@@ -8,8 +8,16 @@ await withClientBrowserProof(
   async (cdp) => {
     const result = await cdp.evaluate(String.raw`
       (async () => {
+        // 频道名文案走 i18n（默认语言可简可繁），stub 与断言期待值都必须与实现同源取 t('shell.chat-*')，不能硬编码字面。
+        const { t } = await import('/src/ui/i18n.ts');
+        const labels = {
+          grudge: t('shell.chat-grudge'),
+          nearby: t('shell.chat-nearby'),
+          world: t('shell.chat-world'),
+          sect: t('shell.chat-sect'),
+          party: t('shell.chat-party'),
+        };
         const buildStaticPanel = () => {
-          const labels = { grudge: '情仇', nearby: '附近', world: '世界', sect: '宗门', party: '组队' };
           const defaults = { 'channel-1': 'grudge', 'channel-2': 'nearby', 'channel-3': 'world' };
           document.getElementById('chat-panel')?.remove();
           const panel = document.createElement('div');
@@ -42,9 +50,9 @@ await withClientBrowserProof(
         const defaultLabels = slotButtons.map((button) => button.textContent.trim());
         const fixedCount = document.querySelectorAll('[data-chat-fixed-channel]').length;
         const optionCounts = selects.map((select) => select.options.length);
-        const hasSlotNumberText = /频道[一二三123]/.test(document.getElementById('chat-panel').textContent)
+        const hasSlotNumberText = /[频頻]道[一二三123]/.test(document.getElementById('chat-panel').textContent)
           || Array.from(document.querySelectorAll('[data-chat-slot-host] [aria-label]'))
-            .some((element) => /频道[一二三123]/.test(element.getAttribute('aria-label') ?? ''));
+            .some((element) => /[频頻]道[一二三123]/.test(element.getAttribute('aria-label') ?? ''));
         let selectPointerDowns = 0;
         selects.forEach((select) => select.addEventListener('pointerdown', () => selectPointerDowns += 1));
         slotButtons[1].click();
@@ -98,6 +106,7 @@ await withClientBrowserProof(
         const restored = Array.from(document.querySelectorAll('[data-chat-slot-select]')).map((select) => select.value);
         restoredChat.syncPartyMessages(null, [], null);
         return {
+          expectedLabels: labels,
           defaults,
           defaultLabels,
           labelsAfterSwitch,
@@ -122,7 +131,11 @@ await withClientBrowserProof(
     `);
 
     assert.deepEqual(result.defaults, ['grudge', 'nearby', 'world'], '三个频道槽默认值错误');
-    assert.deepEqual(result.defaultLabels, ['情仇', '附近', '世界'], '频道槽主按钮未显示当前频道');
+    assert.deepEqual(
+      result.defaultLabels,
+      [result.expectedLabels.grudge, result.expectedLabels.nearby, result.expectedLabels.world],
+      '频道槽主按钮未显示当前频道',
+    );
     assert.equal(result.hasSlotNumberText, false, '频道槽仍显示频道一/二/三文本');
     assert.deepEqual(
       result.mainClickState,
@@ -135,7 +148,7 @@ await withClientBrowserProof(
       '仅展开下拉但未选择时不应切换当前频道槽',
     );
     assert.equal(result.controlsSeparated, true, '槽位主按钮与下拉箭头没有形成独立命中区域');
-    assert.equal(result.labelsAfterSwitch[0], '组队', '下拉切换后主按钮未同步频道名称');
+    assert.equal(result.labelsAfterSwitch[0], result.expectedLabels.party, '下拉切换后主按钮未同步频道名称');
     assert.equal(result.fixedCount, 2, '系统/战斗固定页应保留');
     assert.deepEqual(result.optionCounts, [5, 5, 5], '每个频道槽必须可选五类聊天');
     assert.equal(result.persistedAfterSwitch['channel-1'], 'party', '频道切换未写入 localStorage');
