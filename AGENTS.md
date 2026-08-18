@@ -19,13 +19,104 @@
 - `economy/`：市场、邮件、宗门、排行榜
 - `other/`：通天塔、NPC 商店、任务、兑换码、自动化、GM 系统、Actor 系统
 
-涉及具体游戏系统时，必须先阅读对应的 mechanics 文档再动手。本文件只包含行为规范和红线。
+涉及具体游戏系统时，必须先阅读对应的 mechanics 文档再动手。本文件包含行为规范、红线与项目结构速查（§0）。
 
 **目标运行环境**：
 - 硬件：8 核 CPU / 16GB 内存 / 30Mbps 出口带宽（单服）
 - 并发玩家：5000
 - 地图实例：10000
 - 所有架构决策、内存预算、网络包体、数据库连接池、tick 开销、队列吞吐都必须在此口径下成立
+
+---
+
+## 0. 项目结构速查
+
+**生成于 2026-08-19 / commit 0b0dd0d8 / main**。仓库存量：2523 文件、61.9 万行 TS。pnpm workspace `packages/*` + `benchmarks/pathfinding` + `tools/procgen-demo`。无 CI（无 .github），质量靠 verify*/proof*/audit* 脚本与 LSP 把关。
+
+### 目录结构
+
+| 路径 | 职责 |
+|---|---|
+| packages/server/ | 权威服务端（NestJS + Socket.IO，纯 tsc 编译；详见其 AGENTS.md） |
+| packages/client/ | 客户端（Vite + Canvas2D + DOM UI + React19 渐进式 + PixiJS 地图渲染；详见其 AGENTS.md） |
+| packages/shared/ | 前后端契约单一真源（单 barrel index.ts；详见其 AGENTS.md） |
+| packages/config-editor/ | 内容配置编辑器（详见其 AGENTS.md） |
+| docs/ | 文档中心（docs/README.md 为总入口；mechanics/ 为机制文档，见上方清单） |
+| scripts/ | 70 个 verify / release / proof 编排脚本 |
+| benchmarks/ tools/ | pathfinding 性能对比 / procgen demo（独立 workspace） |
+
+### WHERE TO LOOK
+
+| 任务 | 位置 |
+|---|---|
+| 世界 tick / 玩法 facade | server: `runtime/world/world-runtime.service.ts` |
+| 玩家状态 / 持久化真源 | server: `runtime/player/`、`persistence/player-domain-persistence.service.ts` |
+| 战斗 / 技艺 job | server: `runtime/combat/`、`runtime/craft/pipeline/` |
+| Socket 收发包 | server: `network/world.gateway.ts`；client: `network/socket.ts` |
+| 模板装载 | server: `content/content-template.repository.ts` |
+| 协议 / HTTP DTO | shared: `protocol.ts`、`api-contracts.ts` |
+| 旧版 DOM 面板 | client: `ui/panels/*.ts` |
+| React 面板 | client: `react-ui/panels/<name>/` |
+| 地图渲染 | client: `game-map/renderer/pixi-*.ts` |
+| 验证脚本 | server: `tools/*-smoke.ts`；client: `scripts/prove-*.mjs`；shared: `scripts/check-*.cjs` |
+
+### CODE MAP（核心中枢，按被引用数）
+
+| 符号 | 类型 | 位置 | 被引用 |
+|---|---|---|---|
+| PlayerDomainPersistenceService | service | server `persistence/` | 53 |
+| WorldRuntimeService | service | server `runtime/world/` | 52 |
+| ContentTemplateRepository | service | server `content/` | 52 |
+| WorldGateway | gateway | server `network/` | 43 |
+| AppModule | module | server `app.module.ts` | 42 |
+| SocketManager | class | client `network/socket.ts` | 26 |
+| technique.ts | barrel | shared `src/` | 50 |
+| terrain.ts | barrel | shared `src/` | 44 |
+| api-contracts.ts | types | shared `src/` | 89KB HTTP DTO |
+
+---
+
+## 0.5 生产环境（自建 PVE LXC，2026-08-19 上线）
+
+本项目当前实际运行的生产环境是**自建 PVE 上的 LXC 容器**（非腾讯云 Swarm）。所有线上验证、日志查看、玩家数据查询都指向这套环境。
+
+### 拓扑
+
+| 层 | 内容 |
+|---|---|
+| PVE 主机 | `pve2`（192.168.0.183，PVE 8.4.0） |
+| LXC 105 `daojie` | **192.168.0.191**，4C / 4GB / 30GB，Debian 12 + nesting+keyctl，開機自啟 |
+| daojie-postgres | postgres:16-alpine，資料 `/opt/daojie/pgdata` |
+| daojie-redis | redis:7-alpine，資料 `/opt/daojie/redis-data` |
+| daojie-server | 本地映像 `daojie-server:lxc`（Dockerfile 建置），`-p 13001:13001`，`SERVER_RUNTIME_ROLE=all` + `SERVER_FLUSH_TASK_RUNTIME_MODE=inline`（單容器自用模式，無獨立 worker 容器） |
+
+### 入口與訪問
+
+- 服務入口：`http://192.168.0.191:13001`（`/health`、`/live`、Socket.IO）
+- 進 LXC：`ssh root@192.168.0.191`（密碼見 `.env/pve.env`）或 PVE `pct exec 105`
+- 查日誌：`docker logs daojie-server`；查庫：`docker exec daojie-postgres psql -U mud -d daojie_yusheng`
+- 凭证一律看 `.env/pve.env`（PVE/LXC/DB/GM 密碼）、`.env/istoreos.env`（主路由）；這些檔案被 gitignore，嚴禁寫入任何會進 git 的檔案
+
+### 網路注意
+
+- LXC MAC `BC:24:11:0E:3B:97` 已在 iStoreOS 主路由（192.168.0.1）加 DHCP 靜態綁定，`.191` 不會被 DHCP 池（150~249）派走
+- **192.168.0.190 被區網 TP-Link 設備佔用，禁止使用**
+- CORS 白名單：localhost:5173 / 127.0.0.1:5173 / 192.168.0.191:5173 / 192.168.0.100:5173
+
+### 更新流程（部署新版後端）
+
+1. 本機 `git archive --format=tar.gz -o daojie-src.tar.gz HEAD`（乾淨樹，不含未追蹤檔案）
+2. 傳輸至 LXC（直連 scp 或經 PVE `pct push 105`），解包到 `/opt/daojie/src`
+3. LXC 內 `docker build -f packages/server/Dockerfile -t daojie-server:lxc .`
+4. 重跑 `/opt/daojie/lxc-deploy.sh`（冪等：重建三容器，pgdata/redis-data 在 host volume 不動）
+5. 驗證 `/health` + `/live` + `docker logs` 無新 WARN
+
+### 紅線
+
+- LXC 磁碟僅 30G（占 2.3G）：勿在 LXC 內堆大型檔案；映像 build cache 適時 `docker system prune`
+- `server-data` volume（`/opt/daojie/server-data`）owner 必須是 `100:101`（容器內 appuser），否則 GM 備份 worker EACCES
+- 此環境規格（4C/4G）按 <10 人自用口徑配置，不代表 5000 併發目標口徑；正式對外營運需另評估
+- PVE host 本體**禁止**安裝 Docker 等第三方服務（曾誤裝已清除）；一切進 LXC
 
 ---
 

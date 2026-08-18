@@ -281,13 +281,16 @@ await withClientBrowserProof(
     assert.equal(lateResult.leaked, false, '旧队伍/旧 requestId 的晚包未被隔离');
 
     // 同队名牌只对“自己当前队伍”派生，不泄露或误标其它队伍。
+    // 徽记文案走 i18n（默认语言可简可繁），期待值必须与实现同源取 t('entity.badge.party')，不能硬编码字面。
     const badgeResult = await cdp.evaluate(String.raw`
-      (() => {
+      (async () => {
+        const { t } = await import('/src/ui/i18n.ts');
+        const expectedPartyBadgeText = t('entity.badge.party');
         const { buildEntityNameplateBadges } = window.__partyProof;
         const ownParty = buildEntityNameplateBadges({ kind: 'player', partyMark: 'party-a' }, 'party-a') ?? [];
         const otherParty = buildEntityNameplateBadges({ kind: 'player', partyMark: 'party-b' }, 'party-a') ?? [];
         return {
-          ownPartyMarked: ownParty.some((badge) => badge.tone === 'party' && badge.text === '队'),
+          ownPartyMarked: ownParty.some((badge) => badge.tone === 'party' && badge.text === expectedPartyBadgeText),
           otherPartyMarked: otherParty.some((badge) => badge.tone === 'party'),
         };
       })()
