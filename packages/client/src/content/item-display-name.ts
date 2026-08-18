@@ -5,6 +5,7 @@
  */
 import { getItemDisplayName, type GroundItemEntryView } from '@mud/shared';
 import { getLocalItemTemplate } from './local-templates';
+import { resolveContentDisplayName } from './content-name-locale';
 import {
   UNKNOWN_CLIENT_ITEM_NAME,
   isUsableClientItemNameCandidate,
@@ -21,12 +22,13 @@ export function resolveClientItemBaseName(itemId: string, ...candidates: Array<s
   const normalizedItemId = itemId.trim();
   for (const candidate of candidates) {
     if (isUsableClientItemNameCandidate(normalizedItemId, candidate)) {
-      return normalizeClientItemNameText(candidate);
+      // 繁体语言下，以 itemId 查繁体目录覆盖简中候选名。
+      return resolveContentDisplayName('items', normalizedItemId, 'name', normalizeClientItemNameText(candidate));
     }
   }
   const templateName = normalizeClientItemNameText(normalizedItemId ? getLocalItemTemplate(normalizedItemId)?.name : undefined);
   if (templateName && templateName !== normalizedItemId) {
-    return templateName;
+    return resolveContentDisplayName('items', normalizedItemId, 'name', templateName);
   }
   return UNKNOWN_CLIENT_ITEM_NAME;
 }

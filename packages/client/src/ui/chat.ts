@@ -833,7 +833,7 @@ function appendStructuredNoticeLine(container: DocumentFragment | HTMLElement, r
     return;
   }
   const template = tLoose(data.key, undefined, fallbackText || data.key);
-  const vars = normalizeStructuredNoticeVars(data.vars) ?? {};
+  const vars = normalizeStructuredNoticeVars(data) ?? {};
   const pillMap = new Map<string, NoticePillConfig>();
   for (const pill of data.pills ?? []) {
     if (typeof pill === 'string') {

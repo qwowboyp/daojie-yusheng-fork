@@ -96,6 +96,12 @@ export interface CombatNoticePayload {
   targetMaxHp?: number;
   /** 技能名（'攻击' 表示普攻）。 */
   skill: string;
+  /** 技能内容 id（可选，客户端繁体时据此解析技能名）。 */
+  skillRef?: string;
+  /** 目标内容 id（可选，用于怪物/物品目标名解析）。 */
+  targetRef?: string;
+  /** 施法者内容 id（可选，用于怪物施法者名解析）。 */
+  casterRef?: string;
   /** 同一轮战斗动作的聚合标识。 */
   castId?: string;
   /** 伤害结算。 */
@@ -127,6 +133,19 @@ export interface NoticePillConfig {
   tooltipLines?: string[];
 }
 
+/** 通知内容 domain（与客户端内容名称目录对齐）。 */
+export type NoticeContentDomain = 'items' | 'monsters' | 'techniques' | 'quests' | 'realmLevels' | 'buffs';
+
+/** 展示 token：把 vars 中某个变量映射为内容模板 id，客户端依 locale 解析显示文本。 */
+export interface NoticeDisplayToken {
+  /** 对应 vars 中的变量 key。 */
+  key: string;
+  /** 内容 domain（可选，用于精确查内容名称目录）。 */
+  domain?: NoticeContentDomain;
+  /** 内容模板 id（可选；缺省时用 vars 原值回退）。 */
+  id?: string;
+}
+
 /** 结构化通知载荷：服务端只发数据，客户端负责文本拼接和渲染。 */
 export interface StructuredNoticePayload {
   /** 语言包模板 key。 */
@@ -137,6 +156,8 @@ export interface StructuredNoticePayload {
   pills?: NoticePillConfig[];
   /** 标签 badge 文本列表。 */
   badges?: string[];
+  /** 展示 token 映射（可选）。客户端繁体时据此把 vars 值解析为繁体显示。 */
+  displayTokens?: NoticeDisplayToken[];
 }
 
 /** 单条通知消息视图。 */

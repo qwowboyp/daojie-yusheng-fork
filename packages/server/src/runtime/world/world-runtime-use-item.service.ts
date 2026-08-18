@@ -212,13 +212,13 @@ export class WorldRuntimeUseItemService {
         if (learnedTechniqueId) {
             deps.refreshQuestStates(playerId);
             const itemName = getItemDisplayName(item);
-            const n = buildStructuredNotice('success', 'notice.item.technique-comprehension-added', `参悟 ${itemName}`, { vars: { itemName }, pills: [{ key: 'itemName', style: 'skill' }] });
+            const n = buildStructuredNotice('success', 'notice.item.technique-comprehension-added', `参悟 ${itemName}`, { vars: { itemName }, pills: [{ key: 'itemName', style: 'skill' }], displayTokens: [{ key: 'itemName', domain: 'items', id: item?.itemId }] });
             deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
             return;
         }
         deps.refreshQuestStates(playerId);
         const itemName = getItemDisplayName(item);
-        const n = buildStructuredNotice('success', 'notice.item.used', `使用 ${itemName}`, { vars: { itemName }, pills: [{ key: 'itemName', style: 'target' }] });
+        const n = buildStructuredNotice('success', 'notice.item.used', `使用 ${itemName}`, { vars: { itemName }, pills: [{ key: 'itemName', style: 'target' }], displayTokens: [{ key: 'itemName', domain: 'items', id: item?.itemId }] });
         deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
     }    
     async handleMeritMonthCardItem(playerId, itemInstanceId, item, deps, count = 1) {

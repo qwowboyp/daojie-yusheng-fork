@@ -122,6 +122,7 @@ export class WorldRuntimePlayerCombatService {
             vars: { monsterName: monster.name },
             pills: [{ key: 'monsterName', style: 'target' }],
             badges: ['击杀'],
+            displayTokens: [{ key: 'monsterName', domain: 'monsters', id: monster.monsterId }],
         });
         deps.queuePlayerNotice(killerPlayerId, killNotice.text, killNotice.kind, undefined, undefined, killNotice.structured);
         deps.advanceKillQuestProgress(killerPlayerId, monster.monsterId, monster.name);

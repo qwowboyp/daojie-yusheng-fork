@@ -3,7 +3,7 @@
  *
  * 维护时要保持鉴权、恢复、幂等和数据真源边界清晰，避免把冷路径工具或查询逻辑卷入 tick 热路径。
  */
-import type { NoticePillConfig, NoticeKind, StructuredNoticePayload } from '@mud/shared';
+import type { NoticeDisplayToken, NoticePillConfig, NoticeKind, StructuredNoticePayload } from '@mud/shared';
 
 /** 结构化通知入队参数。 */
 export interface StructuredNoticeInput {
@@ -20,7 +20,12 @@ export function buildStructuredNotice(
   kind: NoticeKind,
   key: string,
   fallbackText: string,
-  opts?: { vars?: Record<string, string | number>; pills?: NoticePillConfig[]; badges?: string[] },
+  opts?: {
+    vars?: Record<string, string | number>;
+    pills?: NoticePillConfig[];
+    badges?: string[];
+    displayTokens?: NoticeDisplayToken[];
+  },
 ): StructuredNoticeInput {
   return {
     kind,
@@ -30,6 +35,7 @@ export function buildStructuredNotice(
       ...(opts?.vars ? { vars: opts.vars } : undefined),
       ...(opts?.pills ? { pills: opts.pills } : undefined),
       ...(opts?.badges ? { badges: opts.badges } : undefined),
+      ...(opts?.displayTokens && opts.displayTokens.length > 0 ? { displayTokens: opts.displayTokens } : undefined),
     },
   };
 }

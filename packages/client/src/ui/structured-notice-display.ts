@@ -5,6 +5,7 @@
  */
 import type { StructuredNoticePayload } from '@mud/shared';
 import { getLocalItemTemplate } from '../content/local-templates';
+import { resolveNoticeTokenValue } from '../content/content-name-locale';
 import { formatDisplayNumber } from '../utils/number';
 import { hasI18nKey, tLoose } from './i18n';
 
@@ -26,7 +27,7 @@ export function resolveStructuredNoticeText(
 ): string {
   const payload = normalizeStructuredNotice(structured) ?? normalizeStructuredNotice(structuredGroup?.[0]);
   if (payload && hasI18nKey(payload.key)) {
-    return tLoose(payload.key, normalizeStructuredNoticeVars(payload.vars));
+    return tLoose(payload.key, normalizeStructuredNoticeVars(payload));
   }
   if (hasI18nKey(rawText)) {
     return tLoose(rawText);
@@ -35,15 +36,17 @@ export function resolveStructuredNoticeText(
 }
 
 export function normalizeStructuredNoticeVars(
-  vars: StructuredNoticePayload['vars'] | undefined,
+  payload: StructuredNoticePayload | undefined,
 ): Record<string, I18nValue> | undefined {
+  const vars = payload?.vars;
   if (!vars) {
     return undefined;
   }
+  const tokenMap = new Map((payload?.displayTokens ?? []).map((token) => [token.key, token]));
   const resolved: Record<string, I18nValue> = {};
   for (const [key, value] of Object.entries(vars)) {
     resolved[key] = typeof value === 'string'
-      ? resolveClientDisplayToken(value)
+      ? resolveNoticeTokenValue(value, tokenMap.get(key))
       : typeof value === 'number'
         ? formatDisplayNumber(value)
         : value;
