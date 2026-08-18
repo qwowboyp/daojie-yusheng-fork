@@ -56,6 +56,11 @@ import {
 } from '../../../ui/offline-gain-render';
 import { MAP_TARGET_FPS_RANGE } from '../../../constants/ui/performance';
 import { t } from '../../../ui/i18n';
+import {
+  getLanguagePreference,
+  updateLanguagePreference,
+  type ClientLocale,
+} from '../../../ui/language-preferences';
 
 type MapPerformanceRenderToggleKey =
   | 'renderRuntimeTileSprites'
@@ -525,6 +530,18 @@ const UiTab = memo(function UiTab() {
   const [floatingPanels, setFloatingPanels] = useState(() => getFloatingPanelPreferences());
   const [status, setStatus] = useState(t('settings.ui.status.saved-local', undefined));
 
+  const handleLanguageChange = useCallback((locale: ClientLocale) => {
+    if (locale === getLanguagePreference()) {
+      return;
+    }
+    const confirmed = window.confirm(t('settings.language.reload-confirm', undefined));
+    if (!confirmed) {
+      return;
+    }
+    updateLanguagePreference(locale);
+    window.location.reload();
+  }, []);
+
   const handleColorMode = useCallback((mode: UiColorMode) => {
     const next = updateUiColorMode(mode);
     setColorMode(mode);
@@ -582,6 +599,28 @@ const UiTab = memo(function UiTab() {
 
   return (
     <>
+      <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
+        <div className="panel-section-title">{t('settings.language.section', undefined)}</div>
+        <div className="settings-ui-copy ui-form-copy">{t('settings.language.copy', undefined)}</div>
+        <div className="settings-ui-mode-row">
+          <button
+            className={`small-btn ghost${getLanguagePreference() === 'zh-CN' ? ' active' : ''}`}
+            type="button"
+            aria-pressed={getLanguagePreference() === 'zh-CN' ? 'true' : 'false'}
+            onClick={() => handleLanguageChange('zh-CN')}
+          >
+            {t('settings.language.option.simplified', undefined)}
+          </button>
+          <button
+            className={`small-btn ghost${getLanguagePreference() === 'zh-TW' ? ' active' : ''}`}
+            type="button"
+            aria-pressed={getLanguagePreference() === 'zh-TW' ? 'true' : 'false'}
+            onClick={() => handleLanguageChange('zh-TW')}
+          >
+            {t('settings.language.option.traditional', undefined)}
+          </button>
+        </div>
+      </div>
       <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
         <div className="panel-section-title">{t('settings.ui.section.color-mode', undefined)}</div>
         <div className="settings-ui-copy ui-form-copy">{t('settings.ui.copy.color-mode', undefined)}</div>

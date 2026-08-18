@@ -57,6 +57,11 @@ import {
 import { MAP_TARGET_FPS_RANGE } from '../../constants/ui/performance';
 import { t } from '../i18n';
 import {
+  getLanguagePreference,
+  updateLanguagePreference,
+  type ClientLocale,
+} from '../language-preferences';
+import {
   mountReactSettingsPanel,
   setReactSettingsPanelCallbacks,
   shouldUseReactSettingsPanel,
@@ -436,6 +441,24 @@ export class SettingsPanel {
       this.syncFloatingPanelControls(body, nextPreferences);
     }, { signal });
 
+    body.querySelectorAll<HTMLButtonElement>('[data-settings-language]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const locale = button.dataset.settingsLanguage as ClientLocale | undefined;
+        if (locale !== 'zh-CN' && locale !== 'zh-TW') {
+          return;
+        }
+        if (locale === getLanguagePreference()) {
+          return;
+        }
+        const confirmed = window.confirm(t('settings.language.reload-confirm', undefined));
+        if (!confirmed) {
+          return;
+        }
+        updateLanguagePreference(locale);
+        window.location.reload();
+      }, { signal });
+    });
+
     body.querySelectorAll<HTMLButtonElement>('[data-ui-color-mode]').forEach((button) => {
       button.addEventListener('click', () => {
         const colorMode = button.dataset.uiColorMode;
@@ -785,7 +808,26 @@ export class SettingsPanel {
   private renderUiTab(): string {
     const config = getUiStyleConfig();
     const floatingPreferences = getFloatingPanelPreferences();
+    const currentLocale = getLanguagePreference();
     return `
+      <div class="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
+        <div class="panel-section-title">${escapeHtml(t('settings.language.section', undefined))}</div>
+        <div class="settings-ui-copy ui-form-copy">${escapeHtml(t('settings.language.copy', undefined))}</div>
+        <div class="settings-ui-mode-row" data-settings-language-row>
+          <button
+            class="small-btn ghost${currentLocale === 'zh-CN' ? ' active' : ''}"
+            type="button"
+            data-settings-language="${'zh-CN'}"
+            aria-pressed="${currentLocale === 'zh-CN' ? 'true' : 'false'}"
+          >${escapeHtml(t('settings.language.option.simplified', undefined))}</button>
+          <button
+            class="small-btn ghost${currentLocale === 'zh-TW' ? ' active' : ''}"
+            type="button"
+            data-settings-language="${'zh-TW'}"
+            aria-pressed="${currentLocale === 'zh-TW' ? 'true' : 'false'}"
+          >${escapeHtml(t('settings.language.option.traditional', undefined))}</button>
+        </div>
+      </div>
       <div class="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
         <div class="panel-section-title">${escapeHtml(t('settings.ui.section.color-mode', undefined))}</div>
         <div class="settings-ui-copy ui-form-copy">${escapeHtml(t('settings.ui.copy.color-mode', undefined))}</div>

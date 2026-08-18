@@ -3,7 +3,16 @@
  *
  * 维护时优先保持局部更新和原有焦点/滚动状态，不在 UI 层裁定资产、战斗或移动合法性。
  */
-import { CLIENT_I18N_MESSAGES, type ClientI18nKey } from '../constants/ui/i18n.generated';
+import {
+  CLIENT_I18N_MESSAGES,
+  SUPPORTED_CLIENT_LOCALES,
+  type ClientI18nKey,
+  type ClientLocale,
+} from '../constants/ui/i18n.generated';
+import { getLanguagePreference } from './language-preferences';
+
+export type { ClientLocale };
+export { SUPPORTED_CLIENT_LOCALES };
 
 type I18nValue = string | number | boolean | null | undefined;
 type I18nValues = Readonly<Record<string, I18nValue>>;
@@ -17,12 +26,18 @@ function stringifyI18nValue(value: I18nValue): string {
   return String(value);
 }
 
+/** 取得当前活跃 locale 对应的文案表。 */
+function activeMessages(): Record<string, string> {
+  return CLIENT_I18N_MESSAGES[getLanguagePreference()];
+}
+
 export function hasI18nKey(key: string): key is ClientI18nKey {
-  return Object.prototype.hasOwnProperty.call(CLIENT_I18N_MESSAGES, key);
+  return Object.prototype.hasOwnProperty.call(activeMessages(), key);
 }
 
 export function t(key: ClientI18nKey | string, values?: I18nValues, fallback?: string): string {
-  const template = hasI18nKey(key) ? CLIENT_I18N_MESSAGES[key] : fallback ?? key;
+  const messages = activeMessages();
+  const template = Object.prototype.hasOwnProperty.call(messages, key) ? messages[key] : fallback ?? key;
   if (!values) {
     return template;
   }

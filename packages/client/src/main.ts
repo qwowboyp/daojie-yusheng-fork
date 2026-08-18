@@ -50,12 +50,14 @@ import './styles/responsive.css';
 
 import { bindExternalLinkGuard } from './ui/external-link-guard';
 import { applyStaticI18n } from './ui/i18n';
+import { initializeLanguagePreference } from './ui/language-preferences';
 import { collectMainDomElements } from './main-dom-elements';
 import { createMainFrontendModules } from './main-frontend-modules';
 import { initializeMainApp } from './main-app-composition';
 import { mountReactMapMinimapShell } from './react-ui/shell/MapMinimapShell';
 
 bindExternalLinkGuard(document);
+initializeLanguagePreference();
 applyStaticI18n(document);
 mountReactMapMinimapShell(document);
 

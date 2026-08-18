@@ -49,6 +49,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.2
         version: 19.2.3(@types/react@19.2.14)
+      opencc-js:
+        specifier: ^1.4.1
+        version: 1.4.1
       typescript:
         specifier: ^5.3.0
         version: 5.9.3
@@ -2340,6 +2343,9 @@ packages:
         optional: true
       zod:
         optional: true
+
+  opencc-js@1.4.1:
+    resolution: {integrity: sha512-2lPLcrg7cnh1ATSduOxhnk/jq6KlR6w+5Ihl4wF7Z5e5Rva4vxTyugV5rZ7EiUCOZl+EDOLetIix+BhgYDCC+A==}
 
   ora@5.4.1:
     resolution: {integrity: sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==}
@@ -5177,6 +5183,8 @@ snapshots:
   openai@6.38.0(ws@8.18.3):
     optionalDependencies:
       ws: 8.18.3
+
+  opencc-js@1.4.1: {}
 
   ora@5.4.1:
     dependencies:

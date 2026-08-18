@@ -162,6 +162,7 @@ login.activation.required,登录,当前网络已有账号注册，请输入激�
 login.activation.submit,登录,提交激活码,激活码弹窗确认按钮
 login.activation.subtitle,登录,当前 Wi-Fi 或出口 IP 已注册过账号。请加入 QQ 群 {qqGroupNumber} 获取激活码。,激活码弹窗副标题
 login.activation.title,登录,需要激活码,激活码弹窗标题
+login.bootstrap.in-progress,登录,正在接引角色进入世界...,等待 Socket Bootstrap 首包
 login.display-name.available,登录,此道号可用,显示名可用状态
 login.display-name.check-failed,登录,验查未果,显示名检查异常兜底
 login.display-name.checking,登录,正在验查...,显示名远端检查中
@@ -173,7 +174,6 @@ login.login-name.label,登录,账号 / 角色名,登录名标签
 login.login-name.placeholder,登录,输入账号或角色名,登录名输入框占位
 login.mode.login,登录,登录,登录模式按钮和提交按钮
 login.mode.register,登录,注册,注册模式按钮和提交按钮
-login.bootstrap.in-progress,登录,正在接引角色进入世界...,等待 Socket Bootstrap 首包
 login.restore.failed,登录,重归失败,会话恢复失败兜底
 login.restore.in-progress,登录,正在重归天地...,会话恢复状态
 loot.action.gathering,掉落,连续采摘中,
@@ -345,56 +345,6 @@ market.tab.market,坊市,市场,
 market.tab.my-orders,坊市,我的交易,
 market.tab.trade-history,坊市,交易记录,
 market.tab.transmission,坊市,传法台,
-market.transmission.action.buy,坊市,求取此法,
-market.transmission.action.cancel,坊市,撤回寄售,
-market.transmission.category.all,坊市,全部功法,
-market.transmission.category.label,坊市,功法分类,
-market.transmission.category.unknown,坊市,未分类,
-market.transmission.consign.choose,坊市,选择残卷,
-market.transmission.consign.close,坊市,收起,
-market.transmission.consign.empty,坊市,暂无可上架残卷。,
-market.transmission.consign.no-selection,坊市,未选择残卷,
-market.transmission.consign.open,坊市,上架残卷,
-market.transmission.consign.open-short,坊市,从背包选择,
-market.transmission.consign.search-empty,坊市,没有匹配的残卷。,
-market.transmission.consign.selected,坊市,已选残卷,
-market.transmission.consign.submit,坊市,确认上架,
-market.transmission.consign.title,坊市,上架残卷,
-market.transmission.consign.visible-count,坊市,{visible} / {total} 卷,
-market.transmission.empty.mine,坊市,暂无寄售中的功法残卷。,
-market.transmission.empty.participate,坊市,当前筛选下暂无功法残卷。,
-market.transmission.empty.select,坊市,请选择一卷功法。,
-market.transmission.grade.unknown,坊市,品阶未明,
-market.transmission.head.category,坊市,类别,
-market.transmission.head.item,坊市,功法,
-market.transmission.head.price,坊市,售价,
-market.transmission.head.quality,坊市,品阶,
-market.transmission.head.seller,坊市,传法者,
-market.transmission.loading,坊市,正在载入传法台,
-market.transmission.page.next,坊市,下一页,
-market.transmission.page.prev,坊市,上一页,
-market.transmission.page-status,坊市,共 {total} 卷，第 {page} / {totalPages} 页,
-market.transmission.realm.unknown,坊市,境界未明,
-market.transmission.ribbon.mine,坊市,我的寄售,
-market.transmission.search,坊市,搜索功法,
-market.transmission.search-placeholder,坊市,输入功法名称,
-market.transmission.sort.grade-desc,坊市,品阶从高到低,
-market.transmission.sort.label,坊市,排序,
-market.transmission.sort.name-asc,坊市,名称顺序,
-market.transmission.sort.newest,坊市,最新上架,
-market.transmission.sort.price-asc,坊市,售价从低到高,
-market.transmission.sort.price-desc,坊市,售价从高到低,
-market.transmission.sort.realm-desc,坊市,境界从高到低,
-market.transmission.summary.active,坊市,在售残卷,
-market.transmission.summary.filtered,坊市,当前结果,
-market.transmission.summary.listing,坊市,上架中,
-market.transmission.summary.mine,坊市,我的寄售,
-market.transmission.summary.result,坊市,卷,
-market.transmission.summary.scroll-unit,坊市,卷,
-market.transmission.summary.wallet,坊市,我的灵石,
-market.transmission.tab.mine,坊市,我的寄售,
-market.transmission.tab.participate,坊市,求取功法,
-market.transmission.unknown-technique,坊市,未知功法,
 market.title,坊市,坊市,
 market.toolbar.page,坊市,共 {total} 件，第 {page} / {totalPages} 页,
 market.toolbar.variants,坊市,{itemName} · 共 {totalVariants} 个强化等级,
@@ -436,6 +386,56 @@ market.trade.title.sell,坊市,发起挂售,
 market.trade.total.bid,坊市,出价占用,
 market.trade.total.buy,坊市,总价,
 market.trade.total.sell,坊市,总额,
+market.transmission.action.buy,坊市,求取此法,
+market.transmission.action.cancel,坊市,撤回寄售,
+market.transmission.category.all,坊市,全部功法,
+market.transmission.category.label,坊市,功法分类,
+market.transmission.category.unknown,坊市,未分类,
+market.transmission.consign.choose,坊市,选择残卷,
+market.transmission.consign.close,坊市,收起,
+market.transmission.consign.empty,坊市,暂无可上架残卷。,
+market.transmission.consign.no-selection,坊市,未选择残卷,
+market.transmission.consign.open,坊市,上架残卷,
+market.transmission.consign.open-short,坊市,从背包选择,
+market.transmission.consign.search-empty,坊市,没有匹配的残卷。,
+market.transmission.consign.selected,坊市,已选残卷,
+market.transmission.consign.submit,坊市,确认上架,
+market.transmission.consign.title,坊市,上架残卷,
+market.transmission.consign.visible-count,坊市,{visible} / {total} 卷,
+market.transmission.empty.mine,坊市,暂无寄售中的功法残卷。,
+market.transmission.empty.participate,坊市,当前筛选下暂无功法残卷。,
+market.transmission.empty.select,坊市,请选择一卷功法。,
+market.transmission.grade.unknown,坊市,品阶未明,
+market.transmission.head.category,坊市,类别,
+market.transmission.head.item,坊市,功法,
+market.transmission.head.price,坊市,售价,
+market.transmission.head.quality,坊市,品阶,
+market.transmission.head.seller,坊市,传法者,
+market.transmission.loading,坊市,正在载入传法台,
+market.transmission.page-status,坊市,共 {total} 卷，第 {page} / {totalPages} 页,
+market.transmission.page.next,坊市,下一页,
+market.transmission.page.prev,坊市,上一页,
+market.transmission.realm.unknown,坊市,境界未明,
+market.transmission.ribbon.mine,坊市,我的寄售,
+market.transmission.search,坊市,搜索功法,
+market.transmission.search-placeholder,坊市,输入功法名称,
+market.transmission.sort.grade-desc,坊市,品阶从高到低,
+market.transmission.sort.label,坊市,排序,
+market.transmission.sort.name-asc,坊市,名称顺序,
+market.transmission.sort.newest,坊市,最新上架,
+market.transmission.sort.price-asc,坊市,售价从低到高,
+market.transmission.sort.price-desc,坊市,售价从高到低,
+market.transmission.sort.realm-desc,坊市,境界从高到低,
+market.transmission.summary.active,坊市,在售残卷,
+market.transmission.summary.filtered,坊市,当前结果,
+market.transmission.summary.listing,坊市,上架中,
+market.transmission.summary.mine,坊市,我的寄售,
+market.transmission.summary.result,坊市,卷,
+market.transmission.summary.scroll-unit,坊市,卷,
+market.transmission.summary.wallet,坊市,我的灵石,
+market.transmission.tab.mine,坊市,我的寄售,
+market.transmission.tab.participate,坊市,求取功法,
+market.transmission.unknown-technique,坊市,未知功法,
 mail.action.claim,飞书,收取信物,
 mail.action.claim-selected,飞书,领取勾选,
 mail.action.clear-selection,飞书,清空勾选,
@@ -547,6 +547,12 @@ technique.action.cancel-cultivate,功法,取消主修,
 technique.action.set-cultivate,功法,设为主修,
 technique.card.layer,功法,第{level}/{maxLevel}层,
 technique.card.skills-toggle,功法,术法 {state},
+technique.comprehension.discard.action,功法,放弃领悟,
+technique.comprehension.discard.confirm.body,功法,放弃后会删除 {name} 的全部未领悟进度。,
+technique.comprehension.discard.confirm.cancel,功法,保留进度,
+technique.comprehension.discard.confirm.ok,功法,确认放弃,
+technique.comprehension.discard.confirm.subtitle,功法,该操作不可撤销,
+technique.comprehension.discard.confirm.title,功法,确认放弃 {name},
 technique.constellation.hover.gain,功法,收益：{value},
 technique.constellation.hover.realm,功法,境界：{realm},
 technique.constellation.hover.total,功法,累计：{value},
@@ -599,12 +605,6 @@ technique.focus.label.progress,功法,层位进度,
 technique.focus.label.skill-nodes,功法,技能节点,
 technique.focus.label.total-attrs,功法,至此累计加成,
 technique.focus.title,功法,第 {level} 层星位,
-technique.comprehension.discard.action,功法,放弃领悟,
-technique.comprehension.discard.confirm.body,功法,放弃后会删除 {name} 的全部未领悟进度。,
-technique.comprehension.discard.confirm.cancel,功法,保留进度,
-technique.comprehension.discard.confirm.ok,功法,确认放弃,
-technique.comprehension.discard.confirm.subtitle,功法,该操作不可撤销,
-technique.comprehension.discard.confirm.title,功法,确认放弃 {name},
 technique.forget.action,功法,遗忘功法,
 technique.forget.confirm.body-1,功法,即将遗忘 {name}，该功法提供的属性与已解锁技能会从角色身上移除。,
 technique.forget.confirm.body-2,功法,当前主修若为该功法，会同时取消主修并停止修炼。,
@@ -1064,7 +1064,6 @@ shell.map-tick-rate-char-time,静态HTML-主界面,时,静态 HTML：packages/cl
 shell.map-tick-rate-char-turn,静态HTML-主界面,转,静态 HTML：packages/client/index.html
 shell.map-zoom-reset-label-reset,静态HTML-主界面,重置,静态 HTML：packages/client/index.html
 shell.market,静态HTML-主界面,坊市,静态 HTML：packages/client/index.html
-shell.social,静态HTML-主界面,道友,静态 HTML：packages/client/index.html
 shell.mobile-action,静态HTML-主界面,行动,静态 HTML：packages/client/index.html
 shell.mobile-attrs,静态HTML-主界面,属性,静态 HTML：packages/client/index.html
 shell.mobile-bag,静态HTML-主界面,行囊,静态 HTML：packages/client/index.html
@@ -1094,6 +1093,7 @@ shell.register.username.placeholder,静态HTML-主界面,输入游戏内用户�
 shell.role-name,静态HTML-主界面,角色名,静态 HTML：packages/client/index.html
 shell.role-name.placeholder,静态HTML-主界面,输入角色名称,静态 HTML：packages/client/index.html
 shell.send,静态HTML-主界面,发送,静态 HTML：packages/client/index.html
+shell.social,静态HTML-主界面,道友,静态 HTML：packages/client/index.html
 shell.tab-login,静态HTML-主界面,登录,静态 HTML：packages/client/index.html
 shell.tab-register,静态HTML-主界面,注册,静态 HTML：packages/client/index.html
 shell.technique,静态HTML-主界面,功法,静态 HTML：packages/client/index.html
@@ -1146,8 +1146,8 @@ gm.editor-section-title-herb-stock,静态HTML-GM,草药库存,静态 HTML：pack
 gm.editor-section-title-player-migration,静态HTML-GM,角色迁移,静态 HTML：packages/client/gm.html
 gm.editor-section-title-save-cleanup,静态HTML-GM,存档清理,静态 HTML：packages/client/gm.html
 gm.editor-tab-basic,静态HTML-GM,基础,静态 HTML：packages/client/gm.html
-gm.editor-tab-buffs,静态HTML-GM,Buff,静态 HTML：packages/client/gm.html
 gm.editor-tab-benefits,静态HTML-GM,权益,静态 HTML：packages/client/gm.html
+gm.editor-tab-buffs,静态HTML-GM,Buff,静态 HTML：packages/client/gm.html
 gm.editor-tab-items,静态HTML-GM,物品,静态 HTML：packages/client/gm.html
 gm.editor-tab-mail,静态HTML-GM,邮件,静态 HTML：packages/client/gm.html
 gm.editor-tab-position,静态HTML-GM,位置,静态 HTML：packages/client/gm.html
@@ -1301,11 +1301,11 @@ gm.shortcut-compensate-combat-exp-2026-04-09,静态HTML-GM,战斗经验补偿-20
 gm.shortcut-compensate-foundation-2026-04-09,静态HTML-GM,底蕴补偿-2026-04-09,静态 HTML：packages/client/gm.html
 gm.shortcut-delete-empty-custom-technique-books,静态HTML-GM,清理空白功法残卷,静态 HTML：packages/client/gm.html
 gm.shortcut-migrate-ai-arts-strength-v1-to-v2,静态HTML-GM,迁移旧版AI术法草稿,静态 HTML：packages/client/gm.html
-gm.shortcut-recover-empty-custom-technique-books,静态HTML-GM,修复空白功法残卷,静态 HTML：packages/client/gm.html
 gm.shortcut-migrate-recovery-pills,静态HTML-GM,恢复丹药迁移,静态 HTML：packages/client/gm.html
+gm.shortcut-recover-empty-custom-technique-books,静态HTML-GM,修复空白功法残卷,静态 HTML：packages/client/gm.html
 gm.shortcut-refresh-online-technique-templates,静态HTML-GM,刷新在线玩家功法模板,静态 HTML：packages/client/gm.html
-gm.shortcut-repair-quest-progress-payloads,静态HTML-GM,修复历史任务进度Payload,静态 HTML：packages/client/gm.html
 gm.shortcut-repair-market-storage-item-ids,静态HTML-GM,修复坊市托管仓旧ID,静态 HTML：packages/client/gm.html
+gm.shortcut-repair-quest-progress-payloads,静态HTML-GM,修复历史任务进度Payload,静态 HTML：packages/client/gm.html
 gm.shortcut-return-all-to-default-spawn,静态HTML-GM,所有角色回新手村出生点,静态 HTML：packages/client/gm.html
 gm.spawn-bots,静态HTML-GM,在选中角色附近生傀儡,静态 HTML：packages/client/gm.html
 gm.summary-memory,静态HTML-GM,0 MB,静态 HTML：packages/client/gm.html
@@ -1648,8 +1648,8 @@ panel.registry.mail,面板注册,飞书,
 panel.registry.market,面板注册,坊市,
 panel.registry.minimap,面板注册,小地图,
 panel.registry.quest,面板注册,任务,
-panel.registry.social,面板注册,道友,
 panel.registry.settings,面板注册,设置,
+panel.registry.social,面板注册,道友,
 panel.registry.technique,面板注册,功法,
 panel.registry.world-map-intel,面板注册,地图情报,
 panel.registry.world-tianji,面板注册,天机阁,
@@ -1843,9 +1843,9 @@ settings.common.action.reset-default,设置,恢复默认,
 settings.common.action.show,设置,显示,
 settings.error.not-connected,设置,气机未通，稍后再试,
 settings.error.redeem-busy,设置,尚有兑换未竟，稍候,
-settings.error.redeem-timeout,设置,兑换未有回音，请稍后查看行囊,
-settings.error.redeem-request-rejected,设置,兑换请求未能受理，请稍后重试,
 settings.error.redeem-execution-failed,设置,兑换执行失败，请先查看行囊再重试,
+settings.error.redeem-request-rejected,设置,兑换请求未能受理，请稍后重试,
+settings.error.redeem-timeout,设置,兑换未有回音，请稍后查看行囊,
 settings.font-level.body.desc,设置,大部分正文、表单输入和常规信息文字。,
 settings.font-level.body.label,设置,正文,
 settings.font-level.body.preview,设置,正文内容示例,
@@ -1867,6 +1867,13 @@ settings.font-level.subtitle.preview,设置,副标题示例,
 settings.font-level.title.desc,设置,弹层标题、面板标题、主要分区抬头。,
 settings.font-level.title.label,设置,标题,
 settings.font-level.title.preview,设置,设置标题,
+settings.language.copy,设置,切换语言后需重新加载界面以套用。,设置面板语言区段说明
+settings.language.option.simplified,设置,简体中文,简体中文选项
+settings.language.option.traditional,设置,繁體中文,繁體中文选项
+settings.language.reload-confirm,设置,切换语言需要重新加载界面，是否继续？,切换语言确认弹窗
+settings.language.reload-confirm-no,设置,取消,取消切换
+settings.language.reload-confirm-yes,设置,重新加载,确认重新加载
+settings.language.section,设置,语言,设置面板语言区段标题
 settings.logout.done,设置,已退出登录,
 settings.modal.close-hint,设置,点击空白处关闭,
 settings.modal.not-logged-in,设置,未登录,
@@ -2428,11 +2435,11 @@ common.unknown-item,通用,未知物品,
 common.value.unknown,通用,未知,缺失 key 自动补齐
 ui.zoom.adjusted,通用,缩放已调整为 {zoom}x,
 ui.zoom.reset,通用,缩放已重置为 {zoom}x,
+notice.action.attack-intensity-updated,通知,出手力度已调整为 {intensity} 成,
 notice.action.aura-sense-toggled,通知,感气视角已{state},
 notice.action.auto-root-foundation-cap,通知,根基已达当前境界上限，已关闭自动凝练根基。,
 notice.action.auto-root-foundation-disabled,通知,已关闭自动凝练根基。,
 notice.action.auto-root-foundation-enabled,通知,已开启自动凝练根基，修为和材料满足时会每息检测并自动凝练。,
-notice.action.attack-intensity-updated,通知,出手力度已调整为 {intensity} 成,
 notice.action.body-training-convert,通知,消耗 {foundationSpent} 底蕴灌入肉身，获得 {expGained} 炼体经验,
 notice.action.compass-required,通知,需要装备铜罗盘才能望气,
 notice.action.cultivation-toggled,通知,修炼已{state},
@@ -2441,15 +2448,15 @@ notice.action.world-migration-peaceful-complete,通知,已切入虚境，后续�
 notice.action.world-migration-peaceful-kept,通知,默认世界已保持为虚境，后续跨图会继续进入虚境线。,
 notice.action.world-migration-real-complete,通知,已切入现世，后续跨图会默认进入现世线。,
 notice.action.world-migration-real-kept,通知,默认世界已保持为现世，后续跨图会继续进入现世线。,
-notice.activity.month-card-activated,通知,已使用{itemName} x{count}，月卡总池增加 {merit} 功德，领取时间重置为 {days} 天,
 notice.activity.eternal-activated,通知,已使用{itemName} x{count}，月卡总池增加 {merit} 功德，每日签到固定池增加 {dailySignInFixedMerit} 功德，已获得永恒权益,
+notice.activity.month-card-activated,通知,已使用{itemName} x{count}，月卡总池增加 {merit} 功德，领取时间重置为 {days} 天,
 notice.asset.reconciliation-pending,通知,资产操作结果正在确认，请稍后刷新背包。,
 notice.channel.alchemy,通知,炼丹,炼丹频道兜底名
 notice.channel.building,通知,建造,建造频道兜底名
 notice.channel.combat,通知,战斗,战斗频道兜底名
 notice.channel.enhancement,通知,强化,强化频道兜底名
-notice.channel.formation,通知,阵法,阵法频道兜底名
 notice.channel.forging,通知,炼器,炼器频道兜底名
+notice.channel.formation,通知,阵法,阵法频道兜底名
 notice.channel.gather,通知,采集,采集频道兜底名
 notice.channel.grudge,通知,情仇,情仇频道兜底名
 notice.channel.loot,通知,掉落,掉落频道兜底名
@@ -2470,12 +2477,12 @@ notice.combat.herb-container-hit,通知,你攻击 {title}，打落 1 朵，剩�
 notice.combat.kill-progress,通知,{action} {target}：{details},
 notice.combat.killed,通知,斩杀 {monsterName},
 notice.combat.killed-batch,通知,连续斩杀 {count} 个目标：{targetList},
+notice.combat.offline-defeat,通知,你在离线挂机期间于{locationName}被{killerName}击败，离线挂机已结束。,
 notice.combat.safe-zone-stop,通知,安全区内无法攻击，自动战斗已停止,
 notice.combat.sha-backlash-convert,通知,身死后煞气入体，煞气反噬累计 {total} 层（剩余 {remaining}）,
 notice.combat.sha-backlash-loss,通知,煞气反噬，折损修为 {progress}、底蕴 {foundation},
 notice.combat.sha-infusion,通知,杀念入体，煞气加深至 {stacks} 层,
 notice.combat.soul-injury,通知,神魂受损加深至 {stacks} 层,
-notice.combat.offline-defeat,通知,你在离线挂机期间于{locationName}被{killerName}击败，离线挂机已结束。,
 notice.combat.temporary-tiles-created,通知,{skillName} 生成了 {count} 处临时石头,
 notice.command.caster-dead,通知,你当前无法继续行动。,
 notice.command.casting-busy,通知,正在吟唱中，无法执行该动作。,
@@ -2494,23 +2501,12 @@ notice.command.target-blocked,通知,目标被遮挡。,
 notice.command.target-dead,通知,目标已经死亡。,
 notice.command.target-left-map,通知,目标已离开当前地图。,
 notice.command.target-out-of-range,通知,目标超出作用范围。,
-notice.command.tile-damage-forbidden,通知,当前区域禁止攻击地形。,
 notice.command.technique-active,通知,学习者已有进行中的技艺任务。,
 notice.command.technique-already-known,通知,学习者已经掌握该功法。,
 notice.command.technique-cancel-none,通知,当前没有可取消的技艺任务。,
 notice.command.technique-none,通知,当前没有进行中的技艺任务。,
 notice.command.technique-queue-full,通知,技艺任务队列已满。,
-notice.technique-aggregation.overlap,通知,无法学习：与已有统合功法重叠的源功法为 {sourceTechniqueNames},
-notice.time-chamber.exit-missing,通知,密室出口暂时不可用。,
-notice.time-chamber.full,通知,密室当前已有修士，请稍后再试。,
-notice.time-chamber.not-inside,通知,当前不在密室中。,
-notice.time-chamber.source-changed,通知,密室入口已经发生变化，请重新操作。,
-notice.time-chamber.too-far,通知,需要靠近密室入口才能进入。,
-notice.time-chamber.unavailable,通知,密室暂时无法通行，请稍后再试。,
-notice.tower.entered,通知,进入通天塔第 {layer} 层。,
-notice.tower.exited,通知,退出通天塔，返回 {mapName}。,
-notice.tower.layer-cleared,通知,通天塔第 {layer} 层已通关，可前往第 {unlockedLayer} 层。,
-notice.tower.layer-cleared-cooldown,通知,通天塔第 {layer} 层已清空，需等待 {cooldownSeconds} 秒后换层。,
+notice.command.tile-damage-forbidden,通知,当前区域禁止攻击地形。,
 notice.craft.activity-condition-failed,通知,{activityLabel}中断：{reason},
 notice.craft.activity-interrupted,通知,{activityLabel}被{reasonLabel}打断,
 notice.craft.activity-interrupted-wait,通知,{itemName} 的{activityLabel}被打断，暂歇 {ticks} 息,
@@ -2650,12 +2646,12 @@ notice.loot.take-failed-container,通知,拿取失败，物品已留在容器内
 notice.loot.take-failed-ground,通知,拿取失败，物品已留在原地。,
 notice.loot.tile-drop-inventory,通知,获得 {itemLabel},通用可拆地块掉落通知
 notice.market.auction.bid-placed,通知,你在拍卖行出价 {itemName}，当前总价 {totalPrice} {currencyName}{extensionText}。,
-notice.market.auction.outbid-refunded-inventory,通知,你在拍卖行对 {itemName} 的出价已被超过，冻结的 {currencyName} x{refundAmount} 已自动退回背包。,
-notice.market.auction.outbid-refunded-storage,通知,你在拍卖行对 {itemName} 的出价已被超过，冻结的 {currencyName} x{refundAmount} 已退回坊市托管仓。,
 notice.market.auction.buyout-buyer,通知,你在拍卖行一口价竞得了 {itemName} x{quantity}，一口价支付 {currencyName} x{totalPrice}。,
 notice.market.auction.buyout-seller,通知,你的寄拍已被一口价拍下：{itemName} x{quantity}，入账 {currencyName} x{totalPrice}。,
 notice.market.auction.consigned,通知,已寄拍 {itemName} x{quantity}，整包总价 {totalPrice} {currencyName}，已收上架费 {listingFee} {currencyName}。,
 notice.market.auction.expired-returned,通知,寄拍 {itemName} x{quantity} 已流拍，物品已自动返还背包或坊市托管仓。,
+notice.market.auction.outbid-refunded-inventory,通知,你在拍卖行对 {itemName} 的出价已被超过，冻结的 {currencyName} x{refundAmount} 已自动退回背包。,
+notice.market.auction.outbid-refunded-storage,通知,你在拍卖行对 {itemName} 的出价已被超过，冻结的 {currencyName} x{refundAmount} 已退回坊市托管仓。,
 notice.market.auction.settled-buyer,通知,你竞得了 {itemName} x{quantity}，整包成交价 {totalPrice} {currencyName}。,
 notice.market.auction.settled-seller,通知,你的寄拍已成交：{itemName} x{quantity}，入账 {currencyName} x{totalPrice}。,
 notice.market.buy-order-duplicate,通知,同一种物品已有求购挂单，不能重复求购。,
@@ -2722,6 +2718,17 @@ notice.sect.role-changed-operator,通知,已将 {memberName} 调整为 {roleName
 notice.sect.terrain-manifested,通知,宗门地脉已向四方显化,
 notice.shop.purchased,通知,购买 {itemLabel}，花费 {currency} x{cost},
 notice.system.cooldown,通知,行动调息中，剩余 {cooldownLeft} 息,
+notice.technique-aggregation.overlap,通知,无法学习：与已有统合功法重叠的源功法为 {sourceTechniqueNames},
+notice.time-chamber.exit-missing,通知,密室出口暂时不可用。,
+notice.time-chamber.full,通知,密室当前已有修士，请稍后再试。,
+notice.time-chamber.not-inside,通知,当前不在密室中。,
+notice.time-chamber.source-changed,通知,密室入口已经发生变化，请重新操作。,
+notice.time-chamber.too-far,通知,需要靠近密室入口才能进入。,
+notice.time-chamber.unavailable,通知,密室暂时无法通行，请稍后再试。,
+notice.tower.entered,通知,进入通天塔第 {layer} 层。,
+notice.tower.exited,通知,退出通天塔，返回 {mapName}。,
+notice.tower.layer-cleared,通知,通天塔第 {layer} 层已通关，可前往第 {unlockedLayer} 层。,
+notice.tower.layer-cleared-cooldown,通知,通天塔第 {layer} 层已清空，需等待 {cooldownSeconds} 秒后换层。,
 notice.travel.arrived,通知,{travelMethod}抵达 {mapName},
 breakthrough.aura.level,突破,灵气等级 {level},
 breakthrough.btn.confirm,突破,确认突破,
@@ -2924,6 +2931,8 @@ guided-tour.step.sense-qi-toggle-tab.body,新手导览,感气是显示类开关�
 guided-tour.step.sense-qi-toggle-tab.title,新手导览,切到开关页,
 guided-tour.step.tutorial.body,新手导览,不清楚系统规则时，可以从这里打开百科。导览完成后也能从设置或调试入口重新打开。,
 guided-tour.step.tutorial.title,新手导览,百科随时可查,
+action.attack-intensity.option,行动,{value} 成,
+action.attack-intensity.title,行动,出手力度,
 action.card.skill-type,行动,[技能],
 action.combat-settings.auto-pills.condition.add-buff-missing,行动,添加效果未生效条件,
 action.combat-settings.auto-pills.condition.add-hp,行动,添加生命条件,
@@ -2993,8 +3002,6 @@ action.combat-settings.targeting.hostile.title,行动,敌对判定,
 action.combat-settings.targeting.title,行动,目标判定,
 action.combat-settings.title,行动,战斗设置,
 action.combat-settings.toggle-aoe,行动,全体攻击,
-action.attack-intensity.option,行动,{value} 成,
-action.attack-intensity.title,行动,出手力度,
 action.cooldown,行动,冷却 {ticks} 息,
 action.cooldown.left,行动,冷却 {ticks} 息,
 action.empty-hint,行动,暂无可用行动,
@@ -3474,13 +3481,13 @@ equipment-tooltip.consumable.unlock-map,装备提示,使用效果：永久解锁
 equipment-tooltip.cooldown.line,装备提示,冷却：{cooldown} 息,范围D固定前端可见文本
 equipment-tooltip.cooldown.meta,装备提示,冷却 {cooldown} 息,范围D固定前端可见文本
 equipment-tooltip.craft.alchemy,装备提示,炼丹,范围D固定前端可见文本
-equipment-tooltip.craft.forging,装备提示,炼器,范围D固定前端可见文本
+equipment-tooltip.craft.building,装备提示,营造,范围D固定前端可见文本
 equipment-tooltip.craft.enhancement,装备提示,强化,范围D固定前端可见文本
-equipment-tooltip.craft.transmission,装备提示,传法,范围D固定前端可见文本
+equipment-tooltip.craft.forging,装备提示,炼器,范围D固定前端可见文本
+equipment-tooltip.craft.formation,装备提示,阵法,范围D固定前端可见文本
 equipment-tooltip.craft.gather,装备提示,采集,范围D固定前端可见文本
 equipment-tooltip.craft.mining,装备提示,挖矿,范围D固定前端可见文本
-equipment-tooltip.craft.building,装备提示,营造,范围D固定前端可见文本
-equipment-tooltip.craft.formation,装备提示,阵法,范围D固定前端可见文本
+equipment-tooltip.craft.transmission,装备提示,传法,范围D固定前端可见文本
 equipment-tooltip.desc.line,装备提示,说明：{desc},范围D固定前端可见文本
 equipment-tooltip.duration.with-stack,装备提示,{duration} 息{stack},范围D固定前端可见文本
 equipment-tooltip.effect.line,装备提示,效果：{effects},范围D固定前端可见文本
@@ -3543,14 +3550,14 @@ equipment-tooltip.special.luck,装备提示,幸运 {value},范围D固定前端�
 equipment-tooltip.status.cooldown,装备提示,冷却 {cooldown} 息,范围D固定前端可见文本
 equipment-tooltip.status.learned,装备提示,已学,范围D固定前端可见文本
 equipment-tooltip.status.read,装备提示,已阅,范围D固定前端可见文本
-equipment-tooltip.target-kind.tile,装备提示,地块,范围D固定前端可见文本
-equipment-tooltip.target.enemy,装备提示,目标,范围D固定前端可见文本
-equipment-tooltip.target.self,装备提示,自身,范围D固定前端可见文本
 equipment-tooltip.tag.alchemy-furnace,装备提示,炼丹工具,范围D固定前端可见文本
 equipment-tooltip.tag.building-hammer,装备提示,营造锤,范围D固定前端可见文本
 equipment-tooltip.tag.enhancement-hammer,装备提示,强化锤,范围D固定前端可见文本
 equipment-tooltip.tag.forging-tool,装备提示,炼器工具,范围D固定前端可见文本
 equipment-tooltip.tag.mining-pickaxe,装备提示,矿镐,范围D固定前端可见文本
+equipment-tooltip.target-kind.tile,装备提示,地块,范围D固定前端可见文本
+equipment-tooltip.target.enemy,装备提示,目标,范围D固定前端可见文本
+equipment-tooltip.target.self,装备提示,自身,范围D固定前端可见文本
 equipment-tooltip.technique-book.desc,装备提示,描述,范围D固定前端可见文本
 equipment-tooltip.technique-book.grade,装备提示,品阶,范围D固定前端可见文本
 equipment-tooltip.technique-book.max-attrs,装备提示,满层属性,范围D固定前端可见文本
@@ -3578,9 +3585,9 @@ equipment-tooltip.trigger.on-unequip,装备提示,卸下时,范围D固定前端�
 equipment-tooltip.utility.building-speed,装备提示,建造速度 {value},范围D固定前端可见文本
 equipment-tooltip.utility.enhancement-speed,装备提示,强化速度 {value},范围D固定前端可见文本
 equipment-tooltip.utility.enhancement-success,装备提示,强化成功修正 {value},范围D固定前端可见文本
+equipment-tooltip.utility.exp,装备提示,{craft}经验 {value},范围D固定前端可见文本
 equipment-tooltip.utility.mining-damage,装备提示,挖矿速度 {value},范围D固定前端可见文本
 equipment-tooltip.utility.mining-drop,装备提示,矿物额外概率 {value},范围D固定前端可见文本
-equipment-tooltip.utility.exp,装备提示,{craft}经验 {value},范围D固定前端可见文本
 equipment-tooltip.utility.output,装备提示,{craft}产出 {value},范围D固定前端可见文本
 equipment-tooltip.utility.speed,装备提示,{craft}速度 {value},范围D固定前端可见文本
 equipment-tooltip.utility.success,装备提示,{craft}成功 {value},范围D固定前端可见文本
