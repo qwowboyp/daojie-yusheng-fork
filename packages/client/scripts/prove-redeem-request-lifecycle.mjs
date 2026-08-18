@@ -75,7 +75,8 @@ try {
   const firstRequestId = sentRequests.at(-1)?.requestId;
   assert.match(firstRequestId, /^redeem:/, '兑换请求必须生成独立 requestId');
   runOnlyTimer();
-  await assert.rejects(timedOut, /兑换未有回音/);
+  // 超时文案走 i18n（默认语言可简可繁），匹配必须兼容两种字形的「兑换未有回音」。
+  await assert.rejects(timedOut, /[兑兌][换換]未有[回迴]音/);
 
   const second = panelOptions.redeemCodes(['CODE-B']);
   const secondRequestId = sentRequests.at(-1)?.requestId;
