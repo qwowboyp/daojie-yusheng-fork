@@ -56,7 +56,6 @@ const TUTORIAL_OPERATION_HINTS: TutorialOperationHint[] = [
   { label: t('tutorial.hint.go-submit.label'), path: t('tutorial.hint.go-submit.path') },
   { label: t('tutorial.hint.take-all.label'), path: t('tutorial.hint.take-all.path') },
   { label: t('tutorial.hint.set-cultivate.label'), path: t('tutorial.hint.set-cultivate.path') },
-  { label: 'GitHub', path: t('tutorial.hint.github.path') },
   { label: t('tutorial.hint.cancel-key.label'), path: t('tutorial.hint.cancel-key.path') },
   { label: t('tutorial.hint.observe.label'), path: t('tutorial.hint.observe.path') },
   { label: t('tutorial.hint.take.label'), path: t('tutorial.hint.take.path') },

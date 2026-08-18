@@ -395,9 +395,6 @@
       --hud-bar-qi-end: #67a7b8;
       --hud-bar-cultivation-start: #7b5b14;
       --hud-bar-cultivation-end: #d4a447;
-      /* 品牌色 */
-      --brand-qq: #12b7f5;
-      --brand-github: #181717;
     }
 
     :root[data-color-mode="dark"] {
@@ -713,7 +710,4 @@
       --hud-bar-qi-end: #7fc3d4;
       --hud-bar-cultivation-start: #a87f22;
       --hud-bar-cultivation-end: #e8bc5c;
-      /* 品牌色 */
-      --brand-qq: #12b7f5;
-      --brand-github: #e8dccf;
     }

@@ -157,7 +157,6 @@ map-render.respawn-countdown,地图渲染,回生 {countdown},范围D固定前端
 map-render.seconds,地图渲染,{seconds}息,范围D固定前端可见文本
 login.activation.code.label,登录,激活码,同 IP 二次注册激活码输入标签
 login.activation.empty,登录,请输入激活码,激活码弹窗空输入提示
-login.activation.qq-action,登录,加入 QQ 群 {qqGroupNumber},激活码弹窗 QQ 群按钮
 login.activation.required,登录,当前网络已有账号注册，请输入激活码继续注册。,同 IP 二次注册默认提示
 login.activation.submit,登录,提交激活码,激活码弹窗确认按钮
 login.activation.subtitle,登录,当前 Wi-Fi 或出口 IP 已注册过账号。请加入 QQ 群 {qqGroupNumber} 获取激活码。,激活码弹窗副标题
@@ -862,7 +861,6 @@ tutorial.hint.execute.label,教程,执行,
 tutorial.hint.execute.path,教程,右下角行动栏->对应条目->执行,
 tutorial.hint.force-attack.label,教程,强制攻击,
 tutorial.hint.force-attack.path,教程,右下角行动栏->行动->强制攻击->执行,
-tutorial.hint.github.path,教程,左上角外链区->GitHub,
 tutorial.hint.go-submit.label,教程,前往交付,
 tutorial.hint.go-submit.path,教程,右侧卷轴区->任务->任务详情->前往交付,
 tutorial.hint.go-target.label,教程,前往目标,
@@ -1012,8 +1010,6 @@ shell.hud-resource-label-hp,静态HTML-主界面,生命值,静态 HTML：package
 shell.hud-resource-label-qi,静态HTML-主界面,灵力,静态 HTML：packages/client/index.html
 shell.intel,静态HTML-主界面,情报,静态 HTML：packages/client/index.html
 shell.inventory,静态HTML-主界面,背包,静态 HTML：packages/client/index.html
-shell.join-qq-group.aria-label,静态HTML-主界面,加入QQ群,静态 HTML：packages/client/index.html
-shell.join-qq-group.title.attr,静态HTML-主界面,加入QQ群,静态 HTML：packages/client/index.html
 shell.layout-toggle-bottom.aria-label,静态HTML-主界面,收起下方面板,静态 HTML：packages/client/index.html
 shell.layout-toggle-bottom.title,静态HTML-主界面,收起下方面板,静态 HTML：packages/client/index.html
 shell.layout-toggle-left,静态HTML-主界面,&lt;,静态 HTML：packages/client/index.html

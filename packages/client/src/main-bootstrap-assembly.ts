@@ -133,11 +133,6 @@ type MainBootstrapAssemblyOptions = {
 
   canvasHost: HTMLElement;
   /**
- * joinQqGroupBtns：joinQqGroupBtn相关字段。
- */
-
-  joinQqGroupBtns: Iterable<HTMLAnchorElement>;
-  /**
  * observeModalEl：observe弹层El相关字段。
  */
 
@@ -147,21 +142,6 @@ type MainBootstrapAssemblyOptions = {
  */
 
   observeModalShellEl: HTMLElement | null;
-  /**
- * qqGroupNumber：qqGroupNumber相关字段。
- */
-
-  qqGroupNumber: string;
-  /**
- * qqGroupMobileDeepLink：qqGroupMobileDeepLink相关字段。
- */
-
-  qqGroupMobileDeepLink: string;
-  /**
- * qqGroupDesktopDeepLink：qqGroupDesktopDeepLink相关字段。
- */
-
-  qqGroupDesktopDeepLink: string;
   /**
  * initialMapPerformanceConfig：initial地图Performance配置状态或数据块。
  */
@@ -671,9 +651,6 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
       applyZoomChange: (nextZoom) => options.uiStateSource.applyZoomChange(nextZoom),
     },
     showToast: (message) => options.showToast(message),
-    qqGroupNumber: options.qqGroupNumber,
-    qqGroupMobileDeepLink: options.qqGroupMobileDeepLink,
-    qqGroupDesktopDeepLink: options.qqGroupDesktopDeepLink,
     registerAutoBattleButtons: () => {
       options.documentRef.getElementById('hud-toggle-auto-battle')?.addEventListener('click', () => {
         options.runtimeSender.sendAction('toggle:auto_battle');

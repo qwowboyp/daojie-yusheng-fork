@@ -7,7 +7,6 @@ import { detailModalHost } from './ui/detail-modal-host';
 import { getLatestObservedEntitiesSnapshot } from './game-map/store/map-store';
 import { syncEstimatedServerTickInterval } from './runtime/server-tick';
 import { getAccessToken } from './ui/auth-api';
-import { QQ_GROUP_DESKTOP_DEEP_LINK, QQ_GROUP_MOBILE_DEEP_LINK, QQ_GROUP_NUMBER } from './main-dom-elements';
 import { createMainRootRuntimeSource } from './main-root-runtime-source';
 import { createMainRuntimeMonitorSource } from './main-runtime-monitor-source';
 import { createMainPanelContext } from './main-app-panel-context';
@@ -130,12 +129,8 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
     windowRef,
     documentRef,
     canvasHost: dom.canvasHost,
-    joinQqGroupBtns: dom.joinQqGroupBtns,
     observeModalEl: dom.observeModalEl,
     observeModalShellEl: dom.observeModalShellEl,
-    qqGroupNumber: QQ_GROUP_NUMBER,
-    qqGroupMobileDeepLink: QQ_GROUP_MOBILE_DEEP_LINK,
-    qqGroupDesktopDeepLink: QQ_GROUP_DESKTOP_DEEP_LINK,
     initialMapPerformanceConfig: modules.initialMapPerformanceConfig,
     runtimeMonitorSource,
     panelRuntimeSource: panelContext.panelRuntimeSource,

@@ -705,12 +705,6 @@
       height: 16px;
       flex: 0 0 16px;
     }
-    .hud-link-btn--qq .hud-link-icon {
-      color: var(--brand-qq);
-    }
-    .hud-link-btn--github .hud-link-icon {
-      color: var(--brand-github);
-    }
     .hud-corner-btn:hover {
       background: var(--surface-hover);
       border-color: rgba(17, 17, 17, 0.38);

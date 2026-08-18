@@ -126,12 +126,7 @@ export type MainDomElements = {
  * pingOnesEl：pingOneEl相关字段。
  */
 
-  pingOnesEl: HTMLElement | null;  
-  /**
- * joinQqGroupBtns：joinQqGroupBtn相关字段。
- */
-
-  joinQqGroupBtns: NodeListOf<HTMLAnchorElement>;  
+  pingOnesEl: HTMLElement | null;
   /**
  * targetingBadgeEl：targetingBadgeEl相关字段。
  */
@@ -165,8 +160,6 @@ export type MainDomElements = {
 };
 
 export const QQ_GROUP_NUMBER = '940886387';
-export const QQ_GROUP_MOBILE_DEEP_LINK = `mqqapi://card/show_pslcard?src_type=internal&version=1&uin=${QQ_GROUP_NUMBER}&card_type=group&source=qrcode`;
-export const QQ_GROUP_DESKTOP_DEEP_LINK = `tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=${QQ_GROUP_NUMBER}`;
 /**
  * collectMainDomElements：执行MainDomElement相关逻辑。
  * @param documentRef Document 参数说明。
@@ -205,7 +198,6 @@ export function collectMainDomElements(documentRef: Document): MainDomElements {
     pingHundredsEl: pingValueEl?.querySelector<HTMLElement>('[data-ping-part="hundreds"]') ?? null,
     pingTensEl: pingValueEl?.querySelector<HTMLElement>('[data-ping-part="tens"]') ?? null,
     pingOnesEl: pingValueEl?.querySelector<HTMLElement>('[data-ping-part="ones"]') ?? null,
-    joinQqGroupBtns: documentRef.querySelectorAll<HTMLAnchorElement>('[data-qq-group-link="true"]'),
     targetingBadgeEl: documentRef.getElementById('map-targeting-indicator'),
     observeModalEl,
     observeModalBodyEl: documentRef.getElementById('observe-modal-body'),

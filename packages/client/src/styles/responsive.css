@@ -89,10 +89,6 @@
         width: min(120px, 34vw);
         margin-bottom: 10px;
       }
-      .login-link-actions {
-        gap: 6px;
-        margin-bottom: 16px;
-      }
       .login-mode-tabs {
         gap: 8px;
         margin-bottom: 16px;

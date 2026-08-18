@@ -273,21 +273,6 @@ type MainStartupBindingsOptions = {
 
   showToast: (message: string) => void;
   /**
- * qqGroupNumber：qqGroupNumber相关字段。
- */
-
-  qqGroupNumber: string;
-  /**
- * qqGroupMobileDeepLink：qqGroupMobileDeepLink相关字段。
- */
-
-  qqGroupMobileDeepLink: string;
-  /**
- * qqGroupDesktopDeepLink：qqGroupDesktopDeepLink相关字段。
- */
-
-  qqGroupDesktopDeepLink: string;
-  /**
  * registerAutoBattleButtons：registerAutoBattleButton相关字段。
  */
 
@@ -346,64 +331,6 @@ type MainStartupBindingsOptions = {
 
   adminSender: Pick<SocketAdminSender, 'sendDebugResetSpawn'>;
 };
-/**
- * copyTextToClipboard：执行copyTextToClipboard相关逻辑。
- * @param text string 参数说明。
- * @returns 返回 Promise，完成后得到copyTextToClipboard。
- */
-
-
-async function copyTextToClipboard(text: string): Promise<boolean> {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-  try {
-    if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(text);
-      return true;
-    }
-  } catch {
-    // 回退到旧复制链路。
-  }
-
-  const textarea = document.createElement('textarea');
-  textarea.value = text;
-  textarea.setAttribute('readonly', 'true');
-  textarea.style.position = 'fixed';
-  textarea.style.top = '-9999px';
-  textarea.style.left = '-9999px';
-  document.body.appendChild(textarea);
-  textarea.select();
-
-  try {
-    return document.execCommand('copy');
-  } catch {
-    return false;
-  } finally {
-    document.body.removeChild(textarea);
-  }
-}
-/**
- * resolveQqGroupLink：规范化或转换QqGroupLink。
- * @param mobile string 参数说明。
- * @param desktop string 参数说明。
- * @returns 返回QqGroupLink。
- */
-
-
-function resolveQqGroupLink(mobile: string, desktop: string): string {
-  const ua = navigator.userAgent.toLowerCase();
-  const isMobile = /android|iphone|ipad|ipod|mobile/.test(ua);
-  return isMobile ? mobile : desktop;
-}
-
-function openQqGroupLink(url: string): boolean {
-  const opened = window.open(url, '_blank', 'noopener,noreferrer');
-  return opened !== null;
-}
-
-function resolveQqGroupButton(target: EventTarget | null): HTMLAnchorElement | null {
-  return target instanceof Element ? target.closest<HTMLAnchorElement>('[data-qq-group-link="true"]') : null;
-}
 /**
  * bindMainStartup：执行bindMainStartup相关逻辑。
  * @param options MainStartupBindingsOptions 选项参数。
@@ -506,31 +433,6 @@ export function bindMainStartup(options: MainStartupBindingsOptions): void {
     maxZoom: options.zoom.maxZoom,
     applyZoomChange: options.zoom.applyZoomChange,
     showToast: options.showToast,
-  });
-
-  options.documentRef.addEventListener('click', (event) => {
-    const button = resolveQqGroupButton(event.target);
-    if (!button) {
-      return;
-    }
-    event.preventDefault();
-    void (async () => {
-      const copyPromise = copyTextToClipboard(options.qqGroupNumber);
-      const opened = openQqGroupLink(resolveQqGroupLink(options.qqGroupMobileDeepLink, options.qqGroupDesktopDeepLink));
-      const copied = await copyPromise;
-      window.setTimeout(() => {
-        if (document.visibilityState !== 'visible') {
-          return;
-        }
-        options.showToast(
-          !opened
-            ? `浏览器已拦截唤起 QQ，可手动搜索群号 ${options.qqGroupNumber}`
-            : copied
-              ? `已尝试唤起 QQ，加群失败时可直接粘贴群号 ${options.qqGroupNumber}`
-              : `已尝试唤起 QQ，如未打开请手动搜索群号 ${options.qqGroupNumber}`,
-        );
-      }, 600);
-    })();
   });
 
   options.registerAutoBattleButtons();

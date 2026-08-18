@@ -83,14 +83,6 @@
       filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.12));
     }
 
-    .login-link-actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 24px;
-    }
-
     .login-mode-tabs {
       display: flex;
       gap: 10px;
@@ -297,10 +289,6 @@
       color: var(--stamp-red);
       font-size: var(--font-size-12);
       line-height: 1.5;
-    }
-
-    .login-activation-qq {
-      align-self: flex-start;
     }
 
     /* ====== 减弱动效偏好：全局禁用过渡与动画 ====== */

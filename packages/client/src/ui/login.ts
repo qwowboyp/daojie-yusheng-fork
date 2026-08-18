@@ -550,9 +550,6 @@ export class LoginUI {
             <input class="login-activation-input" type="text" autocomplete="off" data-login-activation-code="true" />
           </label>
           <div class="login-activation-status" data-login-activation-status="true"></div>
-          <a class="small-btn ghost login-activation-qq" href="#" data-qq-group-link="true">
-            ${escapeHtml(t('login.activation.qq-action', { qqGroupNumber: QQ_GROUP_NUMBER }))}
-          </a>
         </div>
         <div class="confirm-modal-actions">
           <button class="small-btn ghost" type="button" data-login-activation-cancel="true">${escapeHtml(t('modal.confirm.cancel', undefined))}</button>
