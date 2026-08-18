@@ -58,11 +58,12 @@ export function resetLanguagePreference(): ClientLocale {
 
 /** applyLocale：应用语言到文档。 */
 function applyLocale(locale: ClientLocale): void {
-  if (typeof document === 'undefined') {
-    // 非浏览器环境（node 侧 proof / 工具链）无 document，静默跳过 DOM 副作用，语言偏好本身仍可读写。
+  const root = typeof document === 'undefined' ? undefined : document.documentElement;
+  if (!root) {
+    // 非浏览器环境（node 侧 proof / 工具链）或 DOM 根未就绪：静默跳过 DOM 副作用，语言偏好本身仍可读写。
     return;
   }
-  document.documentElement.lang = locale;
+  root.lang = locale;
 }
 
 /** normalizeLocale：规范化 locale，仅接受白名单值，非法值回退默认。 */
