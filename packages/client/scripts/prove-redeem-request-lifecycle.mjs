@@ -104,15 +104,16 @@ try {
     result: null,
     errorCode: 'execution_failed',
   });
-  await assert.rejects(failed, /兑换执行失败/);
+  // 以下錯誤文案均走 i18n（默認語言可簡可繁），匹配必須兼容兩種字形。
+  await assert.rejects(failed, /[兑兌][换換][执執]行失[败敗]/);
 
   const cleared = panelOptions.redeemCodes(['CODE-D']);
   source.clear();
-  await assert.rejects(cleared, /气机已断/);
+  await assert.rejects(cleared, /[气氣][机機]已[断斷]/);
   assert.equal(timers.size, 0, '会话清理必须撤销兑换超时任务');
 
   sendAccepted = false;
-  await assert.rejects(panelOptions.redeemCodes(['CODE-E']), /气机未通/);
+  await assert.rejects(panelOptions.redeemCodes(['CODE-E']), /[气氣][机機]未通/);
   assert.equal(timers.size, 0, '发包门控拒绝后不得留下假等待态');
 
   console.log('兑换码请求关联与会话清理证明通过');
