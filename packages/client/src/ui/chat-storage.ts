@@ -74,7 +74,7 @@ function warnIndexedDbUnavailable(error: unknown): void {
   }
   /** indexedDbUnavailableWarned：indexed Db Unavailable Warned。 */
   indexedDbUnavailableWarned = true;
-  console.warn('[chat] IndexedDB 不可用，本次会话将退回仅内存聊天记录。', error);
+  console.warn('[chat] IndexedDB 不可用，本次會話將退回僅記憶體聊天記錄。', error);
 }
 
 function getLegacyStorage(): Storage | null {
@@ -101,7 +101,7 @@ export function clearLegacyChatStorage(): void {
   try {
     storage.removeItem(CHAT_LOG_STORAGE_KEY);
   } catch (error) {
-    console.warn('[chat] 清理旧版 localStorage 聊天缓存失败。', error);
+    console.warn('[chat] 清理舊版 localStorage 聊天緩存失敗。', error);
   }
 }
 
@@ -231,11 +231,11 @@ async function readMessagesByRange(
         cursor.continue();
       };
       request.onerror = () => {
-        console.warn('[chat] 读取聊天记录失败。', request.error);
+        console.warn('[chat] 讀取聊天記錄失敗。', request.error);
         resolve([]);
       };
     } catch (error) {
-      console.warn('[chat] 读取聊天记录失败。', error);
+      console.warn('[chat] 讀取聊天記錄失敗。', error);
       resolve([]);
     }
   });
@@ -279,7 +279,7 @@ async function persistBatch(entries: PendingPersistEntry[]): Promise<boolean> {
     await withTransactionComplete(transaction);
     return true;
   } catch (error) {
-    console.warn('[chat] 写入聊天记录失败。', error);
+    console.warn('[chat] 寫入聊天記錄失敗。', error);
     return false;
   }
 }

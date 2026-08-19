@@ -14,8 +14,8 @@ export class PartyWorkspacePanel {
     this.workspace = new WorkspaceModalPanel({
       ownerId: 'party-workspace-panel',
       contentId: 'party-workspace-panel',
-      title: '队伍',
-      subtitle: '成员协作、邀请招募与队伍管理',
+      title: '隊伍',
+      subtitle: '成員協作、邀請招募與隊伍管理',
       className: 'party-workspace-content',
       onClose: () => this.handleNativeClose(),
     });
@@ -58,7 +58,7 @@ export class PartyWorkspacePanel {
 
   setUnreadCount(count: number): void {
     const unread = Math.max(0, Math.trunc(count));
-    this.workspace.setTitle(unread > 0 ? `队伍 · ${unread > 99 ? '99+' : unread} 条未读` : '队伍');
+    this.workspace.setTitle(unread > 0 ? `队伍 · ${unread > 99 ? '99+' : unread} 条未读` : '隊伍');
   }
 
   private handleNativeClose(): void {

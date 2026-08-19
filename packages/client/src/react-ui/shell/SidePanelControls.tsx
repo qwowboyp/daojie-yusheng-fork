@@ -96,7 +96,7 @@ export function mountReactSidePanelTabGroup(
   onSelect: (groupId: string, tabName: string) => void,
 ): void {
   container.setAttribute('role', 'tablist');
-  if (!container.hasAttribute('aria-label')) container.setAttribute('aria-label', '面板切换');
+  if (!container.hasAttribute('aria-label')) container.setAttribute('aria-label', '面板切換');
   let entry = tabGroupRoots.get(container);
   if (!entry || !entry.host.isConnected) {
     entry?.root.unmount();

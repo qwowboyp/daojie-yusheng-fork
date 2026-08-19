@@ -188,6 +188,15 @@ export function checkSourceText(text, { file = '' } = {}) {
       }
       return;
     }
+    if (ts.isJsxText(node)) {
+      // JSX 文字節點（<button>一鍵丟棄</button> 的「一鍵丟棄」）不是 StringLiteral，
+      // 但同樣是玩家可見文字；修剪空白後檢查簡體。
+      const raw = node.getText(sourceFile).replace(/^\s+|\s+$/g, '');
+      if (raw && textNeedsConversion(raw)) {
+        violations.push({ file, line: lineAt(text, node.getStart(sourceFile)) + 1, sample: raw.slice(0, 60) });
+      }
+      return;
+    }
     if (ts.isTemplateExpression(node)) {
       return; // 含插值模板：不判违规（需人工改写，见转换器待改寫清單）
     }

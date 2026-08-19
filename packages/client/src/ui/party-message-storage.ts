@@ -33,7 +33,7 @@ function warnIndexedDbUnavailable(error: unknown): void {
     return;
   }
   indexedDbUnavailableWarned = true;
-  console.warn('[party] IndexedDB 不可用，本次会话将退回仅内存队伍消息记录。', error);
+  console.warn('[party] IndexedDB 不可用，本次會話將退回僅記憶體隊伍消息記錄。', error);
 }
 
 function openDatabase(): Promise<IDBDatabase | null> {
@@ -140,11 +140,11 @@ export async function loadRecentPartyMessages(
         cursor.continue();
       };
       request.onerror = () => {
-        console.warn('[party] 读取队伍消息历史失败。', request.error);
+        console.warn('[party] 讀取隊伍消息歷史失敗。', request.error);
         resolve([]);
       };
     } catch (error) {
-      console.warn('[party] 读取队伍消息历史失败。', error);
+      console.warn('[party] 讀取隊伍消息歷史失敗。', error);
       resolve([]);
     }
   });
@@ -170,7 +170,7 @@ async function persistBatch(entries: PendingPersistEntry[]): Promise<boolean> {
     await waitForTransaction(transaction);
     return true;
   } catch (error) {
-    console.warn('[party] 写入队伍消息历史失败。', error);
+    console.warn('[party] 寫入隊伍消息歷史失敗。', error);
     return false;
   }
 }

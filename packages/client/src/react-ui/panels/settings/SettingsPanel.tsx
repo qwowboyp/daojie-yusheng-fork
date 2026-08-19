@@ -639,8 +639,8 @@ const UiTab = memo(function UiTab() {
         <div className="account-settings-status ui-status-text">{status}</div>
       </div>
       <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
-        <div className="panel-section-title">悬浮窗</div>
-        <div className="settings-ui-copy ui-form-copy">关闭后的悬浮窗不会自动显示，可在这里重新开启。</div>
+        <div className="panel-section-title">懸浮窗</div>
+        <div className="settings-ui-copy ui-form-copy">關閉後的懸浮窗不會自動顯示，可在這裡重新開啟。</div>
         <div className="settings-performance-card ui-card-list">
           {FLOATING_PANEL_TOGGLES.map((item) => (
             <div key={item.key} className="settings-performance-row ui-data-table-row" data-floating-panel-key={item.key}>
@@ -649,8 +649,8 @@ const UiTab = memo(function UiTab() {
                 <div className="settings-performance-desc ui-data-table-desc">{item.desc}</div>
               </div>
               <div className="settings-performance-actions ui-inline-actions-end-wrap">
-                <button className={`small-btn ghost${!floatingPanels[item.key] ? ' active' : ''}`} type="button" aria-label={`${item.title}關閉`} aria-pressed={!floatingPanels[item.key] ? 'true' : 'false'} data-floating-panel-enabled="false" onClick={() => handleFloatingPanelToggle(item.key, false)}>关</button>
-                <button className={`small-btn ghost${floatingPanels[item.key] ? ' active' : ''}`} type="button" aria-label={`${item.title}開啟`} aria-pressed={floatingPanels[item.key] ? 'true' : 'false'} data-floating-panel-enabled="true" onClick={() => handleFloatingPanelToggle(item.key, true)}>开</button>
+                <button className={`small-btn ghost${!floatingPanels[item.key] ? ' active' : ''}`} type="button" aria-label={`${item.title}關閉`} aria-pressed={!floatingPanels[item.key] ? 'true' : 'false'} data-floating-panel-enabled="false" onClick={() => handleFloatingPanelToggle(item.key, false)}>關</button>
+                <button className={`small-btn ghost${floatingPanels[item.key] ? ' active' : ''}`} type="button" aria-label={`${item.title}開啟`} aria-pressed={floatingPanels[item.key] ? 'true' : 'false'} data-floating-panel-enabled="true" onClick={() => handleFloatingPanelToggle(item.key, true)}>開</button>
               </div>
             </div>
           ))}
@@ -862,9 +862,9 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
   return (
     <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack settings-resource-reload-shell">
       <div className="settings-ui-table-head">
-        <div className="panel-section-title">本地资源重载</div>
+        <div className="panel-section-title">本地資源重載</div>
       </div>
-      <div className="settings-ui-copy ui-form-copy">仅在当前设备生效。先按名称、资源 key 或图片路径搜索并添加资源，再为列表中的单项选择本地图片。</div>
+      <div className="settings-ui-copy ui-form-copy">僅在當前裝置生效。先按名稱、資源 key 或圖片路徑搜尋並新增資源，再為清單中的單項選擇本機圖片。</div>
       {playerResource && (
         <div className="settings-resource-reload-list ui-card-list">
           {(() => {
@@ -872,7 +872,7 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
             return (
               <div className="settings-resource-reload-row ui-data-table-row">
                 <div className="settings-resource-reload-preview" aria-hidden="true">
-                  {override ? <img src={override.dataUrl} alt="" /> : <span>默认</span>}
+                  {override ? <img src={override.dataUrl} alt="" /> : <span>預設</span>}
                 </div>
                 <div className="settings-performance-meta ui-data-table-meta">
                   <div className="settings-performance-name ui-data-table-name">{playerResource.label}</div>
@@ -881,10 +881,10 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
                 </div>
                 <div className="settings-resource-reload-actions ui-inline-actions-end-wrap">
                   <label className="small-btn ghost settings-resource-reload-file">
-                    选择图片
+                    選擇圖片
                     <input type="file" accept="image/*" onChange={(event) => void handleEntryFileChange(playerResource, event.target.files?.[0])} />
                   </label>
-                  <button className="small-btn ghost" type="button" disabled={!override} onClick={() => handleResetOverride(playerResource.key)}>恢复默认</button>
+                  <button className="small-btn ghost" type="button" disabled={!override} onClick={() => handleResetOverride(playerResource.key)}>恢復預設</button>
                 </div>
               </div>
             );
@@ -892,7 +892,7 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
         </div>
       )}
       <div className="settings-resource-reload-search ui-form-field">
-        <label className="ui-form-label">搜索资源</label>
+        <label className="ui-form-label">搜尋資源</label>
         <input
           className="ui-input"
           type="search"
@@ -917,7 +917,7 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
         </div>
       )}
       {addedResources.length === 0 ? (
-        <div className="empty-hint compact settings-resource-reload-empty">列表为空。搜索资源后点击添加。</div>
+        <div className="empty-hint compact settings-resource-reload-empty">列表為空。搜尋資源後點擊新增。</div>
       ) : (
         <div className="settings-resource-reload-list ui-card-list">
           {addedResources.map((entry) => {
@@ -925,7 +925,7 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
             return (
               <div key={entry.key} className="settings-resource-reload-row ui-data-table-row">
                 <div className="settings-resource-reload-preview" aria-hidden="true">
-                  {override ? <img src={override.dataUrl} alt="" /> : <span>默认</span>}
+                  {override ? <img src={override.dataUrl} alt="" /> : <span>預設</span>}
                 </div>
                 <div className="settings-performance-meta ui-data-table-meta">
                   <div className="settings-performance-name ui-data-table-name">{entry.label}</div>
@@ -934,10 +934,10 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
                 </div>
                 <div className="settings-resource-reload-actions ui-inline-actions-end-wrap">
                   <label className="small-btn ghost settings-resource-reload-file">
-                    选择图片
+                    選擇圖片
                     <input type="file" accept="image/*" onChange={(event) => void handleFileChange(entry.key, event.target.files?.[0])} />
                   </label>
-                  <button className="small-btn ghost" type="button" disabled={!override} onClick={() => handleResetOverride(entry.key)}>恢复默认</button>
+                  <button className="small-btn ghost" type="button" disabled={!override} onClick={() => handleResetOverride(entry.key)}>恢復預設</button>
                   <button className="small-btn ghost" type="button" onClick={() => handleRemoveResource(entry.key)}>移除</button>
                 </div>
               </div>
@@ -1006,7 +1006,7 @@ const OfflineGainTab = memo(function OfflineGainTab({ playerId }: { playerId: st
             {selected ? (
               <div dangerouslySetInnerHTML={{ __html: renderOfflineGainReport(selected) }} />
             ) : (
-              <div className="empty-hint compact settings-offline-gain-empty">点击左侧记录查看详情</div>
+              <div className="empty-hint compact settings-offline-gain-empty">點擊左側記錄查看詳情</div>
             )}
           </div>
         </div>

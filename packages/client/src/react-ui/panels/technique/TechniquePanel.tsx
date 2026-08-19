@@ -211,11 +211,11 @@ export const TechniquePanel = memo(function TechniquePanel() {
       </div>
       {visibleEntries.length > TECHNIQUE_PANEL_PAGE_SIZE && (
         <div className="tech-pagination">
-          <button className="small-btn ghost" type="button" disabled={safePage <= 1} onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}>上一页</button>
+          <button className="small-btn ghost" type="button" disabled={safePage <= 1} onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}>上一頁</button>
           <span className="tech-pagination-status">
-            第 {formatDisplayInteger(safePage)} / {formatDisplayInteger(totalPages)} 页 · 共 {formatDisplayInteger(visibleEntries.length)} 门
+            第 {formatDisplayInteger(safePage)} / {formatDisplayInteger(totalPages)} 頁 · 共 {formatDisplayInteger(visibleEntries.length)} 門
           </span>
-          <button className="small-btn ghost" type="button" disabled={safePage >= totalPages} onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}>下一页</button>
+          <button className="small-btn ghost" type="button" disabled={safePage >= totalPages} onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}>下一頁</button>
         </div>
       )}
     </div>
@@ -243,12 +243,12 @@ const PendingTechniqueCard = memo(function PendingTechniqueCard({ pending, isCul
     callbacks.onDiscardPending?.(pending.techId);
   }, [pending.techId]);
   const actionLabel = transferLocked
-    ? '传授中'
+    ? '傳授中'
     : !selfComprehensionAllowed
-      ? '需传法领悟'
+      ? '需傳法領悟'
       : isCultivating
         ? t('technique.action.cancel-cultivate', undefined)
-        : '设为主修领悟';
+        : '設為主修領悟';
   return (
     <div
       className={`tech-card pending${isCultivating ? ' cultivating' : ''}`}
@@ -258,15 +258,15 @@ const PendingTechniqueCard = memo(function PendingTechniqueCard({ pending, isCul
       <button className="tech-card-main" type="button" onClick={handleCultivate} disabled={startDisabled}>
         <span className="tech-summary-main">
           <span className="tech-name">{pending.name}</span>
-          <span className="tech-badge tech-category">未领悟</span>
-          {pending.sourceKind === 'created' && <span className="tech-badge tech-category">自创</span>}
+          <span className="tech-badge tech-category">未領悟</span>
+          {pending.sourceKind === 'created' && <span className="tech-badge tech-category">自創</span>}
           <span className="tech-badge tech-grade">{getTechniqueGradeLabel(pending.grade)}</span>
           <span className="tech-badge tech-category">{getTechniqueCategoryLabel(pending.category)}</span>
           <span className="tech-badge tech-realm-level">
             {(() => { const d = getTechniqueRealmLevelData(pending.realmLv); return <>{d.displayName}<small className="realm-lv-suffix"> lv{d.lv}</small></>; })()}
           </span>
-          {pending.activeTransferJob && <span className="tech-badge tech-grade">{pending.activeTransferJob.status === 'blocked' ? '等待传授' : '传授中'}</span>}
-          {!selfComprehensionAllowed && <span className="tech-badge tech-grade">需传法</span>}
+          {pending.activeTransferJob && <span className="tech-badge tech-grade">{pending.activeTransferJob.status === 'blocked' ? '等待傳授' : '傳授中'}</span>}
+          {!selfComprehensionAllowed && <span className="tech-badge tech-grade">需傳法</span>}
         </span>
         <span className="tech-progress-meta">
           <span className="tech-progress-text">{Math.floor(pending.progress)} / {Math.floor(pending.requiredProgress)}</span>
@@ -286,7 +286,7 @@ const PendingTechniqueCard = memo(function PendingTechniqueCard({ pending, isCul
           {actionLabel}
         </button>
         {pending.activeTransferJob && (
-          <button className="small-btn danger" type="button" onClick={handleCancelTransmission}>取消传法</button>
+          <button className="small-btn danger" type="button" onClick={handleCancelTransmission}>取消傳法</button>
         )}
         {!pending.activeTransferJob && (
           <button className="small-btn danger" type="button" onClick={handleDiscardPending}>{t('technique.comprehension.discard.action')}</button>

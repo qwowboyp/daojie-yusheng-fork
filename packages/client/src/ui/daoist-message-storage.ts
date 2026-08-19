@@ -33,7 +33,7 @@ function warnIndexedDbUnavailable(error: unknown): void {
     return;
   }
   indexedDbUnavailableWarned = true;
-  console.warn('[social] IndexedDB 不可用，本次会话将退回仅内存私聊记录。', error);
+  console.warn('[social] IndexedDB 不可用，本次會話將退回僅記憶體私聊記錄。', error);
 }
 
 function openDatabase(): Promise<IDBDatabase | null> {
@@ -141,11 +141,11 @@ export async function loadRecentDaoistMessages(
         cursor.continue();
       };
       request.onerror = () => {
-        console.warn('[social] 读取私聊历史失败。', request.error);
+        console.warn('[social] 讀取私聊歷史失敗。', request.error);
         resolve([]);
       };
     } catch (error) {
-      console.warn('[social] 读取私聊历史失败。', error);
+      console.warn('[social] 讀取私聊歷史失敗。', error);
       resolve([]);
     }
   });
@@ -171,7 +171,7 @@ async function persistBatch(entries: PendingPersistEntry[]): Promise<boolean> {
     await waitForTransaction(transaction);
     return true;
   } catch (error) {
-    console.warn('[social] 写入私聊历史失败。', error);
+    console.warn('[social] 寫入私聊歷史失敗。', error);
     return false;
   }
 }

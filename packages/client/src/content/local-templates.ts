@@ -270,7 +270,7 @@ export function resolvePreviewItem(item: ItemStack): ItemStack {
     enhanceLevel: sourceItem.enhanceLevel ?? template.enhanceLevel,
     craftEffectStats: sourceItem.craftEffectStats ?? template.craftEffectStats,
     consumeBuffs: sourceItem.consumeBuffs ?? template.consumeBuffs,
-    tags: sourceItem.tags ?? (isCustomTechniqueBook ? ['功法书'] : template.tags),
+    tags: sourceItem.tags ?? (isCustomTechniqueBook ? ['功法書'] : template.tags),
     contextActions: sourceItem.contextActions ?? template.contextActions,
     mapUnlockId: sourceItem.mapUnlockId ?? template.mapUnlockId,
     mapUnlockIds: sourceItem.mapUnlockIds ?? template.mapUnlockIds,

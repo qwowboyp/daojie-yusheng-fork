@@ -77,7 +77,7 @@ export function formatEquipmentSlotCompactMeta(item: ItemStack | null | undefine
   }
   const meta = getItemDisplayMeta(item);
   const parts = [meta.gradeLabel, meta.levelLabel].filter((part): part is string => Boolean(part));
-  return parts.length > 0 ? parts.join(' · ') : '已装备';
+  return parts.length > 0 ? parts.join(' · ') : '已裝備';
 }
 
 export function formatArtifactQiText(currentQi: number, maxQi: number): string {

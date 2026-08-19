@@ -138,7 +138,7 @@ export function createMainDetailHydrationSource(options: MainDetailHydrationSour
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
       if (!tile.walkable) {
-        return '无法通行';
+        return '無法通行';
       }
       const movementCost = tile.movementCost;
       const cost = typeof movementCost === 'number' && Number.isFinite(movementCost) && movementCost > 0

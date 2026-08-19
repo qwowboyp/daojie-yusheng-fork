@@ -9,10 +9,10 @@ type SocialWorkspacePanelMeta = {
 };
 
 const PANEL_META: Record<SocialWorkspacePanelKind, SocialWorkspacePanelMeta> = {
-  relations: { title: '道友名录', subtitle: '查看道友状态与发起互动' },
-  requests: { title: '道友申请', subtitle: '处理收到与发出的道友申请' },
-  nearby: { title: '附近修士', subtitle: '查看当前附近可互动的修士' },
-  messages: { title: '私聊', subtitle: '与道友进行一对一传音' },
+  relations: { title: '道友名錄', subtitle: '查看道友狀態與發起互動' },
+  requests: { title: '道友申請', subtitle: '處理收到與發出的道友申請' },
+  nearby: { title: '附近修士', subtitle: '查看當前附近可互動的修士' },
+  messages: { title: '私聊', subtitle: '與道友進行一對一傳音' },
 };
 
 export class SocialWorkspacePanel {

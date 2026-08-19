@@ -196,7 +196,7 @@ export function createMainPartyStateSource(options: MainPartyStateSourceOptions)
         applyPanel(result.panel);
       }
       if (result.ok !== true && result.reason) {
-        options.showToast(PARTY_REASON_LABELS[result.reason] ?? '操作失败，请稍后重试', 'warn');
+        options.showToast(PARTY_REASON_LABELS[result.reason] ?? '操作失敗，請稍後重試', 'warn');
       }
     },
     handlePartyChatMessage(message: PartyChatMessageView): void {

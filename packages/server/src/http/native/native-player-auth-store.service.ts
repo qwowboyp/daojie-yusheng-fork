@@ -540,7 +540,7 @@ export class NativePlayerAuthStoreService implements OnModuleInit, OnModuleDestr
     const databaseUrl = resolveServerDatabaseUrl();
     this.persistenceConfigured = Boolean(databaseUrl.trim());
     if (!databaseUrl.trim()) {
-      this.logger.log('主线玩家鉴权存储运行在纯内存模式：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('主線玩家鑑權儲存運行在純記憶體模式：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
 
@@ -548,7 +548,7 @@ export class NativePlayerAuthStoreService implements OnModuleInit, OnModuleDestr
       await this.openPersistence(databaseUrl);
       this.logger.log(`主线玩家鉴权存储已就绪：已加载 ${this.usersById.size} 个账号`);
     } catch (error) {
-      this.logger.error('主线玩家鉴权存储持久化初始化失败，已进入不可用模式并拒绝账号读写', error instanceof Error ? error.stack : String(error));
+      this.logger.error('主線玩家鑑權儲存持久化初始化失敗，已進入不可用模式並拒絕帳號讀寫', error instanceof Error ? error.stack : String(error));
     }
   }
 
@@ -572,7 +572,7 @@ export class NativePlayerAuthStoreService implements OnModuleInit, OnModuleDestr
     if (this.isOperational()) {
       return;
     }
-    throw new ServiceUnavailableException('玩家账号存储暂不可用，请稍后重试');
+    throw new ServiceUnavailableException('玩家帳號儲存暫不可用，請稍後重試');
   }
 
   /** 从正式 auth 专表重建账号索引；恢复后连接已失效时会重新建池，而不是静默跳过。 */
@@ -582,7 +582,7 @@ export class NativePlayerAuthStoreService implements OnModuleInit, OnModuleDestr
     const databaseUrl = resolveServerDatabaseUrl();
     if (!databaseUrl.trim()) {
       if (this.persistenceConfigured) {
-        throw new ServiceUnavailableException('玩家账号存储缺少数据库连接配置，无法重新加载');
+        throw new ServiceUnavailableException('玩家帳號儲存缺少資料庫連線設定，無法重新載入');
       }
       return;
     }
@@ -719,7 +719,7 @@ export class NativePlayerAuthStoreService implements OnModuleInit, OnModuleDestr
     this.assertOperational();
     let normalized = normalizeAuthRecord(user);
     if (!normalized) {
-      throw new BadRequestException('账号记录无效');
+      throw new BadRequestException('帳號記錄無效');
     }
     const previous = this.usersById.get(normalized.id) ?? null;
     if (normalized.playerNo === null && previous?.playerNo !== null && previous?.playerNo !== undefined) {
@@ -742,7 +742,7 @@ export class NativePlayerAuthStoreService implements OnModuleInit, OnModuleDestr
     this.assertOperational();
     let normalized = normalizeAuthRecord(user);
     if (!normalized) {
-      throw new BadRequestException('账号记录无效');
+      throw new BadRequestException('帳號記錄無效');
     }
     const normalizedActivationCode = normalizeRegistrationActivationCode(activationCode);
     if (!normalizedActivationCode) {
@@ -929,7 +929,7 @@ export class NativePlayerAuthStoreService implements OnModuleInit, OnModuleDestr
     this.assertOperational();
     const normalizedSourceText = normalizeRegistrationActivationSourceText(sourceText);
     if (!normalizedSourceText) {
-      throw new BadRequestException('注册激活码来源文本不能为空');
+      throw new BadRequestException('註冊啟用碼來源文字不能為空');
     }
 
     if (this.pool && this.enabled) {
@@ -973,7 +973,7 @@ export class NativePlayerAuthStoreService implements OnModuleInit, OnModuleDestr
           return cloneRegistrationActivationCodeRecord(raced);
         }
       }
-      throw new BadRequestException('生成激活码失败，请重试');
+      throw new BadRequestException('產生啟用碼失敗，請重試');
     }
 
     const existing = this.registrationActivationCodeBySourceText.get(normalizedSourceText) ?? null;
@@ -999,7 +999,7 @@ export class NativePlayerAuthStoreService implements OnModuleInit, OnModuleDestr
       this.indexRegistrationActivationCode(record);
       return cloneRegistrationActivationCodeRecord(record);
     }
-    throw new BadRequestException('生成激活码失败，请重试');
+    throw new BadRequestException('產生啟用碼失敗，請重試');
   }
 
   async findRegistrationActivationCode(activationCode: string): Promise<RegistrationActivationCodeRecord | null> {
@@ -1850,12 +1850,12 @@ function buildConflictMessage(requestedKind: AuthConflictKind, conflictKind: Aut
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
   if (requestedKind === 'account' || conflictKind === 'account') {
-    return '账号已存在';
+    return '帳號已存在';
   }
   if (requestedKind === 'role' || conflictKind === 'role') {
-    return '角色名称已存在';
+    return '角色名稱已存在';
   }
-  return '称号已存在';
+  return '稱號已存在';
 }
 /**
  * ensurePlayerAuthTable：执行ensure玩家认证表相关逻辑。

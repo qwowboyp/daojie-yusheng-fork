@@ -162,7 +162,7 @@ export interface RegistrationActivationCodeIssueView {
   usedAt: string | null;
 }
 
-const REGISTRATION_ACTIVATION_REQUIRED_MESSAGE = '当前网络已有账号注册，请输入激活码继续注册。';
+const REGISTRATION_ACTIVATION_REQUIRED_MESSAGE = '目前網路已有帳號註冊，請輸入啟用碼繼續註冊。';
 
 /** 主线玩家鉴权编排服务：负责注册、登录、刷新和身份同步。 */
 @Injectable()
@@ -274,10 +274,10 @@ export class NativePlayerAuthService {
       ? await this.authStore.findUserByInviteCode(requestedInvitationCode)
       : null;
     if (requestedInvitationCode && !inviterUser) {
-      throw new BadRequestException('邀请码无效');
+      throw new BadRequestException('邀請碼無效');
     }
     if (requestedInvitationCode && this.activityPersistenceService && !this.activityPersistenceService.isEnabled()) {
-      throw new BadRequestException('活动服务暂不可用，暂不能使用邀请码');
+      throw new BadRequestException('活動服務暫不可用，暫不能使用邀請碼');
     }
 
     const userId = randomUUID();
@@ -370,7 +370,7 @@ export class NativePlayerAuthService {
     }
 
     if (candidates.size === 0) {
-      throw new UnauthorizedException('用户不存在');
+      throw new UnauthorizedException('使用者不存在');
     }
 
     const matchResults = await Promise.all(
@@ -384,7 +384,7 @@ export class NativePlayerAuthService {
       .map((entry) => entry.user);
 
     if (matchedUsers.length === 0) {
-      throw new UnauthorizedException('密码错误');
+      throw new UnauthorizedException('密碼錯誤');
     }
 
     let user = directUser && matchedUsers.some((entry) => entry.id === directUser.id)
@@ -393,7 +393,7 @@ export class NativePlayerAuthService {
         ? matchedUsers[0]
         : null;
     if (!user) {
-      throw new BadRequestException('该角色名对应多个账号，请改用账号登录');
+      throw new BadRequestException('該角色名對應多個帳號，請改用帳號登入');
     }
 
     this.assertUserNotBanned(user);
@@ -411,12 +411,12 @@ export class NativePlayerAuthService {
     this.authStore.assertOperational();
     const payload = this.worldPlayerTokenCodecService.validateRefreshToken(typeof refreshToken === 'string' ? refreshToken.trim() : '');
     if (!payload || payload.role === 'gm' || typeof payload.sub !== 'string' || typeof payload.username !== 'string') {
-      throw new UnauthorizedException('刷新令牌无效或已过期');
+      throw new UnauthorizedException('重新整理令牌無效或已過期');
     }
 
     const user = await this.authStore.findUserById(payload.sub);
     if (!user) {
-      throw new UnauthorizedException('用户不存在');
+      throw new UnauthorizedException('使用者不存在');
     }
 
     this.assertUserNotBanned(user);
@@ -456,7 +456,7 @@ export class NativePlayerAuthService {
     this.authStore.assertOperational();
     const user = await this.requireUser(accessToken);
     if (!await verifyPassword(currentPassword, user.passwordHash)) {
-      throw new BadRequestException('当前密码错误');
+      throw new BadRequestException('目前密碼錯誤');
     }
 
     const passwordError = validatePassword(newPassword);
@@ -559,17 +559,17 @@ export class NativePlayerAuthService {
 
     const token = typeof accessToken === 'string' ? accessToken.trim() : '';
     if (!token) {
-      throw new UnauthorizedException('未登录');
+      throw new UnauthorizedException('未登入');
     }
 
     const payload = this.worldPlayerTokenCodecService.validateAccessToken(token);
     if (typeof payload?.sub !== 'string') {
-      throw new UnauthorizedException('登录已失效');
+      throw new UnauthorizedException('登入已失效');
     }
 
     const user = await this.authStore.findUserById(payload.sub);
     if (!user) {
-      throw new UnauthorizedException('用户不存在');
+      throw new UnauthorizedException('使用者不存在');
     }
     this.assertUserNotBanned(user);
     return user;
@@ -686,7 +686,7 @@ export class NativePlayerAuthService {
     const reason = typeof user.banReason === 'string' && user.banReason.trim()
       ? user.banReason.trim()
       : '';
-    throw new UnauthorizedException(reason ? `账号已封禁：${reason}` : '账号已封禁，请联系 GM 处理');
+    throw new UnauthorizedException(reason ? `帳號已封鎖：${reason}` : '帳號已封鎖，請聯繫 GM 處理');
   }
 
   private async resolveRegistrationActivationCodeForRegister(registerIp: string | null, activationCode: unknown): Promise<string | null> {

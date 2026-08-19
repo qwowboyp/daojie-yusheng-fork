@@ -34,45 +34,45 @@ type ActivePanelTarget = {
 };
 
 const FAILURE_TEXT: Record<string, string> = {
-  request_id_required: '密室请求已失效，请重新操作',
-  invalid_time_chamber_panel_mode: '密室面板类型无效',
+  request_id_required: '密室請求已失效，請重新操作',
+  invalid_time_chamber_panel_mode: '密室面板類型無效',
   time_chamber_not_found: '密室不存在或尚未建造完成',
   time_chamber_too_far: '需要靠近密室入口才能操作',
   time_chamber_owner_required: '只有建造者可以管理密室',
-  time_chamber_persistence_disabled: '密室持久化服务暂不可用',
-  time_chamber_state_create_failed: '密室独立空间创建失败，请稍后重试',
-  time_chamber_state_not_found: '密室持久化状态不存在，请重新打开面板',
-  time_chamber_unavailable: '密室实例暂不可用，请稍后重试',
-  insufficient_spirit_stone: '背包中的灵石不足',
-  durable_inventory_unavailable: '资产持久化服务暂不可用',
-  inventory_grant_lease_context_required: '当前位置写入权暂不可用，请稍后重试',
-  inventory_empty_snapshot_changed: '背包状态已变化，请重新操作',
-  inventory_empty_removal_snapshot_changed: '背包状态已变化，请重新操作',
-  invalid_time_chamber_duration: '使用时长超出允许范围',
-  invalid_time_chamber_speed: '时间倍率超出允许范围',
-  invalid_time_chamber_capacity: '最大人数超出当前空间上限',
-  invalid_time_chamber_name: '名称需为 1 至 20 个有效字符',
-  invalid_time_chamber_password: '进入密码需为 1 至 64 个有效字符',
-  invalid_time_chamber_size: '该空间尺寸不可用',
-  time_chamber_full: '密室使用名额已满',
-  time_chamber_activation_required: '密室当前尚未开启',
-  time_chamber_activation_not_required: '一倍速密室无需开启时段，可直接进入',
-  time_chamber_already_active: '密室已开启，无法重复开启或延长时间',
-  time_chamber_expiry_pending: '密室到期清理中，请稍后再开启',
-  time_chamber_price_changed: '密室开启成本已变化，请重新确认',
-  time_chamber_instance_changed: '密室独立空间已变化，请重新打开面板',
-  time_chamber_usage_time_limit: '开启时段超出系统时间范围',
-  time_chamber_settings_locked: '密室运行期间不能修改倍率、容量或空间',
-  time_chamber_capacity_exceeds_size: '请先降低最大人数再缩小空间',
-  time_chamber_occupied: '密室有人时不能调整空间',
-  time_chamber_not_empty: '密室内部存在对象，暂时不能调整空间',
-  time_chamber_has_buildings: '密室内已有建筑，不能再调整空间大小',
-  time_chamber_revision_conflict: '密室状态已变化，请重新操作',
-  time_chamber_password_required: '请输入密室进入密码',
-  time_chamber_password_incorrect: '密室进入密码错误',
-  time_chamber_password_rate_limited: '密码尝试过于频繁，请稍后再试',
-  time_chamber_operation_failed: '密室操作暂未完成，请稍后重试',
-  time_chamber_activation_failed: '密室开启失败，请稍后重试',
+  time_chamber_persistence_disabled: '密室持久化服務暫不可用',
+  time_chamber_state_create_failed: '密室獨立空間建立失敗，請稍後重試',
+  time_chamber_state_not_found: '密室持久化狀態不存在，請重新打開面板',
+  time_chamber_unavailable: '密室實例暫不可用，請稍後重試',
+  insufficient_spirit_stone: '背包中的靈石不足',
+  durable_inventory_unavailable: '資產持久化服務暫不可用',
+  inventory_grant_lease_context_required: '當前位置寫入權暫不可用，請稍後重試',
+  inventory_empty_snapshot_changed: '背包狀態已變化，請重新操作',
+  inventory_empty_removal_snapshot_changed: '背包狀態已變化，請重新操作',
+  invalid_time_chamber_duration: '使用時長超出允許範圍',
+  invalid_time_chamber_speed: '時間倍率超出允許範圍',
+  invalid_time_chamber_capacity: '最大人數超出當前空間上限',
+  invalid_time_chamber_name: '名稱需為 1 至 20 個有效字符',
+  invalid_time_chamber_password: '進入密碼需為 1 至 64 個有效字符',
+  invalid_time_chamber_size: '該空間尺寸不可用',
+  time_chamber_full: '密室使用名額已滿',
+  time_chamber_activation_required: '密室當前尚未開啟',
+  time_chamber_activation_not_required: '一倍速密室無需開啟時段，可直接進入',
+  time_chamber_already_active: '密室已開啟，無法重複開啟或延長時間',
+  time_chamber_expiry_pending: '密室到期清理中，請稍後再開啟',
+  time_chamber_price_changed: '密室開啟成本已變化，請重新確認',
+  time_chamber_instance_changed: '密室獨立空間已變化，請重新打開面板',
+  time_chamber_usage_time_limit: '開啟時段超出系統時間範圍',
+  time_chamber_settings_locked: '密室運行期間不能修改倍率、容量或空間',
+  time_chamber_capacity_exceeds_size: '請先降低最大人數再縮小空間',
+  time_chamber_occupied: '密室有人時不能調整空間',
+  time_chamber_not_empty: '密室內部存在對象，暫時不能調整空間',
+  time_chamber_has_buildings: '密室內已有建築，不能再調整空間大小',
+  time_chamber_revision_conflict: '密室狀態已變化，請重新操作',
+  time_chamber_password_required: '請輸入密室進入密碼',
+  time_chamber_password_incorrect: '密室進入密碼錯誤',
+  time_chamber_password_rate_limited: '密碼嘗試過於頻繁，請稍後再試',
+  time_chamber_operation_failed: '密室操作暫未完成，請稍後重試',
+  time_chamber_activation_failed: '密室開啟失敗，請稍後重試',
 };
 
 export function createMainTimeChamberStateSource(options: MainTimeChamberStateSourceOptions) {
@@ -113,7 +113,7 @@ export function createMainTimeChamberStateSource(options: MainTimeChamberStateSo
       if (!currentDetail() && isActiveModalOpen()) {
         stopAutoRefresh();
         clearModal(mode);
-        options.showToast('读取密室状态超时，请重新打开', 'warn');
+        options.showToast('讀取密室狀態超時，請重新打開', 'warn');
       }
     }, REQUEST_TIMEOUT_MS);
   };
@@ -159,11 +159,11 @@ export function createMainTimeChamberStateSource(options: MainTimeChamberStateSo
   ): void => {
     const detail = (mode === 'usage' ? usageDetail : managementDetail) as TDetail | null;
     if (!detail || activeMode !== mode) {
-      options.showToast('密室状态尚未加载', 'warn');
+      options.showToast('密室狀態尚未加載', 'warn');
       return;
     }
     if (pendingRequestIdByOperation.size > 0) {
-      options.showToast('上一项密室操作仍在处理中', 'warn');
+      options.showToast('上一項密室操作仍在處理中', 'warn');
       return;
     }
     clearDetailRequest();
@@ -175,7 +175,7 @@ export function createMainTimeChamberStateSource(options: MainTimeChamberStateSo
       pendingRequestIdByOperation.delete(operation);
       mutationTimeoutByOperation.delete(operation);
       setPending(operation, false);
-      options.showToast('密室操作响应超时，请确认状态后重试', 'warn');
+      options.showToast('密室操作響應超時，請確認狀態後重試', 'warn');
       const latest = currentDetail();
       if (activeMode && latest && isActiveModalOpen()) requestDetail(activeMode, latest.sourceInstanceId, latest.buildingId);
     }, REQUEST_TIMEOUT_MS));
@@ -241,7 +241,7 @@ export function createMainTimeChamberStateSource(options: MainTimeChamberStateSo
     const player = options.getPlayer();
     const normalizedBuildingId = buildingId.trim();
     if (!player?.instanceId || !normalizedBuildingId) {
-      options.showToast('当前无法定位密室入口', 'warn');
+      options.showToast('當前無法定位密室入口', 'warn');
       return;
     }
     if (
@@ -305,7 +305,7 @@ export function createMainTimeChamberStateSource(options: MainTimeChamberStateSo
         }
       }
       if (!result.ok) {
-        const failureText = FAILURE_TEXT[result.reason ?? ''] ?? '密室操作失败，请稍后重试';
+        const failureText = FAILURE_TEXT[result.reason ?? ''] ?? '密室操作失敗，請稍後重試';
         const passwordFailure = result.reason === 'time_chamber_password_required'
           || result.reason === 'time_chamber_password_incorrect'
           || result.reason === 'time_chamber_password_rate_limited';
@@ -327,11 +327,11 @@ export function createMainTimeChamberStateSource(options: MainTimeChamberStateSo
       }
       if (result.operation === 'activate' || result.operation === 'enter') {
         if (result.entryQueued) {
-          options.showToast(result.operation === 'activate' ? '密室已开启，正在进入' : '正在进入密室', 'success');
+          options.showToast(result.operation === 'activate' ? '密室已開啟，正在進入' : '正在進入密室', 'success');
           clearModal('usage');
           stopAutoRefresh();
         } else {
-          options.showToast('密室已开启，可从当前面板进入', 'success');
+          options.showToast('密室已開啟，可從當前面板進入', 'success');
         }
         return;
       }
@@ -363,7 +363,7 @@ function buildRequestId(operation: string): string {
 
 function operationSuccessText(operation: TimeChamberOperationKind): string {
   if (operation === 'settings') return '密室配置已保存';
-  if (operation === 'resize') return '密室空间已调整';
-  if (operation === 'enter') return '正在进入密室';
-  return '密室状态已更新';
+  if (operation === 'resize') return '密室空間已調整';
+  if (operation === 'enter') return '正在進入密室';
+  return '密室狀態已更新';
 }

@@ -133,7 +133,7 @@ export const InventoryPanel = memo(function InventoryPanel() {
             {t('inventory.action.sort', undefined)}
           </button>
           <button className="small-btn danger" type="button" onClick={() => callbacks.onOpenBulkDiscard?.()}>
-            一键丢弃
+            一鍵丟棄
           </button>
         </div>
       </div>

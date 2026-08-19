@@ -22,7 +22,7 @@ export function createMainTechniqueGenerationPanelSource(
   setTechniqueGenerationCallbacks({
     onGenerate: (category, playerContext, itemSpend, mode) => {
       if (category !== 'internal' && category !== 'arts') {
-        syncTechniqueGenerationState({ error: '当前仅开放内功和术法' });
+        syncTechniqueGenerationState({ error: '當前僅開放內功和術法' });
         return;
       }
       sender.sendGenerate(category, playerContext, itemSpend, mode);
@@ -45,7 +45,7 @@ export function createMainTechniqueGenerationPanelSource(
       detailModalHost.open({
         ownerId: 'technique-generation-panel',
         variantClass: 'detail-modal--technique-generation',
-        title: '功法领悟',
+        title: '功法領悟',
         size: 'full',
         renderBody: (body) => body.replaceChildren(),
         onAfterRender: (body) => {

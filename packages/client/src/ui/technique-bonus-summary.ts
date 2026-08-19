@@ -23,22 +23,22 @@ import { formatDisplayNumber, formatDisplaySignedNumber } from '../utils/number'
 
 const TECHNIQUE_SPECIAL_STAT_LABELS = {
   comprehension: '悟性',
-  luck: '幸运',
+  luck: '幸運',
 } as const;
 
 const QI_FAMILY_LABELS: Record<QiFamilyKey, string> = {
-  aura: '灵气',
-  demonic: '魔气',
-  sha: '煞气',
+  aura: '靈氣',
+  demonic: '魔氣',
+  sha: '煞氣',
 };
 
 const QI_FORM_LABELS: Record<QiFormKey, string> = {
-  refined: '凝练',
+  refined: '凝練',
   dispersed: '逸散',
 };
 
 const QI_ELEMENT_LABELS: Record<QiElementKey, string> = {
-  neutral: '无属性',
+  neutral: '無屬性',
   metal: '金',
   wood: '木',
   water: '水',
@@ -52,7 +52,7 @@ type TechniqueSpecialStats = Partial<Pick<PlayerSpecialStats, TechniqueSpecialSt
 export function formatTechniqueBonusSummary(
   attrs?: Partial<Attributes> | null,
   specialStats?: TechniqueSpecialStats | null,
-  fallback = '无增益',
+  fallback = '無增益',
 ): string {
   return joinTechniqueBonusEntries([
     ...formatTechniqueAttrEntries(attrs),
@@ -60,7 +60,7 @@ export function formatTechniqueBonusSummary(
   ], fallback);
 }
 
-export function formatTechniqueLayerBonusSummary(layer: TechniqueLayerDef, fallback = '无增益'): string {
+export function formatTechniqueLayerBonusSummary(layer: TechniqueLayerDef, fallback = '無增益'): string {
   return joinTechniqueBonusEntries([
     ...formatTechniqueAttrEntries(layer.attrs),
     ...formatTechniqueSpecialStatEntries(layer.specialStats),
@@ -71,7 +71,7 @@ export function formatTechniqueLayerBonusSummary(layer: TechniqueLayerDef, fallb
 export function formatTechniqueCumulativeBonusSummary(
   level: number,
   layers?: TechniqueLayerDef[],
-  fallback = '无增益',
+  fallback = '無增益',
 ): string {
   return joinTechniqueBonusEntries([
     ...formatTechniqueAttrEntries(calcTechniqueAttrValues(level, layers)),
@@ -191,9 +191,9 @@ function formatQiDescriptorLabel(
   element: QiElementKey | undefined,
 ): string {
   if (!family && !form && !element) {
-    return '全部气机';
+    return '全部氣機';
   }
-  const familyLabel = family ? QI_FAMILY_LABELS[family] : '气机';
+  const familyLabel = family ? QI_FAMILY_LABELS[family] : '氣機';
   const formLabel = form === 'dispersed'
     ? QI_FORM_LABELS.dispersed
     : form === 'refined' && element !== 'neutral'

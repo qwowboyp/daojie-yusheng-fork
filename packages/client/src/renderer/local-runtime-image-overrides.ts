@@ -39,30 +39,30 @@ const TILE_LABELS: Record<string, string> = {
   'terrain:hill': '地形 · 山丘',
   'terrain:water': '地形 · 水域',
   'terrain:mud': '地形 · 泥地',
-  'terrain:swamp': '地形 · 沼泽',
+  'terrain:swamp': '地形 · 沼澤',
   'terrain:cold_bog': '地形 · 寒潭',
   'terrain:molten_pool': '地形 · 熔岩',
-  'terrain:cloud_floor': '地形 · 霞台',
-  'terrain:cloud': '地形 · 云海',
-  'terrain:void': '地形 · 虚空',
+  'terrain:cloud_floor': '地形 · 霞臺',
+  'terrain:cloud': '地形 · 雲海',
+  'terrain:void': '地形 · 虛空',
   'terrain:cliff': '地形 · 峭壁',
   'surface:floor': '地表 · 石板',
-  'surface:trail': '地表 · 小径',
+  'surface:trail': '地表 · 小徑',
   'surface:road': '地表 · 大路',
-  'surface:veranda': '地表 · 回廊',
-  'surface:stone_stairs': '地表 · 石阶',
-  'structure:wall': '结构 · 墙',
-  'structure:door': '结构 · 门',
-  'structure:window': '结构 · 窗',
-  'structure:house_eave': '结构 · 屋檐',
-  'structure:house_corner': '结构 · 檐角',
-  'structure:screen_wall': '结构 · 影壁',
-  'structure:tree': '结构 · 树木',
-  'structure:bamboo': '结构 · 翠竹',
-  'structure:stone': '结构 · 岩石',
-  'structure:spirit_ore': '结构 · 灵矿',
-  'structure:black_iron_ore': '结构 · 玄铁矿',
-  'structure:broken_sword_heap': '结构 · 断剑堆',
+  'surface:veranda': '地表 · 迴廊',
+  'surface:stone_stairs': '地表 · 石階',
+  'structure:wall': '結構 · 牆',
+  'structure:door': '結構 · 門',
+  'structure:window': '結構 · 窗',
+  'structure:house_eave': '結構 · 屋簷',
+  'structure:house_corner': '結構 · 簷角',
+  'structure:screen_wall': '結構 · 影壁',
+  'structure:tree': '結構 · 樹木',
+  'structure:bamboo': '結構 · 翠竹',
+  'structure:stone': '結構 · 岩石',
+  'structure:spirit_ore': '結構 · 靈礦',
+  'structure:black_iron_ore': '結構 · 玄鐵礦',
+  'structure:broken_sword_heap': '結構 · 斷劍堆',
 };
 
 type MonsterLocationCatalog = Record<string, { monsterName?: unknown }>;
@@ -98,11 +98,11 @@ function getFallbackKindLabel(kind: RuntimeImageOverrideKind, prefix: string): s
       case 'surface':
         return '地表';
       case 'structure':
-        return '结构';
+        return '結構';
       case 'interactable':
         return '交互物';
       default:
-        return '地块';
+        return '地塊';
     }
   }
   switch (prefix) {
@@ -111,11 +111,11 @@ function getFallbackKindLabel(kind: RuntimeImageOverrideKind, prefix: string): s
     case 'npc':
       return 'NPC';
     case 'container':
-      return '草药/容器';
+      return '草藥/容器';
     case 'player':
       return '玩家';
     default:
-      return '实体';
+      return '實體';
   }
 }
 
@@ -135,7 +135,7 @@ function resolveResourceLabel(kind: RuntimeImageOverrideKind, key: string, label
     return `${kindLabel} · ${rawId}`;
   }
   if (prefix === 'player') {
-    return rawId === 'default' ? '玩家 · 默认形象' : `${kindLabel} · ${rawId}`;
+    return rawId === 'default' ? '玩家 · 預設形象' : `${kindLabel} · ${rawId}`;
   }
   return `${kindLabel} · ${rawId.replace(/[_-]+/g, ' ')}`;
 }

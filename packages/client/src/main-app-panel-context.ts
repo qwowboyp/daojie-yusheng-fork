@@ -171,7 +171,7 @@ export function createMainPanelContext(options: CreateMainPanelContextOptions) {
       techniqueActivityOpeners[key as keyof typeof techniqueActivityOpeners]?.();
     },
     onBindCraftSkill: (key) => { const actionId = getCraftOpenActionId(key); if (actionId) actionPanel.toggleShortcutBinding(actionId); },
-    getCraftSkillBindLabel: (key) => { const actionId = getCraftOpenActionId(key); return actionId ? actionPanel.getShortcutBindLabel(actionId) : '绑定键'; },
+    getCraftSkillBindLabel: (key) => { const actionId = getCraftOpenActionId(key); return actionId ? actionPanel.getShortcutBindLabel(actionId) : '綁定鍵'; },
   });
   const questStateSource = createMainQuestStateSource({
     questPanel,

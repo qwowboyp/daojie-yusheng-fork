@@ -190,7 +190,7 @@ export function createMainBreakthroughStateSource(options: MainBreakthroughState
         hint: preview.blockedReason
           ? preview.blockedReason
           : preview.canBreakthrough
-            ? (hasConsumableRequirements ? t('breakthrough.hint.consumable') : '点击空白处关闭')
+            ? (hasConsumableRequirements ? t('breakthrough.hint.consumable') : '點擊空白處關閉')
               : (hasIncreaseRequirements ? t('breakthrough.hint.increase') : t('breakthrough.hint.hidden')),
         bodyHtml: `
           <div class="breakthrough-modal-grid">

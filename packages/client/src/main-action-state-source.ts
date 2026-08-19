@@ -156,7 +156,7 @@ const TECHNIQUE_ACTIVITY_ACTIONS = {
 export function createMainActionStateSource(options: MainActionStateSourceOptions) {
   options.actionPanel.setCallbacks(
     (actionId, requiresTarget, targetMode, range, actionName) => {
-      const displayActionName = actionName?.trim() || '未知行动';
+      const displayActionName = actionName?.trim() || '未知行動';
       if (actionId === 'loot:open') {
         options.beginTargeting(actionId, displayActionName, targetMode, range ?? 1);
         return;

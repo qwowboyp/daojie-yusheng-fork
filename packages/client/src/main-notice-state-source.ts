@@ -396,10 +396,10 @@ function resolveClientNoticeText(rawText: string, structured?: unknown, structur
 }
 
 function rewriteClientNoticeText(rawText: string): string {
-  if (rawText === '目标过远，无法规划路径') {
+  if (rawText === '目標過遠，無法規劃路徑') {
     return t('notice.rewrite.target-too-far', undefined);
   }
-  if (rawText === '无法到达该位置') {
+  if (rawText === '無法到達該位置') {
     return t('notice.rewrite.unreachable', undefined);
   }
   return rawText;

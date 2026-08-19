@@ -170,7 +170,7 @@ export function createMainAttrDetailStateSource(options: MainAttrDetailStateSour
     onBindCraftSkill: (key) => {
       options.onBindCraftSkill?.(key);
     },
-    getCraftSkillBindLabel: (key) => options.getCraftSkillBindLabel?.(key) ?? '绑定键',
+    getCraftSkillBindLabel: (key) => options.getCraftSkillBindLabel?.(key) ?? '綁定鍵',
   });
   return source;
 }

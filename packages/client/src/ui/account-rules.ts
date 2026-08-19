@@ -37,7 +37,7 @@ export function validateAccountName(accountName: string): string | null {
     return `账号长度不能超过 ${ACCOUNT_MAX_LENGTH} 个字符`;
   }
   if (hasWhitespace(accountName)) {
-    return '账号不支持空格';
+    return '賬號不支持空格';
   }
   return null;
 }
@@ -50,7 +50,7 @@ export function validatePassword(password: string): string | null {
     return `密码长度不能少于 ${PASSWORD_MIN_LENGTH} 个字符`;
   }
   if (hasWhitespace(password)) {
-    return '密码不支持空格';
+    return '密碼不支持空格';
   }
   return null;
 }
@@ -61,19 +61,19 @@ export function validateDisplayName(displayName: string): string | null {
 
   const normalized = displayName.normalize('NFC');
   if (!normalized) {
-    return '显示名称不能为空';
+    return '顯示名稱不能為空';
   }
   if (hasWhitespace(normalized)) {
-    return '显示名称不支持空格';
+    return '顯示名稱不支持空格';
   }
   if (getGraphemeCount(normalized) !== 1) {
-    return '显示名称必须为 1 个字符';
+    return '顯示名稱必須為 1 個字符';
   }
   if (!isDisplayNameWithinStorageLimit(normalized)) {
     return `显示名称组合序列不能超过 ${DISPLAY_NAME_MAX_CODE_POINTS} 个 Unicode 码点`;
   }
   if (!hasVisibleNameGrapheme(normalized) || containsInvisibleOnlyNameGrapheme(normalized)) {
-    return '显示名称必须为可见字符';
+    return '顯示名稱必須為可見字符';
   }
   return null;
 }
@@ -84,13 +84,13 @@ export function validateRoleName(roleName: string): string | null {
 
   const normalized = roleName.normalize('NFC').trim();
   if (!normalized) {
-    return '角色名称不能为空';
+    return '角色名稱不能為空';
   }
   if (!hasVisibleNameGrapheme(normalized)) {
-    return '角色名称必须包含可见字符';
+    return '角色名稱必須包含可見字符';
   }
   if (containsInvisibleOnlyNameGrapheme(normalized)) {
-    return '角色名称不支持不可见字符';
+    return '角色名稱不支持不可見字符';
   }
   if (!isRoleNameWithinLimit(normalized)) {
     return `角色名称${getRoleNameLimitText()}`;

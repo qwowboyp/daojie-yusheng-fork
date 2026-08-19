@@ -277,7 +277,7 @@ function readErrorMessage(data: Record<string, unknown> | null): string {
   if (typeof message === 'string' && message.trim()) {
     return message;
   }
-  return '请求失败';
+  return '請求失敗';
 }
 
 /** JWT 里用于提取账号名的负载字段。 */

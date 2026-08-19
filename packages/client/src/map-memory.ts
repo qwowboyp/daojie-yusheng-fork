@@ -187,7 +187,7 @@ function getStorage(): Storage | null {
     return storage;
   } catch (error) {
     storageAccessible = false;
-    console.warn('[map-memory] 本地存储不可用，已退回仅内存模式。', error);
+    console.warn('[map-memory] 本地存儲不可用，已退回僅記憶體模式。', error);
     return null;
   }
 }
@@ -370,7 +370,7 @@ function flushPersistMemory(): void {
     hasPendingPersist = false;
     allowNextPersistShrink = false;
   } catch (error) {
-    disablePersistence('写入本地地图记忆失败，已停止自动持久化以避免覆盖现有数据。', error);
+    disablePersistence('寫入本地地圖記憶失敗，已停止自動持久化以避免覆蓋現有數據。', error);
   }
 }
 
@@ -444,25 +444,25 @@ function ensureMemoryLoaded(): void {
     const parsed = JSON.parse(raw) as unknown;
     const envelope = getStoredEnvelope(parsed);
     if (!envelope) {
-      disablePersistence('本地地图记忆格式无法识别，已保留原始数据且停止本次会话持久化。');
+      disablePersistence('本地地圖記憶格式無法識別，已保留原始數據且停止本次會話持久化。');
       return;
     }
     if (Object.keys(envelope.maps).length === 0) {
       return;
     }
     if (!importRememberedMaps(envelope.maps)) {
-      disablePersistence('本地地图记忆中没有可恢复的有效内容，已保留原始数据且停止本次会话持久化。');
+      disablePersistence('本地地圖記憶中沒有可恢復的有效內容，已保留原始數據且停止本次會話持久化。');
       return;
     }
     const loadedMapCount = rememberedTilesByMap.size + rememberedMarkersByMap.size;
     const storedMapCount = Object.keys(envelope.maps).length;
     if (loadedMapCount < storedMapCount) {
       console.warn(`[map-memory] 部分地图记忆未能恢复（已加载 ${loadedMapCount}/${storedMapCount}），已保留原始数据且停止本次会话持久化。`);
-      disablePersistence('部分地图记忆未能恢复，停止持久化以避免覆盖。');
+      disablePersistence('部分地圖記憶未能恢復，停止持久化以避免覆蓋。');
       return;
     }
   } catch (error) {
-    disablePersistence('解析本地地图记忆失败，已保留原始数据且停止本次会话持久化。', error);
+    disablePersistence('解析本地地圖記憶失敗，已保留原始數據且停止本次會話持久化。', error);
   }
 }
 

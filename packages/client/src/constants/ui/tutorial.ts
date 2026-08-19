@@ -35,7 +35,7 @@ export const TUTORIAL_TOPICS: TutorialTopic[] = [];
 const REALM_TABLE_TOPIC: TutorialTopic = {
   id: 'realm-table',
   label: '境界表',
-  summary: '所有境界的等级区间与突破所需修为，直接读取共享配置。',
+  summary: '所有境界的等級區間與突破所需修為，直接讀取共享配置。',
   sections: [],
 };
 

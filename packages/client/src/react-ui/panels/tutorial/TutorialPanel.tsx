@@ -234,13 +234,13 @@ function Highlight({ text, query }: { text: string; query: string }) {
 
 function SearchResults({ query, topics }: { query: string; topics: TutorialTopic[] }) {
   const matches = useMemo(() => getSearchMatches(topics, query), [topics, query]);
-  if (matches.length === 0) return <div className="tutorial-search-empty">无匹配结果</div>;
+  if (matches.length === 0) return <div className="tutorial-search-empty">無匹配結果</div>;
   return (
     <div className="tutorial-search-results">
       {matches.map(({ topic, sections, tips }) => (
         <div key={topic.id} className="tutorial-search-group">
           <div className="tutorial-search-group-label"><Highlight text={topic.label} query={query} /></div>
-          {topic.id === 'realm-table' && <div className="tutorial-search-match-item">境界升级数据表</div>}
+          {topic.id === 'realm-table' && <div className="tutorial-search-match-item">境界升級資料表</div>}
           {sections.map((section) => (
             <div key={section.title} className="tutorial-section-card tutorial-search-section">
               <div className="tutorial-section-title"><Highlight text={section.title} query={query} /></div>
@@ -494,9 +494,9 @@ const RealmTablePane = memo(function RealmTablePane() {
         <thead>
           <tr>
             <th>Lv</th>
-            <th>等级名</th>
+            <th>等級名</th>
             <th>大境界</th>
-            <th>升级所需修为</th>
+            <th>升級所需修為</th>
           </tr>
         </thead>
         <tbody>

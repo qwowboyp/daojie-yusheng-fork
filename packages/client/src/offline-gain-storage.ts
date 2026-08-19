@@ -60,7 +60,7 @@ export function storeOfflineGainReportsInBrowser(
       reports: displayReports,
       storedReportIds: normalizedReportIds,
       storageOk: false,
-      error: '浏览器本地存储不可用',
+      error: '瀏覽器本地存儲不可用',
     };
   }
 
@@ -364,7 +364,7 @@ function normalizeOfflineGainReport(report: unknown): OfflineGainReportView | nu
     professions: (Array.isArray(record?.professions) ? record.professions : [])
       .map((entry) => ({
         professionType: normalizeString(entry?.professionType) || 'unknown',
-        label: normalizeString(entry?.label) || '技艺',
+        label: normalizeString(entry?.label) || '技藝',
         expGained: normalizePositiveInteger(entry?.expGained ?? (entry as any)?.expGain),
         expLost: normalizePositiveInteger(entry?.expLost),
         netExp: normalizeSignedInteger(entry?.netExp ?? (normalizePositiveInteger(entry?.expGained ?? (entry as any)?.expGain) - normalizePositiveInteger(entry?.expLost))),

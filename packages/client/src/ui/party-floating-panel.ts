@@ -21,7 +21,7 @@ export class PartyFloatingPanel {
   constructor() {
     this.floatingPanel = new FloatingListPanel({
       id: 'floating-party-hud',
-      title: '队伍状态',
+      title: '隊伍狀態',
       storageKey: PARTY_HUD_STORAGE_KEY,
       className: 'floating-list-panel--party-hud',
       defaultLeft: 12,

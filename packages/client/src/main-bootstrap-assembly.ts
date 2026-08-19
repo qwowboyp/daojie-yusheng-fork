@@ -850,9 +850,9 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
         selectedMode: data.currentBatch ? 'batch' : data.currentJob ? 'single' : techniqueGenerationStore.getState().selectedMode,
         generating: jobIsGenerating || batchIsGenerating,
         error: data.currentJob?.status === 'generated_draft' && !data.currentDraft
-          ? '功法草稿数据异常，请联系管理员处理'
+          ? '功法草稿數據異常，請聯繫管理員處理'
           : data.currentBatch?.status === 'generated_draft' && data.currentBatch.drafts.length !== data.currentBatch.count
-            ? '批量功法草稿数据异常，请联系管理员处理'
+            ? '批量功法草稿數據異常，請聯繫管理員處理'
             : '',
       });
     },
@@ -864,7 +864,7 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
         options.showToast(
           batchLearnedCount > 0
             ? `已将 ${batchLearnedCount} 部功法纳入领悟`
-            : data.techniqueName ? `已学习 ${data.techniqueName}` : '功法已学习',
+            : data.techniqueName ? `已学习 ${data.techniqueName}` : '功法已學習',
           'success',
         );
         syncTechniqueGenerationState({
@@ -888,8 +888,8 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
           const ratioText = `${Math.round(refund.refundRatio * 100)}%`;
           confirmModalHost.open({
             ownerId: 'technique-generation-discard-refund',
-            title: '悟道返还',
-            subtitle: '取消领悟',
+            title: '悟道返還',
+            subtitle: '取消領悟',
             bodyHtml: `
               <div class="confirm-summary-list">
                 <div><span>本次投入</span><strong>${refund.itemSpend} 枚悟道玉简</strong></div>
@@ -898,11 +898,11 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
               </div>
             `,
             confirmLabel: '知道了',
-            cancelLabel: '关闭',
+            cancelLabel: '關閉',
           });
           options.showToast(`已取消领悟，返还 ${refund.refundAmount} 功德`, 'system');
         } else {
-          options.showToast('已取消领悟', 'system');
+          options.showToast('已取消領悟', 'system');
         }
         syncTechniqueGenerationState({
           generating: false,
@@ -983,7 +983,7 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
         }
       }
       if (data.result === 'failed') {
-        options.showToast(data.errorMessage ?? '功法领悟失败', 'warn');
+        options.showToast(data.errorMessage ?? '功法領悟失敗', 'warn');
       }
       const currentGenerationState = techniqueGenerationStore.getState();
       const shouldRefreshAfterFailure = data.result === 'failed'
@@ -994,8 +994,8 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
         currentJob: null,
         currentBatch: null,
         error: data.result === 'failed'
-          ? (data.errorMessage ?? '功法领悟失败')
-          : (data.preview && (!grade || !category) ? '功法领悟结果格式异常' : ''),
+          ? (data.errorMessage ?? '功法領悟失敗')
+          : (data.preview && (!grade || !category) ? '功法領悟結果格式異常' : ''),
       });
       if (shouldRefreshAfterFailure) {
         options.techniqueGenerationSender.sendGetStatus(

@@ -248,9 +248,9 @@ export class PixiMapRendererAdapter {
   };
 
   mount(host: HTMLElement): void {
-    if (this.destroyed) throw new Error('地图渲染器已销毁，不能重新挂载');
+    if (this.destroyed) throw new Error('地圖渲染器已銷燬，不能重新掛載');
     const canvas = host.querySelector<HTMLCanvasElement>('#game-canvas') ?? host.querySelector<HTMLCanvasElement>('canvas');
-    if (!canvas) throw new Error('地图宿主节点缺少 canvas');
+    if (!canvas) throw new Error('地圖宿主節點缺少 canvas');
     const generation = this.mountGeneration + 1;
     this.mountGeneration = generation;
     this.canvas = canvas;
@@ -345,13 +345,13 @@ export class PixiMapRendererAdapter {
     }
     if (generation !== this.mountGeneration || this.canvas !== canvas) return;
     if (this.app.renderer.canvas !== canvas) {
-      throw new Error('主世界 Pixi 渲染器不能切换到新的 canvas');
+      throw new Error('主世界 Pixi 渲染器不能切換到新的 canvas');
     }
     if (this.app.renderer.type !== RendererType.WEBGL) {
-      throw new Error('主世界 Pixi 渲染器必须使用 WebGL 后端');
+      throw new Error('主世界 Pixi 渲染器必須使用 WebGL 後端');
     }
     const gl = (this.app.renderer as WebGLRenderer<HTMLCanvasElement>).gl;
-    if (!(gl instanceof WebGL2RenderingContext)) throw new Error('主世界 Pixi 渲染器必须使用 WebGL2 上下文');
+    if (!(gl instanceof WebGL2RenderingContext)) throw new Error('主世界 Pixi 渲染器必須使用 WebGL2 上下文');
     this.app.renderer.resize(this.width, this.height, 1);
     this.ready = true;
     this.ensureRuntimeImageOverrideListener();

@@ -220,7 +220,7 @@ export class AccessPolicySocketClient {
   }
 
   private nextRequestId(operation: string): string {
-    if (this.disposed) throw new Error('通用权限请求客户端已释放。');
+    if (this.disposed) throw new Error('通用權限請求客戶端已釋放。');
     this.requestSequence = (this.requestSequence + 1) % Number.MAX_SAFE_INTEGER;
     return `access-policy:${operation}:${Date.now().toString(36)}:${this.requestSequence.toString(36)}`;
   }
@@ -229,19 +229,19 @@ export class AccessPolicySocketClient {
 function resolveAccessPolicyClientError(reason: string | undefined): string {
   switch (reason) {
     case 'access_policy_manage_denied':
-      return '当前角色没有管理该权限的资格。';
+      return '當前角色沒有管理該權限的資格。';
     case 'access_policy_resource_not_found':
-      return '权限资源不存在或已经失效。';
+      return '權限資源不存在或已經失效。';
     case 'access_policy_resource_unsupported':
-      return '该功能尚未接入通用权限系统。';
+      return '該功能尚未接入通用權限系統。';
     case 'access_policy_rate_limited':
-      return '权限操作过于频繁，请稍后再试。';
+      return '權限操作過於頻繁，請稍後再試。';
     case 'access_policy_request_timeout':
-      return '权限请求超时，请检查连接后重试。';
+      return '權限請求超時，請檢查連接後重試。';
     case 'access_policy_socket_not_connected':
     case 'access_policy_socket_not_ready':
-      return '当前连接尚未就绪。';
+      return '當前連接尚未就緒。';
     default:
-      return '权限请求失败。';
+      return '權限請求失敗。';
   }
 }

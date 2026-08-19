@@ -399,7 +399,7 @@ function hydrateBootstrapAction(
   const requiresTarget = action.requiresTarget ?? staticAction?.requiresTarget ?? skillTemplate?.requiresTarget ?? bootstrapSkillTemplate?.requiresTarget;
   return {
     id: action.id,
-    name: String(action.name ?? staticAction?.name ?? skillTemplate?.name ?? bootstrapSkillTemplate?.name ?? '').trim() || '未知动作',
+    name: String(action.name ?? staticAction?.name ?? skillTemplate?.name ?? bootstrapSkillTemplate?.name ?? '').trim() || '未知動作',
     type: nextType,
     desc: action.desc ?? staticAction?.desc ?? skillTemplate?.desc ?? bootstrapSkillTemplate?.desc ?? '',
     cooldownLeft: action.cooldownLeft ?? 0,

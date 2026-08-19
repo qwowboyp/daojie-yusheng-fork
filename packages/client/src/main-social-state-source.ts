@@ -45,30 +45,30 @@ type MainSocialStateSourceOptions = {
 export type MainSocialStateSource = ReturnType<typeof createMainSocialStateSource>;
 
 const SOCIAL_REASON_LABELS: Record<string, string> = {
-  invalid_target: '目标无效',
-  target_not_nearby: '目标不在附近',
-  already_related: '已经是道友',
-  request_already_pending: '已有待处理申请',
-  relation_not_found: '未建立道友关系',
-  invalid_message: '消息为空或目标无效',
-  message_channel_busy: '私聊消息较多，请稍后再试',
-  message_persistence_failed: '消息保存失败，请稍后重试',
-  social_persistence_disabled: '道友系统暂不可用',
+  invalid_target: '目標無效',
+  target_not_nearby: '目標不在附近',
+  already_related: '已經是道友',
+  request_already_pending: '已有待處理申請',
+  relation_not_found: '未建立道友關係',
+  invalid_message: '消息為空或目標無效',
+  message_channel_busy: '私聊消息較多，請稍後再試',
+  message_persistence_failed: '消息保存失敗，請稍後重試',
+  social_persistence_disabled: '道友系統暫不可用',
 };
 
 const VAULT_REASON_LABELS: Record<string, string> = {
-  treasure_vault_persistence_disabled: '宝库暂不可用',
-  building_not_found: '宝库不存在',
-  instance_not_found: '地图实例不存在',
-  not_treasure_vault: '目标不是宝库',
-  treasure_vault_permission_denied: '没有宝库权限',
-  treasure_vault_owner_required: '只有建造者可修改宝库设置',
-  invalid_treasure_vault_name: '宝库名称需为 1 至 20 个字符',
-  treasure_vault_organize_failed: '宝库整理失败，请稍后重试',
-  treasure_vault_full: '宝库已满',
-  storage_item_not_found: '宝库物品不存在',
-  inventory_full: '背包已满',
-  invalid_item: '物品无效',
+  treasure_vault_persistence_disabled: '寶庫暫不可用',
+  building_not_found: '寶庫不存在',
+  instance_not_found: '地圖實例不存在',
+  not_treasure_vault: '目標不是寶庫',
+  treasure_vault_permission_denied: '沒有寶庫權限',
+  treasure_vault_owner_required: '只有建造者可修改寶庫設置',
+  invalid_treasure_vault_name: '寶庫名稱需為 1 至 20 個字符',
+  treasure_vault_organize_failed: '寶庫整理失敗，請稍後重試',
+  treasure_vault_full: '寶庫已滿',
+  storage_item_not_found: '寶庫物品不存在',
+  inventory_full: '背包已滿',
+  invalid_item: '物品無效',
 };
 
 export function createMainSocialStateSource(options: MainSocialStateSourceOptions) {
@@ -100,7 +100,7 @@ export function createMainSocialStateSource(options: MainSocialStateSourceOption
       if (!detail) return;
       options.socket.sendOrganizeTreasureVault({ buildingId: detail.buildingId, instanceId: detail.instanceId });
     },
-    onPermissionsSaved: () => options.showToast('权限已保存。', 'success'),
+    onPermissionsSaved: () => options.showToast('權限已保存。', 'success'),
     onRename: (name) => {
       const detail = currentTreasureVaultDetail;
       if (!detail) return;
@@ -265,9 +265,9 @@ export function createMainSocialStateSource(options: MainSocialStateSourceOption
       }
       options.treasureVaultModal.handleOperationResult(result);
       if (result.ok === true && result.operation === 'rename') {
-        options.showToast('宝库重命名成功', 'success');
+        options.showToast('寶庫重命名成功', 'success');
       } else if (result.ok === true && result.operation === 'organize') {
-        options.showToast('宝库整理完成', 'success');
+        options.showToast('寶庫整理完成', 'success');
       } else if (result.ok !== true && result.reason) {
         options.showToast(VAULT_REASON_LABELS[result.reason] ?? result.reason, 'warn');
       }

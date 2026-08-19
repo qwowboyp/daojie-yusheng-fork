@@ -72,21 +72,21 @@ export function resolveClientSkillCastAvailability(
   action: ActionDef | null | undefined,
 ): ClientSkillCastAvailability {
   if (!player) {
-    return { ok: false, reason: 'missing_player', message: '角色状态尚未就绪，暂时不能释放技能。' };
+    return { ok: false, reason: 'missing_player', message: '角色狀態尚未就緒，暫時不能釋放技能。' };
   }
   if (!action || action.type !== 'skill') {
-    return { ok: false, reason: 'missing_action', message: '技能动作尚未就绪，暂时不能释放。' };
+    return { ok: false, reason: 'missing_action', message: '技能動作尚未就緒，暫時不能釋放。' };
   }
   if (action.skillEnabled === false) {
-    return { ok: false, reason: 'disabled', message: '技能已禁用，无法释放。', action };
+    return { ok: false, reason: 'disabled', message: '技能已禁用，無法釋放。', action };
   }
   if (player.dead === true || Math.max(0, Number(player.hp) || 0) <= 0) {
-    return { ok: false, reason: 'dead', message: '角色已倒下，无法释放技能。', action };
+    return { ok: false, reason: 'dead', message: '角色已倒下，無法釋放技能。', action };
   }
 
   const skill = findPlayerSkill(player, action.id);
   if (!skill) {
-    return { ok: false, reason: 'missing_skill', message: '技能模板尚未就绪，暂时不能释放。', action };
+    return { ok: false, reason: 'missing_skill', message: '技能模板尚未就緒，暫時不能釋放。', action };
   }
 
   const range = resolveSkillEffectiveRange(skill);

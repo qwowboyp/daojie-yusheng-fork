@@ -174,14 +174,14 @@ export function bindMainShellInteractions(options: MainShellBindingsOptions): vo
   });
   window.addEventListener('offline', () => {
     options.clearPendingSocketPing();
-    options.renderPingLatency(null, '气机断绝');
+    options.renderPingLatency(null, '氣機斷絕');
   });
   options.documentRef.addEventListener('visibilitychange', () => {
     if (options.documentRef.visibilityState === 'hidden') {
       options.clearPendingSocketPing();
       options.stopPingLoop();
       options.suspendConnectionForHiddenPage();
-      options.renderPingLatency(null, '离线');
+      options.renderPingLatency(null, '離線');
       return;
     }
     options.scheduleConnectionRecovery(150, true);

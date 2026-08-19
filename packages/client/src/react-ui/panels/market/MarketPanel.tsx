@@ -61,7 +61,7 @@ export const MarketPanel = memo(function MarketPanel() {
             坊市
           </button>
           <button className="small-btn" type="button" onClick={() => handleOpenAuction('participate')}>
-            拍卖行
+            拍賣行
           </button>
           <button className="small-btn" type="button" onClick={handleOpenTransmission}>
             {t('market.tab.transmission', undefined)}
