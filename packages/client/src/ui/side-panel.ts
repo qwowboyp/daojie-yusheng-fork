@@ -104,6 +104,12 @@ export class SidePanel {
   private panel: HTMLElement;
   /** mobileShell：mobile Shell。 */
   private mobileShell: HTMLElement | null;
+  /** mobileExpandToggle：移动端底部壳放大/收起按钮（其他 HTML 入口可能无此节点）。 */
+  private mobileExpandToggle: HTMLButtonElement | null;
+  /** mobileExpanded：移动端底部壳是否处于放大态；每次加载默认收起，不持久化。 */
+  private mobileExpanded = false;
+  /** mobileExpandTransitionHandler：放大切换的 transitionend 监听器引用，防止快速切换时堆叠。 */
+  private mobileExpandTransitionHandler: ((event: TransitionEvent) => void) | null = null;
   /** mobileSections：mobile Sections。 */
   private mobileSections: MobileSectionMount[];
   /** persistedState：persisted状态。 */
@@ -141,6 +147,7 @@ export class SidePanel {
   constructor() {
     this.panel = document.getElementById('game-shell')!;
     this.mobileShell = document.getElementById('mobile-ui-shell');
+    this.mobileExpandToggle = document.querySelector<HTMLButtonElement>('#mobile-shell-expand-toggle');
     this.persistedState = this.readPersistedState();
     this.restorePersistedLayoutState();
     this.mobileSections = this.collectMobileSections();
@@ -148,6 +155,7 @@ export class SidePanel {
     this.bindLayoutToggles();
     this.bindLayoutTransitionSync();
     this.bindResponsiveLayout();
+    this.bindMobileExpandToggle();
     this.restorePersistedLayoutSizes();
     this.initializeTabStates();
     this.syncLayoutState();
@@ -348,6 +356,76 @@ export class SidePanel {
   destroy(): void {
     this.responsiveCleanup?.();
     this.responsiveCleanup = null;
+    if (this.mobileExpandTransitionHandler) {
+      this.panel.removeEventListener('transitionend', this.mobileExpandTransitionHandler);
+      this.mobileExpandTransitionHandler = null;
+    }
+  }
+
+  /** bindMobileExpandToggle：绑定移动端底部壳放大/收起按钮（节点缺失时静默跳过）。 */
+  private bindMobileExpandToggle(): void {
+    if (!this.mobileExpandToggle) {
+      return;
+    }
+    this.mobileExpandToggle.addEventListener('click', () => {
+      this.toggleMobileExpanded();
+    });
+  }
+
+  /** toggleMobileExpanded：切换底部壳放大态，更新按钮文案与 aria 状态并通知地图重排。 */
+  private toggleMobileExpanded(): void {
+    const button = this.mobileExpandToggle;
+    if (!button) {
+      return;
+    }
+    this.mobileExpanded = !this.mobileExpanded;
+    // 与 data-building-mode 相同的 dataset true/false 写法，CSS 以 [data-mobile-expanded="true"] 匹配。
+    this.panel.dataset.mobileExpanded = this.mobileExpanded ? 'true' : 'false';
+    const labelKey = this.mobileExpanded ? 'shell.mobile-collapse' : 'shell.mobile-expand';
+    const ariaKey = this.mobileExpanded
+      ? 'shell.mobile-collapse.aria-label'
+      : 'shell.mobile-expand.aria-label';
+    const textNode = button.querySelector<HTMLElement>('.mobile-shell-expand-toggle-text');
+    if (textNode) {
+      // 同步更新 data-i18n 键与文本，保证后续静态 i18n 重扫仍取到正确文案。
+      textNode.dataset.i18n = labelKey;
+      textNode.textContent = t(labelKey);
+    }
+    button.dataset.i18nAriaLabel = ariaKey;
+    button.setAttribute('aria-label', t(ariaKey));
+    button.setAttribute('aria-expanded', this.mobileExpanded ? 'true' : 'false');
+    const glyphNode = button.querySelector<HTMLElement>('.mobile-shell-expand-toggle-glyph');
+    if (glyphNode) {
+      glyphNode.textContent = this.mobileExpanded ? '⤓' : '⤒';
+    }
+    this.notifyMobileExpandedResize();
+    this.onLayoutChange?.();
+  }
+
+  /** notifyMobileExpandedResize：放大切换后通知地图画布重测尺寸（立即一次 + 过渡结束后一次）。 */
+  private notifyMobileExpandedResize(): void {
+    // 下一帧立即派发 resize，兼容不支持 grid-template-rows 过渡而直接跳变的浏览器。
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
+    // 移除上一次尚未触发的 transitionend 监听，避免快速反复切换时堆叠。
+    if (this.mobileExpandTransitionHandler) {
+      this.panel.removeEventListener('transitionend', this.mobileExpandTransitionHandler);
+      this.mobileExpandTransitionHandler = null;
+    }
+    const handler = (event: TransitionEvent) => {
+      // transitionend 会冒泡；只认 game-shell 自身的 grid-template-rows 过渡。
+      if (event.target !== this.panel || event.propertyName !== 'grid-template-rows') {
+        return;
+      }
+      this.panel.removeEventListener('transitionend', handler);
+      if (this.mobileExpandTransitionHandler === handler) {
+        this.mobileExpandTransitionHandler = null;
+      }
+      window.dispatchEvent(new Event('resize'));
+    };
+    this.mobileExpandTransitionHandler = handler;
+    this.panel.addEventListener('transitionend', handler);
   }
 
   /** bindLayoutTransitionSync：绑定布局Transition同步。 */

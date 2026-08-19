@@ -1063,6 +1063,10 @@ shell.market,静态HTML-主界面,坊市,静态 HTML：packages/client/index.htm
 shell.mobile-action,静态HTML-主界面,行动,静态 HTML：packages/client/index.html
 shell.mobile-attrs,静态HTML-主界面,属性,静态 HTML：packages/client/index.html
 shell.mobile-bag,静态HTML-主界面,行囊,静态 HTML：packages/client/index.html
+shell.mobile-collapse,静态HTML-主界面,缩小,静态 HTML：packages/client/index.html
+shell.mobile-collapse.aria-label,静态HTML-主界面,恢复下方界面,静态 HTML：packages/client/index.html
+shell.mobile-expand,静态HTML-主界面,放大,静态 HTML：packages/client/index.html
+shell.mobile-expand.aria-label,静态HTML-主界面,放大下方界面,静态 HTML：packages/client/index.html
 shell.mobile-overview,静态HTML-主界面,概览,静态 HTML：packages/client/index.html
 shell.mobile-ui-shell.aria-label,静态HTML-主界面,手机界面切换,静态 HTML：packages/client/index.html
 shell.name,静态HTML-主界面,修行者,静态 HTML：packages/client/index.html

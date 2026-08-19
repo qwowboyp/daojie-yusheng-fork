@@ -149,6 +149,8 @@
         grid-template-rows: minmax(0, 1.18fr) minmax(0, 0.82fr);
         gap: 6px;
         overflow: hidden;
+        /* 底部壳放大/收起时的行高过渡；不支持 grid-template-rows 过渡的浏览器直接跳变 */
+        transition: grid-template-rows 0.25s ease;
       }
       #layout-left,
       #layout-right {
@@ -166,8 +168,13 @@
       #game-shell[data-building-mode="true"] #mobile-ui-shell {
         display: none;
       }
+      /* 底部壳放大态：地图压缩为一条可点击的窄条，下方界面占满剩余高度 */
+      #game-shell[data-mobile-expanded="true"] {
+        grid-template-rows: clamp(96px, 18vh, 168px) minmax(0, 1fr);
+      }
       #mobile-ui-shell {
         display: grid;
+        position: relative;
         grid-template-rows: auto minmax(0, 1fr);
         padding:
           max(0px, env(safe-area-inset-top, 0px))
@@ -252,6 +259,16 @@
           calc(env(safe-area-inset-bottom, 0px) + 6px)
           max(6px, env(safe-area-inset-left, 0px));
         gap: 4px;
+      }
+      /* 右侧预留悬浮放大按钮的宽度，保证最后一个 tab 不被遮挡 */
+      .mobile-ui-tab-bar {
+        padding-right: calc(max(6px, env(safe-area-inset-right, 0px)) + 56px);
+      }
+      /* 放大/收起按钮仅在移动端布局显示（基础样式在 mobile-shell.css 中默认 display:none） */
+      .mobile-shell-expand-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
       .mobile-ui-tab-btn {
         min-width: 56px;

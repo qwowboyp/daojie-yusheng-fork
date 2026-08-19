@@ -36,6 +36,34 @@
       box-shadow: none;
     }
 
+    /* 移动端底部壳放大/收起按钮：默认隐藏，仅 responsive.css 移动端媒体块内显示。
+       绝对定位于 #mobile-ui-shell 右上（tab bar 行），不参与 tab bar 横向滚动。 */
+    .mobile-shell-expand-toggle {
+      display: none;
+      position: absolute;
+      top: 6px;
+      /* 与移动端 tab bar 的右内边距口径一致，避开右侧安全区 */
+      right: max(6px, env(safe-area-inset-right, 0px));
+      z-index: 2;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 4px 8px;
+      gap: 4px;
+      border: 1px solid var(--wash-ink);
+      background: var(--panel-tab-bar-bg);
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: none;
+    }
+
+    .mobile-shell-expand-toggle-glyph {
+      font-size: var(--font-size-role-body-16);
+    }
+
+    .mobile-shell-expand-toggle-text {
+      font-size: var(--font-size-12);
+    }
+
     .mobile-ui-content {
       min-height: 0;
       display: flex;
