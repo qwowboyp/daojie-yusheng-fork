@@ -1,0 +1,8 @@
+{
+  "ok": false,
+  "violations": [
+    {
+      "file": "packages/server/data/content/monsters/青竹林.json",
+      "line": 4,
+      "sample": "噬灵狼"
+    },

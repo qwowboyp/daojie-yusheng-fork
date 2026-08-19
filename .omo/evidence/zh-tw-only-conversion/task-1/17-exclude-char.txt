@@ -1,0 +1,6 @@
+  [待轉換] .omo\evidence\zh-tw-only-conversion\task-1\exclude-char.json
+
+===== 詞彙表命中行 =====
+    .omo\evidence\zh-tw-only-conversion\task-1\exclude-char.json: 货车信息 → 貨車訊息（命中：信息）
+
+共 1 個文件，待轉換 1 個（dry-run，未寫盤）

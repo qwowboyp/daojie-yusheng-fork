@@ -1,0 +1,10 @@
+  [待轉換] .omo\evidence\zh-tw-only-conversion\task-1\source-test.ts
+
+===== 詞彙表命中行 =====
+    .omo\evidence\zh-tw-only-conversion\task-1\source-test.ts: 登录服务器 → （命中：服务器、登录）
+    .omo\evidence\zh-tw-only-conversion\task-1\source-test.ts: 在线人数: 100 → （命中：在线）
+
+===== 待改寫清單（含 ${} 插值的模板字符串，需人工改写） =====
+    .omo\evidence\zh-tw-only-conversion\task-1\source-test.ts:3 `欢迎 ${label} 的默认页面`
+
+共 1 個文件，待轉換 1 個（dry-run，未寫盤）

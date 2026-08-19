@@ -1,0 +1,17 @@
+  [待轉換] packages\server\data\content\monsters\青竹林.json
+
+===== opencc 字級轉換行 =====
+    packages\server\data\content\monsters\青竹林.json: 噬灵狼 → 噬靈狼
+    packages\server\data\content\monsters\青竹林.json: 《踏风步》残页 → 《踏風步》殘頁
+    packages\server\data\content\monsters\青竹林.json: 青鳞竹蛇 → 青鱗竹蛇
+    packages\server\data\content\monsters\青竹林.json: 竹蛇胆 → 竹蛇膽
+    packages\server\data\content\monsters\青竹林.json: 竹心灵 → 竹心靈
+    packages\server\data\content\monsters\青竹林.json: 《青木剑诀》 → 《青木劍訣》
+    packages\server\data\content\monsters\青竹林.json: 《养气诀》 → 《養氣訣》
+    packages\server\data\content\monsters\青竹林.json: 药烟轻袍 → 藥煙輕袍
+    packages\server\data\content\monsters\青竹林.json: 采气木坠 → 採氣木墜
+    packages\server\data\content\monsters\青竹林.json: 螳锋 → 螳鋒
+    packages\server\data\content\monsters\青竹林.json: 螳锋 → 螳鋒
+    packages\server\data\content\monsters\青竹林.json: 《铁骨功》 → 《鐵骨功》
+
+共 1 個文件，待轉換 1 個（dry-run，未寫盤）

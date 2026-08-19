@@ -1,0 +1,12 @@
+{
+  "ok": false,
+  "violations": [
+    {
+      "file": "packages/server/data/maps/yunlai_town.json",
+      "line": 1798,
+      "sample": "包含替换字符 U+FFFD（�）"
+    },
+    {
+      "file": "packages/server/data/maps/yunlai_town.json",
+      "line": 4,
+      "sample": "云来镇"
