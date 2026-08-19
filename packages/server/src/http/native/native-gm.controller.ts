@@ -40,6 +40,7 @@ import { DeleteEmptyCustomTechniqueBooksConversion } from '../../gm/compat-conve
 import { RecoverEmptyCustomTechniqueBooksConversion } from '../../gm/compat-conversions/conversions/technique/recover-empty-custom-technique-books';
 import { OrphanSectBuildingVisualsConversion } from '../../gm/compat-conversions/conversions/building/orphan-sect-building-visuals';
 import { TongtianTowerCatalogInstanceTypeConversion } from '../../gm/compat-conversions/conversions/world/tongtian-tower-catalog-instance-type';
+import { MailSnapshotTraditionalizeConversion } from '../../gm/compat-conversions/conversions/mail/mail-snapshot-traditionalize';
 /**
  * UpdatePlayerPasswordBody：定义接口结构约束，明确可交付字段含义。
  */
@@ -290,6 +291,7 @@ export class NativeGmController {
     @Inject(DeleteEmptyCustomTechniqueBooksConversion) private readonly deleteEmptyCustomTechniqueBooksConversion: DeleteEmptyCustomTechniqueBooksConversion,
     @Inject(OrphanSectBuildingVisualsConversion) private readonly orphanSectBuildingVisualsConversion: OrphanSectBuildingVisualsConversion,
     @Inject(TongtianTowerCatalogInstanceTypeConversion) private readonly tongtianTowerCatalogInstanceTypeConversion: TongtianTowerCatalogInstanceTypeConversion,
+    @Inject(MailSnapshotTraditionalizeConversion) private readonly mailSnapshotTraditionalizeConversion: MailSnapshotTraditionalizeConversion,
     @Optional()
     @Inject(GmAuditLogPersistenceService)
     private readonly gmAuditLogPersistenceService: GmAuditLogPersistenceService | null = null,
@@ -1302,6 +1304,27 @@ export class NativeGmController {
       targetType: 'compat_conversion',
       targetId: 'tongtian_tower_catalog_instance_type',
     }, (actor) => this.tongtianTowerCatalogInstanceTypeConversion.run({
+      mode: 'apply',
+      actor,
+    }));
+  }
+
+  @Post('shortcuts/compat/mail-traditionalize/dry-run')
+  async dryRunMailSnapshotTraditionalize(@Req() request: unknown) {
+    return this.mailSnapshotTraditionalizeConversion.run({
+      mode: 'dry-run',
+      actor: extractGmActor(request),
+    });
+  }
+
+  @Post('shortcuts/compat/mail-traditionalize/apply')
+  async applyMailSnapshotTraditionalize(@Req() request: unknown) {
+    return this.executeAuditedGmWrite({
+      op: 'gm.shortcuts.compat.mail_traditionalize.apply',
+      request,
+      targetType: 'compat_conversion',
+      targetId: 'mail_snapshot_traditionalize',
+    }, (actor) => this.mailSnapshotTraditionalizeConversion.run({
       mode: 'apply',
       actor,
     }));

@@ -238,6 +238,7 @@
     "@nestjs/websockets": "^10.0.0",
     "bcryptjs": "^3.0.3",
     "openai": "^6.38.0",
+    "opencc-js": "^1.4.1",
     "pg": "^8.20.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.0",

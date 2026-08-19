@@ -164,6 +164,9 @@ importers:
       openai:
         specifier: ^6.38.0
         version: 6.38.0(ws@8.18.3)
+      opencc-js:
+        specifier: ^1.4.1
+        version: 1.4.1
       pg:
         specifier: ^8.20.0
         version: 8.20.0
