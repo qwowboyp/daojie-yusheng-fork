@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "daojie.building-runtime.schema.json",
-  "title": "道劫余生建筑与风水运行时配置",
+  "title": "道劫餘生建築與風水運行時配置",
   "type": "object",
   "properties": {
     "buildings": { "type": "array", "items": { "$ref": "#/$defs/building" } },

@@ -1,8 +1,8 @@
 [
   {
     "id": "tongtian_shadow_art",
-    "name": "通天虚影诀",
-    "desc": "通天塔虚影凝出的本能攻势。",
+    "name": "通天虛影訣",
+    "desc": "通天塔虛影凝出的本能攻勢。",
     "grade": "mortal",
     "category": "arts",
     "realmLv": 1,
@@ -11,8 +11,8 @@
     "skills": [
       {
         "id": "skill.tongtian_shadow_strike",
-        "name": "虚影重击",
-        "desc": "虚影以自身境界压下重击，造成随境界等级提升的物理伤害。",
+        "name": "虛影重擊",
+        "desc": "虛影以自身境界壓下重擊，造成隨境界等級提升的物理傷害。",
         "cooldown": 10,
         "cost": 0,
         "costMultiplier": 0,
@@ -48,8 +48,8 @@
   },
   {
     "id": "qingmu_sword",
-    "name": "青木剑诀",
-    "desc": "青木剑气凝作一线，专取单体破敌。",
+    "name": "青木劍訣",
+    "desc": "青木劍氣凝作一線，專取單體破敵。",
     "grade": "mortal",
     "category": "arts",
     "realmLv": 1,
@@ -58,8 +58,8 @@
     "skills": [
       {
         "id": "skill.qingmu_sword",
-        "name": "青木剑诀",
-        "desc": "青木剑气凝作一线，专取单体破敌。",
+        "name": "青木劍訣",
+        "desc": "青木劍氣凝作一線，專取單體破敵。",
         "cooldown": 10,
         "cost": 17,
         "costMultiplier": 4,

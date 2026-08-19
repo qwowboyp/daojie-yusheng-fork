@@ -5,7 +5,7 @@
     "type": "equipment",
     "grade": "yellow",
     "level": 19,
-    "desc": "鞋底尽是旧裂纹，踩在碎刃和砂地上反而不容易打滑。",
+    "desc": "鞋底盡是舊裂紋，踩在碎刃和砂地上反而不容易打滑。",
     "equipSlot": "legs",
     "effects": [
       {
@@ -36,11 +36,11 @@
   },
   {
     "itemId": "equip.full_edge_blade",
-    "name": "满锋刀",
+    "name": "滿鋒刀",
     "type": "equipment",
     "grade": "yellow",
     "level": 23,
-    "desc": "刀身每一寸都被重新开锋，狠是够狠，就是不太讲后劲。",
+    "desc": "刀身每一寸都被重新開鋒，狠是夠狠，就是不太講後勁。",
     "equipSlot": "weapon",
     "effects": [
       {
@@ -51,7 +51,7 @@
         "chance": 0.3,
         "buff": {
           "buffId": "equip.full_edge_pursue",
-          "name": "追锋",
+          "name": "追鋒",
           "duration": 5,
           "shortMark": "追",
           "category": "buff",
@@ -72,11 +72,11 @@
   },
   {
     "itemId": "equip.sand_ghost_mask",
-    "name": "砂魇面",
+    "name": "砂魘面",
     "type": "equipment",
     "grade": "yellow",
     "level": 23,
-    "desc": "戴久了会让人下意识压低呼吸，适合在乱刃间找空门。",
+    "desc": "戴久了會讓人下意識壓低呼吸，適合在亂刃間找空門。",
     "equipSlot": "head",
     "effects": [
       {
@@ -105,11 +105,11 @@
   },
   {
     "itemId": "equip.chasing_edge_boots",
-    "name": "逐锋履",
+    "name": "逐鋒履",
     "type": "equipment",
     "grade": "yellow",
     "level": 23,
-    "desc": "鞋尖很薄，专为追着对手步点补刀。",
+    "desc": "鞋尖很薄，專為追著對手步點補刀。",
     "equipSlot": "legs",
     "effects": [
       {
@@ -120,7 +120,7 @@
         "cooldown": 2,
         "buff": {
           "buffId": "equip.chasing_edge_rush",
-          "name": "逐锋",
+          "name": "逐鋒",
           "duration": 2,
           "shortMark": "逐",
           "category": "buff",
@@ -141,11 +141,11 @@
   },
   {
     "itemId": "equip.cleft_blade_cloak",
-    "name": "裂锋披",
+    "name": "裂鋒披",
     "type": "equipment",
     "grade": "mystic",
     "level": 25,
-    "desc": "披摆里缝了不少碎刃片，转身时总能带出一点险劲。",
+    "desc": "披擺裡縫了不少碎刃片，轉身時總能帶出一點險勁。",
     "equipSlot": "body",
     "effects": [
       {
@@ -156,7 +156,7 @@
         "cooldown": 3,
         "buff": {
           "buffId": "equip.cleft_cloak_shift",
-          "name": "偏锋",
+          "name": "偏鋒",
           "duration": 3,
           "shortMark": "偏",
           "category": "buff",
@@ -177,11 +177,11 @@
   },
   {
     "itemId": "equip.geng_gate_blade",
-    "name": "庚门断锋",
+    "name": "庚門斷鋒",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "埋在门阙下多年的古刃，拔出来时还带着一股压门镇路的狠意。",
+    "desc": "埋在門闕下多年的古刃，拔出來時還帶著一股壓門鎮路的狠意。",
     "equipSlot": "weapon",
     "effects": [
       {
@@ -192,9 +192,9 @@
         "chance": 0.35,
         "buff": {
           "buffId": "equip.geng_gate_break",
-          "name": "断关",
+          "name": "斷關",
           "duration": 6,
-          "shortMark": "关",
+          "shortMark": "關",
           "category": "buff",
           "visibility": "public",
           "color": "#d0b36e",
@@ -220,7 +220,7 @@
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "旧时封山闭路的令牌，修炼时有股强行把气机压回主脉的蛮劲。",
+    "desc": "舊時封山閉路的令牌，修煉時有股強行把氣機壓回主脈的蠻勁。",
     "equipSlot": "accessory",
     "equipBaselinePercents": {
       "realmExpPerTick": 85,
@@ -229,11 +229,11 @@
   },
   {
     "itemId": "equip.fallrock_maul",
-    "name": "坠岩槌",
+    "name": "墜巖槌",
     "type": "equipment",
     "grade": "yellow",
     "level": 23,
-    "desc": "举起来慢，落下去却像整块坡石滚下来。",
+    "desc": "舉起來慢，落下去卻像整塊坡石滾下來。",
     "equipSlot": "weapon",
     "effects": [
       {
@@ -244,7 +244,7 @@
         "chance": 0.28,
         "buff": {
           "buffId": "equip.fallrock_burst",
-          "name": "崩岩",
+          "name": "崩巖",
           "duration": 4,
           "shortMark": "崩",
           "category": "buff",
@@ -265,11 +265,11 @@
   },
   {
     "itemId": "equip.ridgewall_armor",
-    "name": "岭垣甲",
+    "name": "嶺垣甲",
     "type": "equipment",
     "grade": "yellow",
     "level": 23,
-    "desc": "甲面像小型岩垣一样一层层垒起，硬挡很出色。",
+    "desc": "甲面像小型巖垣一樣一層層壘起，硬擋很出色。",
     "equipSlot": "body",
     "equipBaselinePercents": {
       "maxHp": 50,
@@ -280,11 +280,11 @@
   },
   {
     "itemId": "equip.shieldvein_stone",
-    "name": "护脉石",
+    "name": "護脈石",
     "type": "equipment",
     "grade": "yellow",
     "level": 23,
-    "desc": "贴身佩着时，真气会不自觉绕着经脉走得更稳。",
+    "desc": "貼身佩著時，真氣會不自覺繞著經脈走得更穩。",
     "equipSlot": "accessory",
     "equipBaselinePercents": {
       "realmExpPerTick": 80,
@@ -297,7 +297,7 @@
     "type": "equipment",
     "grade": "mystic",
     "level": 25,
-    "desc": "面甲内侧覆着一层细土膜，能把心火和浮气一起压下去。",
+    "desc": "面甲內側覆著一層細土膜，能把心火和浮氣一起壓下去。",
     "equipSlot": "head",
     "effects": [
       {
@@ -327,11 +327,11 @@
   },
   {
     "itemId": "equip.ridgecleft_halberd",
-    "name": "裂岭戟",
+    "name": "裂嶺戟",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "戟锋像从山脊豁口里抽出来的一截石铁，砸出去就带裂地声。",
+    "desc": "戟鋒像從山脊豁口裡抽出來的一截石鐵，砸出去就帶裂地聲。",
     "equipSlot": "weapon",
     "effects": [
       {
@@ -342,7 +342,7 @@
         "chance": 0.32,
         "buff": {
           "buffId": "equip.ridgecleft_smash",
-          "name": "裂岭",
+          "name": "裂嶺",
           "duration": 4,
           "shortMark": "裂",
           "category": "buff",
@@ -363,11 +363,11 @@
   },
   {
     "itemId": "equip.mount_guard_helm",
-    "name": "镇岭盔",
+    "name": "鎮嶺盔",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "盔壁很厚，像把半圈矮城墙扣在了头上。",
+    "desc": "盔壁很厚，像把半圈矮城牆扣在了頭上。",
     "equipSlot": "head",
     "effects": [
       {
@@ -399,11 +399,11 @@
   },
   {
     "itemId": "equip.mountainseal_plate",
-    "name": "封岳甲",
+    "name": "封嶽甲",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "甲心像压着半座山印，硬碰硬时最能把人往死里钉。",
+    "desc": "甲心像壓著半座山印，硬碰硬時最能把人往死裡釘。",
     "equipSlot": "body",
     "effects": [
       {
@@ -435,11 +435,11 @@
   },
   {
     "itemId": "equip.deepvein_core",
-    "name": "厚脉核",
+    "name": "厚脈核",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "像一枚被地气反复压实的脉核，行功时很会往主脉里聚劲。",
+    "desc": "像一枚被地氣反覆壓實的脈核，行功時很會往主脈裡聚勁。",
     "equipSlot": "accessory",
     "equipBaselinePercents": {
       "realmExpPerTick": 90,
@@ -448,11 +448,11 @@
   },
   {
     "itemId": "equip.returnbreath_copper_pendant",
-    "name": "归息铜佩",
+    "name": "歸息銅佩",
     "type": "equipment",
     "grade": "yellow",
     "level": 19,
-    "desc": "听脉之后发下来的小铜佩，佩口虽旧，却很会把散出去的真气慢慢拢回来。",
+    "desc": "聽脈之後發下來的小銅佩，佩口雖舊，卻很會把散出去的真氣慢慢攏回來。",
     "equipSlot": "accessory",
     "equipBaselinePercents": {
       "techniqueExpPerTick": 90
@@ -460,11 +460,11 @@
   },
   {
     "itemId": "equip.vineguide_staff",
-    "name": "养枝引脉杖",
+    "name": "養枝引脈杖",
     "type": "equipment",
     "grade": "yellow",
     "level": 19,
-    "desc": "藤芯削成的细杖，挥出去时像在牵着周身经脉一同舒展开。",
+    "desc": "藤芯削成的細杖，揮出去時像在牽著周身經脈一同舒展開。",
     "equipSlot": "weapon",
     "effects": [
       {
@@ -475,9 +475,9 @@
         "chance": 0.24,
         "buff": {
           "buffId": "equip.vineguide_sustain",
-          "name": "养枝",
+          "name": "養枝",
           "duration": 4,
-          "shortMark": "养",
+          "shortMark": "養",
           "category": "buff",
           "visibility": "public",
           "color": "#7fbc63",
@@ -496,11 +496,11 @@
   },
   {
     "itemId": "equip.verdant_crown",
-    "name": "青萝束冠",
+    "name": "青蘿束冠",
     "type": "equipment",
     "grade": "yellow",
     "level": 19,
-    "desc": "细藤束成的浅冠，戴久了能让人下意识放缓呼吸。",
+    "desc": "細藤束成的淺冠，戴久了能讓人下意識放緩呼吸。",
     "equipSlot": "head",
     "equipBaselinePercents": {
       "techniqueExpPerTick": 95
@@ -512,7 +512,7 @@
     "type": "equipment",
     "grade": "yellow",
     "level": 19,
-    "desc": "细尺里封着一缕寒汐潮气，出手时更容易把气机引到对方脉门上。",
+    "desc": "細尺裡封著一縷寒汐潮氣，出手時更容易把氣機引到對方脈門上。",
     "equipSlot": "weapon",
     "equipBaselinePercents": {
       "spellAtk": 85,
@@ -522,11 +522,11 @@
   },
   {
     "itemId": "equip.cleantide_robe",
-    "name": "净潮法衣",
+    "name": "淨潮法衣",
     "type": "equipment",
     "grade": "yellow",
     "level": 21,
-    "desc": "用净潮水精反复浸过的法衣，最擅长把杂气挡在衣外。",
+    "desc": "用淨潮水精反覆浸過的法衣，最擅長把雜氣擋在衣外。",
     "equipSlot": "body",
     "equipBaselinePercents": {
       "maxQi": 55,
@@ -536,11 +536,11 @@
   },
   {
     "itemId": "equip.ember_scorch_spear",
-    "name": "赤陨灼枪",
+    "name": "赤隕灼槍",
     "type": "equipment",
     "grade": "yellow",
     "level": 19,
-    "desc": "枪锋烫得发暗，最适合一口气捅进人还没稳住的空门。",
+    "desc": "槍鋒燙得發暗，最適合一口氣捅進人還沒穩住的空門。",
     "equipSlot": "weapon",
     "equipBaselinePercents": {
       "physAtk": 80,
@@ -550,11 +550,11 @@
   },
   {
     "itemId": "equip.furnace_red_ring",
-    "name": "炉心赤戒",
+    "name": "爐心赤戒",
     "type": "equipment",
     "grade": "mystic",
     "level": 26,
-    "desc": "戒心里封着一粒炉心赤晶，真正开打时会把人的火劲再往上顶半截。",
+    "desc": "戒心裡封著一粒爐心赤晶，真正開打時會把人的火勁再往上頂半截。",
     "equipSlot": "accessory",
     "effects": [
       {
@@ -585,11 +585,11 @@
   },
   {
     "itemId": "equip.guizang_conflux_blade",
-    "name": "归藏合流刃",
+    "name": "歸藏合流刃",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "刀脊里压着多股细气，挥起来像把几路劲同时并成一股。",
+    "desc": "刀脊裡壓著多股細氣，揮起來像把幾路勁同時併成一股。",
     "equipSlot": "weapon",
     "equipBaselinePercents": {
       "physAtk": 75,
@@ -600,11 +600,11 @@
   },
   {
     "itemId": "equip.returnarray_boots",
-    "name": "回阵行履",
+    "name": "回陣行履",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "靴底留着旧阵步纹，踩在乱流甬道里比寻常鞋更容易抢回步点。",
+    "desc": "靴底留著舊陣步紋，踩在亂流甬道里比尋常鞋更容易搶回步點。",
     "equipSlot": "legs",
     "equipBaselinePercents": {
       "dodge": 60,
@@ -614,11 +614,11 @@
   },
   {
     "itemId": "equip.qi_crimson_pattern_furnace",
-    "name": "赤纹丹炉",
+    "name": "赤紋丹爐",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "炉壁内嵌赤纹与净潮细槽，能把练气期药性收束得更稳。",
+    "desc": "爐壁內嵌赤紋與淨潮細槽，能把練氣期藥性收束得更穩。",
     "equipSlot": "technique_alchemy",
     "tags": [
       "alchemy_furnace"
@@ -626,9 +626,9 @@
     "contextActions": [
       {
         "id": "alchemy:open",
-        "name": "炼丹",
+        "name": "煉丹",
         "type": "craft",
-        "desc": "查看当前丹炉、丹方目录与炼制状态。",
+        "desc": "查看當前丹爐、丹方目錄與煉製狀態。",
         "cooldownLeft": 0
       }
     ],
@@ -641,11 +641,11 @@
   },
   {
     "itemId": "equip.qi_fengyue_forging_tongs",
-    "name": "锋岳炼器钳",
+    "name": "鋒嶽煉器鉗",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "钳口一边开锋一边镇岳，夹住器胚时不容易让灵纹散开。",
+    "desc": "鉗口一邊開鋒一邊鎮嶽，夾住器胚時不容易讓靈紋散開。",
     "equipSlot": "technique_forging",
     "tags": [
       "forging_tool"
@@ -653,9 +653,9 @@
     "contextActions": [
       {
         "id": "forging:open",
-        "name": "炼器",
+        "name": "煉器",
         "type": "craft",
-        "desc": "查看当前炼器工具与器方目录。",
+        "desc": "查看當前煉器工具與器方目錄。",
         "cooldownLeft": 0
       }
     ],
@@ -668,11 +668,11 @@
   },
   {
     "itemId": "equip.qi_fivephase_enhancement_hammer",
-    "name": "五炁强化锤",
+    "name": "五炁強化錘",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "锤头嵌着五炁尘，落锤时能短暂调平器物五行。",
+    "desc": "錘頭嵌著五炁塵，落錘時能短暫調平器物五行。",
     "equipSlot": "technique_enhancement",
     "tags": [
       "enhancement_hammer"
@@ -680,9 +680,9 @@
     "contextActions": [
       {
         "id": "enhancement:open",
-        "name": "强化",
+        "name": "強化",
         "type": "craft",
-        "desc": "查看当前强化候选、保护材料与强化状态。",
+        "desc": "查看當前強化候選、保護材料與強化狀態。",
         "cooldownLeft": 0
       }
     ],
@@ -695,11 +695,11 @@
   },
   {
     "itemId": "equip.qi_guizang_mining_pickaxe",
-    "name": "归藏矿镐",
+    "name": "歸藏礦鎬",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "镐尖压着归藏脉纹，敲入矿脉时能顺着暗脉裂开。",
+    "desc": "鎬尖壓著歸藏脈紋，敲入礦脈時能順著暗脈裂開。",
     "equipSlot": "technique_mining",
     "tags": [
       "mining_pickaxe"
@@ -707,9 +707,9 @@
     "contextActions": [
       {
         "id": "mining:start",
-        "name": "挖矿",
+        "name": "挖礦",
         "type": "craft",
-        "desc": "选择视野内矿脉，开始一个可在技艺任务列表中查看和取消的挖矿任务。",
+        "desc": "選擇視野內礦脈，開始一個可在技藝任務列表中查看和取消的挖礦任務。",
         "cooldownLeft": 0,
         "requiresTarget": true,
         "targetMode": "tile",
@@ -726,11 +726,11 @@
   },
   {
     "itemId": "equip.qi_halfbase_building_hammer",
-    "name": "半基营造锤",
+    "name": "半基營造錘",
     "type": "equipment",
     "grade": "mystic",
     "level": 29,
-    "desc": "锤柄中藏半基灵胚，定柱、压梁时更容易把地气压稳。",
+    "desc": "錘柄中藏半基靈胚，定柱、壓梁時更容易把地氣壓穩。",
     "equipSlot": "technique_building",
     "tags": [
       "building_hammer"
@@ -738,9 +738,9 @@
     "contextActions": [
       {
         "id": "building:open",
-        "name": "营造",
+        "name": "營造",
         "type": "craft",
-        "desc": "打开营造菜单，并使用当前建造锤处理建造意图。",
+        "desc": "打開營造菜單，並使用當前建造錘處理建造意圖。",
         "cooldownLeft": 0
       }
     ],

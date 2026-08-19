@@ -1,8 +1,8 @@
 [
   {
     "id": "spirit_gathering",
-    "name": "聚灵阵",
-    "desc": "持续抬升范围内地块的炼化中性灵气。",
+    "name": "聚靈陣",
+    "desc": "持續抬升範圍內地塊的煉化中性靈氣。",
     "minSpiritStoneCount": 100,
     "damagePerAura": 100,
     "cost": {
@@ -45,8 +45,8 @@
   },
   {
     "id": "earth_stabilizing",
-    "name": "固脉阵",
-    "desc": "稳固范围内地脉，阻止可攻击地块复生和临时地块自然消散，按效果灵力降低可拆除地块受到的伤害，并使范围内受损地块每息额外恢复 1% 最大生命。",
+    "name": "固脈陣",
+    "desc": "穩固範圍內地脈，阻止可攻擊地塊復生和臨時地塊自然消散，按效果靈力降低可拆除地塊受到的傷害，並使範圍內受損地塊每息額外恢復 1% 最大生命。",
     "minSpiritStoneCount": 1000,
     "damagePerAura": 100,
     "cost": {
@@ -89,8 +89,8 @@
   },
   {
     "id": "warding_barrier",
-    "name": "太玄封界阵",
-    "desc": "以太玄阵纹封锁四方，阵法边界等同墙体阻挡通行与视线，攻击任意边界都会消耗阵眼灵力。",
+    "name": "太玄封界陣",
+    "desc": "以太玄陣紋封鎖四方，陣法邊界等同牆體阻擋通行與視線，攻擊任意邊界都會消耗陣眼靈力。",
     "minSpiritStoneCount": 100,
     "damagePerAura": 100,
     "cost": {
@@ -138,8 +138,8 @@
   },
   {
     "id": "demon_sealing",
-    "name": "封魔阵",
-    "desc": "压制范围内所有妖兽，每点强度提供一层压制；多座封魔阵重叠时只取最高层数，并按实际压制幅度同步降低击杀经验。",
+    "name": "封魔陣",
+    "desc": "壓制範圍內所有妖獸，每點強度提供一層壓制；多座封魔陣重疊時只取最高層數，並按實際壓制幅度同步降低擊殺經驗。",
     "minSpiritStoneCount": 100,
     "damagePerAura": 100,
     "cost": {
@@ -181,8 +181,8 @@
   },
   {
     "id": "sky_veil",
-    "name": "遮天阵",
-    "desc": "遮蔽范围内修士感知，每点强度降低 10% 视野；多座遮天阵重叠时只取最高强度。",
+    "name": "遮天陣",
+    "desc": "遮蔽範圍內修士感知，每點強度降低 10% 視野；多座遮天陣重疊時只取最高強度。",
     "minSpiritStoneCount": 100,
     "damagePerAura": 100,
     "cost": {
@@ -224,8 +224,8 @@
   },
   {
     "id": "sect_guardian_barrier",
-    "name": "护宗大阵",
-    "desc": "护持宗门山门的特殊大阵，阵眼位于宗门内部，主世界入口处形成默认一格封界；本宗门修士可自由通行。",
+    "name": "護宗大陣",
+    "desc": "護持宗門山門的特殊大陣，陣眼位於宗門內部，主世界入口處形成預設一格封界；本宗門修士可自由通行。",
     "lifecycle": "persistent",
     "placeableByDisk": false,
     "access": {
@@ -268,7 +268,7 @@
       "color": "#fde68a",
       "showText": false,
       "rangeHighlightColor": "#f59e0b",
-      "boundaryChar": "护",
+      "boundaryChar": "護",
       "boundaryColor": "#e0f7ff",
       "boundaryRangeHighlightColor": "#67e8f9",
       "eyeVisibleWithoutSenseQi": false,

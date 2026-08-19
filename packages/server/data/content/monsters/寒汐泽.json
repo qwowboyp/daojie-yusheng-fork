@@ -1,7 +1,7 @@
 [
   {
     "id": "m_cold_tide_sprite",
-    "name": "寒汐蜉灵",
+    "name": "寒汐蜉靈",
     "char": "灵",
     "color": "#b8e6ff",
     "grade": "yellow",
@@ -42,7 +42,7 @@
       },
       {
         "itemId": "equip.returnbreath_copper_pendant",
-        "name": "归息铜佩",
+        "name": "歸息銅佩",
         "type": "equipment",
         "count": 1
       },
@@ -54,13 +54,13 @@
       },
       {
         "itemId": "book.hanxi_ximai",
-        "name": "《寒汐洗脉法》",
+        "name": "《寒汐洗脈法》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.ningchao_hushen",
-        "name": "《凝潮护身经》",
+        "name": "《凝潮護身經》",
         "type": "skill_book",
         "count": 1
       }
@@ -90,7 +90,7 @@
   },
   {
     "id": "m_cold_marsh_wraith",
-    "name": "浅泽雾鬼",
+    "name": "淺澤霧鬼",
     "char": "鬼",
     "color": "#9fd1dc",
     "grade": "yellow",
@@ -131,19 +131,19 @@
       },
       {
         "itemId": "equip.cleantide_robe",
-        "name": "净潮法衣",
+        "name": "淨潮法衣",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.ningchao_hushen",
-        "name": "《凝潮护身经》",
+        "name": "《凝潮護身經》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.hanxi_ximai",
-        "name": "《寒汐洗脉法》",
+        "name": "《寒汐洗脈法》",
         "type": "skill_book",
         "count": 1
       }
@@ -173,7 +173,7 @@
   },
   {
     "id": "m_cold_pattern_guard",
-    "name": "冰纹水卒",
+    "name": "冰紋水卒",
     "char": "卒",
     "color": "#7eb9cf",
     "grade": "mystic",
@@ -220,31 +220,31 @@
       },
       {
         "itemId": "equip.cleantide_robe",
-        "name": "净潮法衣",
+        "name": "淨潮法衣",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.hanxi_ximai",
-        "name": "《寒汐洗脉法》",
+        "name": "《寒汐洗脈法》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.ningchao_hushen",
-        "name": "《凝潮护身经》",
+        "name": "《凝潮護身經》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.xuanjing_luoyin",
-        "name": "《玄镜落印诀》",
+        "name": "《玄鏡落印訣》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -274,7 +274,7 @@
   },
   {
     "id": "m_cold_mirror_shade",
-    "name": "寒宫镜妖",
+    "name": "寒宮鏡妖",
     "char": "镜",
     "color": "#bfdaf2",
     "grade": "mystic",
@@ -309,13 +309,13 @@
       },
       {
         "itemId": "cleantide_essence",
-        "name": "净潮水精",
+        "name": "淨潮水精",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -346,7 +346,7 @@
   },
   {
     "id": "m_cold_moonscale",
-    "name": "月沼鲛影",
+    "name": "月沼鮫影",
     "char": "鲛",
     "color": "#8dd0e8",
     "grade": "mystic",
@@ -377,7 +377,7 @@
       },
       {
         "itemId": "cleantide_essence",
-        "name": "净潮水精",
+        "name": "淨潮水精",
         "type": "material",
         "count": 1
       },
@@ -389,19 +389,19 @@
       },
       {
         "itemId": "equip.cleantide_robe",
-        "name": "净潮法衣",
+        "name": "淨潮法衣",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.xuanjin_huilan",
-        "name": "《玄津回澜录》",
+        "name": "《玄津回瀾錄》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -433,7 +433,7 @@
   },
   {
     "id": "m_cold_bridge_patrol",
-    "name": "雾桥巡灵",
+    "name": "霧橋巡靈",
     "char": "巡",
     "color": "#d7eefc",
     "grade": "earth",
@@ -472,7 +472,7 @@
       },
       {
         "itemId": "cleantide_essence",
-        "name": "净潮水精",
+        "name": "淨潮水精",
         "type": "material",
         "count": 1
       },
@@ -484,25 +484,25 @@
       },
       {
         "itemId": "equip.cleantide_robe",
-        "name": "净潮法衣",
+        "name": "淨潮法衣",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.hanxi_ximai",
-        "name": "《寒汐洗脉法》",
+        "name": "《寒汐洗脈法》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.ningchao_hushen",
-        "name": "《凝潮护身经》",
+        "name": "《凝潮護身經》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.xuanjing_luoyin",
-        "name": "《玄镜落印诀》",
+        "name": "《玄鏡落印訣》",
         "type": "skill_book",
         "count": 1
       },
@@ -564,7 +564,7 @@
     "drops": [
       {
         "itemId": "cleantide_essence",
-        "name": "净潮水精",
+        "name": "淨潮水精",
         "type": "material",
         "count": 1
       },
@@ -582,13 +582,13 @@
       },
       {
         "itemId": "equip.cleantide_robe",
-        "name": "净潮法衣",
+        "name": "淨潮法衣",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.taiyin_guichao",
-        "name": "《太阴归潮经》",
+        "name": "《太陰歸潮經》",
         "type": "skill_book",
         "count": 1
       }

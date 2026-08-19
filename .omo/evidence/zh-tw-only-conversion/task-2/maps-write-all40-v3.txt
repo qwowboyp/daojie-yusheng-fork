@@ -1,0 +1,40 @@
+  [已轉換] packages/server/data/maps/yunlai_town.json（80 處文本改寫，網格層/char 保持原樣）
+  [已轉換] packages/server/data/maps/deepvein_ridge.json（1 處文本改寫，網格層/char 保持原樣）
+  [無差異] packages/server/data/maps/guizang_vein_cavern.json
+  [無差異] packages/server/data/maps/yunxu_terrace.json
+  [無差異] packages/server/data/maps/ancient_ruins.json
+  [無差異] packages/server/data/maps/ancient_ruins_monument_hall.json
+  [無差異] packages/server/data/maps/bamboo_forest.json
+  [無差異] packages/server/data/maps/bamboo_forest_mantis_court.json
+  [無差異] packages/server/data/maps/beast_valley.json
+  [無差異] packages/server/data/maps/beast_valley_blood_altar.json
+  [無差異] packages/server/data/maps/black_iron_mine.json
+  [無差異] packages/server/data/maps/black_iron_mine_molten_heart.json
+  [已轉換] packages/server/data/maps/blazewood_waste.json（1 處文本改寫，網格層/char 保持原樣）
+  [無差異] packages/server/data/maps/cleft_blade_plain.json
+  [無差異] packages/server/data/maps/cold_tide_marsh.json
+  [無差異] packages/server/data/maps/compose/verdant_vine_vale/verdant_vine_vale_01_entry.json
+  [無差異] packages/server/data/maps/compose/verdant_vine_vale/verdant_vine_vale_02_slope.json
+  [無差異] packages/server/data/maps/compose/verdant_vine_vale/verdant_vine_vale_03_bridge.json
+  [無差異] packages/server/data/maps/compose/verdant_vine_vale/verdant_vine_vale_04_garden.json
+  [無差異] packages/server/data/maps/compose/verdant_vine_vale/verdant_vine_vale_05_inner_hollow.json
+  [無差異] packages/server/data/maps/compose/verdant_vine_vale/verdant_vine_vale_06_heart_gate.json
+  [已轉換] packages/server/data/maps/darksoil_abyss.json（1 處文本改寫，網格層/char 保持原樣）
+  [無差異] packages/server/data/maps/emberfall_court.json
+  [無差異] packages/server/data/maps/frostblade_abyss.json
+  [無差異] packages/server/data/maps/heaven_ladder.json
+  [無差異] packages/server/data/maps/prison.json
+  [無差異] packages/server/data/maps/qizhen_crossing.json
+  [無差異] packages/server/data/maps/ruined_cavern_manor.json
+  [無差異] packages/server/data/maps/sky_ruins.json
+  [無差異] packages/server/data/maps/sky_ruins_core_well.json
+  [無差異] packages/server/data/maps/spirit_ridge.json
+  [無差異] packages/server/data/maps/spirit_ridge_old_gate.json
+  [無差異] packages/server/data/maps/wildlands.json
+  [無差異] packages/server/data/maps/wildlands_gale_den.json
+  [無差異] packages/server/data/maps/yunlai_town_apothecary_cellar.json
+  [無差異] packages/server/data/maps/yunlai_town_inn_2f.json
+  [無差異] packages/server/data/maps/yunlai_town_lake_bottom_grotto.json
+  [無差異] packages/server/data/maps/yunlai_town_old_shrine_crypt.json
+  [無差異] packages/server/data/maps/yunlai_town_ore_basement.json
+  [無差異] packages/server/data/maps/yunlai_town_south_gate_tower_2f.json

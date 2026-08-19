@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "yunlai_town_inn_2f",
-  "name": "云来镇·沈记脚店二楼",
+  "name": "雲來鎮·沈記腳店二樓",
   "mapGroupId": "yunlai_town",
-  "mapGroupName": "云来镇",
+  "mapGroupName": "雲來鎮",
   "mapGroupOrder": 10,
   "mapGroupMemberOrder": 102,
   "width": 20,
@@ -12,7 +12,7 @@
   "mapLv": 1,
   "spaceVisionMode": "parent_overlay",
   "parentMapId": "yunlai_town",
-  "description": "脚店二楼隔成两间通铺和一条过道，南北开窗，白日里采光最好。",
+  "description": "腳店二樓隔成兩間通鋪和一條過道，南北開窗，白日里採光最好。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草草草",
@@ -88,10 +88,10 @@
   "landmarks": [
     {
       "id": "lm_inn_2f_guest_chest",
-      "name": "寄宿客床头柜",
+      "name": "寄宿客床頭櫃",
       "x": 15,
       "y": 2,
-      "desc": "靠窗的床头柜还留着旧住客没带走的药散和零碎行李。",
+      "desc": "靠窗的床頭櫃還留著舊住客沒帶走的藥散和零碎行李。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1800,
@@ -145,10 +145,10 @@
     },
     {
       "id": "lm_inn_2f_baggage",
-      "name": "散客旧包袱",
+      "name": "散客舊包袱",
       "x": 3,
       "y": 2,
-      "desc": "靠墙堆着一只旧包袱，里头塞着换洗布和几包常备散剂。",
+      "desc": "靠牆堆著一隻舊包袱，裡頭塞著換洗布和幾包常備散劑。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1700,
@@ -205,7 +205,7 @@
       "name": "客房洗漱架",
       "x": 9,
       "y": 2,
-      "desc": "架上摆着木盆、布巾和剩下半瓶的跌打药。",
+      "desc": "架上擺著木盆、布巾和剩下半瓶的跌打藥。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1650,
@@ -259,10 +259,10 @@
     },
     {
       "id": "lm_inn_2f_window_table",
-      "name": "临窗小几",
+      "name": "臨窗小几",
       "x": 9,
       "y": 10,
-      "desc": "小几上还搁着茶盏和外地客留下的随身药包。",
+      "desc": "小几上還擱著茶盞和外地客留下的隨身藥包。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1600,

@@ -2,14 +2,14 @@
   "quests": [
     {
       "id": "q_valley_bone_heap",
-      "title": "谷边收遗骨",
-      "desc": "重伤巡山弟子恳请收殓同门遗骸。击退裂齿妖狼，收回妖狼骨，以告慰于生者。",
-      "story": "兽谷里没什么体面活法，能给同门收回几根骨头，已经算恩情。",
-      "objectiveText": "击退裂齿妖狼，收回妖狼骨",
+      "title": "谷邊收遺骨",
+      "desc": "重傷巡山弟子懇請收殮同門遺骸。擊退裂齒妖狼，收回妖狼骨，以告慰於生者。",
+      "story": "獸谷里沒什麼體面活法，能給同門收回幾根骨頭，已經算恩情。",
+      "objectiveText": "擊退裂齒妖狼，收回妖狼骨",
       "targetMonsterId": "m_valley_wolf",
       "targetCount": 6,
       "targetMapId": "beast_valley",
-      "targetName": "裂齿妖狼",
+      "targetName": "裂齒妖狼",
       "requiredItemId": "demon_wolf_bone",
       "requiredItemCount": 8,
       "reward": [
@@ -28,20 +28,20 @@
     },
     {
       "id": "q_ridge_tiger_claw",
-      "title": "取爪修旧路",
-      "desc": "守岭老修以岭兽爪修缮山路旧桩。猎取灵脊虎，收回岭兽爪，可换得轻身之物。",
-      "story": "灵脊岭不是讲道理的地方，想在这里留条路，靠的是一件件捡回来的硬东西。",
-      "objectiveText": "猎取灵脊虎，收回岭兽爪",
+      "title": "取爪修舊路",
+      "desc": "守嶺老修以嶺獸爪修繕山路舊樁。獵取靈脊虎，收回嶺獸爪，可換得輕身之物。",
+      "story": "靈脊嶺不是講道理的地方，想在這裡留條路，靠的是一件件撿回來的硬東西。",
+      "objectiveText": "獵取靈脊虎，收回嶺獸爪",
       "targetMonsterId": "m_spirit_tiger",
       "targetCount": 6,
       "targetMapId": "spirit_ridge",
-      "targetName": "灵脊虎",
+      "targetName": "靈脊虎",
       "requiredItemId": "ridge_beast_claw",
       "requiredItemCount": 6,
       "reward": [
         {
           "itemId": "pill.windstride_elixir",
-          "name": "轻身丹",
+          "name": "輕身丹",
           "type": "consumable",
           "count": 1
         }
@@ -55,26 +55,26 @@
     },
     {
       "id": "q_ridge_frost_essence_side",
-      "title": "霜华清躁脉",
-      "desc": "守岭老修嘱咐收取霜华精粹，以镇经脉中的躁气，为叩门之前的最后一番调息。",
-      "story": "越临近门槛，越要知道什么时候该快，什么时候该停。",
-      "objectiveText": "猎杀寒翎鹤，收回霜华精粹",
+      "title": "霜華清躁脈",
+      "desc": "守嶺老修囑咐收取霜華精粹，以鎮經脈中的躁氣，為叩門之前的最後一番調息。",
+      "story": "越臨近門檻，越要知道什麼時候該快，什麼時候該停。",
+      "objectiveText": "獵殺寒翎鶴，收回霜華精粹",
       "targetMonsterId": "m_frost_crane",
       "targetCount": 6,
       "targetMapId": "spirit_ridge",
-      "targetName": "寒翎鹤",
+      "targetName": "寒翎鶴",
       "requiredItemId": "frost_essence",
       "requiredItemCount": 4,
       "reward": [
         {
           "itemId": "major_qi_pill",
-          "name": "大还灵丹",
+          "name": "大還靈丹",
           "type": "consumable",
           "count": 2
         },
         {
           "itemId": "pill.break_array_elixir",
-          "name": "破阵丹",
+          "name": "破陣丹",
           "type": "consumable",
           "count": 1
         },

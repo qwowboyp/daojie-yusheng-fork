@@ -1,7 +1,7 @@
 [
   {
     "id": "m_darksoil_beetle",
-    "name": "玄土甲虫",
+    "name": "玄土甲蟲",
     "char": "虫",
     "color": "#8a7050",
     "grade": "earth",
@@ -36,13 +36,13 @@
     "drops": [
       {
         "itemId": "mat.darksoil_carapace",
-        "name": "玄土甲壳",
+        "name": "玄土甲殼",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "mat.earth_beetle_core",
-        "name": "土虫内核",
+        "name": "土蟲內核",
         "type": "material",
         "count": 1,
         "chance": 0.25
@@ -115,14 +115,14 @@
       },
       {
         "itemId": "mat.earth_centipede_segment",
-        "name": "蜈蚣节甲",
+        "name": "蜈蚣節甲",
         "type": "material",
         "count": 1,
         "chance": 0.35
       },
       {
         "itemId": "mat.deep_earth_venom",
-        "name": "地脉蜈毒",
+        "name": "地脈蜈毒",
         "type": "material",
         "count": 1,
         "chance": 0.12
@@ -233,7 +233,7 @@
   },
   {
     "id": "m_darksoil_dragon",
-    "name": "玄壤地龙",
+    "name": "玄壤地龍",
     "char": "龙",
     "color": "#4a3020",
     "grade": "heaven",
@@ -270,27 +270,27 @@
     "drops": [
       {
         "itemId": "mat.dragon_spine_bone",
-        "name": "地龙脊骨",
+        "name": "地龍脊骨",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "mat.dragon_inner_core",
-        "name": "地龙内丹",
+        "name": "地龍內丹",
         "type": "material",
         "count": 1,
         "chance": 0.2
       },
       {
         "itemId": "mat.deep_earth_essence",
-        "name": "深渊土精",
+        "name": "深淵土精",
         "type": "material",
         "count": 1,
         "chance": 0.4
       },
       {
         "itemId": "mat.void_boundary_crystal",
-        "name": "太虚界晶",
+        "name": "太虛界晶",
         "type": "material",
         "count": 1,
         "chance": 0.001
@@ -321,7 +321,7 @@
   },
   {
     "id": "m_fivephase_devourer",
-    "name": "五行噬脉兽",
+    "name": "五行噬脈獸",
     "char": "噬",
     "color": "#8060a0",
     "grade": "heaven",
@@ -358,7 +358,7 @@
     "drops": [
       {
         "itemId": "mat.devourer_beast_core",
-        "name": "噬脉兽核",
+        "name": "噬脈獸核",
         "type": "material",
         "count": 1
       },
@@ -371,14 +371,14 @@
       },
       {
         "itemId": "mat.fivephase_vein_crystal",
-        "name": "五行脉晶",
+        "name": "五行脈晶",
         "type": "material",
         "count": 1,
         "chance": 0.08
       },
       {
         "itemId": "mat.void_boundary_crystal",
-        "name": "太虚界晶",
+        "name": "太虛界晶",
         "type": "material",
         "count": 1,
         "chance": 0.001

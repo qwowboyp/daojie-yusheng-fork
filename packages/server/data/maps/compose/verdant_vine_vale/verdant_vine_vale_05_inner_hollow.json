@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "verdant_vine_vale_05_inner_hollow",
-  "name": "青萝谷·05盘根内坳",
+  "name": "青蘿谷·05盤根內坳",
   "mapGroupId": "verdant_vine_vale",
-  "mapGroupName": "青萝谷",
+  "mapGroupName": "青蘿谷",
   "mapGroupOrder": 40,
   "mapGroupMemberOrder": 5,
   "width": 32,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 27,
   "spaceVisionMode": "isolated",
-  "description": "青萝谷第四段子图。盘根内坳表面还给人留着外宽的空间，真往里走，盘根墙、木瘤地包和老藤拱门会把主路一口口收成喉道，越靠近深处越像被整片根系往心口挤。",
+  "description": "青蘿谷第四段子圖。盤根內坳表面還給人留著外寬的空間，真往裡走，盤根牆、木瘤地包和老藤拱門會把主路一口口收成喉道，越靠近深處越像被整片根系往心口擠。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
@@ -206,7 +206,7 @@
     {
       "resourceNodeId": "landmark.herb.longvein_vine",
       "idPrefix": "lm_verdant_05_longvein",
-      "name": "长脉藤",
+      "name": "長脈藤",
       "placements": [
         {
           "x": 25,
@@ -221,7 +221,7 @@
     {
       "resourceNodeId": "landmark.herb.returnspring_leaf",
       "idPrefix": "lm_verdant_05_returnspring",
-      "name": "回春叶",
+      "name": "回春葉",
       "placements": [
         {
           "x": 25,

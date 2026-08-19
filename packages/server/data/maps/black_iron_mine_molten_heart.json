@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "black_iron_mine_molten_heart",
-  "name": "玄铁矿洞·玄脉熔心",
+  "name": "玄鐵礦洞·玄脈熔心",
   "mapGroupId": "black_iron_mine_molten_heart",
-  "mapGroupName": "玄铁矿洞",
+  "mapGroupName": "玄鐵礦洞",
   "mapGroupOrder": 1000,
   "mapGroupMemberOrder": 0,
   "width": 18,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 10,
   "spaceVisionMode": "isolated",
-  "description": "旧锻炉下方还压着一口没完全冷透的熔心矿锅，裸露的玄铁与灵矿碎光把整座矿腔都照得发暗。",
+  "description": "舊鍛爐下方還壓著一口沒完全冷透的熔心礦鍋，裸露的玄鐵與靈礦碎光把整座礦腔都照得發暗。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草",
@@ -101,10 +101,10 @@
   "landmarks": [
     {
       "id": "lm_molten_heart_crucible",
-      "name": "熔心矿锅",
+      "name": "熔心礦鍋",
       "x": 13,
       "y": 5,
-      "desc": "矿腔中央像炉又像井，黑红矿浆沿着裂缝缓缓鼓动，噬铁矿君就守着这里吞吃所有还能熔进自己体内的铁脉。"
+      "desc": "礦腔中央像爐又像井，黑紅礦漿沿著裂縫緩緩鼓動，噬鐵礦君就守著這裡吞吃所有還能熔進自己體內的鐵脈。"
     }
   ]
 }

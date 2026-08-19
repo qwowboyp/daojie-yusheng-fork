@@ -2,22 +2,22 @@
   "quests": [
     {
       "id": "q_sky_observer_talk",
-      "title": "残宫问真相",
+      "title": "殘宮問真相",
       "line": "main",
-      "chapter": "第五章·残宫封天",
-      "story": "破境练气后，清玄方许入天穹残宫。此地较矿洞、遗迹、兽谷更近真相核心，亦为凡人篇中最凶险之所。需先见观星残影，问明封柱崩塌之由。",
-      "desc": "前往天穹残宫，与观星残影对话，探问封柱真相。",
+      "chapter": "第五章·殘宮封天",
+      "story": "破境練氣後，清玄方許入天穹殘宮。此地較礦洞、遺蹟、獸谷更近真相核心，亦為凡人篇中最兇險之所。需先見觀星殘影，問明封柱崩塌之由。",
+      "desc": "前往天穹殘宮，與觀星殘影對話，探問封柱真相。",
       "objectiveType": "talk",
-      "objectiveText": "前往天穹残宫，与观星残影对话",
+      "objectiveText": "前往天穹殘宮，與觀星殘影對話",
       "targetNpcId": "npc_sky_observer",
-      "targetNpcName": "观星残影",
+      "targetNpcName": "觀星殘影",
       "targetMapId": "sky_ruins",
-      "targetName": "观星残影",
+      "targetName": "觀星殘影",
       "required": 1,
       "reward": [
         {
           "itemId": "recovery_powder",
-          "name": "回灵散",
+          "name": "回靈散",
           "type": "consumable",
           "count": 1
         }
@@ -30,23 +30,23 @@
     },
     {
       "id": "q_sky_star_metal_main",
-      "title": "夺回星陨金",
+      "title": "奪回星隕金",
       "line": "main",
-      "chapter": "第五章·残宫封天",
-      "story": "观星残影言，封柱崩断之前，残宫曾降星铁之雨。欲补天门裂口，须先自猎者手中夺回足够星陨金，令凡人亦得持触天门之物。",
-      "desc": "击败天宫猎者，夺回星陨金。",
-      "objectiveText": "击败天宫猎者，夺取星陨金",
+      "chapter": "第五章·殘宮封天",
+      "story": "觀星殘影言，封柱崩斷之前，殘宮曾降星鐵之雨。欲補天門裂口，須先自獵者手中奪回足夠星隕金，令凡人亦得持觸天門之物。",
+      "desc": "擊敗天宮獵者，奪回星隕金。",
+      "objectiveText": "擊敗天宮獵者，奪取星隕金",
       "targetMonsterId": "m_void_hunter",
       "targetCount": 6,
       "targetMapId": "sky_ruins",
-      "targetName": "天宫猎者",
+      "targetName": "天宮獵者",
       "required": 6,
       "requiredItemId": "star_metal",
       "requiredItemCount": 4,
       "reward": [
         {
           "itemId": "pill.break_array_elixir",
-          "name": "破阵丹",
+          "name": "破陣丹",
           "type": "consumable",
           "count": 1
         }
@@ -61,27 +61,27 @@
       "id": "q_sky_seal_core_main",
       "title": "取天封核心",
       "line": "main",
-      "chapter": "第五章·残宫封天",
-      "story": "星陨金既得，观星残影让开最后一路。言残宫深处非藏宝之地，实为卡于天门与人间之碎骨。须深入击败噬星兽，取回天封核心，为云来镇争得存续之机。",
-      "desc": "深入残宫，击败噬星兽，取回天封核心。",
-      "objectiveText": "击败噬星兽，取回天封核心",
+      "chapter": "第五章·殘宮封天",
+      "story": "星隕金既得，觀星殘影讓開最後一路。言殘宮深處非藏寶之地，實為卡於天門與人間之碎骨。須深入擊敗噬星獸，取回天封核心，為雲來鎮爭得存續之機。",
+      "desc": "深入殘宮，擊敗噬星獸，取回天封核心。",
+      "objectiveText": "擊敗噬星獸，取回天封核心",
       "targetMonsterId": "m_star_devourer",
       "targetCount": 2,
       "targetMapId": "sky_ruins",
-      "targetName": "噬星兽",
+      "targetName": "噬星獸",
       "required": 2,
       "requiredItemId": "sky_seal_core",
       "requiredItemCount": 1,
       "reward": [
         {
           "itemId": "book.starfall_spear",
-          "name": "《陨星枪诀》",
+          "name": "《隕星槍訣》",
           "type": "skill_book",
           "count": 1
         },
         {
           "itemId": "recovery_powder",
-          "name": "回灵散",
+          "name": "回靈散",
           "type": "consumable",
           "count": 2
         }

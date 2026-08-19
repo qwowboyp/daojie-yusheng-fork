@@ -4,7 +4,7 @@
     {
       "fromRealmLv": 1,
       "toRealmLv": 2,
-      "title": "炼皮试手",
+      "title": "煉皮試手",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -16,14 +16,14 @@
           "id": "bw_1_2_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 25,
-          "label": "六维总属性达到 25"
+          "label": "六維總屬性達到 25"
         }
       ]
     },
     {
       "fromRealmLv": 2,
       "toRealmLv": 3,
-      "title": "锻骨立根",
+      "title": "鍛骨立根",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -36,21 +36,21 @@
           "type": "technique",
           "minLevel": 2,
           "count": 1,
-          "label": "至少有 1 门功法修至 2 级",
+          "label": "至少有 1 門功法修至 2 級",
           "increaseAttrRequirementPct": 60
         },
         {
           "id": "bw_2_3_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 55,
-          "label": "六维总属性达到 55"
+          "label": "六維總屬性達到 55"
         }
       ]
     },
     {
       "fromRealmLv": 3,
       "toRealmLv": 4,
-      "title": "易筋活络",
+      "title": "易筋活絡",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -63,21 +63,21 @@
           "type": "technique",
           "minLevel": 4,
           "count": 1,
-          "label": "至少有 1 门功法修至 4 级",
+          "label": "至少有 1 門功法修至 4 級",
           "increaseAttrRequirementPct": 60
         },
         {
           "id": "bw_3_4_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 111,
-          "label": "六维总属性达到 111"
+          "label": "六維總屬性達到 111"
         }
       ]
     },
     {
       "fromRealmLv": 4,
       "toRealmLv": 5,
-      "title": "洗髓聚势",
+      "title": "洗髓聚勢",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -90,21 +90,21 @@
           "type": "technique",
           "minLevel": 6,
           "count": 1,
-          "label": "至少有 1 门功法修至 6 级",
+          "label": "至少有 1 門功法修至 6 級",
           "increaseAttrRequirementPct": 70
         },
         {
           "id": "bw_4_5_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 168,
-          "label": "六维总属性达到 168"
+          "label": "六維總屬性達到 168"
         }
       ]
     },
     {
       "fromRealmLv": 5,
       "toRealmLv": 6,
-      "title": "养气开门",
+      "title": "養氣開門",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -117,21 +117,21 @@
           "type": "technique",
           "minRealm": "Minor",
           "count": 1,
-          "label": "至少有 1 门功法达到小成",
+          "label": "至少有 1 門功法達到小成",
           "increaseAttrRequirementPct": 70
         },
         {
           "id": "bw_5_6_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 200,
-          "label": "六维总属性达到 200"
+          "label": "六維總屬性達到 200"
         }
       ]
     },
     {
       "fromRealmLv": 6,
       "toRealmLv": 7,
-      "title": "通脉引息",
+      "title": "通脈引息",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -144,21 +144,21 @@
           "type": "technique",
           "minLevel": 8,
           "count": 1,
-          "label": "至少有 1 门功法修至 8 级",
+          "label": "至少有 1 門功法修至 8 級",
           "increaseAttrRequirementPct": 70
         },
         {
           "id": "bw_6_7_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 222,
-          "label": "六维总属性达到 222"
+          "label": "六維總屬性達到 222"
         }
       ]
     },
     {
       "fromRealmLv": 7,
       "toRealmLv": 8,
-      "title": "瑶光点命",
+      "title": "瑤光點命",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -171,21 +171,21 @@
           "type": "technique",
           "minRealm": "Minor",
           "count": 1,
-          "label": "至少有 1 门功法达到小成",
+          "label": "至少有 1 門功法達到小成",
           "increaseAttrRequirementPct": 70
         },
         {
           "id": "bw_7_8_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 288,
-          "label": "六维总属性达到 288"
+          "label": "六維總屬性達到 288"
         }
       ]
     },
     {
       "fromRealmLv": 8,
       "toRealmLv": 9,
-      "title": "开阳试锋",
+      "title": "開陽試鋒",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -198,21 +198,21 @@
           "type": "technique",
           "minRealm": "Major",
           "count": 1,
-          "label": "至少有 1 门功法达到大成",
+          "label": "至少有 1 門功法達到大成",
           "increaseAttrRequirementPct": 80
         },
         {
           "id": "bw_8_9_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 340,
-          "label": "六维总属性达到 340"
+          "label": "六維總屬性達到 340"
         }
       ]
     },
     {
       "fromRealmLv": 9,
       "toRealmLv": 10,
-      "title": "玉衡定势",
+      "title": "玉衡定勢",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -225,21 +225,21 @@
           "type": "technique",
           "minLevel": 10,
           "count": 1,
-          "label": "至少有 1 门功法修至 10 级",
+          "label": "至少有 1 門功法修至 10 級",
           "increaseAttrRequirementPct": 80
         },
         {
           "id": "bw_9_10_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 428,
-          "label": "六维总属性达到 428"
+          "label": "六維總屬性達到 428"
         }
       ]
     },
     {
       "fromRealmLv": 10,
       "toRealmLv": 11,
-      "title": "天权定衡",
+      "title": "天權定衡",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -253,21 +253,21 @@
           "minGrade": "yellow",
           "minRealm": "Major",
           "count": 1,
-          "label": "至少有 1 门黄阶功法达到大成",
+          "label": "至少有 1 門黃階功法達到大成",
           "increaseAttrRequirementPct": 90
         },
         {
           "id": "bw_10_11_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 500,
-          "label": "六维总属性达到 500"
+          "label": "六維總屬性達到 500"
         }
       ]
     },
     {
       "fromRealmLv": 11,
       "toRealmLv": 12,
-      "title": "天玑藏锋",
+      "title": "天璣藏鋒",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -281,21 +281,21 @@
           "minGrade": "yellow",
           "minRealm": "Major",
           "count": 1,
-          "label": "至少有 1 门黄阶功法达到大成",
+          "label": "至少有 1 門黃階功法達到大成",
           "increaseAttrRequirementPct": 90
         },
         {
           "id": "bw_11_12_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 588,
-          "label": "六维总属性达到 588"
+          "label": "六維總屬性達到 588"
         }
       ]
     },
     {
       "fromRealmLv": 12,
       "toRealmLv": 13,
-      "title": "天璇试关",
+      "title": "天璇試關",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -309,21 +309,21 @@
           "minGrade": "yellow",
           "minRealm": "Major",
           "count": 1,
-          "label": "至少有 1 门黄阶功法达到大成",
+          "label": "至少有 1 門黃階功法達到大成",
           "increaseAttrRequirementPct": 90
         },
         {
           "id": "bw_12_13_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 666,
-          "label": "六维总属性达到 666"
+          "label": "六維總屬性達到 666"
         }
       ]
     },
     {
       "fromRealmLv": 13,
       "toRealmLv": 14,
-      "title": "天枢归轴",
+      "title": "天樞歸軸",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -337,21 +337,21 @@
           "minGrade": "yellow",
           "minRealm": "Major",
           "count": 1,
-          "label": "至少有 1 门黄阶功法达到大成",
+          "label": "至少有 1 門黃階功法達到大成",
           "increaseAttrRequirementPct": 100
         },
         {
           "id": "bw_13_14_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 720,
-          "label": "六维总属性达到 720"
+          "label": "六維總屬性達到 720"
         }
       ]
     },
     {
       "fromRealmLv": 14,
       "toRealmLv": 15,
-      "title": "宗师立势",
+      "title": "宗師立勢",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -365,21 +365,21 @@
           "minGrade": "yellow",
           "minLevel": 10,
           "count": 1,
-          "label": "至少有 1 门黄阶功法修至圆满",
+          "label": "至少有 1 門黃階功法修至圓滿",
           "increaseAttrRequirementPct": 110
         },
         {
           "id": "bw_14_15_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 750,
-          "label": "六维总属性达到 750"
+          "label": "六維總屬性達到 750"
         }
       ]
     },
     {
       "fromRealmLv": 15,
       "toRealmLv": 16,
-      "title": "大宗师归炁",
+      "title": "大宗師歸炁",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -393,21 +393,21 @@
           "minGrade": "yellow",
           "minLevel": 10,
           "count": 1,
-          "label": "至少有 1 门黄阶功法修至圆满",
+          "label": "至少有 1 門黃階功法修至圓滿",
           "increaseAttrRequirementPct": 110
         },
         {
           "id": "bw_15_16_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 1111,
-          "label": "六维总属性达到 1111"
+          "label": "六維總屬性達到 1111"
         }
       ]
     },
     {
       "fromRealmLv": 16,
       "toRealmLv": 17,
-      "title": "临渊凝锋",
+      "title": "臨淵凝鋒",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -420,21 +420,21 @@
           "type": "technique",
           "minRealm": "Major",
           "count": 2,
-          "label": "至少有 2 门功法达到大成",
+          "label": "至少有 2 門功法達到大成",
           "increaseAttrRequirementPct": 120
         },
         {
           "id": "bw_16_17_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 1250,
-          "label": "六维总属性达到 1250"
+          "label": "六維總屬性達到 1250"
         }
       ]
     },
     {
       "fromRealmLv": 17,
       "toRealmLv": 18,
-      "title": "叩门问真",
+      "title": "叩門問真",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -448,14 +448,14 @@
           "minGrade": "yellow",
           "minLevel": 10,
           "count": 1,
-          "label": "至少有 1 门黄阶功法修至圆满",
+          "label": "至少有 1 門黃階功法修至圓滿",
           "increaseAttrRequirementPct": 120
         },
         {
           "id": "bw_17_18_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 1444,
-          "label": "六维总属性达到 1444"
+          "label": "六維總屬性達到 1444"
         }
       ]
     },
@@ -476,27 +476,27 @@
           "minGrade": "yellow",
           "minLevel": 10,
           "count": 1,
-          "label": "至少有 1 门黄阶功法修至圆满",
+          "label": "至少有 1 門黃階功法修至圓滿",
           "increaseAttrRequirementPct": 120
         },
         {
           "id": "bw_18_19_any_root",
           "type": "root",
           "minValue": 1,
-          "label": "任意灵根达到 1"
+          "label": "任意靈根達到 1"
         },
         {
           "id": "bw_18_19_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 1920,
-          "label": "六维总属性达到 1920"
+          "label": "六維總屬性達到 1920"
         }
       ]
     },
     {
       "fromRealmLv": 19,
       "toRealmLv": 20,
-      "title": "二层养脉",
+      "title": "二層養脈",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -509,21 +509,21 @@
           "type": "technique",
           "minGrade": "yellow",
           "count": 1,
-          "label": "至少掌握 1 门黄阶功法",
+          "label": "至少掌握 1 門黃階功法",
           "increaseAttrRequirementPct": 40
         },
         {
           "id": "bw_19_20_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 2000,
-          "label": "六维总属性达到 2000"
+          "label": "六維總屬性達到 2000"
         }
       ]
     },
     {
       "fromRealmLv": 20,
       "toRealmLv": 21,
-      "title": "三层凝露",
+      "title": "三層凝露",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -537,21 +537,21 @@
           "minGrade": "yellow",
           "minLevel": 2,
           "count": 1,
-          "label": "至少有 1 门黄阶功法修至 2 级",
+          "label": "至少有 1 門黃階功法修至 2 級",
           "increaseAttrRequirementPct": 50
         },
         {
           "id": "bw_20_21_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 2088,
-          "label": "六维总属性达到 2088"
+          "label": "六維總屬性達到 2088"
         }
       ]
     },
     {
       "fromRealmLv": 21,
       "toRealmLv": 22,
-      "title": "四层承岳",
+      "title": "四層承嶽",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -565,21 +565,21 @@
           "minGrade": "yellow",
           "minLevel": 4,
           "count": 1,
-          "label": "至少有 1 门黄阶功法修至 4 级",
+          "label": "至少有 1 門黃階功法修至 4 級",
           "increaseAttrRequirementPct": 60
         },
         {
           "id": "bw_21_22_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 2170,
-          "label": "六维总属性达到 2170"
+          "label": "六維總屬性達到 2170"
         }
       ]
     },
     {
       "fromRealmLv": 22,
       "toRealmLv": 23,
-      "title": "五层熬火",
+      "title": "五層熬火",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -593,21 +593,21 @@
           "minGrade": "yellow",
           "minLevel": 6,
           "count": 1,
-          "label": "至少有 1 门黄阶功法修至 6 级",
+          "label": "至少有 1 門黃階功法修至 6 級",
           "increaseAttrRequirementPct": 70
         },
         {
           "id": "bw_22_23_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 2250,
-          "label": "六维总属性达到 2250"
+          "label": "六維總屬性達到 2250"
         }
       ]
     },
     {
       "fromRealmLv": 23,
       "toRealmLv": 24,
-      "title": "六层凝锋",
+      "title": "六層凝鋒",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -621,21 +621,21 @@
           "minGrade": "yellow",
           "minRealm": "Minor",
           "count": 1,
-          "label": "至少有 1 门黄阶功法达到小成",
+          "label": "至少有 1 門黃階功法達到小成",
           "increaseAttrRequirementPct": 75
         },
         {
           "id": "bw_23_24_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 2730,
-          "label": "六维总属性达到 2730"
+          "label": "六維總屬性達到 2730"
         }
       ]
     },
     {
       "fromRealmLv": 24,
       "toRealmLv": 25,
-      "title": "七层续炁",
+      "title": "七層續炁",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -648,21 +648,21 @@
           "type": "technique",
           "minGrade": "yellow",
           "count": 1,
-          "label": "至少掌握 1 门黄阶功法",
+          "label": "至少掌握 1 門黃階功法",
           "increaseAttrRequirementPct": 80
         },
         {
           "id": "bw_24_25_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 2888,
-          "label": "六维总属性达到 2888"
+          "label": "六維總屬性達到 2888"
         }
       ]
     },
     {
       "fromRealmLv": 25,
       "toRealmLv": 26,
-      "title": "八层聚海",
+      "title": "八層聚海",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -675,21 +675,21 @@
           "type": "technique",
           "minGrade": "yellow",
           "count": 1,
-          "label": "至少掌握 1 门黄阶功法",
+          "label": "至少掌握 1 門黃階功法",
           "increaseAttrRequirementPct": 90
         },
         {
           "id": "bw_25_26_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 3000,
-          "label": "六维总属性达到 3000"
+          "label": "六維總屬性達到 3000"
         }
       ]
     },
     {
       "fromRealmLv": 26,
       "toRealmLv": 27,
-      "title": "九层凝真",
+      "title": "九層凝真",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -702,21 +702,21 @@
           "type": "technique",
           "minGrade": "yellow",
           "count": 1,
-          "label": "至少掌握 1 门黄阶功法",
+          "label": "至少掌握 1 門黃階功法",
           "increaseAttrRequirementPct": 100
         },
         {
           "id": "bw_26_27_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 3140,
-          "label": "六维总属性达到 3140"
+          "label": "六維總屬性達到 3140"
         }
       ]
     },
     {
       "fromRealmLv": 27,
       "toRealmLv": 28,
-      "title": "巅峰临门",
+      "title": "巔峰臨門",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -730,21 +730,21 @@
           "minGrade": "yellow",
           "minRealm": "Major",
           "count": 1,
-          "label": "至少有 1 门黄阶功法达到大成",
+          "label": "至少有 1 門黃階功法達到大成",
           "increaseAttrRequirementPct": 100
         },
         {
           "id": "bw_27_28_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 3666,
-          "label": "六维总属性达到 3666"
+          "label": "六維總屬性達到 3666"
         }
       ]
     },
     {
       "fromRealmLv": 28,
       "toRealmLv": 29,
-      "title": "圆满归一",
+      "title": "圓滿歸一",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -758,21 +758,21 @@
           "minGrade": "yellow",
           "minRealm": "Major",
           "count": 1,
-          "label": "至少有 1 门黄阶功法达到大成",
+          "label": "至少有 1 門黃階功法達到大成",
           "increaseAttrRequirementPct": 110
         },
         {
           "id": "bw_28_29_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 3888,
-          "label": "六维总属性达到 3888"
+          "label": "六維總屬性達到 3888"
         }
       ]
     },
     {
       "fromRealmLv": 29,
       "toRealmLv": 30,
-      "title": "半步筑基",
+      "title": "半步築基",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -786,21 +786,21 @@
           "minGrade": "yellow",
           "minLevel": 10,
           "count": 1,
-          "label": "至少有 1 门黄阶功法修至圆满",
+          "label": "至少有 1 門黃階功法修至圓滿",
           "increaseAttrRequirementPct": 120
         },
         {
           "id": "bw_29_30_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 4288,
-          "label": "六维总属性达到 4288"
+          "label": "六維總屬性達到 4288"
         }
       ]
     },
     {
       "fromRealmLv": 30,
       "toRealmLv": 31,
-      "title": "筑基一层",
+      "title": "築基一層",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -812,14 +812,14 @@
           "id": "bw_30_31_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 29999,
-          "label": "六维总属性达到 29999"
+          "label": "六維總屬性達到 29999"
         }
       ]
     },
     {
       "fromRealmLv": 31,
       "toRealmLv": 32,
-      "title": "筑基二层",
+      "title": "築基二層",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -831,14 +831,14 @@
           "id": "bw_31_32_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 31500,
-          "label": "六维总属性达到 31500"
+          "label": "六維總屬性達到 31500"
         }
       ]
     },
     {
       "fromRealmLv": 32,
       "toRealmLv": 33,
-      "title": "筑基三层",
+      "title": "築基三層",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -850,14 +850,14 @@
           "id": "bw_32_33_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 33000,
-          "label": "六维总属性达到 33000"
+          "label": "六維總屬性達到 33000"
         }
       ]
     },
     {
       "fromRealmLv": 33,
       "toRealmLv": 34,
-      "title": "筑基四层",
+      "title": "築基四層",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -869,14 +869,14 @@
           "id": "bw_33_34_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 39000,
-          "label": "六维总属性达到 39000"
+          "label": "六維總屬性達到 39000"
         }
       ]
     },
     {
       "fromRealmLv": 34,
       "toRealmLv": 35,
-      "title": "筑基五层",
+      "title": "築基五層",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -888,14 +888,14 @@
           "id": "bw_34_35_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 42000,
-          "label": "六维总属性达到 42000"
+          "label": "六維總屬性達到 42000"
         }
       ]
     },
     {
       "fromRealmLv": 35,
       "toRealmLv": 36,
-      "title": "筑基六层",
+      "title": "築基六層",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -907,14 +907,14 @@
           "id": "bw_35_36_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 45500,
-          "label": "六维总属性达到 45500"
+          "label": "六維總屬性達到 45500"
         }
       ]
     },
     {
       "fromRealmLv": 36,
       "toRealmLv": 37,
-      "title": "筑基七层",
+      "title": "築基七層",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -926,14 +926,14 @@
           "id": "bw_36_37_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 56000,
-          "label": "六维总属性达到 56000"
+          "label": "六維總屬性達到 56000"
         }
       ]
     },
     {
       "fromRealmLv": 37,
       "toRealmLv": 38,
-      "title": "筑基八层",
+      "title": "築基八層",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -945,14 +945,14 @@
           "id": "bw_37_38_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 61000,
-          "label": "六维总属性达到 61000"
+          "label": "六維總屬性達到 61000"
         }
       ]
     },
     {
       "fromRealmLv": 38,
       "toRealmLv": 39,
-      "title": "筑基九层",
+      "title": "築基九層",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -964,14 +964,14 @@
           "id": "bw_38_39_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 67000,
-          "label": "六维总属性达到 67000"
+          "label": "六維總屬性達到 67000"
         }
       ]
     },
     {
       "fromRealmLv": 39,
       "toRealmLv": 40,
-      "title": "筑基巅峰",
+      "title": "築基巔峰",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -983,14 +983,14 @@
           "id": "bw_39_40_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 80000,
-          "label": "六维总属性达到 80000"
+          "label": "六維總屬性達到 80000"
         }
       ]
     },
     {
       "fromRealmLv": 40,
       "toRealmLv": 41,
-      "title": "筑基大圆满",
+      "title": "築基大圓滿",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",
@@ -1002,7 +1002,7 @@
           "id": "bw_40_41_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 90000,
-          "label": "六维总属性达到 90000"
+          "label": "六維總屬性達到 90000"
         }
       ]
     },
@@ -1021,14 +1021,14 @@
           "id": "bw_41_42_total_attrs",
           "type": "attribute_total",
           "minTotalValue": 99999,
-          "label": "六维总属性达到 99999"
+          "label": "六維總屬性達到 99999"
         }
       ]
     },
     {
       "fromRealmLv": 42,
       "toRealmLv": 43,
-      "title": "金丹一层",
+      "title": "金丹一層",
       "rootFoundationItems": [
         {
           "itemId": "spirit_stone",

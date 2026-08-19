@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "verdant_vine_vale_01_entry",
-  "name": "青萝谷·01回渡药圃",
+  "name": "青蘿谷·01回渡藥圃",
   "mapGroupId": "verdant_vine_vale",
-  "mapGroupName": "青萝谷",
+  "mapGroupName": "青蘿谷",
   "mapGroupOrder": 40,
   "mapGroupMemberOrder": 1,
   "width": 30,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 19,
   "spaceVisionMode": "isolated",
-  "description": "青萝谷入口子图。回渡药圃先用畦道、藤棚和晒叶台把节奏压慢，人在这里不会马上被木行压力逼死，但一离开药圃主路，藤墙、水沟和湿地就会开始把脚步一点点拽进谷里。",
+  "description": "青蘿谷入口子圖。回渡藥圃先用畦道、藤棚和曬葉臺把節奏壓慢，人在這裡不會馬上被木行壓力逼死，但一離開藥圃主路，藤牆、水溝和溼地就會開始把腳步一點點拽進谷里。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
@@ -207,7 +207,7 @@
     {
       "resourceNodeId": "landmark.herb.longvein_vine",
       "idPrefix": "lm_verdant_01_longvein",
-      "name": "长脉藤",
+      "name": "長脈藤",
       "placements": [
         {
           "x": 16,
@@ -218,7 +218,7 @@
     {
       "resourceNodeId": "landmark.herb.returnspring_leaf",
       "idPrefix": "lm_verdant_01_returnspring",
-      "name": "回春叶",
+      "name": "回春葉",
       "placements": [
         {
           "x": 23,

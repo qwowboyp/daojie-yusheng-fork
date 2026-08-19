@@ -2,15 +2,15 @@
   "quests": [
     {
       "id": "q_mine_overseer_echo",
-      "title": "矿监残魂诉",
-      "desc": "矿监残魂仍以值夜之职自居。须先平息洞中乱窜的晶蝠与活尸，方可归来聆听其所持那份过时矿册中的旧事。",
-      "story": "最可怕的不是死了还不走的人，而是死了还以为自己没出事的人。",
+      "title": "礦監殘魂訴",
+      "desc": "礦監殘魂仍以值夜之職自居。須先平息洞中亂竄的晶蝠與活屍，方可歸來聆聽其所持那份過時礦冊中的舊事。",
+      "story": "最可怕的不是死了還不走的人，而是死了還以為自己沒出事的人。",
       "objectiveType": "talk",
-      "objectiveText": "前往玄铁矿洞，与矿监残魂对话",
+      "objectiveText": "前往玄鐵礦洞，與礦監殘魂對話",
       "targetNpcId": "npc_mine_overseer_ghost",
-      "targetNpcName": "矿监残魂",
+      "targetNpcName": "礦監殘魂",
       "targetMapId": "black_iron_mine",
-      "targetName": "矿监残魂",
+      "targetName": "礦監殘魂",
       "required": 1,
       "reward": [
         {
@@ -29,20 +29,20 @@
     },
     {
       "id": "q_mine_overseer_cleanup",
-      "title": "旧册未销名",
-      "desc": "矿册之上，有一批人从未登记出矿，名字亦未入死籍。需清除洞中游荡的活尸，带回矿晶核，矿监残魂方肯道出后续隐情。",
-      "story": "被记在账上的人未必活着，不在账上的人也未必真死了。",
-      "objectiveText": "清除矿洞活尸，带回矿晶核",
+      "title": "舊冊未銷名",
+      "desc": "礦冊之上，有一批人從未登記出礦，名字亦未入死籍。需清除洞中游蕩的活屍，帶回礦晶核，礦監殘魂方肯道出後續隱情。",
+      "story": "被記在賬上的人未必活著，不在賬上的人也未必真死了。",
+      "objectiveText": "清除礦洞活屍，帶回礦晶核",
       "targetMonsterId": "m_mine_ghoul",
       "targetCount": 6,
       "targetMapId": "black_iron_mine",
-      "targetName": "矿洞活尸",
+      "targetName": "礦洞活屍",
       "requiredItemId": "mine_crystal_core",
       "requiredItemCount": 1,
       "reward": [
         {
           "itemId": "pill.break_array_elixir",
-          "name": "破阵丹",
+          "name": "破陣丹",
           "type": "consumable",
           "count": 1
         }
@@ -55,19 +55,19 @@
     },
     {
       "id": "q_ruin_owl_watch",
-      "title": "碑林驱骨枭",
-      "desc": "碑灵学士为残碑周遭盘旋的骨枭所扰，每述旧事，皆被阴嚎声打断。须先清除骨枭，方能使其从容陈说往昔。",
-      "story": "有些死人比活人更爱讲话，可要让它们开口，也得先替它们把环境收拾干净。",
-      "objectiveText": "清除遗迹骨枭",
+      "title": "碑林驅骨梟",
+      "desc": "碑靈學士為殘碑周遭盤旋的骨梟所擾，每述舊事，皆被陰嚎聲打斷。須先清除骨梟，方能使其從容陳說往昔。",
+      "story": "有些死人比活人更愛講話，可要讓它們開口，也得先替它們把環境收拾乾淨。",
+      "objectiveText": "清除遺蹟骨梟",
       "targetMonsterId": "m_bone_owl",
       "targetCount": 6,
       "targetMapId": "ancient_ruins",
-      "targetName": "遗迹骨枭",
+      "targetName": "遺蹟骨梟",
       "required": 6,
       "reward": [
         {
           "itemId": "major_qi_pill",
-          "name": "大还灵丹",
+          "name": "大還靈丹",
           "type": "consumable",
           "count": 1
         },

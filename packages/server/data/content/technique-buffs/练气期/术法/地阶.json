@@ -4,7 +4,7 @@
     "target": "self",
     "buffId": "buff.baoyuan_guard",
     "name": "抱元",
-    "desc": "抱元守一，双抗短时暴涨。",
+    "desc": "抱元守一，雙抗短時暴漲。",
     "shortMark": "元",
     "category": "buff",
     "visibility": "public",

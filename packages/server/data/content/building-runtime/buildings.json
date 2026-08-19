@@ -1,7 +1,7 @@
 [
   {
     "id": "stone_wall",
-    "name": "石墙",
+    "name": "石牆",
     "visual": { "tileType": "wall", "layer": "structure" },
     "placement": { "layer": "structure", "footprint": [{ "dx": 0, "dy": 0 }] },
     "topology": { "blocksMove": true, "blocksSight": true, "roomBoundary": 100, "shaShield": 20 },
@@ -10,7 +10,7 @@
   },
   {
     "id": "wooden_door",
-    "name": "木门",
+    "name": "木門",
     "visual": { "tileType": "door", "layer": "structure" },
     "placement": { "layer": "structure", "footprint": [{ "dx": 0, "dy": 0 }] },
     "topology": { "blocksMove": false, "blocksSight": false, "roomBoundary": 100, "opening": "door" },
@@ -37,7 +37,7 @@
   },
   {
     "id": "scripture_platform",
-    "name": "藏经台",
+    "name": "藏經臺",
     "placement": { "layer": "facility", "footprint": [{ "dx": 0, "dy": 0 }] },
     "topology": { "blocksMove": true },
     "fengShui": { "elementVector": { "wood": 18, "earth": 4 }, "traits": ["facility.scripture_platform", "storage.scripture"], "comfort": 3, "stability": 10, "qiAffinity": 2 },
@@ -45,8 +45,8 @@
   },
   {
     "id": "treasure_vault",
-    "name": "宝库",
-    "visual": { "glyph": "宝", "color": "#d69e2e", "layer": "furniture" },
+    "name": "寶庫",
+    "visual": { "glyph": "寶", "color": "#d69e2e", "layer": "furniture" },
     "placement": { "layer": "furniture", "footprint": [{ "dx": 0, "dy": 0 }] },
     "topology": { "blocksMove": false },
     "fengShui": { "elementVector": { "earth": 16, "metal": 8 }, "traits": ["facility.treasure_vault", "storage.item"], "stability": 12, "comfort": 2 },
@@ -55,7 +55,7 @@
   },
   {
     "id": "technique_refining_table",
-    "name": "炼法台",
+    "name": "煉法臺",
     "visual": { "glyph": "法", "color": "#7c3aed", "layer": "furniture" },
     "placement": { "layer": "facility", "footprint": [{ "dx": 0, "dy": 0 }] },
     "topology": { "blocksMove": false },
@@ -64,8 +64,8 @@
   },
   {
     "id": "technique_unification_platform",
-    "name": "统法台",
-    "visual": { "glyph": "统", "color": "#4f7664", "layer": "furniture" },
+    "name": "統法臺",
+    "visual": { "glyph": "統", "color": "#4f7664", "layer": "furniture" },
     "placement": { "layer": "facility", "footprint": [{ "dx": 0, "dy": 0 }] },
     "topology": { "blocksMove": false, "blocksSight": false },
     "fengShui": { "elementVector": { "wood": 12, "water": 8, "earth": 4 }, "traits": ["facility.technique_unification", "storage.technique_lineage"], "comfort": 3, "stability": 10, "qiAffinity": 2 },
@@ -83,7 +83,7 @@
   },
   {
     "id": "meditation_mat",
-    "name": "蒲团",
+    "name": "蒲團",
     "visual": { "glyph": "蒲", "color": "#8b5e34", "layer": "furniture" },
     "placement": { "layer": "facility", "footprint": [{ "dx": 0, "dy": 0 }] },
     "topology": { "blocksMove": false },

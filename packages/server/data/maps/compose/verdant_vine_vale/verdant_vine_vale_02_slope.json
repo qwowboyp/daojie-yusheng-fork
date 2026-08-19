@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "verdant_vine_vale_02_slope",
-  "name": "青萝谷·02引藤坡",
+  "name": "青蘿谷·02引藤坡",
   "mapGroupId": "verdant_vine_vale",
-  "mapGroupName": "青萝谷",
+  "mapGroupName": "青蘿谷",
   "mapGroupOrder": 40,
   "mapGroupMemberOrder": 2,
   "width": 30,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 21,
   "spaceVisionMode": "isolated",
-  "description": "青萝谷第一段子图。引藤坡不是直着抬升的坡，而是被横藤、湿地边和碎石桩切成几次弯折，主路像被一路拽着走，左右明明有空地，却总让人觉得停不住脚。",
+  "description": "青蘿谷第一段子圖。引藤坡不是直著抬升的坡，而是被橫藤、溼地邊和碎石樁切成幾次彎折，主路像被一路拽著走，左右明明有空地，卻總讓人覺得停不住腳。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
@@ -207,7 +207,7 @@
     {
       "resourceNodeId": "landmark.herb.longvein_vine",
       "idPrefix": "lm_verdant_02_longvein",
-      "name": "长脉藤",
+      "name": "長脈藤",
       "placements": [
         {
           "x": 23,
@@ -218,7 +218,7 @@
     {
       "resourceNodeId": "landmark.herb.returnspring_leaf",
       "idPrefix": "lm_verdant_02_returnspring",
-      "name": "回春叶",
+      "name": "回春葉",
       "placements": [
         {
           "x": 6,

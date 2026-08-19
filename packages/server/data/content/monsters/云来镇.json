@@ -1,7 +1,7 @@
 [
   {
     "id": "m_town_rat_south",
-    "name": "南沟灰尾鼠",
+    "name": "南溝灰尾鼠",
     "char": "鼠",
     "color": "#9b9b9b",
     "radius": 5,
@@ -49,7 +49,7 @@
   },
   {
     "id": "m_town_rat_refuse",
-    "name": "废棚灰尾鼠",
+    "name": "廢棚灰尾鼠",
     "char": "鼠",
     "color": "#8f8f8f",
     "radius": 3,
@@ -97,7 +97,7 @@
   },
   {
     "id": "m_gate_thug",
-    "name": "断路暴徒",
+    "name": "斷路暴徒",
     "char": "匪",
     "color": "#ba6f5a",
     "radius": 6,
@@ -159,14 +159,14 @@
       },
       {
         "itemId": "book.iron_bone_art",
-        "name": "《铁骨功》",
+        "name": "《鐵骨功》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.01
       },
       {
         "itemId": "equip.trench_runner_boots",
-        "name": "越沟快靴",
+        "name": "越溝快靴",
         "type": "equipment",
         "count": 1
       }

@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "prison",
-  "name": "监牢",
+  "name": "監牢",
   "mapGroupId": "prison",
-  "mapGroupName": "监牢",
+  "mapGroupName": "監牢",
   "mapGroupOrder": 1000,
   "mapGroupMemberOrder": 0,
   "width": 20,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 1,
   "spaceVisionMode": "isolated",
-  "description": "四面空空，只余一片无遮无拦的囚场。",
+  "description": "四面空空，只餘一片無遮無攔的囚場。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草草草",

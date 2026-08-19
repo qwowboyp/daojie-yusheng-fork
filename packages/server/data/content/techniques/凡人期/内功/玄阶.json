@@ -1,8 +1,8 @@
 [
   {
     "id": "stillheart",
-    "name": "止念诀",
-    "desc": "万念俱止，心如止水；杂念不起，神识自明。",
+    "name": "止念訣",
+    "desc": "萬念俱止，心如止水；雜念不起，神識自明。",
     "grade": "mystic",
     "category": "internal",
     "realmLv": 15,
@@ -17,8 +17,8 @@
   },
   {
     "id": "lightshadow_art",
-    "name": "折影提气诀",
-    "desc": "身折光影，步踏虚空；提一口气，身形已在数丈之外。",
+    "name": "折影提氣訣",
+    "desc": "身折光影，步踏虛空；提一口氣，身形已在數丈之外。",
     "grade": "mystic",
     "category": "internal",
     "realmLv": 16,
@@ -33,8 +33,8 @@
   },
   {
     "id": "body_tempering_formula",
-    "name": "锻体决",
-    "desc": "千锤百炼，以身为铁、以气为锤，终成金刚不坏。",
+    "name": "鍛體決",
+    "desc": "千錘百煉，以身為鐵、以氣為錘，終成金剛不壞。",
     "grade": "mystic",
     "category": "internal",
     "realmLv": 18,

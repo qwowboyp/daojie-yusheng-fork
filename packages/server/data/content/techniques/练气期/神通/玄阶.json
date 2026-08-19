@@ -1,8 +1,8 @@
 [
   {
     "id": "wildsunder_chart",
-    "name": "八荒裂岳图",
-    "desc": "以裂岳真意锁住落点，轰然震塌一片地脉；层数越高，塌势越重。",
+    "name": "八荒裂嶽圖",
+    "desc": "以裂嶽真意鎖住落點，轟然震塌一片地脈；層數越高，塌勢越重。",
     "grade": "mystic",
     "category": "divine",
     "realmLv": 24,
@@ -27,8 +27,8 @@
     "skills": [
       {
         "id": "skill.wildsunder_fall",
-        "name": "崩界天陨",
-        "desc": "以裂岳真意锁住落点，轰然震塌一片地脉；功法层数越高，塌势越重。",
+        "name": "崩界天隕",
+        "desc": "以裂嶽真意鎖住落點，轟然震塌一片地脈；功法層數越高，塌勢越重。",
         "cooldown": 1800,
         "cost": 20578,
         "costMultiplier": 8,
@@ -74,8 +74,8 @@
   },
   {
     "id": "voidflame_chapter",
-    "name": "太虚劫光篇",
-    "desc": "引太虚劫光覆落成域；层数越高，劫光越盛。",
+    "name": "太虛劫光篇",
+    "desc": "引太虛劫光覆落成域；層數越高，劫光越盛。",
     "grade": "mystic",
     "category": "divine",
     "realmLv": 24,
@@ -100,8 +100,8 @@
     "skills": [
       {
         "id": "skill.voidflame_cataclysm",
-        "name": "劫光灭域",
-        "desc": "引太虚劫光覆落成域，功法层数越高，劫光越盛。",
+        "name": "劫光滅域",
+        "desc": "引太虛劫光覆落成域，功法層數越高，劫光越盛。",
         "cooldown": 1800,
         "cost": 20578,
         "costMultiplier": 8,

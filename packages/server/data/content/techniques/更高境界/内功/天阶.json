@@ -1,8 +1,8 @@
 [
   {
     "id": "ningqi_chengji",
-    "name": "凝气成基法",
-    "desc": "以气为砖、以脉为渠，凝虚成实，筑就大道之基。",
+    "name": "凝氣成基法",
+    "desc": "以氣為磚、以脈為渠，凝虛成實，築就大道之基。",
     "grade": "heaven",
     "category": "internal",
     "realmLv": 31,
@@ -154,8 +154,8 @@
   },
   {
     "id": "xuesha_huanling_jue",
-    "name": "血煞唤灵决",
-    "desc": "更高境界天阶秘术预留位，名称偏血煞召唤或代价型召灵。",
+    "name": "血煞喚靈決",
+    "desc": "更高境界天階秘術預留位，名稱偏血煞召喚或代價型召靈。",
     "grade": "heaven",
     "category": "secret",
     "realmLv": 42,

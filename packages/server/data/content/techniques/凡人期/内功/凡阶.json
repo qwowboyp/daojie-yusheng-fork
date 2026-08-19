@@ -1,8 +1,8 @@
 [
   {
     "id": "standing_stake_art",
-    "name": "站桩功",
-    "desc": "扎根基、稳下盘，凡人锤炼体魄之始。",
+    "name": "站樁功",
+    "desc": "紮根基、穩下盤，凡人錘鍊體魄之始。",
     "grade": "mortal",
     "category": "internal",
     "realmLv": 1,
@@ -17,8 +17,8 @@
   },
   {
     "id": "bear_cauldron_art",
-    "name": "担石功",
-    "desc": "负石而行，以重压催生筋骨之力。",
+    "name": "擔石功",
+    "desc": "負石而行，以重壓催生筋骨之力。",
     "grade": "mortal",
     "category": "internal",
     "realmLv": 5,

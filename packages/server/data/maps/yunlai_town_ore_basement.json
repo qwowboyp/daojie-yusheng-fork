@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "yunlai_town_ore_basement",
-  "name": "云来镇·旧屋矿窖",
+  "name": "雲來鎮·舊屋礦窖",
   "mapGroupId": "yunlai_town",
-  "mapGroupName": "云来镇",
+  "mapGroupName": "雲來鎮",
   "mapGroupOrder": 10,
   "mapGroupMemberOrder": 99,
   "width": 20,
@@ -12,7 +12,7 @@
   "mapLv": 1,
   "spaceVisionMode": "parent_overlay",
   "parentMapId": "yunlai_town",
-  "description": "旧屋下方被人偷偷掏出一间矿窖，岩壁里夹着几条细小灵脉，也裸露出一段发黑的玄铁矿层。",
+  "description": "舊屋下方被人偷偷掏出一間礦窖，巖壁裡夾著幾條細小靈脈，也裸露出一段發黑的玄鐵礦層。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草草草",
@@ -115,26 +115,26 @@
   "landmarks": [
     {
       "id": "lm_ore_basement_spirit_vein",
-      "name": "碎露灵石矿",
+      "name": "碎露靈石礦",
       "x": 11,
       "y": 2,
-      "desc": "矿壁里嵌着零散灵石，稍加开凿就会震落出可用灵石。",
+      "desc": "礦壁裡嵌著零散靈石，稍加開鑿就會震落出可用靈石。",
       "resourceNodeId": "landmark.spirit_ore_vein"
     },
     {
       "id": "lm_ore_basement_black_iron_vein",
-      "name": "玄铁矿脉",
+      "name": "玄鐵礦脈",
       "x": 10,
       "y": 9,
-      "desc": "一段埋得很浅的玄铁矿层，被人粗粗凿开过，留下不少可继续撬取的矿块。",
+      "desc": "一段埋得很淺的玄鐵礦層，被人粗粗鑿開過，留下不少可繼續撬取的礦塊。",
       "resourceNodeId": "landmark.ore_basement_black_iron_vein"
     },
     {
       "id": "lm_ore_basement_tool_rack",
-      "name": "矿工工具架",
+      "name": "礦工工具架",
       "x": 9,
       "y": 9,
-      "desc": "架子上还搁着旧镐、麻绳和没搬走的矿灯零件。",
+      "desc": "架子上還擱著舊鎬、麻繩和沒搬走的礦燈零件。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2000,
@@ -188,10 +188,10 @@
     },
     {
       "id": "lm_ore_basement_miner_chest",
-      "name": "矿工旧木箱",
+      "name": "礦工舊木箱",
       "x": 14,
       "y": 10,
-      "desc": "旧木箱里多是矿工留下的绳索、楔子和几块没带走的矿料。",
+      "desc": "舊木箱裡多是礦工留下的繩索、楔子和幾塊沒帶走的礦料。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2100,

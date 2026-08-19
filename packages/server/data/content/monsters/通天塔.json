@@ -1,7 +1,7 @@
 [
   {
     "id": "m_tongtian_shadow",
-    "name": "虚影",
+    "name": "虛影",
     "char": "影",
     "color": "#8f9bb8",
     "radius": 4,
@@ -41,7 +41,7 @@
   },
   {
     "id": "m_tongtian_shadow_elite",
-    "name": "虚影·精英",
+    "name": "虛影·精英",
     "char": "影",
     "color": "#b7c2e8",
     "radius": 4,

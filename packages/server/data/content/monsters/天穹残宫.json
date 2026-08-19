@@ -1,7 +1,7 @@
 [
   {
     "id": "m_void_hunter",
-    "name": "天宫猎者",
+    "name": "天宮獵者",
     "char": "猎",
     "color": "#9d8cff",
     "radius": 8,
@@ -10,13 +10,13 @@
     "drops": [
       {
         "itemId": "star_metal",
-        "name": "星陨金",
+        "name": "星隕金",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "void_shard",
-        "name": "虚蚀碎片",
+        "name": "虛蝕碎片",
         "type": "material",
         "count": 1
       }
@@ -59,7 +59,7 @@
   },
   {
     "id": "m_sky_puppet",
-    "name": "残宫傀仪",
+    "name": "殘宮傀儀",
     "char": "傀",
     "color": "#96b6d9",
     "radius": 6,
@@ -68,13 +68,13 @@
     "drops": [
       {
         "itemId": "sky_pattern_page",
-        "name": "天纹残页",
+        "name": "天紋殘頁",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.spirit_anchor",
-        "name": "《镇灵篇》",
+        "name": "《鎮靈篇》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.01
@@ -118,7 +118,7 @@
   },
   {
     "id": "m_star_devourer",
-    "name": "噬星残兽精英",
+    "name": "噬星殘獸精英",
     "char": "噬",
     "color": "#ff7e7e",
     "radius": 2,
@@ -134,13 +134,13 @@
       },
       {
         "itemId": "star_metal",
-        "name": "星陨金",
+        "name": "星隕金",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.starfall_spear",
-        "name": "《陨星枪诀》",
+        "name": "《隕星槍訣》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.2
@@ -185,7 +185,7 @@
   },
   {
     "id": "m_fallen_palace_lord",
-    "name": "坠星宫主",
+    "name": "墜星宮主",
     "char": "宫",
     "color": "#ffb86c",
     "radius": 2,
@@ -194,33 +194,33 @@
     "drops": [
       {
         "itemId": "star_metal",
-        "name": "星陨金",
+        "name": "星隕金",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "void_shard",
-        "name": "虚蚀碎片",
+        "name": "虛蝕碎片",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.starfall_spear",
-        "name": "《陨星枪诀》",
+        "name": "《隕星槍訣》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.25
       },
       {
         "itemId": "book.body_tempering_formula",
-        "name": "《锻体决》",
+        "name": "《鍛體決》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.25
       },
       {
         "itemId": "pill.shatter_spirit",
-        "name": "碎灵丹",
+        "name": "碎靈丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.001

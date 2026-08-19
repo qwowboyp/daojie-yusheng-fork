@@ -1,11 +1,11 @@
 [
   {
     "itemId": "equip.copper_luopan",
-    "name": "铜罗盘",
+    "name": "銅羅盤",
     "type": "equipment",
     "grade": "yellow",
     "level": 1,
-    "desc": "凡匠铸成的小罗盘，针脚不算灵敏，却能帮人辨出屋内气机偏向。装备后可使用望气视角观察风水。",
+    "desc": "凡匠鑄成的小羅盤，針腳不算靈敏，卻能幫人辨出屋內氣機偏向。裝備後可使用望氣視角觀察風水。",
     "equipSlot": "weapon",
     "equipSpecialStats": {
       "luck": 1
@@ -13,11 +13,11 @@
   },
   {
     "itemId": "equip.gate_headcloth",
-    "name": "门丁裹头巾",
+    "name": "門丁裹頭巾",
     "type": "equipment",
     "grade": "yellow",
     "level": 2,
-    "desc": "值夜门丁常用的厚布头巾，夜里守门的人比白日看得更细。",
+    "desc": "值夜門丁常用的厚布頭巾，夜裡守門的人比白日看得更細。",
     "equipSlot": "head",
     "effects": [
       {
@@ -51,11 +51,11 @@
   },
   {
     "itemId": "equip.trench_runner_boots",
-    "name": "越沟快靴",
+    "name": "越溝快靴",
     "type": "equipment",
     "grade": "yellow",
     "level": 2,
-    "desc": "鞋跟窄而硬，踩沟跃坎时比寻常鞋更利索。",
+    "desc": "鞋跟窄而硬，踩溝躍坎時比尋常鞋更利索。",
     "equipSlot": "legs",
     "effects": [
       {
@@ -67,7 +67,7 @@
         "buff": {
           "buffId": "equip.runner_step",
           "name": "借步",
-          "desc": "借着余势调整步点，短时间内更易抢到先手。",
+          "desc": "藉著餘勢調整步點，短時間內更易搶到先手。",
           "duration": 2,
           "shortMark": "步",
           "category": "buff",
@@ -87,11 +87,11 @@
   },
   {
     "itemId": "equip.herb_mist_robe",
-    "name": "药烟轻袍",
+    "name": "藥煙輕袍",
     "type": "equipment",
     "grade": "yellow",
     "level": 3,
-    "desc": "晒药时沾过苦烟的薄袍，能稍稍护住气海。",
+    "desc": "曬藥時沾過苦煙的薄袍，能稍稍護住氣海。",
     "equipSlot": "body",
     "equipBaselinePercents": {
       "maxQi": 60,
@@ -101,11 +101,11 @@
   },
   {
     "itemId": "equip.gather_qi_pendant",
-    "name": "采气木坠",
+    "name": "採氣木墜",
     "type": "equipment",
     "grade": "yellow",
     "level": 3,
-    "desc": "刻着简陋聚气纹的木坠，聊胜于无。",
+    "desc": "刻著簡陋聚氣紋的木墜，聊勝於無。",
     "equipSlot": "accessory",
     "equipBaselinePercents": {
       "realmExpPerTick": 70,
@@ -114,11 +114,11 @@
   },
   {
     "itemId": "equip.orebreak_hammer",
-    "name": "矿卫破岩锤",
+    "name": "礦衛破巖錘",
     "type": "equipment",
     "grade": "mystic",
     "level": 3,
-    "desc": "锤头沉得惊人，砸石和砸骨头时都带着同一种闷响。",
+    "desc": "錘頭沉得驚人，砸石和砸骨頭時都帶著同一種悶響。",
     "equipSlot": "weapon",
     "equipBaselinePercents": {
       "physAtk": 85,
@@ -128,11 +128,11 @@
   },
   {
     "itemId": "equip.soot_lamp_hood",
-    "name": "熄火矿灯冠",
+    "name": "熄火礦燈冠",
     "type": "equipment",
     "grade": "mystic",
     "level": 3,
-    "desc": "矿灯虽然熄了，旧灯罩仍能帮人摸清黑暗里的轮廓。",
+    "desc": "礦燈雖然熄了，舊燈罩仍能幫人摸清黑暗裡的輪廓。",
     "equipSlot": "head",
     "effects": [
       {
@@ -161,11 +161,11 @@
   },
   {
     "itemId": "equip.broken_rune_blade",
-    "name": "断碑纹剑",
+    "name": "斷碑紋劍",
     "type": "equipment",
     "grade": "mystic",
     "level": 4,
-    "desc": "剑脊嵌着未熄的残纹，挥动时像是在拖着半截旧阵。",
+    "desc": "劍脊嵌著未熄的殘紋，揮動時像是在拖著半截舊陣。",
     "equipSlot": "weapon",
     "equipBaselinePercents": {
       "physAtk": 85,
@@ -175,11 +175,11 @@
   },
   {
     "itemId": "equip.rift_guard_armor",
-    "name": "镇煞护心甲",
+    "name": "鎮煞護心甲",
     "type": "equipment",
     "grade": "mystic",
     "level": 4,
-    "desc": "甲心嵌着旧镇煞片，护得住胸口那一口气，也护得住人不乱。",
+    "desc": "甲心嵌著舊鎮煞片，護得住胸口那一口氣，也護得住人不亂。",
     "equipSlot": "body",
     "equipBaselinePercents": {
       "maxHp": 45,
@@ -194,7 +194,7 @@
     "type": "equipment",
     "grade": "mystic",
     "level": 4,
-    "desc": "骨牌内封着一缕不肯散去的残意，静修时残意会层层侵体，杀敌时反能回涌一口浊气。",
+    "desc": "骨牌內封著一縷不肯散去的殘意，靜修時殘意會層層侵體，殺敵時反能回湧一口濁氣。",
     "equipSlot": "accessory",
     "tags": [
       "fanren",
@@ -219,9 +219,9 @@
         "buff": {
           "buffId": "equip.soul_devour_erosion",
           "name": "噬元侵骨",
-          "desc": "每息叠一层，四维压制会随着层数不断加深；当前实际降幅会直接显示在状态说明里。",
+          "desc": "每息疊一層，四維壓制會隨著層數不斷加深；當前實際降幅會直接顯示在狀態說明裡。",
           "duration": 3600,
-          "shortMark": "蚀",
+          "shortMark": "蝕",
           "category": "debuff",
           "visibility": "public",
           "persistOnDeath": true,
@@ -237,11 +237,11 @@
   },
   {
     "itemId": "equip.copper_pill_furnace",
-    "name": "铜胎丹炉",
+    "name": "銅胎丹爐",
     "type": "equipment",
     "grade": "yellow",
     "level": 2,
-    "desc": "小巧耐烧的铜胎丹炉，炉壁内侧刻着稳火与散药气的浅纹，正适合初学炼丹者随身携带。",
+    "desc": "小巧耐燒的銅胎丹爐，爐壁內側刻著穩火與散藥氣的淺紋，正適合初學煉丹者隨身攜帶。",
     "equipSlot": "technique_alchemy",
     "tags": [
       "alchemy_furnace"
@@ -249,9 +249,9 @@
     "contextActions": [
       {
         "id": "alchemy:open",
-        "name": "炼丹",
+        "name": "煉丹",
         "type": "craft",
-        "desc": "查看当前丹炉、丹方目录与炼制状态。",
+        "desc": "查看當前丹爐、丹方目錄與煉製狀態。",
         "cooldownLeft": 0
       }
     ],
@@ -264,11 +264,11 @@
   },
   {
     "itemId": "equip.copper_enhancement_hammer",
-    "name": "铜强化锤",
+    "name": "銅強化錘",
     "type": "equipment",
     "grade": "yellow",
     "level": 2,
-    "desc": "锤头嵌着稳灵铜片，敲击时能短暂收束器物灵纹，正适合初学者用来打底强化。",
+    "desc": "錘頭嵌著穩靈銅片，敲擊時能短暫收束器物靈紋，正適合初學者用來打底強化。",
     "equipSlot": "technique_enhancement",
     "tags": [
       "enhancement_hammer"
@@ -276,9 +276,9 @@
     "contextActions": [
       {
         "id": "enhancement:open",
-        "name": "强化",
+        "name": "強化",
         "type": "craft",
-        "desc": "查看当前强化候选、保护材料与强化状态。",
+        "desc": "查看當前強化候選、保護材料與強化狀態。",
         "cooldownLeft": 0
       }
     ],
@@ -291,11 +291,11 @@
   },
   {
     "itemId": "equip.copper_forging_tool",
-    "name": "铜炼器钳",
+    "name": "銅煉器鉗",
     "type": "equipment",
     "grade": "yellow",
     "level": 2,
-    "desc": "铜柄火钳嵌着稳纹小环，能夹持低阶器胚，是初学炼器者最常用的入门工具。",
+    "desc": "銅柄火鉗嵌著穩紋小環，能夾持低階器胚，是初學煉器者最常用的入門工具。",
     "equipSlot": "technique_forging",
     "tags": [
       "forging_tool"
@@ -303,9 +303,9 @@
     "contextActions": [
       {
         "id": "forging:open",
-        "name": "炼器",
+        "name": "煉器",
         "type": "craft",
-        "desc": "查看当前炼器工具与器方目录。",
+        "desc": "查看當前煉器工具與器方目錄。",
         "cooldownLeft": 0
       }
     ],
@@ -318,11 +318,11 @@
   },
   {
     "itemId": "equip.copper_building_hammer",
-    "name": "铜营造锤",
+    "name": "銅營造錘",
     "type": "equipment",
     "grade": "yellow",
     "level": 2,
-    "desc": "锤身刻着规尺短线，可用于夯定梁柱与地基，是营造入门时的基础建造锤。",
+    "desc": "錘身刻著規尺短線，可用於夯定樑柱與地基，是營造入門時的基礎建造錘。",
     "equipSlot": "technique_building",
     "tags": [
       "building_hammer"
@@ -330,9 +330,9 @@
     "contextActions": [
       {
         "id": "building:open",
-        "name": "营造",
+        "name": "營造",
         "type": "craft",
-        "desc": "打开营造菜单，并使用当前建造锤处理建造意图。",
+        "desc": "打開營造菜單，並使用當前建造錘處理建造意圖。",
         "cooldownLeft": 0
       }
     ],
@@ -344,11 +344,11 @@
   },
   {
     "itemId": "equip.copper_mining_pickaxe",
-    "name": "铜矿镐",
+    "name": "銅礦鎬",
     "type": "equipment",
     "grade": "yellow",
     "level": 2,
-    "desc": "镐尖嵌着聚力铜片，挥击矿脉时能集中力道于一点，是矿工入门的基础采掘工具。",
+    "desc": "鎬尖嵌著聚力銅片，揮擊礦脈時能集中力道於一點，是礦工入門的基礎採掘工具。",
     "equipSlot": "technique_mining",
     "tags": [
       "mining_pickaxe"
@@ -356,9 +356,9 @@
     "contextActions": [
       {
         "id": "mining:start",
-        "name": "挖矿",
+        "name": "挖礦",
         "type": "craft",
-        "desc": "选择视野内矿脉，开始一个可在技艺任务列表中查看和取消的挖矿任务。",
+        "desc": "選擇視野內礦脈，開始一個可在技藝任務列表中查看和取消的挖礦任務。",
         "cooldownLeft": 0,
         "requiresTarget": true,
         "targetMode": "tile",

@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "ancient_ruins_monument_hall",
-  "name": "断碑遗迹·断碑主殿",
+  "name": "斷碑遺蹟·斷碑主殿",
   "mapGroupId": "ancient_ruins_monument_hall",
-  "mapGroupName": "断碑遗迹",
+  "mapGroupName": "斷碑遺蹟",
   "mapGroupOrder": 1000,
   "mapGroupMemberOrder": 0,
   "width": 18,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 11,
   "spaceVisionMode": "isolated",
-  "description": "中庭背后的主殿早被裂纹贯穿，残碑、断门和旧司命台依旧保留着某种勉强不散的秩序。",
+  "description": "中庭背後的主殿早被裂紋貫穿，殘碑、斷門和舊司命臺依舊保留著某種勉強不散的秩序。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草",
@@ -101,10 +101,10 @@
   "landmarks": [
     {
       "id": "lm_monument_hall_arbiter_seat",
-      "name": "司命断座",
+      "name": "司命斷座",
       "x": 13,
       "y": 5,
-      "desc": "主殿尽头的石座已经被裂成数段，却还残留着足以驱使旧纹路的余威，裂碑司命正借它重新聚起全殿断纹。"
+      "desc": "主殿盡頭的石座已經被裂成數段，卻還殘留著足以驅使舊紋路的餘威，裂碑司命正借它重新聚起全殿斷紋。"
     }
   ]
 }

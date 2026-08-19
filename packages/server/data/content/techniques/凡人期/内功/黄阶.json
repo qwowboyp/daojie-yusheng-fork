@@ -1,8 +1,8 @@
 [
   {
     "id": "dragon_elephant_bone",
-    "name": "镇骨功",
-    "desc": "以气镇骨，由外而内固本培元。",
+    "name": "鎮骨功",
+    "desc": "以氣鎮骨，由外而內固本培元。",
     "grade": "yellow",
     "category": "internal",
     "realmLv": 7,
@@ -18,7 +18,7 @@
   {
     "id": "golden_lock_body",
     "name": "固元功",
-    "desc": "封关锁窍，使元气不泄、根基不摇。",
+    "desc": "封關鎖竅，使元氣不洩、根基不搖。",
     "grade": "yellow",
     "category": "internal",
     "realmLv": 9,
@@ -33,8 +33,8 @@
   },
   {
     "id": "hundred_temper_body",
-    "name": "壮身功",
-    "desc": "打熬筋骨，以外功催发内劲。",
+    "name": "壯身功",
+    "desc": "打熬筋骨，以外功催發內勁。",
     "grade": "yellow",
     "category": "internal",
     "realmLv": 10,
@@ -49,8 +49,8 @@
   },
   {
     "id": "nourishing_qi_art",
-    "name": "养气诀",
-    "desc": "养气如养珠，绵绵若存，渐成气候。",
+    "name": "養氣訣",
+    "desc": "養氣如養珠，綿綿若存，漸成氣候。",
     "grade": "yellow",
     "category": "internal",
     "realmLv": 11,
@@ -66,7 +66,7 @@
   {
     "id": "cloudchase_steps",
     "name": "分光步",
-    "desc": "步踏光影之间，身随念转而人已换位。",
+    "desc": "步踏光影之間，身隨念轉而人已換位。",
     "grade": "yellow",
     "category": "internal",
     "realmLv": 12,
@@ -81,8 +81,8 @@
   },
   {
     "id": "bright_eye_sutra",
-    "name": "明目经",
-    "desc": "炼目如镜，照见秋毫，神识随之清明。",
+    "name": "明目經",
+    "desc": "煉目如鏡，照見秋毫，神識隨之清明。",
     "grade": "yellow",
     "category": "internal",
     "realmLv": 12,

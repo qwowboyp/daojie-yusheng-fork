@@ -2,17 +2,17 @@
   "quests": [
     {
       "id": "q_wildlands_roadhouse",
-      "title": "荒野问路",
+      "title": "荒野問路",
       "line": "main",
-      "chapter": "第一章·粮路讨生",
-      "story": "云来镇初立足脚，沈七娘即遣往镇外探路。南门通荒野，此路关乎脚店粮货之来源。需先寻访洛猎户，探明粮路现下由何人把持。",
-      "desc": "前往荒野，寻访洛猎户，探明南门粮路现状。",
+      "chapter": "第一章·糧路討生",
+      "story": "雲來鎮初立足腳，沈七娘即遣往鎮外探路。南門通荒野，此路關乎腳店糧貨之來源。需先尋訪洛獵戶，探明糧路現下由何人把持。",
+      "desc": "前往荒野，尋訪洛獵戶，探明南門糧路現狀。",
       "objectiveType": "talk",
-      "objectiveText": "前往荒野，与洛猎户对话",
+      "objectiveText": "前往荒野，與洛獵戶對話",
       "targetNpcId": "npc_hunter_luo",
-      "targetNpcName": "洛猎户",
+      "targetNpcName": "洛獵戶",
       "targetMapId": "wildlands",
-      "targetName": "洛猎户",
+      "targetName": "洛獵戶",
       "required": 1,
       "reward": [
         {
@@ -30,12 +30,12 @@
     },
     {
       "id": "q_wildlands_boar_meat",
-      "title": "猎彘换粮",
+      "title": "獵彘換糧",
       "line": "main",
-      "chapter": "第一章·粮路讨生",
-      "story": "洛猎户言明，荒野猎物日稀，镇中口粮愈紧。欲减南门饿殍，须先猎取獠牙野彘，以彘牙换粮，方解燃眉之急。",
-      "desc": "猎杀荒野獠牙野彘，取回彘牙，交予脚店换取粮食。",
-      "objectiveText": "猎杀獠牙野彘，收取彘牙",
+      "chapter": "第一章·糧路討生",
+      "story": "洛獵戶言明，荒野獵物日稀，鎮中口糧愈緊。欲減南門餓殍，須先獵取獠牙野彘，以彘牙換糧，方解燃眉之急。",
+      "desc": "獵殺荒野獠牙野彘，取回彘牙，交予腳店換取糧食。",
+      "objectiveText": "獵殺獠牙野彘，收取彘牙",
       "targetMonsterId": "m_wild_boar",
       "targetCount": 6,
       "targetMapId": "wildlands",
@@ -46,7 +46,7 @@
       "reward": [
         {
           "itemId": "major_qi_pill",
-          "name": "大还灵丹",
+          "name": "大還靈丹",
           "type": "consumable",
           "count": 1
         }
@@ -61,10 +61,10 @@
       "id": "q_wildlands_bandit_toll",
       "title": "荒野平匪",
       "line": "main",
-      "chapter": "第一章·粮路讨生",
-      "story": "粮货虽至，荒野匪患未除，粮路仍不安稳。马会头与韩铁匠皆言，若欲畅通南门粮道，须先将盘踞荒野的匪徒一并清剿。",
-      "desc": "清剿荒野匪徒，收缴腰牌，疏通南门粮路。",
-      "objectiveText": "击退荒野匪徒，收取腰牌",
+      "chapter": "第一章·糧路討生",
+      "story": "糧貨雖至，荒野匪患未除，糧路仍不安穩。馬會頭與韓鐵匠皆言，若欲暢通南門糧道，須先將盤踞荒野的匪徒一併清剿。",
+      "desc": "清剿荒野匪徒，收繳腰牌，疏通南門糧路。",
+      "objectiveText": "擊退荒野匪徒，收取腰牌",
       "targetMonsterId": "m_wild_bandit",
       "targetCount": 6,
       "targetMapId": "wildlands",
@@ -75,7 +75,7 @@
       "reward": [
         {
           "itemId": "pill.break_array_elixir",
-          "name": "破阵丹",
+          "name": "破陣丹",
           "type": "consumable",
           "count": 1
         }
@@ -88,23 +88,23 @@
     },
     {
       "id": "q_wildlands_swamp_medicine",
-      "title": "阴沼取蛛丝",
+      "title": "陰沼取蛛絲",
       "line": "main",
-      "chapter": "第一章·粮路讨生",
-      "story": "南门暂安，兰药师却言无名伤者日益虚弱，终启药方。需往荒野阴沼猎杀毒蛛，取其完整蛛丝归来，方可配制良药。",
-      "desc": "猎杀阴沼毒蛛，收取蛛丝，交予兰药师配药。",
-      "objectiveText": "猎杀阴沼毒蛛，收取阴沼丝",
+      "chapter": "第一章·糧路討生",
+      "story": "南門暫安，蘭藥師卻言無名傷者日益虛弱，終啟藥方。需往荒野陰沼獵殺毒蛛，取其完整蛛絲歸來，方可配製良藥。",
+      "desc": "獵殺陰沼毒蛛，收取蛛絲，交予蘭藥師配藥。",
+      "objectiveText": "獵殺陰沼毒蛛，收取陰沼絲",
       "targetMonsterId": "m_mire_spider",
       "targetCount": 2,
       "targetMapId": "wildlands",
-      "targetName": "阴沼毒蛛",
+      "targetName": "陰沼毒蛛",
       "required": 2,
       "requiredItemId": "spider_silk",
       "requiredItemCount": 3,
       "reward": [
         {
           "itemId": "book.nourishing_qi_art",
-          "name": "《养气诀》",
+          "name": "《養氣訣》",
           "type": "skill_book",
           "count": 1
         },
@@ -129,22 +129,22 @@
     },
     {
       "id": "q_wildlands_old_gate_words",
-      "title": "旧关问往事",
+      "title": "舊關問往事",
       "line": "main",
-      "chapter": "第一章·粮路讨生",
-      "story": "药虽续命，井边怪语终难释怀。文籍师叔令往北井旧坊寻老关卒，言旧北关当年非单纯失守，实乃内乱先起。需将此情探明，回禀清玄。",
-      "desc": "前往北井旧坊，向老关卒探问旧北关往事，回禀清玄执事。",
+      "chapter": "第一章·糧路討生",
+      "story": "藥雖續命，井邊怪語終難釋懷。文籍師叔令往北井舊坊尋老關卒，言舊北關當年非單純失守，實乃內亂先起。需將此情探明，回稟清玄。",
+      "desc": "前往北井舊坊，向老關卒探問舊北關往事，回稟清玄執事。",
       "objectiveType": "talk",
-      "objectiveText": "向老关卒探问旧北关之事",
+      "objectiveText": "向老關卒探問舊北關之事",
       "targetNpcId": "npc_old_gate_guard",
-      "targetNpcName": "老关卒",
+      "targetNpcName": "老關卒",
       "targetMapId": "yunlai_town",
-      "targetName": "老关卒",
+      "targetName": "老關卒",
       "required": 1,
       "reward": [
         {
           "itemId": "book.iron_bone_art",
-          "name": "《铁骨功》",
+          "name": "《鐵骨功》",
           "type": "skill_book",
           "count": 1
         }
@@ -157,39 +157,39 @@
     },
     {
       "id": "q_wildlands_bone_forging",
-      "title": "锻骨破境",
+      "title": "鍛骨破境",
       "line": "main",
-      "chapter": "第一章·粮路讨生",
-      "story": "清玄闻言不再深究，唯遣往更远处历练。眼下根基尚浅，若欲探明井底真相，须先修至锻骨之境，方能承受荒野更深处之凶险。",
-      "desc": "于荒野持续历练，破境至锻骨，为深入青竹林做准备。",
+      "chapter": "第一章·糧路討生",
+      "story": "清玄聞言不再深究，唯遣往更遠處歷練。眼下根基尚淺，若欲探明井底真相，須先修至鍛骨之境，方能承受荒野更深處之兇險。",
+      "desc": "於荒野持續歷練，破境至鍛骨，為深入青竹林做準備。",
       "objectiveType": "realm_stage",
-      "objectiveText": "历练至锻骨",
+      "objectiveText": "歷練至鍛骨",
       "targetRealmLv": 3,
       "targetMapId": "wildlands",
-      "targetName": "锻骨",
+      "targetName": "鍛骨",
       "required": 1,
       "reward": [
         {
           "itemId": "book_wind_step",
-          "name": "《踏风步》",
+          "name": "《踏風步》",
           "type": "skill_book",
           "count": 1
         },
         {
           "itemId": "book.hundred_temper_body",
-          "name": "《壮身功》",
+          "name": "《壯身功》",
           "type": "skill_book",
           "count": 1
         },
         {
           "itemId": "map.bamboo_forest",
-          "name": "青竹林野图",
+          "name": "青竹林野圖",
           "type": "consumable",
           "count": 1
         },
         {
           "itemId": "pill.windstride_elixir",
-          "name": "轻身丹",
+          "name": "輕身丹",
           "type": "consumable",
           "count": 1
         }

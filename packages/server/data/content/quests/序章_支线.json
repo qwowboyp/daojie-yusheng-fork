@@ -2,20 +2,20 @@
   "quests": [
     {
       "id": "q_han_gate_steel",
-      "title": "城边驱流匪",
-      "desc": "韩铁匠遣令清剿城边流匪，取其铁件与腰牌归缴，以铸门楼与己身兵刃。",
-      "story": "云来镇不缺会抱怨的人，缺的是能把死人和匪徒身上那点东西重新敲成活路的人。",
-      "objectiveText": "清剿城边流匪，缴回匪徒腰牌",
+      "title": "城邊驅流匪",
+      "desc": "韓鐵匠遣令清剿城邊流匪，取其鐵件與腰牌歸繳，以鑄門樓與己身兵刃。",
+      "story": "雲來鎮不缺會抱怨的人，缺的是能把死人和匪徒身上那點東西重新敲成活路的人。",
+      "objectiveText": "清剿城邊流匪，繳回匪徒腰牌",
       "targetMonsterId": "m_gate_thug",
       "targetCount": 6,
       "targetMapId": "yunlai_town",
-      "targetName": "城边流匪",
+      "targetName": "城邊流匪",
       "requiredItemId": "bandit_insignia",
       "requiredItemCount": 3,
       "reward": [
         {
           "itemId": "pill.break_array_elixir",
-          "name": "破阵丹",
+          "name": "破陣丹",
           "type": "consumable",
           "count": 1
         }
@@ -28,20 +28,20 @@
     },
     {
       "id": "q_lan_refuse_tail",
-      "title": "药香驱鼠患",
-      "desc": "药铺后巷废料堆常招鼠患，兰药师令清除灰尾鼠，并取鼠尾归来，以配驱虫之药。",
-      "story": "兰药师嘴上说着「药不轻给」，可谁真替她把脏活做了，她也从不让人白跑。",
-      "objectiveText": "清除药铺后巷鼠患，取回鼠尾",
+      "title": "藥香驅鼠患",
+      "desc": "藥鋪後巷廢料堆常招鼠患，蘭藥師令清除灰尾鼠，並取鼠尾歸來，以配驅蟲之藥。",
+      "story": "蘭藥師嘴上說著「藥不輕給」，可誰真替她把髒活做了，她也從不讓人白跑。",
+      "objectiveText": "清除藥鋪後巷鼠患，取回鼠尾",
       "targetMonsterId": "m_town_rat_refuse",
       "targetCount": 6,
       "targetMapId": "yunlai_town",
-      "targetName": "后巷灰尾鼠",
+      "targetName": "後巷灰尾鼠",
       "requiredItemId": "rat_tail",
       "requiredItemCount": 5,
       "reward": [
         {
           "itemId": "minor_qi_pill",
-          "name": "小还灵丹",
+          "name": "小還靈丹",
           "type": "consumable",
           "count": 1
         },
@@ -66,20 +66,20 @@
     },
     {
       "id": "q_shen_bunk_deposit",
-      "title": "替店传一言",
-      "desc": "沈七娘言明，欲在脚店立足，非徒口食可为。往寻赵老六，传递脚店之言，并归报其语。",
-      "story": "脚店不是善堂，但在这镇里，能让你记住自己还算个人的地方，也就这么几处。",
+      "title": "替店傳一言",
+      "desc": "沈七娘言明，欲在腳店立足，非徒口食可為。往尋趙老六，傳遞腳店之言，並歸報其語。",
+      "story": "腳店不是善堂，但在這鎮裡，能讓你記住自己還算個人的地方，也就這麼幾處。",
       "objectiveType": "talk",
-      "objectiveText": "寻赵老六，传达脚店之言",
+      "objectiveText": "尋趙老六，傳達腳店之言",
       "targetNpcId": "npc_zhao_laoliu",
-      "targetNpcName": "赵老六",
+      "targetNpcName": "趙老六",
       "targetMapId": "yunlai_town",
-      "targetName": "赵老六",
+      "targetName": "趙老六",
       "required": 1,
       "reward": [
         {
           "itemId": "minor_qi_pill",
-          "name": "小还灵丹",
+          "name": "小還靈丹",
           "type": "consumable",
           "count": 1
         },

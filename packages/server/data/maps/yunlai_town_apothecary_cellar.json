@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "yunlai_town_apothecary_cellar",
-  "name": "云来镇·兰氏药铺地窖",
+  "name": "雲來鎮·蘭氏藥鋪地窖",
   "mapGroupId": "yunlai_town",
-  "mapGroupName": "云来镇",
+  "mapGroupName": "雲來鎮",
   "mapGroupOrder": 10,
   "mapGroupMemberOrder": 99,
   "width": 18,
@@ -12,7 +12,7 @@
   "mapLv": 1,
   "spaceVisionMode": "parent_overlay",
   "parentMapId": "yunlai_town",
-  "description": "药铺地窖阴凉干燥，分层放着草药、药酒和临时封存的猎获材料。",
+  "description": "藥鋪地窖陰涼乾燥，分層放著草藥、藥酒和臨時封存的獵獲材料。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草",
@@ -88,10 +88,10 @@
   "landmarks": [
     {
       "id": "lm_apothecary_cellar_crate",
-      "name": "封蜡药材柜",
+      "name": "封蠟藥材櫃",
       "x": 13,
       "y": 2,
-      "desc": "柜屉都打过蜡封，防潮也防鼠，里头多是难得材料。",
+      "desc": "櫃屜都打過蠟封，防潮也防鼠，裡頭多是難得材料。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1600,
@@ -144,10 +144,10 @@
     },
     {
       "id": "lm_apothecary_cellar_jar",
-      "name": "药酒陶缸",
+      "name": "藥酒陶缸",
       "x": 3,
       "y": 1,
-      "desc": "陶缸里封着浸泡药酒，缸沿边上还挂着没刮干净的草渣。",
+      "desc": "陶缸裡封著浸泡藥酒，缸沿邊上還掛著沒刮乾淨的草渣。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1700,
@@ -200,10 +200,10 @@
     },
     {
       "id": "lm_apothecary_cellar_shelf",
-      "name": "低矮药架",
+      "name": "低矮藥架",
       "x": 5,
       "y": 8,
-      "desc": "临时搁在墙边的小药架上堆着零散蛇胆、蛛丝和包好的外用药。",
+      "desc": "臨時擱在牆邊的小藥架上堆著零散蛇膽、蛛絲和包好的外用藥。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1500,
@@ -255,10 +255,10 @@
     },
     {
       "id": "lm_apothecary_cellar_drying_basket",
-      "name": "阴干药篓",
+      "name": "陰乾藥簍",
       "x": 6,
       "y": 2,
-      "desc": "竹篓里铺满了待阴干的草药和细碎蛛丝。",
+      "desc": "竹簍裡鋪滿了待陰乾的草藥和細碎蛛絲。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1500,
@@ -310,10 +310,10 @@
     },
     {
       "id": "lm_apothecary_cellar_spare_cabinet",
-      "name": "封存偏柜",
+      "name": "封存偏櫃",
       "x": 15,
       "y": 9,
-      "desc": "偏柜里存着不常用的外敷药和少量封蜡材料。",
+      "desc": "偏櫃裡存著不常用的外敷藥和少量封蠟材料。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1650,

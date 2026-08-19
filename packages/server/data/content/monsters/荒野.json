@@ -16,7 +16,7 @@
       },
       {
         "itemId": "mat.beast_bone",
-        "name": "妖兽骨",
+        "name": "妖獸骨",
         "type": "material",
         "count": 1
       }
@@ -57,7 +57,7 @@
   },
   {
     "id": "m_swamp_lizard",
-    "name": "泽鳞蜥",
+    "name": "澤鱗蜥",
     "char": "蜥",
     "color": "#7cbf7c",
     "radius": 6,
@@ -66,7 +66,7 @@
     "drops": [
       {
         "itemId": "lizard_scale",
-        "name": "泽鳞",
+        "name": "澤鱗",
         "type": "material",
         "count": 1
       },
@@ -129,7 +129,7 @@
       },
       {
         "itemId": "equip.gate_headcloth",
-        "name": "门丁裹头巾",
+        "name": "門丁裹頭巾",
         "type": "equipment",
         "count": 1
       }
@@ -168,7 +168,7 @@
   },
   {
     "id": "m_mire_spider",
-    "name": "阴沼毒蛛精英",
+    "name": "陰沼毒蛛精英",
     "char": "蛛",
     "color": "#54528a",
     "radius": 5,
@@ -177,7 +177,7 @@
     "drops": [
       {
         "itemId": "spider_silk",
-        "name": "阴沼丝",
+        "name": "陰沼絲",
         "type": "material",
         "count": 1
       },
@@ -227,7 +227,7 @@
   },
   {
     "id": "m_gale_bone_king",
-    "name": "裂风荒王",
+    "name": "裂風荒王",
     "char": "荒",
     "color": "#b68f6a",
     "radius": 2,
@@ -236,7 +236,7 @@
     "drops": [
       {
         "itemId": "spider_silk",
-        "name": "阴沼丝",
+        "name": "陰沼絲",
         "type": "material",
         "count": 1
       },
@@ -248,7 +248,7 @@
       },
       {
         "itemId": "book.cloud_blade",
-        "name": "《流云刀谱》",
+        "name": "《流雲刀譜》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.5
@@ -294,7 +294,7 @@
   },
   {
     "id": "m_dust_vulture",
-    "name": "裂喙秃鹫",
+    "name": "裂喙禿鷲",
     "char": "鹫",
     "color": "#9d8f77",
     "radius": 6,
@@ -309,7 +309,7 @@
       },
       {
         "itemId": "book.cloud_blade",
-        "name": "《流云刀谱》",
+        "name": "《流雲刀譜》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.01

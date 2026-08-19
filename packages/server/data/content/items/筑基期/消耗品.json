@@ -4,12 +4,12 @@
     "name": "寒髓回春丹",
     "type": "consumable",
     "level": 42,
-    "desc": "丹色如霜，入口却生温润春意，能把断续生机重新拢回经络。",
+    "desc": "丹色如霜，入口卻生溫潤春意，能把斷續生機重新攏回經絡。",
     "consumeBuffs": [
       {
         "buffId": "item_buff.pill_foundation_coldmarrow_heal",
         "name": "寒髓回春丹·回生",
-        "desc": "药力护住经络，生命回复暂时大幅提高。",
+        "desc": "藥力護住經絡，生命回覆暫時大幅提高。",
         "shortMark": "生",
         "duration": 120,
         "stats": {
@@ -24,16 +24,16 @@
   },
   {
     "itemId": "pill.foundation_frostspring_qi",
-    "name": "霜泉还灵丹",
+    "name": "霜泉還靈丹",
     "type": "consumable",
     "level": 42,
-    "desc": "霜泉凝作一丸，化开时如清流入海，能引散乱灵机重归气海。",
+    "desc": "霜泉凝作一丸，化開時如清流入海，能引散亂靈機重歸氣海。",
     "consumeBuffs": [
       {
         "buffId": "item_buff.pill_foundation_frostspring_qi",
-        "name": "霜泉还灵丹·回灵",
-        "desc": "药力盘绕气海，灵力回复暂时大幅提高。",
-        "shortMark": "灵",
+        "name": "霜泉還靈丹·回靈",
+        "desc": "藥力盤繞氣海，靈力回覆暫時大幅提高。",
+        "shortMark": "靈",
         "duration": 120,
         "stats": {
           "qiRegenRate": 430
@@ -47,10 +47,10 @@
   },
   {
     "itemId": "wudao_yujian",
-    "name": "悟道玉简",
+    "name": "悟道玉簡",
     "type": "consumable",
     "level": 31,
-    "desc": "蕴含前人道韵的玉简，使用后可开启功法领悟，凝聚天地灵机推演出一门全新功法。",
+    "desc": "蘊含前人道韻的玉簡，使用後可開啟功法領悟，凝聚天地靈機推演出一門全新功法。",
     "stackable": true,
     "maxStack": 99,
     "grade": "mystic",

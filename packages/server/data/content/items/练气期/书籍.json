@@ -1,240 +1,240 @@
 [
   {
     "itemId": "book.genghua_ningfeng",
-    "name": "《庚华凝锋诀》",
+    "name": "《庚華凝鋒訣》",
     "type": "skill_book",
-    "desc": "记载庚华凝锋诀的修行法门，使用后学会庚华凝锋诀。",
+    "desc": "記載庚華凝鋒訣的修行法門，使用後學會庚華凝鋒訣。",
     "learnTechniqueId": "genghua_ningfeng"
   },
   {
     "itemId": "book.guicang_hemai",
-    "name": "《归藏合脉经》",
+    "name": "《歸藏合脈經》",
     "type": "skill_book",
-    "desc": "记载归藏合脉经的修行法门，使用后学会归藏合脉经。",
+    "desc": "記載歸藏合脈經的修行法門，使用後學會歸藏合脈經。",
     "learnTechniqueId": "guicang_hemai"
   },
   {
     "itemId": "book.hanxi_ximai",
-    "name": "《寒汐洗脉法》",
+    "name": "《寒汐洗脈法》",
     "type": "skill_book",
-    "desc": "记载寒汐洗脉法的修行法门，使用后学会寒汐洗脉法。",
+    "desc": "記載寒汐洗脈法的修行法門，使用後學會寒汐洗脈法。",
     "learnTechniqueId": "hanxi_ximai"
   },
   {
     "itemId": "book.houtu_chengyuan",
     "name": "《厚土承元功》",
     "type": "skill_book",
-    "desc": "记载厚土承元功的修行法门，使用后学会厚土承元功。",
+    "desc": "記載厚土承元功的修行法門，使用後學會厚土承元功。",
     "learnTechniqueId": "houtu_chengyuan"
   },
   {
     "itemId": "book.liyan_duanxi",
-    "name": "《离炎锻息诀》",
+    "name": "《離炎鍛息訣》",
     "type": "skill_book",
-    "desc": "记载离炎锻息诀的修行法门，使用后学会离炎锻息诀。",
+    "desc": "記載離炎鍛息訣的修行法門，使用後學會離炎鍛息訣。",
     "learnTechniqueId": "liyan_duanxi"
   },
   {
     "itemId": "book.qingmu_yangmai",
-    "name": "《青木养脉篇》",
+    "name": "《青木養脈篇》",
     "type": "skill_book",
-    "desc": "记载青木养脉篇的修行法门，使用后学会青木养脉篇。",
+    "desc": "記載青木養脈篇的修行法門，使用後學會青木養脈篇。",
     "learnTechniqueId": "qingmu_yangmai"
   },
   {
     "itemId": "book.dimai_fumai",
-    "name": "《地脉覆脉术》",
+    "name": "《地脈覆脈術》",
     "type": "skill_book",
-    "desc": "记载地脉覆脉术的修行法门，使用后学会地脉覆脉术。",
+    "desc": "記載地脈覆脈術的修行法門，使用後學會地脈覆脈術。",
     "learnTechniqueId": "dimai_fumai"
   },
   {
     "itemId": "book.duanjin_zhuixing",
-    "name": "《断金追星术》",
+    "name": "《斷金追星術》",
     "type": "skill_book",
-    "desc": "记载断金追星术的修行法门，使用后学会断金追星术。",
+    "desc": "記載斷金追星術的修行法門，使用後學會斷金追星術。",
     "learnTechniqueId": "duanjin_zhuixing"
   },
   {
     "itemId": "book.manzhi_jiaoluo",
-    "name": "《蔓织绞络术》",
+    "name": "《蔓織絞絡術》",
     "type": "skill_book",
-    "desc": "记载蔓织绞络术的修行法门，使用后学会蔓织绞络术。",
+    "desc": "記載蔓織絞絡術的修行法門，使用後學會蔓織絞絡術。",
     "learnTechniqueId": "manzhi_jiaoluo"
   },
   {
     "itemId": "book.xuanjing_luoyin",
-    "name": "《玄镜落印诀》",
+    "name": "《玄鏡落印訣》",
     "type": "skill_book",
-    "desc": "记载玄镜落印诀的修行法门，使用后学会玄镜落印诀。",
+    "desc": "記載玄鏡落印訣的修行法門，使用後學會玄鏡落印訣。",
     "learnTechniqueId": "xuanjing_luoyin"
   },
   {
     "itemId": "book.yaohuo_liebo",
-    "name": "《曜火裂波术》",
+    "name": "《曜火裂波術》",
     "type": "skill_book",
-    "desc": "记载曜火裂波术的修行法门，使用后学会曜火裂波术。",
+    "desc": "記載曜火裂波術的修行法門，使用後學會曜火裂波術。",
     "learnTechniqueId": "yaohuo_liebo"
   },
   {
     "itemId": "book.tingmai_dingxi",
-    "name": "《听脉定息诀》",
+    "name": "《聽脈定息訣》",
     "type": "skill_book",
-    "desc": "记载听脉定息诀的修行法门，使用后学会听脉定息诀。",
+    "desc": "記載聽脈定息訣的修行法門，使用後學會聽脈定息訣。",
     "learnTechniqueId": "tingmai_dingxi"
   },
   {
     "itemId": "book.chiqi_ranqiao",
-    "name": "《赤息燃窍功》",
+    "name": "《赤息燃竅功》",
     "type": "skill_book",
-    "desc": "记载赤息燃窍功的修行法门，使用后学会赤息燃窍功。",
+    "desc": "記載赤息燃竅功的修行法門，使用後學會赤息燃竅功。",
     "learnTechniqueId": "chiqi_ranqiao"
   },
   {
     "itemId": "book.jinluo_lifeng",
-    "name": "《金络砺锋功》",
+    "name": "《金絡礪鋒功》",
     "type": "skill_book",
-    "desc": "记载金络砺锋功的修行法门，使用后学会金络砺锋功。",
+    "desc": "記載金絡礪鋒功的修行法門，使用後學會金絡礪鋒功。",
     "learnTechniqueId": "jinluo_lifeng"
   },
   {
     "itemId": "book.ningchao_hushen",
-    "name": "《凝潮护身经》",
+    "name": "《凝潮護身經》",
     "type": "skill_book",
-    "desc": "记载凝潮护身经的修行法门，使用后学会凝潮护身经。",
+    "desc": "記載凝潮護身經的修行法門，使用後學會凝潮護身經。",
     "learnTechniqueId": "ningchao_hushen"
   },
   {
     "itemId": "book.qingteng_huixi",
-    "name": "《青藤回息诀》",
+    "name": "《青藤回息訣》",
     "type": "skill_book",
-    "desc": "记载青藤回息诀的修行法门，使用后学会青藤回息诀。",
+    "desc": "記載青藤回息訣的修行法門，使用後學會青藤回息訣。",
     "learnTechniqueId": "qingteng_huixi"
   },
   {
     "itemId": "book.zhenyue_huyuan",
-    "name": "《镇岳护元诀》",
+    "name": "《鎮嶽護元訣》",
     "type": "skill_book",
-    "desc": "记载镇岳护元诀的修行法门，使用后学会镇岳护元诀。",
+    "desc": "記載鎮嶽護元訣的修行法門，使用後學會鎮嶽護元訣。",
     "learnTechniqueId": "zhenyue_huyuan"
   },
   {
     "itemId": "book.baihong_duanyue",
-    "name": "《白虹断岳典》",
+    "name": "《白虹斷嶽典》",
     "type": "skill_book",
-    "desc": "记载白虹断岳典的修行法门，使用后学会白虹断岳典。",
+    "desc": "記載白虹斷嶽典的修行法門，使用後學會白虹斷嶽典。",
     "learnTechniqueId": "baihong_duanyue"
   },
   {
     "itemId": "book.chiyao_fenmai",
-    "name": "《赤曜焚脉篇》",
+    "name": "《赤曜焚脈篇》",
     "type": "skill_book",
-    "desc": "记载赤曜焚脉篇的修行法门，使用后学会赤曜焚脉篇。",
+    "desc": "記載赤曜焚脈篇的修行法門，使用後學會赤曜焚脈篇。",
     "learnTechniqueId": "chiyao_fenmai"
   },
   {
     "itemId": "book.kunyue_zhenhai",
-    "name": "《坤岳镇海篇》",
+    "name": "《坤嶽鎮海篇》",
     "type": "skill_book",
-    "desc": "记载坤岳镇海篇的修行法门，使用后学会坤岳镇海篇。",
+    "desc": "記載坤嶽鎮海篇的修行法門，使用後學會坤嶽鎮海篇。",
     "learnTechniqueId": "kunyue_zhenhai"
   },
   {
     "itemId": "book.wanzhi_huichun",
-    "name": "《万枝回春卷》",
+    "name": "《萬枝回春卷》",
     "type": "skill_book",
-    "desc": "记载万枝回春卷的修行法门，使用后学会万枝回春卷。",
+    "desc": "記載萬枝回春卷的修行法門，使用後學會萬枝回春卷。",
     "learnTechniqueId": "wanzhi_huichun"
   },
   {
     "itemId": "book.wuqi_guiliu",
-    "name": "《五炁归流篇》",
+    "name": "《五炁歸流篇》",
     "type": "skill_book",
-    "desc": "记载五炁归流篇的修行法门，使用后学会五炁归流篇。",
+    "desc": "記載五炁歸流篇的修行法門，使用後學會五炁歸流篇。",
     "learnTechniqueId": "wuqi_guiliu"
   },
   {
     "itemId": "book.xuanjin_huilan",
-    "name": "《玄津回澜录》",
+    "name": "《玄津回瀾錄》",
     "type": "skill_book",
-    "desc": "记载玄津回澜录的修行法门，使用后学会玄津回澜录。",
+    "desc": "記載玄津回瀾錄的修行法門，使用後學會玄津回瀾錄。",
     "learnTechniqueId": "xuanjin_huilan"
   },
   {
     "itemId": "book.zhoutian_xihai",
     "name": "《周天息海篇》",
     "type": "skill_book",
-    "desc": "记载周天息海篇的修行法门，使用后学会周天息海篇。",
+    "desc": "記載周天息海篇的修行法門，使用後學會周天息海篇。",
     "learnTechniqueId": "zhoutian_xihai"
   },
   {
     "itemId": "book.wildsunder_chart",
-    "name": "《八荒裂岳图》",
+    "name": "《八荒裂嶽圖》",
     "type": "skill_book",
-    "desc": "记载八荒裂岳图的修行法门，使用后学会八荒裂岳图。",
+    "desc": "記載八荒裂嶽圖的修行法門，使用後學會八荒裂嶽圖。",
     "learnTechniqueId": "wildsunder_chart"
   },
   {
     "itemId": "book.voidflame_chapter",
-    "name": "《太虚劫光篇》",
+    "name": "《太虛劫光篇》",
     "type": "skill_book",
-    "desc": "记载太虚劫光篇的修行法门，使用后学会太虚劫光篇。",
+    "desc": "記載太虛劫光篇的修行法門，使用後學會太虛劫光篇。",
     "learnTechniqueId": "voidflame_chapter"
   },
   {
     "itemId": "book.huangting_zaishan",
-    "name": "《黄庭载山经》",
+    "name": "《黃庭載山經》",
     "type": "skill_book",
-    "desc": "记载黄庭载山经的修行法门，使用后学会黄庭载山经。",
+    "desc": "記載黃庭載山經的修行法門，使用後學會黃庭載山經。",
     "learnTechniqueId": "huangting_zaishan"
   },
   {
     "itemId": "book.hunyuan_zaimai",
-    "name": "《混元载脉图》",
+    "name": "《混元載脈圖》",
     "type": "skill_book",
-    "desc": "记载混元载脉图的修行法门，使用后学会混元载脉图。",
+    "desc": "記載混元載脈圖的修行法門，使用後學會混元載脈圖。",
     "learnTechniqueId": "hunyuan_zaimai"
   },
   {
     "itemId": "book.taibai_zhuxing",
-    "name": "《太白诛形录》",
+    "name": "《太白誅形錄》",
     "type": "skill_book",
-    "desc": "记载太白诛形录的修行法门，使用后学会太白诛形录。",
+    "desc": "記載太白誅形錄的修行法門，使用後學會太白誅形錄。",
     "learnTechniqueId": "taibai_zhuxing"
   },
   {
     "itemId": "book.taiyin_guichao",
-    "name": "《太阴归潮经》",
+    "name": "《太陰歸潮經》",
     "type": "skill_book",
-    "desc": "记载太阴归潮经的修行法门，使用后学会太阴归潮经。",
+    "desc": "記載太陰歸潮經的修行法門，使用後學會太陰歸潮經。",
     "learnTechniqueId": "taiyin_guichao"
   },
   {
     "itemId": "book.changsheng_chanyuan",
-    "name": "《长生缠元经》",
+    "name": "《長生纏元經》",
     "type": "skill_book",
-    "desc": "记载长生缠元经的修行法门，使用后学会长生缠元经。",
+    "desc": "記載長生纏元經的修行法門，使用後學會長生纏元經。",
     "learnTechniqueId": "changsheng_chanyuan"
   },
   {
     "itemId": "book.zhuming_jintian",
-    "name": "《朱明烬天录》",
+    "name": "《朱明燼天錄》",
     "type": "skill_book",
-    "desc": "记载朱明烬天录的修行法门，使用后学会朱明烬天录。",
+    "desc": "記載朱明燼天錄的修行法門，使用後學會朱明燼天錄。",
     "learnTechniqueId": "zhuming_jintian"
   },
   {
     "itemId": "book.yi_kunlun",
-    "name": "《移昆仑》",
+    "name": "《移崑崙》",
     "type": "skill_book",
-    "desc": "记载移昆仑的修行法门，使用后学会移昆仑。",
+    "desc": "記載移崑崙的修行法門，使用後學會移崑崙。",
     "learnTechniqueId": "yi_kunlun"
   },
   {
     "itemId": "book.taichu_baoyuan",
     "name": "《太初抱元章》",
     "type": "skill_book",
-    "desc": "记载太初抱元章的修行法门，使用后学会太初抱元章。",
+    "desc": "記載太初抱元章的修行法門，使用後學會太初抱元章。",
     "learnTechniqueId": "taichu_baoyuan"
   }
 ]

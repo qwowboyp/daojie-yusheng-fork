@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "yunlai_town",
-  "name": "云来镇",
+  "name": "雲來鎮",
   "mapGroupId": "yunlai_town",
-  "mapGroupName": "云来镇",
+  "mapGroupName": "雲來鎮",
   "mapGroupOrder": 10,
   "mapGroupMemberOrder": 0,
   "width": 64,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 1,
   "spaceVisionMode": "isolated",
-  "description": "压缩为 64x64 的云来镇新布局：保留主路、客店、药铺、旧祠与南门，删去多余院落，并把围墙做出多处坍塌缺口，整体偏破败荒凉。",
+  "description": "壓縮為 64x64 的雲來鎮新佈局：保留主路、客店、藥鋪、舊祠與南門，刪去多餘院落，並把圍牆做出多處坍塌缺口，整體偏破敗荒涼。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
@@ -452,52 +452,52 @@
   "landmarks": [
     {
       "id": "lm_south_gate",
-      "name": "南门门楼",
+      "name": "南門門樓",
       "x": 31,
       "y": 49,
-      "desc": "云来镇如今只剩这一条像样的出入口，门楼和外墙都已补得东一块西一块。"
+      "desc": "雲來鎮如今只剩這一條像樣的出入口，門樓和外牆都已補得東一塊西一塊。"
     },
     {
       "id": "lm_foot_inn",
-      "name": "沈记脚店",
+      "name": "沈記腳店",
       "x": 15,
       "y": 35,
-      "desc": "脚店缩到了西南角，楼板吱呀作响，仍是外来短工最常落脚的地方。"
+      "desc": "腳店縮到了西南角，樓板吱呀作響，仍是外來短工最常落腳的地方。"
     },
     {
       "id": "lm_apothecary",
-      "name": "兰氏药铺",
+      "name": "蘭氏藥鋪",
       "x": 40,
       "y": 35,
-      "desc": "药铺还亮着灯，柜台却比从前少了一半，剩下的都是常用伤药和猎获材料。"
+      "desc": "藥鋪還亮著燈，櫃檯卻比從前少了一半，剩下的都是常用傷藥和獵獲材料。"
     },
     {
       "id": "lm_store_notice",
-      "name": "残木告示台",
+      "name": "殘木告示臺",
       "x": 27,
       "y": 33,
-      "desc": "镇里还在这里贴路况和征人通告，只是木架已经被风雨泡得发黑。"
+      "desc": "鎮裡還在這裡貼路況和徵人通告，只是木架已經被風雨泡得發黑。"
     },
     {
       "id": "lm_blacksmith_anvil",
-      "name": "镇防铁砧",
+      "name": "鎮防鐵砧",
       "x": 47,
       "y": 26,
-      "desc": "韩铁匠把炉棚压缩成半间破屋，铁砧旁常年堆着未清走的旧料。"
+      "desc": "韓鐵匠把爐棚壓縮成半間破屋，鐵砧旁常年堆著未清走的舊料。"
     },
     {
       "id": "lm_old_well",
-      "name": "北井围栏",
+      "name": "北井圍欄",
       "x": 31,
       "y": 22,
-      "desc": "旧井还在，只是井栏缺口越来越大，夜里总有湿冷气从里面往外冒。"
+      "desc": "舊井還在，只是井欄缺口越來越大，夜裡總有溼冷氣從裡面往外冒。"
     },
     {
       "id": "lm_old_shrine",
-      "name": "旧祠供桌",
+      "name": "舊祠供桌",
       "x": 18,
       "y": 13,
-      "desc": "北边旧祠只剩一间正室没塌，供桌前的香灰却像一直有人来续过。",
+      "desc": "北邊舊祠只剩一間正室沒塌，供桌前的香灰卻像一直有人來續過。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2400,
@@ -553,10 +553,10 @@
     },
     {
       "id": "lm_ruined_shrine",
-      "name": "城外破庙",
+      "name": "城外破廟",
       "x": 53,
       "y": 52,
-      "desc": "东南乱地里的破庙已经塌得只剩半面墙，暴徒和夜行客偶尔还会来这里停脚。",
+      "desc": "東南亂地裡的破廟已經塌得只剩半面牆，暴徒和夜行客偶爾還會來這裡停腳。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2200,
@@ -613,17 +613,17 @@
     },
     {
       "id": "lm_south_hidden_lake",
-      "name": "木坊静湖",
+      "name": "木坊靜湖",
       "x": 49,
       "y": 42,
-      "desc": "镇墙东南角积成的小湖还在，水面不大，却总像在往更深的地方漏。"
+      "desc": "鎮牆東南角積成的小湖還在，水面不大，卻總像在往更深的地方漏。"
     },
     {
       "id": "lm_old_records_rack",
-      "name": "破木书架",
+      "name": "破木書架",
       "x": 27,
       "y": 13,
-      "desc": "书架半塌，里头塞着潮掉的簿册和几页没来得及带走的杂本。",
+      "desc": "書架半塌，裡頭塞著潮掉的簿冊和幾頁沒來得及帶走的雜本。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2100,
@@ -679,10 +679,10 @@
     },
     {
       "id": "lm_collapsed_wardrobe",
-      "name": "坍墙衣柜",
+      "name": "坍牆衣櫃",
       "x": 39,
       "y": 13,
-      "desc": "半截柜门被碎墙压住，里头还挂着几件发潮旧衣。",
+      "desc": "半截櫃門被碎牆壓住，裡頭還掛著幾件發潮舊衣。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2000,
@@ -740,10 +740,10 @@
     },
     {
       "id": "lm_inn_counter",
-      "name": "旧账台",
+      "name": "舊賬臺",
       "x": 13,
       "y": 33,
-      "desc": "掌柜把能锁的抽屉都留在了这里，里面常塞着零散药包和住客落下的小物件。",
+      "desc": "掌櫃把能鎖的抽屜都留在了這裡，裡面常塞著零散藥包和住客落下的小物件。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1800,
@@ -801,10 +801,10 @@
     },
     {
       "id": "lm_inn_baggage",
-      "name": "通铺包袱堆",
+      "name": "通鋪包袱堆",
       "x": 20,
       "y": 38,
-      "desc": "短工走得匆忙，通铺角落还堆着几只没系紧的旧包袱。",
+      "desc": "短工走得匆忙，通鋪角落還堆著幾隻沒繫緊的舊包袱。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1700,
@@ -862,10 +862,10 @@
     },
     {
       "id": "lm_apothecary_herb_cabinet",
-      "name": "百味药柜",
+      "name": "百味藥櫃",
       "x": 41,
       "y": 32,
-      "desc": "柜格里还分着寒热干湿，翻找时一股苦药香扑面而来。",
+      "desc": "櫃格里還分著寒熱乾溼，翻找時一股苦藥香撲面而來。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1600,
@@ -922,10 +922,10 @@
     },
     {
       "id": "lm_apothecary_basket",
-      "name": "晒药竹篓",
+      "name": "曬藥竹簍",
       "x": 38,
       "y": 37,
-      "desc": "靠墙叠着几只没来得及收走的竹篓，里头还压着干草和药材碎末。",
+      "desc": "靠牆疊著幾隻沒來得及收走的竹簍，裡頭還壓著乾草和藥材碎末。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1500,
@@ -981,10 +981,10 @@
     },
     {
       "id": "lm_forge_scrap_basket",
-      "name": "废料铁筐",
+      "name": "廢料鐵筐",
       "x": 40,
       "y": 24,
-      "desc": "铁匠把断刀碎料和没炼净的矿块都丢在这里，挑一挑还能翻出能用的。",
+      "desc": "鐵匠把斷刀碎料和沒煉淨的礦塊都丟在這裡，挑一挑還能翻出能用的。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1800,
@@ -1045,7 +1045,7 @@
       "name": "值夜兵器架",
       "x": 34,
       "y": 45,
-      "desc": "门楼下还立着一副旧兵器架，刀杆和木盾堆得七零八落。",
+      "desc": "門樓下還立著一副舊兵器架，刀杆和木盾堆得七零八落。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1650,
@@ -1103,10 +1103,10 @@
     },
     {
       "id": "lm_shrine_incense_cabinet",
-      "name": "残香供柜",
+      "name": "殘香供櫃",
       "x": 21,
       "y": 16,
-      "desc": "供柜抽屉里堆着发霉香灰、旧纸钱和少量没烧完的杂物。",
+      "desc": "供櫃抽屜裡堆著發黴香灰、舊紙錢和少量沒燒完的雜物。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2200,
@@ -1162,10 +1162,10 @@
     },
     {
       "id": "lm_old_records_desk",
-      "name": "烂边书案",
+      "name": "爛邊書案",
       "x": 28,
       "y": 15,
-      "desc": "书案受潮起翘，案角下却还压着几页账册和手抄残本。",
+      "desc": "書案受潮起翹，案角下卻還壓著幾頁賬冊和手抄殘本。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2050,
@@ -1221,10 +1221,10 @@
     },
     {
       "id": "lm_old_resident_bedroll",
-      "name": "旧铺盖卷",
+      "name": "舊鋪蓋卷",
       "x": 37,
       "y": 15,
-      "desc": "床褥早烂了，只剩一卷卷潮硬被褥，摸进去偶尔还能翻出遗漏的小物件。",
+      "desc": "床褥早爛了，只剩一卷卷潮硬被褥，摸進去偶爾還能翻出遺漏的小物件。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1900,
@@ -1285,7 +1285,7 @@
       "name": "客房矮几",
       "x": 15,
       "y": 38,
-      "desc": "矮几上还留着茶盏和几张散落房票，桌洞里多半有点遗落杂物。",
+      "desc": "矮几上還留著茶盞和幾張散落房票，桌洞裡多半有點遺落雜物。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1750,
@@ -1343,10 +1343,10 @@
     },
     {
       "id": "lm_inn_wall_shelf",
-      "name": "墙边食架",
+      "name": "牆邊食架",
       "x": 20,
       "y": 33,
-      "desc": "墙架上码着缺口碗盏和几包粗面干粮，翻翻还能找到应急散药。",
+      "desc": "牆架上碼著缺口碗盞和幾包粗麵乾糧，翻翻還能找到應急散藥。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1700,
@@ -1404,10 +1404,10 @@
     },
     {
       "id": "lm_apothecary_treatment_table",
-      "name": "敷药诊案",
+      "name": "敷藥診案",
       "x": 45,
       "y": 32,
-      "desc": "诊案边还放着纱布、木夹和研钵，常用外伤药大多就压在下面。",
+      "desc": "診案邊還放著紗布、木夾和研缽，常用外傷藥大多就壓在下面。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1550,
@@ -1464,10 +1464,10 @@
     },
     {
       "id": "lm_apothecary_clay_jar",
-      "name": "药渣陶罐",
+      "name": "藥渣陶罐",
       "x": 45,
       "y": 36,
-      "desc": "罐里盛着捣剩下的药渣和半干草叶，偶尔还掺着能用的材料。",
+      "desc": "罐裡盛著搗剩下的藥渣和半乾草葉，偶爾還摻著能用的材料。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1450,
@@ -1523,10 +1523,10 @@
     },
     {
       "id": "lm_forge_coal_box",
-      "name": "炉边炭箱",
+      "name": "爐邊炭箱",
       "x": 48,
       "y": 24,
-      "desc": "炭箱底下混着未敲开的碎矿、铁渣和几块还能再烧一轮的黑炭。",
+      "desc": "炭箱底下混著未敲開的碎礦、鐵渣和幾塊還能再燒一輪的黑炭。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1750,
@@ -1584,10 +1584,10 @@
     },
     {
       "id": "lm_gate_ration_shelf",
-      "name": "门楼干粮架",
+      "name": "門樓乾糧架",
       "x": 28,
       "y": 48,
-      "desc": "靠门楼内侧立着一排干粮架，兵丁常把伤药和饼袋一并塞在上头。",
+      "desc": "靠門樓內側立著一排乾糧架，兵丁常把傷藥和餅袋一併塞在上頭。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 1600,
@@ -1644,45 +1644,45 @@
     },
     {
       "id": "landmark_yunlai_town_kuangdong",
-      "name": "地下矿洞入口",
+      "name": "地下礦洞入口",
       "x": 42,
       "y": 17,
-      "desc": "隐藏的矿洞入口,似乎需要挖掘碎石才能进入"
+      "desc": "隱藏的礦洞入口,似乎需要挖掘碎石才能進入"
     }
   ],
   "npcs": [
     {
       "id": "npc_zhao_laoliu",
-      "name": "赵老六",
+      "name": "趙老六",
       "x": 25,
       "y": 47,
       "char": "赵",
       "color": "#c9b38a",
-      "dialogue": "人能进镇就算赚着了，至于明天怎么活，等明天再骂老天。",
+      "dialogue": "人能進鎮就算賺著了，至於明天怎麼活，等明天再罵老天。",
       "role": "guide",
       "shopItems": [],
       "quests": []
     },
     {
       "id": "npc_ma_huitou",
-      "name": "马会头",
+      "name": "馬會頭",
       "x": 32,
       "y": 47,
       "char": "门",
       "color": "#d6a76a",
-      "dialogue": "能走的门只剩南边这道，墙上那些洞可不算路。",
+      "dialogue": "能走的門只剩南邊這道，牆上那些洞可不算路。",
       "role": "guard",
       "shopItems": [],
       "quests": []
     },
     {
       "id": "npc_gate_guard_a",
-      "name": "值门兵丁",
+      "name": "值門兵丁",
       "x": 29,
       "y": 47,
       "char": "兵",
       "color": "#c7b08a",
-      "dialogue": "外头乱得很，想出镇练手就走正道，别钻塌墙。",
+      "dialogue": "外頭亂得很，想出鎮練手就走正道，別鑽塌牆。",
       "role": "guard",
       "shopItems": [],
       "quests": []
@@ -1694,31 +1694,31 @@
       "y": 34,
       "char": "掌",
       "color": "#d99f7e",
-      "dialogue": "店是旧了点，炕还是热的。想住就进，别嫌漏风。",
+      "dialogue": "店是舊了點，炕還是熱的。想住就進，別嫌漏風。",
       "role": "inn",
       "shopItems": [],
       "quests": []
     },
     {
       "id": "npc_wounded_stranger",
-      "name": "无名伤者",
+      "name": "無名傷者",
       "x": 20,
       "y": 35,
       "char": "伤",
       "color": "#c98d8d",
-      "dialogue": "别......别往井里看......井底有人在学你说话......",
+      "dialogue": "別......別往井裡看......井底有人在學你說話......",
       "role": "story",
       "shopItems": [],
       "quests": []
     },
     {
       "id": "npc_herbalist_lan",
-      "name": "兰药师",
+      "name": "蘭藥師",
       "x": 39,
       "y": 34,
       "char": "药",
       "color": "#8ccf9b",
-      "dialogue": "墙塌了还能补，人伤了得趁早治。药铺没以前那么宽敞，东西还够用。",
+      "dialogue": "牆塌了還能補，人傷了得趁早治。藥鋪沒以前那麼寬敞，東西還夠用。",
       "role": "support",
       "shopItems": [
         {
@@ -1766,36 +1766,36 @@
     },
     {
       "id": "npc_healer_su",
-      "name": "素问医女",
+      "name": "素問醫女",
       "x": 44,
       "y": 34,
       "char": "医",
       "color": "#f3c1cc",
-      "dialogue": "夜里别靠北井，也别在东南那片积水边久站。",
+      "dialogue": "夜裡別靠北井，也別在東南那片積水邊久站。",
       "role": "support",
       "shopItems": [],
       "quests": []
     },
     {
       "id": "npc_qingxuan",
-      "name": "清玄执事",
+      "name": "清玄執事",
       "x": 31,
       "y": 24,
       "char": "执",
       "color": "#f6d365",
-      "dialogue": "镇子缩了，路反倒更清楚了。先认清活路，再谈修行。",
+      "dialogue": "鎮子縮了，路反倒更清楚了。先認清活路，再談修行。",
       "role": "quest_giver",
       "shopItems": [],
       "quests": []
     },
     {
       "id": "npc_wenji",
-      "name": "文籍师叔",
+      "name": "文籍師叔",
       "x": 13,
       "y": 45,
       "char": "籍",
       "color": "#9eb6e8",
-      "dialogue": "架上这几本都是给穷苦人���底子的，十枚灵石一本，先把骨架和气口练稳再说。",
+      "dialogue": "架上這幾本都是給窮苦人打底子的，十枚靈石一本，先把骨架和氣口練穩再說。",
       "role": "lore",
       "shopItems": [
         {
@@ -1815,12 +1815,12 @@
     },
     {
       "id": "npc_map_seller_yan_bo",
-      "name": "行图贩子·严伯",
+      "name": "行圖販子·嚴伯",
       "x": 14,
       "y": 46,
       "char": "图",
       "color": "#d8c287",
-      "dialogue": "旧路新路都画在这几卷纸上。认路花的是灵石，乱闯赔的是命，自己掂量。",
+      "dialogue": "舊路新路都畫在這幾捲紙上。認路花的是靈石，亂闖賠的是命，自己掂量。",
       "role": "trader",
       "shopItems": [
         {
@@ -1864,12 +1864,12 @@
     },
     {
       "id": "npc_blacksmith_han",
-      "name": "韩铁匠",
+      "name": "韓鐵匠",
       "x": 47,
       "y": 26,
       "char": "匠",
       "color": "#e38f66",
-      "dialogue": "棚子塌了就塌了，铁砧还在就能开工。",
+      "dialogue": "棚子塌了就塌了，鐵砧還在就能開工。",
       "role": "craft",
       "shopItems": [
         {
@@ -1890,19 +1890,19 @@
       "y": 20,
       "char": "夜",
       "color": "#9aa7c2",
-      "dialogue": "墙上的缺口白天漏风，夜里可不一定只漏风。",
+      "dialogue": "牆上的缺口白天漏風，夜裡可不一定只漏風。",
       "role": "warning",
       "shopItems": [],
       "quests": []
     },
     {
       "id": "npc_old_gate_guard",
-      "name": "老关卒",
+      "name": "老關卒",
       "x": 31,
       "y": 9,
       "char": "关",
       "color": "#a7b0b8",
-      "dialogue": "北关早守不住了，剩下这段残墙，也就是提醒后人别忘了。",
+      "dialogue": "北關早守不住了，剩下這段殘牆，也就是提醒後人別忘了。",
       "role": "guard",
       "shopItems": [],
       "quests": []
@@ -1959,7 +1959,7 @@
     {
       "resourceNodeId": "landmark.herb.green_spirit_stem",
       "idPrefix": "lm_yunlai_spirit_stem",
-      "name": "青灵茎",
+      "name": "青靈莖",
       "placements": [
         {
           "x": 26,

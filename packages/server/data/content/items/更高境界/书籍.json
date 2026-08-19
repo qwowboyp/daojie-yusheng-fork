@@ -1,16 +1,16 @@
 [
   {
     "itemId": "book.ningqi_chengji",
-    "name": "《凝气成基法》",
+    "name": "《凝氣成基法》",
     "type": "skill_book",
-    "desc": "记载凝气成基法的修行法门，使用后学会凝气成基法。",
+    "desc": "記載凝氣成基法的修行法門，使用後學會凝氣成基法。",
     "learnTechniqueId": "ningqi_chengji"
   },
   {
     "itemId": "book.xuesha_huanling_jue",
-    "name": "《血煞唤灵决》",
+    "name": "《血煞喚靈決》",
     "type": "skill_book",
-    "desc": "记载血煞唤灵决的修行法门，使用后学会血煞唤灵决。",
+    "desc": "記載血煞喚靈決的修行法門，使用後學會血煞喚靈決。",
     "learnTechniqueId": "xuesha_huanling_jue"
   }
 ]

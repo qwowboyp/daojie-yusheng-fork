@@ -1,7 +1,7 @@
 [
   {
     "id": "m_spirit_tiger",
-    "name": "灵脊虎",
+    "name": "靈脊虎",
     "char": "虎",
     "color": "#d3b06f",
     "radius": 8,
@@ -10,7 +10,7 @@
     "drops": [
       {
         "itemId": "ridge_beast_claw",
-        "name": "岭兽爪",
+        "name": "嶺獸爪",
         "type": "material",
         "count": 1
       }
@@ -53,7 +53,7 @@
   },
   {
     "id": "m_frost_crane",
-    "name": "寒翎鹤",
+    "name": "寒翎鶴",
     "char": "鹤",
     "color": "#b7d6ff",
     "radius": 7,
@@ -62,13 +62,13 @@
     "drops": [
       {
         "itemId": "frost_essence",
-        "name": "霜华精粹",
+        "name": "霜華精粹",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.frost_sutra",
-        "name": "《寒魄经》",
+        "name": "《寒魄經》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.01
@@ -111,7 +111,7 @@
   },
   {
     "id": "m_ridge_ghost",
-    "name": "守岭残魂精英",
+    "name": "守嶺殘魂精英",
     "char": "魂",
     "color": "#8f8fc9",
     "radius": 5,
@@ -120,20 +120,20 @@
     "drops": [
       {
         "itemId": "spirit_ridge_sigil",
-        "name": "灵岭行令",
+        "name": "靈嶺行令",
         "type": "quest_item",
         "count": 1,
         "chance": 0.24
       },
       {
         "itemId": "void_shard",
-        "name": "虚蚀碎片",
+        "name": "虛蝕碎片",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.lightshadow_art",
-        "name": "《折影提气诀》",
+        "name": "《折影提氣訣》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.2
@@ -183,7 +183,7 @@
   },
   {
     "id": "m_spine_gate_lord",
-    "name": "镇脊关主",
+    "name": "鎮脊關主",
     "char": "关",
     "color": "#c7d4ef",
     "radius": 2,
@@ -192,19 +192,19 @@
     "drops": [
       {
         "itemId": "ridge_beast_claw",
-        "name": "岭兽爪",
+        "name": "嶺獸爪",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "frost_essence",
-        "name": "霜华精粹",
+        "name": "霜華精粹",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.frost_sutra",
-        "name": "《寒魄经》",
+        "name": "《寒魄經》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.5

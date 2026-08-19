@@ -1,7 +1,7 @@
 [
   {
     "id": "m_valley_wolf",
-    "name": "裂齿妖狼",
+    "name": "裂齒妖狼",
     "char": "妖",
     "color": "#d2b48c",
     "radius": 9,
@@ -16,14 +16,14 @@
       },
       {
         "itemId": "book.hundred_temper_body",
-        "name": "《壮身功》",
+        "name": "《壯身功》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.01
       },
       {
         "itemId": "mat.beast_bone",
-        "name": "妖兽骨",
+        "name": "妖獸骨",
         "type": "material",
         "count": 1
       }
@@ -65,7 +65,7 @@
   },
   {
     "id": "m_blood_crow",
-    "name": "血羽鸦",
+    "name": "血羽鴉",
     "char": "鸦",
     "color": "#8f1d21",
     "radius": 7,
@@ -80,7 +80,7 @@
       },
       {
         "itemId": "book.redflame_art",
-        "name": "《赤焰诀》",
+        "name": "《赤焰訣》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.01
@@ -123,7 +123,7 @@
   },
   {
     "id": "m_valley_alpha",
-    "name": "裂渊狼主",
+    "name": "裂淵狼主",
     "char": "王",
     "color": "#ff6b6b",
     "radius": 3,
@@ -132,7 +132,7 @@
     "drops": [
       {
         "itemId": "book_stillheart",
-        "name": "《止念诀》",
+        "name": "《止念訣》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.5
@@ -145,7 +145,7 @@
       },
       {
         "itemId": "valley_core",
-        "name": "兽谷核心",
+        "name": "獸谷核心",
         "type": "quest_item",
         "count": 1,
         "chance": 1
@@ -206,7 +206,7 @@
     "drops": [
       {
         "itemId": "serpent_scale",
-        "name": "谷蛇逆鳞",
+        "name": "谷蛇逆鱗",
         "type": "material",
         "count": 1
       }
@@ -248,7 +248,7 @@
   },
   {
     "id": "m_valley_emperor",
-    "name": "裂渊谷皇精英",
+    "name": "裂淵谷皇精英",
     "char": "皇",
     "color": "#de5050",
     "radius": 2,
@@ -270,13 +270,13 @@
       },
       {
         "itemId": "equip.rift_guard_armor",
-        "name": "裂隙镇守甲",
+        "name": "裂隙鎮守甲",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.hundred_temper_body",
-        "name": "《壮身功》",
+        "name": "《壯身功》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.2
@@ -349,14 +349,14 @@
       },
       {
         "itemId": "book_stillheart",
-        "name": "《止念诀》",
+        "name": "《止念訣》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.5
       },
       {
         "itemId": "equip.rift_guard_armor",
-        "name": "裂隙镇守甲",
+        "name": "裂隙鎮守甲",
         "type": "equipment",
         "count": 1
       }

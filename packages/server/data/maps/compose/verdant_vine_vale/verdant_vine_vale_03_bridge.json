@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "verdant_vine_vale_03_bridge",
-  "name": "青萝谷·03双桥岔谷",
+  "name": "青蘿谷·03雙橋岔谷",
   "mapGroupId": "verdant_vine_vale",
-  "mapGroupName": "青萝谷",
+  "mapGroupName": "青蘿谷",
   "mapGroupOrder": 40,
   "mapGroupMemberOrder": 3,
   "width": 32,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 22,
   "spaceVisionMode": "isolated",
-  "description": "青萝谷第二段子图。双桥岔谷把路线第一次真正拆成上下两股，上桥窄而直，下桥缓而绕，桥下湿地和枯桩一直在提醒人你看得见另一条路，却不是哪里都能直接跳过去。",
+  "description": "青蘿谷第二段子圖。雙橋岔谷把路線第一次真正拆成上下兩股，上橋窄而直，下橋緩而繞，橋下溼地和枯樁一直在提醒人你看得見另一條路，卻不是哪裡都能直接跳過去。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
@@ -213,7 +213,7 @@
     {
       "resourceNodeId": "landmark.herb.longvein_vine",
       "idPrefix": "lm_verdant_03_longvein",
-      "name": "长脉藤",
+      "name": "長脈藤",
       "placements": [
         {
           "x": 25,
@@ -224,7 +224,7 @@
     {
       "resourceNodeId": "landmark.herb.returnspring_leaf",
       "idPrefix": "lm_verdant_03_returnspring",
-      "name": "回春叶",
+      "name": "回春葉",
       "placements": [
         {
           "x": 6,

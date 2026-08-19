@@ -1,7 +1,7 @@
 [
   {
     "id": "m_deepvein_croc",
-    "name": "黄岩鼍兽",
+    "name": "黃岩鼉獸",
     "char": "鼍",
     "color": "#c9aa7a",
     "grade": "yellow",
@@ -33,13 +33,13 @@
     "drops": [
       {
         "itemId": "earthbearing_stone",
-        "name": "承脉石",
+        "name": "承脈石",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "thickrock_core",
-        "name": "厚岩核",
+        "name": "厚巖核",
         "type": "material",
         "count": 1
       },
@@ -51,7 +51,7 @@
       },
       {
         "itemId": "book.zhenyue_huyuan",
-        "name": "《镇岳护元诀》",
+        "name": "《鎮嶽護元訣》",
         "type": "skill_book",
         "count": 1
       }
@@ -81,7 +81,7 @@
   },
   {
     "id": "m_deepvein_stonebound",
-    "name": "沉脉石奴",
+    "name": "沉脈石奴",
     "char": "奴",
     "color": "#b89469",
     "grade": "yellow",
@@ -113,19 +113,19 @@
     "drops": [
       {
         "itemId": "earthbearing_stone",
-        "name": "承脉石",
+        "name": "承脈石",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "thickrock_core",
-        "name": "厚岩核",
+        "name": "厚巖核",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.zhenyue_huyuan",
-        "name": "《镇岳护元诀》",
+        "name": "《鎮嶽護元訣》",
         "type": "skill_book",
         "count": 1
       },
@@ -160,7 +160,7 @@
   },
   {
     "id": "m_deepvein_armor_spirit",
-    "name": "坠岩甲灵",
+    "name": "墜巖甲靈",
     "char": "甲",
     "color": "#d0b488",
     "grade": "mystic",
@@ -196,31 +196,31 @@
     "drops": [
       {
         "itemId": "earthbearing_stone",
-        "name": "承脉石",
+        "name": "承脈石",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "thickrock_core",
-        "name": "厚岩核",
+        "name": "厚巖核",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.fallrock_maul",
-        "name": "坠岩槌",
+        "name": "墜巖槌",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.ridgewall_armor",
-        "name": "岭垣甲",
+        "name": "嶺垣甲",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.shieldvein_stone",
-        "name": "护脉石",
+        "name": "護脈石",
         "type": "equipment",
         "count": 1
       },
@@ -232,19 +232,19 @@
       },
       {
         "itemId": "book.zhenyue_huyuan",
-        "name": "《镇岳护元诀》",
+        "name": "《鎮嶽護元訣》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.dimai_fumai",
-        "name": "《地脉覆脉术》",
+        "name": "《地脈覆脈術》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -275,7 +275,7 @@
   },
   {
     "id": "m_deepvein_ridge_warden",
-    "name": "岳纹镇灵",
+    "name": "嶽紋鎮靈",
     "char": "镇",
     "color": "#dfc29a",
     "grade": "mystic",
@@ -311,13 +311,13 @@
     "drops": [
       {
         "itemId": "earthbearing_stone",
-        "name": "承脉石",
+        "name": "承脈石",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "stonegall_core",
-        "name": "镇岳石胆",
+        "name": "鎮嶽石膽",
         "type": "material",
         "count": 1
       },
@@ -329,7 +329,7 @@
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -360,7 +360,7 @@
   },
   {
     "id": "m_deepvein_stele_bearer",
-    "name": "厚土负碑者",
+    "name": "厚土負碑者",
     "char": "碑",
     "color": "#b5966f",
     "grade": "mystic",
@@ -384,25 +384,25 @@
     "drops": [
       {
         "itemId": "earthbearing_stone",
-        "name": "承脉石",
+        "name": "承脈石",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "stonegall_core",
-        "name": "镇岳石胆",
+        "name": "鎮嶽石膽",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.kunyue_zhenhai",
-        "name": "《坤岳镇海篇》",
+        "name": "《坤嶽鎮海篇》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -434,7 +434,7 @@
   },
   {
     "id": "m_deepvein_heavy_guard",
-    "name": "裂岭重卫",
+    "name": "裂嶺重衛",
     "char": "卫",
     "color": "#a88960",
     "grade": "earth",
@@ -471,25 +471,25 @@
     "drops": [
       {
         "itemId": "earthbearing_stone",
-        "name": "承脉石",
+        "name": "承脈石",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "stonegall_core",
-        "name": "镇岳石胆",
+        "name": "鎮嶽石膽",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.ridgecleft_halberd",
-        "name": "裂岭戟",
+        "name": "裂嶺戟",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.mount_guard_helm",
-        "name": "镇岭盔",
+        "name": "鎮嶺盔",
         "type": "equipment",
         "count": 1
       },
@@ -501,19 +501,19 @@
       },
       {
         "itemId": "book.zhenyue_huyuan",
-        "name": "《镇岳护元诀》",
+        "name": "《鎮嶽護元訣》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.dimai_fumai",
-        "name": "《地脉覆脉术》",
+        "name": "《地脈覆脈術》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.wildsunder_chart",
-        "name": "《八荒裂岳图》",
+        "name": "《八荒裂嶽圖》",
         "type": "skill_book",
         "count": 1
       }
@@ -543,7 +543,7 @@
   },
   {
     "id": "m_deepvein_earth_effigy",
-    "name": "玄岳地傀",
+    "name": "玄嶽地傀",
     "char": "傀",
     "color": "#d8bc92",
     "grade": "earth",
@@ -580,31 +580,31 @@
     "drops": [
       {
         "itemId": "stonegall_core",
-        "name": "镇岳石胆",
+        "name": "鎮嶽石膽",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "earthbearing_stone",
-        "name": "承脉石",
+        "name": "承脈石",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.mountainseal_plate",
-        "name": "封岳甲",
+        "name": "封嶽甲",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.deepvein_core",
-        "name": "厚脉核",
+        "name": "厚脈核",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.huangting_zaishan",
-        "name": "《黄庭载山经》",
+        "name": "《黃庭載山經》",
         "type": "skill_book",
         "count": 1
       }

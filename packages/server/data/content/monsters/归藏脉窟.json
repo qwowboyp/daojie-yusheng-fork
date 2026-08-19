@@ -1,7 +1,7 @@
 [
   {
     "id": "m_guizang_tangled_wisp",
-    "name": "错脉游灵",
+    "name": "錯脈遊靈",
     "char": "灵",
     "color": "#d8d2c4",
     "grade": "mystic",
@@ -30,19 +30,19 @@
     "drops": [
       {
         "itemId": "fivephase_dust",
-        "name": "五炁尘",
+        "name": "五炁塵",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "guizang_vein_core",
-        "name": "归藏脉核",
+        "name": "歸藏脈核",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.tingmai_dingxi",
-        "name": "《听脉定息诀》",
+        "name": "《聽脈定息訣》",
         "type": "skill_book",
         "count": 1
       }
@@ -71,7 +71,7 @@
   },
   {
     "id": "m_guizang_reflux_attendant",
-    "name": "逆流残侍",
+    "name": "逆流殘侍",
     "char": "侍",
     "color": "#c9b7a0",
     "grade": "mystic",
@@ -100,25 +100,25 @@
     "drops": [
       {
         "itemId": "fivephase_dust",
-        "name": "五炁尘",
+        "name": "五炁塵",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "guizang_vein_core",
-        "name": "归藏脉核",
+        "name": "歸藏脈核",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.guizang_conflux_blade",
-        "name": "归藏合流刃",
+        "name": "歸藏合流刃",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.guicang_hemai",
-        "name": "《归藏合脉经》",
+        "name": "《歸藏合脈經》",
         "type": "skill_book",
         "count": 1
       }
@@ -174,25 +174,25 @@
     "drops": [
       {
         "itemId": "fivephase_dust",
-        "name": "五炁尘",
+        "name": "五炁塵",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "guizang_vein_core",
-        "name": "归藏脉核",
+        "name": "歸藏脈核",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.guizang_conflux_blade",
-        "name": "归藏合流刃",
+        "name": "歸藏合流刃",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.returnarray_boots",
-        "name": "回阵行履",
+        "name": "回陣行履",
         "type": "equipment",
         "count": 1
       }
@@ -221,7 +221,7 @@
   },
   {
     "id": "m_guizang_chaos_sentry",
-    "name": "乱炁守侍",
+    "name": "亂炁守侍",
     "char": "卫",
     "color": "#b8a28b",
     "grade": "earth",
@@ -250,19 +250,19 @@
     "drops": [
       {
         "itemId": "fivephase_dust",
-        "name": "五炁尘",
+        "name": "五炁塵",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "guizang_vein_core",
-        "name": "归藏脉核",
+        "name": "歸藏脈核",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.guizang_conflux_blade",
-        "name": "归藏合流刃",
+        "name": "歸藏合流刃",
         "type": "equipment",
         "count": 1
       }
@@ -292,7 +292,7 @@
   },
   {
     "id": "m_guizang_dualphase_beast",
-    "name": "双相脉兽",
+    "name": "雙相脈獸",
     "char": "兽",
     "color": "#d7c29d",
     "grade": "earth",
@@ -325,31 +325,31 @@
     "drops": [
       {
         "itemId": "fivephase_dust",
-        "name": "五炁尘",
+        "name": "五炁塵",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "guizang_vein_core",
-        "name": "归藏脉核",
+        "name": "歸藏脈核",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.guizang_conflux_blade",
-        "name": "归藏合流刃",
+        "name": "歸藏合流刃",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.returnarray_boots",
-        "name": "回阵行履",
+        "name": "回陣行履",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.wuqi_guiliu",
-        "name": "《五炁归流篇》",
+        "name": "《五炁歸流篇》",
         "type": "skill_book",
         "count": 1
       }
@@ -379,7 +379,7 @@
   },
   {
     "id": "m_guizang_ruined_relic",
-    "name": "乱基守遗",
+    "name": "亂基守遺",
     "char": "遗",
     "color": "#c7d1de",
     "grade": "earth",
@@ -409,13 +409,13 @@
     "drops": [
       {
         "itemId": "fivephase_dust",
-        "name": "五炁尘",
+        "name": "五炁塵",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "guizang_vein_core",
-        "name": "归藏脉核",
+        "name": "歸藏脈核",
         "type": "material",
         "count": 1
       }
@@ -479,25 +479,25 @@
     "drops": [
       {
         "itemId": "half_base_embryo",
-        "name": "半基灵胚",
+        "name": "半基靈胚",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "guizang_vein_core",
-        "name": "归藏脉核",
+        "name": "歸藏脈核",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.guizang_conflux_blade",
-        "name": "归藏合流刃",
+        "name": "歸藏合流刃",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.returnarray_boots",
-        "name": "回阵行履",
+        "name": "回陣行履",
         "type": "equipment",
         "count": 1
       },
@@ -509,7 +509,7 @@
       },
       {
         "itemId": "book.hunyuan_zaimai",
-        "name": "《混元载脉图》",
+        "name": "《混元載脈圖》",
         "type": "skill_book",
         "count": 1
       },

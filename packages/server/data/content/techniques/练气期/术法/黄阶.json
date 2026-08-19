@@ -1,8 +1,8 @@
 [
   {
     "id": "genghua_ningfeng",
-    "name": "庚华凝锋诀",
-    "desc": "锋炁成线，直破前方三步。",
+    "name": "庚華凝鋒訣",
+    "desc": "鋒炁成線，直破前方三步。",
     "grade": "yellow",
     "category": "arts",
     "realmLv": 19,
@@ -12,7 +12,7 @@
       {
         "id": "skill.genghua_ningfeng",
         "name": "分光",
-        "desc": "锋炁成线，直破前方三步。",
+        "desc": "鋒炁成線，直破前方三步。",
         "cooldown": 18,
         "cost": 2463,
         "costMultiplier": 5,
@@ -67,8 +67,8 @@
   },
   {
     "id": "guicang_hemai",
-    "name": "归藏合脉经",
-    "desc": "归藏摄杂，敌身所负枷锁愈重，收束之力愈狠。",
+    "name": "歸藏合脈經",
+    "desc": "歸藏攝雜，敵身所負枷鎖愈重，收束之力愈狠。",
     "grade": "yellow",
     "category": "arts",
     "realmLv": 19,
@@ -77,8 +77,8 @@
     "skills": [
       {
         "id": "skill.guicang_hemai",
-        "name": "归藏",
-        "desc": "归藏摄杂，目标减益越多，收束越狠。",
+        "name": "歸藏",
+        "desc": "歸藏攝雜，目標減益越多，收束越狠。",
         "cooldown": 20,
         "cost": 2463,
         "costMultiplier": 5,
@@ -124,8 +124,8 @@
   },
   {
     "id": "hanxi_ximai",
-    "name": "寒汐洗脉法",
-    "desc": "寒汐入体，凝潮压敌。",
+    "name": "寒汐洗脈法",
+    "desc": "寒汐入體，凝潮壓敵。",
     "grade": "yellow",
     "category": "arts",
     "realmLv": 19,
@@ -135,7 +135,7 @@
       {
         "id": "skill.hanxi_ximai",
         "name": "凝",
-        "desc": "寒汐入体，凝潮压敌。",
+        "desc": "寒汐入體，凝潮壓敵。",
         "cooldown": 16,
         "cost": 1478,
         "costMultiplier": 3,
@@ -187,7 +187,7 @@
   {
     "id": "houtu_chengyuan",
     "name": "厚土承元功",
-    "desc": "土劲厚重沉实，一击之后再叠山岳之护。",
+    "desc": "土勁厚重沉實，一擊之後再疊山嶽之護。",
     "grade": "yellow",
     "category": "arts",
     "realmLv": 19,
@@ -196,8 +196,8 @@
     "skills": [
       {
         "id": "skill.houtu_chengyuan",
-        "name": "承岳",
-        "desc": "土劲厚重沉实，一击之后再叠山岳之护。",
+        "name": "承嶽",
+        "desc": "土勁厚重沉實，一擊之後再疊山嶽之護。",
         "cooldown": 18,
         "cost": 1970,
         "costMultiplier": 4,
@@ -244,8 +244,8 @@
   },
   {
     "id": "liyan_duanxi",
-    "name": "离炎锻息诀",
-    "desc": "离炎成网，烈息罩身。",
+    "name": "離炎鍛息訣",
+    "desc": "離炎成網，烈息罩身。",
     "grade": "yellow",
     "category": "arts",
     "realmLv": 19,
@@ -254,8 +254,8 @@
     "skills": [
       {
         "id": "skill.liyan_duanxi",
-        "name": "炽息天罗",
-        "desc": "离炎成网，烈息罩身。",
+        "name": "熾息天羅",
+        "desc": "離炎成網，烈息罩身。",
         "cooldown": 22,
         "cost": 2463,
         "costMultiplier": 5,
@@ -313,8 +313,8 @@
   },
   {
     "id": "qingmu_yangmai",
-    "name": "青木养脉篇",
-    "desc": "木脉铺展，同道回生，来犯者受创。",
+    "name": "青木養脈篇",
+    "desc": "木脈鋪展，同道回生，來犯者受創。",
     "grade": "yellow",
     "category": "arts",
     "realmLv": 19,
@@ -324,7 +324,7 @@
       {
         "id": "skill.qingmu_yangmai",
         "name": "回春",
-        "desc": "木脉铺展，友方回生，敌者受创。",
+        "desc": "木脈鋪展，友方回生，敵者受創。",
         "cooldown": 24,
         "cost": 2463,
         "costMultiplier": 5,
@@ -406,8 +406,8 @@
   },
   {
     "id": "tingmai_dingxi",
-    "name": "听脉定息诀",
-    "desc": "调息定脉，净去缠身邪扰。",
+    "name": "聽脈定息訣",
+    "desc": "調息定脈，淨去纏身邪擾。",
     "grade": "yellow",
     "category": "arts",
     "realmLv": 19,
@@ -417,7 +417,7 @@
       {
         "id": "skill.tingmai_dingxi",
         "name": "定息",
-        "desc": "调息定脉，净去缠身邪扰。",
+        "desc": "調息定脈，淨去纏身邪擾。",
         "cooldown": 24,
         "cost": 493,
         "costMultiplier": 1,

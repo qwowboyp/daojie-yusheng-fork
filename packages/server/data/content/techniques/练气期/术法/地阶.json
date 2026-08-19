@@ -1,8 +1,8 @@
 [
   {
     "id": "huangting_zaishan",
-    "name": "黄庭载山经",
-    "desc": "黄庭借山成势，以厚土重压敌身。",
+    "name": "黃庭載山經",
+    "desc": "黃庭借山成勢，以厚土重壓敵身。",
     "grade": "earth",
     "category": "arts",
     "realmLv": 27,
@@ -11,8 +11,8 @@
     "skills": [
       {
         "id": "skill.huangting_zaishan",
-        "name": "载山",
-        "desc": "黄庭借山成势，以厚土重压敌身。",
+        "name": "載山",
+        "desc": "黃庭借山成勢，以厚土重壓敵身。",
         "cooldown": 24,
         "cost": 65073,
         "costMultiplier": 7,
@@ -59,8 +59,8 @@
   },
   {
     "id": "taibai_zhuxing",
-    "name": "太白诛形录",
-    "desc": "裂甲既成，贴身诛形。",
+    "name": "太白誅形錄",
+    "desc": "裂甲既成，貼身誅形。",
     "grade": "earth",
     "category": "arts",
     "realmLv": 27,
@@ -69,8 +69,8 @@
     "skills": [
       {
         "id": "skill.taibai_zhuxing",
-        "name": "诛形",
-        "desc": "裂甲既成，贴身诛形。",
+        "name": "誅形",
+        "desc": "裂甲既成，貼身誅形。",
         "cooldown": 24,
         "cost": 55777,
         "costMultiplier": 6,
@@ -114,7 +114,7 @@
   {
     "id": "taichu_baoyuan",
     "name": "太初抱元章",
-    "desc": "抱元守一，短时之内刀剑难伤、术法难侵。",
+    "desc": "抱元守一，短時之內刀劍難傷、術法難侵。",
     "grade": "earth",
     "category": "arts",
     "realmLv": 27,
@@ -124,7 +124,7 @@
       {
         "id": "skill.taichu_baoyuan",
         "name": "抱元",
-        "desc": "抱元守一，短时拔升双抗。",
+        "desc": "抱元守一，短時拔升雙抗。",
         "cooldown": 28,
         "cost": 27888,
         "costMultiplier": 3,
@@ -142,8 +142,8 @@
   },
   {
     "id": "taiyin_guichao",
-    "name": "太阴归潮经",
-    "desc": "归潮成线，借己身潮势层层叠加，如暗涌吞舟。",
+    "name": "太陰歸潮經",
+    "desc": "歸潮成線，借己身潮勢層層疊加，如暗湧吞舟。",
     "grade": "earth",
     "category": "arts",
     "realmLv": 27,
@@ -153,7 +153,7 @@
       {
         "id": "skill.taiyin_guichao",
         "name": "潮",
-        "desc": "归潮成线，借己身潮势压垮敌体。",
+        "desc": "歸潮成線，借己身潮勢壓垮敵體。",
         "cooldown": 24,
         "cost": 46481,
         "costMultiplier": 5,
@@ -208,8 +208,8 @@
   },
   {
     "id": "changsheng_chanyuan",
-    "name": "长生缠元经",
-    "desc": "枯荣逆转，断其回息。",
+    "name": "長生纏元經",
+    "desc": "枯榮逆轉，斷其回息。",
     "grade": "earth",
     "category": "arts",
     "realmLv": 27,
@@ -218,8 +218,8 @@
     "skills": [
       {
         "id": "skill.changsheng_chanyuan",
-        "name": "枯荣禁脉",
-        "desc": "枯荣逆转，断其回息。",
+        "name": "枯榮禁脈",
+        "desc": "枯榮逆轉，斷其回息。",
         "cooldown": 28,
         "cost": 46481,
         "costMultiplier": 5,
@@ -272,8 +272,8 @@
   },
   {
     "id": "zhuming_jintian",
-    "name": "朱明烬天录",
-    "desc": "朱明火势归于己身，三息之后覆压四方。",
+    "name": "朱明燼天錄",
+    "desc": "朱明火勢歸於己身，三息之後覆壓四方。",
     "grade": "earth",
     "category": "arts",
     "realmLv": 27,
@@ -283,7 +283,7 @@
       {
         "id": "skill.zhuming_jintian",
         "name": "朱明劫焰",
-        "desc": "朱明火势归于己身，三息之后覆压四方。",
+        "desc": "朱明火勢歸於己身，三息之後覆壓四方。",
         "cooldown": 32,
         "cost": 46481,
         "costMultiplier": 5,

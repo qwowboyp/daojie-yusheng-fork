@@ -34,7 +34,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { Converter } from 'opencc-js';
 import ts from 'typescript';
-import { VOCABULARY_CN_TO_TW, sortedVocabularyEntries } from './lib/tw-vocabulary.mjs';
+import { VOCABULARY_CN_TO_TW, sortedVocabularyEntries, maskProtected } from './lib/tw-vocabulary.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,10 +62,13 @@ export function loadExcludeFields() {
   return list;
 }
 
-/** 两段式转换单段文本：先词级最长匹配，再字级收尾。 */
+/** 两段式转换单段文本：先掩码保护台湾标准词 → 词级最长匹配 → 字级收尾 → 还原保护词。 */
 export function convertText(text) {
+  // 掩码：把已是台湾标准的「濃郁 / 馥郁 / 岩」替换为控制字符哨兵，
+  // 防止 opencc cn→tw 在字级收尾时误转（濃郁→濃鬱、岩→巖）。
+  const { text: masked, restore } = maskProtected(text);
   // 词级：按 key 长度降序替换
-  let vocabResult = text;
+  let vocabResult = masked;
   const vocabHits = [];
   const seen = new Set();
   for (const [cn, tw] of sortedVocabularyEntries()) {
@@ -77,9 +80,10 @@ export function convertText(text) {
       }
     }
   }
-  // 字级：词级结果再走 opencc
+  // 字级：词级结果再走 opencc（哨兵为控制字符，原样透传）
   const charResult = cn2tw(vocabResult);
-  return { text: charResult, vocabHits };
+  // 还原：把哨兵换回台湾标准原词
+  return { text: restore(charResult), vocabHits };
 }
 
 /**
@@ -224,11 +228,49 @@ export function convertJsonString(text, { excludedFields = [] } = {}) {
       after.startsWith(':') ||
       /^[ \t]*:/.test(after.slice(0, after.search(/[^ \t]/) === -1 ? 0 : 1));
 
-    // 判断是否在排除字段的 value 位置：向前找最近的「字段名」字符串
+    // 判断是否在排除字段的 value 位置：向前找最近的「字段名」字符串。
+    // 支援兩種形狀：
+    //   1. "field": value            → 直接值（含陣列值的第一個元素之前）
+    //   2. "field": [ ... ] 內的元素 → 由內往外找未閉合的 '['，直到找到
+    //      其前綴為排除欄位；例如 "tagGroups": [ [ "药品" ] ] 的內層字串。
     let excluded = false;
     const m = /"((?:[^"\\]|\\.)*)"[ \t]*:[ \t]*$/.exec(before);
     if (m && excludedFields.includes(m[1])) {
       excluded = true;
+    } else {
+      // 由內往外掃描未閉合的 '['：
+      // 從 before 結尾往回走，把已閉合的 ']' 前的內容直接跳過，
+      // 遇到未閉合的 '[' 就檢查其緊鄰前綴是否為排除欄位；不是則繼續往外層找。
+      let scan = before;
+      for (;;) {
+        const closeIdx = scan.lastIndexOf(']');
+        const openIdx = scan.lastIndexOf('[');
+        if (openIdx === -1) break;
+        if (closeIdx > openIdx) {
+          // 最後一個括號是 ']'：往前找到與它配對的 '[' 之前的內容。
+          // 用括號計數找出真正未閉合的 '['。
+          let depth = 0;
+          let i = closeIdx - 1;
+          for (; i >= 0; i -= 1) {
+            const ch = scan[i];
+            if (ch === ']') depth += 1;
+            else if (ch === '[') {
+              if (depth === 0) break;
+              depth -= 1;
+            }
+          }
+          scan = scan.slice(0, i);
+          continue;
+        }
+        const head = scan.slice(0, openIdx);
+        const fm = /"((?:[^"\\]|\\.)*)"[ \t]*:[ \t]*$/.exec(head);
+        if (fm && excludedFields.includes(fm[1])) {
+          excluded = true;
+          break;
+        }
+        // 該層 '[' 前綴不是排除欄位 → 繼續往外找
+        scan = head;
+      }
     }
 
     if (isKey) continue;

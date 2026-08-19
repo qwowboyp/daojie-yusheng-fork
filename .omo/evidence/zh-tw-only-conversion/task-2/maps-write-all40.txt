@@ -1,0 +1,14 @@
+file:///X:/workSpace/daojie-yusheng-fork/scripts/convert-to-traditional.mjs:144
+    throw new Error(
+          ^
+
+Error: X:\workSpace\daojie-yusheng-fork\packages\server\data\maps\yunlai_town.json.patched:1609:31 包含替换字符 U+FFFD（�）——该文件编码已损坏，拒绝转换。请先修复该文件（如为简体原文，请人工改写后再转换；todo 2 会处理已知的 3 个地图文件）。
+    at readFileChecked (file:///X:/workSpace/daojie-yusheng-fork/scripts/convert-to-traditional.mjs:144:11)
+    at convertFile (file:///X:/workSpace/daojie-yusheng-fork/scripts/convert-to-traditional.mjs:449:16)
+    at main (file:///X:/workSpace/daojie-yusheng-fork/.omo/evidence/zh-tw-only-conversion/task-2/convert-maps-with-grid-exclude.mjs:87:20)
+    at file:///X:/workSpace/daojie-yusheng-fork/.omo/evidence/zh-tw-only-conversion/task-2/convert-maps-with-grid-exclude.mjs:123:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.3.1

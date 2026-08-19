@@ -2,14 +2,14 @@
   "quests": [
     {
       "id": "q_intro_south_gate_rollcall",
-      "title": "初入云来镇",
+      "title": "初入雲來鎮",
       "line": "main",
       "guideFlowId": "starter-basics",
-      "chapter": "序章·断道入镇",
-      "story": "你从北关残墙边醒来时，老关卒正守着那段早已废掉的旧路。他见你还能站，没问来历，只让你别继续在北井旧坊磨蹭，先顺着镇路往里走，去南市脚店找沈七娘挂个名，不然天一黑，连个能缩身子的炕角都轮不到你。",
-      "desc": "循镇路南行，往南市脚店寻沈七娘，取得今夜落脚之资。",
+      "chapter": "序章·斷道入鎮",
+      "story": "你從北關殘牆邊醒來時，老關卒正守著那段早已廢掉的舊路。他見你還能站，沒問來歷，只讓你別繼續在北井舊坊磨蹭，先順著鎮路往裡走，去南市腳店找沈七娘掛個名，不然天一黑，連個能縮身子的炕角都輪不到你。",
+      "desc": "循鎮路南行，往南市腳店尋沈七娘，取得今夜落腳之資。",
       "objectiveType": "talk",
-      "objectiveText": "前往沈记脚店，与沈七娘交谈",
+      "objectiveText": "前往沈記腳店，與沈七娘交談",
       "targetNpcId": "npc_shen_qiniang",
       "targetNpcName": "沈七娘",
       "targetMapId": "yunlai_town",
@@ -31,34 +31,34 @@
     },
     {
       "id": "q_intro_old_road_witness",
-      "title": "断道旧事",
+      "title": "斷道舊事",
       "line": "main",
-      "chapter": "序章·断道入镇",
-      "story": "沈七娘不收只会喊苦的人。她让你先去问赵老六，确认门外那批人到底还能剩下多少活口，也顺便看看你是不是个跑得动腿、带得回话的人。",
-      "desc": "出南门寻赵老六，探问断道实情，归后向脚店复命。",
+      "chapter": "序章·斷道入鎮",
+      "story": "沈七娘不收只會喊苦的人。她讓你先去問趙老六，確認門外那批人到底還能剩下多少活口，也順便看看你是不是個跑得動腿、帶得回話的人。",
+      "desc": "出南門尋趙老六，探問斷道實情，歸後向腳店覆命。",
       "objectiveType": "talk",
-      "objectiveText": "寻赵老六，探问断道旧事",
+      "objectiveText": "尋趙老六，探問斷道舊事",
       "targetNpcId": "npc_zhao_laoliu",
-      "targetNpcName": "赵老六",
+      "targetNpcName": "趙老六",
       "targetMapId": "yunlai_town",
-      "targetName": "赵老六",
+      "targetName": "趙老六",
       "required": 1,
       "reward": [
         {
           "itemId": "equip.trench_runner_boots",
-          "name": "越沟快靴",
+          "name": "越溝快靴",
           "type": "equipment",
           "count": 1
         },
         {
           "itemId": "equip.gather_qi_pendant",
-          "name": "采气木坠",
+          "name": "採氣木墜",
           "type": "equipment",
           "count": 1
         },
         {
           "itemId": "equip.herb_mist_robe",
-          "name": "药烟轻袍",
+          "name": "藥煙輕袍",
           "type": "equipment",
           "count": 1
         }
@@ -71,27 +71,27 @@
     },
     {
       "id": "q_intro_manual",
-      "title": "授诀护此身",
+      "title": "授訣護此身",
       "line": "main",
       "guideFlowId": "cultivation-guide",
-      "chapter": "序章·断道入镇",
-      "story": "赵老六提了一句你身上还带着书卷，沈七娘便把你推给了清玄执事。清玄不关心你从哪来，只说在这个镇子里，没点护身的本事，迟早会死在替别人跑腿的路上。",
-      "desc": "开卷取《青木剑诀》，习诀护身，以备不虞。",
+      "chapter": "序章·斷道入鎮",
+      "story": "趙老六提了一句你身上還帶著書卷，沈七娘便把你推給了清玄執事。清玄不關心你從哪來，只說在這個鎮子裡，沒點護身的本事，遲早會死在替別人跑腿的路上。",
+      "desc": "開卷取《青木劍訣》，習訣護身，以備不虞。",
       "objectiveType": "learn_technique",
-      "objectiveText": "开启背囊，习得《青木剑诀》",
+      "objectiveText": "開啟背囊，習得《青木劍訣》",
       "targetTechniqueId": "qingmu_sword",
-      "targetName": "青木剑诀",
+      "targetName": "青木劍訣",
       "required": 1,
       "reward": [
         {
           "itemId": "minor_qi_pill",
-          "name": "小还灵丹",
+          "name": "小還靈丹",
           "type": "consumable",
           "count": 2
         },
         {
           "itemId": "map.yunlai_town",
-          "name": "云来初境图",
+          "name": "雲來初境圖",
           "type": "consumable",
           "count": 1
         }
@@ -104,13 +104,13 @@
     },
     {
       "id": "q_intro_clear_south_gate",
-      "title": "南门驱鼠患",
+      "title": "南門驅鼠患",
       "line": "main",
       "guideFlowId": "force-attack-guide",
-      "chapter": "序章·断道入镇",
-      "story": "马会头不愿多给你一句好话，但他也确实不想让南门外继续烂下去。粮袋边、垃圾堆旁都是灰尾鼠，再拖下去，流民和守兵今晚都别想睡安稳。",
-      "desc": "清除南门外及废料堆旁灰尾鼠，以证己非坐食之辈。",
-      "objectiveText": "击退南门外灰尾鼠",
+      "chapter": "序章·斷道入鎮",
+      "story": "馬會頭不願多給你一句好話，但他也確實不想讓南門外繼續爛下去。糧袋邊、垃圾堆旁都是灰尾鼠，再拖下去，流民和守兵今晚都別想睡安穩。",
+      "desc": "清除南門外及廢料堆旁灰尾鼠，以證己非坐食之輩。",
+      "objectiveText": "擊退南門外灰尾鼠",
       "targetMonsterId": "m_town_rat_south",
       "targetCount": 6,
       "targetMapId": "yunlai_town",
@@ -132,12 +132,12 @@
     },
     {
       "id": "q_intro_medicine_fee",
-      "title": "刀口换药汤",
+      "title": "刀口換藥湯",
       "line": "main",
-      "chapter": "序章·断道入镇",
-      "story": "脚店里那名无名伤者快撑不住了，沈七娘却不打算倒贴药。她让你去收拾几名趁夜摸到城边的流匪，把他们身上的腰牌带回来，算作今晚那锅药汤的钱。",
-      "desc": "击退城边流匪，取其腰牌归缴，以充伤者药资。",
-      "objectiveText": "驱逐城边流匪，缴回腰牌",
+      "chapter": "序章·斷道入鎮",
+      "story": "腳店裡那名無名傷者快撐不住了，沈七娘卻不打算倒貼藥。她讓你去收拾幾名趁夜摸到城邊的流匪，把他們身上的腰牌帶回來，算作今晚那鍋藥湯的錢。",
+      "desc": "擊退城邊流匪，取其腰牌歸繳，以充傷者藥資。",
+      "objectiveText": "驅逐城邊流匪，繳回腰牌",
       "targetMonsterId": "m_gate_thug",
       "targetCount": 4,
       "targetMapId": "yunlai_town",
@@ -148,7 +148,7 @@
       "reward": [
         {
           "itemId": "minor_qi_pill",
-          "name": "小还灵丹",
+          "name": "小還靈丹",
           "type": "consumable",
           "count": 2
         },
@@ -167,17 +167,17 @@
     },
     {
       "id": "q_intro_wounded_words",
-      "title": "片语惊玄机",
+      "title": "片語驚玄機",
       "line": "main",
-      "chapter": "序章·断道入镇",
-      "story": "伤药熬下去后，那无名伤者终于醒过一次。沈七娘让你去听听他还能吐出什么话，再把能记住的东西带去告诉清玄。她不想惹麻烦，但也知道这人身上的伤不像普通刀口。",
-      "desc": "入脚店探询无名伤者，记其所言，转呈清玄执事。",
+      "chapter": "序章·斷道入鎮",
+      "story": "傷藥熬下去後，那無名傷者終於醒過一次。沈七娘讓你去聽聽他還能吐出什麼話，再把能記住的東西帶去告訴清玄。她不想惹麻煩，但也知道這人身上的傷不像普通刀口。",
+      "desc": "入腳店探詢無名傷者，記其所言，轉呈清玄執事。",
       "objectiveType": "talk",
-      "objectiveText": "前往脚店，与无名伤者交谈",
+      "objectiveText": "前往腳店，與無名傷者交談",
       "targetNpcId": "npc_wounded_stranger",
-      "targetNpcName": "无名伤者",
+      "targetNpcName": "無名傷者",
       "targetMapId": "yunlai_town",
-      "targetName": "无名伤者",
+      "targetName": "無名傷者",
       "required": 1,
       "reward": [
         {
@@ -195,13 +195,13 @@
     },
     {
       "id": "q_intro_old_well_watch",
-      "title": "北井夜异闻",
+      "title": "北井夜異聞",
       "line": "main",
-      "chapter": "序章·断道入镇",
-      "story": "清玄听完那句呓语后，脸色也沉了下来。他不打算现在追查，只让你先去问守夜人，确认北井旧坊最近夜里是不是又出了怪事。这个镇子还撑得住，可有些东西显然比匪患更早就在里面扎了根。",
-      "desc": "寻守夜人，询北井夜间异动，归后向清玄复命。",
+      "chapter": "序章·斷道入鎮",
+      "story": "清玄聽完那句囈語後，臉色也沉了下來。他不打算現在追查，只讓你先去問守夜人，確認北井舊坊最近夜裡是不是又出了怪事。這個鎮子還撐得住，可有些東西顯然比匪患更早就在裡面紮了根。",
+      "desc": "尋守夜人，詢北井夜間異動，歸後向清玄覆命。",
       "objectiveType": "talk",
-      "objectiveText": "寻访守夜人，探问北井夜间异动",
+      "objectiveText": "尋訪守夜人，探問北井夜間異動",
       "targetNpcId": "npc_watchman",
       "targetNpcName": "守夜人",
       "targetMapId": "yunlai_town",
@@ -210,19 +210,19 @@
       "reward": [
         {
           "itemId": "book.mountain_insight_chart",
-          "name": "《玄照图》",
+          "name": "《玄照圖》",
           "type": "skill_book",
           "count": 1
         },
         {
           "itemId": "book.standing_stake_art",
-          "name": "《站桩功》",
+          "name": "《站樁功》",
           "type": "skill_book",
           "count": 1
         },
         {
           "itemId": "map.wildlands",
-          "name": "荒原游猎图",
+          "name": "荒原遊獵圖",
           "type": "consumable",
           "count": 1
         }
@@ -235,17 +235,17 @@
     },
     {
       "id": "q_intro_body_tempering",
-      "title": "炼皮立根基",
+      "title": "煉皮立根基",
       "line": "main",
       "guideFlowId": "cultivation-guide",
-      "chapter": "序章·断道入镇",
-      "story": "清玄不打算现在就替你掀开北井那层盖子。他给你的要求更现实: 先把境界练到能在云来镇外活着回来。等你真正撑住第一口内息，这镇子里的话你才有资格继续往下听。",
-      "desc": "镇外苦修，习《站桩功》，备足鼠尾，强健体魄，突破炼皮境，奠定武道根基。",
+      "chapter": "序章·斷道入鎮",
+      "story": "清玄不打算現在就替你掀開北井那層蓋子。他給你的要求更現實: 先把境界練到能在雲來鎮外活著回來。等你真正撐住第一口內息，這鎮子裡的話你才有資格繼續往下聽。",
+      "desc": "鎮外苦修，習《站樁功》，備足鼠尾，強健體魄，突破煉皮境，奠定武道根基。",
       "objectiveType": "realm_stage",
-      "objectiveText": "备齐鼠尾，达至体魄门槛，突破炼皮境",
+      "objectiveText": "備齊鼠尾，達至體魄門檻，突破煉皮境",
       "targetRealmLv": 2,
       "targetMapId": "wildlands",
-      "targetName": "炼皮",
+      "targetName": "煉皮",
       "required": 1,
       "reward": [
         {
@@ -256,13 +256,13 @@
         },
         {
           "itemId": "pill.windstride_elixir",
-          "name": "轻身丹",
+          "name": "輕身丹",
           "type": "consumable",
           "count": 1
         },
         {
           "itemId": "major_qi_pill",
-          "name": "大还灵丹",
+          "name": "大還靈丹",
           "type": "consumable",
           "count": 1
         }

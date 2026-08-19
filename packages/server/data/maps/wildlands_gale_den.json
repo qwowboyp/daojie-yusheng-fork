@@ -1,7 +1,7 @@
 {
   "format": 2,
   "id": "wildlands_gale_den",
-  "name": "荒野·荒骨风穴",
+  "name": "荒野·荒骨風穴",
   "mapGroupId": "wildlands_gale_den",
   "mapGroupName": "荒野",
   "mapGroupOrder": 1000,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 4,
   "spaceVisionMode": "isolated",
-  "description": "残碑背后的风蚀裂穴，骨堆与毒丝一层套一层，主路上被赶散的荒物最终都被逼进了这里。",
+  "description": "殘碑背後的風蝕裂穴，骨堆與毒絲一層套一層，主路上被趕散的荒物最終都被逼進了這裡。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草崖崖草草草草草草草",
@@ -94,10 +94,10 @@
   "landmarks": [
     {
       "id": "lm_gale_den_bone_eye",
-      "name": "裂风骨眼",
+      "name": "裂風骨眼",
       "x": 13,
       "y": 2,
-      "desc": "风穴最深处的骨堆像一只被砂石磨开的眼，裂风荒王就盘在这里，把闯进来的活物一点点剥成白骨。"
+      "desc": "風穴最深處的骨堆像一隻被砂石磨開的眼，裂風荒王就盤在這裡，把闖進來的活物一點點剝成白骨。"
     }
   ]
 }

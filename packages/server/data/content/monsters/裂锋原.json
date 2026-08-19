@@ -1,7 +1,7 @@
 [
   {
     "id": "m_cleft_blade_wraith",
-    "name": "断刃游魂",
+    "name": "斷刃遊魂",
     "char": "魂",
     "color": "#d7c78f",
     "grade": "yellow",
@@ -33,13 +33,13 @@
     "drops": [
       {
         "itemId": "sword_pellet",
-        "name": "剑丸",
+        "name": "劍丸",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "cleft_iron_fragment",
-        "name": "残兵铁片",
+        "name": "殘兵鐵片",
         "type": "material",
         "count": 1
       },
@@ -51,13 +51,13 @@
       },
       {
         "itemId": "book.genghua_ningfeng",
-        "name": "《庚华凝锋诀》",
+        "name": "《庚華凝鋒訣》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.jinluo_lifeng",
-        "name": "《金络砺锋功》",
+        "name": "《金絡礪鋒功》",
         "type": "skill_book",
         "count": 1
       }
@@ -119,25 +119,25 @@
     "drops": [
       {
         "itemId": "sword_pellet",
-        "name": "剑丸",
+        "name": "劍丸",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "cleft_iron_fragment",
-        "name": "残兵铁片",
+        "name": "殘兵鐵片",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.jinluo_lifeng",
-        "name": "《金络砺锋功》",
+        "name": "《金絡礪鋒功》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.genghua_ningfeng",
-        "name": "《庚华凝锋诀》",
+        "name": "《庚華凝鋒訣》",
         "type": "skill_book",
         "count": 1
       }
@@ -167,7 +167,7 @@
   },
   {
     "id": "m_cleft_blade_sprite",
-    "name": "金砂锋魈",
+    "name": "金砂鋒魈",
     "char": "魈",
     "color": "#e4c780",
     "grade": "mystic",
@@ -203,55 +203,55 @@
     "drops": [
       {
         "itemId": "sword_pellet",
-        "name": "剑丸",
+        "name": "劍丸",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "cleft_iron_fragment",
-        "name": "残兵铁片",
+        "name": "殘兵鐵片",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.full_edge_blade",
-        "name": "满锋刀",
+        "name": "滿鋒刀",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.sand_ghost_mask",
-        "name": "砂魇面",
+        "name": "砂魘面",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.chasing_edge_boots",
-        "name": "逐锋履",
+        "name": "逐鋒履",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.genghua_ningfeng",
-        "name": "《庚华凝锋诀》",
+        "name": "《庚華凝鋒訣》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.jinluo_lifeng",
-        "name": "《金络砺锋功》",
+        "name": "《金絡礪鋒功》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.duanjin_zhuixing",
-        "name": "《断金追星术》",
+        "name": "《斷金追星術》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -282,7 +282,7 @@
   },
   {
     "id": "m_cleft_banner_general",
-    "name": "残兵鸣将",
+    "name": "殘兵鳴將",
     "char": "将",
     "color": "#d0b06f",
     "grade": "mystic",
@@ -318,25 +318,25 @@
     "drops": [
       {
         "itemId": "sword_pellet",
-        "name": "剑丸",
+        "name": "劍丸",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "blade_pattern_crystal",
-        "name": "锋纹残晶",
+        "name": "鋒紋殘晶",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.cleft_blade_cloak",
-        "name": "裂锋披",
+        "name": "裂鋒披",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -366,7 +366,7 @@
   },
   {
     "id": "m_cleft_stele_puppet",
-    "name": "断碑锋傀",
+    "name": "斷碑鋒傀",
     "char": "傀",
     "color": "#bfa986",
     "grade": "mystic",
@@ -390,25 +390,25 @@
     "drops": [
       {
         "itemId": "sword_pellet",
-        "name": "剑丸",
+        "name": "劍丸",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "blade_pattern_crystal",
-        "name": "锋纹残晶",
+        "name": "鋒紋殘晶",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.baihong_duanyue",
-        "name": "《白虹断岳典》",
+        "name": "《白虹斷嶽典》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -440,7 +440,7 @@
   },
   {
     "id": "m_cleft_iron_guard",
-    "name": "残旌铁卫",
+    "name": "殘旌鐵衛",
     "char": "卫",
     "color": "#d5b97f",
     "grade": "earth",
@@ -477,37 +477,37 @@
     "drops": [
       {
         "itemId": "sword_pellet",
-        "name": "剑丸",
+        "name": "劍丸",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "blade_pattern_crystal",
-        "name": "锋纹残晶",
+        "name": "鋒紋殘晶",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book.genghua_ningfeng",
-        "name": "《庚华凝锋诀》",
+        "name": "《庚華凝鋒訣》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.jinluo_lifeng",
-        "name": "《金络砺锋功》",
+        "name": "《金絡礪鋒功》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.duanjin_zhuixing",
-        "name": "《断金追星术》",
+        "name": "《斷金追星術》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.baihong_duanyue",
-        "name": "《白虹断岳典》",
+        "name": "《白虹斷嶽典》",
         "type": "skill_book",
         "count": 1
       }
@@ -537,7 +537,7 @@
   },
   {
     "id": "m_cleft_gate_lord",
-    "name": "庚金镇门将",
+    "name": "庚金鎮門將",
     "char": "门",
     "color": "#f0d48c",
     "grade": "earth",
@@ -574,19 +574,19 @@
     "drops": [
       {
         "itemId": "blade_pattern_crystal",
-        "name": "锋纹残晶",
+        "name": "鋒紋殘晶",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "sword_pellet",
-        "name": "剑丸",
+        "name": "劍丸",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.geng_gate_blade",
-        "name": "庚门断锋",
+        "name": "庚門斷鋒",
         "type": "equipment",
         "count": 1
       },
@@ -598,7 +598,7 @@
       },
       {
         "itemId": "book.taibai_zhuxing",
-        "name": "《太白诛形录》",
+        "name": "《太白誅形錄》",
         "type": "skill_book",
         "count": 1
       }

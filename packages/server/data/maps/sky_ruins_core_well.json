@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "sky_ruins_core_well",
-  "name": "天穹残宫·封天核心井",
+  "name": "天穹殘宮·封天核心井",
   "mapGroupId": "sky_ruins_core_well",
-  "mapGroupName": "天穹残宫",
+  "mapGroupName": "天穹殘宮",
   "mapGroupOrder": 1000,
   "mapGroupMemberOrder": 0,
   "width": 18,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 18,
   "spaceVisionMode": "isolated",
-  "description": "核心井内壁并未完全塌穿，残存云台与星纹环廊仍围着井心缓慢转动，像一座还在下坠的旧天门。",
+  "description": "核心井內壁並未完全塌穿，殘存雲臺與星紋環廊仍圍著井心緩慢轉動，像一座還在下墜的舊天門。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草",
     "草空空空空霞霞霞霞空空空空云云云云草",
@@ -119,7 +119,7 @@
       "name": "封天井座",
       "x": 13,
       "y": 5,
-      "desc": "环廊最深处还保留着一圈压井的旧座痕，坠星宫主正借这里残存的封天力把整口核心井拖向更深的坠落。"
+      "desc": "環廊最深處還保留著一圈壓井的舊座痕，墜星宮主正借這裡殘存的封天力把整口核心井拖向更深的墜落。"
     }
   ]
 }

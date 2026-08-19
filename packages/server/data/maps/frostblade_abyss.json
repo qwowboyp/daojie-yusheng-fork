@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "frostblade_abyss",
-  "name": "霜刃渊",
+  "name": "霜刃淵",
   "mapGroupId": "frostblade_abyss",
-  "mapGroupName": "霜刃渊",
+  "mapGroupName": "霜刃淵",
   "mapGroupOrder": 1010,
   "mapGroupMemberOrder": 0,
   "width": 40,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 31,
   "spaceVisionMode": "isolated",
-  "description": "云墟台南崖裂口之下的冰铁纵向深渊。寒气与金行灵力沿崖壁层层下沉，渊体由上至下越收越窄，至底部又略展为冰窟。筑基修士从顶部裂口攀链而入，经由铁脉甬道与冰桥，深入渊底冰窟猎杀冰铁妖兽，采集金水双行材料。",
+  "description": "雲墟臺南崖裂口之下的冰鐵縱向深淵。寒氣與金行靈力沿崖壁層層下沉，淵體由上至下越收越窄，至底部又略展為冰窟。築基修士從頂部裂口攀鏈而入，經由鐵脈甬道與冰橋，深入淵底冰窟獵殺冰鐵妖獸，採集金水雙行材料。",
   "terrain": [
     "崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖",
     "崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖",
@@ -295,8 +295,8 @@
       "routeDomain": "inherit",
       "allowPlayerOverlap": false,
       "hidden": false,
-      "observeTitle": "云墟台崖阶",
-      "observeDesc": "向上攀援的铁链嵌入冰壁，尽头是云墟台南崖裂口的微光。"
+      "observeTitle": "雲墟臺崖階",
+      "observeDesc": "向上攀援的鐵鏈嵌入冰壁，盡頭是雲墟臺南崖裂口的微光。"
     },
     {
       "id": "frostblade_abyss:19,55",
@@ -312,8 +312,8 @@
       "routeDomain": "inherit",
       "allowPlayerOverlap": false,
       "hidden": false,
-      "observeTitle": "焚木荒台通道",
-      "observeDesc": "渊底裂缝中透出灼热气息，穿过这道冰火交界便是焚木荒台。"
+      "observeTitle": "焚木荒臺通道",
+      "observeDesc": "淵底裂縫中透出灼熱氣息，穿過這道冰火交界便是焚木荒臺。"
     }
   ],
   "spawnPoint": {
@@ -348,46 +348,46 @@
       "name": "裂谷入口",
       "x": 19,
       "y": 5,
-      "desc": "从云墟台南崖裂口坠下的第一块开阔台地。冰壁向四周陡然张开，寒气从下方深渊翻涌而上，远处主道沿着东壁蜿蜒下坠。"
+      "desc": "從雲墟臺南崖裂口墜下的第一塊開闊臺地。冰壁向四周陡然張開，寒氣從下方深淵翻湧而上，遠處主道沿著東壁蜿蜒下墜。"
     },
     {
       "id": "lm_frostblade_iron_wall",
-      "name": "铁壁矿脉",
+      "name": "鐵壁礦脈",
       "x": 27,
       "y": 22,
-      "desc": "中层东壁裸露的玄铁矿脉，矿石带从崖体中突出，寒铁碎散落脉根。寒铁蝎与霜鳞蛇绕脉巡弋。"
+      "desc": "中層東壁裸露的玄鐵礦脈，礦石帶從崖體中突出，寒鐵碎散落脈根。寒鐵蠍與霜鱗蛇繞脈巡弋。"
     },
     {
       "id": "lm_frostblade_side_cave",
-      "name": "寒铁侧洞",
+      "name": "寒鐵側洞",
       "x": 32,
       "y": 26,
-      "desc": "中层东壁开裂出的窄入口，内部空间被千年寒气养出一片灵石矿区，传闻有铁壳精英妖兽镇守。"
+      "desc": "中層東壁開裂出的窄入口，內部空間被千年寒氣養出一片靈石礦區，傳聞有鐵殼精英妖獸鎮守。"
     },
     {
       "id": "lm_frostblade_ice_bridge",
-      "name": "冰桥",
+      "name": "冰橋",
       "x": 19,
       "y": 38,
-      "desc": "横跨深渊裂缝的窄冰桥，仅两步宽。桥下空冥幽深，桥面玄冰覆盖一层薄霜，过桥即入渊底冰窟。"
+      "desc": "橫跨深淵裂縫的窄冰橋，僅兩步寬。橋下空冥幽深，橋面玄冰覆蓋一層薄霜，過橋即入淵底冰窟。"
     },
     {
       "id": "lm_frostblade_deep_cavern",
-      "name": "冰窟深处",
+      "name": "冰窟深處",
       "x": 19,
       "y": 50,
-      "desc": "霜刃渊最深处的开阔冰窟，寒沼遍地，冰柱林立。铁壳玄龟与冰晶蛛在沼气中盘踞，西南壁裂缝透出灼热气息。"
+      "desc": "霜刃淵最深處的開闊冰窟，寒沼遍地，冰柱林立。鐵殼玄龜與冰晶蛛在沼氣中盤踞，西南壁裂縫透出灼熱氣息。"
     }
   ],
   "npcs": [
     {
       "id": "npc_frostblade_scout",
-      "name": "探渊斥候·寒七",
+      "name": "探淵斥候·寒七",
       "x": 17,
       "y": 7,
       "char": "斥",
       "color": "#8bb8cf",
-      "dialogue": "渊里的妖兽都带金水双行灵力，皮糙肉厚还会冻人。外围的寒铁蝎、霜鳞蛇还好对付；铁脉甬道里多留意东壁矿脉，那一段路最容易被夹击。下到冰桥再往深处走，寒沼会拖慢你的脚步——铁壳玄龟那壳子，筑基前期的术法打上去跟挠痒似的。",
+      "dialogue": "淵裡的妖獸都帶金水雙行靈力，皮糙肉厚還會凍人。外圍的寒鐵蠍、霜鱗蛇還好對付；鐵脈甬道里多留意東壁礦脈，那一段路最容易被夾擊。下到冰橋再往深處走，寒沼會拖慢你的腳步——鐵殼玄龜那殼子，築基前期的術法打上去跟撓癢似的。",
       "role": "warning",
       "shopItems": [],
       "quests": []
@@ -397,7 +397,7 @@
     {
       "resourceNodeId": "landmark.herb.frostblade_cold_iron_shard",
       "idPrefix": "lm_cold_iron",
-      "name": "寒铁碎",
+      "name": "寒鐵碎",
       "placements": [
         {
           "x": 28,
@@ -443,7 +443,7 @@
     {
       "resourceNodeId": "landmark.herb.frostblade_deepwater_moss",
       "idPrefix": "lm_deepwater_moss",
-      "name": "渊水苔",
+      "name": "淵水苔",
       "placements": [
         {
           "x": 17,

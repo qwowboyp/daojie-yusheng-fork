@@ -1,7 +1,7 @@
 [
   {
     "id": "m_huanling_zhenren",
-    "name": "重伤的唤灵真人",
+    "name": "重傷的喚靈真人",
     "char": "真",
     "color": "#f0d2a4",
     "grade": "spirit",
@@ -16,8 +16,8 @@
     "initialBuffs": [
       {
         "buffId": "buff.huanling_zhenren_wounded",
-        "name": "重伤",
-        "desc": "旧伤未愈，战斗属性被极度压制。",
+        "name": "重傷",
+        "desc": "舊傷未愈，戰鬥屬性被極度壓制。",
         "category": "debuff",
         "visibility": "public",
         "duration": 999999,
@@ -26,7 +26,7 @@
         "maxStacks": 1,
         "mainCombatStatsPercent": -4444,
         "statMode": "percent",
-        "shortMark": "伤",
+        "shortMark": "傷",
         "color": "#b85c5c"
       }
     ],
@@ -50,7 +50,7 @@
       },
       {
         "itemId": "book.xuesha_huanling_jue",
-        "name": "《血煞唤灵决》",
+        "name": "《血煞喚靈決》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.02
@@ -64,21 +64,21 @@
       },
       {
         "itemId": "mat.red_flame_leaf",
-        "name": "赤火叶",
+        "name": "赤火葉",
         "type": "material",
         "count": 50,
         "chance": 1
       },
       {
         "itemId": "mat.green_spirit_stem",
-        "name": "青灵茎",
+        "name": "青靈莖",
         "type": "material",
         "count": 50,
         "chance": 1
       },
       {
         "itemId": "mat.frost_lotus_petal",
-        "name": "寒莲瓣",
+        "name": "寒蓮瓣",
         "type": "material",
         "count": 50,
         "chance": 1
@@ -99,14 +99,14 @@
       },
       {
         "itemId": "mat.breakarray_shard",
-        "name": "破纹砂",
+        "name": "破紋砂",
         "type": "material",
         "count": 50,
         "chance": 1
       },
       {
         "itemId": "mat.swiftwind_reed",
-        "name": "疾风苇",
+        "name": "疾風葦",
         "type": "material",
         "count": 50,
         "chance": 1
@@ -120,28 +120,28 @@
       },
       {
         "itemId": "mat.sunmelt_seed",
-        "name": "融阳子",
+        "name": "融陽子",
         "type": "material",
         "count": 50,
         "chance": 1
       },
       {
         "itemId": "mat.longvein_vine",
-        "name": "长脉藤",
+        "name": "長脈藤",
         "type": "material",
         "count": 50,
         "chance": 1
       },
       {
         "itemId": "mat.returnspring_leaf",
-        "name": "回春叶",
+        "name": "回春葉",
         "type": "material",
         "count": 50,
         "chance": 1
       },
       {
         "itemId": "mat.coldmarrow_reed",
-        "name": "寒髓苇",
+        "name": "寒髓葦",
         "type": "material",
         "count": 50,
         "chance": 1
@@ -169,14 +169,14 @@
       },
       {
         "itemId": "mat.bearingroot_ginseng",
-        "name": "承脉参",
+        "name": "承脈參",
         "type": "material",
         "count": 50,
         "chance": 1
       },
       {
         "itemId": "mat.stonecore_lingzhi",
-        "name": "岩髓芝",
+        "name": "巖髓芝",
         "type": "material",
         "count": 50,
         "chance": 1
@@ -190,7 +190,7 @@
       },
       {
         "itemId": "mat.ironvein_caltrop",
-        "name": "铁脉蒺",
+        "name": "鐵脈蒺",
         "type": "material",
         "count": 50,
         "chance": 1

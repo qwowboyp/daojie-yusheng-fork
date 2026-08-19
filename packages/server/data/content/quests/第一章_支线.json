@@ -2,26 +2,26 @@
   "quests": [
     {
       "id": "q_han_gate_scrap",
-      "title": "城垣缴匪铁",
-      "desc": "城边流匪持破兵横行，韩铁匠意在其废铁。清除匪众，缴回腰牌，所得废铁可充门楼之用。",
-      "story": "这镇子剩下来的东西不多，铁器算其中最值钱的一种。韩铁匠不在乎来路，只在乎还能不能敲。",
-      "objectiveText": "清除城边流匪，缴回匪徒腰牌",
+      "title": "城垣繳匪鐵",
+      "desc": "城邊流匪持破兵橫行，韓鐵匠意在其廢鐵。清除匪眾，繳回腰牌，所得廢鐵可充門樓之用。",
+      "story": "這鎮子剩下來的東西不多，鐵器算其中最值錢的一種。韓鐵匠不在乎來路，只在乎還能不能敲。",
+      "objectiveText": "清除城邊流匪，繳回匪徒腰牌",
       "targetMonsterId": "m_gate_thug",
       "targetCount": 6,
       "targetMapId": "yunlai_town",
-      "targetName": "城边流匪",
+      "targetName": "城邊流匪",
       "requiredItemId": "bandit_insignia",
       "requiredItemCount": 3,
       "reward": [
         {
           "itemId": "minor_qi_pill",
-          "name": "小还灵丹",
+          "name": "小還靈丹",
           "type": "consumable",
           "count": 2
         },
         {
           "itemId": "pill.break_array_elixir",
-          "name": "破阵丹",
+          "name": "破陣丹",
           "type": "consumable",
           "count": 1
         }
@@ -34,14 +34,14 @@
     },
     {
       "id": "q_lan_tail_medicine",
-      "title": "鼠尾熬驱秽",
-      "desc": "兰药师遣人清除后巷鼠患，收取鼠尾。药铺与脚店均需熬制驱秽汤药，以防夏日疫秽蔓延。",
-      "story": "药铺能稳住几条命，不是靠仙丹，是靠有人把最脏最细碎的活做完。",
-      "objectiveText": "清除后巷鼠患，收取鼠尾",
+      "title": "鼠尾熬驅穢",
+      "desc": "蘭藥師遣人清除後巷鼠患，收取鼠尾。藥鋪與腳店均需熬製驅穢湯藥，以防夏日疫穢蔓延。",
+      "story": "藥鋪能穩住幾條命，不是靠仙丹，是靠有人把最髒最細碎的活做完。",
+      "objectiveText": "清除後巷鼠患，收取鼠尾",
       "targetMonsterId": "m_town_rat_refuse",
       "targetCount": 6,
       "targetMapId": "yunlai_town",
-      "targetName": "后巷灰尾鼠",
+      "targetName": "後巷灰尾鼠",
       "requiredItemId": "rat_tail",
       "requiredItemCount": 6,
       "reward": [
@@ -66,11 +66,11 @@
     },
     {
       "id": "q_recluse_first_meet",
-      "title": "荒野访隐客",
-      "desc": "洛猎户言荒野深处常有野修客出没，形迹孤僻。往荒野寻访此人，察其可交与否。",
-      "story": "边镇靠规矩活，荒野靠眼色活。真想在外头多走几步，就得认识那些不写在门牌上的人。",
+      "title": "荒野訪隱客",
+      "desc": "洛獵戶言荒野深處常有野修客出沒，形跡孤僻。往荒野尋訪此人，察其可交與否。",
+      "story": "邊鎮靠規矩活，荒野靠眼色活。真想在外頭多走幾步，就得認識那些不寫在門牌上的人。",
       "objectiveType": "talk",
-      "objectiveText": "前往荒野，寻访野修客",
+      "objectiveText": "前往荒野，尋訪野修客",
       "targetNpcId": "npc_wild_recluse",
       "targetNpcName": "野修客",
       "targetMapId": "wildlands",
@@ -93,26 +93,26 @@
     },
     {
       "id": "q_recluse_spider_silk_rewrite",
-      "title": "蛛丝换残诀",
-      "desc": "野修客令人赴阴沼采取完整蛛丝。其所藏《赤焰诀》残篇，唯肯自寻出路者方得授受。",
-      "story": "这世上总有人不肯认命，可他们教人的方式，也从来不会比世道更温柔。",
-      "objectiveText": "猎杀阴沼毒蛛，取阴沼丝",
+      "title": "蛛絲換殘訣",
+      "desc": "野修客令人赴陰沼採取完整蛛絲。其所藏《赤焰訣》殘篇，唯肯自尋出路者方得授受。",
+      "story": "這世上總有人不肯認命，可他們教人的方式，也從來不會比世道更溫柔。",
+      "objectiveText": "獵殺陰沼毒蛛，取陰沼絲",
       "targetMonsterId": "m_mire_spider",
       "targetCount": 2,
       "targetMapId": "wildlands",
-      "targetName": "阴沼毒蛛",
+      "targetName": "陰沼毒蛛",
       "requiredItemId": "spider_silk",
       "requiredItemCount": 4,
       "reward": [
         {
           "itemId": "major_qi_pill",
-          "name": "大还灵丹",
+          "name": "大還靈丹",
           "type": "consumable",
           "count": 1
         },
         {
           "itemId": "pill.windstride_elixir",
-          "name": "轻身丹",
+          "name": "輕身丹",
           "type": "consumable",
           "count": 1
         },

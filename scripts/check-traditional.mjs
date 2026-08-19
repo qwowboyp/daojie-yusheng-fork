@@ -27,7 +27,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { Converter } from 'opencc-js';
 import ts from 'typescript';
-import { VOCABULARY_CN_TO_TW } from './lib/tw-vocabulary.mjs';
+import { VOCABULARY_CN_TO_TW, applyProtectedMask } from './lib/tw-vocabulary.mjs';
 import { convertText, findReplacementChar, loadExcludeFields } from './convert-to-traditional.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -37,13 +37,20 @@ const repoRoot = path.resolve(__dirname, '..');
 /** 简体 → 繁体（台湾用字）字级转换器，用于检查是否还有简体字残留。 */
 const cn2tw = Converter({ from: 'cn', to: 'tw' });
 
-/** 单条文本的幂等检查：词级命中或字级残留 → true（需要转换）。 */
+/**
+ * 单条文本的幂等检查：词级命中或字级残留 → true（需要转换）。
+ * 检查前先掩码保护台湾标准词（濃郁/馥郁/岩），避免 opencc cn→tw
+ * 非幂等误转（濃郁→濃鬱、岩→巖）对已正确的台湾文本造成误报。
+ * 掩码词均为繁体台湾标准写法，简体词（浓郁/忧郁）不受掩码影响，
+ * 真正的简体残留仍会被词级检查或 cn2tw 差异抓到。
+ */
 function textNeedsConversion(text) {
   if (!text || text.length === 0) return false;
+  const masked = applyProtectedMask(text);
   for (const cn of VOCABULARY_CN_TO_TW.keys()) {
-    if (text.includes(cn)) return true;
+    if (masked.includes(cn)) return true;
   }
-  return cn2tw(text) !== text;
+  return cn2tw(masked) !== masked;
 }
 
 /** 统计位置的行号（从 0 起始，行号 = 行数 + 1）。 */

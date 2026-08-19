@@ -1,7 +1,7 @@
 [
   {
     "id": "m_spirit_wolf",
-    "name": "噬灵狼",
+    "name": "噬靈狼",
     "char": "狼",
     "color": "#b3b7c1",
     "radius": 7,
@@ -16,7 +16,7 @@
       },
       {
         "itemId": "book_wind_step",
-        "name": "《踏风步》残页",
+        "name": "《踏風步》殘頁",
         "type": "skill_book",
         "count": 1,
         "chance": 0.01
@@ -58,7 +58,7 @@
   },
   {
     "id": "m_bamboo_serpent",
-    "name": "青鳞竹蛇",
+    "name": "青鱗竹蛇",
     "char": "蛇",
     "color": "#67b56f",
     "radius": 5,
@@ -67,7 +67,7 @@
     "drops": [
       {
         "itemId": "serpent_gall",
-        "name": "竹蛇胆",
+        "name": "竹蛇膽",
         "type": "material",
         "count": 1
       }
@@ -108,7 +108,7 @@
   },
   {
     "id": "m_bamboo_sprite",
-    "name": "竹心灵",
+    "name": "竹心靈",
     "char": "灵",
     "color": "#91d88d",
     "radius": 5,
@@ -123,27 +123,27 @@
       },
       {
         "itemId": "book.qingmu_sword",
-        "name": "《青木剑诀》",
+        "name": "《青木劍訣》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.01
       },
       {
         "itemId": "book.nourishing_qi_art",
-        "name": "《养气诀》",
+        "name": "《養氣訣》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.01
       },
       {
         "itemId": "equip.herb_mist_robe",
-        "name": "药烟轻袍",
+        "name": "藥煙輕袍",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.gather_qi_pendant",
-        "name": "采气木坠",
+        "name": "採氣木墜",
         "type": "equipment",
         "count": 1
       }
@@ -194,7 +194,7 @@
     "drops": [
       {
         "itemId": "mantis_blade",
-        "name": "螳锋",
+        "name": "螳鋒",
         "type": "material",
         "count": 1
       },
@@ -252,7 +252,7 @@
     "drops": [
       {
         "itemId": "mantis_blade",
-        "name": "螳锋",
+        "name": "螳鋒",
         "type": "material",
         "count": 1
       },
@@ -264,7 +264,7 @@
       },
       {
         "itemId": "book.iron_bone_art",
-        "name": "《铁骨功》",
+        "name": "《鐵骨功》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.5

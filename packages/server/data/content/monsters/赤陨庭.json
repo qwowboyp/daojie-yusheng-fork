@@ -30,7 +30,7 @@
     "drops": [
       {
         "itemId": "ember_sand",
-        "name": "陨火砂",
+        "name": "隕火砂",
         "type": "material",
         "count": 1
       },
@@ -42,19 +42,19 @@
       },
       {
         "itemId": "equip.furnace_red_ring",
-        "name": "炉心赤戒",
+        "name": "爐心赤戒",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.liyan_duanxi",
-        "name": "《离炎锻息诀》",
+        "name": "《離炎鍛息訣》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.chiqi_ranqiao",
-        "name": "《赤息燃窍功》",
+        "name": "《赤息燃竅功》",
         "type": "skill_book",
         "count": 1
       }
@@ -84,7 +84,7 @@
   },
   {
     "id": "m_ember_whelp",
-    "name": "赤烬蜥幼",
+    "name": "赤燼蜥幼",
     "char": "蜥",
     "color": "#ef8d56",
     "grade": "yellow",
@@ -113,7 +113,7 @@
     "drops": [
       {
         "itemId": "ember_sand",
-        "name": "陨火砂",
+        "name": "隕火砂",
         "type": "material",
         "count": 1
       },
@@ -125,19 +125,19 @@
       },
       {
         "itemId": "equip.ember_scorch_spear",
-        "name": "赤陨灼枪",
+        "name": "赤隕灼槍",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.chiqi_ranqiao",
-        "name": "《赤息燃窍功》",
+        "name": "《赤息燃竅功》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.liyan_duanxi",
-        "name": "《离炎锻息诀》",
+        "name": "《離炎鍛息訣》",
         "type": "skill_book",
         "count": 1
       }
@@ -167,7 +167,7 @@
   },
   {
     "id": "m_ember_lizard",
-    "name": "熔纹火蜥",
+    "name": "熔紋火蜥",
     "char": "蜴",
     "color": "#ff7b47",
     "grade": "mystic",
@@ -196,7 +196,7 @@
     "drops": [
       {
         "itemId": "ember_sand",
-        "name": "陨火砂",
+        "name": "隕火砂",
         "type": "material",
         "count": 1
       },
@@ -208,37 +208,37 @@
       },
       {
         "itemId": "equip.ember_scorch_spear",
-        "name": "赤陨灼枪",
+        "name": "赤隕灼槍",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.furnace_red_ring",
-        "name": "炉心赤戒",
+        "name": "爐心赤戒",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.liyan_duanxi",
-        "name": "《离炎锻息诀》",
+        "name": "《離炎鍛息訣》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.chiqi_ranqiao",
-        "name": "《赤息燃窍功》",
+        "name": "《赤息燃竅功》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.yaohuo_liebo",
-        "name": "《曜火裂波术》",
+        "name": "《曜火裂波術》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -268,7 +268,7 @@
   },
   {
     "id": "m_ember_attendant",
-    "name": "炉心灼侍",
+    "name": "爐心灼侍",
     "char": "侍",
     "color": "#ffc38e",
     "grade": "mystic",
@@ -297,31 +297,31 @@
     "drops": [
       {
         "itemId": "ember_sand",
-        "name": "陨火砂",
+        "name": "隕火砂",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "furnace_red_crystal",
-        "name": "炉心赤晶",
+        "name": "爐心赤晶",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.ember_scorch_spear",
-        "name": "赤陨灼枪",
+        "name": "赤隕灼槍",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.furnace_red_ring",
-        "name": "炉心赤戒",
+        "name": "爐心赤戒",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -352,7 +352,7 @@
   },
   {
     "id": "m_ember_bone_patrol",
-    "name": "炽骨巡卒",
+    "name": "熾骨巡卒",
     "char": "卒",
     "color": "#d66a4a",
     "grade": "mystic",
@@ -376,37 +376,37 @@
     "drops": [
       {
         "itemId": "ember_sand",
-        "name": "陨火砂",
+        "name": "隕火砂",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "furnace_red_crystal",
-        "name": "炉心赤晶",
+        "name": "爐心赤晶",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.ember_scorch_spear",
-        "name": "赤陨灼枪",
+        "name": "赤隕灼槍",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.furnace_red_ring",
-        "name": "炉心赤戒",
+        "name": "爐心赤戒",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.chiyao_fenmai",
-        "name": "《赤曜焚脉篇》",
+        "name": "《赤曜焚脈篇》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "pill.breakmirror_pellet",
-        "name": "破镜丹",
+        "name": "破鏡丹",
         "type": "consumable",
         "count": 1,
         "chance": 0.01
@@ -438,7 +438,7 @@
   },
   {
     "id": "m_ember_flame_guard",
-    "name": "流火戍灵",
+    "name": "流火戍靈",
     "char": "灵",
     "color": "#ff9a5b",
     "grade": "earth",
@@ -470,49 +470,49 @@
     "drops": [
       {
         "itemId": "ember_sand",
-        "name": "陨火砂",
+        "name": "隕火砂",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "furnace_red_crystal",
-        "name": "炉心赤晶",
+        "name": "爐心赤晶",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.ember_scorch_spear",
-        "name": "赤陨灼枪",
+        "name": "赤隕灼槍",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.furnace_red_ring",
-        "name": "炉心赤戒",
+        "name": "爐心赤戒",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.liyan_duanxi",
-        "name": "《离炎锻息诀》",
+        "name": "《離炎鍛息訣》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.chiqi_ranqiao",
-        "name": "《赤息燃窍功》",
+        "name": "《赤息燃竅功》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.yaohuo_liebo",
-        "name": "《曜火裂波术》",
+        "name": "《曜火裂波術》",
         "type": "skill_book",
         "count": 1
       },
       {
         "itemId": "book.voidflame_chapter",
-        "name": "《太虚劫光篇》",
+        "name": "《太虛劫光篇》",
         "type": "skill_book",
         "count": 1
       }
@@ -542,7 +542,7 @@
   },
   {
     "id": "m_ember_furnace_lord",
-    "name": "离火炉君",
+    "name": "離火爐君",
     "char": "君",
     "color": "#ffcf96",
     "grade": "earth",
@@ -568,31 +568,31 @@
     "drops": [
       {
         "itemId": "furnace_red_crystal",
-        "name": "炉心赤晶",
+        "name": "爐心赤晶",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "ember_sand",
-        "name": "陨火砂",
+        "name": "隕火砂",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.ember_scorch_spear",
-        "name": "赤陨灼枪",
+        "name": "赤隕灼槍",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "equip.furnace_red_ring",
-        "name": "炉心赤戒",
+        "name": "爐心赤戒",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.zhuming_jintian",
-        "name": "《朱明烬天录》",
+        "name": "《朱明燼天錄》",
         "type": "skill_book",
         "count": 1
       }

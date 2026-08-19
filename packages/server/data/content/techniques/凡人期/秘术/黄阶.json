@@ -1,8 +1,8 @@
 [
   {
     "id": "mountain_insight_chart",
-    "name": "玄照图",
-    "desc": "黄阶秘术预留位，名称偏观察、照影和识破。",
+    "name": "玄照圖",
+    "desc": "黃階秘術預留位，名稱偏觀察、照影和識破。",
     "grade": "yellow",
     "category": "secret",
     "realmLv": 8,
@@ -30,8 +30,8 @@
   },
   {
     "id": "hidden_fortune_record",
-    "name": "藏运录",
-    "desc": "黄阶秘术预留位，名称偏运势、掉落或资源流转。",
+    "name": "藏運錄",
+    "desc": "黃階秘術預留位，名稱偏運勢、掉落或資源流轉。",
     "grade": "yellow",
     "category": "secret",
     "realmLv": 13,

@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "black_iron_mine",
-  "name": "玄铁矿洞",
+  "name": "玄鐵礦洞",
   "mapGroupId": "black_iron_mine",
-  "mapGroupName": "玄铁矿洞",
+  "mapGroupName": "玄鐵礦洞",
   "mapGroupOrder": 1000,
   "mapGroupMemberOrder": 0,
   "width": 48,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 6,
   "spaceVisionMode": "isolated",
-  "description": "扩展为 48x48 的断矿旧道：西侧残轨仍接青竹林，中段旧锻炉台成了唯一能喘口气的避风点，怪物堵在通往各矿带的岔口上，矿区内部只留下零星灵石矿点与多段裸露玄铁矿层，方便沿矿带持续开采。",
+  "description": "擴展為 48x48 的斷礦舊道：西側殘軌仍接青竹林，中段舊鍛爐臺成了唯一能喘口氣的避風點，怪物堵在通往各礦帶的岔口上，礦區內部只留下零星靈石礦點與多段裸露玄鐵礦層，方便沿礦帶持續開採。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
@@ -271,38 +271,38 @@
   "landmarks": [
     {
       "id": "lm_mine_core",
-      "name": "失落信标井",
+      "name": "失落信標井",
       "x": 39,
       "y": 12,
-      "desc": "深矿区里仅剩的一口旧信标井，矿魈借着残火盘踞在旁，想抢回核心就得从这片矿脉里硬撕一条路。"
+      "desc": "深礦區裡僅剩的一口舊信標井，礦魈藉著殘火盤踞在旁，想搶回核心就得從這片礦脈裡硬撕一條路。"
     },
     {
       "id": "lm_old_forge",
-      "name": "旧锻炉台",
+      "name": "舊鍛爐臺",
       "x": 24,
       "y": 23,
-      "desc": "矿线里最后还在喘气的火口，锻炉余火就守在这。再往里走，才算真正进了断矿深处。",
+      "desc": "礦線裡最後還在喘氣的火口，鍛爐餘火就守在這。再往裡走，才算真正進了斷礦深處。",
       "container": {
         "grade": "earth",
         "refreshTicks": 3000,
         "drops": [
           {
             "itemId": "black_iron_chunk",
-            "name": "玄铁矿块",
+            "name": "玄鐵礦塊",
             "type": "material",
             "count": 2,
             "chance": 0.8
           },
           {
             "itemId": "crystal_dust",
-            "name": "晶尘",
+            "name": "晶塵",
             "type": "material",
             "count": 2,
             "chance": 0.6
           },
           {
             "itemId": "equip.soot_lamp_hood",
-            "name": "矿卫盔",
+            "name": "礦衛盔",
             "type": "equipment",
             "count": 1,
             "chance": 0.14
@@ -313,50 +313,50 @@
     },
     {
       "id": "lm_black_iron_vein_north",
-      "name": "北段玄铁矿脉",
+      "name": "北段玄鐵礦脈",
       "x": 39,
       "y": 16,
-      "desc": "信标井旁的玄铁矿层被旧矿工剥开过大半，只剩几道还能继续撬下矿块的硬脉。",
+      "desc": "信標井旁的玄鐵礦層被舊礦工剝開過大半，只剩幾道還能繼續撬下礦塊的硬脈。",
       "resourceNodeId": "landmark.black_iron_vein"
     },
     {
       "id": "lm_black_iron_vein_south",
-      "name": "裂隙玄铁矿层",
+      "name": "裂隙玄鐵礦層",
       "x": 20,
       "y": 35,
-      "desc": "下层裂隙把黑沉矿层整片掀了出来，灵石不多，玄铁却扎得很密，是最适合久留开采的一段矿带。",
+      "desc": "下層裂隙把黑沉礦層整片掀了出來，靈石不多，玄鐵卻扎得很密，是最適合久留開採的一段礦帶。",
       "resourceNodeId": "landmark.black_iron_vein"
     },
     {
       "id": "lm_black_iron_vein_east",
-      "name": "东支裸矿壁",
+      "name": "東支裸礦壁",
       "x": 37,
       "y": 36,
-      "desc": "东支巷道的矿壁被塌方磨掉一层，露出成片玄铁硬筋，旁边只嵌着零零散散的灵石点。",
+      "desc": "東支巷道的礦壁被塌方磨掉一層，露出成片玄鐵硬筋，旁邊只嵌著零零散散的靈石點。",
       "resourceNodeId": "landmark.black_iron_vein"
     }
   ],
   "npcs": [
     {
       "id": "npc_mine_overseer_ghost",
-      "name": "矿监残魂",
+      "name": "礦監殘魂",
       "x": 24,
       "y": 13,
       "char": "魂",
       "color": "#c0d6ff",
-      "dialogue": "矿路先死在闸门，再死在人心。东北那口信标井还亮着半截旧命，矿魈全守在那边，你若敢去，就别把炉火也丢了。",
+      "dialogue": "礦路先死在閘門，再死在人心。東北那口信標井還亮著半截舊命，礦魈全守在那邊，你若敢去，就別把爐火也丟了。",
       "role": "quest_hint",
       "shopItems": [],
       "quests": []
     },
     {
       "id": "npc_mine_smith",
-      "name": "锻炉余火",
+      "name": "鍛爐餘火",
       "x": 26,
       "y": 23,
       "char": "炉",
       "color": "#e7a66a",
-      "dialogue": "先把这口气喘匀，再去东北把失落信标核心抢回来。矿路还能不能接上，就看那一点火种还剩多少。",
+      "dialogue": "先把這口氣喘勻，再去東北把失落信標核心搶回來。礦路還能不能接上，就看那一點火種還剩多少。",
       "role": "quest_giver",
       "shopItems": [],
       "quests": []
@@ -366,7 +366,7 @@
     {
       "resourceNodeId": "landmark.herb.breakarray_shard",
       "idPrefix": "lm_mine_breakarray",
-      "name": "破纹砂",
+      "name": "破紋砂",
       "placements": [
         {
           "x": 9,

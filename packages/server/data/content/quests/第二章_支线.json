@@ -2,27 +2,27 @@
   "quests": [
     {
       "id": "q_mine_embers",
-      "title": "炉心续火",
+      "title": "爐心續火",
       "guideFlowId": "mining-guide",
-      "desc": "锻炉余火尚存一息，命人深入矿区再取一批玄铁矿块，试看旧炉能否将最后一口炉火续燃。",
-      "story": "矿洞里剩下的不只是矿，也有一群不肯散干净的旧念头。",
-      "objectiveText": "斩杀矿洞活尸，带回玄铁矿块",
+      "desc": "鍛爐餘火尚存一息，命人深入礦區再取一批玄鐵礦塊，試看舊爐能否將最後一口爐火續燃。",
+      "story": "礦洞裡剩下的不只是礦，也有一群不肯散乾淨的舊念頭。",
+      "objectiveText": "斬殺礦洞活屍，帶回玄鐵礦塊",
       "targetMonsterId": "m_mine_ghoul",
       "targetCount": 6,
       "targetMapId": "black_iron_mine",
-      "targetName": "矿洞活尸",
+      "targetName": "礦洞活屍",
       "requiredItemId": "black_iron_chunk",
       "requiredItemCount": 4,
       "reward": [
         {
           "itemId": "major_qi_pill",
-          "name": "大还灵丹",
+          "name": "大還靈丹",
           "type": "consumable",
           "count": 1
         },
         {
           "itemId": "pill.break_array_elixir",
-          "name": "破阵丹",
+          "name": "破陣丹",
           "type": "consumable",
           "count": 1
         }
@@ -36,20 +36,20 @@
     },
     {
       "id": "q_mine_colossus_side",
-      "title": "斩巨摘炉心",
-      "desc": "旧炉欲再燃，须先取出矿脉巨像之心。锻炉余火言明，此物或将毁人，或将人送上更坚硬的一步。",
-      "story": "有些地方的门，不是靠钥匙开的，是靠你敢不敢把门里最大的东西先打烂。",
-      "objectiveText": "击败矿脉巨像，取回巨像核心",
+      "title": "斬巨摘爐心",
+      "desc": "舊爐欲再燃，須先取出礦脈巨像之心。鍛爐餘火言明，此物或將毀人，或將人送上更堅硬的一步。",
+      "story": "有些地方的門，不是靠鑰匙開的，是靠你敢不敢把門裡最大的東西先打爛。",
+      "objectiveText": "擊敗礦脈巨像，取回巨像核心",
       "targetMonsterId": "m_ore_colossus",
       "targetCount": 2,
       "targetMapId": "black_iron_mine",
-      "targetName": "矿脉巨像",
+      "targetName": "礦脈巨像",
       "requiredItemId": "colossus_heart",
       "requiredItemCount": 1,
       "reward": [
         {
           "itemId": "major_qi_pill",
-          "name": "大还灵丹",
+          "name": "大還靈丹",
           "type": "consumable",
           "count": 2
         }
@@ -62,14 +62,14 @@
     },
     {
       "id": "q_ruin_scholar_echo",
-      "title": "碑灵试炼",
-      "desc": "碑灵学士不肯直言遗迹所藏，命人先清除四周游走的石卫，方肯再吐下一句实话。",
-      "story": "活人怕鬼，鬼怕遗忘。碑灵学士更怕的是，连愿意听它说话的人都没了。",
-      "objectiveText": "清除遗迹石卫，收回断纹石片",
+      "title": "碑靈試煉",
+      "desc": "碑靈學士不肯直言遺蹟所藏，命人先清除四周遊走的石衛，方肯再吐下一句實話。",
+      "story": "活人怕鬼，鬼怕遺忘。碑靈學士更怕的是，連願意聽它說話的人都沒了。",
+      "objectiveText": "清除遺蹟石衛，收回斷紋石片",
       "targetMonsterId": "m_ruin_guardian",
       "targetCount": 6,
       "targetMapId": "ancient_ruins",
-      "targetName": "石卫傀儡",
+      "targetName": "石衛傀儡",
       "requiredItemId": "rune_shard",
       "requiredItemCount": 6,
       "reward": [
@@ -89,20 +89,20 @@
     },
     {
       "id": "q_ruin_keeper_side",
-      "title": "守纹残念",
-      "desc": "碑灵学士将人推至守纹残念处，言称真正持有开门之权者并非己身。取回遗迹钥石，方可探明此地究竟被何物熬成如今这般模样。",
-      "story": "一处遗迹若还守着门，往往不是为了拦外人，而是为了把门里的东西再关久一点。",
-      "objectiveText": "击败符阵看守，取回遗迹钥石",
+      "title": "守紋殘念",
+      "desc": "碑靈學士將人推至守紋殘念處，言稱真正持有開門之權者並非己身。取回遺蹟鑰石，方可探明此地究竟被何物熬成如今這般模樣。",
+      "story": "一處遺蹟若還守著門，往往不是為了攔外人，而是為了把門裡的東西再關久一點。",
+      "objectiveText": "擊敗符陣看守，取回遺蹟鑰石",
       "targetMonsterId": "m_rune_watcher",
       "targetCount": 2,
       "targetMapId": "ancient_ruins",
-      "targetName": "符阵看守",
+      "targetName": "符陣看守",
       "requiredItemId": "ruin_keystone",
       "requiredItemCount": 1,
       "reward": [
         {
           "itemId": "major_qi_pill",
-          "name": "大还灵丹",
+          "name": "大還靈丹",
           "type": "consumable",
           "count": 1
         },

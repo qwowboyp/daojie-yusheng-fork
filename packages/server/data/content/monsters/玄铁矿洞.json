@@ -1,7 +1,7 @@
 [
   {
     "id": "m_mine_ghoul",
-    "name": "矿魈",
+    "name": "礦魈",
     "char": "魈",
     "color": "#8f7fa8",
     "radius": 8,
@@ -10,20 +10,20 @@
     "drops": [
       {
         "itemId": "mine_signal_core",
-        "name": "失落信标核心",
+        "name": "失落信標核心",
         "type": "quest_item",
         "count": 1,
         "chance": 0.18
       },
       {
         "itemId": "black_iron_chunk",
-        "name": "玄铁矿块",
+        "name": "玄鐵礦塊",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "mine_crystal_core",
-        "name": "矿晶核",
+        "name": "礦晶核",
         "type": "quest_item",
         "count": 1,
         "chance": 0.14
@@ -72,13 +72,13 @@
     "drops": [
       {
         "itemId": "crystal_dust",
-        "name": "晶尘",
+        "name": "晶塵",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "book_thunder_palm",
-        "name": "《惊雷掌》残卷",
+        "name": "《驚雷掌》殘卷",
         "type": "skill_book",
         "count": 1,
         "chance": 0.01
@@ -121,7 +121,7 @@
   },
   {
     "id": "m_tunnel_stalker",
-    "name": "隧影潜猎者",
+    "name": "隧影潛獵者",
     "char": "潜",
     "color": "#6f84a8",
     "radius": 5,
@@ -130,13 +130,13 @@
     "drops": [
       {
         "itemId": "black_iron_chunk",
-        "name": "玄铁矿块",
+        "name": "玄鐵礦塊",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.soot_lamp_hood",
-        "name": "熄火矿灯冠",
+        "name": "熄火礦燈冠",
         "type": "equipment",
         "count": 1
       }
@@ -179,7 +179,7 @@
   },
   {
     "id": "m_ore_colossus",
-    "name": "玄矿巨像精英",
+    "name": "玄礦巨像精英",
     "char": "像",
     "color": "#8f8a7b",
     "radius": 3,
@@ -195,19 +195,19 @@
       },
       {
         "itemId": "black_iron_chunk",
-        "name": "玄铁矿块",
+        "name": "玄鐵礦塊",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "spirit_iron_fragment",
-        "name": "灵铁碎片",
+        "name": "靈鐵碎片",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "equip.rift_guard_armor",
-        "name": "裂隙镇守甲",
+        "name": "裂隙鎮守甲",
         "type": "equipment",
         "count": 1
       },
@@ -220,13 +220,13 @@
       },
       {
         "itemId": "equip.orebreak_hammer",
-        "name": "矿卫破岩锤",
+        "name": "礦衛破巖錘",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "quest.miner_token",
-        "name": "矿洞令牌",
+        "name": "礦洞令牌",
         "type": "quest_item",
         "count": 1
       }
@@ -269,7 +269,7 @@
   },
   {
     "id": "m_iron_devour_lord",
-    "name": "噬铁矿君",
+    "name": "噬鐵礦君",
     "char": "君",
     "color": "#a78b73",
     "radius": 2,
@@ -278,19 +278,19 @@
     "drops": [
       {
         "itemId": "black_iron_chunk",
-        "name": "玄铁矿块",
+        "name": "玄鐵礦塊",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "crystal_dust",
-        "name": "晶尘",
+        "name": "晶塵",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "spirit_iron_fragment",
-        "name": "灵铁碎片",
+        "name": "靈鐵碎片",
         "type": "material",
         "count": 1
       },
@@ -303,13 +303,13 @@
       },
       {
         "itemId": "equip.rift_guard_armor",
-        "name": "裂隙镇守甲",
+        "name": "裂隙鎮守甲",
         "type": "equipment",
         "count": 1
       },
       {
         "itemId": "book.redflame_art",
-        "name": "《赤焰诀》",
+        "name": "《赤焰訣》",
         "type": "skill_book",
         "count": 1,
         "chance": 0.5

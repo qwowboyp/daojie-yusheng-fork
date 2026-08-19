@@ -1,9 +1,9 @@
 [
   {
     "itemId": "mat.technique_fragment",
-    "name": "功法残页",
+    "name": "功法殘頁",
     "type": "material",
-    "desc": "分解功法书得到的残页，可在炼法台中重制功法书。",
+    "desc": "分解功法書得到的殘頁，可在煉法臺中重製功法書。",
     "materialCategory": "exotic",
     "tags": [
       "功法",
@@ -13,9 +13,9 @@
   },
   {
     "itemId": "mat.technique_unification_test",
-    "name": "测试材料",
+    "name": "測試材料",
     "type": "material",
-    "desc": "仅供尚未开放的玩法内部测试，不参与坊市流通。",
+    "desc": "僅供尚未開放的玩法內部測試，不參與坊市流通。",
     "marketTradable": false,
     "tags": [
       "测试"
@@ -23,7 +23,7 @@
   },
   {
     "itemId": "mat.beast_bone",
-    "name": "妖兽骨",
+    "name": "妖獸骨",
     "type": "material",
     "level": 1,
     "materialCategory": "exotic",
@@ -33,7 +33,7 @@
         "earth": 2
       }
     },
-    "desc": "山野妖兽遗骨，可留作后用。",
+    "desc": "山野妖獸遺骨，可留作後用。",
     "grade": "mortal",
     "tags": [
       "异材"
@@ -41,9 +41,9 @@
   },
   {
     "itemId": "quest.miner_token",
-    "name": "矿洞令牌",
+    "name": "礦洞令牌",
     "type": "quest_item",
-    "desc": "证明你被允许深入矿洞与古修遗迹。"
+    "desc": "證明你被允許深入礦洞與古修遺蹟。"
   },
   {
     "itemId": "wolf_fang",
@@ -57,7 +57,7 @@
         "earth": 5
       }
     },
-    "desc": "噬灵狼的利牙。",
+    "desc": "噬靈狼的利牙。",
     "grade": "mortal",
     "tags": [
       "异材"
@@ -65,7 +65,7 @@
   },
   {
     "itemId": "serpent_gall",
-    "name": "竹蛇胆",
+    "name": "竹蛇膽",
     "type": "material",
     "level": 6,
     "materialCategory": "exotic",
@@ -75,7 +75,7 @@
         "water": 8
       }
     },
-    "desc": "青鳞竹蛇的胆囊。",
+    "desc": "青鱗竹蛇的膽囊。",
     "grade": "mortal",
     "tags": [
       "异材",
@@ -84,7 +84,7 @@
   },
   {
     "itemId": "black_iron_chunk",
-    "name": "玄铁矿块",
+    "name": "玄鐵礦塊",
     "type": "material",
     "level": 11,
     "materialCategory": "ore",
@@ -94,7 +94,7 @@
         "earth": 7
       }
     },
-    "desc": "可用于炼器的粗矿。",
+    "desc": "可用於煉器的粗礦。",
     "grade": "mortal",
     "tags": [
       "矿石",
@@ -105,7 +105,7 @@
   },
   {
     "itemId": "crystal_dust",
-    "name": "晶尘",
+    "name": "晶塵",
     "type": "material",
     "level": 6,
     "materialCategory": "ore",
@@ -125,13 +125,13 @@
   },
   {
     "itemId": "mine_signal_core",
-    "name": "失落信标核心",
+    "name": "失落信標核心",
     "type": "quest_item",
-    "desc": "矿洞旧阵的核心部件。"
+    "desc": "礦洞舊陣的核心部件。"
   },
   {
     "itemId": "rune_shard",
-    "name": "断纹石片",
+    "name": "斷紋石片",
     "type": "material",
     "level": 12,
     "materialCategory": "ore",
@@ -141,7 +141,7 @@
         "earth": 13
       }
     },
-    "desc": "遗迹傀儡体内剥落的残纹。",
+    "desc": "遺蹟傀儡體內剝落的殘紋。",
     "grade": "mortal",
     "tags": [
       "矿石",
@@ -161,7 +161,7 @@
         "earth": 16
       }
     },
-    "desc": "兽谷妖狼的坚骨。",
+    "desc": "獸谷妖狼的堅骨。",
     "grade": "mortal",
     "tags": [
       "异材"
@@ -179,7 +179,7 @@
         "fire": 18
       }
     },
-    "desc": "血羽鸦留下的邪异翎羽。",
+    "desc": "血羽鴉留下的邪異翎羽。",
     "grade": "mortal",
     "tags": [
       "异材"
@@ -187,13 +187,13 @@
   },
   {
     "itemId": "valley_core",
-    "name": "兽谷核心",
+    "name": "獸谷核心",
     "type": "quest_item",
-    "desc": "谷底裂隙孕出的异质核心。"
+    "desc": "谷底裂隙孕出的異質核心。"
   },
   {
     "itemId": "spirit_iron_fragment",
-    "name": "灵铁碎片",
+    "name": "靈鐵碎片",
     "type": "material",
     "level": 14,
     "materialCategory": "ore",
@@ -203,7 +203,7 @@
         "earth": 8
       }
     },
-    "desc": "蕴灵玄铁的碎片。",
+    "desc": "蘊靈玄鐵的碎片。",
     "grade": "mortal",
     "tags": [
       "矿石",
@@ -250,7 +250,7 @@
   },
   {
     "itemId": "lizard_scale",
-    "name": "泽鳞",
+    "name": "澤鱗",
     "type": "material",
     "level": 4,
     "materialCategory": "exotic",
@@ -260,7 +260,7 @@
         "earth": 3
       }
     },
-    "desc": "泽鳞蜥脱落的鳞片。",
+    "desc": "澤鱗蜥脫落的鱗片。",
     "grade": "mortal",
     "tags": [
       "异材"
@@ -278,7 +278,7 @@
         "earth": 2
       }
     },
-    "desc": "荒野匪徒身份的金属牌。",
+    "desc": "荒野匪徒身份的金屬牌。",
     "grade": "mortal",
     "tags": [
       "异材"
@@ -296,7 +296,7 @@
         "earth": 4
       }
     },
-    "desc": "竹灵聚气形成的核心髓结。",
+    "desc": "竹靈聚氣形成的核心髓結。",
     "grade": "mortal",
     "tags": [
       "异材",
@@ -305,7 +305,7 @@
   },
   {
     "itemId": "spider_silk",
-    "name": "阴沼丝",
+    "name": "陰沼絲",
     "type": "material",
     "level": 3,
     "materialCategory": "exotic",
@@ -315,7 +315,7 @@
         "water": 5
       }
     },
-    "desc": "沼泽妖蛛吐出的坚韧蛛丝。",
+    "desc": "沼澤妖蛛吐出的堅韌蛛絲。",
     "grade": "mortal",
     "tags": [
       "异材",
@@ -324,7 +324,7 @@
   },
   {
     "itemId": "mantis_blade",
-    "name": "螳锋",
+    "name": "螳鋒",
     "type": "material",
     "level": 10,
     "materialCategory": "exotic",
@@ -343,21 +343,21 @@
   },
   {
     "itemId": "mine_crystal_core",
-    "name": "矿晶核",
+    "name": "礦晶核",
     "type": "quest_item",
-    "desc": "矿洞深层晶簇凝结出的核心。"
+    "desc": "礦洞深層晶簇凝結出的核心。"
   },
   {
     "itemId": "colossus_heart",
     "name": "巨像核心",
     "type": "quest_item",
-    "desc": "矿脉巨像的驱动核心。"
+    "desc": "礦脈巨像的驅動核心。"
   },
   {
     "itemId": "ruin_keystone",
-    "name": "遗迹钥石",
+    "name": "遺蹟鑰石",
     "type": "quest_item",
-    "desc": "可驱动古修阵门的钥石。"
+    "desc": "可驅動古修陣門的鑰石。"
   },
   {
     "itemId": "soul_ink",
@@ -371,7 +371,7 @@
         "earth": 6
       }
     },
-    "desc": "古碑残魂凝结出的墨色灵液。",
+    "desc": "古碑殘魂凝結出的墨色靈液。",
     "grade": "mortal",
     "tags": [
       "异材"
@@ -379,7 +379,7 @@
   },
   {
     "itemId": "serpent_scale",
-    "name": "谷蛇逆鳞",
+    "name": "谷蛇逆鱗",
     "type": "material",
     "level": 11,
     "materialCategory": "exotic",
@@ -389,7 +389,7 @@
         "water": 12
       }
     },
-    "desc": "兽谷异蛇的逆鳞碎片。",
+    "desc": "獸谷異蛇的逆鱗碎片。",
     "grade": "mortal",
     "tags": [
       "异材"
@@ -399,11 +399,11 @@
     "itemId": "valley_emperor_fang",
     "name": "谷皇獠牙",
     "type": "quest_item",
-    "desc": "兽谷皇级妖兽的本命獠牙。"
+    "desc": "獸谷皇級妖獸的本命獠牙。"
   },
   {
     "itemId": "ridge_beast_claw",
-    "name": "岭兽爪",
+    "name": "嶺獸爪",
     "type": "material",
     "level": 12,
     "materialCategory": "exotic",
@@ -413,7 +413,7 @@
         "earth": 7
       }
     },
-    "desc": "灵岭猛兽留下的巨大爪痕骨。",
+    "desc": "靈嶺猛獸留下的巨大爪痕骨。",
     "grade": "mortal",
     "tags": [
       "异材"
@@ -421,7 +421,7 @@
   },
   {
     "itemId": "frost_essence",
-    "name": "霜华精粹",
+    "name": "霜華精粹",
     "type": "material",
     "level": 13,
     "materialCategory": "exotic",
@@ -431,7 +431,7 @@
         "water": 14
       }
     },
-    "desc": "极寒灵气凝结的蓝白晶滴。",
+    "desc": "極寒靈氣凝結的藍白晶滴。",
     "grade": "mortal",
     "tags": [
       "异材"
@@ -439,13 +439,13 @@
   },
   {
     "itemId": "spirit_ridge_sigil",
-    "name": "灵岭行令",
+    "name": "靈嶺行令",
     "type": "quest_item",
-    "desc": "灵岭守关者留下的通行令符。"
+    "desc": "靈嶺守關者留下的通行令符。"
   },
   {
     "itemId": "void_shard",
-    "name": "虚蚀碎片",
+    "name": "虛蝕碎片",
     "type": "material",
     "level": 14,
     "materialCategory": "exotic",
@@ -455,7 +455,7 @@
         "earth": 8
       }
     },
-    "desc": "虚空妖物躯壳剥落的暗晶。",
+    "desc": "虛空妖物軀殼剝落的暗晶。",
     "grade": "mortal",
     "tags": [
       "异材",
@@ -464,7 +464,7 @@
   },
   {
     "itemId": "star_metal",
-    "name": "星陨金",
+    "name": "星隕金",
     "type": "material",
     "level": 15,
     "materialCategory": "ore",
@@ -474,7 +474,7 @@
         "fire": 8
       }
     },
-    "desc": "坠星坑深处采得的高纯灵金。",
+    "desc": "墜星坑深處採得的高純靈金。",
     "grade": "mortal",
     "tags": [
       "矿石",
@@ -485,7 +485,7 @@
   },
   {
     "itemId": "sky_pattern_page",
-    "name": "天纹残页",
+    "name": "天紋殘頁",
     "type": "material",
     "level": 16,
     "materialCategory": "exotic",
@@ -495,7 +495,7 @@
         "wood": 9
       }
     },
-    "desc": "记录古天宫阵纹的残页。",
+    "desc": "記錄古天宮陣紋的殘頁。",
     "grade": "mortal",
     "tags": [
       "异材"
@@ -505,7 +505,7 @@
     "itemId": "sky_seal_core",
     "name": "天封核心",
     "type": "quest_item",
-    "desc": "封印天宫裂隙所需的核心组件。"
+    "desc": "封印天宮裂隙所需的核心組件。"
   },
   {
     "itemId": "mat.moondew_grass",
@@ -520,14 +520,14 @@
         "water": 3
       }
     },
-    "desc": "清晨叶尖常挂月白露珠，是最常见的温和药底。",
+    "desc": "清晨葉尖常掛月白露珠，是最常見的溫和藥底。",
     "tags": [
       "药材"
     ]
   },
   {
     "itemId": "mat.red_flame_leaf",
-    "name": "赤火叶",
+    "name": "赤火葉",
     "type": "material",
     "grade": "yellow",
     "level": 16,
@@ -538,14 +538,14 @@
         "fire": 23
       }
     },
-    "desc": "叶脉似有火线流过，微温不烈，常用来提振炉火药性。",
+    "desc": "葉脈似有火線流過，微溫不烈，常用來提振爐火藥性。",
     "tags": [
       "药材"
     ]
   },
   {
     "itemId": "mat.green_spirit_stem",
-    "name": "青灵茎",
+    "name": "青靈莖",
     "type": "material",
     "grade": "yellow",
     "level": 8,
@@ -556,14 +556,14 @@
         "water": 7
       }
     },
-    "desc": "蕴有淡薄灵机的草茎，常作聚气和缓冲药引。",
+    "desc": "蘊有淡薄靈機的草莖，常作聚氣和緩衝藥引。",
     "tags": [
       "药材"
     ]
   },
   {
     "itemId": "mat.frost_lotus_petal",
-    "name": "寒莲瓣",
+    "name": "寒蓮瓣",
     "type": "material",
     "grade": "mystic",
     "level": 12,
@@ -574,7 +574,7 @@
         "water": 23
       }
     },
-    "desc": "带着寒雾水汽的薄瓣，能压住燥烈药势。",
+    "desc": "帶著寒霧水汽的薄瓣，能壓住燥烈藥勢。",
     "tags": [
       "药材"
     ]
@@ -592,7 +592,7 @@
         "water": 14
       }
     },
-    "desc": "花香清冽，炼入丹中常能扶正心神、澄明五感。",
+    "desc": "花香清冽，煉入丹中常能扶正心神、澄明五感。",
     "tags": [
       "药材"
     ]
@@ -610,14 +610,14 @@
         "fire": 12
       }
     },
-    "desc": "果肉辛甜，药气偏热，最适合催发血气。",
+    "desc": "果肉辛甜，藥氣偏熱，最適合催發血氣。",
     "tags": [
       "药材"
     ]
   },
   {
     "itemId": "mat.breakarray_shard",
-    "name": "破纹砂",
+    "name": "破紋砂",
     "type": "material",
     "grade": "mystic",
     "level": 3,
@@ -628,7 +628,7 @@
         "fire": 5
       }
     },
-    "desc": "从旧阵裂缝里筛出的细砂，药性带着轻微撕裂感。",
+    "desc": "從舊陣裂縫裡篩出的細砂，藥性帶著輕微撕裂感。",
     "tags": [
       "矿石",
       "矿材",
@@ -637,7 +637,7 @@
   },
   {
     "itemId": "mat.swiftwind_reed",
-    "name": "疾风苇",
+    "name": "疾風葦",
     "type": "material",
     "grade": "mystic",
     "level": 12,
@@ -648,7 +648,7 @@
         "wood": 23
       }
     },
-    "desc": "细长苇芯中藏着轻灵风息，常用来炼制轻身类丹药。",
+    "desc": "細長葦芯中藏著輕靈風息，常用來煉製輕身類丹藥。",
     "tags": [
       "药材",
       "木材"
@@ -667,7 +667,7 @@
         "earth": 26
       }
     },
-    "desc": "入口极苦，药劲却最能逼出修者经脉里的勤修之意。",
+    "desc": "入口極苦，藥勁卻最能逼出修者經脈裡的勤修之意。",
     "tags": [
       "药材",
       "木材"
@@ -675,7 +675,7 @@
   },
   {
     "itemId": "mat.sunmelt_seed",
-    "name": "融阳子",
+    "name": "融陽子",
     "type": "material",
     "grade": "earth",
     "level": 20,
@@ -686,7 +686,7 @@
         "earth": 26
       }
     },
-    "desc": "在炽热岩缝里长成的赤金种子，蕴着强横烈阳药引。",
+    "desc": "在熾熱巖縫裡長成的赤金種子，蘊著強橫烈陽藥引。",
     "tags": [
       "药材"
     ]

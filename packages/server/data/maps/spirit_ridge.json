@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "spirit_ridge",
-  "name": "灵脊岭",
+  "name": "靈脊嶺",
   "mapGroupId": "spirit_ridge",
-  "mapGroupName": "灵脊岭",
+  "mapGroupName": "靈脊嶺",
   "mapGroupOrder": 1000,
   "mapGroupMemberOrder": 0,
   "width": 48,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 12,
   "spaceVisionMode": "isolated",
-  "description": "扩展为 48x48 的灵脊岭：西坡是能盘旋上行的缓岭旧道，东侧则是坠向兽谷与残宫的断崖危台；中央寒潭与守岭关门把第四章的试炼层层抬高，最上方升穹阵则把凡武尽头推到真正的修仙门槛前。",
+  "description": "擴展為 48x48 的靈脊嶺：西坡是能盤旋上行的緩嶺舊道，東側則是墜向獸谷與殘宮的斷崖危臺；中央寒潭與守嶺關門把第四章的試煉層層抬高，最上方升穹陣則把凡武盡頭推到真正的修仙門檻前。",
   "terrain": [
     "崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖",
     "崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖草草草草草崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖崖",
@@ -310,31 +310,31 @@
   "landmarks": [
     {
       "id": "lm_ridge_gate",
-      "name": "岭顶关门",
+      "name": "嶺頂關門",
       "x": 24,
       "y": 12,
-      "desc": "真正的守岭关门立在寒潭之上，跨过这里才算摸到凡武尽头与练气门缝的交界。",
+      "desc": "真正的守嶺關門立在寒潭之上，跨過這裡才算摸到凡武盡頭與練氣門縫的交界。",
       "container": {
         "grade": "heaven",
         "refreshTicks": 3600,
         "drops": [
           {
             "itemId": "ridge_beast_claw",
-            "name": "岭兽爪",
+            "name": "嶺獸爪",
             "type": "material",
             "count": 2,
             "chance": 0.8
           },
           {
             "itemId": "frost_essence",
-            "name": "霜华精粹",
+            "name": "霜華精粹",
             "type": "material",
             "count": 1,
             "chance": 0.55
           },
           {
             "itemId": "equip.deepvein_core",
-            "name": "凝灵戒",
+            "name": "凝靈戒",
             "type": "equipment",
             "count": 1,
             "chance": 0.1
@@ -345,21 +345,21 @@
     },
     {
       "id": "lm_ridge_sky_lift",
-      "name": "升穹阵",
+      "name": "升穹陣",
       "x": 24,
       "y": 3,
-      "desc": "守岭老修看守的旧升穹阵，只有真正跨过灵岭试炼的人，才有资格继续上行去碰天穹残宫。"
+      "desc": "守嶺老修看守的舊升穹陣，只有真正跨過靈嶺試煉的人，才有資格繼續上行去碰天穹殘宮。"
     }
   ],
   "npcs": [
     {
       "id": "npc_ridge_sage",
-      "name": "守岭老修",
+      "name": "守嶺老修",
       "x": 24,
       "y": 24,
       "char": "修",
       "color": "#b0d6ff",
-      "dialogue": "下头是还没塌干净的人间路，上头是已经开始掉下来的天门。你若连这道岭都站不稳，就别谈替谁叩门。",
+      "dialogue": "下頭是還沒塌乾淨的人間路，上頭是已經開始掉下來的天門。你若連這道嶺都站不穩，就別談替誰叩門。",
       "role": "quest_giver",
       "shopItems": [],
       "quests": []

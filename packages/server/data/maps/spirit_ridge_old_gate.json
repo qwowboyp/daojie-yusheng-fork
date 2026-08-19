@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "spirit_ridge_old_gate",
-  "name": "灵脊岭·悬门旧关",
+  "name": "靈脊嶺·懸門舊關",
   "mapGroupId": "spirit_ridge_old_gate",
-  "mapGroupName": "灵脊岭",
+  "mapGroupName": "靈脊嶺",
   "mapGroupOrder": 1000,
   "mapGroupMemberOrder": 0,
   "width": 18,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 16,
   "spaceVisionMode": "isolated",
-  "description": "关门正后方还藏着一截悬在断崖边的旧关道，左侧尚能绕行，右侧却已经整面塌成绝壁。",
+  "description": "關門正後方還藏著一截懸在斷崖邊的舊關道，左側尚能繞行，右側卻已經整面塌成絕壁。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草崖崖崖崖崖崖崖崖草",
@@ -101,10 +101,10 @@
   "landmarks": [
     {
       "id": "lm_old_gate_platform",
-      "name": "悬门旧台",
+      "name": "懸門舊臺",
       "x": 13,
       "y": 4,
-      "desc": "旧关门后的石台只剩半边还挂在崖外，镇脊关主就守在这块险地尽头，把所有试图翻过去的人都当成新的垫脚骨。"
+      "desc": "舊關門後的石臺只剩半邊還掛在崖外，鎮脊關主就守在這塊險地盡頭，把所有試圖翻過去的人都當成新的墊腳骨。"
     }
   ]
 }

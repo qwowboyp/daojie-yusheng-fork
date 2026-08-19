@@ -1,7 +1,7 @@
 [
   {
     "id": "m_frost_scale_serpent",
-    "name": "霜鳞蛇",
+    "name": "霜鱗蛇",
     "char": "蛇",
     "color": "#a8d4e6",
     "grade": "mystic",
@@ -30,13 +30,13 @@
     "drops": [
       {
         "itemId": "mat.frost_scale",
-        "name": "霜鳞片",
+        "name": "霜鱗片",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "mat.cold_serpent_gall",
-        "name": "寒蛇胆",
+        "name": "寒蛇膽",
         "type": "material",
         "count": 1,
         "chance": 0.3
@@ -67,7 +67,7 @@
   },
   {
     "id": "m_cold_iron_scorpion",
-    "name": "寒铁蝎",
+    "name": "寒鐵蠍",
     "char": "蝎",
     "color": "#7a8fa6",
     "grade": "mystic",
@@ -99,13 +99,13 @@
     "drops": [
       {
         "itemId": "mat.cold_iron_carapace",
-        "name": "寒铁甲壳",
+        "name": "寒鐵甲殼",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "mat.scorpion_venom_sac",
-        "name": "蝎毒囊",
+        "name": "蠍毒囊",
         "type": "material",
         "count": 1,
         "chance": 0.25
@@ -168,13 +168,13 @@
     "drops": [
       {
         "itemId": "mat.ice_crystal_silk",
-        "name": "冰晶丝",
+        "name": "冰晶絲",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "mat.frozen_spider_core",
-        "name": "冰蛛内核",
+        "name": "冰蛛內核",
         "type": "material",
         "count": 1,
         "chance": 0.2
@@ -205,7 +205,7 @@
   },
   {
     "id": "m_ironshell_turtle",
-    "name": "铁甲玄龟",
+    "name": "鐵甲玄龜",
     "char": "龟",
     "color": "#5a7080",
     "grade": "earth",
@@ -241,20 +241,20 @@
     "drops": [
       {
         "itemId": "mat.ironshell_fragment",
-        "name": "铁甲碎片",
+        "name": "鐵甲碎片",
         "type": "material",
         "count": 1
       },
       {
         "itemId": "mat.turtle_cold_marrow",
-        "name": "玄龟寒髓",
+        "name": "玄龜寒髓",
         "type": "material",
         "count": 1,
         "chance": 0.4
       },
       {
         "itemId": "mat.deep_iron_essence",
-        "name": "深渊铁精",
+        "name": "深淵鐵精",
         "type": "material",
         "count": 1,
         "chance": 0.15

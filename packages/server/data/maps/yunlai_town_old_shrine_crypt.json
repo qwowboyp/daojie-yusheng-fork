@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "yunlai_town_old_shrine_crypt",
-  "name": "云来镇·旧祠暗室",
+  "name": "雲來鎮·舊祠暗室",
   "mapGroupId": "yunlai_town",
-  "mapGroupName": "云来镇",
+  "mapGroupName": "雲來鎮",
   "mapGroupOrder": 10,
   "mapGroupMemberOrder": 99,
   "width": 16,
@@ -12,7 +12,7 @@
   "mapLv": 1,
   "spaceVisionMode": "parent_overlay",
   "parentMapId": "yunlai_town",
-  "description": "旧祠供桌下还压着一间暗室，潮气重，香灰和纸钱味一直散不干净。",
+  "description": "舊祠供桌下還壓著一間暗室，潮氣重，香灰和紙錢味一直散不乾淨。",
   "terrain": [
     "草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草",
@@ -102,7 +102,7 @@
       "name": "灰石供匣",
       "x": 6,
       "y": 1,
-      "desc": "供匣里混着旧香灰、残页和不知哪一代人留下的压箱杂物。",
+      "desc": "供匣裡混著舊香灰、殘頁和不知哪一代人留下的壓箱雜物。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2400,
@@ -158,10 +158,10 @@
     },
     {
       "id": "lm_old_shrine_crypt_offering_table",
-      "name": "旧供案暗格",
+      "name": "舊供案暗格",
       "x": 8,
       "y": 6,
-      "desc": "供案底下藏着窄窄一层暗格，潮得发黑，但还塞着些旧物。",
+      "desc": "供案底下藏著窄窄一層暗格，潮得發黑，但還塞著些舊物。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2200,
@@ -217,10 +217,10 @@
     },
     {
       "id": "lm_old_shrine_crypt_incense_box",
-      "name": "潮旧香盒",
+      "name": "潮舊香盒",
       "x": 11,
       "y": 6,
-      "desc": "香盒受潮发黑，里面却还压着几截没烧完的旧香和纸封小包。",
+      "desc": "香盒受潮發黑，裡面卻還壓著幾截沒燒完的舊香和紙封小包。",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2100,

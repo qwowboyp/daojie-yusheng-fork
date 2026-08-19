@@ -3,21 +3,21 @@
     {
       "id": "landmark.spirit_ore_vein",
       "kind": "landmark_marker",
-      "name": "灵石矿脉",
-      "sourceLabel": "灵石矿",
+      "name": "靈石礦脈",
+      "sourceLabel": "靈石礦",
       "itemId": "spirit_stone"
     },
     {
       "id": "landmark.black_iron_vein",
       "kind": "landmark_marker",
-      "name": "玄铁矿脉",
-      "sourceLabel": "玄铁矿",
+      "name": "玄鐵礦脈",
+      "sourceLabel": "玄鐵礦",
       "itemId": "black_iron_chunk"
     },
     {
       "id": "landmark.ore_basement_black_iron_vein",
       "kind": "landmark_container",
-      "name": "玄铁矿脉",
+      "name": "玄鐵礦脈",
       "container": {
         "grade": "mortal",
         "refreshTicks": 2400,
@@ -92,7 +92,7 @@
     {
       "id": "landmark.herb.red_flame_leaf",
       "kind": "landmark_container",
-      "name": "赤火叶",
+      "name": "赤火葉",
       "container": {
         "variant": "herb",
         "grade": "yellow",
@@ -103,7 +103,7 @@
         "drops": [
           {
             "itemId": "mat.red_flame_leaf",
-            "name": "赤火叶",
+            "name": "赤火葉",
             "type": "material",
             "count": 1
           }
@@ -113,7 +113,7 @@
     {
       "id": "landmark.herb.green_spirit_stem",
       "kind": "landmark_container",
-      "name": "青灵茎",
+      "name": "青靈莖",
       "container": {
         "variant": "herb",
         "grade": "yellow",
@@ -124,7 +124,7 @@
         "drops": [
           {
             "itemId": "mat.green_spirit_stem",
-            "name": "青灵茎",
+            "name": "青靈莖",
             "type": "material",
             "count": 1
           }
@@ -134,7 +134,7 @@
     {
       "id": "landmark.herb.frost_lotus_petal",
       "kind": "landmark_container",
-      "name": "寒莲瓣",
+      "name": "寒蓮瓣",
       "container": {
         "variant": "herb",
         "grade": "mystic",
@@ -145,7 +145,7 @@
         "drops": [
           {
             "itemId": "mat.frost_lotus_petal",
-            "name": "寒莲瓣",
+            "name": "寒蓮瓣",
             "type": "material",
             "count": 1
           }
@@ -197,7 +197,7 @@
     {
       "id": "landmark.herb.breakarray_shard",
       "kind": "landmark_container",
-      "name": "破纹砂",
+      "name": "破紋砂",
       "container": {
         "variant": "herb",
         "grade": "mystic",
@@ -208,7 +208,7 @@
         "drops": [
           {
             "itemId": "mat.breakarray_shard",
-            "name": "破纹砂",
+            "name": "破紋砂",
             "type": "material",
             "count": 1
           }
@@ -218,7 +218,7 @@
     {
       "id": "landmark.herb.swiftwind_reed",
       "kind": "landmark_container",
-      "name": "疾风苇",
+      "name": "疾風葦",
       "container": {
         "variant": "herb",
         "grade": "mystic",
@@ -229,7 +229,7 @@
         "drops": [
           {
             "itemId": "mat.swiftwind_reed",
-            "name": "疾风苇",
+            "name": "疾風葦",
             "type": "material",
             "count": 1
           }
@@ -260,7 +260,7 @@
     {
       "id": "landmark.herb.sunmelt_seed",
       "kind": "landmark_container",
-      "name": "融阳子",
+      "name": "融陽子",
       "container": {
         "variant": "herb",
         "grade": "earth",
@@ -271,7 +271,7 @@
         "drops": [
           {
             "itemId": "mat.sunmelt_seed",
-            "name": "融阳子",
+            "name": "融陽子",
             "type": "material",
             "count": 1
           }
@@ -281,7 +281,7 @@
     {
       "id": "landmark.herb.longvein_vine",
       "kind": "landmark_container",
-      "name": "长脉藤",
+      "name": "長脈藤",
       "container": {
         "variant": "herb",
         "grade": "yellow",
@@ -292,7 +292,7 @@
         "drops": [
           {
             "itemId": "mat.longvein_vine",
-            "name": "长脉藤",
+            "name": "長脈藤",
             "type": "material",
             "count": 1
           }
@@ -302,7 +302,7 @@
     {
       "id": "landmark.herb.returnspring_leaf",
       "kind": "landmark_container",
-      "name": "回春叶",
+      "name": "回春葉",
       "container": {
         "variant": "herb",
         "grade": "yellow",
@@ -313,7 +313,7 @@
         "drops": [
           {
             "itemId": "mat.returnspring_leaf",
-            "name": "回春叶",
+            "name": "回春葉",
             "type": "material",
             "count": 1
           }
@@ -323,7 +323,7 @@
     {
       "id": "landmark.herb.coldmarrow_reed",
       "kind": "landmark_container",
-      "name": "寒髓苇",
+      "name": "寒髓葦",
       "container": {
         "variant": "herb",
         "grade": "yellow",
@@ -334,7 +334,7 @@
         "drops": [
           {
             "itemId": "mat.coldmarrow_reed",
-            "name": "寒髓苇",
+            "name": "寒髓葦",
             "type": "material",
             "count": 1
           }
@@ -407,7 +407,7 @@
     {
       "id": "landmark.herb.bearingroot_ginseng",
       "kind": "landmark_container",
-      "name": "承脉参",
+      "name": "承脈參",
       "container": {
         "variant": "herb",
         "grade": "yellow",
@@ -418,7 +418,7 @@
         "drops": [
           {
             "itemId": "mat.bearingroot_ginseng",
-            "name": "承脉参",
+            "name": "承脈參",
             "type": "material",
             "count": 1
           }
@@ -428,7 +428,7 @@
     {
       "id": "landmark.herb.stonecore_lingzhi",
       "kind": "landmark_container",
-      "name": "岩髓芝",
+      "name": "巖髓芝",
       "container": {
         "variant": "herb",
         "grade": "yellow",
@@ -439,7 +439,7 @@
         "drops": [
           {
             "itemId": "mat.stonecore_lingzhi",
-            "name": "岩髓芝",
+            "name": "巖髓芝",
             "type": "material",
             "count": 1
           }
@@ -470,7 +470,7 @@
     {
       "id": "landmark.herb.ironvein_caltrop",
       "kind": "landmark_container",
-      "name": "铁脉蒺",
+      "name": "鐵脈蒺",
       "container": {
         "variant": "herb",
         "grade": "yellow",
@@ -481,7 +481,7 @@
         "drops": [
           {
             "itemId": "mat.ironvein_caltrop",
-            "name": "铁脉蒺",
+            "name": "鐵脈蒺",
             "type": "material",
             "count": 1
           }
@@ -512,7 +512,7 @@
     {
       "id": "landmark.herb.frostblade_cold_iron_shard",
       "kind": "landmark_container",
-      "name": "寒铁碎",
+      "name": "寒鐵碎",
       "container": {
         "variant": "herb",
         "grade": "earth",
@@ -523,7 +523,7 @@
         "drops": [
           {
             "itemId": "mat.cold_iron_shard",
-            "name": "寒铁碎",
+            "name": "寒鐵碎",
             "type": "material",
             "count": 1
           }
@@ -533,7 +533,7 @@
     {
       "id": "landmark.herb.frostblade_deepwater_moss",
       "kind": "landmark_container",
-      "name": "渊水苔",
+      "name": "淵水苔",
       "container": {
         "variant": "herb",
         "grade": "earth",
@@ -544,7 +544,7 @@
         "drops": [
           {
             "itemId": "mat.deepwater_moss",
-            "name": "渊水苔",
+            "name": "淵水苔",
             "type": "material",
             "count": 1
           }
@@ -554,7 +554,7 @@
     {
       "id": "landmark.herb.blazewood_ember_branch",
       "kind": "landmark_container",
-      "name": "余烬枝",
+      "name": "餘燼枝",
       "container": {
         "variant": "herb",
         "grade": "earth",
@@ -565,7 +565,7 @@
         "drops": [
           {
             "itemId": "mat.ember_branch",
-            "name": "余烬枝",
+            "name": "餘燼枝",
             "type": "material",
             "count": 1
           }
@@ -575,7 +575,7 @@
     {
       "id": "landmark.herb.blazewood_fire_seed",
       "kind": "landmark_container",
-      "name": "焚灵种",
+      "name": "焚靈種",
       "container": {
         "variant": "herb",
         "grade": "earth",
@@ -586,7 +586,7 @@
         "drops": [
           {
             "itemId": "mat.fire_seed",
-            "name": "焚灵种",
+            "name": "焚靈種",
             "type": "material",
             "count": 1
           }
@@ -638,7 +638,7 @@
     {
       "id": "landmark.herb.darksoil_mixed_crystal",
       "kind": "landmark_container",
-      "name": "混元脉石",
+      "name": "混元脈石",
       "container": {
         "variant": "herb",
         "grade": "heaven",
@@ -649,7 +649,7 @@
         "drops": [
           {
             "itemId": "mat.mixed_vein_stone",
-            "name": "混元脉石",
+            "name": "混元脈石",
             "type": "material",
             "count": 1
           }
@@ -659,7 +659,7 @@
     {
       "id": "landmark.herb.darksoil_abyss_mud",
       "kind": "landmark_container",
-      "name": "深渊灵泥",
+      "name": "深淵靈泥",
       "container": {
         "variant": "herb",
         "grade": "heaven",
@@ -670,7 +670,7 @@
         "drops": [
           {
             "itemId": "mat.abyss_spirit_mud",
-            "name": "深渊灵泥",
+            "name": "深淵靈泥",
             "type": "material",
             "count": 1
           }

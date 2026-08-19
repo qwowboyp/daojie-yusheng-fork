@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "yunlai_town_lake_bottom_grotto",
-  "name": "云来镇·湖底洞天",
+  "name": "雲來鎮·湖底洞天",
   "mapGroupId": "yunlai_town",
-  "mapGroupName": "云来镇",
+  "mapGroupName": "雲來鎮",
   "mapGroupOrder": 10,
   "mapGroupMemberOrder": 98,
   "width": 22,
@@ -12,7 +12,7 @@
   "mapLv": 1,
   "spaceVisionMode": "isolated",
   "parentMapId": "yunlai_town",
-  "description": "湖心暗眼之下藏着一处半天然半石室的湖底洞天，湿冷却有灵气回旋。",
+  "description": "湖心暗眼之下藏著一處半天然半石室的湖底洞天，溼冷卻有靈氣迴旋。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草草草草草",
@@ -116,10 +116,10 @@
   "landmarks": [
     {
       "id": "lm_lake_bottom_stone_seat",
-      "name": "湖心石台",
+      "name": "湖心石臺",
       "x": 11,
       "y": 6,
-      "desc": "被水汽打磨得极平的石台，像是专门给人打坐吐纳留下的位置。"
+      "desc": "被水汽打磨得極平的石臺，像是專門給人打坐吐納留下的位置。"
     }
   ]
 }

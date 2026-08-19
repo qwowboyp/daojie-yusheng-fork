@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "sky_ruins",
-  "name": "天穹残宫",
+  "name": "天穹殘宮",
   "mapGroupId": "sky_ruins",
-  "mapGroupName": "天穹残宫",
+  "mapGroupName": "天穹殘宮",
   "mapGroupOrder": 1000,
   "mapGroupMemberOrder": 0,
   "width": 48,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 15,
   "spaceVisionMode": "isolated",
-  "description": "扩展为 48x48 的天穹残宫：南侧升穹落台承接灵脊岭与遗迹残阶，中段观星台是残影守住的最后据点，外庭猎场散落着星铁雨后的猎者与傀壳，最北端断桥尽头则是噬星兽盘踞的封柱核心井。",
+  "description": "擴展為 48x48 的天穹殘宮：南側升穹落臺承接靈脊嶺與遺蹟殘階，中段觀星臺是殘影守住的最後據點，外庭獵場散落著星鐵雨後的獵者與傀殼，最北端斷橋盡頭則是噬星獸盤踞的封柱核心井。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
     "草空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空空草",
@@ -278,35 +278,35 @@
       "name": "封柱核心井",
       "x": 24,
       "y": 5,
-      "desc": "断桥尽头的核心井还在往外渗出裂天余波，噬星兽就伏在井边啃噬最后的封柱骨架。"
+      "desc": "斷橋盡頭的核心井還在往外滲出裂天餘波，噬星獸就伏在井邊啃噬最後的封柱骨架。"
     },
     {
       "id": "lm_sky_altar",
-      "name": "残宫观星台",
+      "name": "殘宮觀星臺",
       "x": 24,
       "y": 24,
-      "desc": "观星台是残宫中少数还没完全塌穿的台面，站在这里能同时看见灵脊岭、断碑遗迹和更高处的断裂封天。",
+      "desc": "觀星臺是殘宮中少數還沒完全塌穿的檯面，站在這裡能同時看見靈脊嶺、斷碑遺蹟和更高處的斷裂封天。",
       "container": {
         "grade": "saint",
         "refreshTicks": 4800,
         "drops": [
           {
             "itemId": "star_metal",
-            "name": "星陨金",
+            "name": "星隕金",
             "type": "material",
             "count": 2,
             "chance": 0.8
           },
           {
             "itemId": "void_shard",
-            "name": "虚蚀碎片",
+            "name": "虛蝕碎片",
             "type": "material",
             "count": 1,
             "chance": 0.65
           },
           {
             "itemId": "equip.deepvein_core",
-            "name": "空劫符坠",
+            "name": "空劫符墜",
             "type": "equipment",
             "count": 1,
             "chance": 0.08
@@ -319,12 +319,12 @@
   "npcs": [
     {
       "id": "npc_sky_observer",
-      "name": "观星残影",
+      "name": "觀星殘影",
       "x": 24,
       "y": 25,
       "char": "星",
       "color": "#e5e6ff",
-      "dialogue": "别把这里当宝地。星铁雨先砸穿了残宫，封柱才跟着断。你若想替地上争口喘息，就先把那些还替旧天守门的壳子和猎者清干净。",
+      "dialogue": "別把這裡當寶地。星鐵雨先砸穿了殘宮，封柱才跟著斷。你若想替地上爭口喘息，就先把那些還替舊天守門的殼子和獵者清乾淨。",
       "role": "quest_giver",
       "shopItems": [],
       "quests": []

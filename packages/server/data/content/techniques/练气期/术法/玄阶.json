@@ -1,8 +1,8 @@
 [
   {
     "id": "baihong_duanyue",
-    "name": "白虹断岳典",
-    "desc": "白虹横掠，断势裂甲。",
+    "name": "白虹斷嶽典",
+    "desc": "白虹橫掠，斷勢裂甲。",
     "grade": "mystic",
     "category": "arts",
     "realmLv": 23,
@@ -11,8 +11,8 @@
     "skills": [
       {
         "id": "skill.baihong_duanyue",
-        "name": "断影",
-        "desc": "白虹横掠，断势裂甲。",
+        "name": "斷影",
+        "desc": "白虹橫掠，斷勢裂甲。",
         "cooldown": 20,
         "cost": 14417,
         "costMultiplier": 7,
@@ -69,8 +69,8 @@
   },
   {
     "id": "chiyao_fenmai",
-    "name": "赤曜焚脉篇",
-    "desc": "赤曜凝火，三息之后焚界而落。",
+    "name": "赤曜焚脈篇",
+    "desc": "赤曜凝火，三息之後焚界而落。",
     "grade": "mystic",
     "category": "arts",
     "realmLv": 23,
@@ -80,7 +80,7 @@
       {
         "id": "skill.chiyao_fenmai",
         "name": "赤曜焚界",
-        "desc": "赤曜凝火，三息之后焚界而落。",
+        "desc": "赤曜凝火，三息之後焚界而落。",
         "cooldown": 26,
         "cost": 10298,
         "costMultiplier": 5,
@@ -142,8 +142,8 @@
   },
   {
     "id": "kunyue_zhenhai",
-    "name": "坤岳镇海篇",
-    "desc": "坤岳重压，护体更进一步。",
+    "name": "坤嶽鎮海篇",
+    "desc": "坤嶽重壓，護體更進一步。",
     "grade": "mystic",
     "category": "arts",
     "realmLv": 23,
@@ -152,8 +152,8 @@
     "skills": [
       {
         "id": "skill.kunyue_zhenhai",
-        "name": "镇海",
-        "desc": "坤岳重压，护体更进一步。",
+        "name": "鎮海",
+        "desc": "坤嶽重壓，護體更進一步。",
         "cooldown": 20,
         "cost": 10298,
         "costMultiplier": 5,
@@ -200,8 +200,8 @@
   },
   {
     "id": "wanzhi_huichun",
-    "name": "万枝回春卷",
-    "desc": "木意锁魂，直压单敌。",
+    "name": "萬枝回春卷",
+    "desc": "木意鎖魂，直壓單敵。",
     "grade": "mystic",
     "category": "arts",
     "realmLv": 23,
@@ -211,7 +211,7 @@
       {
         "id": "skill.wanzhi_huichun",
         "name": "束魂",
-        "desc": "木意锁魂，直压单敌。",
+        "desc": "木意鎖魂，直壓單敵。",
         "cooldown": 20,
         "cost": 10298,
         "costMultiplier": 5,
@@ -254,8 +254,8 @@
   },
   {
     "id": "xuanjin_huilan",
-    "name": "玄津回澜录",
-    "desc": "回澜自起，近身震散敌势。",
+    "name": "玄津回瀾錄",
+    "desc": "回瀾自起，近身震散敵勢。",
     "grade": "mystic",
     "category": "arts",
     "realmLv": 23,
@@ -264,8 +264,8 @@
     "skills": [
       {
         "id": "skill.xuanjin_huilan",
-        "name": "涌",
-        "desc": "回澜自起，近身震散敌势。",
+        "name": "湧",
+        "desc": "回瀾自起，近身震散敵勢。",
         "cooldown": 18,
         "cost": 10298,
         "costMultiplier": 5,
@@ -323,8 +323,8 @@
   },
   {
     "id": "yi_kunlun",
-    "name": "移昆仑",
-    "desc": "叩定地脉，搬山成岳，改变战场地形。",
+    "name": "移崑崙",
+    "desc": "叩定地脈，搬山成嶽，改變戰場地形。",
     "grade": "mystic",
     "category": "arts",
     "realmLv": 23,
@@ -333,8 +333,8 @@
     "skills": [
       {
         "id": "skill.yi_kunlun_point_stone",
-        "name": "叩地成岳",
-        "desc": "叩定一处地脉，搬山成岳，生成一块可被攻击拆除的临时石头。",
+        "name": "叩地成嶽",
+        "desc": "叩定一處地脈，搬山成嶽，生成一塊可被攻擊拆除的臨時石頭。",
         "cooldown": 8,
         "cost": 4119,
         "costMultiplier": 2,
@@ -383,8 +383,8 @@
       },
       {
         "id": "skill.yi_kunlun_hollow_square",
-        "name": "八荒锁岳",
-        "desc": "牵动八方地脉，在目标周围叠起三乘三外环石阵，中宫留空。",
+        "name": "八荒鎖嶽",
+        "desc": "牽動八方地脈，在目標周圍疊起三乘三外環石陣，中宮留空。",
         "cooldown": 16,
         "cost": 10298,
         "costMultiplier": 5,
@@ -436,8 +436,8 @@
       },
       {
         "id": "skill.yi_kunlun_horizontal_wall",
-        "name": "横断天关",
-        "desc": "横移昆仑一线，生成三块相连的临时石头，截断通路。",
+        "name": "橫斷天關",
+        "desc": "橫移崑崙一線，生成三塊相連的臨時石頭，截斷通路。",
         "cooldown": 12,
         "cost": 8238,
         "costMultiplier": 4,

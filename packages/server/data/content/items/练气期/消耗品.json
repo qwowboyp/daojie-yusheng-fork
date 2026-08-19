@@ -4,12 +4,12 @@
     "name": "引基散",
     "type": "consumable",
     "level": 20,
-    "desc": "药散入腹后会把乱气往气海底部慢慢拢住，3600 息内让境界修为 +30%、功法经验 +30%。",
+    "desc": "藥散入腹後會把亂氣往氣海底部慢慢攏住，3600 息內讓境界修為 +30%、功法經驗 +30%。",
     "consumeBuffs": [
       {
         "buffId": "item_buff.guiding_powder",
         "name": "引基",
-        "desc": "气机被药势往下拢住，3600 息内境界修为与功法经验获取效率各提高 30%。",
+        "desc": "氣機被藥勢往下攏住，3600 息內境界修為與功法經驗獲取效率各提高 30%。",
         "shortMark": "引",
         "duration": 3600,
         "stats": {
@@ -23,17 +23,17 @@
   },
   {
     "itemId": "recovery_powder",
-    "name": "回灵散",
+    "name": "回靈散",
     "type": "consumable",
     "level": 30,
-    "desc": "散末遇气即化，清凉灵意贴着经络回转，收拢散失灵机。",
+    "desc": "散末遇氣即化，清涼靈意貼著經絡迴轉，收攏散失靈機。",
     "grade": "mystic",
     "consumeBuffs": [
       {
         "buffId": "item_buff.recovery_powder",
-        "name": "回灵散·回灵",
-        "desc": "药力盘绕气海，灵力回复暂时大幅提高。",
-        "shortMark": "灵",
+        "name": "回靈散·回靈",
+        "desc": "藥力盤繞氣海，靈力回覆暫時大幅提高。",
+        "shortMark": "靈",
         "duration": 120,
         "stats": {
           "qiRegenRate": 220
@@ -46,16 +46,16 @@
   },
   {
     "itemId": "stabilizing_pellet",
-    "name": "镇脉丸",
+    "name": "鎮脈丸",
     "type": "consumable",
     "level": 30,
-    "desc": "丸体沉厚，药势贴脉而行，能压住乱血并稳住经络根基。",
+    "desc": "丸體沉厚，藥勢貼脈而行，能壓住亂血並穩住經絡根基。",
     "grade": "mystic",
     "consumeBuffs": [
       {
         "buffId": "item_buff.stabilizing_pellet",
-        "name": "镇脉丸·回生",
-        "desc": "药力护住经络，生命回复暂时大幅提高。",
+        "name": "鎮脈丸·回生",
+        "desc": "藥力護住經絡，生命回覆暫時大幅提高。",
         "shortMark": "生",
         "duration": 120,
         "stats": {
@@ -69,16 +69,16 @@
   },
   {
     "itemId": "pill.edge_quenching_powder",
-    "name": "淬锋散",
+    "name": "淬鋒散",
     "type": "consumable",
     "level": 23,
-    "desc": "金行药粉入口发涩，3900 息内使命中 +14%、暴击 +10%、破招 +15%。",
+    "desc": "金行藥粉入口發澀，3900 息內使命中 +14%、暴擊 +10%、破招 +15%。",
     "consumeBuffs": [
       {
         "buffId": "item_buff.edge_quenching_powder",
-        "name": "淬锋",
-        "desc": "锋势短暂拔高，3900 息内命中 +14%、暴击 +10%、破招 +15%。",
-        "shortMark": "锋",
+        "name": "淬鋒",
+        "desc": "鋒勢短暫拔高，3900 息內命中 +14%、暴擊 +10%、破招 +15%。",
+        "shortMark": "鋒",
         "duration": 3900,
         "stats": {
           "hit": 14,
@@ -92,16 +92,16 @@
   },
   {
     "itemId": "pill.chiyang_draught",
-    "name": "赤阳液",
+    "name": "赤陽液",
     "type": "consumable",
     "level": 26,
-    "desc": "药液烈得像一口吞火，3900 息内使物理攻击 +18%、法术攻击 +18%、暴击 +12%、灵力输出速率 +18%。",
+    "desc": "藥液烈得像一口吞火，3900 息內使物理攻擊 +18%、法術攻擊 +18%、暴擊 +12%、靈力輸出速率 +18%。",
     "consumeBuffs": [
       {
         "buffId": "item_buff.chiyang_draught",
-        "name": "赤阳",
-        "desc": "药势逼着火炁一起上涌，3900 息内物理攻击 +18%、法术攻击 +18%、暴击 +12%、灵力输出速率 +18%。",
-        "shortMark": "阳",
+        "name": "赤陽",
+        "desc": "藥勢逼著火炁一起上湧，3900 息內物理攻擊 +18%、法術攻擊 +18%、暴擊 +12%、靈力輸出速率 +18%。",
+        "shortMark": "陽",
         "duration": 3900,
         "stats": {
           "physAtk": 18,
@@ -119,12 +119,12 @@
     "name": "五和丸",
     "type": "consumable",
     "level": 30,
-    "desc": "把几种温顺药性压成一丸，4800 息内使法术防御 +18%、境界修为 +36%、功法经验 +36%。",
+    "desc": "把幾種溫順藥性壓成一丸，4800 息內使法術防禦 +18%、境界修為 +36%、功法經驗 +36%。",
     "consumeBuffs": [
       {
         "buffId": "item_buff.fivephase_harmony_pellet",
         "name": "五和",
-        "desc": "五行不再互相顶撞，4800 息内法术防御 +18%、境界修为与功法经验获取效率各提高 36%。",
+        "desc": "五行不再互相頂撞，4800 息內法術防禦 +18%、境界修為與功法經驗獲取效率各提高 36%。",
         "shortMark": "和",
         "duration": 4800,
         "stats": {
@@ -139,15 +139,15 @@
   },
   {
     "itemId": "pill.breakmirror_pellet",
-    "name": "破镜丹",
+    "name": "破鏡丹",
     "type": "consumable",
     "level": 28,
-    "desc": "药力会强行撬开六维潜势，短时间内把根骨、体魄与神识一并拔高，但也会压碎气血与灵力根基，只适合搏命时服下。",
+    "desc": "藥力會強行撬開六維潛勢，短時間內把根骨、體魄與神識一併拔高，但也會壓碎氣血與靈力根基，只適合搏命時服下。",
     "consumeBuffs": [
       {
         "buffId": "item_buff.breakmirror_pellet",
-        "name": "破镜",
-        "desc": "六维潜势被药力强行撬高，肉身与气海却被压得近乎崩裂。",
+        "name": "破鏡",
+        "desc": "六維潛勢被藥力強行撬高，肉身與氣海卻被壓得近乎崩裂。",
         "shortMark": "破",
         "duration": 3600,
         "attrs": {
@@ -174,12 +174,12 @@
     "type": "consumable",
     "level": 30,
     "grade": "earth",
-    "desc": "以重伤金丹真人的残丹法门逆炼成丸，服下后会强行凝出法相虚影。虚影若要维持，必须持续燃烧灵力，一旦后继无力便会当场崩散。",
+    "desc": "以重傷金丹真人的殘丹法門逆煉成丸，服下後會強行凝出法相虛影。虛影若要維持，必須持續燃燒靈力，一旦後繼無力便會當場崩散。",
     "consumeBuffs": [
       {
         "buffId": "buff.huanling_candan_faxiang",
-        "name": "残丹法相虚影",
-        "desc": "丹力强行撑起残丹法相虚影，体型额外暴涨三倍，攻势与术势尽数失控。",
+        "name": "殘丹法相虛影",
+        "desc": "丹力強行撐起殘丹法相虛影，體型額外暴漲三倍，攻勢與術勢盡數失控。",
         "sourceSkillId": "skill.huanling_candan_faxiang",
         "shortMark": "相",
         "category": "buff",
@@ -202,8 +202,8 @@
       },
       {
         "buffId": "buff.huanling_candan_kuoyu",
-        "name": "虚影扩域",
-        "desc": "法相虚影外翻余波，术法的射程与杀域同时扩开。",
+        "name": "虛影擴域",
+        "desc": "法相虛影外翻餘波，術法的射程與殺域同時擴開。",
         "sourceSkillId": "skill.huanling_candan_faxiang",
         "shortMark": "域",
         "category": "buff",
@@ -221,34 +221,34 @@
   },
   {
     "itemId": "map.qizhen_crossing",
-    "name": "栖真渡街图",
+    "name": "棲真渡街圖",
     "type": "consumable",
     "level": 7,
-    "desc": "记着栖真渡三重错台、行修街和五行出入口的主城街图。使用后可永久解锁栖真渡地图。",
+    "desc": "記著棲真渡三重錯臺、行修街和五行出入口的主城街圖。使用後可永久解鎖棲真渡地圖。",
     "mapUnlockId": "qizhen_crossing"
   },
   {
     "itemId": "map.deepvein_ridge",
-    "name": "厚脉岭采脉图",
+    "name": "厚脈嶺採脈圖",
     "type": "consumable",
     "level": 7,
-    "desc": "描出厚脉岭外坪、裂坡和采脉险路。使用后可永久解锁厚脉岭地图。",
+    "desc": "描出厚脈嶺外坪、裂坡和採脈險路。使用後可永久解鎖厚脈嶺地圖。",
     "mapUnlockId": "deepvein_ridge"
   },
   {
     "itemId": "map.cold_tide_marsh",
-    "name": "寒汐泽雾行图",
+    "name": "寒汐澤霧行圖",
     "type": "consumable",
     "level": 8,
-    "desc": "按雾桥、水线和寒核方位誊录的行图。使用后可永久解锁寒汐泽地图。",
+    "desc": "按霧橋、水線和寒核方位謄錄的行圖。使用後可永久解鎖寒汐澤地圖。",
     "mapUnlockId": "cold_tide_marsh"
   },
   {
     "itemId": "map.verdant_vine_vale",
-    "name": "青萝谷藤径图",
+    "name": "青蘿谷藤徑圖",
     "type": "consumable",
     "level": 8,
-    "desc": "把藤门、桥径和谷中灵植带都标了出来。使用后可永久解锁青萝谷六段藤径图。",
+    "desc": "把藤門、橋徑和谷中靈植帶都標了出來。使用後可永久解鎖青蘿谷六段藤徑圖。",
     "mapUnlockIds": [
       "verdant_vine_vale_01_entry",
       "verdant_vine_vale_02_slope",
@@ -260,26 +260,26 @@
   },
   {
     "itemId": "map.emberfall_court",
-    "name": "赤陨庭火路图",
+    "name": "赤隕庭火路圖",
     "type": "consumable",
     "level": 9,
-    "desc": "火路台阶、炉庭转折和退路都被压进了这张旧图。使用后可永久解锁赤陨庭地图。",
+    "desc": "火路臺階、爐庭轉折和退路都被壓進了這張舊圖。使用後可永久解鎖赤隕庭地圖。",
     "mapUnlockId": "emberfall_court"
   },
   {
     "itemId": "map.cleft_blade_plain",
-    "name": "裂锋原战线图",
+    "name": "裂鋒原戰線圖",
     "type": "consumable",
     "level": 9,
-    "desc": "按残阵、砂兵线和断兵冢口整理出的长线战图。使用后可永久解锁裂锋原地图。",
+    "desc": "按殘陣、砂兵線和斷兵冢口整理出的長線戰圖。使用後可永久解鎖裂鋒原地圖。",
     "mapUnlockId": "cleft_blade_plain"
   },
   {
     "itemId": "map.guizang_vein_cavern",
-    "name": "归藏脉窟阵脉图",
+    "name": "歸藏脈窟陣脈圖",
     "type": "consumable",
     "level": 10,
-    "desc": "窟内归窍支路、断脉井与回渡节点都被细细标出。使用后可永久解锁归藏脉窟地图。",
+    "desc": "窟內歸竅支路、斷脈井與回渡節點都被細細標出。使用後可永久解鎖歸藏脈窟地圖。",
     "mapUnlockId": "guizang_vein_cavern"
   }
 ]

@@ -66,3 +66,60 @@ export function applyVocabulary(text) {
   }
   return { text: result, hits };
 }
+
+/* ------------------------------------------------------------------ */
+/* 台湾标准用词保护表（opencc cn→tw 幂等性修复）                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * 台湾标准写法保护表。
+ *
+ * opencc-js 的 cn→tw 不是幂等转换：对「已是台湾标准」的文本再次转换时，
+ * 会误转部分台湾惯用词为异体/罕用字（例：濃郁→濃鬱、岩→巖、馥郁→馥鬱）。
+ * 这些字形在简化字与台湾标准之间本无差异（岩/岩石 简繁体同形），误转后
+ * 反而变成台湾不用或仅用于特定词的字（鬱 只用于 憂鬱/鬱悶/鬱金香）。
+ *
+ * 掩码规则：
+ *   - 岩：单字掩码安全——简化字「岩」与台湾标准「岩」同形，掩码不影响
+ *     真正的简体转换（黄岩鼍兽→黃岩鼉獸 仍正确）。
+ *   - 濃郁 / 馥郁：词级掩码——单字「郁」绝不掩码，「憂郁 / 忧郁」仍能被
+ *     守卫抓到（郁 在台湾标准只有 鬱 一种写法，但仅在 憂鬱 等词中）。
+ *
+ * 追加条目即可扩展；新条目必须是「台湾标准写法」且 opencc 会误转的词/字。
+ */
+export const TW_PROTECTED_PHRASES = ['濃郁', '馥郁', '岩'];
+
+/**
+ * 掩码保护：把 TW_PROTECTED_PHRASES 中的词替换为控制字符哨兵，
+ * 避免 opencc 对这些已是台湾标准的词做错误再转换。
+ *
+ * 返回 { text: 掩码后的文本, restore: (t) => 把哨兵还原为原词的函数 }。
+ * 哨兵为 \u0000TW<i>\u0000 形式（控制字符 + ASCII），源文本中不会出现，
+ * opencc 字级转换对非 CJK 控制字符原样透传。
+ */
+export function maskProtected(text) {
+  let out = text;
+  const map = new Map();
+  // 长词优先掩码（避免「岩石」等长词被「岩」前缀截断；当前条目不重叠，纯防御）
+  const ordered = [...TW_PROTECTED_PHRASES].sort((a, b) => b.length - a.length);
+  for (const [i, phrase] of ordered.entries()) {
+    const sentinel = `\u0000TW${i}\u0000`;
+    map.set(sentinel, phrase);
+    out = out.split(phrase).join(sentinel);
+  }
+  return {
+    text: out,
+    restore: (t) => {
+      let result = t;
+      for (const [sentinel, phrase] of map) {
+        result = result.split(sentinel).join(phrase);
+      }
+      return result;
+    },
+  };
+}
+
+/** 便捷导出：只返回掩码后的文本（守卫 textNeedsConversion 用）。 */
+export function applyProtectedMask(text) {
+  return maskProtected(text).text;
+}

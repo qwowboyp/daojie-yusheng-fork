@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "beast_valley_blood_altar",
-  "name": "噬魂兽谷·血祭坛",
+  "name": "噬魂獸谷·血祭壇",
   "mapGroupId": "beast_valley_blood_altar",
-  "mapGroupName": "噬魂兽谷",
+  "mapGroupName": "噬魂獸谷",
   "mapGroupOrder": 1000,
   "mapGroupMemberOrder": 0,
   "width": 18,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 14,
   "spaceVisionMode": "isolated",
-  "description": "谷底裂隙旁还有一座更古老的血祭坛，污血与兽骨被潮气反复浸透，像一口从不真正熄灭的旧祭火。",
+  "description": "谷底裂隙旁還有一座更古老的血祭壇，汙血與獸骨被潮氣反覆浸透，像一口從不真正熄滅的舊祭火。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草",
     "草崖崖草草草草泥泥泥泥草草草草崖崖草",
@@ -101,10 +101,10 @@
   "landmarks": [
     {
       "id": "lm_blood_altar_heart",
-      "name": "噬魂血坛",
+      "name": "噬魂血壇",
       "x": 9,
       "y": 5,
-      "desc": "血坛中央的污池还在缓慢鼓泡，像有什么东西一直在下面吞咽，噬魂狼祖就伏在坛边守着这口旧时代留下的喂食之地。"
+      "desc": "血壇中央的汙池還在緩慢鼓泡，像有什麼東西一直在下面吞嚥，噬魂狼祖就伏在壇邊守著這口舊時代留下的餵食之地。"
     }
   ]
 }

@@ -2,14 +2,14 @@
   "quests": [
     {
       "id": "q_sky_puppet_scrap",
-      "title": "残宫破傀壳",
-      "desc": "封柱周遭天宫傀壳盘踞，当尽行清除，以免后来者尚未见天门便折损于旧壳之中。",
-      "story": "有些地方会把过去留下来，不是为了纪念，是因为连清理它们的人都死在了半路上。",
-      "objectiveText": "清除天宫傀壳",
+      "title": "殘宮破傀殼",
+      "desc": "封柱周遭天宮傀殼盤踞，當盡行清除，以免後來者尚未見天門便折損於舊殼之中。",
+      "story": "有些地方會把過去留下來，不是為了紀念，是因為連清理它們的人都死在了半路上。",
+      "objectiveText": "清除天宮傀殼",
       "targetMonsterId": "m_sky_puppet",
       "targetCount": 6,
       "targetMapId": "sky_ruins",
-      "targetName": "天宫傀壳",
+      "targetName": "天宮傀殼",
       "required": 6,
       "reward": [
         {
@@ -28,14 +28,14 @@
     },
     {
       "id": "q_sky_hunter_spoil",
-      "title": "收天宫遗物",
-      "desc": "观星残影嘱咐收取天宫猎者遗留之物，此等遗存留于人间，远胜腐朽于天上。",
-      "story": "凡人篇走到这里，已经不是活着就算赢，而是终于能从天上抢一点东西回地上用。",
-      "objectiveText": "击败天宫猎者，收回星陨金",
+      "title": "收天宮遺物",
+      "desc": "觀星殘影囑咐收取天宮獵者遺留之物，此等遺存留於人間，遠勝腐朽於天上。",
+      "story": "凡人篇走到這裡，已經不是活著就算贏，而是終於能從天上搶一點東西回地上用。",
+      "objectiveText": "擊敗天宮獵者，收回星隕金",
       "targetMonsterId": "m_void_hunter",
       "targetCount": 6,
       "targetMapId": "sky_ruins",
-      "targetName": "天宫猎者",
+      "targetName": "天宮獵者",
       "requiredItemId": "star_metal",
       "requiredItemCount": 6,
       "reward": [
@@ -47,7 +47,7 @@
         },
         {
           "itemId": "pill.windstride_elixir",
-          "name": "轻身丹",
+          "name": "輕身丹",
           "type": "consumable",
           "count": 1
         }

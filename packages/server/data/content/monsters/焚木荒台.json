@@ -178,7 +178,7 @@
     "drops": [
       {
         "itemId": "mat.blaze_lizard_scale",
-        "name": "烈焰蜥鳞",
+        "name": "烈焰蜥鱗",
         "type": "material",
         "count": 1
       },
@@ -271,7 +271,7 @@
       },
       {
         "itemId": "mat.wood_fire_essence",
-        "name": "木火精华",
+        "name": "木火精華",
         "type": "material",
         "count": 1,
         "chance": 0.1
@@ -345,21 +345,21 @@
       },
       {
         "itemId": "mat.blazewood_king_ember",
-        "name": "焚王余烬",
+        "name": "焚王餘燼",
         "type": "material",
         "count": 1,
         "chance": 0.5
       },
       {
         "itemId": "mat.wood_fire_dao_seed",
-        "name": "木火道种",
+        "name": "木火道種",
         "type": "material",
         "count": 1,
         "chance": 0.08
       },
       {
         "itemId": "mat.void_boundary_crystal",
-        "name": "太虚界晶",
+        "name": "太虛界晶",
         "type": "material",
         "count": 1,
         "chance": 0.001

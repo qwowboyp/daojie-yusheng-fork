@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "ruined_cavern_manor",
-  "name": "破败洞府",
+  "name": "破敗洞府",
   "mapGroupId": "ruined_cavern_manor",
-  "mapGroupName": "破败洞府",
+  "mapGroupName": "破敗洞府",
   "mapGroupOrder": 1000,
   "mapGroupMemberOrder": 0,
   "width": 18,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 43,
   "spaceVisionMode": "isolated",
-  "description": "归藏阵核旁裂开的暗缝后面，藏着一座早就塌空的旧洞府。洞里没有陈设，只剩几块被压裂的残石和一口还未完全散尽的金丹余威。",
+  "description": "歸藏陣核旁裂開的暗縫後面，藏著一座早就塌空的舊洞府。洞裡沒有陳設，只剩幾塊被壓裂的殘石和一口還未完全散盡的金丹餘威。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草",

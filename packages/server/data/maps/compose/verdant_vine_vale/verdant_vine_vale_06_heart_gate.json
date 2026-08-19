@@ -1,9 +1,9 @@
 {
   "format": 2,
   "id": "verdant_vine_vale_06_heart_gate",
-  "name": "青萝谷·06心藤坳口",
+  "name": "青蘿谷·06心藤坳口",
   "mapGroupId": "verdant_vine_vale",
-  "mapGroupName": "青萝谷",
+  "mapGroupName": "青蘿谷",
   "mapGroupOrder": 40,
   "mapGroupMemberOrder": 6,
   "width": 32,
@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 29,
   "spaceVisionMode": "isolated",
-  "description": "青萝谷最终段子图。心藤坳口的外圈已经被整株老藤盘成半封闭木环，内圈留着一块还能绕步的坳地，真正的压迫不在直线卡口，而在整块坳地都像长在同一条主根上。",
+  "description": "青蘿谷最終段子圖。心藤坳口的外圈已經被整株老藤盤成半封閉木環，內圈留著一塊還能繞步的坳地，真正的壓迫不在直線卡口，而在整塊坳地都像長在同一條主根上。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草草",
@@ -205,7 +205,7 @@
     {
       "resourceNodeId": "landmark.herb.longvein_vine",
       "idPrefix": "lm_verdant_06_longvein",
-      "name": "长脉藤",
+      "name": "長脈藤",
       "placements": [
         {
           "x": 16,
@@ -216,7 +216,7 @@
     {
       "resourceNodeId": "landmark.herb.returnspring_leaf",
       "idPrefix": "lm_verdant_06_returnspring",
-      "name": "回春叶",
+      "name": "回春葉",
       "placements": [
         {
           "x": 25,

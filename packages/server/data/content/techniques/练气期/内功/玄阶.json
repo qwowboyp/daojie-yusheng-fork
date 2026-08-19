@@ -1,8 +1,8 @@
 [
   {
     "id": "wuqi_guiliu",
-    "name": "五炁归流篇",
-    "desc": "五炁归元，如百川入海，汇成周天根基。",
+    "name": "五炁歸流篇",
+    "desc": "五炁歸元，如百川入海，匯成周天根基。",
     "grade": "mystic",
     "category": "internal",
     "realmLv": 23,
@@ -20,7 +20,7 @@
   {
     "id": "zhoutian_xihai",
     "name": "周天息海篇",
-    "desc": "一息一周天，气海如潮汐涨落，循环不止则生机不灭。",
+    "desc": "一息一周天，氣海如潮汐漲落，循環不止則生機不滅。",
     "grade": "mystic",
     "category": "internal",
     "realmLv": 23,
