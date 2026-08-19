@@ -42,17 +42,17 @@ export class NodeRegistryService implements OnModuleInit, OnModuleDestroy {
   async onModuleInit(): Promise<void> {
     this.pool = this.databasePoolProvider?.getPool('node-registry') ?? null;
     if (!this.pool) {
-      this.logger.log('节点注册已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('節點註冊已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
 
     try {
       await ensureNodeRegistryTable(this.pool);
       this.enabled = true;
-      this.logger.log(`节点注册已启用（node_registry），nodeId=${this.nodeId}`);
+      this.logger.log(`節點註冊已啟用（node_registry），nodeId=${this.nodeId}`);
     } catch (error: unknown) {
       this.logger.error(
-        '节点注册初始化失败，已回退为禁用模式',
+        '節點註冊初始化失敗，已回退為禁用模式',
         error instanceof Error ? error.stack : String(error),
       );
       this.pool = null;

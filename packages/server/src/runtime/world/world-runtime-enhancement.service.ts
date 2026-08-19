@@ -66,7 +66,7 @@ export class WorldRuntimeEnhancementService {
             ? await this.craftPanelRuntimeService.startEnhancementDurably(player, payload, deps)
             : this.craftPanelRuntimeService.startTechniqueActivity(player, 'enhancement', payload, deps);
         if (!result.ok) {
-            throw new BadRequestException(result.error ?? '启动强化失败');
+            throw new BadRequestException(result.error ?? '啟動強化失敗');
         }
         this.worldRuntimeCraftMutationService.flushCraftMutation(playerId, result, 'enhancement', deps);
     }    
@@ -88,7 +88,7 @@ export class WorldRuntimeEnhancementService {
             ? await this.craftPanelRuntimeService.cancelEnhancementDurably(player, deps)
             : this.craftPanelRuntimeService.cancelTechniqueActivity(player, 'enhancement', deps);
         if (!result.ok) {
-            throw new BadRequestException(result.error ?? '取消强化失败');
+            throw new BadRequestException(result.error ?? '取消強化失敗');
         }
         this.worldRuntimeCraftMutationService.flushCraftMutation(playerId, result, 'enhancement', deps);
     }    

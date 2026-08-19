@@ -197,17 +197,17 @@ export class PlayerIdentityPersistenceService {
         }
         const sharedPool = this.databasePoolProvider?.getPool?.('player-identity');
         if (!sharedPool) {
-            this.logger.warn('玩家身份持久化已禁用：数据库连接池提供者未提供连接池');
+            this.logger.warn('玩家身份持久化已禁用：數據庫連接池提供者未提供連接池');
             return;
         }
         this.pool = sharedPool;
         try {
             await ensurePlayerIdentityTable(this.pool);
             this.enabled = true;
-            this.logger.log('玩家身份持久化已启用（server_player_identity + player_identity 镜像）');
+            this.logger.log('玩家身份持久化已啟用（server_player_identity + player_identity 鏡像）');
         }
         catch (error) {
-            this.logger.error('玩家身份持久化初始化失败，已回退为禁用模式', error instanceof Error ? error.stack : String(error));
+            this.logger.error('玩家身份持久化初始化失敗，已回退為禁用模式', error instanceof Error ? error.stack : String(error));
             this.releasePoolReference();
         }
     }

@@ -49,7 +49,7 @@ export class OutboxEventConsumerRegistryService {
     const topic = typeof event.topic === 'string' ? event.topic.trim() : '';
     const consumer = this.resolveConsumer(topic);
     if (!consumer) {
-      this.logger.debug(`发件箱 topic 未命中消费者，按空操作处理：${topic || 'unknown'}`);
+      this.logger.debug(`發件箱 topic 未命中消費者，按空操作處理：${topic || 'unknown'}`);
       return;
     }
     await consumer(event);
@@ -80,7 +80,7 @@ export class OutboxEventConsumerRegistryService {
     const logOnly = (event: OutboxEventRecord) => {
       const topic = typeof event.topic === 'string' ? event.topic : 'unknown';
       const eventId = typeof event.event_id === 'string' ? event.event_id : 'unknown';
-      this.logger.debug(`发件箱内置消费者确认 topic=${topic} eventId=${eventId}`);
+      this.logger.debug(`發件箱內置消費者確認 topic=${topic} eventId=${eventId}`);
     };
 
     this.registerExact('player.mail.claimed', logOnly);

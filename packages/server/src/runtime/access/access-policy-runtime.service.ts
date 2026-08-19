@@ -237,7 +237,7 @@ export class AccessPolicyRuntimeService implements OnModuleDestroy {
       try {
         relationKinds = await this.resolveRelationKinds(ownerPlayerId, actorPlayerId);
       } catch (error) {
-        this.logger.warn(`通用权限关系事实读取失败：${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`通用權限關係事實讀取失敗：${error instanceof Error ? error.message : String(error)}`);
         return { ok: false, allowed: false, reason: 'access_policy_relation_unavailable' };
       }
     }
@@ -276,7 +276,7 @@ export class AccessPolicyRuntimeService implements OnModuleDestroy {
           sameParty = await this.partyRuntimeService.arePlayersInSameParty(actorPlayerId, ownerPlayerId);
         }
       } catch (error) {
-        this.logger.warn(`通用权限队伍事实读取失败：${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`通用權限隊伍事實讀取失敗：${error instanceof Error ? error.message : String(error)}`);
         return { ok: false, allowed: false, reason: 'access_policy_party_unavailable' };
       }
     }

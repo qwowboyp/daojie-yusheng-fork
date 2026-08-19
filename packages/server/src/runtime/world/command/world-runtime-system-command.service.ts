@@ -79,7 +79,7 @@ export class WorldRuntimeSystemCommandService {
             catch (error) {
                 const message = error instanceof Error ? error.message : String(error);
                 this.logger.error(
-                    `处理系统指令 ${command.kind} 失败：${message}`,
+                    `處理系統指令 ${command.kind} 失敗：${message}`,
                     error instanceof Error ? error.stack : undefined,
                 );
             }
@@ -141,7 +141,7 @@ export class WorldRuntimeSystemCommandService {
         const cooldownLeft = Math.max(0, readyTick - currentTick);
         if (cooldownLeft > 0) {
             if (typeof deps.queuePlayerNotice === 'function') {
-                const n = buildStructuredNotice('system', 'notice.system.cooldown', `行动尚在调息中，还需 ${cooldownLeft} 息`, {
+                const n = buildStructuredNotice('system', 'notice.system.cooldown', `行動尚在調息中，還需 ${cooldownLeft} 息`, {
                     vars: { cooldownLeft },
                 });
                 deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);

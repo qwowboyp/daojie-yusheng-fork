@@ -68,9 +68,9 @@ export class GmConfigPersistenceService implements OnModuleInit, OnModuleDestroy
       await ensureGmConfigTable(this.pool);
       await this.loadAll();
       this.enabled = true;
-      this.logger.log('GM 配置持久化已启用');
+      this.logger.log('GM 配置持久化已啟用');
     } catch (error: unknown) {
-      this.logger.warn(`GM 配置初始化失败：${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`GM 配置初始化失敗：${error instanceof Error ? error.message : String(error)}`);
     }
     this.initialized = true;
   }

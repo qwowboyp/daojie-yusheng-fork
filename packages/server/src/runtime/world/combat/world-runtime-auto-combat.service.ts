@@ -519,7 +519,7 @@ export class WorldRuntimeAutoCombatService {
                     }
                     if (typeof deps.queuePlayerNotice === 'function') {
                         const itemName = getItemDisplayName(match.item);
-                        const n = buildStructuredNotice('success', 'notice.combat.auto-use-item', `自动使用 ${itemName}`, { vars: { itemName }, pills: [{ key: 'itemName', style: 'target' }] });
+                        const n = buildStructuredNotice('success', 'notice.combat.auto-use-item', `自動使用 ${itemName}`, { vars: { itemName }, pills: [{ key: 'itemName', style: 'target' }] });
                         deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
                     }
                 }
@@ -566,7 +566,7 @@ export class WorldRuntimeAutoCombatService {
                     }
                     if (typeof deps.queuePlayerNotice === 'function') {
                         const itemName = getItemDisplayName(match.item);
-                        const n = buildStructuredNotice('success', 'notice.combat.auto-use-item', `自动使用 ${itemName}`, { vars: { itemName }, pills: [{ key: 'itemName', style: 'target' }] });
+                        const n = buildStructuredNotice('success', 'notice.combat.auto-use-item', `自動使用 ${itemName}`, { vars: { itemName }, pills: [{ key: 'itemName', style: 'target' }] });
                         deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
                     }
                 }

@@ -138,7 +138,7 @@ function buildCultivationBuffProjection(player: ProjectablePlayerBuffState): Vis
   }
   const projected: VisibleBuffState = freezeVisibleBuffProjection({
     buffId: CULTIVATION_BUFF_ID,
-    name: '修炼中',
+    name: '修煉中',
     desc: buildCultivationBuffDescription(techniqueName),
     shortMark: '修',
     category: 'buff',
@@ -148,7 +148,7 @@ function buildCultivationBuffProjection(player: ProjectablePlayerBuffState): Vis
     stacks: 1,
     maxStacks: 1,
     sourceSkillId: CULTIVATION_ACTION_ID,
-    sourceSkillName: '修炼',
+    sourceSkillName: '修煉',
   });
   cultivationBuffProjectionCache.set(cacheKey, projected);
   return projected;
@@ -167,9 +167,9 @@ function resolveCultivatingTechniqueName(player: ProjectablePlayerBuffState): st
 
 function buildCultivationBuffDescription(techniqueName: string | null): string {
   if (techniqueName) {
-    return `${techniqueName} 正在运转，每息获得境界修为与功法经验。`;
+    return `${techniqueName} 正在運轉，每息獲得境界修為與功法經驗。`;
   }
-  return '正在调息修炼，每息获得境界修为与功法经验。';
+  return '正在調息修煉，每息獲得境界修為與功法經驗。';
 }
 
 /** 构建营造进度的虚拟 buff 投影。 */
@@ -182,7 +182,7 @@ function buildBuildingBuffProjection(player: ProjectablePlayerBuffState): Visibl
   const totalTicks = Math.max(1, Math.trunc(Number(job?.totalTicks ?? remainingTicks) || remainingTicks || 1));
   const buildingName = typeof job?.buildingName === 'string' && job.buildingName.trim()
     ? job.buildingName.trim()
-    : '建筑';
+    : '建築';
   const paused = job?.phase === 'paused';
   const cacheKey = `${buildingName}|${paused ? 1 : 0}|${remainingTicks}|${totalTicks}`;
   const cached = buildingBuffProjectionCache.get(cacheKey);
@@ -191,11 +191,11 @@ function buildBuildingBuffProjection(player: ProjectablePlayerBuffState): Visibl
   }
   const projected: VisibleBuffState = freezeVisibleBuffProjection({
     buffId: 'activity.building',
-    name: paused ? '营造暂停' : '营造中',
+    name: paused ? '營造暫停' : '營造中',
     desc: paused
-      ? `${buildingName} 的营造已暂停，尚余 ${remainingTicks} 息。`
-      : `${buildingName} 正在营造，尚余 ${remainingTicks} 息。`,
-    shortMark: '筑',
+      ? `${buildingName} 的營造已暫停，尚餘 ${remainingTicks} 息。`
+      : `${buildingName} 正在營造，尚餘 ${remainingTicks} 息。`,
+    shortMark: '築',
     category: 'buff',
     visibility: 'public',
     remainingTicks,
@@ -203,7 +203,7 @@ function buildBuildingBuffProjection(player: ProjectablePlayerBuffState): Visibl
     stacks: 1,
     maxStacks: 1,
     sourceSkillId: 'building:construct',
-    sourceSkillName: '营造',
+    sourceSkillName: '營造',
   });
   buildingBuffProjectionCache.set(cacheKey, projected);
   return projected;

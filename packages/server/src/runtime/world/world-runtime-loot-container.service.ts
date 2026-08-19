@@ -339,10 +339,10 @@ export class WorldRuntimeLootContainerService {
                     item: { ...entry.item },
                 })),
                 emptyText: herbRows.length > 0
-                    ? '当前可继续采集此处草药。'
+                    ? '當前可繼續採集此處草藥。'
                     : respawnRemainingTicks !== undefined
-                        ? `这处草药药性回生中，还需 ${Math.max(1, respawnRemainingTicks)} 息。`
-                        : '这处草药已经采尽，正在等待重新生长。',
+                        ? `這處草藥藥性回生中，還需 ${Math.max(1, respawnRemainingTicks)} 息。`
+                        : '這處草藥已經採盡，正在等待重新生長。',
                 variant: 'herb',
                 herb: {
                     grade: container.grade,
@@ -372,8 +372,8 @@ export class WorldRuntimeLootContainerService {
                 : undefined,
             items: buildContainerWindowItems(containerState.entries),
             emptyText: hasHiddenContainerEntries(containerState.entries)
-                ? '正在翻找，每完成一轮搜索会显露一件物品。'
-                : '容器里已经空了。',
+                ? '正在翻找，每完成一輪搜索會顯露一件物品。'
+                : '容器裡已經空了。',
         };
     }    
     /**
@@ -701,17 +701,17 @@ export class WorldRuntimeLootContainerService {
             deps,
         );
         if (reconciliation.blocked) {
-            return buildContainerMutationResult('当前已有玩家正在采集该目标。');
+            return buildContainerMutationResult('當前已有玩家正在採集該目標。');
         }
         if (hasActivePlayerGatherJob) {
-            return buildContainerMutationResult('当前已有采集任务在进行中。');
+            return buildContainerMutationResult('當前已有采集任務在進行中。');
         }
         const herbRows = groupContainerLootRows(resolved.state.entries);
         const nextRow = (itemKey
             ? herbRows.find((entry) => entry.itemKey === itemKey)
             : herbRows[0]) ?? null;
         if (!nextRow) {
-            return buildContainerMutationResult('当前没有可采集的草药。');
+            return buildContainerMutationResult('當前沒有可採集的草藥。');
         }
         const totalTicks = computeEffectiveHerbGatherTicks(player, resolved.container, nextRow);
         const jobRunId = createGatherJobRunId();
@@ -960,7 +960,7 @@ export class WorldRuntimeLootContainerService {
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const job = player.gatherJob;
         if (!job || Number(job.remainingTicks) <= 0) {
-            return buildContainerMutationResult('当前没有可取消的采集任务。');
+            return buildContainerMutationResult('當前沒有可取消的採集任務。');
         }
         const location = deps.getPlayerLocationOrThrow(playerId);
         const instance = deps.getInstanceRuntimeOrThrow(location.instanceId);
@@ -988,39 +988,39 @@ export class WorldRuntimeLootContainerService {
     checkGatherContinueCondition(playerId, player, job, deps) {
         const sourceId = this.resolveGatherJobSourceId(playerId, player, job, deps);
         if (!sourceId) {
-            return { satisfied: false, reason: '采集目标无效。', shouldCancel: true };
+            return { satisfied: false, reason: '採集目標無效。', shouldCancel: true };
         }
         let location = null;
         try {
             location = deps.getPlayerLocationOrThrow(playerId);
         }
         catch (_error) {
-            return { satisfied: false, reason: '当前位置不可用。' };
+            return { satisfied: false, reason: '當前位置不可用。' };
         }
         const parsedSource = parseContainerSourceId(sourceId);
         if (!parsedSource || parsedSource.instanceId !== location.instanceId) {
-            return { satisfied: false, reason: '采集目标不在当前地图。' };
+            return { satisfied: false, reason: '採集目標不在當前地圖。' };
         }
         const instance = deps.getInstanceRuntime?.(location.instanceId) ?? deps.getInstanceRuntimeOrThrow?.(location.instanceId);
         const container = instance?.getContainerById?.(parsedSource.containerId);
         if (!container || container.variant !== 'herb') {
-            return { satisfied: false, reason: '采集目标已经不存在。', shouldCancel: true };
+            return { satisfied: false, reason: '採集目標已經不存在。', shouldCancel: true };
         }
         if (Math.max(Math.abs(player.x - container.x), Math.abs(player.y - container.y)) > 1) {
-            return { satisfied: false, reason: '你已离开草药采集范围。' };
+            return { satisfied: false, reason: '你已離開草藥採集範圍。' };
         }
         const lootWindowTarget = this.playerRuntimeService.getLootWindowTarget(playerId);
         if (!lootWindowTarget || lootWindowTarget.tileX !== container.x || lootWindowTarget.tileY !== container.y) {
-            return { satisfied: false, reason: '请重新打开采集目标。' };
+            return { satisfied: false, reason: '請重新打開採集目標。' };
         }
         const state = this.ensureContainerState(location.instanceId, container, instance.tick, player);
         const activeSearchPlayerId = resolveActiveSearchPlayerId(state.activeSearch);
         if (activeSearchPlayerId && activeSearchPlayerId !== playerId) {
-            return { satisfied: false, reason: '采集目标正在由其他玩家采集。' };
+            return { satisfied: false, reason: '採集目標正在由其他玩家採集。' };
         }
         const rows = groupContainerLootRows(state.entries);
         if (rows.length <= 0) {
-            return { satisfied: false, reason: `${container.name} 已经采尽。`, shouldCancel: true };
+            return { satisfied: false, reason: `${container.name} 已經採盡。`, shouldCancel: true };
         }
         return { satisfied: true };
     }
@@ -1283,7 +1283,7 @@ export class WorldRuntimeLootContainerService {
             if (pile && Number.isFinite(pile.x) && Number.isFinite(pile.y)) {
                 const dist = Math.max(Math.abs(player.x - pile.x), Math.abs(player.y - pile.y));
                 if (dist > 1) {
-                    throw new BadRequestException('拾取距离过远，请靠近目标。');
+                    throw new BadRequestException('拾取距離過遠，請靠近目標。');
                 }
             }
         }
@@ -1327,7 +1327,7 @@ export class WorldRuntimeLootContainerService {
             this.playerRuntimeService.receiveInventoryItem(playerId, item);
             deps.refreshQuestStates(playerId);
             const itemLabel = this.formatLootItemStackLabel(item);
-            const n = buildStructuredNotice('loot', 'notice.loot.obtained', `获得 ${itemLabel}`, { vars: { itemName: itemLabel }, pills: [{ key: 'itemName', style: 'target' }] });
+            const n = buildStructuredNotice('loot', 'notice.loot.obtained', `獲得 ${itemLabel}`, { vars: { itemName: itemLabel }, pills: [{ key: 'itemName', style: 'target' }] });
             deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
             return;
         }
@@ -1340,10 +1340,10 @@ export class WorldRuntimeLootContainerService {
                 y: Number.isFinite(Number(pile.y)) ? Math.trunc(Number(pile.y)) : player.y,
             };
             if (!targetEntry?.item) {
-                throw new NotFoundException(`地面物品不存在：${itemKey}，来源 ${sourceId}`);
+                throw new NotFoundException(`地面物品不存在：${itemKey}，來源 ${sourceId}`);
             }
             if (!canReceiveItemStack(player, targetEntry.item)) {
-                throw new BadRequestException('背包空间不足，无法拿取该物品');
+                throw new BadRequestException('背包空間不足，無法拿取該物品');
             }
             const tileIndex = parseGroundLootSourceTileIndex(sourceId);
             const sourceItemsBefore = typeof instance.captureGroundTileItemsForAssetMutation === 'function'
@@ -1352,7 +1352,7 @@ export class WorldRuntimeLootContainerService {
             const takenSourceItems = [{ ...targetEntry.item }];
             const taken = instance.takeGroundItem(sourceId, itemKey, player.x, player.y);
             if (!taken) {
-                throw new NotFoundException(`地面物品不存在：${itemKey}，来源 ${sourceId}`);
+                throw new NotFoundException(`地面物品不存在：${itemKey}，來源 ${sourceId}`);
             }
             const sourceRevisionAfterMutation = readInstancePersistenceDomainRevision(instance, 'ground_item');
             await this.grantLootItemsDurably({
@@ -1376,16 +1376,16 @@ export class WorldRuntimeLootContainerService {
         }
         const targetEntry = Array.isArray(pile?.items) ? pile.items.find((entry) => entry?.itemKey === itemKey) : null;
         if (targetEntry?.item && !canReceiveItemStack(player, targetEntry.item)) {
-            throw new BadRequestException('背包空间不足，无法拿取该物品');
+            throw new BadRequestException('背包空間不足，無法拿取該物品');
         }
         const item = instance.takeGroundItem(sourceId, itemKey, player.x, player.y);
         if (!item) {
-            throw new NotFoundException(`地面物品不存在：${itemKey}，来源 ${sourceId}`);
+            throw new NotFoundException(`地面物品不存在：${itemKey}，來源 ${sourceId}`);
         }
         this.playerRuntimeService.receiveInventoryItem(playerId, item);
         deps.refreshQuestStates(playerId);
         const itemLabel = this.formatLootItemStackLabel(item);
-        const n2 = buildStructuredNotice('loot', 'notice.loot.obtained', `获得 ${itemLabel}`, { vars: { itemName: itemLabel }, pills: [{ key: 'itemName', style: 'target' }] });
+        const n2 = buildStructuredNotice('loot', 'notice.loot.obtained', `獲得 ${itemLabel}`, { vars: { itemName: itemLabel }, pills: [{ key: 'itemName', style: 'target' }] });
         deps.queuePlayerNotice(playerId, n2.text, n2.kind, undefined, undefined, n2.structured);
     }    
     /**
@@ -1421,7 +1421,7 @@ export class WorldRuntimeLootContainerService {
             const takenItems = this.takeAllContainerItems(location.instanceId, playerId, player, sourceId, deps);
             const sourceRevisionAfterMutation = this.getContainerPersistenceRevision(location.instanceId);
             if (takenItems.length === 0) {
-                throw new BadRequestException('当前没有可拿取的物品');
+                throw new BadRequestException('當前沒有可拿取的物品');
             }
             if (durableGrantEnabled) {
                 const removedEntries = visibleEntriesBeforeTake
@@ -1458,14 +1458,14 @@ export class WorldRuntimeLootContainerService {
             }
             deps.refreshQuestStates(playerId);
             const itemList = this.formatLootItemListSummary(takenItems);
-            const n = buildStructuredNotice('loot', 'notice.loot.obtained-multi', `获得 ${itemList}`, { vars: { itemList }, pills: [{ key: 'itemList', style: 'target' }] });
+            const n = buildStructuredNotice('loot', 'notice.loot.obtained-multi', `獲得 ${itemList}`, { vars: { itemList }, pills: [{ key: 'itemList', style: 'target' }] });
             deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
             return;
         }
         const instance = deps.getInstanceRuntimeOrThrow(location.instanceId);
         const pile = instance.getGroundPileBySourceId(sourceId);
         if (!pile || pile.items.length === 0) {
-            throw new NotFoundException(`地面来源不存在：${sourceId}`);
+            throw new NotFoundException(`地面來源不存在：${sourceId}`);
         }
         const originalItemCount = pile.items.length;
         const originalPosition = {
@@ -1487,7 +1487,7 @@ export class WorldRuntimeLootContainerService {
             if (nextSimulation.length > player.inventory.capacity) {
                 stoppedByCapacity = true;
                 if (takenItems.length === 0) {
-                    throw new BadRequestException('背包空间不足，无法继续拿取');
+                    throw new BadRequestException('背包空間不足，無法繼續拿取');
                 }
                 break;
             }
@@ -1501,7 +1501,7 @@ export class WorldRuntimeLootContainerService {
             takenItems.push(taken);
         }
         if (takenItems.length === 0) {
-            throw new BadRequestException('当前没有可拿取的物品');
+            throw new BadRequestException('當前沒有可拿取的物品');
         }
         const sourceRevisionAfterMutation = readInstancePersistenceDomainRevision(instance, 'ground_item');
         if (durableGrantEnabled) {
@@ -1530,10 +1530,10 @@ export class WorldRuntimeLootContainerService {
         }
         deps.refreshQuestStates(playerId);
         const itemList = this.formatLootItemListSummary(takenItems);
-        const n3 = buildStructuredNotice('loot', 'notice.loot.obtained-multi', `获得 ${itemList}`, { vars: { itemList }, pills: [{ key: 'itemList', style: 'target' }] });
+        const n3 = buildStructuredNotice('loot', 'notice.loot.obtained-multi', `獲得 ${itemList}`, { vars: { itemList }, pills: [{ key: 'itemList', style: 'target' }] });
         deps.queuePlayerNotice(playerId, n3.text, n3.kind, undefined, undefined, n3.structured);
         if (stoppedByCapacity || takenItems.length < originalItemCount) {
-            const nBagFull = buildStructuredNotice('info', 'notice.loot.bag-full', '背包空间不足，剩余物品暂时拿不下。', {});
+            const nBagFull = buildStructuredNotice('info', 'notice.loot.bag-full', '背包空間不足，剩餘物品暫時拿不下。', {});
             deps.queuePlayerNotice(playerId, nBagFull.text, nBagFull.kind, undefined, undefined, nBagFull.structured);
         }
     }    
@@ -1553,14 +1553,14 @@ export class WorldRuntimeLootContainerService {
 
         const resolved = this.resolveContainerStateForPlayer(instanceId, playerId, player, sourceId, deps);
         if (resolved.container.variant === 'herb') {
-            throw new BadRequestException('草药采集请使用采集动作');
+            throw new BadRequestException('草藥採集請使用採集動作');
         }
         const row = groupContainerLootRows(resolved.state.entries.filter((entry) => entry.visible)).find((entry) => entry.itemKey === itemKey);
         if (!row) {
-            throw new NotFoundException(`容器物品不存在：${itemKey}，来源 ${sourceId}`);
+            throw new NotFoundException(`容器物品不存在：${itemKey}，來源 ${sourceId}`);
         }
         if (!canReceiveContainerRow(player, row.entries)) {
-            throw new BadRequestException('背包空间不足，无法拿取该物品');
+            throw new BadRequestException('背包空間不足，無法拿取該物品');
         }
         removeContainerRowEntries(resolved.state.entries, row.entries);
         if (!resolved.state.activeSearch && hasHiddenContainerEntries(resolved.state.entries)) {
@@ -1584,7 +1584,7 @@ export class WorldRuntimeLootContainerService {
 
         const resolved = this.resolveContainerStateForPlayer(instanceId, playerId, player, sourceId, deps);
         if (resolved.container.variant === 'herb') {
-            throw new BadRequestException('草药采集请使用采集动作');
+            throw new BadRequestException('草藥採集請使用採集動作');
         }
         const rows = groupContainerLootRows(resolved.state.entries.filter((entry) => entry.visible));
         if (rows.length === 0) {
@@ -1628,12 +1628,12 @@ export class WorldRuntimeLootContainerService {
             return false;
         }
         if (typeof durableOperationService?.grantInventoryItems !== 'function') {
-            throw new BadRequestException('地面物品资产事务暂不可用，请稍后重试');
+            throw new BadRequestException('地面物品資產事務暫不可用，請稍後重試');
         }
         const runtimeOwnerId = typeof player?.runtimeOwnerId === 'string' ? player.runtimeOwnerId.trim() : '';
         const sessionEpoch = Number.isFinite(player?.sessionEpoch) ? Math.max(0, Math.trunc(Number(player.sessionEpoch))) : 0;
         if (!runtimeOwnerId || sessionEpoch <= 0) {
-            throw new BadRequestException('玩家资产事务围栏暂不可用，请稍后重试');
+            throw new BadRequestException('玩家資產事務圍欄暫不可用，請稍後重試');
         }
         return true;
     }
@@ -1706,7 +1706,7 @@ export class WorldRuntimeLootContainerService {
     buildDurableGroundSourceMutation(instance, instanceId, sourceId) {
         const tileIndex = parseGroundLootSourceTileIndex(sourceId);
         if (tileIndex == null) {
-            throw new BadRequestException('非法地面物品来源');
+            throw new BadRequestException('非法地面物品來源');
         }
         const currentItems = typeof instance?.captureGroundTileItemsForAssetMutation === 'function'
             ? instance.captureGroundTileItemsForAssetMutation(tileIndex)
@@ -1740,7 +1740,7 @@ export class WorldRuntimeLootContainerService {
         const state = states
             .find((entry) => entry?.sourceId === sourceId);
         if (!state?.containerId) {
-            throw new BadRequestException('容器持久化状态不存在');
+            throw new BadRequestException('容器持久化狀態不存在');
         }
         const ownershipEpoch = resolveLootSourceOwnershipEpoch(instance);
         const flushLedgerVersion = nextPlayerPersistenceVersion();
@@ -1841,8 +1841,8 @@ export class WorldRuntimeLootContainerService {
                             reconciliation.inventoryItems,
                         );
                         this.logger.warn(reconciliation.replayReadFailed
-                            ? `地面/容器资产事务已确认提交，但 operation 明细暂不可读，已按同一请求后态收敛：operationId=${operationId}`
-                            : `地面/容器资产事务 COMMIT 回包不确定，已按 operation 回读收敛：operationId=${operationId}`);
+                            ? `地面/容器資產事務已確認提交，但 operation 明細暫不可讀，已按同一請求後態收斂：operationId=${operationId}`
+                            : `地面/容器資產事務 COMMIT 回包不確定，已按 operation 回讀收斂：operationId=${operationId}`);
                     }
                 }
                 if (commitOutcomeUnknown) {
@@ -1865,11 +1865,11 @@ export class WorldRuntimeLootContainerService {
         }
         if (finalError) {
             if (commitOutcomeUnknown) {
-                this.logger.error(`地面/容器资产事务结果仍未确认，保留运行态与 dirty 等待后续 flush：playerId=${input.playerId} operationId=${operationId}`);
+                this.logger.error(`地面/容器資產事務結果仍未確認，保留運行態與 dirty 等待後續 flush：playerId=${input.playerId} operationId=${operationId}`);
                 const pendingNotice = buildStructuredNotice(
                     'warn',
                     'notice.asset.reconciliation-pending',
-                    '资产操作结果正在确认，请稍后刷新背包。',
+                    '資產操作結果正在確認，請稍後刷新背包。',
                     {},
                 );
                 input.deps.queuePlayerNotice(
@@ -1887,7 +1887,7 @@ export class WorldRuntimeLootContainerService {
                     input.restoreOnFailure();
                 }
                 catch (restoreError) {
-                    this.logger.warn(`容器/地面物品持久化拿取回滚失败：${restoreError instanceof Error ? restoreError.message : String(restoreError)}`);
+                    this.logger.warn(`容器/地面物品持久化拿取回滾失敗：${restoreError instanceof Error ? restoreError.message : String(restoreError)}`);
                 }
             }
             else if (input.instance && input.originalPosition) {
@@ -1896,16 +1896,16 @@ export class WorldRuntimeLootContainerService {
                         input.instance.dropGroundItem(input.originalPosition.x, input.originalPosition.y, item);
                     }
                     catch (restoreError) {
-                        this.logger.warn(`地面物品持久化拿取回滚失败：${restoreError instanceof Error ? restoreError.message : String(restoreError)}`);
+                        this.logger.warn(`地面物品持久化拿取回滾失敗：${restoreError instanceof Error ? restoreError.message : String(restoreError)}`);
                     }
                 }
             }
-            this.logger.warn(`地面/容器物品持久化拿取失败：playerId=${input.playerId} sourceType=${input.sourceType} sourceRefId=${input.sourceRefId} error=${finalError instanceof Error ? finalError.message : String(finalError)}`);
+            this.logger.warn(`地面/容器物品持久化拿取失敗：playerId=${input.playerId} sourceType=${input.sourceType} sourceRefId=${input.sourceRefId} error=${finalError instanceof Error ? finalError.message : String(finalError)}`);
             const sourceIsContainer = input.sourceType === 'container_take' || input.sourceType === 'container_take_all';
             const failureNotice = buildStructuredNotice(
                 'warn',
                 sourceIsContainer ? 'notice.loot.take-failed-container' : 'notice.loot.take-failed-ground',
-                sourceIsContainer ? '拿取失败，物品已留在容器内。' : '拿取失败，物品已留在原地。',
+                sourceIsContainer ? '拿取失敗，物品已留在容器內。' : '拿取失敗，物品已留在原地。',
                 {},
             );
             input.deps.queuePlayerNotice(
@@ -1926,7 +1926,7 @@ export class WorldRuntimeLootContainerService {
         const successNotice = buildStructuredNotice(
             'loot',
             isMultiTake ? 'notice.loot.obtained-multi' : 'notice.loot.obtained',
-            `获得 ${itemSummary}`,
+            `獲得 ${itemSummary}`,
             isMultiTake
                 ? { vars: { itemList: itemSummary }, pills: [{ key: 'itemList', style: 'target' }] }
                 : { vars: { itemName: itemSummary }, pills: [{ key: 'itemName', style: 'target' }] },
@@ -1943,7 +1943,7 @@ export class WorldRuntimeLootContainerService {
             const partialNotice = buildStructuredNotice(
                 'info',
                 'notice.loot.bag-full',
-                '背包空间不足，剩余物品暂时拿不下。',
+                '背包空間不足，剩餘物品暫時拿不下。',
                 {},
             );
             input.deps.queuePlayerNotice(
@@ -2012,31 +2012,31 @@ export class WorldRuntimeLootContainerService {
 
         const lootWindowTarget = this.playerRuntimeService.getLootWindowTarget(playerId);
         if (!lootWindowTarget) {
-            throw new BadRequestException('请先打开拿取界面');
+            throw new BadRequestException('請先打開拿取界面');
         }
         if (Math.max(Math.abs(player.x - lootWindowTarget.tileX), Math.abs(player.y - lootWindowTarget.tileY)) > 1) {
             this.playerRuntimeService.clearLootWindow(playerId);
-            throw new BadRequestException('你已离开拿取范围');
+            throw new BadRequestException('你已離開拿取範圍');
         }
         const parsedSource = parseContainerSourceId(sourceId);
         if (!parsedSource) {
-            throw new BadRequestException('非法容器来源');
+            throw new BadRequestException('非法容器來源');
         }
         if (parsedSource.instanceId !== instanceId) {
-            throw new BadRequestException('目标容器不在当前实例中');
+            throw new BadRequestException('目標容器不在當前實例中');
         }
         const instance = deps.getInstanceRuntimeOrThrow(instanceId);
         const container = instance.getContainerById(parsedSource.containerId);
         if (!container) {
             this.playerRuntimeService.clearLootWindow(playerId);
-            throw new NotFoundException('目标容器不存在');
+            throw new NotFoundException('目標容器不存在');
         }
         if (container.x !== lootWindowTarget.tileX || container.y !== lootWindowTarget.tileY) {
-            throw new BadRequestException('当前拿取界面与目标容器不一致');
+            throw new BadRequestException('當前拿取界面與目標容器不一致');
         }
         const expectedSourceId = buildContainerSourceId(instanceId, container.id);
         if (sourceId !== expectedSourceId) {
-            throw new BadRequestException('当前拿取界面与目标容器不一致');
+            throw new BadRequestException('當前拿取界面與目標容器不一致');
         }
         return { instance, container, state: this.ensureContainerState(instanceId, container, instance.tick, player) };
     }    
@@ -2053,7 +2053,7 @@ export class WorldRuntimeLootContainerService {
     resolveHerbContainerStateForPlayer(instanceId, playerId, player, sourceId, deps) {
         const resolved = this.resolveContainerStateForPlayer(instanceId, playerId, player, sourceId, deps);
         if (resolved.container.variant !== 'herb') {
-            throw new BadRequestException('当前目标不是草药采集点');
+            throw new BadRequestException('當前目標不是草藥採集點');
         }
         return resolved;
     }
@@ -2313,21 +2313,21 @@ function buildGatherTechniqueNotice(kind, key, vars = undefined, pills = undefin
 }
 
 function normalizeGatherResourceNodeName(value) {
-    return typeof value === 'string' && value.trim() ? value.trim() : '采集目标';
+    return typeof value === 'string' && value.trim() ? value.trim() : '採集目標';
 }
 
 function resolveGatherInterruptReasonLabel(reason) {
     switch (reason) {
         case 'move':
-            return '移动';
+            return '移動';
         case 'attack':
             return '出手';
         case 'cultivate':
             return '打坐';
         case 'defeat':
-            return '身陨';
+            return '身隕';
         default:
-            return '手动取消';
+            return '手動取消';
     }
 }
 
@@ -2541,7 +2541,7 @@ function restoreInventoryGrantRollbackState(player, rollbackState, playerRuntime
 function resolveLootSourceOwnershipEpoch(instance) {
     const ownershipEpoch = Math.trunc(Number(instance?.meta?.ownershipEpoch));
     if (!Number.isSafeInteger(ownershipEpoch) || ownershipEpoch <= 0) {
-        throw new BadRequestException('当前地图实例资产事务围栏暂不可用，请稍后重试');
+        throw new BadRequestException('當前地圖實例資產事務圍欄暫不可用，請稍後重試');
     }
     return ownershipEpoch;
 }

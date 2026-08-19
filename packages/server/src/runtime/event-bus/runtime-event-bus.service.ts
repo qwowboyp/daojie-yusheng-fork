@@ -844,7 +844,7 @@ function buildAggregatedNotice(
     ...incoming,
     id: existing.id,
     kind: existing.kind,
-    text: `${rule.fallbackPrefix} ${count} 项`,
+    text: `${rule.fallbackPrefix} ${count} 項`,
     castId: existing.castId ?? incoming.castId,
     structured: {
       key: rule.aggregateKey,

@@ -60,34 +60,34 @@ function resolvePlayerMovementPathingOptions(player, deps) {
 
 function buildNavigationFailureNotice(error) {
     const message = error instanceof Error ? error.message : String(error);
-    if (message === '目标超出地图范围') {
+    if (message === '目標超出地圖範圍') {
         return buildStructuredNotice(
             'warn',
             'notice.navigation.target-out-of-bounds',
-            '目标超出地图范围。',
+            '目標超出地圖範圍。',
         );
     }
-    if (message === '当前任务没有可导航目标' || message === '任务目标当前不可达') {
+    if (message === '當前任務沒有可導航目標' || message === '任務目標當前不可達') {
         return buildStructuredNotice(
             'warn',
             'notice.navigation.quest-unreachable',
-            '任务目标当前不可达。',
+            '任務目標當前不可達。',
         );
     }
-    if (message === '无法到达该位置'
-        || message === '前往界门的路径不可达'
+    if (message === '無法到達該位置'
+        || message === '前往界門的路徑不可達'
         || /^无法规划前往 .+ 的跨图路线$/.test(message)
         || /^当前地图没有通往 .+ 的界门$/.test(message)) {
         return buildStructuredNotice(
             'warn',
             'notice.navigation.unreachable',
-            '无法到达该位置。',
+            '無法到達該位置。',
         );
     }
     return buildStructuredNotice(
         'warn',
         'notice.navigation.failed',
-        '导航暂时不可用，请稍后重试。',
+        '導航暫時不可用，請稍後重試。',
     );
 }
 
@@ -248,18 +248,18 @@ export class WorldRuntimeNavigationService {
         const player = this.playerRuntimeService.getPlayer(playerId);
         const currentMapId = resolvePlayerMapId(player, instance);
         if (!currentMapId) {
-            throw new BadRequestException('当前地图状态异常');
+            throw new BadRequestException('當前地圖狀態異常');
         }
         const targetMapId = typeof targetMapIdInput === 'string' && targetMapIdInput.trim()
             ? targetMapIdInput.trim()
             : currentMapId;
         if (targetMapId === currentMapId && instance.isInBounds?.(x, y) !== true) {
-            throw new BadRequestException('目标超出地图范围');
+            throw new BadRequestException('目標超出地圖範圍');
         }
         if (targetMapId !== currentMapId) {
             const targetTemplate = this.templateRepository.getOrThrow(targetMapId);
             if (!isInBounds(x, y, targetTemplate.width, targetTemplate.height)) {
-                throw new BadRequestException('目标超出地图范围');
+                throw new BadRequestException('目標超出地圖範圍');
             }
         }
         this.interruptManualNavigation(playerId, deps);
@@ -344,7 +344,7 @@ export class WorldRuntimeNavigationService {
         this.interruptManualNavigation(playerId, deps);
         const questId = typeof questIdInput === 'string' ? questIdInput.trim() : '';
         if (!questId) {
-            throw new BadRequestException('任务 ID 不能为空');
+            throw new BadRequestException('任務 ID 不能為空');
         }
         const intent = { kind: 'quest', questId };
         this.navigationIntents.set(playerId, intent);
@@ -414,7 +414,7 @@ export class WorldRuntimeNavigationService {
         }
         catch (error) {
             if (error instanceof TypeError || error instanceof RangeError) {
-                console.error(`[寻路] 路径规划错误：`, error);
+                console.error(`[尋路] 路徑規劃錯誤：`, error);
             }
             return [];
         }
@@ -449,8 +449,8 @@ export class WorldRuntimeNavigationService {
                 ? deps.getOrCreateDefaultLineInstance(transfer.targetMapId, linePreset)
                 : deps.getOrCreatePublicInstance(transfer.targetMapId));
         const mapName = targetInstance.template.name;
-        const travelMethod = transfer.reason === 'manual_portal' ? '通过界门' : '穿过灵脉';
-        const n = buildStructuredNotice('travel', 'notice.travel.arrived', `${travelMethod}抵达 ${mapName}`, {
+        const travelMethod = transfer.reason === 'manual_portal' ? '通過界門' : '穿過靈脈';
+        const n = buildStructuredNotice('travel', 'notice.travel.arrived', `${travelMethod}抵達 ${mapName}`, {
             vars: { travelMethod, mapName },
             pills: [{ key: 'mapName', style: 'target' }],
         });
@@ -656,19 +656,19 @@ export class WorldRuntimeNavigationService {
         const instance = deps.getInstanceRuntimeOrThrow(location.instanceId);
         const currentMapId = resolvePlayerMapId(player, instance);
         if (!currentMapId) {
-            throw new BadRequestException('当前地图状态异常');
+            throw new BadRequestException('當前地圖狀態異常');
         }
         const playerMovementPathingOptions = resolvePlayerMovementPathingOptions(player, deps);
         const destination = this.resolveNavigationDestination(playerId, intent, deps, playerMovementPathingOptions);
         if (destination.mapId !== currentMapId) {
             const route = this.findMapRoute(currentMapId, destination.mapId);
             if (!route || route.length < 2) {
-                throw new BadRequestException(`无法规划前往 ${this.resolveMapDisplayName(destination.mapId)} 的跨图路线`);
+                throw new BadRequestException(`無法規劃前往 ${this.resolveMapDisplayName(destination.mapId)} 的跨圖路線`);
             }
             const nextMapId = route[1];
             const portal = selectNearestPortal(instance.template.portals, nextMapId, player.x, player.y);
             if (!portal) {
-                throw new BadRequestException(`当前地图没有通往 ${this.resolveMapDisplayName(nextMapId)} 的界门`);
+                throw new BadRequestException(`當前地圖沒有通往 ${this.resolveMapDisplayName(nextMapId)} 的界門`);
             }
             if (player.x === portal.x && player.y === portal.y) {
                 logServerNextMovement(deps.logger ?? this.logger, 'runtime.navigation.crossMap.atPortal', {
@@ -678,12 +678,12 @@ export class WorldRuntimeNavigationService {
             }
             const pathResult = findOptimalPathOnMap(instance, player.playerId, player.x, player.y, [{ x: portal.x, y: portal.y }], true, playerMovementPathingOptions);
             if (!pathResult || pathResult.points.length === 0) {
-                throw new BadRequestException('前往界门的路径不可达');
+                throw new BadRequestException('前往界門的路徑不可達');
             }
             const previewPath = isServerNextMovementDebugEnabled() ? pathResult.points : null;
             const direction = directionFromStep(player.x, player.y, pathResult.points[0].x, pathResult.points[0].y);
             if (direction === null) {
-                throw new BadRequestException('前往界门的路径不可达');
+                throw new BadRequestException('前往界門的路徑不可達');
             }
             logServerNextMovement(deps.logger ?? this.logger, 'runtime.navigation.crossMap.path', {
                 playerId, fromMapId: currentMapId, destinationMapId: destination.mapId, from: { x: player.x, y: player.y }, route, portal, direction,
@@ -704,11 +704,11 @@ export class WorldRuntimeNavigationService {
         const serverPathResult = preferredPath ? null : findOptimalPathOnMap(instance, player.playerId, player.x, player.y, destination.goals, true, playerMovementPathingOptions);
         const pathResult = preferredPath ?? serverPathResult;
         if (!pathResult || pathResult.points.length === 0) {
-            throw new BadRequestException(intent.kind === 'quest' ? '任务目标当前不可达' : '无法到达该位置');
+            throw new BadRequestException(intent.kind === 'quest' ? '任務目標當前不可達' : '無法到達該位置');
         }
         const direction = directionFromStep(player.x, player.y, pathResult.points[0].x, pathResult.points[0].y);
         if (direction === null) {
-            throw new BadRequestException(intent.kind === 'quest' ? '任务目标当前不可达' : '无法到达该位置');
+            throw new BadRequestException(intent.kind === 'quest' ? '任務目標當前不可達' : '無法到達該位置');
         }
         const previewPath = isServerNextMovementDebugEnabled() ? pathResult.points : null;
         logServerNextMovement(deps.logger ?? this.logger, 'runtime.navigation.local.path', {
@@ -724,7 +724,7 @@ export class WorldRuntimeNavigationService {
         const templateName = this.templateRepository.has(mapId)
             ? this.templateRepository.getOrThrow(mapId).name
             : this.templateRepository.resolveMapGroupLabel(mapId);
-        return resolvePlayerFacingContentName(mapId, '未知地图', templateName);
+        return resolvePlayerFacingContentName(mapId, '未知地圖', templateName);
     }
     /** resolveNavigationStepAsync：优先通过 AsyncPathfindingService 解析 tick 外寻路，失败时同步 fallback。 */
     async resolveNavigationStepAsync(playerId, intent, deps) {
@@ -736,7 +736,7 @@ export class WorldRuntimeNavigationService {
         const instance = deps.getInstanceRuntimeOrThrow(location.instanceId);
         const currentMapId = resolvePlayerMapId(player, instance);
         if (!currentMapId) {
-            throw new BadRequestException('当前地图状态异常');
+            throw new BadRequestException('當前地圖狀態異常');
         }
         const playerMovementPathingOptions = resolvePlayerMovementPathingOptions(player, deps);
         if (playerMovementPathingOptions?.allowIgnoreStaticObstacle === true) {
@@ -758,7 +758,7 @@ export class WorldRuntimeNavigationService {
         if (preferredPath) {
             const direction = directionFromStep(player.x, player.y, preferredPath.points[0].x, preferredPath.points[0].y);
             if (direction === null) {
-                throw new BadRequestException(intent.kind === 'quest' ? '任务目标当前不可达' : '无法到达该位置');
+                throw new BadRequestException(intent.kind === 'quest' ? '任務目標當前不可達' : '無法到達該位置');
             }
             return { kind: 'move', direction, maxSteps: preferredPath.points.length, path: preferredPath.points.map((entry) => ({ x: entry.x, y: entry.y })) };
         }
@@ -771,11 +771,11 @@ export class WorldRuntimeNavigationService {
             destination.goals,
         );
         if (pathResult.status !== 'success' || pathResult.path.length === 0) {
-            throw new BadRequestException(intent.kind === 'quest' ? '任务目标当前不可达' : '无法到达该位置');
+            throw new BadRequestException(intent.kind === 'quest' ? '任務目標當前不可達' : '無法到達該位置');
         }
         const direction = directionFromStep(player.x, player.y, pathResult.path[0].x, pathResult.path[0].y);
         if (direction === null) {
-            throw new BadRequestException(intent.kind === 'quest' ? '任务目标当前不可达' : '无法到达该位置');
+            throw new BadRequestException(intent.kind === 'quest' ? '任務目標當前不可達' : '無法到達該位置');
         }
         logServerNextMovement(deps.logger ?? this.logger, 'runtime.navigation.local.path', {
             playerId,
@@ -806,7 +806,7 @@ export class WorldRuntimeNavigationService {
             const instance = deps.getInstanceRuntimeOrThrow(location.instanceId);
             const currentMapId = resolvePlayerMapId(player, instance);
             if (!currentMapId) {
-                throw new BadRequestException('当前地图状态异常');
+                throw new BadRequestException('當前地圖狀態異常');
             }
             const goals = intent.mapId === currentMapId
                 ? (() => {
@@ -819,25 +819,25 @@ export class WorldRuntimeNavigationService {
                     intent.allowNearestReachable,
                 );
             if (goals.length === 0) {
-                throw new BadRequestException('无法到达该位置');
+                throw new BadRequestException('無法到達該位置');
             }
             return { mapId: intent.mapId, goals };
         }
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const quest = player.quests.quests.find((entry) => entry.id === intent.questId && entry.status !== 'completed');
         if (!quest) {
-            throw new NotFoundException('目标任务不存在或已完成');
+            throw new NotFoundException('目標任務不存在或已完成');
         }
         const resolved = deps.resolveQuestNavigationTarget(quest);
         if (!resolved) {
-            throw new BadRequestException('当前任务没有可导航目标');
+            throw new BadRequestException('當前任務沒有可導航目標');
         }
         const targetTemplate = this.templateRepository.getOrThrow(resolved.mapId);
         const goals = resolved.adjacent
             ? buildAdjacentGoalPoints(targetTemplate, resolved.x, resolved.y)
             : buildGoalPointsFromTemplate(targetTemplate, resolved.x, resolved.y, true);
         if (goals.length === 0) {
-            throw new BadRequestException('任务目标当前不可达');
+            throw new BadRequestException('任務目標當前不可達');
         }
         return { mapId: resolved.mapId, goals };
     }

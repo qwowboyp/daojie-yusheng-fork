@@ -289,7 +289,7 @@ export class TechniqueAggregationService {
 
     const platform = options.platform ?? {
       buildingId: normalizeText(request.buildingId) || 'unknown',
-      displayName: '统法台',
+      displayName: '統法臺',
       isOwner: true,
       accessPolicyResource: {
         resourceType: 'technique_unification_platform',
@@ -876,7 +876,7 @@ export class TechniqueAggregationService {
     const template: TechniqueTemplate = {
       id,
       name: validation.displayName,
-      desc: '此法典合参 ' + validation.sourceTechniqueIds.length + ' 门同阶自创内功，六维所得在诸法总和之上再增一成。',
+      desc: '此法典合參 ' + validation.sourceTechniqueIds.length + ' 門同階自創內功，六維所得在諸法總和之上再增一成。',
       grade,
       category: TECHNIQUE_AGGREGATE_CATEGORY,
       realmLv,

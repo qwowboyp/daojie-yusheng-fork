@@ -25,7 +25,7 @@ export class MailExpirationCleanupWorker {
   async runOnce(limit = 64): Promise<number> {
     const processed = await this.mailPersistenceService.cleanupExpiredMails(limit);
     if (processed > 0) {
-      this.logger.debug(`邮件过期清理完成：processed=${processed}`);
+      this.logger.debug(`郵件過期清理完成：processed=${processed}`);
     }
     return processed;
   }

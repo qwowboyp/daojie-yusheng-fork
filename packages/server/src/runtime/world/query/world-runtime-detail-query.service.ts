@@ -115,12 +115,12 @@ export class WorldRuntimeDetailQueryService {
         const { view, viewer, location, instance } = context;
         if (kind === 'npc') {
             if (!view.localNpcs.some((entry) => entry.npcId === id)) {
-                return { kind, id, error: '目标不在当前视野内' };
+                return { kind, id, error: '目標不在當前視野內' };
             }
 
             const npc = instance.getNpc(id);
             if (!npc) {
-                return { kind, id, error: '目标不存在' };
+                return { kind, id, error: '目標不存在' };
             }
             return {
                 kind,
@@ -143,12 +143,12 @@ export class WorldRuntimeDetailQueryService {
         }
         if (kind === 'monster') {
             if (!view.localMonsters.some((entry) => entry.runtimeId === id)) {
-                return { kind, id, error: '目标不在当前视野内' };
+                return { kind, id, error: '目標不在當前視野內' };
             }
 
             const monster = instance.getMonster(id);
             if (!monster) {
-                return { kind, id, error: '目标不存在' };
+                return { kind, id, error: '目標不存在' };
             }
             return {
                 kind,
@@ -176,12 +176,12 @@ export class WorldRuntimeDetailQueryService {
         }
         if (kind === 'player') {
             if (id !== viewer.playerId && !view.visiblePlayers.some((entry) => entry.playerId === id)) {
-                return { kind, id, error: '目标不在当前视野内' };
+                return { kind, id, error: '目標不在當前視野內' };
             }
 
             const target = this.playerRuntimeService.getPlayer(id);
             if (!target || target.instanceId !== location.instanceId) {
-                return { kind, id, error: '目标不存在' };
+                return { kind, id, error: '目標不存在' };
             }
             return {
                 kind,
@@ -204,7 +204,7 @@ export class WorldRuntimeDetailQueryService {
 
             const portal = view.localPortals.find((entry) => buildPortalId(entry) === id);
             if (!portal) {
-                return { kind, id, error: '目标不在当前视野内' };
+                return { kind, id, error: '目標不在當前視野內' };
             }
 
             const targetMapName = this.templateRepository.has(portal.targetMapId)
@@ -231,14 +231,14 @@ export class WorldRuntimeDetailQueryService {
 
             const containerId = id.startsWith('container:') ? id.slice('container:'.length).trim() : '';
             if (!containerId) {
-                return { kind, id, error: '目标不存在' };
+                return { kind, id, error: '目標不存在' };
             }
 
             const container = instance.getContainerById(containerId);
 
             const viewRadius = Math.max(1, Math.round(viewer.attrs.numericStats.viewRange));
             if (!container || !isTileVisibleInView(view, container.x, container.y, viewRadius)) {
-                return { kind, id, error: '目标不在当前视野内' };
+                return { kind, id, error: '目標不在當前視野內' };
             }
             return {
                 kind,
@@ -254,12 +254,12 @@ export class WorldRuntimeDetailQueryService {
             };
         }
         if (!view.localGroundPiles.some((entry) => entry.sourceId === id)) {
-            return { kind, id, error: '目标不在当前视野内' };
+            return { kind, id, error: '目標不在當前視野內' };
         }
 
         const pile = instance.getGroundPileBySourceId(id);
         if (!pile) {
-            return { kind, id, error: '目标不存在' };
+            return { kind, id, error: '目標不存在' };
         }
         return {
             kind,
@@ -289,7 +289,7 @@ export class WorldRuntimeDetailQueryService {
             return {
                 x,
                 y,
-                error: '目标不在当前视野内',
+                error: '目標不在當前視野內',
             };
         }
 
@@ -298,7 +298,7 @@ export class WorldRuntimeDetailQueryService {
             return {
                 x,
                 y,
-                error: '目标不存在',
+                error: '目標不存在',
             };
         }
 
@@ -543,7 +543,7 @@ function buildTileRuntimeResources(entries, aura, viewer) {
         : value;
     return [{
         key: resourceKey,
-        label: '灵气',
+        label: '靈氣',
         value,
         effectiveValue,
         level: getAuraLevel(effectiveValue, DEFAULT_AURA_LEVEL_BASE_VALUE),
@@ -580,7 +580,7 @@ function resolveTileResourceLabel(resourceKey, parsed) {
         return resourceKey;
     }
     if (parsed.family === 'aura' && parsed.form === 'refined' && parsed.element === 'neutral') {
-        return '灵气';
+        return '靈氣';
     }
     const elementLabel = parsed.element === 'neutral'
         ? ''
@@ -593,9 +593,9 @@ function resolveTileResourceLabel(resourceKey, parsed) {
         }[parsed.element] ?? `${parsed.element}`);
     const formLabel = parsed.form === 'dispersed' ? '逸散' : '';
     const familyLabel = ({
-        aura: '灵气',
-        sha: '煞气',
-        demonic: '魔气',
+        aura: '靈氣',
+        sha: '煞氣',
+        demonic: '魔氣',
     }[parsed.family] ?? parsed.family);
     return `${elementLabel}${formLabel}${familyLabel}` || resourceKey;
 }

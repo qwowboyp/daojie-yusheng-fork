@@ -283,7 +283,7 @@ export class WorldRuntimeTickDispatchService {
         catch (error) {
             // 玩家已经不在线时忽略通知，避免影响主流程。
             if (error instanceof TypeError || error instanceof ReferenceError) {
-                this.logger.error(`推送玩家通知编程错误 playerId=${playerId}`, (error as Error).stack);
+                this.logger.error(`推送玩家通知編程錯誤 playerId=${playerId}`, (error as Error).stack);
             }
         }
     }
@@ -313,7 +313,7 @@ export class WorldRuntimeTickDispatchService {
         } catch (error) {
             // 玩家不在线时忽略
             if (error instanceof TypeError || error instanceof ReferenceError) {
-                this.logger.error(`推送玩家反馈编程错误 playerId=${playerId}`, (error as Error).stack);
+                this.logger.error(`推送玩家反饋編程錯誤 playerId=${playerId}`, (error as Error).stack);
             }
         }
     }

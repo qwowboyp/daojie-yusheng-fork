@@ -15,7 +15,7 @@ export function resolveFlushTaskRuntimeMode(): FlushTaskRuntimeMode {
   const raw = readTrimmedEnv('SERVER_FLUSH_TASK_RUNTIME_MODE', 'FLUSH_TASK_RUNTIME_MODE')?.toLowerCase();
   if (raw === 'direct' || raw === 'legacy') {
     if (raw === 'legacy') {
-      flushModeLogger.warn('FLUSH_TASK_RUNTIME_MODE 使用了已废弃的 "legacy" 别名，已映射为 "direct"');
+      flushModeLogger.warn('FLUSH_TASK_RUNTIME_MODE 使用了已廢棄的 "legacy" 別名，已映射為 "direct"');
     }
     return 'direct';
   }

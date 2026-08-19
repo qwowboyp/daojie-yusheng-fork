@@ -110,7 +110,7 @@ export class MapTemplateRepository {
 
         const template = this.templates.get(templateId);
         if (!template) {
-            throw new Error(`未找到地图模板：${templateId}`);
+            throw new Error(`未找到地圖模板：${templateId}`);
         }
         return template;
     }
@@ -240,7 +240,7 @@ export class MapTemplateRepository {
         }
         const portalValidationError = validateEditableMapPortalReciprocity(documents);
         if (portalValidationError) {
-            throw new Error(`地图传送点校验失败: ${portalValidationError}`);
+            throw new Error(`地圖傳送點校驗失敗: ${portalValidationError}`);
         }
         for (const document of documents) {
             indexDocumentNpcs(document, this.npcLocationById);
@@ -253,7 +253,7 @@ export class MapTemplateRepository {
             this.questRegistry.registerMapTemplate(template);
         }
         this.rebuildMapGroupIndex();
-        this.logger.log(`已加载 ${this.templates.size} 个地图模板`);
+        this.logger.log(`已加載 ${this.templates.size} 個地圖模板`);
     }
     rebuildMapGroupIndex() {
         this.mapGroupMembersById.clear();

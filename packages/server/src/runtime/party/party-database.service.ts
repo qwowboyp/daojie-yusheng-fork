@@ -16,20 +16,20 @@ export class PartyDatabaseService implements OnModuleInit {
 
   async onModuleInit(): Promise<void> {
     if (!resolveServerDatabaseUrl().trim()) {
-      this.logger.warn('组队持久化已禁用：未提供数据库地址');
+      this.logger.warn('組隊持久化已禁用：未提供數據庫地址');
       return;
     }
     const pool = this.databasePoolProvider.getPool('party-runtime') as PartyPool | null;
     if (!pool) {
-      this.logger.warn('组队持久化已禁用：数据库连接池不可用');
+      this.logger.warn('組隊持久化已禁用：數據庫連接池不可用');
       return;
     }
     try {
       await ensurePartyTables(pool);
       this.pool = pool;
-      this.logger.log('组队持久化已启用');
+      this.logger.log('組隊持久化已啟用');
     } catch (error) {
-      this.logger.error('组队表初始化失败', error instanceof Error ? error.stack : String(error));
+      this.logger.error('組隊表初始化失敗', error instanceof Error ? error.stack : String(error));
     }
   }
 

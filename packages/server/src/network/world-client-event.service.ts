@@ -22,49 +22,49 @@ import { WorldSyncQuestLootService } from './world-sync-quest-loot.service';
 function normalizeClientVisibleErrorMessage(message) {
     const text = typeof message === 'string' ? message.trim() : '';
     if (!text) {
-        return '未知错误';
+        return '未知錯誤';
     }
     if (text === 'unknown error') {
-        return '未知错误';
+        return '未知錯誤';
     }
     if (text === 'target is required') {
-        return '必须指定目标';
+        return '必須指定目標';
     }
     if (text === 'questId is required') {
-        return '任务 ID 不能为空';
+        return '任務 ID 不能為空';
     }
     if (text === 'actionId is required') {
-        return '动作 ID 不能为空';
+        return '動作 ID 不能為空';
     }
     if (/^Target .+ not found or cannot be attacked$/.test(text)) {
-        return '没有可命中的目标';
+        return '沒有可命中的目標';
     }
     if (/^Monster .+ not found$/.test(text)) {
-        return '妖兽不存在或已失去踪迹';
+        return '妖獸不存在或已失去蹤跡';
     }
     if (/^Skill .+ out of range$/.test(text)) {
-        return '目标超出技能范围';
+        return '目標超出技能範圍';
     }
     if (/^Skill .+ cooling down$/.test(text)) {
-        return '技能尚在冷却';
+        return '技能尚在冷卻';
     }
     if (/^Skill .+ qi insufficient$/.test(text)) {
-        return '元气不足，无法释放技能';
+        return '元氣不足，無法釋放技能';
     }
     if (/^Skill .+ not found$/.test(text) || /^Skill action .+ not found$/.test(text)) {
-        return '技能不存在或尚未启用';
+        return '技能不存在或尚未啟用';
     }
     if (/^Player .+ not attached to instance$/.test(text)) {
-        return '玩家尚未进入地图实例';
+        return '玩家尚未進入地圖實例';
     }
     if (/^Player .+ is not connected$/.test(text)) {
-        return '玩家尚未连接';
+        return '玩家尚未連接';
     }
     if (/^Inventory slot .+ not found$/.test(text)) {
         return '背包槽位不存在';
     }
     if (/^Ground source .+ not found$/.test(text)) {
-        return '地面来源不存在';
+        return '地面來源不存在';
     }
     if (/^Ground item .+ not found at .+$/.test(text)) {
         return '地面物品不存在';
@@ -160,7 +160,7 @@ export class WorldClientEventService {
     }
     /** 发送由异常对象转换来的错误包。 */
     emitGatewayError(client, code, error) {
-        this.emitError(client, code, error instanceof Error ? error.message : '未知错误');
+        this.emitError(client, code, error instanceof Error ? error.message : '未知錯誤');
     }
     /** 发送协议层错误，通常用于鉴权或消息格式错误。 */
     emitProtocolFailure(client, code, text) {
@@ -282,11 +282,11 @@ export class WorldClientEventService {
             try {
                 const operation = this.chatRuntimeService.handlePlayerChat(playerId, payload, runtime);
                 void Promise.resolve(operation).catch((error) => {
-                    this.logger.warn(`聊天意图处理失败 playerId=${playerId} error=${error instanceof Error ? error.message : String(error)}`);
+                    this.logger.warn(`聊天意圖處理失敗 playerId=${playerId} error=${error instanceof Error ? error.message : String(error)}`);
                 });
             }
             catch (error) {
-                this.logger.warn(`聊天意图处理失败 playerId=${playerId} error=${error instanceof Error ? error.message : String(error)}`);
+                this.logger.warn(`聊天意圖處理失敗 playerId=${playerId} error=${error instanceof Error ? error.message : String(error)}`);
             }
             return;
         }

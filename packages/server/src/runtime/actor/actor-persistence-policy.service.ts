@@ -53,7 +53,7 @@ export class ActorPersistencePolicyService {
   /** 注册一个 actor 的 policy（覆盖前缀默认）。 */
   register(playerId: string, policy: ActorPersistencePolicy): void {
     if (typeof playerId !== 'string' || playerId.length === 0) {
-      throw new Error('ActorPersistencePolicyService.register: playerId 不能为空');
+      throw new Error('ActorPersistencePolicyService.register: playerId 不能為空');
     }
     this.policies.set(playerId, policy);
   }

@@ -104,19 +104,19 @@ export class WorldSessionRecoveryQueueService {
     const timeoutHandle = setTimeout(() => {
       slowWarned = true;
       this.logger.warn(
-        `恢复队列任务超过阈值，继续等待数据库真源 key=${task.key} priority=${task.priority} thresholdMs=${task.timeoutMs}`,
+        `恢復隊列任務超過閾值，繼續等待數據庫真源 key=${task.key} priority=${task.priority} thresholdMs=${task.timeoutMs}`,
       );
     }, task.timeoutMs);
     timeoutHandle.unref?.();
     try {
       const result = await task.run();
       if (slowWarned) {
-        this.logger.log(`恢复队列慢任务最终完成 key=${task.key} priority=${task.priority}`);
+        this.logger.log(`恢復隊列慢任務最終完成 key=${task.key} priority=${task.priority}`);
       }
       task.resolve(result);
     } catch (error: unknown) {
       this.logger.warn(
-        `恢复队列任务失败 key=${task.key} priority=${task.priority}: ${error instanceof Error ? error.stack || error.message : String(error)}`,
+        `恢復隊列任務失敗 key=${task.key} priority=${task.priority}: ${error instanceof Error ? error.stack || error.message : String(error)}`,
       );
       task.reject(error);
     } finally {

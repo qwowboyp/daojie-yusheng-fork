@@ -85,7 +85,7 @@ export class ActorBlueprintRegistryService implements OnModuleDestroy {
   register(blueprint: ActorBlueprint): ActorBlueprint {
     const blueprintId = blueprint.blueprintId;
     if (typeof blueprintId !== 'string' || blueprintId.length === 0) {
-      throw new Error('ActorBlueprintRegistryService.register: blueprintId 不能为空');
+      throw new Error('ActorBlueprintRegistryService.register: blueprintId 不能為空');
     }
     if (this.entries.has(blueprintId)) {
       throw new Error(`ActorBlueprintRegistryService.register: blueprintId ${blueprintId} 已存在`);
@@ -150,7 +150,7 @@ export class ActorBlueprintRegistryService implements OnModuleDestroy {
       }
     }
     if (removed > 0) {
-      this.logger.debug(`垃圾回收清理过期蓝图 ${removed} 个，剩余 ${this.entries.size}`);
+      this.logger.debug(`垃圾回收清理過期藍圖 ${removed} 個，剩餘 ${this.entries.size}`);
     }
   }
 }

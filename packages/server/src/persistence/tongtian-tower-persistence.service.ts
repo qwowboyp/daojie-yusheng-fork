@@ -57,11 +57,11 @@ export class TongtianTowerPersistenceService implements OnModuleInit {
       await this.loadAllProgress();
       this.enabled = true;
       this.initializationFailure = null;
-      this.logger.log(`通天塔持久化已启用，已加载 ${this.progressByPlayerId.size} 条进度`);
+      this.logger.log(`通天塔持久化已啟用，已加載 ${this.progressByPlayerId.size} 條進度`);
     } catch (error) {
       this.enabled = false;
       this.initializationFailure = error;
-      this.logger.error('通天塔持久化初始化失败，已回退为内存模式', error instanceof Error ? error.stack : String(error));
+      this.logger.error('通天塔持久化初始化失敗，已回退為記憶體模式', error instanceof Error ? error.stack : String(error));
     }
   }
 
@@ -288,7 +288,7 @@ export class TongtianTowerPersistenceService implements OnModuleInit {
     }
     this.lastAsyncFailureWarningKey = key;
     this.lastAsyncFailureWarningAt = now;
-    this.logger.warn(`通天塔进度异步落库失败：${error instanceof Error ? error.message : String(error)}`);
+    this.logger.warn(`通天塔進度異步落庫失敗：${error instanceof Error ? error.message : String(error)}`);
   }
 
   private async tryRecreateTable(): Promise<void> {
@@ -296,9 +296,9 @@ export class TongtianTowerPersistenceService implements OnModuleInit {
     this.recreating = true;
     try {
       await ensureTongtianTowerProgressTable(this.pool);
-      this.logger.warn('player_tongtian_tower_progress 表已自动重建');
+      this.logger.warn('player_tongtian_tower_progress 表已自動重建');
     } catch (e: unknown) {
-      this.logger.error('player_tongtian_tower_progress 表自动重建失败', e instanceof Error ? e.message : String(e));
+      this.logger.error('player_tongtian_tower_progress 表自動重建失敗', e instanceof Error ? e.message : String(e));
     } finally {
       this.recreating = false;
     }
@@ -344,7 +344,7 @@ async function ensureTongtianTowerProgressTable(pool: Pool): Promise<void> {
 function normalizePlayerId(value: unknown): string {
   const playerId = typeof value === 'string' ? value.trim() : '';
   if (!playerId) {
-    throw new Error('通天塔玩家 ID 不能为空');
+    throw new Error('通天塔玩家 ID 不能為空');
   }
   return playerId;
 }

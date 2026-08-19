@@ -118,10 +118,10 @@ export class WorldRuntimePlayerCombatService {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
         let sectionStartedAt = beginPlayerMonsterKillPerf(deps);
-        const killNotice = buildStructuredNotice('combat', 'notice.combat.killed', `${monster.name} 被你斩杀`, {
+        const killNotice = buildStructuredNotice('combat', 'notice.combat.killed', `${monster.name} 被你斬殺`, {
             vars: { monsterName: monster.name },
             pills: [{ key: 'monsterName', style: 'target' }],
-            badges: ['击杀'],
+            badges: ['擊殺'],
             displayTokens: [{ key: 'monsterName', domain: 'monsters', id: monster.monsterId }],
         });
         deps.queuePlayerNotice(killerPlayerId, killNotice.text, killNotice.kind, undefined, undefined, killNotice.structured);
@@ -429,7 +429,7 @@ export class WorldRuntimePlayerCombatService {
         if (received) {
             this.rememberDeliveredMonsterLootSource(sourceRefId);
             const itemLabel = formatItemStackLabel(item);
-            const lootNotice = buildStructuredNotice('loot', 'notice.loot.obtained', `获得 ${itemLabel}`, {
+            const lootNotice = buildStructuredNotice('loot', 'notice.loot.obtained', `獲得 ${itemLabel}`, {
                 vars: { itemName: itemLabel },
                 pills: [{ key: 'itemName', style: 'target' }],
             });
@@ -448,7 +448,7 @@ export class WorldRuntimePlayerCombatService {
             'combat.playerMonsterKill.lootGroundSpawnMs',
             sectionStartedAt,
         );
-        const dropNotice = buildStructuredNotice('loot', 'notice.loot.bag-full-ground', `${formatItemStackLabel(item)} 掉落在 (${x}, ${y}) 的地面上，但你的背包已满。`, {
+        const dropNotice = buildStructuredNotice('loot', 'notice.loot.bag-full-ground', `${formatItemStackLabel(item)} 掉落在 (${x}, ${y}) 的地面上，但你的背包已滿。`, {
             vars: { itemLabel: formatItemStackLabel(item), x, y },
             pills: [{ key: 'itemLabel', style: 'target' }],
         });
@@ -616,7 +616,7 @@ export class WorldRuntimePlayerCombatService {
         const notice = buildStructuredNotice(
             'system',
             'notice.combat.offline-defeat',
-            `你在离线挂机期间于${locationName}被${killerName}击败，离线挂机已结束。`,
+            `你在離線掛機期間於${locationName}被${killerName}擊敗，離線掛機已結束。`,
             {
                 vars: { killerName, locationName },
                 pills: [
@@ -642,7 +642,7 @@ export class WorldRuntimePlayerCombatService {
         this.playerCountersPersistenceService?.increment?.(victim.playerId, 'deathCount');
         if (killer.combat?.allowAoePlayerHit === true) {
             const nextStacks = this.playerRuntimeService.addPvPShaInfusionStack(killer.playerId);
-            const shaNotice = buildStructuredNotice('combat', 'notice.combat.sha-infusion', `杀念入体，煞气入体加深至 ${nextStacks} 层。`, {
+            const shaNotice = buildStructuredNotice('combat', 'notice.combat.sha-infusion', `殺念入體，煞氣入體加深至 ${nextStacks} 層。`, {
                 vars: { stacks: nextStacks },
                 pills: [{ key: 'stacks', style: 'damage', color: '#a855f7' }],
             });
@@ -652,7 +652,7 @@ export class WorldRuntimePlayerCombatService {
         const soulNotice = buildStructuredNotice(
             'combat',
             'notice.combat.soul-injury',
-            '神魂受损加深；身死与遁返都不会清除，需静养一时辰。',
+            '神魂受損加深；身死與遁返都不會清除，需靜養一時辰。',
             {
                 vars: { stacks: soulInjuryStacks },
                 pills: [{ key: 'stacks', style: 'damage' }],
@@ -666,7 +666,7 @@ export class WorldRuntimePlayerCombatService {
             if (this.playerRuntimeService.canReceiveInventoryItem(killer.playerId, reward)) {
                 this.playerRuntimeService.receiveInventoryItem(killer.playerId, reward);
                 const rewardLabel = `${reward.name} x${bloodEssenceCount}`;
-                const rewardNotice = buildStructuredNotice('loot', 'notice.loot.obtained', `获得 ${rewardLabel}`, {
+                const rewardNotice = buildStructuredNotice('loot', 'notice.loot.obtained', `獲得 ${rewardLabel}`, {
                     vars: { itemName: rewardLabel },
                     pills: [{ key: 'itemName', style: 'target' }],
                 });
@@ -674,7 +674,7 @@ export class WorldRuntimePlayerCombatService {
             }
             else {
                 deps.spawnGroundItem(deathSite.instance, deathSite.x, deathSite.y, reward);
-                const pvpDropNotice = buildStructuredNotice('loot', 'notice.loot.pvp-bag-full', `你的背包已满，${reward.name} x${bloodEssenceCount} 掉在了 ${victimName} 倒下之处。`, {
+                const pvpDropNotice = buildStructuredNotice('loot', 'notice.loot.pvp-bag-full', `你的背包已滿，${reward.name} x${bloodEssenceCount} 掉在了 ${victimName} 倒下之處。`, {
                     vars: { itemName: reward.name, count: bloodEssenceCount, victimName },
                     pills: [{ key: 'itemName', style: 'target' }, { key: 'victimName', style: 'target' }],
                 });
@@ -778,7 +778,7 @@ function resolvePlayerDeathSite(victim: any, deps: any) {
 
 function resolveOfflineDefeatSourceName(killerPlayerId: string | null, killer: any, instance: any): string {
     if (killer) {
-        return resolvePlayerDisplayName(killer, { playerId: killer.playerId, fallback: '未知敌手' });
+        return resolvePlayerDisplayName(killer, { playerId: killer.playerId, fallback: '未知敵手' });
     }
     const normalizedKillerId = typeof killerPlayerId === 'string' ? killerPlayerId.trim() : '';
     const monster = normalizedKillerId && typeof instance?.getMonster === 'function'
@@ -786,7 +786,7 @@ function resolveOfflineDefeatSourceName(killerPlayerId: string | null, killer: a
         : null;
     return resolvePlayerFacingContentName(
         monster?.monsterId ?? normalizedKillerId,
-        '未知敌手',
+        '未知敵手',
         monster?.displayName,
         monster?.name,
     );
@@ -805,21 +805,21 @@ function isOfflineRuntimePlayer(player: any) {
 
 function pushShaDeathPenaltyMessages(deps: any, playerId: string, deathPenalty: any) {
     if ((deathPenalty.consumedProgress ?? 0) > 0 || (deathPenalty.consumedFoundation ?? 0) > 0) {
-        const fallback = `体内煞气反噬，折损 ${deathPenalty.consumedProgress} 点境界修为${deathPenalty.consumedFoundation > 0 ? `，并再损 ${deathPenalty.consumedFoundation} 点底蕴` : ''}。`;
+        const fallback = `體內煞氣反噬，折損 ${deathPenalty.consumedProgress} 點境界修為${deathPenalty.consumedFoundation > 0 ? `，並再損 ${deathPenalty.consumedFoundation} 點底蘊` : ''}。`;
         const notice = buildStructuredNotice('combat', 'notice.combat.sha-backlash-loss', fallback, {
             vars: { progress: deathPenalty.consumedProgress, foundation: deathPenalty.consumedFoundation },
             pills: [
-                { key: 'progress', style: 'damage', color: '#a855f7', tooltipTitle: '煞气反噬', tooltipLines: [`折损境界修为 ${deathPenalty.consumedProgress}`] },
+                { key: 'progress', style: 'damage', color: '#a855f7', tooltipTitle: '煞氣反噬', tooltipLines: [`折損境界修為 ${deathPenalty.consumedProgress}`] },
             ],
         });
         deps.queuePlayerNotice(playerId, notice.text, notice.kind, undefined, undefined, notice.structured);
     }
     if ((deathPenalty.backlashAddedStacks ?? 0) > 0) {
-        const fallback = `身死之后，${deathPenalty.backlashAddedStacks} 层煞气入体转为煞气反噬；当前煞气反噬 ${deathPenalty.backlashTotalStacks} 层，煞气入体余 ${deathPenalty.remainingInfusionStacks} 层。`;
+        const fallback = `身死之後，${deathPenalty.backlashAddedStacks} 層煞氣入體轉為煞氣反噬；當前煞氣反噬 ${deathPenalty.backlashTotalStacks} 層，煞氣入體餘 ${deathPenalty.remainingInfusionStacks} 層。`;
         const notice = buildStructuredNotice('combat', 'notice.combat.sha-backlash-convert', fallback, {
             vars: { added: deathPenalty.backlashAddedStacks, total: deathPenalty.backlashTotalStacks, remaining: deathPenalty.remainingInfusionStacks },
             pills: [
-                { key: 'total', style: 'damage', color: '#a855f7', tooltipTitle: '煞气反噬', tooltipLines: [`新增 ${deathPenalty.backlashAddedStacks} 层`, `煞气入体余 ${deathPenalty.remainingInfusionStacks} 层`] },
+                { key: 'total', style: 'damage', color: '#a855f7', tooltipTitle: '煞氣反噬', tooltipLines: [`新增 ${deathPenalty.backlashAddedStacks} 層`, `煞氣入體餘 ${deathPenalty.remainingInfusionStacks} 層`] },
             ],
         });
         deps.queuePlayerNotice(playerId, notice.text, notice.kind, undefined, undefined, notice.structured);

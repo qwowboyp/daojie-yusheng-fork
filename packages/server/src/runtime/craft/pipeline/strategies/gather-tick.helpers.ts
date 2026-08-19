@@ -49,7 +49,7 @@ export async function executeGatherTick(
   const state = service.ensureContainerState(location.instanceId, container, instance.tick);
   const activeSearchPlayerId = resolveActiveSearchPlayerId(state.activeSearch);
   if (activeSearchPlayerId && activeSearchPlayerId !== playerId) {
-    const sleepPayload = buildGatherSleepPayload(job, location.instanceId, container, '采集目标正在由其他玩家采集。');
+    const sleepPayload = buildGatherSleepPayload(job, location.instanceId, container, '採集目標正在由其他玩家採集。');
     player.gatherJob = null;
     markPlayerActiveJobDirty(playerRuntimeService, player);
     return buildGatherTickSleepResult(sleepPayload, [buildGatherNotice('warn', 'notice.craft.gather.busy-sleeping')]);
@@ -85,7 +85,7 @@ export async function executeGatherTick(
       state.activeSearch = undefined;
       service.markContainerPersistenceDirty(location.instanceId);
     }
-    const sleepPayload = buildGatherSleepPayload(job, location.instanceId, container, '你已离开草药采集范围。');
+    const sleepPayload = buildGatherSleepPayload(job, location.instanceId, container, '你已離開草藥採集範圍。');
     player.gatherJob = null;
     markPlayerActiveJobDirty(playerRuntimeService, player);
     return buildGatherTickSleepResult(sleepPayload, [buildGatherNotice('warn', 'notice.craft.gather.left-range')]);
@@ -362,7 +362,7 @@ function buildGatherTickSleepResult(sleepPayload: Record<string, unknown>, messa
 function buildGatherNodeNotice(kind: GatherNoticeKind, key: string, resourceNodeName: unknown): GatherNoticeMessage {
   const normalizedName = typeof resourceNodeName === 'string' && resourceNodeName.trim()
     ? resourceNodeName.trim()
-    : '采集目标';
+    : '採集目標';
   return buildGatherNotice(
     kind,
     key,
@@ -395,7 +395,7 @@ function buildGatherSleepPayload(job: Record<string, any>, instanceId: string, c
       resourceNodeId: container.id,
       instanceId,
     },
-    label: job?.resourceNodeName ?? container.name ?? '采集',
+    label: job?.resourceNodeName ?? container.name ?? '採集',
     reason,
   };
 }

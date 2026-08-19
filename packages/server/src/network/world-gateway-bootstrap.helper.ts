@@ -192,16 +192,16 @@ class WorldGatewayBootstrapHelper {
             return undefined;
         }
         if (client?.data?.isGm === true) {
-            this.gateway.logger.debug(`已忽略 GM 引导中的请求 sessionId：socket=${client.id} sessionId=${requestedSessionId}`);
+            this.gateway.logger.debug(`已忽略 GM 引導中的請求 sessionId：socket=${client.id} sessionId=${requestedSessionId}`);
             return undefined;
         }
         const authSource = this.resolveAuthenticatedIdentitySource(client, identity);
         if (!AUTHENTICATED_REQUESTED_SESSION_ID_AUTH_SOURCES.has(authSource)) {
-            this.gateway.logger.debug(`已忽略鉴权引导中的请求 sessionId：socket=${client.id} authSource=${authSource || '未知'} sessionId=${requestedSessionId}`);
+            this.gateway.logger.debug(`已忽略鑑權引導中的請求 sessionId：socket=${client.id} authSource=${authSource || '未知'} sessionId=${requestedSessionId}`);
             return undefined;
         }
         if (!this.gateway.sessionBootstrapService.shouldAllowRequestedDetachedResume(client)) {
-            this.gateway.logger.debug(`由于复用策略已忽略鉴权引导中的请求 sessionId：socket=${client.id} authSource=${authSource || '未知'} sessionId=${requestedSessionId}`);
+            this.gateway.logger.debug(`由於複用策略已忽略鑑權引導中的請求 sessionId：socket=${client.id} authSource=${authSource || '未知'} sessionId=${requestedSessionId}`);
             return undefined;
         }
         return requestedSessionId;
@@ -245,7 +245,7 @@ class WorldGatewayBootstrapHelper {
         const promise = (async () => {
             const routeTarget = await this.resolvePlayerRouteTarget(identity.playerId);
             if (routeTarget && !routeTarget.isLocalTarget) {
-                this.rejectAuthenticatedConnect(client, SOCKET_BOOTSTRAP_REDIRECT_CODE, `玩家会话应连接节点 ${routeTarget.targetNodeId}`, {
+                this.rejectAuthenticatedConnect(client, SOCKET_BOOTSTRAP_REDIRECT_CODE, `玩家會話應連接節點 ${routeTarget.targetNodeId}`, {
                     redirectNodeId: routeTarget.targetNodeId,
                     redirectUrl: routeTarget.targetServerUrl,
                 });
@@ -279,8 +279,8 @@ class WorldGatewayBootstrapHelper {
  */
 
     rejectUnauthenticatedConnect(client) {
-        this.gateway.logger.debug(`已拒绝未登录套接字连接：socket=${client.id} protocol=${typeof client?.data?.protocol === 'string' ? client.data.protocol : '未知'}`);
-        return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.unauthenticatedDisabledCode, '未登录连接已禁用，请先登录');
+        this.gateway.logger.debug(`已拒絕未登入套接字連接：socket=${client.id} protocol=${typeof client?.data?.protocol === 'string' ? client.data.protocol : '未知'}`);
+        return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.unauthenticatedDisabledCode, '未登入連接已禁用，請先登入');
     }    
     /**
  * rejectGmConnect：执行rejectGMConnect相关逻辑。
@@ -313,7 +313,7 @@ class WorldGatewayBootstrapHelper {
             emitter.call(this.gateway.worldClientEventService, client, code, error);
             return;
         }
-        this.emitSocketError(client, code, error instanceof Error ? error.message : '未知错误');
+        this.emitSocketError(client, code, error instanceof Error ? error.message : '未知錯誤');
     }    
     /**
  * resolveBootstrapAuthContext：规范化或转换引导认证上下文。
@@ -329,17 +329,17 @@ class WorldGatewayBootstrapHelper {
         const requestedSessionInspection = this.gateway.sessionBootstrapService.inspectSocketRequestedSessionId(client);
         const protocol = typeof client?.data?.protocol === 'string' ? client.data.protocol.trim().toLowerCase() : '';
         if ((token || gmToken) && protocol === 'mainline' && requestedSessionInspection.error) {
-            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.invalidSessionIdCode, '主线认证握手 sessionId 非法');
+            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.invalidSessionIdCode, '主線認證握手 sessionId 非法');
         }
         if (gmToken) {
             if (!this.gateway.sessionBootstrapService.authenticateSocketGmToken(gmToken)) {
-                return this.rejectGmConnect(client, GM_CONNECT_CONTRACT.authFailCode, 'GM 认证失败');
+                return this.rejectGmConnect(client, GM_CONNECT_CONTRACT.authFailCode, 'GM 認證失敗');
             }
             if (!token) {
-                return this.rejectGmConnect(client, GM_CONNECT_CONTRACT.playerAuthRequiredCode, 'GM socket 需要同时提供玩家登录令牌');
+                return this.rejectGmConnect(client, GM_CONNECT_CONTRACT.playerAuthRequiredCode, 'GM socket 需要同時提供玩家登入令牌');
             }
             if (requestedSessionInspection.sessionId) {
-                return this.rejectGmConnect(client, GM_CONNECT_CONTRACT.sessionIdForbiddenCode, 'GM socket 不允许携带 sessionId 续连');
+                return this.rejectGmConnect(client, GM_CONNECT_CONTRACT.sessionIdForbiddenCode, 'GM socket 不允許攜帶 sessionId 續連');
             }
             client.data.isGm = true;
             client.data.gmRole = 'gm';
@@ -351,10 +351,10 @@ class WorldGatewayBootstrapHelper {
             protocol,
         });
         if (!identity) {
-            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.authFailCode, '认证失败');
+            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.authFailCode, '認證失敗');
         }
         if (protocol === 'mainline' && identity.authSource !== 'mainline' && identity.authSource !== 'token') {
-            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.authFailCode, 'mainline 协议仅允许 主线真源身份');
+            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.authFailCode, 'mainline 協議僅允許 主線真源身份');
         }
         const authenticatedBootstrapContractViolation = this.gateway.sessionBootstrapService.resolveAuthenticatedBootstrapContractViolation(
             client,
@@ -383,13 +383,13 @@ class WorldGatewayBootstrapHelper {
             return true;
         }
         if (handshakeProtocol === 'legacy') {
-            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.legacyProtocolDisabledCode, 'legacy socket API 已移除，仅支持 mainline 协议握手') !== null;
+            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.legacyProtocolDisabledCode, 'legacy socket API 已移除，僅支持 mainline 協議握手') !== null;
         }
         if (handshakeProtocol && hasAuthHint) {
-            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.unsupportedProtocolCode, `不支持的握手协议: ${handshakeProtocol}`) !== null;
+            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.unsupportedProtocolCode, `不支持的握手協議: ${handshakeProtocol}`) !== null;
         }
         if (!handshakeProtocol && hasAuthHint) {
-            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.protocolRequiredCode, 'token/gmToken 连接必须声明握手协议') !== null;
+            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.protocolRequiredCode, 'token/gmToken 連接必須聲明握手協議') !== null;
         }
         return true;
     }    
@@ -421,10 +421,10 @@ class WorldGatewayBootstrapHelper {
 
         const currentProtocol = typeof client?.data?.protocol === 'string' ? client.data.protocol.trim().toLowerCase() : '';
         if (currentProtocol === 'legacy') {
-            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.legacyProtocolDisabledCode, 'legacy 握手连接不能进入 mainline hello 链路') !== null;
+            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.legacyProtocolDisabledCode, 'legacy 握手連接不能進入 mainline hello 鏈路') !== null;
         }
         if (currentProtocol && currentProtocol !== 'mainline') {
-            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.unsupportedProtocolCode, `不支持的 hello 协议上下文: ${currentProtocol}`) !== null;
+            return this.rejectAuthenticatedConnect(client, AUTHENTICATED_CONNECT_CONTRACT.unsupportedProtocolCode, `不支持的 hello 協議上下文: ${currentProtocol}`) !== null;
         }
         this.markClientProtocol(client, 'mainline');
         return true;
@@ -463,7 +463,7 @@ class WorldGatewayBootstrapHelper {
     async handleConnection(client) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
-        this.gateway.logger.debug(`套接字已连接：${client.id}`);
+        this.gateway.logger.debug(`套接字已連接：${client.id}`);
         if (!this.ensureConnectionProtocol(client)) {
             return;
         }

@@ -163,12 +163,12 @@ export class MapPersistenceFlushService {
  */
 
     onModuleInit() {
-        this.logger.log('地图持久化刷新服务已注册，等待启动链路编排器开闸');
+        this.logger.log('地圖持久化刷新服務已註冊，等待啟動鏈路編排器開閘');
     }
 
     startForLifecycleCoordinator() {
         if (!shouldRunLegacyFlushIntervals()) {
-            this.logger.log('地图持久化直接定时器已停用，由统一刷盘任务运行时调度');
+            this.logger.log('地圖持久化直接定時器已停用，由統一刷盤任務運行時調度');
             return;
         }
         if (this.timer) {
@@ -178,7 +178,7 @@ export class MapPersistenceFlushService {
             void this.flushDirtyInstances();
         }, MAP_PERSISTENCE_FLUSH_INTERVAL_MS);
         this.timer.unref();
-        this.logger.log(`地图持久化刷新已启动，间隔 ${MAP_PERSISTENCE_FLUSH_INTERVAL_MS}ms，妖兽运行态降频 ${MAP_PERSISTENCE_MONSTER_RUNTIME_INTERVAL_MS}ms`);
+        this.logger.log(`地圖持久化刷新已啟動，間隔 ${MAP_PERSISTENCE_FLUSH_INTERVAL_MS}ms，妖獸運行態降頻 ${MAP_PERSISTENCE_MONSTER_RUNTIME_INTERVAL_MS}ms`);
     }
     /**
  * onModuleDestroy：执行on模块Destroy相关逻辑。
@@ -242,7 +242,7 @@ export class MapPersistenceFlushService {
         }
         if (this.isFlushPoolBackpressureActive()) {
             this.flushThrottleUntilAt = Date.now() + MAP_PERSISTENCE_SLOW_FLUSH_BACKOFF_MS;
-            this.logger.warn(`地图刷盘因刷盘池等待排队而退避：waiting>=${MAP_PERSISTENCE_FLUSH_POOL_WAITING_THRESHOLD}`);
+            this.logger.warn(`地圖刷盤因刷盤池等待排隊而退避：waiting>=${MAP_PERSISTENCE_FLUSH_POOL_WAITING_THRESHOLD}`);
             return;
         }
         await this.runFlushCycle('interval');
@@ -369,7 +369,7 @@ export class MapPersistenceFlushService {
                     persistedInstanceCount += deltas.length;
                 } catch (error) {
                     cycleFailures.push(error);
-                    this.logger.error(`地图批量持久化失败（${reason}） domain=${domain}`, error instanceof Error ? error.stack : String(error));
+                    this.logger.error(`地圖批量持久化失敗（${reason}） domain=${domain}`, error instanceof Error ? error.stack : String(error));
                 }
             }
             const deltaConstructMs = performance.now() - deltaConstructStart;
@@ -399,7 +399,7 @@ export class MapPersistenceFlushService {
                         persistedInstanceCount += 1;
                     }, (instanceId, error) => {
                         cycleFailures.push(error);
-                        this.logger.error(`地图持久化刷新失败（${reason}） instanceId=${instanceId}`, error instanceof Error ? error.stack : String(error));
+                        this.logger.error(`地圖持久化刷新失敗（${reason}） instanceId=${instanceId}`, error instanceof Error ? error.stack : String(error));
                     });
                 }
             }
@@ -480,7 +480,7 @@ export class MapPersistenceFlushService {
         }
         this.flushThrottleUntilAt = Date.now() + MAP_PERSISTENCE_SLOW_FLUSH_BACKOFF_MS;
         const domainCounts = formatDomainCounts(persistedDomainCounts);
-        this.logger.warn(`地图最终一致刷盘触发降级退避：durationMs=${Math.trunc(durationMs)} thresholdMs=${slowThresholdMs} backoffMs=${MAP_PERSISTENCE_SLOW_FLUSH_BACKOFF_MS} dirtyInstanceCount=${dirtyInstanceCount} persistedInstanceCount=${persistedInstanceCount} skippedInstanceCount=${skippedInstanceCount}${domainCounts ? ` domainCounts=${domainCounts}` : ''}`);
+        this.logger.warn(`地圖最終一致刷盤觸發降級退避：durationMs=${Math.trunc(durationMs)} thresholdMs=${slowThresholdMs} backoffMs=${MAP_PERSISTENCE_SLOW_FLUSH_BACKOFF_MS} dirtyInstanceCount=${dirtyInstanceCount} persistedInstanceCount=${persistedInstanceCount} skippedInstanceCount=${skippedInstanceCount}${domainCounts ? ` domainCounts=${domainCounts}` : ''}`);
     }
 }
 /**

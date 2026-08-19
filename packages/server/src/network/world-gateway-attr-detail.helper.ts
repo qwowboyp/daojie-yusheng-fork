@@ -199,7 +199,7 @@ function resolveTechniqueEffectCache(player): TechniqueEffectCacheEntry {
     if (hasNonZeroAttributes(techniqueAttrs)) {
         bonuses.push({
             source: 'technique:aggregate',
-            label: '功法总成',
+            label: '功法總成',
             attrs: clonePartialAttributes(techniqueAttrs),
         });
     }
@@ -207,7 +207,7 @@ function resolveTechniqueEffectCache(player): TechniqueEffectCacheEntry {
     if (hasNonZeroAttributes(techniqueMaxAttrPercentBonus)) {
         bonuses.push({
             source: TECHNIQUE_MAX_ATTR_PERCENT_BONUS_SOURCE,
-            label: '万法归元',
+            label: '萬法歸元',
             attrs: clonePartialAttributes(techniqueMaxAttrPercentBonus),
             attrMode: 'percent',
         });

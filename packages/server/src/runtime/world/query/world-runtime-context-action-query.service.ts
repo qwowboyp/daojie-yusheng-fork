@@ -22,44 +22,44 @@ const {
 
 const STATIC_TOGGLE_CONTEXT_ACTIONS = [{
         id: 'toggle:auto_battle',
-        name: '自动战斗',
+        name: '自動戰鬥',
         type: 'toggle',
-        desc: '自动追击附近妖兽并释放技能，可随时切换开关。',
+        desc: '自動追擊附近妖獸並釋放技能，可隨時切換開關。',
     }, {
         id: 'toggle:auto_retaliate',
-        name: '自动反击',
+        name: '自動反擊',
         type: 'toggle',
-        desc: '控制被攻击时是否自动开战。',
+        desc: '控制被攻擊時是否自動開戰。',
     }, {
         id: 'toggle:auto_battle_stationary',
-        name: '原地战斗',
+        name: '原地戰鬥',
         type: 'toggle',
-        desc: '控制自动战斗时是否原地输出，还是按射程追击目标。',
+        desc: '控制自動戰鬥時是否原地輸出，還是按射程追擊目標。',
     }, {
         id: 'toggle:allow_aoe_player_hit',
-        name: '全体攻击',
+        name: '全體攻擊',
         type: 'toggle',
-        desc: '控制群体攻击是否会误伤其他玩家。',
+        desc: '控制群體攻擊是否會誤傷其他玩家。',
     }, {
         id: 'toggle:auto_idle_cultivation',
-        name: '闲置自动修炼',
+        name: '閒置自動修煉',
         type: 'toggle',
-        desc: '控制角色闲置一段时间后是否自动开始修炼。',
+        desc: '控制角色閒置一段時間後是否自動開始修煉。',
     }, {
         id: 'cultivation:toggle',
-        name: '当前修炼',
+        name: '當前修煉',
         type: 'toggle',
-        desc: '切换角色修炼状态；没有主修时只推进境界修为。',
+        desc: '切換角色修煉狀態；沒有主修時只推進境界修為。',
     }, {
         id: 'toggle:auto_switch_cultivation',
-        name: '修满自动切换',
+        name: '修滿自動切換',
         type: 'toggle',
-        desc: '控制主修功法圆满后是否自动切到下一门未圆满功法。',
+        desc: '控制主修功法圓滿後是否自動切到下一門未圓滿功法。',
     }, {
         id: 'sense_qi:toggle',
-        name: '感气视角',
+        name: '感氣視角',
         type: 'toggle',
-        desc: '切换感气视角，观察地块灵气层次与变化。',
+        desc: '切換感氣視角，觀察地塊靈氣層次與變化。',
     }];
 const WANG_QI_COMPASS_ITEM_ID = 'equip.copper_luopan';
 const SECT_TEMPLATE_PREFIX = 'sect_domain:';
@@ -137,9 +137,9 @@ export class WorldRuntimeContextActionQueryService {
         if (!isTimeChamberInstance) {
             actions.push({
                 id: 'battle:force_attack',
-                name: '强制攻击',
+                name: '強制攻擊',
                 type: 'battle',
-                desc: '无视自动索敌限制，直接锁定你选中的目标发起攻击。',
+                desc: '無視自動索敵限制，直接鎖定你選中的目標發起攻擊。',
                 cooldownLeft: 0,
                 range: Math.max(1, Math.round(player?.attrs.numericStats.viewRange ?? 1)),
                 requiresTarget: true,
@@ -149,28 +149,28 @@ export class WorldRuntimeContextActionQueryService {
         if (isTimeChamberInstance) {
             actions.push({
                 id: 'time_chamber:leave',
-                name: '离开密室',
+                name: '離開密室',
                 type: 'travel',
-                desc: '返回密室入口所在的外部地图。',
+                desc: '返回密室入口所在的外部地圖。',
                 cooldownLeft: 0,
             });
         }
         const respawnTargetMapId = typeof player?.respawnTemplateId === 'string' && player.respawnTemplateId.trim()
             ? player.respawnTemplateId.trim()
             : (typeof deps?.resolveDefaultRespawnMapId === 'function' ? deps.resolveDefaultRespawnMapId() : 'yunlai_town');
-        let respawnTargetName = '默认复活点';
+        let respawnTargetName = '預設復活點';
         if (respawnTargetMapId && this.templateRepository.has(respawnTargetMapId)) {
             respawnTargetName = resolvePlayerFacingContentName(
                 respawnTargetMapId,
-                '默认复活点',
+                '預設復活點',
                 this.templateRepository.getOrThrow(respawnTargetMapId).name,
             );
         } else {
             const stableSectTemplateId = resolveStableSectTemplateId(respawnTargetMapId);
             if (stableSectTemplateId && this.templateRepository.has(stableSectTemplateId)) {
-                respawnTargetName = this.templateRepository.getOrThrow(stableSectTemplateId).name || '所属宗门';
+                respawnTargetName = this.templateRepository.getOrThrow(stableSectTemplateId).name || '所屬宗門';
             } else if (stableSectTemplateId) {
-                respawnTargetName = '所属宗门';
+                respawnTargetName = '所屬宗門';
             }
         }
         const returnReadyTick = normalizeReturnToSpawnReadyTick(player, currentTick);
@@ -179,7 +179,7 @@ export class WorldRuntimeContextActionQueryService {
             id: RETURN_TO_SPAWN_ACTION_ID,
             name: '遁返',
             type: 'travel',
-            desc: `催动归引灵符，遁返回 ${respawnTargetName}，之后需调息 ${RETURN_TO_SPAWN_COOLDOWN_TICKS} 息。`,
+            desc: `催動歸引靈符，遁返回 ${respawnTargetName}，之後需調息 ${RETURN_TO_SPAWN_COOLDOWN_TICKS} 息。`,
             cooldownLeft: returnCooldownLeft,
         });
         for (const action of STATIC_TOGGLE_CONTEXT_ACTIONS) {
@@ -194,9 +194,9 @@ export class WorldRuntimeContextActionQueryService {
         if (hasEquippedItem(player, WANG_QI_COMPASS_ITEM_ID)) {
             actions.push({
                 id: 'wang_qi:toggle',
-                name: '望气',
+                name: '望氣',
                 type: 'interact',
-                desc: '借铜罗盘观察房间风水，低于平衡偏红，高于平衡偏绿。',
+                desc: '借銅羅盤觀察房間風水，低於平衡偏紅，高於平衡偏綠。',
                 cooldownLeft: 0,
             });
         }
@@ -212,16 +212,16 @@ export class WorldRuntimeContextActionQueryService {
             const qiLabel = formatDisplayInteger(remainingQi);
             actions.push({
                 id: `formation:toggle:${formation.id}`,
-                name: formation.active ? `关闭：${formation.name}` : `开启：${formation.name}`,
+                name: formation.active ? `關閉：${formation.name}` : `開啟：${formation.name}`,
                 type: 'interact',
-                desc: `阵眼灵力 ${qiLabel}，灵石 ${formatDisplayInteger(remainingStones)}，半径 ${formatDisplayInteger(radius)}。`,
+                desc: `陣眼靈力 ${qiLabel}，靈石 ${formatDisplayInteger(remainingStones)}，半徑 ${formatDisplayInteger(radius)}。`,
                 cooldownLeft: 0,
             });
             actions.push({
                 id: `formation:refill:${formation.id}`,
-                name: `资源补给：${formation.name}`,
+                name: `資源補給：${formation.name}`,
                 type: 'interact',
-                desc: `一次性消耗 ${formatDisplayInteger(refillStones)} 灵石和 ${formatDisplayInteger(refillQi)} 灵力，补给当前阵法资源池。`,
+                desc: `一次性消耗 ${formatDisplayInteger(refillStones)} 靈石和 ${formatDisplayInteger(refillQi)} 靈力，補給當前陣法資源池。`,
                 cooldownLeft: 0,
             });
             const maintaining = player.formationJob
@@ -229,11 +229,11 @@ export class WorldRuntimeContextActionQueryService {
                 && player.formationJob.formationInstanceId === formation.id;
             actions.push({
                 id: maintaining ? `formation:cancel_maintain:${formation.id}` : `formation:maintain:${formation.id}`,
-                name: maintaining ? `停止补充：${formation.name}` : `补充灵力：${formation.name}`,
+                name: maintaining ? `停止補充：${formation.name}` : `補充靈力：${formation.name}`,
                 type: 'interact',
                 desc: maintaining
-                    ? `停止持续向阵法注入自身灵力。当前阵眼灵力 ${qiLabel}。`
-                    : `持续向阵法注入自身灵力，每息获得阵法技艺经验。当前阵眼灵力 ${qiLabel}。`,
+                    ? `停止持續向陣法注入自身靈力。當前陣眼靈力 ${qiLabel}。`
+                    : `持續向陣法注入自身靈力，每息獲得陣法技藝經驗。當前陣眼靈力 ${qiLabel}。`,
                 cooldownLeft: 0,
             });
         }
@@ -255,21 +255,21 @@ export class WorldRuntimeContextActionQueryService {
                     if (isTreasureVaultBuilding(instance, building)) {
                         const buildingName = typeof entry?.name === 'string' && entry.name.trim()
                             ? entry.name.trim()
-                            : '宝库';
+                            : '寶庫';
                         const encodedBuildingId = encodeURIComponent(building.id);
                         actions.push({
                             id: `treasure_vault:open:${encodedBuildingId}`,
-                            name: `打开：${buildingName}`,
+                            name: `打開：${buildingName}`,
                             type: 'interact',
-                            desc: '查看附近宝库，并按创建者设定的权限存取物品。',
+                            desc: '查看附近寶庫，並按建立者設定的權限存取物品。',
                             cooldownLeft: 0,
                         });
                         if (typeof building.ownerPlayerId === 'string' && building.ownerPlayerId.trim() === view.playerId) {
                             actions.push({
                                 id: `treasure_vault:permissions:${encodedBuildingId}`,
-                                name: `设置权限：${buildingName}`,
+                                name: `設置權限：${buildingName}`,
                                 type: 'interact',
-                                desc: '建造者可分别设置宝库查看与存入、取出的使用权限。',
+                                desc: '建造者可分別設置寶庫查看與存入、取出的使用權限。',
                                 cooldownLeft: 0,
                             });
                         }
@@ -287,11 +287,11 @@ export class WorldRuntimeContextActionQueryService {
                         const effectiveSpeed = Math.max(1, Math.trunc(Number(summary?.effectiveSpeed) || 1));
                         const occupancy = Math.max(0, Math.trunc(Number(summary?.occupancy) || 0));
                         const capacity = Math.max(1, Math.trunc(Number(summary?.capacity) || 1));
-                        const statusText = `时间流速 ${configuredSpeed} 倍（当前 ${effectiveSpeed} 倍） · 当前人数 ${occupancy}/${capacity}`;
+                        const statusText = `時間流速 ${configuredSpeed} 倍（當前 ${effectiveSpeed} 倍） · 當前人數 ${occupancy}/${capacity}`;
                         const encodedBuildingId = encodeURIComponent(building.id);
                         actions.push({
                             id: `time_chamber:usage:${encodedBuildingId}`,
-                            name: `开启：${buildingName}`,
+                            name: `開啟：${buildingName}`,
                             type: 'interact',
                             desc: statusText,
                             cooldownLeft: 0,
@@ -309,33 +309,33 @@ export class WorldRuntimeContextActionQueryService {
                     if (building?.defId === 'technique_refining_table' && building?.state === 'active') {
                         const buildingName = typeof entry?.name === 'string' && entry.name.trim()
                             ? entry.name.trim()
-                            : '炼法台';
+                            : '煉法臺';
                         const encodedBuildingId = encodeURIComponent(building.id);
                         actions.push({
                             id: 'technique_refining:open',
-                            name: `炼法：${buildingName}`,
+                            name: `煉法：${buildingName}`,
                             type: 'interact',
-                            desc: '打开炼法台，选择背包内功法书分解为功法残页，或抄录指定层数的功法书。',
+                            desc: '打開煉法臺，選擇背包內功法書分解為功法殘頁，或抄錄指定層數的功法書。',
                             cooldownLeft: 0,
                         });
                     }
                     if (building?.defId === 'technique_unification_platform' && building?.state === 'active') {
                         const buildingName = typeof entry?.name === 'string' && entry.name.trim()
                             ? entry.name.trim()
-                            : '统法台';
+                            : '統法臺';
                         const encodedBuildingId = encodeURIComponent(building.id);
                         actions.push({
                             id: `technique_unification:open:${encodedBuildingId}`,
-                            name: `参阅法脉：${buildingName}`,
+                            name: `參閱法脈：${buildingName}`,
                             type: 'interact',
-                            desc: '登台查阅所承法脉；获准修订者可将同阶圆满的自创内功续录入卷。',
+                            desc: '登臺查閱所承法脈；獲準修訂者可將同階圓滿的自創內功續錄入卷。',
                             cooldownLeft: 0,
                         });
                     }
                     continue;
                 }
                 const remainingTicks = Math.max(1, Math.trunc(Number(entry?.remainingTicks ?? building.buildRemainingTicks ?? building.buildStrength ?? 1)));
-                const buildingName = resolvePlayerFacingContentName(building.defId, '未知建筑', entry?.name);
+                const buildingName = resolvePlayerFacingContentName(building.defId, '未知建築', entry?.name);
                 const sectBuildPermission = typeof deps?.worldRuntimeSectService?.resolveSectInstancePermission === 'function'
                     ? deps.worldRuntimeSectService.resolveSectInstancePermission(
                         view.playerId,
@@ -348,9 +348,9 @@ export class WorldRuntimeContextActionQueryService {
                 }
                 actions.push({
                     id: `building:start:${building.id}`,
-                    name: `开始建造：${buildingName}（余 ${remainingTicks} 息）`,
+                    name: `開始建造：${buildingName}（餘 ${remainingTicks} 息）`,
                     type: 'interact',
-                    desc: `靠近半成品后持续施工，剩余 ${remainingTicks} 息。`,
+                    desc: `靠近半成品後持續施工，剩餘 ${remainingTicks} 息。`,
                     cooldownLeft: 0,
                 });
             }
@@ -374,17 +374,17 @@ export class WorldRuntimeContextActionQueryService {
                 : portal.targetMapId;
             actions.push({
                 id: 'portal:travel',
-                name: `传送至：${targetName}`,
+                name: `傳送至：${targetName}`,
                 type: 'travel',
-                desc: `踏入对应界门，前往 ${targetName}。`,
+                desc: `踏入對應界門，前往 ${targetName}。`,
                 cooldownLeft: 0,
             });
             if (!actions.some((entry) => entry.id === 'world:migrate')) {
                 actions.push({
                     id: 'world:migrate',
-                    name: '世界迁移',
+                    name: '世界遷移',
                     type: 'interact',
-                    desc: '切换当前地图的虚境/现世，并同步更新后续跨图的默认分线。',
+                    desc: '切換當前地圖的虛境/現世，並同步更新後續跨圖的預設分線。',
                     cooldownLeft: 0,
                 });
             }
@@ -393,9 +393,9 @@ export class WorldRuntimeContextActionQueryService {
             if (chebyshevDistance(view.self.x, view.self.y, npc.x, npc.y) <= 1) {
                 actions.push({
                     id: `npc:${npc.npcId}`,
-                    name: `交谈：${npc.name}`,
+                    name: `交談：${npc.name}`,
                     type: 'interact',
-                    desc: npc.dialogue?.trim() ? npc.dialogue.trim() : `与 ${npc.name} 交谈。`,
+                    desc: npc.dialogue?.trim() ? npc.dialogue.trim() : `與 ${npc.name} 交談。`,
                     cooldownLeft: 0,
                 });
             }
@@ -410,7 +410,7 @@ export class WorldRuntimeContextActionQueryService {
                 id: `npc_shop:${npc.npcId}`,
                 name: `商店：${npc.name}`,
                 type: 'interact',
-                desc: `查看 ${npc.name} 当前出售的货物。`,
+                desc: `查看 ${npc.name} 當前出售的貨物。`,
                 cooldownLeft: 0,
             });
         }
@@ -420,7 +420,7 @@ export class WorldRuntimeContextActionQueryService {
                 id: 'realm:breakthrough',
                 name: `突破至 ${preview?.targetDisplayName ?? '下一境界'}`,
                 type: 'breakthrough',
-                desc: preview?.blockedReason ?? `当前境界已圆满，点击查看 ${preview?.targetDisplayName ?? '下一境界'} 的突破要求。`,
+                desc: preview?.blockedReason ?? `當前境界已圓滿，點擊查看 ${preview?.targetDisplayName ?? '下一境界'} 的突破要求。`,
                 cooldownLeft: 0,
             });
         }
@@ -438,9 +438,9 @@ function buildScripturePlatformActions(player, building) {
     if (existingTechniqueId && Number(building.scriptureRecordedAtTick) > 0) {
         return [{
             id: `scripture:contemplate:${encodeURIComponent(building.id)}`,
-            name: '参悟',
+            name: '參悟',
             type: 'interact',
-            desc: `参悟藏经台内的${normalizeText(building.scriptureTechniqueName) || '功法'}。`,
+            desc: `參悟藏經臺內的${normalizeText(building.scriptureTechniqueName) || '功法'}。`,
             scriptureTechniqueId: existingTechniqueId,
             scriptureTechniqueName: resolvePlayerFacingContentName(existingTechniqueId, '未知功法', building.scriptureTechniqueName),
             scriptureTechniqueRealmLv: Math.max(1, Math.trunc(Number(building.scriptureRealmLv) || 1)),
@@ -451,9 +451,9 @@ function buildScripturePlatformActions(player, building) {
     }
     return [{
         id: `scripture:record:${encodeURIComponent(building.id)}`,
-        name: Number(building.scriptureProgress) > 0 ? '继续录入' : '录入',
+        name: Number(building.scriptureProgress) > 0 ? '繼續錄入' : '錄入',
         type: 'interact',
-        desc: '打开藏经台录入界面，选择自身已经练满的自创功法写入藏经台。',
+        desc: '打開藏經臺錄入界面，選擇自身已經練滿的自創功法寫入藏經臺。',
         cooldownLeft: 0,
     }];
 }

@@ -176,7 +176,7 @@ class WorldRuntimeFormationService {
             || !leaseWritable
         ) {
             if (this.requiresFormationPersistenceFence()) {
-                throw new ServiceUnavailableException(`地图实例 ${instanceId || 'unknown'} 阵法持久化租约不可写`);
+                throw new ServiceUnavailableException(`地圖實例 ${instanceId || 'unknown'} 陣法持久化租約不可寫`);
             }
             return null;
         }
@@ -295,7 +295,7 @@ class WorldRuntimeFormationService {
             );
         }
         if (resolveServerDatabaseUrl().trim() && !isFormationVolatileFallbackAllowed()) {
-            throw new ServiceUnavailableException('阵法资产事务暂不可用，请稍后重试');
+            throw new ServiceUnavailableException('陣法資產事務暫不可用，請稍後重試');
         }
         this.applyFormationResourceFallback(playerId, plan.qiCost, plan.spiritStoneCount, plan.itemInstanceId, plan.instance, plan.placement);
         return this.applyCreatedFormationRuntime(plan, deps, false);
@@ -307,14 +307,14 @@ class WorldRuntimeFormationService {
         const diskItem = this.playerRuntimeService.peekInventoryItemByInstanceId(playerId, itemInstanceId);
         const diskTier = resolveFormationDiskTier(diskItem);
         if (!diskItem || !diskTier) {
-            throw new BadRequestException('需要使用阵盘布阵');
+            throw new BadRequestException('需要使用陣盤佈陣');
         }
         const template = this.resolveFormationTemplate(payload?.formationId);
         if (resolveFormationLifecycle(template) === FORMATION_LIFECYCLE_PERSISTENT) {
-            throw new BadRequestException(`${template.name}是持续性阵法，不能通过阵盘布置`);
+            throw new BadRequestException(`${template.name}是持續性陣法，不能通過陣盤佈置`);
         }
         if (template.placeableByDisk === false) {
-            throw new BadRequestException(`${template.name}不能通过阵盘布置`);
+            throw new BadRequestException(`${template.name}不能通過陣盤佈置`);
         }
         const diskMultiplier = normalizeDiskMultiplier(diskItem);
         const formationSkillLevel = resolveFormationSkillLevel(player);
@@ -324,10 +324,10 @@ class WorldRuntimeFormationService {
             : null;
         const spiritStoneCount = plan
             ? plan.spiritStoneCount
-            : normalizePositiveInteger(payload?.spiritStoneCount, '灵石数量');
+            : normalizePositiveInteger(payload?.spiritStoneCount, '靈石數量');
         const minSpiritStoneCount = resolveFormationMinSpiritStoneCount(template);
         if (!plan && spiritStoneCount < minSpiritStoneCount) {
-            throw new BadRequestException(`${template.name}至少需要投入 ${formatInteger(minSpiritStoneCount)} 灵石`);
+            throw new BadRequestException(`${template.name}至少需要投入 ${formatInteger(minSpiritStoneCount)} 靈石`);
         }
         const qiCost = plan ? plan.qiCost : resolveFormationQiCost(spiritStoneCount, template);
         const allocation = plan
@@ -337,7 +337,7 @@ class WorldRuntimeFormationService {
         const location = deps.getPlayerLocationOrThrow(playerId);
         const instance = deps.getInstanceRuntime(location.instanceId);
         if (!instance) {
-            throw new NotFoundException('当前地图实例不存在');
+            throw new NotFoundException('當前地圖實例不存在');
         }
         assertCanPlaceFormationInInstance(instance);
         const placement = resolveFormationPlacement(playerId, player, location, instance);
@@ -437,7 +437,7 @@ class WorldRuntimeFormationService {
             playerId,
             'success',
             'notice.formation.deployed',
-            `${template.name}已布下：半径 ${stats.radius}，强度 ${formatInteger(stats.effectValue)}，灵力 ${formatInteger(stats.totalQiBudget ?? stats.totalAuraBudget)}，灵石 ${formatInteger(stats.totalSpiritStoneBudget ?? spiritStoneCount)}。`,
+            `${template.name}已佈下：半徑 ${stats.radius}，強度 ${formatInteger(stats.effectValue)}，靈力 ${formatInteger(stats.totalQiBudget ?? stats.totalAuraBudget)}，靈石 ${formatInteger(stats.totalSpiritStoneBudget ?? spiritStoneCount)}。`,
             {
                 formationName: template.name,
                 radius: stats.radius,
@@ -455,11 +455,11 @@ class WorldRuntimeFormationService {
     upsertSectGuardianFormation(input, deps = null, options: { deferPersistence?: boolean } = {}) {
         const template = this.resolveFormationTemplate(input?.formationId ?? 'sect_guardian_barrier');
         if (template.effect?.kind !== BOUNDARY_BARRIER_EFFECT_KIND) {
-            throw new BadRequestException('护宗大阵模板必须是边界防护阵法');
+            throw new BadRequestException('護宗大陣模板必須是邊界防護陣法');
         }
         const instanceId = normalizeInstanceId(input?.instanceId);
         if (!instanceId) {
-            throw new BadRequestException('地图实例 ID 不能为空');
+            throw new BadRequestException('地圖實例 ID 不能為空');
         }
         const persistenceFence = options.deferPersistence === true
             ? null
@@ -467,7 +467,7 @@ class WorldRuntimeFormationService {
         const x = firstFiniteInteger(input?.x);
         const y = firstFiniteInteger(input?.y);
         if (!Number.isFinite(x) || !Number.isFinite(y)) {
-            throw new BadRequestException('护宗大阵入口坐标无效');
+            throw new BadRequestException('護宗大陣入口座標無效');
         }
         const ownerSectId = normalizeOptionalString(input?.ownerSectId ?? input?.sectId);
         const eyeInstanceId = normalizeInstanceId(input?.eyeInstanceId) || instanceId;
@@ -565,7 +565,7 @@ class WorldRuntimeFormationService {
     dispatchSetFormationActive(playerId, payload, deps = null) {
         const formation = this.findOwnedFormation(playerId, payload?.formationInstanceId);
         if (isPersistentFormation(formation)) {
-            throw new BadRequestException('持续性阵法需要在阵法管理面板操作');
+            throw new BadRequestException('持續性陣法需要在陣法管理面板操作');
         }
         const persistenceFence = this.captureFormationPersistenceFenceForFormation(formation, deps);
         formation.active = payload?.active !== false
@@ -578,8 +578,8 @@ class WorldRuntimeFormationService {
             playerId,
             'info',
             'notice.formation.active-set',
-            `${formation.name}已${formation.active ? '开启' : '关闭'}。`,
-            { formationName: formation.name, stateLabel: formation.active ? '开启' : '关闭' },
+            `${formation.name}已${formation.active ? '開啟' : '關閉'}。`,
+            { formationName: formation.name, stateLabel: formation.active ? '開啟' : '關閉' },
         );
         return formation;
     }
@@ -600,7 +600,7 @@ class WorldRuntimeFormationService {
             );
         }
         if (resolveServerDatabaseUrl().trim() && !isFormationVolatileFallbackAllowed()) {
-            throw new ServiceUnavailableException('阵法资产事务暂不可用，请稍后重试');
+            throw new ServiceUnavailableException('陣法資產事務暫不可用，請稍後重試');
         }
         this.applyRefillFormationPlayerResources(plan, deps);
         return this.applyRefillFormationRuntime(plan, deps, false);
@@ -609,7 +609,7 @@ class WorldRuntimeFormationService {
     buildRefillFormationPlan(playerId, payload, deps = null) {
         const formation = this.findOwnedFormation(playerId, payload?.formationInstanceId);
         if (isPersistentFormation(formation)) {
-            throw new BadRequestException('持续性阵法需要在阵法管理面板注入灵石或灵力');
+            throw new BadRequestException('持續性陣法需要在陣法管理面板注入靈石或靈力');
         }
         const defaultSpiritStoneCount = Math.max(1, Math.trunc(Number(formation.spiritStoneCount) || 1));
         const spiritStoneCount = payload && 'spiritStoneCount' in payload
@@ -619,7 +619,7 @@ class WorldRuntimeFormationService {
             ? normalizeNonNegativeInteger(payload.qiAmount ?? payload.qiCost ?? 0)
             : resolveFormationQiCost(defaultSpiritStoneCount, formation.template);
         if (spiritStoneCount <= 0 && qiAmount <= 0) {
-            throw new BadRequestException('至少需要补充灵石或灵力');
+            throw new BadRequestException('至少需要補充靈石或靈力');
         }
         this.assertCanPay(playerId, qiAmount, spiritStoneCount);
         const nextFormation = cloneFormationForResourceMutation(formation);
@@ -694,7 +694,7 @@ class WorldRuntimeFormationService {
             playerId,
             'success',
             'notice.formation.refilled',
-            `${formation.name}补充灵石 ${formatInteger(spiritStoneCount)}，灵力 ${formatInteger(qiAmount)}。`,
+            `${formation.name}補充靈石 ${formatInteger(spiritStoneCount)}，靈力 ${formatInteger(qiAmount)}。`,
             {
                 formationName: formation.name,
                 spiritStoneCount: formatInteger(spiritStoneCount),
@@ -737,16 +737,16 @@ class WorldRuntimeFormationService {
         const playerId = normalizePlayerId(player);
         const formationInstanceId = normalizeOptionalString(job?.formationInstanceId);
         if (!playerId || !formationInstanceId) {
-            return { satisfied: false, reason: '阵法维护目标无效。', shouldCancel: true };
+            return { satisfied: false, reason: '陣法維護目標無效。', shouldCancel: true };
         }
         let formation = null;
         try {
             formation = this.resolveMaintainableFormation(playerId, formationInstanceId, _ctx);
         } catch (_error) {
-            return { satisfied: false, reason: '阵法已不存在或不属于你。', shouldCancel: true };
+            return { satisfied: false, reason: '陣法已不存在或不屬於你。', shouldCancel: true };
         }
         if (!formation || resolveFormationRemainingSpiritStoneBudget(formation) <= 0) {
-            return { satisfied: false, reason: '阵法灵石已耗尽。', shouldCancel: true };
+            return { satisfied: false, reason: '陣法靈石已耗盡。', shouldCancel: true };
         }
         const controlInstanceId = normalizeInstanceId(formation.eyeInstanceId) || formation.instanceId;
         const controlX = firstFiniteInteger(formation.eyeX, formation.x);
@@ -754,7 +754,7 @@ class WorldRuntimeFormationService {
         const playerInstanceId = normalizeInstanceId(player.instanceId);
         if (playerInstanceId !== controlInstanceId
             || !isWithinFormationMaintenanceControlRange(player.x, player.y, controlX, controlY)) {
-            return { satisfied: false, reason: '离开阵法控制点位。' };
+            return { satisfied: false, reason: '離開陣法控制點位。' };
         }
         return { satisfied: true };
     }
@@ -799,13 +799,13 @@ class WorldRuntimeFormationService {
     dispatchSetPersistentFormationStrength(playerId, payload, deps = null) {
         const formation = this.findFormationByInstanceOrId(payload?.instanceId, payload?.formationInstanceId);
         if (!formation) {
-            throw new NotFoundException('阵法不存在');
+            throw new NotFoundException('陣法不存在');
         }
         if (!isPersistentFormation(formation)) {
-            throw new BadRequestException('该阵法不是持续性阵法');
+            throw new BadRequestException('該陣法不是持續性陣法');
         }
         const persistenceFence = this.captureFormationPersistenceFenceForFormation(formation, deps);
-        const strength = normalizePositiveInteger(payload?.strength ?? payload?.effectValue ?? 1, '阵法强度');
+        const strength = normalizePositiveInteger(payload?.strength ?? payload?.effectValue ?? 1, '陣法強度');
         const setup = normalizeFormationSetup(formation.template, {
             ...(typeof isFormationSetupInput === 'function' && isFormationSetupInput(formation.allocation) ? formation.allocation : {}),
             radius: Math.max(1, Math.trunc(Number(formation.stats?.radius ?? formation.allocation?.radius ?? 1) || 1)),
@@ -836,7 +836,7 @@ class WorldRuntimeFormationService {
             playerId,
             'success',
             'notice.formation.strength-set',
-            `${formation.name}强度已调整为 ${formatInteger(strength)}。`,
+            `${formation.name}強度已調整為 ${formatInteger(strength)}。`,
             { formationName: formation.name, strength: formatInteger(strength) },
         );
         return formation;
@@ -845,10 +845,10 @@ class WorldRuntimeFormationService {
     dispatchSetPersistentFormationActive(playerId, payload, deps = null) {
         const formation = this.findFormationByInstanceOrId(payload?.instanceId, payload?.formationInstanceId);
         if (!formation) {
-            throw new NotFoundException('阵法不存在');
+            throw new NotFoundException('陣法不存在');
         }
         if (!isPersistentFormation(formation)) {
-            throw new BadRequestException('该阵法不是持续性阵法');
+            throw new BadRequestException('該陣法不是持續性陣法');
         }
         const persistenceFence = this.captureFormationPersistenceFenceForFormation(formation, deps);
         formation.active = payload?.active !== false
@@ -861,8 +861,8 @@ class WorldRuntimeFormationService {
             playerId,
             'info',
             'notice.formation.active-set',
-            `${formation.name}已${formation.active ? '开启' : '关闭'}。`,
-            { formationName: formation.name, stateLabel: formation.active ? '开启' : '关闭' },
+            `${formation.name}已${formation.active ? '開啟' : '關閉'}。`,
+            { formationName: formation.name, stateLabel: formation.active ? '開啟' : '關閉' },
         );
         return formation;
     }
@@ -883,7 +883,7 @@ class WorldRuntimeFormationService {
             );
         }
         if (resolveServerDatabaseUrl().trim() && !isFormationVolatileFallbackAllowed()) {
-            throw new ServiceUnavailableException('阵法资产事务暂不可用，请稍后重试');
+            throw new ServiceUnavailableException('陣法資產事務暫不可用，請稍後重試');
         }
         this.applyPersistentFormationInjectionPlayerResources(plan, deps);
         return this.applyPersistentFormationInjectionRuntime(plan, deps, false);
@@ -892,15 +892,15 @@ class WorldRuntimeFormationService {
     buildPersistentFormationInjectionPlan(playerId, payload) {
         const formation = this.findFormationByInstanceOrId(payload?.instanceId, payload?.formationInstanceId);
         if (!formation) {
-            throw new NotFoundException('阵法不存在');
+            throw new NotFoundException('陣法不存在');
         }
         if (!isPersistentFormation(formation)) {
-            throw new BadRequestException('该阵法不是持续性阵法');
+            throw new BadRequestException('該陣法不是持續性陣法');
         }
         const spiritStoneCount = normalizeNonNegativeInteger(payload?.spiritStoneCount ?? 0);
         const qiAmount = normalizeNonNegativeInteger(payload?.qiAmount ?? payload?.qiCost ?? resolveFormationQiCost(spiritStoneCount, formation.template));
         if (spiritStoneCount <= 0 && qiAmount <= 0) {
-            throw new BadRequestException('至少需要注入灵石或灵力');
+            throw new BadRequestException('至少需要注入靈石或靈力');
         }
         this.assertCanInject(playerId, qiAmount, spiritStoneCount);
         const nextFormation = cloneFormationForResourceMutation(formation);
@@ -975,7 +975,7 @@ class WorldRuntimeFormationService {
             playerId,
             'success',
             'notice.formation.injected',
-            `${formation.name}注入灵石 ${formatInteger(spiritStoneCount)}，灵力 ${formatInteger(qiAmount)}。`,
+            `${formation.name}注入靈石 ${formatInteger(spiritStoneCount)}，靈力 ${formatInteger(qiAmount)}。`,
             {
                 formationName: formation.name,
                 spiritStoneCount: formatInteger(spiritStoneCount),
@@ -1008,7 +1008,7 @@ class WorldRuntimeFormationService {
                     formation.ownerPlayerId,
                     'warning',
                     'notice.formation.spirit-stone-depleted',
-                    `${formation.name}灵石耗尽，阵势损毁。`,
+                    `${formation.name}靈石耗盡，陣勢損毀。`,
                     { formationName: formation.name },
                 );
                 continue;
@@ -1029,7 +1029,7 @@ class WorldRuntimeFormationService {
                         formation.ownerPlayerId,
                         'warning',
                         'notice.formation.qi-depleted',
-                        `${formation.name}灵力不足，阵势关闭。`,
+                        `${formation.name}靈力不足，陣勢關閉。`,
                         { formationName: formation.name },
                     );
                 }
@@ -1396,7 +1396,7 @@ class WorldRuntimeFormationService {
                 formation.ownerPlayerId,
                 'warning',
                 'notice.formation.eye-qi-depleted',
-                `${formation.name}阵眼灵力耗尽，阵势关闭。`,
+                `${formation.name}陣眼靈力耗盡，陣勢關閉。`,
                 { formationName: formation.name },
             );
             if (typeof deps?.refreshPlayerContextActions === 'function') {
@@ -1588,9 +1588,9 @@ class WorldRuntimeFormationService {
                 continue;
             }
             if (instance && !isPersistentFormation(formation) && !isFormationProtectedPlacementAllowed(instance, formation)) {
-                this.logger.warn(`启动清理了违规阵法：${normalizedInstanceId} ${formation.id} ${formation.name}`);
+                this.logger.warn(`啟動清理了違規陣法：${normalizedInstanceId} ${formation.id} ${formation.name}`);
                 await this.deleteFormationSnapshot(formation, persistenceFence).catch((error) => {
-                    this.logger.warn(`启动清理违规阵法持久态失败：${normalizedInstanceId} ${formation.id} ${error instanceof Error ? error.message : String(error)}`);
+                    this.logger.warn(`啟動清理違規陣法持久態失敗：${normalizedInstanceId} ${formation.id} ${error instanceof Error ? error.message : String(error)}`);
                 });
                 continue;
             }
@@ -1619,7 +1619,7 @@ class WorldRuntimeFormationService {
         try {
             template = this.resolveFormationTemplate(formationId);
         } catch (_error) {
-            this.logger.warn(`恢复阵法条目模板解析失败 formationId=${formationId}: ${_error instanceof Error ? _error.message : String(_error)}`);
+            this.logger.warn(`恢復陣法條目模板解析失敗 formationId=${formationId}: ${_error instanceof Error ? _error.message : String(_error)}`);
             return null;
         }
         const diskTier = normalizeFormationDiskTier(entry.diskTier);
@@ -1709,7 +1709,7 @@ class WorldRuntimeFormationService {
         this._formationPersistTimers.set(normalizedInstanceId, setTimeout(() => {
             this._formationPersistTimers.delete(normalizedInstanceId);
             if (!this.persistenceReady || !this.persistencePool) {
-                this.logger.warn(`阵法持久化池未就绪，保留脏标记等待重试：${normalizedInstanceId}`);
+                this.logger.warn(`陣法持久化池未就緒，保留髒標記等待重試：${normalizedInstanceId}`);
                 return;
             }
             void this.saveInstanceFormations(
@@ -1717,7 +1717,7 @@ class WorldRuntimeFormationService {
                 this.formationPersistenceFenceByInstanceId.get(normalizedInstanceId) ?? null,
             ).catch((error) => {
                 this.dirtyFormationInstanceIds.add(normalizedInstanceId);
-                this.logger.warn(`阵法持久化失败，已保留脏标记：${normalizedInstanceId} ${error instanceof Error ? error.message : String(error)}`);
+                this.logger.warn(`陣法持久化失敗，已保留髒標記：${normalizedInstanceId} ${error instanceof Error ? error.message : String(error)}`);
             });
         }, 5000));
     }
@@ -1726,7 +1726,7 @@ class WorldRuntimeFormationService {
         const instanceId = this.markFormationInstanceDirty(formation?.instanceId, persistenceFence);
         void this.saveFormationSnapshot(formation, persistenceFence).catch((error) => {
             if (instanceId) this.dirtyFormationInstanceIds.add(instanceId);
-            this.logger.warn(`阵法单体持久化失败，已保留脏标记：${formation?.instanceId ?? ''} ${error instanceof Error ? error.message : String(error)}`);
+            this.logger.warn(`陣法單體持久化失敗，已保留髒標記：${formation?.instanceId ?? ''} ${error instanceof Error ? error.message : String(error)}`);
         });
     }
 
@@ -1734,7 +1734,7 @@ class WorldRuntimeFormationService {
         this.markFormationRemovalDirty(formation, persistenceFence);
         void this.deleteFormationSnapshot(formation, persistenceFence).catch((error) => {
             this.markFormationRemovalDirty(formation, persistenceFence);
-            this.logger.warn(`阵法删除持久化失败，已保留删除重试：${formation?.instanceId ?? ''} ${error instanceof Error ? error.message : String(error)}`);
+            this.logger.warn(`陣法刪除持久化失敗，已保留刪除重試：${formation?.instanceId ?? ''} ${error instanceof Error ? error.message : String(error)}`);
         });
     }
 
@@ -2103,7 +2103,7 @@ class WorldRuntimeFormationService {
         }
         const sharedPool = this.databasePoolProvider?.getPool?.('formation') ?? null;
         if (!sharedPool) {
-            this.logger.warn('阵法持久化已禁用：数据库连接池提供者未提供连接池');
+            this.logger.warn('陣法持久化已禁用：數據庫連接池提供者未提供連接池');
             return;
         }
         try {
@@ -2111,7 +2111,7 @@ class WorldRuntimeFormationService {
             this.persistencePool = sharedPool;
             this.persistenceReady = true;
         } catch (error) {
-            this.logger.warn(`阵法持久化初始化失败：${error instanceof Error ? error.message : String(error)}`);
+            this.logger.warn(`陣法持久化初始化失敗：${error instanceof Error ? error.message : String(error)}`);
         }
     }
 
@@ -2142,7 +2142,7 @@ class WorldRuntimeFormationService {
     findOwnedFormation(playerId, formationInstanceId) {
         const normalizedId = typeof formationInstanceId === 'string' ? formationInstanceId.trim() : '';
         if (!normalizedId) {
-            throw new BadRequestException('阵法实例 ID 不能为空');
+            throw new BadRequestException('陣法實例 ID 不能為空');
         }
         for (const formations of this.formationsByInstanceId.values()) {
             const formation = formations.find((entry) => entry.id === normalizedId);
@@ -2150,11 +2150,11 @@ class WorldRuntimeFormationService {
                 continue;
             }
             if (formation.ownerPlayerId !== playerId) {
-                throw new ForbiddenException('不能操作他人的阵法');
+                throw new ForbiddenException('不能操作他人的陣法');
             }
             return formation;
         }
-        throw new NotFoundException('阵法不存在');
+        throw new NotFoundException('陣法不存在');
     }
 
     findFormationInInstance(instanceId, formationInstanceId) {
@@ -2223,7 +2223,7 @@ class WorldRuntimeFormationService {
             if (isPersistentFormation(formation) || formation?.formationId === 'sect_guardian_barrier') {
                 if (!isFormationProtectedPlacementAllowed(instance, formation)) {
                     keptSectGuardianCount += 1;
-                    this.logger.warn(`启动发现宗门护宗阵保护点位冲突，暂不清理：${normalizedInstanceId} ${formation?.id ?? ''}`);
+                    this.logger.warn(`啟動發現宗門護宗陣保護點位衝突，暫不清理：${normalizedInstanceId} ${formation?.id ?? ''}`);
                 }
                 kept.push(formation);
                 continue;
@@ -2267,14 +2267,14 @@ class WorldRuntimeFormationService {
     resolveFormationTemplate(formationId) {
         const normalizedId = typeof formationId === 'string' ? formationId.trim() : '';
         if (!normalizedId) {
-            throw new BadRequestException('阵法 ID 不能为空');
+            throw new BadRequestException('陣法 ID 不能為空');
         }
         const configured = typeof this.contentTemplateRepository.getFormationTemplate === 'function'
             ? this.contentTemplateRepository.getFormationTemplate(normalizedId)
             : null;
         const template = configured ?? getFormationTemplateById(normalizedId);
         if (!template) {
-            throw new NotFoundException(`阵法不存在：${normalizedId}`);
+            throw new NotFoundException(`陣法不存在：${normalizedId}`);
         }
         return template;
     }
@@ -2285,7 +2285,7 @@ class WorldRuntimeFormationService {
             ? deps.getInstanceRuntime(instanceId)
             : null;
         if (!instance || deps?.getInstanceRuntime?.(instanceId) !== instance) {
-            throw new ServiceUnavailableException('阵法所在实例暂不可用');
+            throw new ServiceUnavailableException('陣法所在實例暫不可用');
         }
         return instance;
     }
@@ -2311,7 +2311,7 @@ class WorldRuntimeFormationService {
             || ownershipEpoch <= 0
             || !leaseWritable
         ) {
-            throw new ServiceUnavailableException('阵法所在实例租约尚未就绪');
+            throw new ServiceUnavailableException('陣法所在實例租約尚未就緒');
         }
         return {
             durable,
@@ -2442,7 +2442,7 @@ class WorldRuntimeFormationService {
             checkpoint.timer = null;
             void this.flushPendingFormationMaintenance(checkpoint.formationInstanceId).catch((error) => {
                 this.logger.warn(
-                    `阵法维护检查点提交失败，已保留并重试：${checkpoint.formationInstanceId} ${error instanceof Error ? error.message : String(error)}`,
+                    `陣法維護檢查點提交失敗，已保留並重試：${checkpoint.formationInstanceId} ${error instanceof Error ? error.message : String(error)}`,
                 );
             });
         }, delay);
@@ -2489,7 +2489,7 @@ class WorldRuntimeFormationService {
         );
         if (!durableContext) {
             if (resolveServerDatabaseUrl().trim() && !isFormationVolatileFallbackAllowed()) {
-                throw new ServiceUnavailableException('阵法维护资产事务暂不可用，请稍后重试');
+                throw new ServiceUnavailableException('陣法維護資產事務暫不可用，請稍後重試');
             }
             return tickAction(deps);
         }
@@ -2531,7 +2531,7 @@ class WorldRuntimeFormationService {
             const expectedJobVersion = Math.max(1, Math.trunc(Number(currentJob.jobVersion) || 1));
             const expectedFormationUpdatedAtMs = Math.max(1, Math.trunc(Number(currentFormation.updatedAt) || 0));
             if (!expectedJobRunId || expectedFormationUpdatedAtMs <= 0) {
-                throw new ServiceUnavailableException('阵法维护任务围栏暂不可用');
+                throw new ServiceUnavailableException('陣法維護任務圍欄暫不可用');
             }
             const previousSuppress = currentPlayer.suppressImmediateDomainPersistence;
             currentPlayer.suppressImmediateDomainPersistence = true;
@@ -2561,7 +2561,7 @@ class WorldRuntimeFormationService {
                     new Set(['vitals', 'profession', 'active_job']),
                 ) ?? null;
                 if (!nextPlayerSnapshot || !nextActiveJob || nextActiveJob.jobVersion <= expectedJobVersion) {
-                    throw new ServiceUnavailableException('阵法维护后态快照暂不可用');
+                    throw new ServiceUnavailableException('陣法維護後態快照暫不可用');
                 }
                 const snapshotRevision = Math.max(0, Math.trunc(Number(currentPlayer.persistentRevision) || 0));
                 const formationSnapshot = serializeFormation(currentFormation);
@@ -2663,7 +2663,7 @@ class WorldRuntimeFormationService {
         }
         const sessionFence = this.playerRuntimeService.getSessionFence?.(playerId) ?? null;
         if (!sessionFence?.runtimeOwnerId || !sessionFence?.sessionEpoch) {
-            throw new ServiceUnavailableException('玩家资产事务围栏暂不可用');
+            throw new ServiceUnavailableException('玩家資產事務圍欄暫不可用');
         }
         durableInput.expectedRuntimeOwnerId = sessionFence.runtimeOwnerId;
         durableInput.expectedSessionEpoch = sessionFence.sessionEpoch;
@@ -2687,12 +2687,12 @@ class WorldRuntimeFormationService {
     async commitFormationResourcePlan(input) {
         const currentPlayer = this.playerRuntimeService.getPlayerOrThrow(input.playerId);
         if (Math.max(0, Math.trunc(Number(currentPlayer.qi ?? 0))) < input.qiAmount) {
-            throw new NotFoundException('灵力不足');
+            throw new NotFoundException('靈力不足');
         }
         const currentSnapshot = this.playerRuntimeService.buildPersistenceSnapshot?.(input.playerId) ?? null;
         const sessionFence = this.playerRuntimeService.getSessionFence?.(input.playerId) ?? null;
         if (!currentSnapshot || !sessionFence?.runtimeOwnerId || !sessionFence?.sessionEpoch) {
-            throw new ServiceUnavailableException('玩家资产事务围栏暂不可用');
+            throw new ServiceUnavailableException('玩家資產事務圍欄暫不可用');
         }
         const nextInventoryItems = input.nextInventoryItems.map((entry) => ({ ...entry }));
         const nextWalletBalances = buildWalletBalancesFromInventory(
@@ -2812,20 +2812,20 @@ class WorldRuntimeFormationService {
     assertCanPay(playerId, qiCost, spiritStoneCount) {
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         if (player.qi < qiCost) {
-            throw new NotFoundException('灵力不足');
+            throw new NotFoundException('靈力不足');
         }
         if (!this.playerRuntimeService.canAffordWallet(playerId, FORMATION_SPIRIT_STONE_ITEM_ID, spiritStoneCount)) {
-            throw new NotFoundException('灵石不足');
+            throw new NotFoundException('靈石不足');
         }
     }
 
     assertCanInject(playerId, qiAmount, spiritStoneCount) {
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         if (qiAmount > 0 && player.qi < qiAmount) {
-            throw new NotFoundException('灵力不足');
+            throw new NotFoundException('靈力不足');
         }
         if (spiritStoneCount > 0 && !this.playerRuntimeService.canAffordWallet(playerId, FORMATION_SPIRIT_STONE_ITEM_ID, spiritStoneCount)) {
-            throw new NotFoundException('灵石不足');
+            throw new NotFoundException('靈石不足');
         }
     }
 }
@@ -2892,7 +2892,7 @@ async function ensureInstanceFormationStateTable(pool) {
 function normalizeSlotIndex(input) {
     const value = Math.trunc(Number(input));
     if (!Number.isFinite(value) || value < 0) {
-        throw new BadRequestException('槽位索引无效');
+        throw new BadRequestException('槽位索引無效');
     }
     return value;
 }
@@ -2900,7 +2900,7 @@ function normalizeSlotIndex(input) {
 function normalizePositiveInteger(input, label) {
     const value = Math.trunc(Number(input));
     if (!Number.isFinite(value) || value <= 0) {
-        throw new BadRequestException(`${label}必须大于 0`);
+        throw new BadRequestException(`${label}必須大於 0`);
     }
     return value;
 }
@@ -2916,7 +2916,7 @@ function normalizeBoundedRuntimeInteger(input, fallback, minimum, maximum) {
 function normalizeNonNegativeInteger(input) {
     const value = Math.trunc(Number(input));
     if (!Number.isFinite(value) || value < 0) {
-        throw new BadRequestException('灵力消耗不能为负');
+        throw new BadRequestException('靈力消耗不能為負');
     }
     return value;
 }
@@ -2941,7 +2941,7 @@ function resolveFormationPlacement(playerId, player, location, instance) {
     const x = firstFiniteInteger(runtimePosition?.x, player?.x, location?.x);
     const y = firstFiniteInteger(runtimePosition?.y, player?.y, location?.y);
     if (!Number.isFinite(x) || !Number.isFinite(y)) {
-        throw new BadRequestException('无法确认布阵坐标');
+        throw new BadRequestException('無法確認佈陣座標');
     }
     return { x, y };
 }
@@ -2997,7 +2997,7 @@ function resolveFormationSkillLevel(source) {
 
 function assertCanPlaceFormationInInstance(instance) {
     if (isVirtualPublicWorldInstance(instance)) {
-        throw new BadRequestException('虚境不能布置阵法，请前往现世。');
+        throw new BadRequestException('虛境不能佈置陣法，請前往現世。');
     }
 }
 
@@ -3073,8 +3073,8 @@ function forEachFormationAffectedRuntimeCell(instance, formation, visitor) {
 function assertFormationProtectedPlacementAllowed(instance, formation) {
     const conflict = findFormationProtectedPlacementConflict(instance, formation);
     if (conflict.ok !== true) {
-        const formationName = normalizeOptionalString(formation?.name) || '阵法';
-        throw new BadRequestException(`${formationName}范围内${formatProtectedPlacementConflictReason(conflict.reason)}`);
+        const formationName = normalizeOptionalString(formation?.name) || '陣法';
+        throw new BadRequestException(`${formationName}範圍內${formatProtectedPlacementConflictReason(conflict.reason)}`);
     }
 }
 
@@ -3136,7 +3136,7 @@ function buildFormationResourceInventoryPlan(items, spiritStoneCount, diskItemIn
         }
     }
     if (remainingSpiritStones > 0) {
-        throw new NotFoundException('灵石不足');
+        throw new NotFoundException('靈石不足');
     }
 
     const normalizedDiskItemInstanceId = normalizeOptionalString(diskItemInstanceId);
@@ -3145,12 +3145,12 @@ function buildFormationResourceInventoryPlan(items, spiritStoneCount, diskItemIn
             normalizeOptionalString(entry?.itemInstanceId) === normalizedDiskItemInstanceId
         ));
         if (diskIndex < 0) {
-            throw new NotFoundException('阵盘已不在背包中');
+            throw new NotFoundException('陣盤已不在背包中');
         }
         const disk = nextItems[diskIndex];
         const diskCount = Math.max(0, Math.trunc(Number(disk?.count ?? 0)));
         if (diskCount <= 0) {
-            throw new NotFoundException('阵盘数量不足');
+            throw new NotFoundException('陣盤數量不足');
         }
         if (diskCount === 1) {
             nextItems.splice(diskIndex, 1);
@@ -3359,7 +3359,7 @@ function buildRuntimeFormationProjection(formation, role = 'effect') {
         ownerSectId: formation.ownerSectId ?? null,
         formationId: formation.formationId,
         lifecycle,
-        name: isEyeProjection ? `${formation.name}阵眼` : formation.name,
+        name: isEyeProjection ? `${formation.name}陣眼` : formation.name,
         x: isEyeProjection && Number.isFinite(Number(formation.eyeX)) ? Math.trunc(Number(formation.eyeX)) : formation.x,
         y: isEyeProjection && Number.isFinite(Number(formation.eyeY)) ? Math.trunc(Number(formation.eyeY)) : formation.y,
         eyeInstanceId: formation.eyeInstanceId ?? formation.instanceId,
@@ -3654,7 +3654,7 @@ function resolveInventoryItemInstanceId(payload, playerRuntimeService, playerId)
         || normalizeOptionalString(payload?.expectedItemInstanceId);
     if (!itemInstanceId) {
         playerRuntimeService.repairInventoryItemInstanceIds(playerId);
-        throw new BadRequestException('背包物品身份已修复，请重新选择。');
+        throw new BadRequestException('背包物品身份已修復，請重新選擇。');
     }
     return itemInstanceId;
 }

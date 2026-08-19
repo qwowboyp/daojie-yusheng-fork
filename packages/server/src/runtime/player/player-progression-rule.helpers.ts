@@ -12,20 +12,20 @@ export { resolvePlayerComprehensionSpeedRate } from './player-comprehension-spee
 export const ELEMENT_KEYS = ['metal', 'wood', 'water', 'fire', 'earth'];
 export const TECHNIQUE_GRADE_ORDER = ['mortal', 'yellow', 'mystic', 'earth', 'heaven', 'spirit', 'saint', 'emperor'];
 
-const PATH_SEVERED_BREAKTHROUGH_LABEL = '仙路断绝';
-const PATH_SEVERED_BREAKTHROUGH_REASON = '仙路断绝，你的前路已被无形天堑阻断，暂时无法继续突破。';
+const PATH_SEVERED_BREAKTHROUGH_LABEL = '仙路斷絕';
+const PATH_SEVERED_BREAKTHROUGH_REASON = '仙路斷絕，你的前路已被無形天塹阻斷，暫時無法繼續突破。';
 
 function formatTechniqueRealmLabel(value) {
     switch (value) {
         case TechniqueRealm.Perfection:
-            return '圆满';
+            return '圓滿';
         case TechniqueRealm.Major:
             return '大成';
         case TechniqueRealm.Minor:
             return '小成';
         case TechniqueRealm.Entry:
         default:
-            return '入门';
+            return '入門';
     }
 }
 /** 复制并收敛天门灵根数值。 */
@@ -276,12 +276,12 @@ export function formatTechniqueRequirementLabel(requirement) {
         parts.push('功法');
     }
     if (requirement.minLevel > 0) {
-        parts.push(`修至 ${requirement.minLevel} 级`);
+        parts.push(`修至 ${requirement.minLevel} 級`);
     }
     if (requirement.minRealm !== undefined) {
-        parts.push(`功法境界达到${formatTechniqueRealmLabel(requirement.minRealm)}`);
+        parts.push(`功法境界達到${formatTechniqueRealmLabel(requirement.minRealm)}`);
     }
-    return `至少有 ${requirement.count} 门${parts.join('，')}`;
+    return `至少有 ${requirement.count} 門${parts.join('，')}`;
 }
 
 function normalizeTechniqueGrade(value) {
@@ -300,22 +300,22 @@ function compareTechniqueGrade(value, minimum) {
 function formatTechniqueGradeLabel(value) {
     switch (value) {
         case 'yellow':
-            return '黄阶';
+            return '黃階';
         case 'mystic':
-            return '玄阶';
+            return '玄階';
         case 'earth':
-            return '地阶';
+            return '地階';
         case 'heaven':
-            return '天阶';
+            return '天階';
         case 'spirit':
-            return '灵阶';
+            return '靈階';
         case 'saint':
-            return '圣阶';
+            return '聖階';
         case 'emperor':
-            return '帝阶';
+            return '帝階';
         case 'mortal':
         default:
-            return '凡阶';
+            return '凡階';
     }
 }
 

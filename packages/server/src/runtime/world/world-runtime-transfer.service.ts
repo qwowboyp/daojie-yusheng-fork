@@ -57,7 +57,7 @@ export class WorldRuntimeTransferService {
         }
         const attachReady = resolveTransferTargetAttachReady(target, deps);
         if (!attachReady.ok) {
-            this.logger.warn(`传送目标实例暂不可进入：playerId=${transfer.playerId} target=${target?.meta?.instanceId ?? 'missing'} reason=${attachReady.reason}`);
+            this.logger.warn(`傳送目標實例暫不可進入：playerId=${transfer.playerId} target=${target?.meta?.instanceId ?? 'missing'} reason=${attachReady.reason}`);
             return;
         }
         const previousSourcePosition = typeof source.getPlayerPosition === 'function'
@@ -180,7 +180,7 @@ function rollbackTransferInstancePlacement(input) {
             target.disconnectPlayer(playerId);
         }
         catch (rollbackError) {
-            logger.warn(`传送失败回滚目标实例挂接失败：playerId=${playerId} error=${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`);
+            logger.warn(`傳送失敗回滾目標實例掛接失敗：playerId=${playerId} error=${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`);
         }
     }
     if (targetConnected && target === source && previousSourcePosition && typeof source.relocatePlayer === 'function') {
@@ -188,7 +188,7 @@ function rollbackTransferInstancePlacement(input) {
             source.relocatePlayer(playerId, previousSourcePosition.x, previousSourcePosition.y);
         }
         catch (rollbackError) {
-            logger.warn(`传送失败恢复同实例落点失败：playerId=${playerId} error=${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`);
+            logger.warn(`傳送失敗恢復同實例落點失敗：playerId=${playerId} error=${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`);
         }
     }
     if (sourceDisconnected && source && target !== source && typeof source.connectPlayer === 'function') {
@@ -202,7 +202,7 @@ function rollbackTransferInstancePlacement(input) {
             });
         }
         catch (rollbackError) {
-            logger.warn(`传送失败恢复源实例挂接失败：playerId=${playerId} error=${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`);
+            logger.warn(`傳送失敗恢復源實例掛接失敗：playerId=${playerId} error=${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`);
         }
     }
     try {
@@ -214,7 +214,7 @@ function rollbackTransferInstancePlacement(input) {
         }
     }
     catch (rollbackError) {
-        logger.warn(`传送失败恢复位置索引失败：playerId=${playerId} cause=${error instanceof Error ? error.message : String(error)} rollback=${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`);
+        logger.warn(`傳送失敗恢復位置索引失敗：playerId=${playerId} cause=${error instanceof Error ? error.message : String(error)} rollback=${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`);
     }
 }
 

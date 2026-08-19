@@ -102,33 +102,33 @@ function validateStructure(raw: unknown): ValidationError[] {
   const errors: ValidationError[] = [];
 
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
-    errors.push({ layer: 1, field: 'root', message: '必须是非空对象' });
+    errors.push({ layer: 1, field: 'root', message: '必須是非空對象' });
     return errors;
   }
 
   const obj = raw as Record<string, unknown>;
 
   if (typeof obj.name !== 'string' || !obj.name.trim()) {
-    errors.push({ layer: 1, field: 'name', message: '必须是非空字符串' });
+    errors.push({ layer: 1, field: 'name', message: '必須是非空字符串' });
   }
   if (typeof obj.grade !== 'string') {
-    errors.push({ layer: 1, field: 'grade', message: '必须是字符串' });
+    errors.push({ layer: 1, field: 'grade', message: '必須是字符串' });
   }
   if (typeof obj.category !== 'string') {
-    errors.push({ layer: 1, field: 'category', message: '必须是字符串' });
+    errors.push({ layer: 1, field: 'category', message: '必須是字符串' });
   }
   if (!Number.isFinite(obj.realmLv) || (obj.realmLv as number) < 1) {
-    errors.push({ layer: 1, field: 'realmLv', message: '必须是 ≥1 的有限数字' });
+    errors.push({ layer: 1, field: 'realmLv', message: '必須是 ≥1 的有限數字' });
   }
 
   const category = obj.category as string;
   if (category === 'internal') {
     if (!obj.attrRatio || typeof obj.attrRatio !== 'object') {
-      errors.push({ layer: 1, field: 'attrRatio', message: 'internal 类功法必须提供 attrRatio' });
+      errors.push({ layer: 1, field: 'attrRatio', message: 'internal 類功法必須提供 attrRatio' });
     }
   } else if (category === 'arts') {
     if (!Array.isArray(obj.skills) || obj.skills.length === 0) {
-      errors.push({ layer: 1, field: 'skills', message: 'arts 类功法必须提供非空 skills 数组' });
+      errors.push({ layer: 1, field: 'skills', message: 'arts 類功法必須提供非空 skills 數組' });
     }
   }
 
@@ -143,7 +143,7 @@ function validateSemantics(candidate: Record<string, unknown>, expectedCategory:
   // category 限制
   const category = candidate.category as string;
   if (!ALLOWED_CATEGORIES.includes(category as TechniqueCategory)) {
-    errors.push({ layer: 2, field: 'category', message: `仅允许 ${ALLOWED_CATEGORIES.join('/')}，收到 ${category}` });
+    errors.push({ layer: 2, field: 'category', message: `僅允許 ${ALLOWED_CATEGORIES.join('/')}，收到 ${category}` });
   }
   if (category !== expectedCategory) {
     errors.push({ layer: 2, field: 'category', message: `期望 ${expectedCategory}，收到 ${category}` });
@@ -152,14 +152,14 @@ function validateSemantics(candidate: Record<string, unknown>, expectedCategory:
   // grade 合法
   const grade = candidate.grade as string;
   if (!TECHNIQUE_GRADE_ORDER.includes(grade as TechniqueGrade)) {
-    errors.push({ layer: 2, field: 'grade', message: `非法品阶: ${grade}` });
+    errors.push({ layer: 2, field: 'grade', message: `非法品階: ${grade}` });
   }
 
   // attrFloat 范围
   if (candidate.attrFloat !== undefined) {
     const attrFloat = Number(candidate.attrFloat);
     if (!Number.isFinite(attrFloat) || attrFloat < -0.15 || attrFloat > 0.10) {
-      errors.push({ layer: 2, field: 'attrFloat', message: 'attrFloat 必须在 [-0.15, 0.10]' });
+      errors.push({ layer: 2, field: 'attrFloat', message: 'attrFloat 必須在 [-0.15, 0.10]' });
     }
   }
 
@@ -167,7 +167,7 @@ function validateSemantics(candidate: Record<string, unknown>, expectedCategory:
   if (candidate.expDifficulty !== undefined) {
     const expDifficulty = Number(candidate.expDifficulty);
     if (!Number.isFinite(expDifficulty) || expDifficulty < 0.5 || expDifficulty > 2.0) {
-      errors.push({ layer: 2, field: 'expDifficulty', message: 'expDifficulty 必须在 [0.5, 2.0]' });
+      errors.push({ layer: 2, field: 'expDifficulty', message: 'expDifficulty 必須在 [0.5, 2.0]' });
     }
   }
 
@@ -175,7 +175,7 @@ function validateSemantics(candidate: Record<string, unknown>, expectedCategory:
   if (candidate.maxLayer !== undefined) {
     const maxLayer = Number(candidate.maxLayer);
     if (!Number.isFinite(maxLayer) || maxLayer < 3 || maxLayer > 49) {
-      errors.push({ layer: 2, field: 'maxLayer', message: 'maxLayer 必须在 [3, 49]' });
+      errors.push({ layer: 2, field: 'maxLayer', message: 'maxLayer 必須在 [3, 49]' });
     }
   }
 
@@ -196,9 +196,9 @@ function validateNumerics(candidate: Record<string, unknown>, expectedCategory: 
     const normalizedAttrRatio = normalizeTechniqueAttrRatio(attrRatio);
     const weightSum = Object.values(normalizedAttrRatio ?? {}).reduce((sum, value) => sum + value, 0);
     if (!normalizedAttrRatio || weightSum <= 0) {
-      errors.push({ layer: 3, field: 'attrRatio', message: 'attrRatio 必须包含合法六维字段且权重和 > 0' });
+      errors.push({ layer: 3, field: 'attrRatio', message: 'attrRatio 必須包含合法六維字段且權重和 > 0' });
     } else if (Object.keys(normalizedAttrRatio).length < 2) {
-      errors.push({ layer: 3, field: 'attrRatio', message: 'attrRatio 至少需要 2 个合法六维字段' });
+      errors.push({ layer: 3, field: 'attrRatio', message: 'attrRatio 至少需要 2 個合法六維字段' });
     }
   }
 
@@ -221,12 +221,12 @@ function validateArtsStrengthSemantics(candidate: Record<string, unknown>): Vali
     return errors;
   }
   if (skills.length !== 1) {
-    errors.push({ layer: 2, field: 'skills', message: 'AI 术法首版必须且只能生成 1 个技能' });
+    errors.push({ layer: 2, field: 'skills', message: 'AI 術法首版必須且只能生成 1 個技能' });
   }
 
   skills.forEach((rawSkill, skillIndex) => {
     if (!rawSkill || typeof rawSkill !== 'object' || Array.isArray(rawSkill)) {
-      errors.push({ layer: 2, field: `skills[${skillIndex}]`, message: '技能必须是对象' });
+      errors.push({ layer: 2, field: `skills[${skillIndex}]`, message: '技能必須是對象' });
       return;
     }
     const skill = rawSkill as Record<string, unknown>;
@@ -235,7 +235,7 @@ function validateArtsStrengthSemantics(candidate: Record<string, unknown>): Vali
         errors.push({
           layer: 2,
           field: `skills[${skillIndex}].${field}`,
-          message: '术法强度草稿禁止输出旧版 SkillDef/Effect/预算字段',
+          message: '術法強度草稿禁止輸出舊版 SkillDef/Effect/預算字段',
         });
       }
     }
@@ -249,17 +249,17 @@ function validateArtsStrengthSemantics(candidate: Record<string, unknown>): Vali
 function validateArtsStrengthTarget(raw: unknown, skillIndex: number, errors: ValidationError[]): void {
   if (raw === undefined) return;
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
-    errors.push({ layer: 2, field: `skills[${skillIndex}].target`, message: 'target 必须是对象' });
+    errors.push({ layer: 2, field: `skills[${skillIndex}].target`, message: 'target 必須是對象' });
     return;
   }
   const target = raw as Record<string, unknown>;
   for (const key of Object.keys(target)) {
     if (!ARTS_STRENGTH_TARGET_KEYS.has(key)) {
-      errors.push({ layer: 2, field: `skills[${skillIndex}].target.${key}`, message: 'target 包含未允许字段' });
+      errors.push({ layer: 2, field: `skills[${skillIndex}].target.${key}`, message: 'target 包含未允許字段' });
     }
   }
   if (target.type !== undefined && !ARTS_STRENGTH_TARGET_TYPES.has(String(target.type))) {
-    errors.push({ layer: 2, field: `skills[${skillIndex}].target.type`, message: 'target.type 不在允许范围' });
+    errors.push({ layer: 2, field: `skills[${skillIndex}].target.type`, message: 'target.type 不在允許範圍' });
   }
   validateOptionalArtsPositiveWeight(target.castRangeWeight, `skills[${skillIndex}].target.castRangeWeight`, errors);
   validateOptionalArtsPositiveWeight(target.areaWeight, `skills[${skillIndex}].target.areaWeight`, errors);
@@ -268,33 +268,33 @@ function validateArtsStrengthTarget(raw: unknown, skillIndex: number, errors: Va
 function validateArtsStrengthStructure(raw: unknown, skillIndex: number, errors: ValidationError[]): void {
   if (raw === undefined) return;
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
-    errors.push({ layer: 2, field: `skills[${skillIndex}].structureStrength`, message: 'structureStrength 必须是对象' });
+    errors.push({ layer: 2, field: `skills[${skillIndex}].structureStrength`, message: 'structureStrength 必須是對象' });
     return;
   }
   for (const key of Object.keys(raw as Record<string, unknown>)) {
     const value = Number((raw as Record<string, unknown>)[key]);
     if (!ARTS_STRENGTH_STRUCTURE_KEYS.has(key)) {
-      errors.push({ layer: 2, field: `skills[${skillIndex}].structureStrength.${key}`, message: 'structureStrength 只允许 damage/cost/cooldown/chant/castRange/area' });
+      errors.push({ layer: 2, field: `skills[${skillIndex}].structureStrength.${key}`, message: 'structureStrength 只允許 damage/cost/cooldown/chant/castRange/area' });
     } else if (!isValidArtsWeight(value)) {
-      errors.push({ layer: 2, field: `skills[${skillIndex}].structureStrength.${key}`, message: 'structureStrength 权重必须在 [-100, 100]' });
+      errors.push({ layer: 2, field: `skills[${skillIndex}].structureStrength.${key}`, message: 'structureStrength 權重必須在 [-100, 100]' });
     }
   }
 }
 
 function validateArtsStrengthFormula(raw: unknown, skillIndex: number, errors: ValidationError[]): void {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
-    errors.push({ layer: 2, field: `skills[${skillIndex}].formulaStrength`, message: 'formulaStrength 必须是对象' });
+    errors.push({ layer: 2, field: `skills[${skillIndex}].formulaStrength`, message: 'formulaStrength 必須是對象' });
     return;
   }
   const formula = raw as Record<string, unknown>;
   for (const key of Object.keys(formula)) {
     if (!ARTS_STRENGTH_FORMULA_KEYS.has(key)) {
-      errors.push({ layer: 2, field: `skills[${skillIndex}].formulaStrength.${key}`, message: 'formulaStrength 包含未允许字段' });
+      errors.push({ layer: 2, field: `skills[${skillIndex}].formulaStrength.${key}`, message: 'formulaStrength 包含未允許字段' });
     }
   }
   const bases = formula.attributeBases;
   if (!bases || typeof bases !== 'object' || Array.isArray(bases)) {
-    errors.push({ layer: 2, field: `skills[${skillIndex}].formulaStrength.attributeBases`, message: 'attributeBases 必须是对象' });
+    errors.push({ layer: 2, field: `skills[${skillIndex}].formulaStrength.attributeBases`, message: 'attributeBases 必須是對象' });
   } else {
     for (const key of Object.keys(bases as Record<string, unknown>)) {
       const value = Number((bases as Record<string, unknown>)[key]);
@@ -302,13 +302,13 @@ function validateArtsStrengthFormula(raw: unknown, skillIndex: number, errors: V
         errors.push({
           layer: 2,
           field: `skills[${skillIndex}].formulaStrength.attributeBases.${key}`,
-          message: 'attributeBases key 不在允许的战斗属性白名单中',
+          message: 'attributeBases key 不在允許的戰鬥屬性白名單中',
         });
       } else if (!Number.isFinite(value) || value <= 0 || value > TECHNIQUE_ARTS_STRENGTH_CONSTANTS.attributeBases.maxScale) {
         errors.push({
           layer: 2,
           field: `skills[${skillIndex}].formulaStrength.attributeBases.${key}`,
-          message: 'attributeBases 必须是 1 到 100 的正权重；0 或负数表示不参与时请省略该 key',
+          message: 'attributeBases 必須是 1 到 100 的正權重；0 或負數表示不參與時請省略該 key',
         });
       }
     }
@@ -316,7 +316,7 @@ function validateArtsStrengthFormula(raw: unknown, skillIndex: number, errors: V
   const percentBonuses = formula.percentBonuses;
   if (percentBonuses !== undefined) {
     if (!percentBonuses || typeof percentBonuses !== 'object' || Array.isArray(percentBonuses)) {
-      errors.push({ layer: 2, field: `skills[${skillIndex}].formulaStrength.percentBonuses`, message: 'percentBonuses 必须是对象' });
+      errors.push({ layer: 2, field: `skills[${skillIndex}].formulaStrength.percentBonuses`, message: 'percentBonuses 必須是對象' });
       return;
     }
     for (const key of Object.keys(percentBonuses as Record<string, unknown>)) {
@@ -325,13 +325,13 @@ function validateArtsStrengthFormula(raw: unknown, skillIndex: number, errors: V
         errors.push({
           layer: 2,
           field: `skills[${skillIndex}].formulaStrength.percentBonuses.${key}`,
-          message: 'percentBonuses key 不在允许的百分比来源白名单中',
+          message: 'percentBonuses key 不在允許的百分比來源白名單中',
         });
       } else if (!isValidArtsPercentBonusWeight(value)) {
         errors.push({
           layer: 2,
           field: `skills[${skillIndex}].formulaStrength.percentBonuses.${key}`,
-          message: 'percentBonuses 权重必须在 [0, 100]',
+          message: 'percentBonuses 權重必須在 [0, 100]',
         });
       }
     }
@@ -361,7 +361,7 @@ function validateOptionalArtsPositiveWeight(raw: unknown, field: string, errors:
     errors.push({
       layer: 2,
       field,
-      message: `target 权重必须在 [${TECHNIQUE_ARTS_STRENGTH_CONSTANTS.structure.minRange}, ${TECHNIQUE_ARTS_STRENGTH_CONSTANTS.structure.maxRange}]`,
+      message: `target 權重必須在 [${TECHNIQUE_ARTS_STRENGTH_CONSTANTS.structure.minRange}, ${TECHNIQUE_ARTS_STRENGTH_CONSTANTS.structure.maxRange}]`,
     });
   }
 }

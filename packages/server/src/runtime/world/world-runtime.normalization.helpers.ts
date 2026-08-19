@@ -153,10 +153,10 @@ export function parseRuntimeInstanceDescriptor(instanceId) {
 }
 /** 按实例预设生成展示名称。 */
 export function buildRuntimeInstanceDisplayName(templateName, linePreset, lineIndex = 1, defaultEntry = true) {
-    const label = normalizeRuntimeInstanceLinePreset(linePreset) === 'real' ? '真实' : '和平';
+    const label = normalizeRuntimeInstanceLinePreset(linePreset) === 'real' ? '真實' : '和平';
     const resolvedTemplateName = typeof templateName === 'string' && templateName.trim()
         ? templateName.trim()
-        : '未知地图';
+        : '未知地圖';
     if (defaultEntry) {
         return `${resolvedTemplateName}·${label}`;
     }
@@ -201,7 +201,7 @@ export function formatItemListSummary(items) {
     if (items.length <= 3) {
         return preview.join('、');
     }
-    return `${preview.join('、')} 等 ${items.length} 种物品`;
+    return `${preview.join('、')} 等 ${items.length} 種物品`;
 }
 /** 浅拷贝战斗特效对象，避免共享引用。 */
 export function cloneCombatEffect(source) {
@@ -382,18 +382,18 @@ export function removeContainerRowEntries(source, removed) {
 export function buildNpcQuestProgressText(quest) {
     switch (quest.objectiveType) {
         case 'kill':
-            return `去猎杀 ${quest.targetName}（${quest.progress}/${quest.required}）。`;
+            return `去獵殺 ${quest.targetName}（${quest.progress}/${quest.required}）。`;
         case 'submit_item':
             return `收集 ${quest.targetName}（${quest.progress}/${quest.required}）。`;
         case 'talk':
             return quest.targetNpcName
-                ? `去找 ${quest.targetNpcName} 传话。`
-                : `去找 ${quest.targetName} 传话。`;
+                ? `去找 ${quest.targetNpcName} 傳話。`
+                : `去找 ${quest.targetName} 傳話。`;
         case 'learn_technique':
             return `修成 ${quest.targetName}。`;
         case 'realm_progress':
         case 'realm_stage':
-            return `继续修炼至 ${quest.targetName}。`;
+            return `繼續修煉至 ${quest.targetName}。`;
         default:
             return quest.desc || quest.title;
     }
@@ -526,9 +526,9 @@ export function resolveQuestTargetLabel(objectiveType, quest, targetRealmLabel, 
         return resolvePlayerFacingContentName(quest.targetTechniqueId, '未知功法', quest.targetName, techniqueName);
     }
     if (objectiveType === 'kill' && typeof quest.targetMonsterId === 'string' && quest.targetMonsterId.trim()) {
-        return resolvePlayerFacingContentName(quest.targetMonsterId, '未知妖兽', quest.targetName);
+        return resolvePlayerFacingContentName(quest.targetMonsterId, '未知妖獸', quest.targetName);
     }
-    return resolvePlayerFacingContentName(quest.id, '未知目标', quest.targetName, quest.title);
+    return resolvePlayerFacingContentName(quest.id, '未知目標', quest.targetName, quest.title);
 }
 /** 生成任务奖励展示文本。 */
 export function buildQuestRewardText(quest, rewards) {
@@ -655,14 +655,14 @@ export function parseDirection(input) {
                 break;
         }
     }
-    throw new BadRequestException(`方向无效：${String(input)}`);
+    throw new BadRequestException(`方向無效：${String(input)}`);
 }
 /** 标准化物品槽位索引。 */
 export function normalizeSlotIndex(input) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     if (!Number.isFinite(input)) {
-        throw new BadRequestException(`背包槽位无效：${String(input)}`);
+        throw new BadRequestException(`背包槽位無效：${String(input)}`);
     }
     return Math.max(0, Math.trunc(Number(input)));
 }
@@ -672,7 +672,7 @@ export function normalizeEquipSlot(input) {
 
     const slot = typeof input === 'string' ? input.trim() : '';
     if (!(EQUIP_SLOTS as readonly string[]).includes(slot)) {
-        throw new BadRequestException(`装备槽位无效：${String(input)}`);
+        throw new BadRequestException(`裝備槽位無效：${String(input)}`);
     }
     return slot;
 }
@@ -680,7 +680,7 @@ export function normalizeEquipSlot(input) {
 export function normalizeArtifactSlot(input) {
     const slot = typeof input === 'string' ? input.trim() : '';
     if (!(ARTIFACT_SLOTS as readonly string[]).includes(slot)) {
-        throw new BadRequestException(`法宝槽位无效：${String(input)}`);
+        throw new BadRequestException(`法寶槽位無效：${String(input)}`);
     }
     return slot;
 }
@@ -690,7 +690,7 @@ export function normalizeEquipmentOrArtifactSlot(input) {
     if ((EQUIP_SLOTS as readonly string[]).includes(slot) || (ARTIFACT_SLOTS as readonly string[]).includes(slot)) {
         return slot;
     }
-    throw new BadRequestException(`装备槽位无效：${String(input)}`);
+    throw new BadRequestException(`裝備槽位無效：${String(input)}`);
 }
 /** 标准化功法 ID，空值返回 null。 */
 export function normalizeTechniqueId(input) {
@@ -701,7 +701,7 @@ export function normalizeShopQuantity(input) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     if (typeof input !== 'number' || !Number.isSafeInteger(input) || input <= 0) {
-        throw new BadRequestException('购买数量无效');
+        throw new BadRequestException('購買數量無效');
     }
     return Math.trunc(input);
 }
@@ -713,7 +713,7 @@ export function normalizePositiveCount(input) {
         return 1;
     }
     if (!Number.isFinite(input)) {
-        throw new BadRequestException(`数量无效：${String(input)}`);
+        throw new BadRequestException(`數量無效：${String(input)}`);
     }
     return Math.max(1, Math.trunc(Number(input)));
 }
@@ -722,7 +722,7 @@ export function normalizeCoordinate(input, label) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     if (!Number.isFinite(input)) {
-        throw new BadRequestException(`${label} 坐标无效：${String(input)}`);
+        throw new BadRequestException(`${label} 座標無效：${String(input)}`);
     }
     return Math.trunc(Number(input));
 }
@@ -734,7 +734,7 @@ export function normalizeRollCount(input) {
         return 1;
     }
     if (!Number.isFinite(input)) {
-        throw new BadRequestException(`掉落次数无效：${String(input)}`);
+        throw new BadRequestException(`掉落次數無效：${String(input)}`);
     }
     return Math.max(1, Math.min(1000, Math.trunc(Number(input))));
 }

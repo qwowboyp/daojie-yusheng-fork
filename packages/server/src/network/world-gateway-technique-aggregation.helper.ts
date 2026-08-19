@@ -402,7 +402,7 @@ export class WorldGatewayTechniqueAggregationHelper {
     const learner = latest ? this.resolveLearnerState(check.player, latest.techniqueId, latest.metadata.revision) : null;
     return {
       buildingId: check.building.id,
-      displayName: normalizeText(check.building.name) || '统法台',
+      displayName: normalizeText(check.building.name) || '統法臺',
       ...(normalizeText(check.building.ownerPlayerId) ? { ownerPlayerId: normalizeText(check.building.ownerPlayerId) } : {}),
       isOwner,
       ...(familyId ? { familyId } : {}),
@@ -605,7 +605,7 @@ export class WorldGatewayTechniqueAggregationHelper {
       learnedAggregateCount: 0,
       platform: {
         buildingId: normalizeText(request.buildingId) || 'unknown',
-        displayName: normalizeText(check?.building?.name) || '统法台',
+        displayName: normalizeText(check?.building?.name) || '統法臺',
         isOwner: false,
         accessPolicyResource: this.deps.buildingAccessPolicyService?.buildTechniquePlatformResource(
           normalizeText(request.buildingId) || 'unknown',

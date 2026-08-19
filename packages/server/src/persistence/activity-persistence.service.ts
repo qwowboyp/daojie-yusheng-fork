@@ -104,21 +104,21 @@ export class ActivityPersistenceService {
   async onModuleInit(): Promise<void> {
     const databaseUrl = resolveServerDatabaseUrl();
     if (!databaseUrl.trim()) {
-      this.logger.log('活动持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('活動持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
     const sharedPool = this.databasePoolProvider?.getPool?.('activity');
     if (!sharedPool) {
-      this.logger.warn('活动持久化已禁用：数据库连接池不可用');
+      this.logger.warn('活動持久化已禁用：數據庫連接池不可用');
       return;
     }
     this.pool = sharedPool;
     try {
       await ensureActivityTables(sharedPool);
       this.enabled = true;
-      this.logger.log('活动持久化已启用');
+      this.logger.log('活動持久化已啟用');
     } catch (error) {
-      this.logger.error('活动持久化初始化失败，已回退为禁用模式', error instanceof Error ? error.stack : String(error));
+      this.logger.error('活動持久化初始化失敗，已回退為禁用模式', error instanceof Error ? error.stack : String(error));
       this.pool = null;
       this.enabled = false;
     }

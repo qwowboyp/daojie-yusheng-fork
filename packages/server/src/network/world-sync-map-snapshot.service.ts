@@ -1059,7 +1059,7 @@ function projectPortalRenderEntity(portal) {
     y: portal.y,
     char: resolvePortalRenderChar(portal),
     color: typeof portal.color === 'string' && portal.color.trim() ? portal.color.trim() : '#c8a15a',
-    name: typeof portal.name === 'string' && portal.name.trim() ? portal.name.trim() : '传送点',
+    name: typeof portal.name === 'string' && portal.name.trim() ? portal.name.trim() : '傳送點',
     kind: 'portal',
   };
 }
@@ -1075,9 +1075,9 @@ function buildPortalRenderEntityId(portal) {
 
 function resolvePortalRenderChar(portal) {
   if (typeof portal.char === 'string' && portal.char.trim()) {
-    return portal.char.trim()[0] ?? '阵';
+    return portal.char.trim()[0] ?? '陣';
   }
-  return portal.kind === 'stairs' ? '' : '阵';
+  return portal.kind === 'stairs' ? '' : '陣';
 }
 
 function isSameNpcRenderEntity(projected, npc) {

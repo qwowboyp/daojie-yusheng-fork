@@ -67,7 +67,7 @@ export class OfflineHangingRuntimeCleanupService implements OnModuleDestroy {
       });
     }, OFFLINE_HANGING_RUNTIME_SWEEP_INTERVAL_MS);
     this.timer.unref();
-    this.logger.log(`离线挂机运行态清理已启动，间隔 ${OFFLINE_HANGING_RUNTIME_SWEEP_INTERVAL_MS}ms`);
+    this.logger.log(`離線掛機運行態清理已啟動，間隔 ${OFFLINE_HANGING_RUNTIME_SWEEP_INTERVAL_MS}ms`);
   }
 
   onModuleDestroy(): void {
@@ -160,7 +160,7 @@ export class OfflineHangingRuntimeCleanupService implements OnModuleDestroy {
         } catch (error) {
           result.failed += 1;
           this.logger.warn(
-            `离线挂机运行态清理失败：${playerId} ${error instanceof Error ? error.message : String(error)}`,
+            `離線掛機運行態清理失敗：${playerId} ${error instanceof Error ? error.message : String(error)}`,
           );
           return null;
         }
@@ -176,7 +176,7 @@ export class OfflineHangingRuntimeCleanupService implements OnModuleDestroy {
 
     if (result.candidates > 0 || result.failed > 0) {
       this.logger.log(
-        `离线挂机运行态清理完成：候选=${result.candidates} 入队=${result.queuedForReap} 跳过=${result.skipped} 失败=${result.failed}`,
+        `離線掛機運行態清理完成：候選=${result.candidates} 入隊=${result.queuedForReap} 跳過=${result.skipped} 失敗=${result.failed}`,
       );
     }
     return result;
@@ -277,7 +277,7 @@ export class OfflineHangingRuntimeCleanupService implements OnModuleDestroy {
 
   private logSweepFailure(error: unknown): void {
     this.logger.error(
-      `离线挂机运行态扫描已整轮中止：${error instanceof Error ? error.message : String(error)}`,
+      `離線掛機運行態掃描已整輪中止：${error instanceof Error ? error.message : String(error)}`,
       error instanceof Error ? error.stack : undefined,
     );
   }

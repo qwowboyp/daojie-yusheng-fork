@@ -91,12 +91,12 @@ export class BackgroundWorkerRuntimeService implements OnModuleInit, OnModuleDes
   ) {}
 
   onModuleInit(): void {
-    this.logger.log('后台任务编排器已注册，等待启动链路编排器开闸');
+    this.logger.log('後臺任務編排器已註冊，等待啟動鏈路編排器開閘');
   }
 
   startForLifecycleCoordinator(): void {
     if (!shouldStartBackgroundWorkers()) {
-      this.logger.log('后台任务编排器已跳过：当前 role 不承载后台 worker');
+      this.logger.log('後臺任務編排器已跳過：當前 role 不承載後臺 worker');
       return;
     }
     if (this.timers.size > 0) {
@@ -112,12 +112,12 @@ export class BackgroundWorkerRuntimeService implements OnModuleInit, OnModuleDes
       this.timers.set(task.id, timer);
       this.scheduleTask(task);
     }
-    this.logger.log(`后台任务编排器已启动：${this.timers.size} 个定时任务`);
+    this.logger.log(`後臺任務編排器已啟動：${this.timers.size} 個定時任務`);
   }
 
   async onModuleDestroy(): Promise<void> {
     await this.drainForShutdown().catch((error: unknown) => {
-      this.logger.error('后台任务编排器销毁 drain 失败', error instanceof Error ? error.stack : String(error));
+      this.logger.error('後臺任務編排器銷燬 drain 失敗', error instanceof Error ? error.stack : String(error));
     });
   }
 
@@ -311,7 +311,7 @@ export class BackgroundWorkerRuntimeService implements OnModuleInit, OnModuleDes
     } catch (error) {
       state.lastFailureAt = new Date().toISOString();
       state.lastFailure = error instanceof Error ? error.message : String(error);
-      this.logger.warn(`后台任务执行失败 id=${task.id}: ${error instanceof Error ? error.stack || error.message : String(error)}`);
+      this.logger.warn(`後臺任務執行失敗 id=${task.id}: ${error instanceof Error ? error.stack || error.message : String(error)}`);
     } finally {
       state.running = false;
       state.lastHeartbeatAt = new Date().toISOString();
@@ -357,7 +357,7 @@ export class BackgroundWorkerRuntimeService implements OnModuleInit, OnModuleDes
     const budgetTimer = setTimeout(() => {
       budgetExceeded = true;
       inFlightAtBudget = this.inFlightRuns.size;
-      this.logger.error(`后台任务关机 drain 超过预算 ${budgetMs}ms，继续等待 ${inFlightAtBudget} 个在途任务，避免连接池提前关闭`);
+      this.logger.error(`後臺任務關機 drain 超過預算 ${budgetMs}ms，繼續等待 ${inFlightAtBudget} 個在途任務，避免連接池提前關閉`);
     }, budgetMs);
     try {
       while (this.inFlightRuns.size > 0) {

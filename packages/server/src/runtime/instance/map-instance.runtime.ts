@@ -755,19 +755,19 @@ class MapInstanceRuntime {
             ? runtimeStatus
             : PLAYER_ATTACH_BLOCKED_INSTANCE_STATES.has(status) ? status : '';
         if (blockedState) {
-            throw new Error(`实例 ${this.meta.instanceId} 当前状态禁止玩家接入：${blockedState}`);
+            throw new Error(`實例 ${this.meta.instanceId} 當前狀態禁止玩家接入：${blockedState}`);
         }
         const assignedNodeId = typeof this.meta?.assignedNodeId === 'string' ? this.meta.assignedNodeId.trim() : '';
         const leaseToken = typeof this.meta?.leaseToken === 'string' ? this.meta.leaseToken.trim() : '';
         if (assignedNodeId && leaseToken) {
             const leaseExpireAt = this.meta?.leaseExpireAt ? new Date(this.meta.leaseExpireAt).getTime() : 0;
             if (!Number.isFinite(leaseExpireAt) || leaseExpireAt <= Date.now()) {
-                throw new Error(`实例 ${this.meta.instanceId} 当前租约已过期，禁止玩家接入`);
+                throw new Error(`實例 ${this.meta.instanceId} 當前租約已過期，禁止玩家接入`);
             }
         }
         const destroyAt = this.meta?.destroyAt ? new Date(this.meta.destroyAt).getTime() : 0;
         if (Number.isFinite(destroyAt) && destroyAt > 0 && destroyAt <= Date.now()) {
-            throw new Error(`实例 ${this.meta.instanceId} 已到计划销毁时间，禁止玩家接入`);
+            throw new Error(`實例 ${this.meta.instanceId} 已到計劃銷燬時間，禁止玩家接入`);
         }
 
         const existing = this.playersById.get(request.playerId);
@@ -792,7 +792,7 @@ class MapInstanceRuntime {
 
         const spawn = this.findSpawnPoint(request.preferredX, request.preferredY, request.playerId);
         if (!spawn) {
-            throw new Error(`实例 ${this.meta.instanceId} 中没有可用出生点`);
+            throw new Error(`實例 ${this.meta.instanceId} 中沒有可用出生點`);
         }
 
         const handle = this.allocateHandle();
@@ -1158,7 +1158,7 @@ class MapInstanceRuntime {
 
         const target = this.findSpawnPoint(preferredX, preferredY, playerId);
         if (!target) {
-            throw new Error(`实例 ${this.meta.instanceId} 中没有可用空地块`);
+            throw new Error(`實例 ${this.meta.instanceId} 中沒有可用空地塊`);
         }
         if (player.x === target.x && player.y === target.y) {
             return {
@@ -1971,7 +1971,7 @@ class MapInstanceRuntime {
             return { ok: false, reason: 'technique_unification_platform_already_bound' };
         }
         const techniqueName = normalizeBuildingId(input?.techniqueName);
-        const nextName = techniqueName ? `统法台：${techniqueName}` : building.name;
+        const nextName = techniqueName ? `統法臺：${techniqueName}` : building.name;
         const seededPolicies = normalizePersistedBuildingAccessPolicies(
             { accessPolicies: input?.accessPolicies },
             TECHNIQUE_UNIFICATION_PLATFORM_DEF_ID,
@@ -7600,12 +7600,12 @@ class MapInstanceRuntime {
                 ? Math.max(remainingTicks ?? 0, Math.ceil(resolveBuildingDeconstructionTotalWork(building)), 1)
                 : undefined;
         const char = typeof compiled?.glyph === 'string' && compiled.glyph.trim()
-            ? compiled.glyph.trim()[0] ?? '筑'
-            : (compiled?.name?.trim()?.[0] ?? '筑');
+            ? compiled.glyph.trim()[0] ?? '築'
+            : (compiled?.name?.trim()?.[0] ?? '築');
         const color = typeof compiled?.color === 'string' && compiled.color.trim()
             ? compiled.color.trim()
             : '#cbd5e1';
-        const name = resolvePlayerFacingContentName(building.defId, '未知建筑', building?.name, compiled?.name);
+        const name = resolvePlayerFacingContentName(building.defId, '未知建築', building?.name, compiled?.name);
         const cached = this.localBuildingViewCacheById.get(building.id);
         if (cached
             && cached.x === building.x
@@ -8146,7 +8146,7 @@ class MapInstanceRuntime {
             }) === true;
         }
         catch (_error) {
-            console.warn(`[地图实例] isDynamicallyBlockedTile 异常 x=${x} y=${y}`, _error instanceof Error ? _error.message : _error);
+            console.warn(`[地圖實例] isDynamicallyBlockedTile 異常 x=${x} y=${y}`, _error instanceof Error ? _error.message : _error);
             return false;
         }
     }
@@ -8164,7 +8164,7 @@ class MapInstanceRuntime {
             return typeof result === 'boolean' ? result : null;
         }
         catch (_error) {
-            console.warn(`[地图实例] resolveCompositeSightBlocked 异常 x=${x} y=${y}`, _error instanceof Error ? _error.message : _error);
+            console.warn(`[地圖實例] resolveCompositeSightBlocked 異常 x=${x} y=${y}`, _error instanceof Error ? _error.message : _error);
             return null;
         }
     }
@@ -9604,8 +9604,8 @@ function buildMonsterInitialBuffState(monster, effect) {
     const stacks = Math.min(maxStacks, Math.max(1, Math.trunc(Number(effect.stacks) || 1)));
     const name = resolvePlayerFacingContentName(effect.buffId, '未知增益', effect.name);
     const shortMark = typeof effect.shortMark === 'string' && effect.shortMark.trim()
-        ? String(Array.from(effect.shortMark.trim())[0] ?? '气')
-        : String(Array.from(name)[0] ?? '气');
+        ? String(Array.from(effect.shortMark.trim())[0] ?? '氣')
+        : String(Array.from(name)[0] ?? '氣');
     return {
         buffId: effect.buffId,
         name,
@@ -9619,7 +9619,7 @@ function buildMonsterInitialBuffState(monster, effect) {
         stacks,
         maxStacks,
         sourceSkillId: `monster-initial:${monster.monsterId}:${effect.buffId}`,
-        sourceSkillName: `${monster.name}·先天妖势`,
+        sourceSkillName: `${monster.name}·先天妖勢`,
         realmLv: Math.max(1, Math.floor(monster.level ?? 1)),
         color: typeof effect.color === 'string' ? effect.color : undefined,
         attrs: effect.attrs ? { ...effect.attrs } : undefined,
@@ -10422,7 +10422,7 @@ function resolveBuildingCombatTargetName(building, compiled) {
     if (typeof building?.defId === 'string' && building.defId.trim()) {
         return building.defId.trim();
     }
-    return '建筑';
+    return '建築';
 }
 function resolveBuildingCombatTargetPriority(compiled, building) {
     const layerId = Math.max(0, Math.trunc(Number(compiled?.layerId) || 0));

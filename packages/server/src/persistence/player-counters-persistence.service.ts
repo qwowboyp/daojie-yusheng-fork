@@ -57,7 +57,7 @@ export class PlayerCountersPersistenceService implements OnModuleInit, OnModuleD
   async onModuleInit(): Promise<void> {
     const pool = this.databasePoolProvider?.getPool('player_counters') ?? null;
     if (!pool) {
-      this.logger.log('player_counters 持久化已禁用：未提供数据库连接');
+      this.logger.log('player_counters 持久化已禁用：未提供數據庫連接');
       return;
     }
     this.pool = pool;
@@ -65,10 +65,10 @@ export class PlayerCountersPersistenceService implements OnModuleInit, OnModuleD
       await ensurePlayerCountersTable(pool);
       await this.loadAll();
       this.enabled = true;
-      this.logger.log(`player_counters 持久化已启用，已加载 ${this.cache.size} 名玩家的计数器`);
+      this.logger.log(`player_counters 持久化已啟用，已加載 ${this.cache.size} 名玩家的計數器`);
     } catch (error) {
       this.enabled = false;
-      this.logger.error('player_counters 初始化失败', error instanceof Error ? error.stack : String(error));
+      this.logger.error('player_counters 初始化失敗', error instanceof Error ? error.stack : String(error));
     }
   }
 
@@ -89,13 +89,13 @@ export class PlayerCountersPersistenceService implements OnModuleInit, OnModuleD
         shutdownFailureAttempt += 1;
         if (shutdownFailureAttempt < PLAYER_COUNTERS_SHUTDOWN_RETRY_LIMIT) {
           this.logger.warn(
-            `player_counters 关机刷盘失败，准备重试：pending=${this.dirtyWriteCount} attempt=${shutdownFailureAttempt} error=${formatError(error)}`,
+            `player_counters 關機刷盤失敗，準備重試：pending=${this.dirtyWriteCount} attempt=${shutdownFailureAttempt} error=${formatError(error)}`,
           );
           await sleep(PLAYER_COUNTERS_SHUTDOWN_RETRY_DELAY_MS);
           continue;
         }
         this.logger.error(
-          `player_counters 关机刷盘失败，仍有 ${this.dirtyWriteCount} 项脏值保留在内存：${formatError(error)}`,
+          `player_counters 關機刷盤失敗，仍有 ${this.dirtyWriteCount} 項髒值保留在記憶體：${formatError(error)}`,
         );
         break;
       }
@@ -243,7 +243,7 @@ export class PlayerCountersPersistenceService implements OnModuleInit, OnModuleD
       this.retryAttempt += 1;
       retryDelayMs = resolveRetryDelayMs(this.retryAttempt);
       this.logger.warn(
-        `player_counters 批量落库失败：pending=${this.dirtyWriteCount} attempt=${this.retryAttempt} retryInMs=${retryDelayMs} error=${formatError(error)}`,
+        `player_counters 批量落庫失敗：pending=${this.dirtyWriteCount} attempt=${this.retryAttempt} retryInMs=${retryDelayMs} error=${formatError(error)}`,
       );
     } finally {
       if (this.flushInFlight === run) {
@@ -332,9 +332,9 @@ export class PlayerCountersPersistenceService implements OnModuleInit, OnModuleD
     this.recreating = true;
     try {
       await ensurePlayerCountersTable(this.pool);
-      this.logger.warn('player_counters 表已自动重建');
+      this.logger.warn('player_counters 表已自動重建');
     } catch (e: unknown) {
-      this.logger.error('player_counters 表自动重建失败', e instanceof Error ? e.message : String(e));
+      this.logger.error('player_counters 表自動重建失敗', e instanceof Error ? e.message : String(e));
     } finally {
       this.recreating = false;
     }

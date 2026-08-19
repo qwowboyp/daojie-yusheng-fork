@@ -274,10 +274,10 @@ function resolveJobLabel(
 ): string {
   if (kind === 'transmission') {
     if (job.jobType === 'scripture_contemplation') {
-      return normalizeText(job.label) || '藏经参悟';
+      return normalizeText(job.label) || '藏經參悟';
     }
     if (job.jobType === 'scripture_recording') {
-      return normalizeText(job.label) || '藏经录入';
+      return normalizeText(job.label) || '藏經錄入';
     }
     return normalizeText(job.label) || resolveKindLabel(kind);
   }
@@ -345,47 +345,47 @@ function normalizeKind(kind: unknown): RuntimeTechniqueActivityKind {
 function resolveKindLabel(kind: RuntimeTechniqueActivityKind): string {
   switch (kind) {
     case 'alchemy':
-      return '炼丹任务';
+      return '煉丹任務';
     case 'forging':
-      return '炼器任务';
+      return '煉器任務';
     case 'enhancement':
-      return '强化任务';
+      return '強化任務';
     case 'transmission':
-      return '传法';
+      return '傳法';
     case 'gather':
-      return '采集任务';
+      return '採集任務';
     case 'building':
-      return '营造任务';
+      return '營造任務';
     case 'mining':
-      return '挖矿任务';
+      return '挖礦任務';
     case 'formation':
-      return '阵法任务';
+      return '陣法任務';
   }
 }
 
 function resolveTransmissionBlockedReason(reason: unknown): string {
   if (reason === 'teacher_out_of_range') {
-    return '传授者不在 2 格范围内';
+    return '傳授者不在 2 格範圍內';
   }
   if (reason === 'teacher_technique_not_perfected') {
-    return '传授者尚未将原功法修至满层';
+    return '傳授者尚未將原功法修至滿層';
   }
   if (reason === 'not_created_technique') {
-    return '只能传授自创功法';
+    return '只能傳授自創功法';
   }
   if (reason === 'technique_aggregation_platform_required') {
-    return '统法只能从统法台参悟';
+    return '統法只能從統法臺參悟';
   }
   if (reason === 'scripture_platform_unavailable') {
-    return '藏经台不可用';
+    return '藏經臺不可用';
   }
   if (reason === 'scripture_platform_out_of_range') {
-    return '不在藏经台 1 格范围内';
+    return '不在藏經臺 1 格範圍內';
   }
   if (reason === 'scripture_recording_locked') {
-    return '藏经台已有藏书';
+    return '藏經臺已有藏書';
   }
-  return '等待传授条件恢复';
+  return '等待傳授條件恢復';
 }
 
 function resolveNonNegativeInteger(value: unknown): number {

@@ -2916,7 +2916,7 @@ export class WorldRuntimeCombatActionService {
       damage: Math.max(0, Math.round(Number(result.damage) || 0)),
     };
     if (!assertCombatAoiResultEventBudget(event)) {
-      this.logger.warn(`战斗 AOI 结果字段预算超限：${Object.keys(event).length} > 预算，事件已降级 [instanceId=${outcome.instanceId}, actorId=${outcome.actor?.id}]`);
+      this.logger.warn(`戰鬥 AOI 結果字段預算超限：${Object.keys(event).length} > 預算，事件已降級 [instanceId=${outcome.instanceId}, actorId=${outcome.actor?.id}]`);
     }
     return event;
   }
@@ -3018,17 +3018,17 @@ export class WorldRuntimeCombatActionService {
 
   formatRejectLog(outcome) {
     const actor = outcome.actor ? `${outcome.actor.kind}:${outcome.actor.id}` : '未知';
-    const target = outcome.target ? `${outcome.target.kind}:${outcome.target.id ?? ''}` : '无';
+    const target = outcome.target ? `${outcome.target.kind}:${outcome.target.id ?? ''}` : '無';
     const targetCount = resolveOutcomeTargetCount(outcome);
-    return `战斗动作被拒绝 原因=${outcome.reason} 阶段=${outcome.phase} 施放者=${actor} 动作=${outcome.actionId ?? '未知'} 实例=${outcome.instanceId ?? '未知'} 目标=${target} 目标数=${targetCount}`;
+    return `戰鬥動作被拒絕 原因=${outcome.reason} 階段=${outcome.phase} 施放者=${actor} 動作=${outcome.actionId ?? '未知'} 實例=${outcome.instanceId ?? '未知'} 目標=${target} 目標數=${targetCount}`;
   }
 
   formatOutcomeLog(outcome) {
     const actor = outcome.actor ? `${outcome.actor.kind}:${outcome.actor.id}` : '未知';
-    const target = outcome.target ? `${outcome.target.kind}:${outcome.target.id ?? ''}` : '无';
+    const target = outcome.target ? `${outcome.target.kind}:${outcome.target.id ?? ''}` : '無';
     const damage = Number.isFinite(Number(outcome.result?.damage)) ? Number(outcome.result.damage) : 0;
     const targetCount = resolveOutcomeTargetCount(outcome);
-    return `战斗动作结算 阶段=${outcome.phase} 施放者=${actor} 动作=${outcome.actionId ?? '未知'} 实例=${outcome.instanceId ?? '未知'} 目标=${target} 目标数=${targetCount} 伤害=${damage}`;
+    return `戰鬥動作結算 階段=${outcome.phase} 施放者=${actor} 動作=${outcome.actionId ?? '未知'} 實例=${outcome.instanceId ?? '未知'} 目標=${target} 目標數=${targetCount} 傷害=${damage}`;
   }
 }
 

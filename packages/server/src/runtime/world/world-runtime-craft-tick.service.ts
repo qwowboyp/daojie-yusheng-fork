@@ -266,7 +266,7 @@ export class WorldRuntimeCraftTickService {
           } catch (error) {
             const notice = buildCraftTickErrorNotice(error);
             this.logger.error(
-                `玩家技艺 tick 失败 playerId=${playerId}`,
+                `玩家技藝 tick 失敗 playerId=${playerId}`,
                 error instanceof Error ? error.stack : String(error),
             );
             try {
@@ -280,12 +280,12 @@ export class WorldRuntimeCraftTickService {
                 );
                 void Promise.resolve(noticeOperation).catch((noticeError) => {
                     this.logger.warn(
-                        `玩家技艺 tick 失败通知入队失败 playerId=${playerId} error=${noticeError instanceof Error ? noticeError.message : String(noticeError)}`,
+                        `玩家技藝 tick 失敗通知入隊失敗 playerId=${playerId} error=${noticeError instanceof Error ? noticeError.message : String(noticeError)}`,
                     );
                 });
             } catch (noticeError) {
                 this.logger.warn(
-                    `玩家技艺 tick 失败通知入队失败 playerId=${playerId} error=${noticeError instanceof Error ? noticeError.message : String(noticeError)}`,
+                    `玩家技藝 tick 失敗通知入隊失敗 playerId=${playerId} error=${noticeError instanceof Error ? noticeError.message : String(noticeError)}`,
                 );
             }
           } finally {
@@ -371,18 +371,18 @@ export class WorldRuntimeCraftTickService {
             void Promise.resolve(pendingFlush)
                 .then((flushed) => {
                     if (flushed !== true) {
-                        this.logger.warn(`建造任务投影收敛未完成 playerId=${player?.playerId ?? 'unknown'} reason=${reason}`);
+                        this.logger.warn(`建造任務投影收斂未完成 playerId=${player?.playerId ?? 'unknown'} reason=${reason}`);
                     }
                 })
                 .catch((error) => {
                     this.logger.warn(
-                        `建造任务投影收敛失败 playerId=${player?.playerId ?? 'unknown'} reason=${reason} error=${error instanceof Error ? error.message : String(error)}`,
+                        `建造任務投影收斂失敗 playerId=${player?.playerId ?? 'unknown'} reason=${reason} error=${error instanceof Error ? error.message : String(error)}`,
                     );
                 });
         }
         catch (error) {
             this.logger.warn(
-                `建造任务投影收敛调度失败 playerId=${player?.playerId ?? 'unknown'} reason=${reason} error=${error instanceof Error ? error.message : String(error)}`,
+                `建造任務投影收斂調度失敗 playerId=${player?.playerId ?? 'unknown'} reason=${reason} error=${error instanceof Error ? error.message : String(error)}`,
             );
         }
     }
@@ -423,8 +423,8 @@ export class WorldRuntimeCraftTickService {
             player,
             kind,
             sleepPayload.payload ?? {},
-            typeof sleepPayload.label === 'string' && sleepPayload.label.trim() ? sleepPayload.label.trim() : '技艺任务',
-            typeof sleepPayload.reason === 'string' && sleepPayload.reason.trim() ? sleepPayload.reason.trim() : '条件暂时不满足',
+            typeof sleepPayload.label === 'string' && sleepPayload.label.trim() ? sleepPayload.label.trim() : '技藝任務',
+            typeof sleepPayload.reason === 'string' && sleepPayload.reason.trim() ? sleepPayload.reason.trim() : '條件暫時不滿足',
         );
     }
 };
@@ -522,15 +522,15 @@ export function buildCraftTickErrorNotice(error: unknown): { text: string; kind:
         return buildStructuredNotice(
             'warn',
             'notice.craft.enhancement.sync-conflict',
-            '强化状态正在同步，请稍后重试。',
+            '強化狀態正在同步，請稍後重試。',
         );
     }
     if (message.includes('formation_maintenance_active_job_sync_pending')) {
         return buildStructuredNotice(
             'warn',
             'notice.craft.formation.sync-pending',
-            '阵法维护任务状态正在同步，请稍后重试。',
+            '陣法維護任務狀態正在同步，請稍後重試。',
         );
     }
-    return { text: message || '技艺任务处理失败', kind: 'warn' };
+    return { text: message || '技藝任務處理失敗', kind: 'warn' };
 }

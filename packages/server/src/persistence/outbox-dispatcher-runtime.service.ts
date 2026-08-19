@@ -57,10 +57,10 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
       description: 'Outbox dispatcher runtime adapter',
     });
     if (!this.isRuntimeEnabled()) {
-      this.logger.log('发件箱调度运行时已跳过：当前配置或 role 不承载发件箱任务');
+      this.logger.log('發件箱調度運行時已跳過：當前配置或 role 不承載發件箱任務');
       return;
     }
-    this.logger.log('发件箱调度运行时已交由调度管理器调度');
+    this.logger.log('發件箱調度運行時已交由調度管理器調度');
   }
 
   async onModuleDestroy(): Promise<void> {
@@ -94,7 +94,7 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
         } catch (error: unknown) {
           if (error instanceof OutboxDeliveryFinalizationError) {
             this.logger.error(
-              `发件箱事件消费结果收敛失败，保留 claim 等待恢复 topic=${resolveEventTopic(event)} eventId=${resolveEventId(event) || '未知'}`,
+              `發件箱事件消費結果收斂失敗，保留 claim 等待恢復 topic=${resolveEventTopic(event)} eventId=${resolveEventId(event) || '未知'}`,
               error.originalError instanceof Error ? error.originalError.stack : String(error.originalError),
             );
           } else {
@@ -104,7 +104,7 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
       }
     } catch (error: unknown) {
       this.logger.error(
-        '发件箱调度运行时轮询失败',
+        '發件箱調度運行時輪詢失敗',
         error instanceof Error ? error.stack : String(error),
       );
     } finally {
@@ -123,7 +123,7 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
     const topic = resolveEventTopic(event);
     const claimOwner = typeof event.claimed_by === 'string' ? event.claimed_by.trim() : '';
     if (!eventId || !claimOwner) {
-      this.logger.warn(`发件箱事件缺少 event_id 或 claim owner，拒绝消费 topic=${topic} eventId=${eventId || '未知'}`);
+      this.logger.warn(`發件箱事件缺少 event_id 或 claim owner，拒絕消費 topic=${topic} eventId=${eventId || '未知'}`);
       return false;
     }
     const claimTtlMs = resolveOutboxConsumerClaimTtlMs();
@@ -151,7 +151,7 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
       }
     }
     if (dedupeClaim.status === 'processing') {
-      this.logger.debug(`发件箱事件仍由其他 consumer 处理，延后而不确认 topic=${topic} eventId=${eventId}`);
+      this.logger.debug(`發件箱事件仍由其他 consumer 處理，延後而不確認 topic=${topic} eventId=${eventId}`);
       try {
         await this.outboxDispatcherService.deferClaim({ eventId, claimOwner, retryDelayMs: 1_000 });
         return false;
@@ -160,7 +160,7 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
       }
     }
     if (dedupeClaim.status === 'stale') {
-      this.logger.debug(`发件箱 claim 已被接管，拒绝进入 consumer topic=${topic} eventId=${eventId}`);
+      this.logger.debug(`發件箱 claim 已被接管，拒絕進入 consumer topic=${topic} eventId=${eventId}`);
       return false;
     }
 
@@ -176,7 +176,7 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
       throw new OutboxDeliveryFinalizationError(error);
     }
     if (!claimRenewed) {
-      this.logger.warn(`发件箱消费开始前 claim 已丢失，拒绝进入 consumer topic=${topic} eventId=${eventId}`);
+      this.logger.warn(`發件箱消費開始前 claim 已丟失，拒絕進入 consumer topic=${topic} eventId=${eventId}`);
       return false;
     }
 
@@ -187,7 +187,7 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
       renew: () => this.outboxDispatcherService.renewConsumerClaims({ eventId, claimOwner, claimTtlMs }),
       onFailure: (error) => {
         this.logger.warn(
-          `发件箱消费 claim 续租失败，消费结束后将拒绝确认或重试 topic=${topic} eventId=${eventId}: ${formatError(error)}`,
+          `發件箱消費 claim 續租失敗，消費結束後將拒絕確認或重試 topic=${topic} eventId=${eventId}: ${formatError(error)}`,
         );
       },
     });
@@ -198,17 +198,17 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
     } catch (error) {
       const claimCurrent = await heartbeat.stop();
       if (!claimCurrent) {
-        this.logger.warn(`发件箱消费失败时 claim 已丢失，拒绝重试 topic=${topic} eventId=${eventId}`);
+        this.logger.warn(`發件箱消費失敗時 claim 已丟失，拒絕重試 topic=${topic} eventId=${eventId}`);
         return false;
       }
       throw error;
     }
     const claimCurrent = await heartbeat.stop();
     if (!claimCurrent) {
-      this.logger.warn(`发件箱消费完成时 claim 已丢失，拒绝确认 topic=${topic} eventId=${eventId}`);
+      this.logger.warn(`發件箱消費完成時 claim 已丟失，拒絕確認 topic=${topic} eventId=${eventId}`);
       return false;
     }
-    this.logger.debug(`发件箱事件已投递 topic=${topic} eventId=${eventId}`);
+    this.logger.debug(`發件箱事件已投遞 topic=${topic} eventId=${eventId}`);
     try {
       const dedupeCompletion = await this.outboxDispatcherService.markConsumerDedupeDelivered({
         eventId,
@@ -216,13 +216,13 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
       });
       if (dedupeCompletion !== 'delivered') {
         this.logger.warn(
-          `发件箱 consumer claim 已丢失，拒绝确认 outbox topic=${topic} eventId=${eventId} dedupeState=${dedupeCompletion}`,
+          `發件箱 consumer claim 已丟失，拒絕確認 outbox topic=${topic} eventId=${eventId} dedupeState=${dedupeCompletion}`,
         );
         return false;
       }
       const delivered = await this.outboxDispatcherService.markDelivered({ eventId, claimOwner });
       if (!delivered) {
-        this.logger.debug(`发件箱 outbox claim 已被接管，消费结果由后续 claim 收敛 topic=${topic} eventId=${eventId}`);
+        this.logger.debug(`發件箱 outbox claim 已被接管，消費結果由後續 claim 收斂 topic=${topic} eventId=${eventId}`);
         return false;
       }
       this.markProcessedEvent(eventId, operationId);
@@ -262,7 +262,7 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
     const claimOwner = typeof event.claimed_by === 'string' ? event.claimed_by.trim() : '';
     const topic = typeof event.topic === 'string' ? event.topic : 'unknown';
     this.logger.error(
-      `发件箱事件消费失败 topic=${topic} eventId=${eventId || '未知'}`,
+      `發件箱事件消費失敗 topic=${topic} eventId=${eventId || '未知'}`,
       error instanceof Error ? error.stack : String(error),
     );
     if (!eventId || !claimOwner) {
@@ -276,11 +276,11 @@ export class OutboxDispatcherRuntimeService implements OnModuleInit, OnModuleDes
         maxAttempts: resolveOutboxMaxAttempts(),
       });
       if (!transitioned) {
-        this.logger.debug(`发件箱失败结果因 claim 已被接管而忽略 topic=${topic} eventId=${eventId}`);
+        this.logger.debug(`發件箱失敗結果因 claim 已被接管而忽略 topic=${topic} eventId=${eventId}`);
       }
     } catch (markFailedError: unknown) {
       this.logger.error(
-        `发件箱事件标记失败异常 topic=${topic} eventId=${eventId}`,
+        `發件箱事件標記失敗異常 topic=${topic} eventId=${eventId}`,
         markFailedError instanceof Error ? markFailedError.stack : String(markFailedError),
       );
     }

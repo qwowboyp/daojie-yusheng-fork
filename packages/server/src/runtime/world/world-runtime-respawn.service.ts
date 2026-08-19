@@ -99,7 +99,7 @@ export class WorldRuntimeRespawnService {
         const cleanup = this.persistAndRemoveOfflineDefeatedPlayer(playerId, player, deps)
             .catch((error) => {
                 this.logger.error(
-                    `离线战败清理异常终止 playerId=${playerId}`,
+                    `離線戰敗清理異常終止 playerId=${playerId}`,
                     error instanceof Error ? error.stack : String(error),
                 );
             })
@@ -157,7 +157,7 @@ export class WorldRuntimeRespawnService {
             }
             catch (error) {
                 if (isPlayerPresenceStaleFenceError(error)) {
-                    this.logger.warn(`离线战败清理已被更新的玩家所有权取代 playerId=${playerId}`);
+                    this.logger.warn(`離線戰敗清理已被更新的玩家所有權取代 playerId=${playerId}`);
                     if (this.isOfflineDefeatCleanupCurrent(playerId, player, deps)) {
                         this.playerRuntimeService.removePlayerRuntime(playerId);
                     }
@@ -166,7 +166,7 @@ export class WorldRuntimeRespawnService {
                 attempt += 1;
                 if (attempt === 1 || isPowerOfTwo(attempt)) {
                     this.logger.warn(
-                        `离线战败持久化失败，等待重试 playerId=${playerId} attempt=${attempt} error=${error instanceof Error ? error.message : String(error)}`,
+                        `離線戰敗持久化失敗，等待重試 playerId=${playerId} attempt=${attempt} error=${error instanceof Error ? error.message : String(error)}`,
                     );
                 }
                 await waitForOfflineDefeatCleanupRetry(attempt);
@@ -262,7 +262,7 @@ export class WorldRuntimeRespawnService {
             buffClearMode: options?.buffClearMode ?? 'death',
         });
         const mapName = targetInstance.template.name;
-        const n = buildStructuredNotice('travel', 'notice.respawn.revived', `已在 ${mapName} 复生`, {
+        const n = buildStructuredNotice('travel', 'notice.respawn.revived', `已在 ${mapName} 復生`, {
             vars: { mapName },
             pills: [{ key: 'mapName', style: 'target' }],
         });

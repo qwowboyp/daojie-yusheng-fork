@@ -50,7 +50,7 @@ export class WorldGatewayAccessPolicyHelper {
       const result = await this.gateway.accessPolicyResourceService.loadForEditor(playerId, payload.ref);
       client.emit(S2C.AccessPolicyResourceResult, toResourceResult(requestId, 'load', result));
     } catch (error) {
-      this.warn('读取权限资源失败', error);
+      this.warn('讀取權限資源失敗', error);
       client.emit(S2C.AccessPolicyResourceResult, failureResourceResult(requestId, 'load', 'access_policy_internal_error'));
     }
   }
@@ -71,7 +71,7 @@ export class WorldGatewayAccessPolicyHelper {
       const result = await this.gateway.accessPolicyResourceService.loadSetForEditor(playerId, payload.ref);
       client.emit(S2C.AccessPolicyResourceSetResult, toResourceSetResult(requestId, result));
     } catch (error) {
-      this.warn('读取权限资源组失败', error);
+      this.warn('讀取權限資源組失敗', error);
       client.emit(S2C.AccessPolicyResourceSetResult, failureResourceSetResult(requestId, 'access_policy_internal_error'));
     }
   }
@@ -105,7 +105,7 @@ export class WorldGatewayAccessPolicyHelper {
         ? { requestId, ok: true, player: { playerNo: resolved.playerNo, roleName: resolved.roleName } }
         : { requestId, ok: false, reason: 'access_policy_player_not_found' });
     } catch (error) {
-      this.warn('解析权限玩家序号失败', error);
+      this.warn('解析權限玩家序號失敗', error);
       client.emit(S2C.AccessPolicyPlayerResult, {
         requestId,
         ok: false,
@@ -135,7 +135,7 @@ export class WorldGatewayAccessPolicyHelper {
       );
       client.emit(S2C.AccessPolicyResourceResult, toResourceResult(requestId, 'save', result));
     } catch (error) {
-      this.warn('保存权限资源失败', error);
+      this.warn('保存權限資源失敗', error);
       client.emit(S2C.AccessPolicyResourceResult, failureResourceResult(requestId, 'save', 'access_policy_internal_error'));
     }
   }

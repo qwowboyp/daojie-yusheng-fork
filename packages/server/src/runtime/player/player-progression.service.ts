@@ -625,26 +625,26 @@ export class PlayerProgressionService {
 
             const segments = [];
             if (actualRealmGain > 0) {
-                segments.push(`境界修为 +${actualRealmGain}`);
+                segments.push(`境界修為 +${actualRealmGain}`);
             }
             if (actualTechniqueGain.gained > 0 && actualTechniqueGain.name) {
-                const gainLabel = actualTechniqueGain.kind === 'comprehension' ? '领悟进度' : '经验';
+                const gainLabel = actualTechniqueGain.kind === 'comprehension' ? '領悟進度' : '經驗';
                 segments.push(`${actualTechniqueGain.name} ${gainLabel} +${formatProgressionGainAmount(actualTechniqueGain.gained)}`);
             }
             if (actualCombatExpGain > 0) {
-                segments.push(`战斗经验 +${actualCombatExpGain}`);
+                segments.push(`戰鬥經驗 +${actualCombatExpGain}`);
             }
             if (actualFoundationGain > 0) {
-                segments.push(`底蕴 +${actualFoundationGain}`);
+                segments.push(`底蘊 +${actualFoundationGain}`);
             }
             mutation = mergeProgressionMutation(mutation, {
                 ...createEmptyMutation(),
                 changed: true,
                 notices: [{
 
-                        text: `${input.isKiller === false ? '参与击杀' : '斩杀'}${input.monsterName?.trim() ? ` ${input.monsterName.trim()}` : ' 敌人'}，${segments.join('，')}。`,
+                        text: `${input.isKiller === false ? '參與擊殺' : '斬殺'}${input.monsterName?.trim() ? ` ${input.monsterName.trim()}` : ' 敵人'}，${segments.join('，')}。`,
                         kind: 'info',
-                        structured: { key: 'notice.combat.kill-progress', vars: { action: input.isKiller === false ? '参与击杀' : '斩杀', target: input.monsterName?.trim() || '敌人', details: segments.join('，') }, pills: [{ key: 'target', style: 'target' }] },
+                        structured: { key: 'notice.combat.kill-progress', vars: { action: input.isKiller === false ? '參與擊殺' : '斬殺', target: input.monsterName?.trim() || '敵人', details: segments.join('，') }, pills: [{ key: 'target', style: 'target' }] },
                     }],
                 });
         }
@@ -711,7 +711,7 @@ export class PlayerProgressionService {
         if (!this.hasReachedHeavenGateRealm(realm.realmLv)) {
             return {
                 changed: false,
-                notices: [{ text: '当前境界不可开天门', kind: 'warn', structured: { key: 'notice.heaven-gate.realm-invalid' } }],
+                notices: [{ text: '當前境界不可開天門', kind: 'warn', structured: { key: 'notice.heaven-gate.realm-invalid' } }],
                 dirtyDomains: [],
             };
         }
@@ -720,7 +720,7 @@ export class PlayerProgressionService {
         if (!heavenGate?.unlocked) {
             return {
                 changed: false,
-                notices: [{ text: '当前尚未叩开仙门，暂时不能开天门', kind: 'warn', structured: { key: 'notice.heaven-gate.not-unlocked' } }],
+                notices: [{ text: '當前尚未叩開仙門，暫時不能開天門', kind: 'warn', structured: { key: 'notice.heaven-gate.not-unlocked' } }],
                 dirtyDomains: [],
             };
         }
@@ -728,14 +728,14 @@ export class PlayerProgressionService {
             if (heavenGate.entered) {
                 return {
                     changed: false,
-                    notices: [{ text: '当前已入天门，无法再改动灵根', kind: 'warn', structured: { key: 'notice.heaven-gate.already-entered-no-modify' } }],
+                    notices: [{ text: '當前已入天門，無法再改動靈根', kind: 'warn', structured: { key: 'notice.heaven-gate.already-entered-no-modify' } }],
                     dirtyDomains: [],
                 };
             }
             if (!element || !ELEMENT_KEYS.includes(element)) {
                 return {
                     changed: false,
-                    notices: [{ text: '灵根目标无效', kind: 'warn', structured: { key: 'notice.heaven-gate.invalid-element' } }],
+                    notices: [{ text: '靈根目標無效', kind: 'warn', structured: { key: 'notice.heaven-gate.invalid-element' } }],
                     dirtyDomains: [],
                 };
             }
@@ -744,7 +744,7 @@ export class PlayerProgressionService {
             if (realm.progress < cost) {
                 return {
                     changed: false,
-                    notices: [{ text: '当前境界修为不足', kind: 'warn', structured: { key: 'notice.heaven-gate.progress-insufficient' } }],
+                    notices: [{ text: '當前境界修為不足', kind: 'warn', structured: { key: 'notice.heaven-gate.progress-insufficient' } }],
                     dirtyDomains: [],
                 };
             }
@@ -754,14 +754,14 @@ export class PlayerProgressionService {
                 if (severed.has(element)) {
                     return {
                         changed: false,
-                        notices: [{ text: `${ELEMENT_KEY_LABELS[element]}灵根已被斩断`, kind: 'warn', structured: { key: 'notice.heaven-gate.already-severed', vars: { element: ELEMENT_KEY_LABELS[element] } } }],
+                        notices: [{ text: `${ELEMENT_KEY_LABELS[element]}靈根已被斬斷`, kind: 'warn', structured: { key: 'notice.heaven-gate.already-severed', vars: { element: ELEMENT_KEY_LABELS[element] } } }],
                         dirtyDomains: [],
                     };
                 }
                 if (severed.size >= HEAVEN_GATE_MAX_SEVERED) {
                     return {
                         changed: false,
-                        notices: [{ text: '最多只能斩断四条灵根', kind: 'warn', structured: { key: 'notice.heaven-gate.max-severed' } }],
+                        notices: [{ text: '最多隻能斬斷四條靈根', kind: 'warn', structured: { key: 'notice.heaven-gate.max-severed' } }],
                         dirtyDomains: [],
                     };
                 }
@@ -770,7 +770,7 @@ export class PlayerProgressionService {
             else if (!severed.has(element)) {
                 return {
                     changed: false,
-                    notices: [{ text: `${ELEMENT_KEY_LABELS[element]}灵根尚未斩断`, kind: 'warn', structured: { key: 'notice.heaven-gate.not-severed', vars: { element: ELEMENT_KEY_LABELS[element] } } }],
+                    notices: [{ text: `${ELEMENT_KEY_LABELS[element]}靈根尚未斬斷`, kind: 'warn', structured: { key: 'notice.heaven-gate.not-severed', vars: { element: ELEMENT_KEY_LABELS[element] } } }],
                     dirtyDomains: [],
                 };
             }
@@ -789,7 +789,7 @@ export class PlayerProgressionService {
                 changed: true,
                 notices: [{
 
-                        text: `${action === 'sever' ? '斩断' : '补回'}${ELEMENT_KEY_LABELS[element]}灵根，消耗 ${cost} 点境界修为。`,
+                        text: `${action === 'sever' ? '斬斷' : '補回'}${ELEMENT_KEY_LABELS[element]}靈根，消耗 ${cost} 點境界修為。`,
                         kind: 'success',
                         structured: { key: action === 'sever' ? 'notice.heaven-gate.sever-success' : 'notice.heaven-gate.restore-success', vars: { element: ELEMENT_KEY_LABELS[element], cost }, pills: [{ key: 'element', style: 'target' }] },
                     }],
@@ -800,7 +800,7 @@ export class PlayerProgressionService {
             if (heavenGate.entered) {
                 return {
                     changed: false,
-                    notices: [{ text: '当前已入天门，无法再重开天门', kind: 'warn', structured: { key: 'notice.heaven-gate.already-entered-no-reopen' } }],
+                    notices: [{ text: '當前已入天門，無法再重開天門', kind: 'warn', structured: { key: 'notice.heaven-gate.already-entered-no-reopen' } }],
                     dirtyDomains: [],
                 };
             }
@@ -820,7 +820,7 @@ export class PlayerProgressionService {
             return {
                 changed: true,
                 notices: [{
-                        text: `天门已开，本次灵根总值为 ${total}。`,
+                        text: `天門已開，本次靈根總值為 ${total}。`,
                         kind: 'success',
                         structured: { key: 'notice.heaven-gate.open-success', vars: { total }, pills: [{ key: 'total', style: 'damage' }] },
                     }],
@@ -831,14 +831,14 @@ export class PlayerProgressionService {
             if (heavenGate.entered) {
                 return {
                     changed: false,
-                    notices: [{ text: '当前已入天门，无法再逆天改命', kind: 'warn', structured: { key: 'notice.heaven-gate.already-entered-no-reroll' } }],
+                    notices: [{ text: '當前已入天門，無法再逆天改命', kind: 'warn', structured: { key: 'notice.heaven-gate.already-entered-no-reroll' } }],
                     dirtyDomains: [],
                 };
             }
             if (!heavenGate.roots) {
                 return {
                     changed: false,
-                    notices: [{ text: '当前尚未开天门，无法逆天改命', kind: 'warn', structured: { key: 'notice.heaven-gate.not-opened-no-reroll' } }],
+                    notices: [{ text: '當前尚未開天門，無法逆天改命', kind: 'warn', structured: { key: 'notice.heaven-gate.not-opened-no-reroll' } }],
                     dirtyDomains: [],
                 };
             }
@@ -847,7 +847,7 @@ export class PlayerProgressionService {
             if (realm.progress < cost) {
                 return {
                     changed: false,
-                    notices: [{ text: '当前境界修为不足，无法逆天改命', kind: 'warn', structured: { key: 'notice.heaven-gate.progress-insufficient-reroll' } }],
+                    notices: [{ text: '當前境界修為不足，無法逆天改命', kind: 'warn', structured: { key: 'notice.heaven-gate.progress-insufficient-reroll' } }],
                     dirtyDomains: [],
                 };
             }
@@ -865,7 +865,7 @@ export class PlayerProgressionService {
             return {
                 changed: true,
                 notices: [{
-                        text: `逆天改命消耗 ${cost} 点境界修为，后续开天门平均品质加成提升至 +${nextAverageBonus}。`,
+                        text: `逆天改命消耗 ${cost} 點境界修為，後續開天門平均品質加成提升至 +${nextAverageBonus}。`,
                         kind: 'success',
                         structured: { key: 'notice.heaven-gate.reroll-success', vars: { cost, averageBonus: nextAverageBonus }, pills: [{ key: 'cost', style: 'damage' }, { key: 'averageBonus', style: 'target' }] },
                     }],
@@ -875,14 +875,14 @@ export class PlayerProgressionService {
         if (!heavenGate.roots) {
             return {
                 changed: false,
-                notices: [{ text: '尚未开天门，无法入天门', kind: 'warn', structured: { key: 'notice.heaven-gate.not-opened-no-enter' } }],
+                notices: [{ text: '尚未開天門，無法入天門', kind: 'warn', structured: { key: 'notice.heaven-gate.not-opened-no-enter' } }],
                 dirtyDomains: [],
             };
         }
         if (heavenGate.entered) {
             return {
                 changed: false,
-                notices: [{ text: '当前已入天门，无需重复确认', kind: 'warn', structured: { key: 'notice.heaven-gate.already-entered-duplicate' } }],
+                notices: [{ text: '當前已入天門，無需重複確認', kind: 'warn', structured: { key: 'notice.heaven-gate.already-entered-duplicate' } }],
                 dirtyDomains: [],
             };
         }
@@ -900,7 +900,7 @@ export class PlayerProgressionService {
         return {
             changed: true,
             notices: [{
-                    text: '你已入天门，灵根结果已定。后续仍需按原本条件突破至练气。',
+                    text: '你已入天門，靈根結果已定。後續仍需按原本條件突破至練氣。',
                     kind: 'success',
                     structured: { key: 'notice.heaven-gate.enter-success' },
                 }],
@@ -914,7 +914,7 @@ export class PlayerProgressionService {
         if (!tier) {
             return {
                 changed: false,
-                notices: [{ text: '灵根幼苗品阶无效', kind: 'warn', structured: { key: 'notice.heaven-gate.seed-tier-invalid' } }],
+                notices: [{ text: '靈根幼苗品階無效', kind: 'warn', structured: { key: 'notice.heaven-gate.seed-tier-invalid' } }],
                 dirtyDomains: [],
             };
         }
@@ -923,7 +923,7 @@ export class PlayerProgressionService {
         if (!this.hasReachedHeavenGateRealm(realm.realmLv)) {
             return {
                 changed: false,
-                notices: [{ text: '至少需在叩仙门境界使用灵根幼苗', kind: 'warn', structured: { key: 'notice.heaven-gate.seed-realm-invalid' } }],
+                notices: [{ text: '至少需在叩仙門境界使用靈根幼苗', kind: 'warn', structured: { key: 'notice.heaven-gate.seed-realm-invalid' } }],
                 dirtyDomains: [],
             };
         }
@@ -932,7 +932,7 @@ export class PlayerProgressionService {
         if (heavenGate?.entered) {
             return {
                 changed: false,
-                notices: [{ text: '当前已入天门，无法再改动灵根', kind: 'warn', structured: { key: 'notice.heaven-gate.already-entered-no-modify' } }],
+                notices: [{ text: '當前已入天門，無法再改動靈根', kind: 'warn', structured: { key: 'notice.heaven-gate.already-entered-no-modify' } }],
                 dirtyDomains: [],
             };
         }
@@ -945,7 +945,7 @@ export class PlayerProgressionService {
         if (foundationCost > currentFoundation) {
             return {
                 changed: false,
-                notices: [{ text: `底蕴不足，使用${tier === 'divine' ? '神品' : '天品'}灵根幼苗需要 ${foundationCost} 点底蕴`, kind: 'warn', structured: { key: 'notice.heaven-gate.seed-foundation-insufficient', vars: { tierName: tier === 'divine' ? '神品' : '天品', cost: foundationCost } } }],
+                notices: [{ text: `底蘊不足，使用${tier === 'divine' ? '神品' : '天品'}靈根幼苗需要 ${foundationCost} 點底蘊`, kind: 'warn', structured: { key: 'notice.heaven-gate.seed-foundation-insufficient', vars: { tierName: tier === 'divine' ? '神品' : '天品', cost: foundationCost } } }],
                 dirtyDomains: [],
             };
         }
@@ -964,15 +964,15 @@ export class PlayerProgressionService {
         this.applyRealmPresentation(player, realm);
 
         const rootSummary = tier === 'divine'
-            ? '五行灵根已全部固定为 100'
-            : '五行灵根已全部定为 99，并至少一系催至 100';
-        const costSummary = foundationCost > 0 ? `，消耗 ${foundationCost} 点底蕴` : '';
+            ? '五行靈根已全部固定為 100'
+            : '五行靈根已全部定為 99，並至少一系催至 100';
+        const costSummary = foundationCost > 0 ? `，消耗 ${foundationCost} 點底蘊` : '';
         return {
             changed: true,
             notices: [{
-                text: `${tier === 'divine' ? '神品' : '天品'}灵根幼苗扎入命宫${costSummary}，${rootSummary}，逆天改命累计提升 ${gainedRerollCount} 次（现为 ${nextRerollCount} 次）。`,
+                text: `${tier === 'divine' ? '神品' : '天品'}靈根幼苗扎入命宮${costSummary}，${rootSummary}，逆天改命累計提升 ${gainedRerollCount} 次（現為 ${nextRerollCount} 次）。`,
                 kind: 'success',
-                structured: { key: 'notice.heaven-gate.seed-success', vars: { tierName: tier === 'divine' ? '神品' : '天品', costSummary: foundationCost > 0 ? `消耗 ${foundationCost} 点底蕴` : '', rootSummary, gainedRerollCount, totalRerollCount: nextRerollCount }, pills: [{ key: 'tierName', style: 'target' }] },
+                structured: { key: 'notice.heaven-gate.seed-success', vars: { tierName: tier === 'divine' ? '神品' : '天品', costSummary: foundationCost > 0 ? `消耗 ${foundationCost} 點底蘊` : '', rootSummary, gainedRerollCount, totalRerollCount: nextRerollCount }, pills: [{ key: 'tierName', style: 'target' }] },
             }],
             actionsDirty: false,
             dirtyDomains: ['progression', 'attr'],
@@ -983,7 +983,7 @@ export class PlayerProgressionService {
         if (!this.hasReachedHeavenGateRealm(realm.realmLv)) {
             return {
                 changed: false,
-                notices: [{ text: '当前至少需要叩仙门境界，才能使用碎灵丹', kind: 'warn', structured: { key: 'notice.heaven-gate.shatter-realm-invalid' } }],
+                notices: [{ text: '當前至少需要叩仙門境界，才能使用碎靈丹', kind: 'warn', structured: { key: 'notice.heaven-gate.shatter-realm-invalid' } }],
                 dirtyDomains: [],
             };
         }
@@ -992,7 +992,7 @@ export class PlayerProgressionService {
         if (!heavenGate?.unlocked) {
             return {
                 changed: false,
-                notices: [{ text: '当前尚未叩开仙门，暂时不能使用碎灵丹', kind: 'warn', structured: { key: 'notice.heaven-gate.shatter-not-unlocked' } }],
+                notices: [{ text: '當前尚未叩開仙門，暫時不能使用碎靈丹', kind: 'warn', structured: { key: 'notice.heaven-gate.shatter-not-unlocked' } }],
                 dirtyDomains: [],
             };
         }
@@ -1006,7 +1006,7 @@ export class PlayerProgressionService {
         return {
             changed: true,
             notices: [{
-                text: `碎灵丹化开命宫旧痕，消耗 ${cost} 点境界修为，天门已重置，逆天改命累计额外增加 1 次（现为 ${nextRerollCount} 次）。`,
+                text: `碎靈丹化開命宮舊痕，消耗 ${cost} 點境界修為，天門已重置，逆天改命累計額外增加 1 次（現為 ${nextRerollCount} 次）。`,
                 kind: 'success',
                 structured: { key: 'notice.heaven-gate.shatter-success', vars: { cost, totalRerollCount: nextRerollCount }, pills: [{ key: 'cost', style: 'damage' }] },
             }],
@@ -1027,7 +1027,7 @@ export class PlayerProgressionService {
         return {
             changed: true,
             notices: [{
-                text: '往生丹药力尽化前尘，境界已重归凡胎，境界修为与底蕴尽数归零。',
+                text: '往生丹藥力盡化前塵，境界已重歸凡胎，境界修為與底蘊盡數歸零。',
                 kind: 'success',
                 structured: { key: 'notice.heaven-gate.wangsheng-success' },
             }],
@@ -1053,14 +1053,14 @@ export class PlayerProgressionService {
         if (!preview) {
             return {
                 changed: false,
-                notices: [{ text: '突破条件尚未满足', kind: 'warn', structured: { key: 'notice.progression.breakthrough-requirements-unmet' } }],
+                notices: [{ text: '突破條件尚未滿足', kind: 'warn', structured: { key: 'notice.progression.breakthrough-requirements-unmet' } }],
                 dirtyDomains: [],
             };
         }
         if (!preview.canBreakthrough) {
             return {
                 changed: false,
-                notices: [{ text: preview.blockedReason ?? '突破条件尚未满足', kind: 'warn', structured: { key: 'notice.progression.breakthrough-blocked' } }],
+                notices: [{ text: preview.blockedReason ?? '突破條件尚未滿足', kind: 'warn', structured: { key: 'notice.progression.breakthrough-blocked' } }],
                 dirtyDomains: [],
             };
         }
@@ -1104,7 +1104,7 @@ export class PlayerProgressionService {
         if (!preview.canRefine) {
             return {
                 changed: false,
-                notices: [{ text: preview.blockedReason ?? '当前还不能凝练根基', kind: 'warn', structured: { key: 'notice.progression.refine-blocked' } }],
+                notices: [{ text: preview.blockedReason ?? '當前還不能凝練根基', kind: 'warn', structured: { key: 'notice.progression.refine-blocked' } }],
                 dirtyDomains: [],
             };
         }
@@ -1120,7 +1120,7 @@ export class PlayerProgressionService {
         return {
             changed: true,
             notices: [{
-                    text: `你凝练 1 点根基，六维境界乘区提高 ${ROOT_FOUNDATION_ATTR_PERCENT_PER_POINT}%。`,
+                    text: `你凝練 1 點根基，六維境界乘區提高 ${ROOT_FOUNDATION_ATTR_PERCENT_PER_POINT}%。`,
                     kind: 'success',
                     structured: { key: 'notice.progression.refine-success', vars: { percent: ROOT_FOUNDATION_ATTR_PERCENT_PER_POINT }, pills: [{ key: 'percent', style: 'damage' }] },
                 }],
@@ -1190,7 +1190,7 @@ export class PlayerProgressionService {
         const configuredMaxRealmLevel = PLAYER_REALM_STAGE_LEVEL_RANGES[finalRealmStage]?.levelTo ?? 30;
         this.maxRealmLevel = Math.min(Math.max(1, ...this.realmLevels.keys()), configuredMaxRealmLevel);
         this.loadBreakthroughTransitions();
-        this.logger.log(`已从 ${filePath} 加载 ${this.realmLevels.size} 个境界等级`);
+        this.logger.log(`已從 ${filePath} 加載 ${this.realmLevels.size} 個境界等級`);
     }
     /** 读取并缓存每级突破配置。 */
     loadBreakthroughTransitions() {
@@ -1394,11 +1394,11 @@ export class PlayerProgressionService {
             requirements.push({
                 id: `realm_${realm.realmLv}_progress_not_ready`,
                 type: 'attribute_total',
-                label: '境界修为圆满',
+                label: '境界修為圓滿',
                 completed: false,
                 hidden: false,
                 blocksBreakthrough: true,
-                detail: `当前境界修为 ${Math.max(0, Math.floor(Number(realm.progress ?? 0) || 0))} / ${Math.max(0, Math.floor(Number(realm.progressToNext ?? 0) || 0))}`,
+                detail: `當前境界修為 ${Math.max(0, Math.floor(Number(realm.progress ?? 0) || 0))} / ${Math.max(0, Math.floor(Number(realm.progressToNext ?? 0) || 0))}`,
             });
         }
         if (!transition || transition.requirements.length === 0 || transition.toRealmLv > this.maxRealmLevel) {
@@ -1431,8 +1431,8 @@ export class PlayerProgressionService {
                         optional: !blocksBreakthrough,
                         blocksBreakthrough,
                         detail: completed
-                            ? '当前已满足，确认突破后会消耗对应材料。'
-                            : `当前尚未满足。当前 ${ownedCount} / ${requirement.count}`,
+                            ? '當前已滿足，確認突破後會消耗對應材料。'
+                            : `當前尚未滿足。當前 ${ownedCount} / ${requirement.count}`,
                     });
                     continue;
                 }
@@ -1448,9 +1448,9 @@ export class PlayerProgressionService {
                         increasePct: isOptionalBreakthroughRequirementIncreaser(requirement) ? getBreakthroughRequirementIncreasePct(requirement) : undefined,
                         detail: isOptionalBreakthroughRequirementIncreaser(requirement)
                             ? (completed
-                                ? `当前已生效；若不满足该功法条件，全部属性要求上浮 ${getBreakthroughRequirementIncreasePct(requirement)}%。`
-                                : `当前未生效；若不满足该功法条件，全部属性要求上浮 ${getBreakthroughRequirementIncreasePct(requirement)}%。`)
-                            : (completed ? '当前已满足。' : '当前尚未满足。'),
+                                ? `當前已生效；若不滿足該功法條件，全部屬性要求上浮 ${getBreakthroughRequirementIncreasePct(requirement)}%。`
+                                : `當前未生效；若不滿足該功法條件，全部屬性要求上浮 ${getBreakthroughRequirementIncreasePct(requirement)}%。`)
+                            : (completed ? '當前已滿足。' : '當前尚未滿足。'),
                     });
                     continue;
                 }
@@ -1461,14 +1461,14 @@ export class PlayerProgressionService {
                         id: requirement.id,
                         type: 'attribute_total',
                         label: requiredTotal > requirement.minTotalValue
-                            ? `六维总属性达到 ${requiredTotal}（基础 ${requirement.minTotalValue}）`
-                            : (requirement.label ?? `六维总属性达到 ${requirement.minTotalValue}`),
+                            ? `六維總屬性達到 ${requiredTotal}（基礎 ${requirement.minTotalValue}）`
+                            : (requirement.label ?? `六維總屬性達到 ${requirement.minTotalValue}`),
                         completed,
                         hidden: false,
                         blocksBreakthrough: true,
                         detail: requiredTotal > requirement.minTotalValue
-                            ? `当前六维总属性 ${currentTotal} / ${requiredTotal}，基础要求 ${requirement.minTotalValue}`
-                            : `当前六维总属性 ${currentTotal} / ${requirement.minTotalValue}`,
+                            ? `當前六維總屬性 ${currentTotal} / ${requiredTotal}，基礎要求 ${requirement.minTotalValue}`
+                            : `當前六維總屬性 ${currentTotal} / ${requirement.minTotalValue}`,
                     });
                     continue;
                 }
@@ -1477,11 +1477,11 @@ export class PlayerProgressionService {
                     requirements.push({
                         id: requirement.id,
                         type: 'root',
-                        label: requirement.label ?? `任意灵根达到 ${requirement.minValue}`,
+                        label: requirement.label ?? `任意靈根達到 ${requirement.minValue}`,
                         completed,
                         hidden: false,
                         blocksBreakthrough: true,
-                        detail: `当前最高灵根 ${currentValue} / ${requirement.minValue}`,
+                        detail: `當前最高靈根 ${currentValue} / ${requirement.minValue}`,
                     });
                     continue;
                 }
@@ -1544,11 +1544,11 @@ export class PlayerProgressionService {
         let blockedReason;
         if (remaining <= 0) {
             blockedReason = current > cap
-                ? `已有根基 ${current} 点，已超过当前等级可凝练上限 ${cap} 点；已有根基保留，暂不可继续凝练。`
-                : `已达当前等级可凝练上限 ${cap} 点；已有根基保留，暂不可继续凝练。`;
+                ? `已有根基 ${current} 點，已超過當前等級可凝練上限 ${cap} 點；已有根基保留，暫不可繼續凝練。`
+                : `已達當前等級可凝練上限 ${cap} 點；已有根基保留，暫不可繼續凝練。`;
         }
         else if (!realm.breakthroughReady || progress < costProgress) {
-            blockedReason = '需要当前境界修为圆满';
+            blockedReason = '需要當前境界修為圓滿';
         }
         else if (missingItems.length > 0) {
             const missingText = missingItems.map((item) => {
@@ -1937,7 +1937,7 @@ export class PlayerProgressionService {
 
         const notices = !realm.breakthroughReady && nextRealm.breakthroughReady
             ? [{
-                    text: `${nextRealm.displayName}修为已圆满，可以尝试突破。`,
+                    text: `${nextRealm.displayName}修為已圓滿，可以嘗試突破。`,
                     kind: 'success',
                     structured: { key: 'notice.progression.realm-full', vars: { realmName: nextRealm.displayName }, pills: [{ key: 'realmName', style: 'target' }] },
                 }]
@@ -2094,7 +2094,7 @@ export class PlayerProgressionService {
                     techniquesDirty: true,
                     actionsDirty: true,
                     notices: [{
-                            text: `${fromName} 已达当前修炼上限，主修已自动切换为 ${toName}。`,
+                            text: `${fromName} 已達當前修煉上限，主修已自動切換為 ${toName}。`,
                             kind: 'info',
                             structured: { key: 'notice.progression.technique-auto-switch', vars: { fromName, toName }, pills: [{ key: 'fromName', style: 'skill' }, { key: 'toName', style: 'skill' }] },
                         }],
@@ -2123,7 +2123,7 @@ export class PlayerProgressionService {
             techniquesDirty: true,
             actionsDirty: true,
             notices: [{
-                    text: '当前主修功法不存在，已自动清空主修设置。',
+                    text: '當前主修功法不存在，已自動清空主修設置。',
                     kind: 'warn',
                     structured: { key: 'notice.progression.cultivation-cleared' },
                 }],
@@ -2284,8 +2284,8 @@ export class PlayerProgressionService {
             const techniqueName = resolvePlayerFacingContentName(technique.techId, '未知功法', technique.name);
             notices.push({
                 text: fullyMastered
-                    ? `${techniqueName} 已修至圆满。`
-                    : `${techniqueName} 提升至第 ${technique.level} 层。`,
+                    ? `${techniqueName} 已修至圓滿。`
+                    : `${techniqueName} 提升至第 ${technique.level} 層。`,
                 kind: 'success',
                 structured: fullyMastered
                     ? { key: 'notice.progression.technique-perfected', vars: { techName: techniqueName }, pills: [{ key: 'techName', style: 'skill' }] }
@@ -2413,7 +2413,7 @@ export class PlayerProgressionService {
                 professionDirty: transmissionSkillDirty,
                 actionsDirty: false,
                 notices: [{
-                    text: `功法 ${pendingTechniqueName} 已无法找到，领悟进度保留。`,
+                    text: `功法 ${pendingTechniqueName} 已無法找到，領悟進度保留。`,
                     kind: 'warn',
                     structured: { key: 'notice.progression.technique-comprehension-template-missing', vars: { techName: pendingTechniqueName }, pills: [{ key: 'techName', style: 'skill' }] },
                 }],
@@ -2472,7 +2472,7 @@ export class PlayerProgressionService {
             actionsDirty: true,
             pendingTechniqueComprehensionRemovedIds: [pending.techId, ...replacedTechniqueIds],
             notices: [{
-                text: `${pendingTechniqueName} 已领悟完成。`,
+                text: `${pendingTechniqueName} 已領悟完成。`,
                 kind: 'success',
                 structured: { key: 'notice.progression.technique-comprehension-complete', vars: { techName: pendingTechniqueName }, pills: [{ key: 'techName', style: 'skill' }] },
             }],
@@ -2504,7 +2504,7 @@ export class PlayerProgressionService {
             bodyTraining.level += 1;
             bodyTraining.expToNext = getBodyTrainingExpToNext(bodyTraining.level);
             notices.push({
-                text: `炼体突破至第 ${bodyTraining.level} 层，全属性提升 1%。`,
+                text: `煉體突破至第 ${bodyTraining.level} 層，全屬性提升 1%。`,
                 kind: 'success',
                 structured: { key: 'notice.progression.body-training-level-up', vars: { level: bodyTraining.level }, pills: [{ key: 'level', style: 'damage' }] },
             });

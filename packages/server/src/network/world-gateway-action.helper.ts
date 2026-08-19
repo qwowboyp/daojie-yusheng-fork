@@ -153,7 +153,7 @@ export class WorldGatewayActionHelper {
     try {
       const sectService = this.gateway.worldRuntimeService.worldRuntimeSectService;
       if (!sectService) {
-        throw new Error('宗门服务尚未就绪');
+        throw new Error('宗門服務尚未就緒');
       }
       client.emit(S2C.SectApplicationPage, sectService.buildSectApplicationPage(playerId, payload));
     } catch (error) {
@@ -179,12 +179,12 @@ export class WorldGatewayActionHelper {
     if (actionId === 'loot:open') {
       const tile = typeof payload?.target === 'string' ? parseTileTargetRef(payload.target) : null;
       if (!tile) {
-        throw new Error('拿取需要指定目标格子');
+        throw new Error('拿取需要指定目標格子');
       }
 
       const player = this.gateway.playerRuntimeService.getPlayerOrThrow(playerId);
       if (Math.max(Math.abs(player.x - tile.x), Math.abs(player.y - tile.y)) > 1) {
-        throw new Error('拿取范围只有 1 格。');
+        throw new Error('拿取範圍只有 1 格。');
       }
 
       this.gateway.worldProtocolProjectionService.emitTileLootInteraction(
@@ -275,7 +275,7 @@ export class WorldGatewayActionHelper {
           ? payload.type.trim()
           : '';
     if (!actionId) {
-      throw new Error('动作 ID 不能为空');
+      throw new Error('動作 ID 不能為空');
     }
     return actionId;
   }

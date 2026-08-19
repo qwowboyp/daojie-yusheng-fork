@@ -446,7 +446,7 @@ export class WorldRuntimeQuestQueryService {
 
         const source = this.templateRepository.getQuestSource(questId);
         if (!source) {
-            throw new NotFoundException(`任务不存在：${questId}`);
+            throw new NotFoundException(`任務不存在：${questId}`);
         }
 
         const quest = source.quest;
@@ -677,9 +677,9 @@ export class WorldRuntimeQuestQueryService {
         if (!source) {
             return {
                 ...quest,
-                title: resolvePlayerFacingContentName(quest.id, '未知任务', quest.title),
+                title: resolvePlayerFacingContentName(quest.id, '未知任務', quest.title),
                 desc: quest.desc ?? '',
-                targetName: resolvePlayerFacingContentName(quest.targetMonsterId ?? quest.id, '未知目标', quest.targetName),
+                targetName: resolvePlayerFacingContentName(quest.targetMonsterId ?? quest.id, '未知目標', quest.targetName),
                 rewardText: quest.rewardText ?? '',
                 rewardItemId: quest.rewardItemId ?? '',
                 rewardItemIds: Array.isArray(quest.rewardItemIds) ? quest.rewardItemIds.slice() : [],

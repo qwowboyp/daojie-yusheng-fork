@@ -71,21 +71,21 @@ export class TreasureVaultRuntimeService {
   async onModuleInit(): Promise<void> {
     const databaseUrl = resolveServerDatabaseUrl();
     if (!databaseUrl.trim()) {
-      this.logger.log('宝库持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('寶庫持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
     const pool = this.databasePoolProvider?.getPool?.('treasure-vault-runtime') as PoolLike | null;
     if (!pool) {
-      this.logger.warn('宝库持久化已禁用：数据库连接池不可用');
+      this.logger.warn('寶庫持久化已禁用：數據庫連接池不可用');
       return;
     }
     try {
       await ensureTreasureVaultTables(pool);
       this.pool = pool;
       this.enabled = true;
-      this.logger.log('宝库持久化已启用（instance_building_storage_item）');
+      this.logger.log('寶庫持久化已啟用（instance_building_storage_item）');
     } catch (error) {
-      this.logger.error('宝库持久化初始化失败，已回退为禁用模式', error instanceof Error ? error.stack : String(error));
+      this.logger.error('寶庫持久化初始化失敗，已回退為禁用模式', error instanceof Error ? error.stack : String(error));
       this.pool = null;
       this.enabled = false;
     }
@@ -192,7 +192,7 @@ export class TreasureVaultRuntimeService {
         try {
           this.playerRuntimeService.receiveInventoryItem(playerId, extractedItems[index]);
         } catch (rollbackError) {
-          this.logger.error('宝库存入失败后回滚背包失败', rollbackError instanceof Error ? rollbackError.stack : String(rollbackError));
+          this.logger.error('寶庫存入失敗後回滾背包失敗', rollbackError instanceof Error ? rollbackError.stack : String(rollbackError));
         }
       }
       return { ok: false, operation: 'deposit', reason: error instanceof Error ? error.message : 'deposit_failed' };
@@ -200,7 +200,7 @@ export class TreasureVaultRuntimeService {
     try {
       return { ok: true, operation: 'deposit', detail: await this.buildDetailView(playerId, resolved.instance, resolved.building) };
     } catch (error) {
-      this.logger.warn(`宝库批量存入已提交，但详情回读失败：${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`寶庫批量存入已提交，但詳情回讀失敗：${error instanceof Error ? error.message : String(error)}`);
       return { ok: true, operation: 'deposit' };
     }
   }
@@ -240,7 +240,7 @@ export class TreasureVaultRuntimeService {
       try {
         await this.storeItem(resolved.instance.meta.instanceId, resolved.building.id, item, resolved.capacity, resolved.building, resolved.instance);
       } catch (rollbackError) {
-        this.logger.error('宝库取出失败后回滚库内物品失败', rollbackError instanceof Error ? rollbackError.stack : String(rollbackError));
+        this.logger.error('寶庫取出失敗後回滾庫內物品失敗', rollbackError instanceof Error ? rollbackError.stack : String(rollbackError));
       }
       return { ok: false, operation: 'withdraw', reason: error instanceof Error ? error.message : 'withdraw_failed' };
     }
@@ -261,7 +261,7 @@ export class TreasureVaultRuntimeService {
       await this.organizeStorageRows(resolved.instance.meta.instanceId, resolved.building.id);
       return { ok: true, operation: 'organize', detail: await this.buildDetailView(playerId, resolved.instance, resolved.building) };
     } catch (error) {
-      this.logger.error('宝库整理失败，事务已回滚', error instanceof Error ? error.stack : String(error));
+      this.logger.error('寶庫整理失敗，事務已回滾', error instanceof Error ? error.stack : String(error));
       return { ok: false, operation: 'organize', reason: 'treasure_vault_organize_failed' };
     }
   }
@@ -353,7 +353,7 @@ export class TreasureVaultRuntimeService {
       const mailId = buildVaultRecoveryMailId(ownerPlayerId, instanceId, buildingId);
       const buildingName = normalizeString(input.buildingName)
         || normalizeString(rows.find((row) => normalizeString(row.building_name))?.building_name)
-        || '宝库';
+        || '寶庫';
       const reason = normalizeString(input.reason) || 'deconstruct';
       await client.query(
         `INSERT INTO ${PLAYER_MAIL_TABLE}(
@@ -365,9 +365,9 @@ export class TreasureVaultRuntimeService {
         [
           mailId,
           ownerPlayerId,
-          '司命台',
-          `宝库物品返还：${buildingName}`,
-          `你的宝库「${buildingName}」已被拆除或摧毁。为避免资产丢失，库内全部物品已随本邮件返还。`,
+          '司命臺',
+          `寶庫物品返還：${buildingName}`,
+          `你的寶庫「${buildingName}」已被拆除或摧毀。為避免資產丟失，庫內全部物品已隨本郵件返還。`,
           'treasure_vault_recovery',
           `${instanceId}:${buildingId}`,
           JSON.stringify({ args: [], instanceId, buildingId, buildingName, reason }),
@@ -418,7 +418,7 @@ export class TreasureVaultRuntimeService {
       return { ok: true, itemCount: rows.length, mailId };
     } catch (error) {
       await client.query('ROLLBACK').catch(() => undefined);
-      this.logger.error('宝库物品返还邮件迁移失败，已保留宝库库存不删除', error instanceof Error ? error.stack : String(error));
+      this.logger.error('寶庫物品返還郵件遷移失敗，已保留寶庫庫存不刪除', error instanceof Error ? error.stack : String(error));
       return { ok: false, itemCount: 0, reason: error instanceof Error ? error.message : 'treasure_vault_recovery_failed' };
     } finally {
       client.release();
@@ -442,7 +442,7 @@ export class TreasureVaultRuntimeService {
     const result = await this.pool.query(
       `SELECT storage.instance_id, storage.building_id,
               COALESCE(MAX(storage.owner_player_id), MAX(building.owner_player_id), MAX(catalog.owner_player_id)) AS owner_player_id,
-              COALESCE(MAX(storage.building_name), MAX(building.def_id), '宝库') AS building_name,
+              COALESCE(MAX(storage.building_name), MAX(building.def_id), '寶庫') AS building_name,
               COUNT(*)::bigint AS item_count
          FROM ${TREASURE_VAULT_STORAGE_TABLE} storage
          LEFT JOIN ${INSTANCE_CATALOG_TABLE} catalog ON catalog.instance_id = storage.instance_id
@@ -465,7 +465,7 @@ export class TreasureVaultRuntimeService {
     const result = await this.pool.query(
       `SELECT storage.instance_id, storage.building_id,
               COALESCE(MAX(storage.owner_player_id), MAX(building.owner_player_id), MAX(catalog.owner_player_id)) AS owner_player_id,
-              COALESCE(MAX(storage.building_name), MAX(building.def_id), '宝库') AS building_name,
+              COALESCE(MAX(storage.building_name), MAX(building.def_id), '寶庫') AS building_name,
               COUNT(*)::bigint AS item_count
          FROM ${TREASURE_VAULT_STORAGE_TABLE} storage
          LEFT JOIN ${INSTANCE_BUILDING_STATE_TABLE} building ON building.instance_id = storage.instance_id AND building.building_id = storage.building_id
@@ -487,7 +487,7 @@ export class TreasureVaultRuntimeService {
       const ownerPlayerId = normalizeString(group.owner_player_id);
       if (!ownerPlayerId) {
         blockedVaults += 1;
-        this.logger.warn(`发现无法自动返还的宝库库存：缺少 owner_player_id instance=${normalizeString(group.instance_id)} building=${normalizeString(group.building_id)}`);
+        this.logger.warn(`發現無法自動返還的寶庫庫存：缺少 owner_player_id instance=${normalizeString(group.instance_id)} building=${normalizeString(group.building_id)}`);
         continue;
       }
       const recovered = await this.recoverVaultItemsToOwnerMail({
@@ -505,7 +505,7 @@ export class TreasureVaultRuntimeService {
         continue;
       }
       blockedVaults += 1;
-      this.logger.warn(`宝库库存自动返还失败：instance=${normalizeString(group.instance_id)} building=${normalizeString(group.building_id)} reason=${recovered.reason ?? 'unknown'}`);
+      this.logger.warn(`寶庫庫存自動返還失敗：instance=${normalizeString(group.instance_id)} building=${normalizeString(group.building_id)} reason=${recovered.reason ?? 'unknown'}`);
     }
     return {
       ok: blockedVaults === 0,
@@ -871,7 +871,7 @@ function resolveVaultCapacity(instance: any, building: any): number {
 
 function resolveBuildingName(instance: any, building: any): string {
   const compiled = resolveCompiledBuildingDefinition(instance?.buildingCatalog, building);
-  return resolvePlayerFacingContentName(building?.defId, '宝库', building?.name, compiled?.name);
+  return resolvePlayerFacingContentName(building?.defId, '寶庫', building?.name, compiled?.name);
 }
 
 function normalizeTreasureVaultName(input: unknown): string | null {

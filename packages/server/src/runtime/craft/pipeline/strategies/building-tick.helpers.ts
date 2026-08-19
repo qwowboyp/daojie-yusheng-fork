@@ -59,7 +59,7 @@ export function executeBuildingTick(
   }
 
   if (!isPlayerNearBuilding(player, building, 1)) {
-    const sleepPayload = buildBuildingSleepPayload(job, building, '需要靠近半成品后才能继续建造。');
+    const sleepPayload = buildBuildingSleepPayload(job, building, '需要靠近半成品後才能繼續建造。');
     player.buildingJob = null;
     markPlayerActiveJobDirty(playerRuntimeService, player);
     runtime.refreshPlayerContextActions?.(playerId);
@@ -114,7 +114,7 @@ export function executeBuildingTick(
   );
   job.buildingName = resolvePlayerFacingContentName(
     building.defId,
-    '未知建筑',
+    '未知建築',
     runtime.resolveBuildingDisplayName?.(instance, building),
     job.buildingName,
   );
@@ -203,13 +203,13 @@ async function executeBuildingDeconstructionTick(
   );
   job.buildingName = resolvePlayerFacingContentName(
     building.defId,
-    '未知建筑',
+    '未知建築',
     runtime.resolveBuildingDisplayName?.(instance, building),
     job.buildingName,
   );
   job.instanceId = instance.meta?.instanceId ?? job.instanceId;
   job.operation = 'deconstruct';
-  job.label = '拆除建筑';
+  job.label = '拆除建築';
   job.totalTicks = totalTicks;
   job.remainingTicks = nextRemainingTicks;
   job.workTotalTicks = totalTicks;
@@ -320,7 +320,7 @@ function isPlayerNearBuilding(player: Record<string, any>, building: Record<stri
 function buildBuildingCompletionNotice(runtime: BuildingTickRuntimePort, building: Record<string, any>): TechniqueActivityNoticeMessage {
   const buildingName = resolvePlayerFacingContentName(
     building?.defId,
-    '未知建筑',
+    '未知建築',
     runtime.resolveBuildingDisplayNameByRuntime?.(runtime, building),
     building?.name,
   );
@@ -335,7 +335,7 @@ function buildBuildingCompletionNotice(runtime: BuildingTickRuntimePort, buildin
 function buildBuildingDeconstructionCompletionNotice(runtime: BuildingTickRuntimePort, building: Record<string, any>): TechniqueActivityNoticeMessage {
   const buildingName = resolvePlayerFacingContentName(
     building?.defId,
-    '未知建筑',
+    '未知建築',
     runtime.resolveBuildingDisplayNameByRuntime?.(runtime, building),
     building?.name,
   );
@@ -387,7 +387,7 @@ function buildBuildingSleepPayload(job: Record<string, any>, building: Record<st
       buildingId: job?.buildingId ?? building?.id,
       instanceId: job?.instanceId ?? building?.instanceId,
     },
-    label: resolvePlayerFacingContentName(building?.defId, '建造任务', job?.buildingName, building?.name),
+    label: resolvePlayerFacingContentName(building?.defId, '建造任務', job?.buildingName, building?.name),
     reason,
   };
 }

@@ -132,7 +132,7 @@ class WorldGatewayCraftHelper {
                 ? payload.action
                 : null;
             if (!queueId || !action) {
-                throw new BadRequestException('行动队列调整参数无效');
+                throw new BadRequestException('行動隊列調整參數無效');
             }
             this.worldClientEventService.markProtocol(client, 'mainline');
             this.worldRuntimeService.worldRuntimeCommandIntakeFacadeService.enqueueReorderTechniqueActivityQueue(

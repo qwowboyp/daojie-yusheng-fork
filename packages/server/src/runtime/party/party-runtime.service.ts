@@ -152,7 +152,7 @@ export class PartyRuntimeService implements OnModuleInit, OnModuleDestroy {
         const panel = await this.panelService.build(playerId, runtime);
         socket.emit(S2C.PartyPanel, panel);
       } catch (error) {
-        this.logger.warn(`队伍面板推送失败 player=${playerId}: ${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`隊伍面板推送失敗 player=${playerId}: ${error instanceof Error ? error.message : String(error)}`);
       }
     }));
   }

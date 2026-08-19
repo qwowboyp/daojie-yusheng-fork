@@ -11,7 +11,7 @@ function assertInstanceSupportsPlayerCombat(instance) {
     if (instance?.meta?.supportsPvp === true) {
         return;
     }
-    throw new BadRequestException('当前实例不允许玩家互攻');
+    throw new BadRequestException('當前實例不允許玩家互攻');
 }
 
 function dispatchAutoCombatCommand(playerId, command, locked, deps) {
@@ -84,9 +84,9 @@ export class WorldRuntimeBattleEngageService {
                 : null;
             if (!resolvedTarget) {
                 if (targetX !== null && targetY !== null && instance?.meta?.canDamageTile !== true) {
-                    throw new BadRequestException('当前实例不允许攻击地形');
+                    throw new BadRequestException('當前實例不允許攻擊地形');
                 }
-                throw new BadRequestException('该目标无法被攻击');
+                throw new BadRequestException('該目標無法被攻擊');
             }
             if (locked && targetRef) {
                 this.playerRuntimeService.updateCombatSettings(playerId, {
@@ -118,7 +118,7 @@ export class WorldRuntimeBattleEngageService {
         }
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         if (!player.instanceId) {
-            throw new BadRequestException('尚未进入地图实例');
+            throw new BadRequestException('尚未進入地圖實例');
         }
         const monsterInstance = deps.getInstanceRuntimeOrThrow(player.instanceId);
         const resolvedTarget = resolveAttackableTargetRef(
@@ -134,7 +134,7 @@ export class WorldRuntimeBattleEngageService {
                 this.playerRuntimeService.clearCombatTarget(playerId, currentTick);
                 return;
             }
-            throw new BadRequestException('没有可命中的目标');
+            throw new BadRequestException('沒有可命中的目標');
         }
         if (locked) {
             this.playerRuntimeService.updateCombatSettings(playerId, {

@@ -44,7 +44,7 @@ export class MiningStrategy implements TechniqueActivityStrategy<PlayerMiningJob
   readonly kind = 'mining' as const;
   readonly jobSlot = 'miningJob';
   readonly skillSlot = 'miningSkill';
-  readonly activityLabel = '挖矿';
+  readonly activityLabel = '挖礦';
   readonly pauseTicks = 10;
   readonly conditional = true;
 
@@ -63,22 +63,22 @@ export class MiningStrategy implements TechniqueActivityStrategy<PlayerMiningJob
     }
     const target = resolveMiningTarget(payload);
     if (!target) {
-      return { ok: false, error: '挖矿目标不能为空。' };
+      return { ok: false, error: '挖礦目標不能為空。' };
     }
     const deps = resolveMiningDeps(ctx);
     const location = resolvePlayerLocation(playerId, player, deps);
     const instanceId = resolveInstanceId(payload, location, player);
     const instance = instanceId ? resolveInstance(instanceId, deps, ctx) : null;
     if (!instance || typeof instance.getTileCombatState !== 'function') {
-      return { ok: false, error: '当前地图不可挖矿。' };
+      return { ok: false, error: '當前地圖不可挖礦。' };
     }
     const tileState = instance.getTileCombatState(target.x, target.y);
     if (!tileState || tileState.destroyed === true) {
-      return { ok: false, error: '挖矿目标已经不存在。' };
+      return { ok: false, error: '挖礦目標已經不存在。' };
     }
     const tileType = typeof tileState.tileType === 'string' ? tileState.tileType : '';
     if (!isOreMinableTileType(tileType)) {
-      return { ok: false, error: '该地块不是矿脉。' };
+      return { ok: false, error: '該地塊不是礦脈。' };
     }
     const currentHp = Math.max(1, Math.trunc(Number(tileState.hp ?? tileState.maxHp) || 1));
     return {
@@ -102,14 +102,14 @@ export class MiningStrategy implements TechniqueActivityStrategy<PlayerMiningJob
     const queue = ensureTechniqueActivityQueue(player);
     const mode = normalizeQueueMode((payload as { queueMode?: unknown } | null)?.queueMode);
     if (mode !== 'replace' && queue.length >= TECHNIQUE_ACTIVITY_QUEUE_MAX_LENGTH) {
-      return { ok: false, error: '技艺任务队列已满。', panelChanged: true, messages: [], groundDrops: [] };
+      return { ok: false, error: '技藝任務隊列已滿。', panelChanged: true, messages: [], groundDrops: [] };
     }
     const nextPayload = buildMiningQueuePayload(validated, payload);
     const item = {
       queueId: createMiningQueueId(validated),
       kind: 'mining',
       payload: nextPayload,
-      label: validated.tileName || '挖矿任务',
+      label: validated.tileName || '挖礦任務',
       state: 'pending',
       createdAt: Date.now(),
       cancelRef: { kind: 'mining', queueId: '' },
@@ -241,15 +241,15 @@ export class MiningStrategy implements TechniqueActivityStrategy<PlayerMiningJob
     const deps = resolveMiningDeps(ctx);
     const location = resolvePlayerLocation(resolvePlayerId(player), player, deps);
     if (location.instanceId !== job.instanceId) {
-      return { satisfied: false, reason: '已离开矿脉所在地图。' };
+      return { satisfied: false, reason: '已離開礦脈所在地圖。' };
     }
     const instance = resolveInstance(job.instanceId, deps, ctx);
     const tileState = instance?.getTileCombatState?.(job.targetX, job.targetY);
     if (!tileState || tileState.destroyed === true) {
-      return { satisfied: false, reason: '矿脉已经不存在。', shouldCancel: true };
+      return { satisfied: false, reason: '礦脈已經不存在。', shouldCancel: true };
     }
     if (!isOreMinableTileType(tileState.tileType)) {
-      return { satisfied: false, reason: '目标已不是矿脉。', shouldCancel: true };
+      return { satisfied: false, reason: '目標已不是礦脈。', shouldCancel: true };
     }
     return { satisfied: true };
   }
@@ -483,7 +483,7 @@ function resolveMiningBaseDamage(player: unknown): number {
 }
 
 function resolveTileName(tileType: string): string {
-  return uiLabels.TILE_TYPE_LABELS[tileType as keyof typeof uiLabels.TILE_TYPE_LABELS] ?? '矿脉';
+  return uiLabels.TILE_TYPE_LABELS[tileType as keyof typeof uiLabels.TILE_TYPE_LABELS] ?? '礦脈';
 }
 
 function advanceMiningPause(job: PlayerMiningJob): void {
@@ -530,7 +530,7 @@ function buildMiningSleepPayload(job: PlayerMiningJob, reason?: string): Record<
       targetX: job.targetX,
       targetY: job.targetY,
     },
-    label: job.miningNodeName || '挖矿任务',
-    reason: reason ?? '条件暂时不满足',
+    label: job.miningNodeName || '挖礦任務',
+    reason: reason ?? '條件暫時不滿足',
   };
 }

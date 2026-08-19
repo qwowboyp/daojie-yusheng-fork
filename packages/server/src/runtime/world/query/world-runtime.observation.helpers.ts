@@ -97,13 +97,13 @@ export function computeResolvedDamage(baseDamage, damageKind, attackerStats, att
 }
 /** 生成中文的伤害明细字符串。 */
 export function formatCombatDamageBreakdown(rawDamage, actualDamage, damageKind, element = undefined) {
-    return `原始 ${formatDisplayInteger(Math.max(0, Math.round(rawDamage)))} - 实际 ${formatDisplayInteger(Math.max(0, Math.round(actualDamage)))} - ${formatCombatDamageType(damageKind, element)}`;
+    return `原始 ${formatDisplayInteger(Math.max(0, Math.round(rawDamage)))} - 實際 ${formatDisplayInteger(Math.max(0, Math.round(actualDamage)))} - ${formatCombatDamageType(damageKind, element)}`;
 }
 /** 提取玩家需要直接看见的战斗判定标签。 */
 export function getCombatResolutionLabels(resolution) {
     const labels = [];
     if (resolution?.dodged) {
-        labels.push('闪避');
+        labels.push('閃避');
     }
     if (resolution?.broken) {
         labels.push('破招');
@@ -112,7 +112,7 @@ export function getCombatResolutionLabels(resolution) {
         labels.push('拆招');
     }
     if (resolution?.crit) {
-        labels.push('暴击');
+        labels.push('暴擊');
     }
     return labels;
 }
@@ -121,11 +121,11 @@ export function formatCombatResolutionOutcome(resolution, damageKind, element = 
     const labels = getCombatResolutionLabels(resolution);
     if (resolution?.dodged) {
         return labels.length > 0
-            ? `被闪避，未造成伤害（${labels.join('、')}）`
-            : '被闪避，未造成伤害';
+            ? `被閃避，未造成傷害（${labels.join('、')}）`
+            : '被閃避，未造成傷害';
     }
     const suffix = labels.length > 0 ? `（${labels.join('、')}）` : '';
-    return `造成 ${formatCombatDamageBreakdown(resolution?.rawDamage ?? 0, resolution?.damage ?? 0, damageKind, element)} 伤害${suffix}`;
+    return `造成 ${formatCombatDamageBreakdown(resolution?.rawDamage ?? 0, resolution?.damage ?? 0, damageKind, element)} 傷害${suffix}`;
 }
 /** 地图浮字使用短标签，日志里再展示完整伤害明细。 */
 export function formatCombatResolutionFloatText(resolution) {
@@ -206,15 +206,15 @@ export function buildCombatNoticePayload(opts: {
 }
 /** 生成“攻击/施展技能”类的动作描述语句。 */
 export function formatCombatActionClause(casterLabel, targetLabel, actionLabel) {
-    return actionLabel === '攻击'
-        ? `${casterLabel}对${targetLabel}发起攻击`
-        : `${casterLabel}对${targetLabel}施展${actionLabel}`;
+    return actionLabel === '攻擊'
+        ? `${casterLabel}對${targetLabel}發起攻擊`
+        : `${casterLabel}對${targetLabel}施展${actionLabel}`;
 }
 /** 生成伤害类型文本（物理/法术+元素）。 */
 export function formatCombatDamageType(damageKind, element) {
 
     const elementLabel = element ? `${ELEMENT_KEY_LABELS[element] ?? element}行` : '';
-    return damageKind === 'physical' ? `${elementLabel}物理` : `${elementLabel}法术`;
+    return damageKind === 'physical' ? `${elementLabel}物理` : `${elementLabel}法術`;
 }
 /** 浅拷贝只读展示用 Buff，避免运行时引用污染。 */
 export function cloneVisibleBuff(source) {
@@ -272,36 +272,36 @@ function buildObservationLineSpecs(snapshot, includeResources) {
     if (includeResources) {
         lines.push(
             { threshold: 0.18, label: '生命', value: formatCurrentMaxObservation(snapshot.hp, snapshot.maxHp) },
-            { threshold: 0.24, label: '灵力', value: formatCurrentMaxObservation(snapshot.qi, snapshot.maxQi) },
+            { threshold: 0.24, label: '靈力', value: formatCurrentMaxObservation(snapshot.qi, snapshot.maxQi) },
         );
     }
     lines.push(
-        { threshold: 0.32, label: '物理攻击', value: formatWholeObservation(snapshot.stats.physAtk) },
-        { threshold: 0.36, label: '物理防御', value: formatWholeObservation(snapshot.stats.physDef) },
-        { threshold: 0.4, label: '法术攻击', value: formatWholeObservation(snapshot.stats.spellAtk) },
-        { threshold: 0.44, label: '法术防御', value: formatWholeObservation(snapshot.stats.spellDef) },
+        { threshold: 0.32, label: '物理攻擊', value: formatWholeObservation(snapshot.stats.physAtk) },
+        { threshold: 0.36, label: '物理防禦', value: formatWholeObservation(snapshot.stats.physDef) },
+        { threshold: 0.4, label: '法術攻擊', value: formatWholeObservation(snapshot.stats.spellAtk) },
+        { threshold: 0.44, label: '法術防禦', value: formatWholeObservation(snapshot.stats.spellDef) },
         { threshold: 0.52, label: '命中', value: formatWholeObservation(snapshot.stats.hit) },
-        { threshold: 0.56, label: '闪避', value: formatWholeObservation(snapshot.stats.dodge) },
-        { threshold: 0.62, label: '暴击', value: formatWholeObservation(snapshot.stats.crit) },
+        { threshold: 0.56, label: '閃避', value: formatWholeObservation(snapshot.stats.dodge) },
+        { threshold: 0.62, label: '暴擊', value: formatWholeObservation(snapshot.stats.crit) },
         { threshold: 0.66, label: '免爆', value: formatWholeObservation(snapshot.stats.antiCrit) },
-        { threshold: 0.7, label: '暴击伤害', value: formatCritDamageObservation(snapshot.stats.critDamage) },
+        { threshold: 0.7, label: '暴擊傷害', value: formatCritDamageObservation(snapshot.stats.critDamage) },
         { threshold: 0.76, label: '破招', value: formatWholeObservation(snapshot.stats.breakPower) },
         { threshold: 0.8, label: '化解', value: formatWholeObservation(snapshot.stats.resolvePower) },
-        { threshold: 0.84, label: '最大灵力输出速率', value: `${formatWholeObservation(snapshot.stats.maxQiOutputPerTick)} / 息` },
-        { threshold: 0.87, label: '灵力回复', value: `${formatWholeObservation(snapshot.stats.qiRegenRate)} / 息` },
-        { threshold: 0.89, label: '生命回复', value: `${formatWholeObservation(snapshot.stats.hpRegenRate)} / 息` },
+        { threshold: 0.84, label: '最大靈力輸出速率', value: `${formatWholeObservation(snapshot.stats.maxQiOutputPerTick)} / 息` },
+        { threshold: 0.87, label: '靈力回覆', value: `${formatWholeObservation(snapshot.stats.qiRegenRate)} / 息` },
+        { threshold: 0.89, label: '生命回覆', value: `${formatWholeObservation(snapshot.stats.hpRegenRate)} / 息` },
     );
     if (snapshot.realmLabel) {
         lines.push({ threshold: 0.9, label: '境界', value: snapshot.realmLabel });
     }
     if (snapshot.attrs) {
         lines.push(
-            { threshold: 0.92, label: '体魄', value: formatWholeObservation(snapshot.attrs.constitution) },
-            { threshold: 0.94, label: '神识', value: formatWholeObservation(snapshot.attrs.spirit) },
+            { threshold: 0.92, label: '體魄', value: formatWholeObservation(snapshot.attrs.constitution) },
+            { threshold: 0.94, label: '神識', value: formatWholeObservation(snapshot.attrs.spirit) },
             { threshold: 0.96, label: '身法', value: formatWholeObservation(snapshot.attrs.perception) },
             { threshold: 0.98, label: '根骨', value: formatWholeObservation(snapshot.attrs.talent) },
             { threshold: 0.99, label: '力道', value: formatWholeObservation(snapshot.attrs.strength) },
-            { threshold: 1, label: '经脉', value: formatWholeObservation(snapshot.attrs.meridians) },
+            { threshold: 1, label: '經脈', value: formatWholeObservation(snapshot.attrs.meridians) },
         );
     }
     return lines;
@@ -329,8 +329,8 @@ export function buildMonsterObservation(viewerSpirit, monster) {
             stats: monster.numericStats,
             attrs: monster.attrs,
         }, true),
-        { threshold: 0.28, label: '血脉层次', value: MONSTER_TIER_LABELS[monster.tier] ?? '凡血' },
-        { threshold: 0.9, label: '境界', value: `等级 ${monster.level}` },
+        { threshold: 0.28, label: '血脈層次', value: MONSTER_TIER_LABELS[monster.tier] ?? '凡血' },
+        { threshold: 0.9, label: '境界', value: `等級 ${monster.level}` },
     ]);
 }
 /** 生成妖兽战利品预览列表与命中概率。 */
@@ -357,7 +357,7 @@ export function buildMonsterLootPreview(contentTemplateRepository, viewer, monst
         .sort((left, right) => right.chance - left.chance || compareStableText(left.itemId, right.itemId));
     return {
         entries,
-        emptyText: entries.length > 0 ? undefined : '此獠身上暂未看出稳定掉落。',
+        emptyText: entries.length > 0 ? undefined : '此獠身上暫未看出穩定掉落。',
     };
 }
 /** 依据观看者掉率属性，调整可见掉落概率。 */
@@ -397,22 +397,22 @@ export function buildNpcObservation(npc) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     const lines = [
-        { label: '身份', value: npc.role ?? '寻常人物' },
-        { label: '商号', value: npc.hasShop ? '经营货铺' : '暂无营生' },
+        { label: '身份', value: npc.role ?? '尋常人物' },
+        { label: '商號', value: npc.hasShop ? '經營貨鋪' : '暫無營生' },
     ];
     if (typeof npc.dialogue === 'string' && npc.dialogue.trim()) {
-        lines.push({ label: '话语', value: npc.dialogue.trim() });
+        lines.push({ label: '話語', value: npc.dialogue.trim() });
     }
     if (npc.quests.length > 0) {
-        lines.push({ label: '委托', value: `可交互 ${npc.quests.length} 项` });
+        lines.push({ label: '委託', value: `可交互 ${npc.quests.length} 項` });
     }
     return {
         clarity: 'clear',
         verdict: npc.quests.length > 0
-            ? '对方似乎正等着与来客交谈，身上带着几分未了的委托气息。'
+            ? '對方似乎正等著與來客交談，身上帶著幾分未了的委託氣息。'
             : npc.hasShop
-                ? '对方神色沉稳，像是久经往来的买卖人。'
-                : '对方气机平和，看不出明显敌意。',
+                ? '對方神色沉穩，像是久經往來的買賣人。'
+                : '對方氣機平和，看不出明顯敵意。',
         lines,
     };
 }
@@ -430,12 +430,12 @@ export function buildPortalTileEntityDetail(portal, targetMapName) {
             clarity: 'clear',
 
             verdict: portal.trigger === 'auto'
-                ? '此地灵路与空间缝隙已经贯通，踏入其中便会立刻被牵引离去。'
-                : '此地灵路稳定却未主动张开，需要你亲自触动才能穿行。',
+                ? '此地靈路與空間縫隙已經貫通，踏入其中便會立刻被牽引離去。'
+                : '此地靈路穩定卻未主動張開，需要你親自觸動才能穿行。',
             lines: [
-                { label: '类型', value: buildPortalKindLabel(portal.kind) },
-                { label: '方向', value: portal.direction === 'one_way' ? '单向' : '双向' },
-                { label: '触发', value: portal.trigger === 'auto' ? '踏入即触发' : '需要主动使用' },
+                { label: '類型', value: buildPortalKindLabel(portal.kind) },
+                { label: '方向', value: portal.direction === 'one_way' ? '單向' : '雙向' },
+                { label: '觸發', value: portal.trigger === 'auto' ? '踏入即觸發' : '需要主動使用' },
                 { label: '去向', value: destination },
             ],
         },
@@ -453,7 +453,7 @@ export function buildGroundTileEntityDetail(groundPile) {
     const remainingKinds = Math.max(0, groundPile.items.length - previews.length);
 
     const previewText = remainingKinds > 0
-        ? `${previews.join('、')} 等 ${groundPile.items.length} 类`
+        ? `${previews.join('、')} 等 ${groundPile.items.length} 類`
         : previews.join('、');
     return {
         id: groundPile.sourceId,
@@ -466,12 +466,12 @@ export function buildGroundTileEntityDetail(groundPile) {
             clarity: 'clear',
 
             verdict: groundPile.items.length === 1
-                ? '地上静静躺着一件可拾取之物。'
-                : '地上散落着几样可拾取之物，像是刚被人匆忙遗落。',
+                ? '地上靜靜躺著一件可拾取之物。'
+                : '地上散落著幾樣可拾取之物，像是剛被人匆忙遺落。',
             lines: [
-                { label: '种类', value: `${groundPile.items.length} 类` },
-                { label: '总量', value: `${totalCount} 件` },
-                { label: '可见', value: previewText || '暂无可辨之物' },
+                { label: '種類', value: `${groundPile.items.length} 類` },
+                { label: '總量', value: `${totalCount} 件` },
+                { label: '可見', value: previewText || '暫無可辨之物' },
             ],
         },
     };
@@ -484,29 +484,29 @@ export function buildContainerTileEntityDetail(container) {
         kind: 'container',
         observation: {
             clarity: 'clear',
-            verdict: container.desc?.trim() || `这处${container.name}可以搜索，翻找后或许会有收获。`,
+            verdict: container.desc?.trim() || `這處${container.name}可以搜索，翻找後或許會有收穫。`,
             lines: [
-                { label: '类别', value: '可搜索陈设' },
-                { label: '名称', value: container.name },
-                { label: '搜索阶次', value: String(container.grade) },
+                { label: '類別', value: '可搜索陳設' },
+                { label: '名稱', value: container.name },
+                { label: '搜索階次', value: String(container.grade) },
             ],
         },
     };
 }
 /** 生成建筑实体详情与基础状态。 */
 export function buildBuildingTileEntityDetail(building, compiled) {
-    const name = resolvePlayerFacingContentName(building?.defId, '未知建筑', building?.name, compiled?.name);
+    const name = resolvePlayerFacingContentName(building?.defId, '未知建築', building?.name, compiled?.name);
     const maxHp = Math.max(1, Math.trunc(Number(building?.maxHp ?? compiled?.maxHp ?? 1) || 1));
     const hp = Math.max(0, Math.min(maxHp, Math.trunc(Number(building?.hp ?? maxHp) || maxHp)));
     const lines = [
-        { label: '类别', value: '建筑' },
-        { label: '名称', value: name },
-        { label: '状态', value: buildBuildingStateLabel(building?.state) },
+        { label: '類別', value: '建築' },
+        { label: '名稱', value: name },
+        { label: '狀態', value: buildBuildingStateLabel(building?.state) },
         { label: '生命', value: formatCurrentMaxObservation(hp, maxHp) },
     ];
     if (typeof building?.scriptureTechniqueId === 'string' && building.scriptureTechniqueId.trim()) {
         lines.push({
-            label: '藏书',
+            label: '藏書',
             value: resolvePlayerFacingContentName(
                 building.scriptureTechniqueId,
                 '未知功法',
@@ -522,7 +522,7 @@ export function buildBuildingTileEntityDetail(building, compiled) {
         maxHp,
         observation: {
             clarity: 'clear',
-            verdict: `此处立有${name}。`,
+            verdict: `此處立有${name}。`,
             lines,
         },
     };
@@ -581,21 +581,21 @@ export function buildObservationVerdict(progress, selfView) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     if (selfView) {
-        return '神识内照，经络与底蕴尽现。';
+        return '神識內照，經絡與底蘊盡現。';
     }
     if (progress <= 0) {
-        return '对方气机晦暗难明，暂时看不透。';
+        return '對方氣機晦暗難明，暫時看不透。';
     }
     if (progress < 0.34) {
-        return '只能勉强分辨出些许轮廓。';
+        return '只能勉強分辨出些許輪廓。';
     }
     if (progress < 0.68) {
-        return '已能看出部分深浅，但仍有遮掩。';
+        return '已能看出部分深淺，但仍有遮掩。';
     }
     if (progress < 1) {
-        return '大致能辨明其底蕴与强弱。';
+        return '大致能辨明其底蘊與強弱。';
     }
-    return '对方虚实已尽收眼底。';
+    return '對方虛實已盡收眼底。';
 }
 /** 输出“当前值/最大值”数值文本。 */
 export function formatCurrentMaxObservation(current, max) {
@@ -604,19 +604,19 @@ export function formatCurrentMaxObservation(current, max) {
 function buildBuildingStateLabel(state) {
     switch (state) {
         case 'planned':
-            return '规划中';
+            return '規劃中';
         case 'building':
             return '建造中';
         case 'active':
-            return '已启用';
+            return '已啟用';
         case 'damaged':
-            return '受损';
+            return '受損';
         case 'destroyed':
-            return '已毁坏';
+            return '已毀壞';
         case 'deconstructing':
             return '拆除中';
         default:
-            return '建筑';
+            return '建築';
     }
 }
 /** 组合可读的传送点显示名。 */
@@ -629,15 +629,15 @@ export function buildPortalDisplayName(portal, targetMapName) {
 export function buildPortalKindLabel(kind) {
     switch (kind) {
         case 'stairs':
-            return '楼梯';
+            return '樓梯';
         case 'door':
-            return '门扉';
+            return '門扉';
         case 'cave':
             return '洞口';
         case 'gate':
-            return '关隘';
+            return '關隘';
         default:
-            return '传送阵';
+            return '傳送陣';
     }
 }
 /** 读取显式传送点 ID，兼容旧坐标 ID。 */

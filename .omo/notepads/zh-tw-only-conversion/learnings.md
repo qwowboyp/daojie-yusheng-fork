@@ -138,3 +138,14 @@ _Auto-scaffolded by /start-work. Append new entries below - never overwrite._
 - **bundle 證據**：移除 catalog 後 dist 10.79 → 10.45 MB（−0.34MB），catalog 本內聯 main-panels chunk。
 - **驗證鏈**：build:shared → client build（需 CHROME_BIN）→ verify:client 全綠；
   rg zero-hits；CSV check-traditional ok:true。
+
+## 2026-08-20 Task-4: 補齊 6 個 i18n 通知 key
+
+- server 已引用但 CSV 缺漏的 6 個 notice.* key 補進 zh-TW.csv（category 通知）：
+  notice.item.open-panel / notice.combat.low-priority / notice.technique.activity-complete /
+  notice.test / notice.inventory.destroyed / notice.inventory.sorted。
+- 插入位置依字母序就近：item.open-panel 放 item.* 區塊；inventory.* 放 item 與 loot 之間；
+  combat.low-priority 放 combat.* 區塊；test 放 system.cooldown 後；technique.activity-complete 放
+  technique-aggregation.overlap 後。
+- generate:i18n 3960 → 3966 條；guard check-traditional ok:true；6 key 全進 i18n.generated.ts。
+- 證據：.omo/evidence/zh-tw-only-conversion/task-4/evidence.md。

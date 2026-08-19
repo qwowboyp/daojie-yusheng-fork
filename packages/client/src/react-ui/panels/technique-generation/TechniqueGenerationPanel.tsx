@@ -335,7 +335,7 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
     <div className="technique-generation-panel">
       {!state.available && (
         <div className="technique-generation-panel__state technique-generation-panel__state--locked">
-          <strong>暂不可用</strong>
+                  <strong>暫不可用</strong>
           <span>{state.unavailableReason || '當前無法使用'}</span>
         </div>
       )}
@@ -349,7 +349,7 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
 
           <div className="technique-generation-panel__main">
             <section className="technique-generation-panel__section">
-              <div className="technique-generation-panel__section-title">功法类型</div>
+              <div className="technique-generation-panel__section-title">功法類型</div>
               <div className="technique-generation-panel__tabs" role="tablist" aria-label="功法類型">
                 {CATEGORY_TABS.map((tab) => (
                   <button
@@ -361,14 +361,14 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
                     onClick={() => !tab.locked && handleCategoryChange(tab.value)}
                   >
                     <span>{tab.label}</span>
-                    {tab.locked && <small>未开放</small>}
+                    {tab.locked && <small>未開放</small>}
                   </button>
                 ))}
               </div>
             </section>
             {selectedCategory === 'internal' && (
               <section className="technique-generation-panel__section">
-                <div className="technique-generation-panel__section-title">参悟方式</div>
+                <div className="technique-generation-panel__section-title">參悟方式</div>
                 <div className="technique-generation-panel__tabs technique-generation-panel__mode-tabs" role="tablist" aria-label="參悟方式">
                   <button
                     type="button"
@@ -376,7 +376,7 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
                     aria-pressed={selectedMode === 'single'}
                     onClick={() => handleModeChange('single')}
                   >
-                    <span>单部领悟</span>
+                    <span>單部領悟</span>
                   </button>
                   <button
                     type="button"
@@ -384,12 +384,12 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
                     aria-pressed={selectedMode === 'batch'}
                     onClick={() => handleModeChange('batch')}
                   >
-                    <span>批量领悟</span>
+                    <span>批量領悟</span>
                   </button>
                 </div>
                 {selectedMode === 'batch' && (
                   <p className="technique-generation-panel__mode-note">
-                    每枚玉简各成一部内功，品阶、境界与强度分别推演；名号与法意由天机拟定，六维权重均衡。
+                    每枚玉簡各成一部內功，品階、境界與強度分別推演；名號與法意由天機擬定，六維權重均衡。
                   </p>
                 )}
               </section>
@@ -397,10 +397,9 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
 
             <section className="technique-generation-panel__section technique-generation-panel__section--context">
               <label className="technique-generation-panel__field-label" htmlFor="technique-generation-context">
-                主题描述
-                <span>可选</span>
-              </label>
-              <textarea
+                主題描述
+                <span>可選</span>
+              </label>              <textarea
                 id="technique-generation-context"
                 value={playerContext}
                 onChange={(e) => setPlayerContext([...e.target.value].slice(0, CUSTOM_TECHNIQUE_PROMPT_MAX_LENGTH).join(''))}
@@ -430,20 +429,20 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
         <div className="technique-generation-panel__state technique-generation-panel__state--loading">
           <span className="technique-generation-panel__spinner" aria-hidden="true" />
           <strong>正在推演功法</strong>
-          <span>请稍候，结果生成后会自动显示。</span>
+                    <span>請稍候，結果生成後會自動顯示。</span>
         </div>
       )}
 
       {state.currentDraft && (
         <div className="technique-generation-panel__preview">
-          <div className="technique-generation-panel__section-title">领悟结果</div>
+          <div className="technique-generation-panel__section-title">領悟結果</div>
           <div className="technique-generation-panel__preview-info">
             <div className="technique-generation-panel__metric">
-              <span>品阶</span>
+              <span>品階</span>
               <strong>{getTechniqueGradeLabel(state.currentDraft.grade)}</strong>
             </div>
             <div className="technique-generation-panel__metric">
-              <span>类别</span>
+              <span>類別</span>
               <strong>{getTechniqueCategoryLabel(state.currentDraft.category)}</strong>
             </div>
             <div className="technique-generation-panel__metric">
@@ -451,7 +450,7 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
               <strong>Lv.{state.currentDraft.realmLv}</strong>
             </div>
             <div className="technique-generation-panel__metric">
-              <span>层数</span>
+              <span>層數</span>
               <strong>{state.currentDraft.maxLayer}</strong>
             </div>
             {state.currentDraft.modelName && (
@@ -464,14 +463,14 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
               <p className="technique-generation-panel__desc">{state.currentDraft.desc}</p>
             )}
             <div className="technique-generation-panel__suggested-name">
-              <span>建议名</span>
+              <span>建議名</span>
               <strong>{state.currentDraft.suggestedName}</strong>
             </div>
           </div>
 
           {state.currentDraft.category === 'internal' && (
             <div className="technique-generation-panel__effect">
-              <span>满层六维加成</span>
+              <span>滿層六維加成</span>
               {renderTechniqueAttrRadar(state.currentDraft.fullLevelAttrs)}
             </div>
           )}
@@ -485,7 +484,7 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
 
           <div className="technique-generation-panel__naming">
             <label className="technique-generation-panel__field-label" htmlFor="technique-generation-name">
-              为功法命名
+                為功法命名
               <span>{CUSTOM_TECHNIQUE_NAME_MIN_LENGTH}-{CUSTOM_TECHNIQUE_NAME_MAX_LENGTH}字</span>
             </label>
             <input
@@ -505,10 +504,10 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
               onClick={handleAdopt}
               disabled={!state.currentDraft.jobId || [...customName.trim()].length < CUSTOM_TECHNIQUE_NAME_MIN_LENGTH}
             >
-              采纳并学习
+              採納並學習
             </button>
             <button type="button" className="small-btn ghost" onClick={handleDiscard}>
-              取消领悟
+              取消領悟
             </button>
           </div>
         </div>
@@ -554,7 +553,7 @@ function renderTechniqueAttrRadar(attrs: Partial<Attributes> | undefined): React
   });
   const maxValue = Math.max(0, ...values.map((value) => Math.max(0, value)));
   if (maxValue <= 0) {
-    return <strong>无增益</strong>;
+    return <strong>無增益</strong>;
   }
 
   const scaleStep = maxValue >= 100 ? 50 : maxValue >= 20 ? 10 : 5;
@@ -595,7 +594,7 @@ function renderTechniqueAttrRadar(attrs: Partial<Attributes> | undefined): React
   return (
     <div className="attr-radar-shell technique-generation-panel__attr-radar-shell">
       <div className="attr-radar-head">
-        <div className="attr-radar-title">六维轮图</div>
+        <div className="attr-radar-title">六維輪圖</div>
         <div className="attr-radar-scale">刻度 {formatDisplaySignedNumber(scale)}</div>
       </div>
       <div className="attr-radar-body technique-generation-panel__attr-radar-body">
@@ -681,7 +680,7 @@ function renderRealmRange(range: TechniqueGenerationPanelState['rollRange']): Re
     return (
       <section className="technique-generation-panel__section technique-generation-panel__roll-card">
         <div className="technique-generation-panel__rail-label">境界</div>
-        <div className="technique-generation-panel__muted">读取中</div>
+        <div className="technique-generation-panel__muted">讀取中</div>
       </section>
     );
   }
@@ -729,8 +728,8 @@ function renderGradeRange(range: TechniqueGenerationPanelState['rollRange']): Re
   if (!range) {
     return (
       <section className="technique-generation-panel__section technique-generation-panel__roll-card">
-        <div className="technique-generation-panel__rail-label">品阶</div>
-        <div className="technique-generation-panel__muted">读取中</div>
+        <div className="technique-generation-panel__rail-label">品階</div>
+        <div className="technique-generation-panel__muted">讀取中</div>
       </section>
     );
   }
@@ -747,7 +746,7 @@ function renderGradeRange(range: TechniqueGenerationPanelState['rollRange']): Re
         }}
         onPointerLeave={hideTechniqueGenerationTooltip}
       >
-        品阶
+        品階
       </div>
       <div className="technique-generation-panel__range-group technique-generation-panel__range-group--grade">
         <div className="technique-generation-panel__range-stack" aria-label="品階概率分佈">
@@ -801,10 +800,10 @@ function renderBatchPreview(
     <div className="technique-generation-panel__preview technique-generation-panel__batch-preview">
       <div className="technique-generation-panel__batch-heading">
         <div>
-          <div className="technique-generation-panel__section-title">批量领悟结果</div>
-          <p>共得 {batch.drafts.length} 部内功，六维权重均衡。采纳后将一并进入待领悟功法。</p>
+          <div className="technique-generation-panel__section-title">批量領悟結果</div>
+          <p>共得 {batch.drafts.length} 部內功，六維權重均衡。採納後將一併進入待領悟功法。</p>
         </div>
-        <span>第 {page} / {totalPages} 页</span>
+          <span>第 {page} / {totalPages} 頁</span>
       </div>
       <div className="technique-generation-panel__batch-grid">
         {pageDrafts.map((draft) => (
@@ -827,17 +826,17 @@ function renderBatchPreview(
       </div>
       {totalPages > 1 && (
         <div className="technique-generation-panel__batch-pagination">
-          <button type="button" className="small-btn ghost" disabled={page <= 1} onClick={() => onPageChange(page - 1)}>上一页</button>
-          <span>每页 {pageSize} 部</span>
-          <button type="button" className="small-btn ghost" disabled={page >= totalPages} onClick={() => onPageChange(page + 1)}>下一页</button>
+          <button type="button" className="small-btn ghost" disabled={page <= 1} onClick={() => onPageChange(page - 1)}>上一頁</button>
+          <span>每頁 {pageSize} 部</span>
+          <button type="button" className="small-btn ghost" disabled={page >= totalPages} onClick={() => onPageChange(page + 1)}>下一頁</button>
         </div>
       )}
       <div className="technique-generation-panel__actions">
         <button type="button" className="small-btn technique-generation-panel__adopt" onClick={onAdopt}>
-          全部采纳并学习
+          全部採納並學習
         </button>
         <button type="button" className="small-btn ghost" onClick={onDiscard}>
-          放弃本批功法
+          放棄本批功法
         </button>
       </div>
     </div>
@@ -947,7 +946,7 @@ function renderItemSpendSelector(
 
 function renderPreviewSkills(skills: SkillDef[] | undefined): ReactElement {
   if (!skills || skills.length === 0) {
-    return <strong>无技能</strong>;
+    return <strong>無技能</strong>;
   }
   const sortedSkills = [...skills].sort((left, right) => {
     const levelDelta = resolveSkillUnlockLevel(left) - resolveSkillUnlockLevel(right);
@@ -1013,12 +1012,12 @@ function renderPreviewSkills(skills: SkillDef[] | undefined): ReactElement {
           >
             <div className="technique-generation-panel__skill-head">
               <strong>{skill.name}</strong>
-              <span>解锁 Lv.{formatDisplayInteger(resolveSkillUnlockLevel(skill))}</span>
+              <span>解鎖 Lv.{formatDisplayInteger(resolveSkillUnlockLevel(skill))}</span>
             </div>
             <div className="technique-generation-panel__skill-meta">
-              <span>灵力 {formatDisplayInteger(skill.cost)}</span>
+              <span>靈力 {formatDisplayInteger(skill.cost)}</span>
               {windupTicks > 0 && <span>吟唱 {formatDisplayInteger(windupTicks)} 息</span>}
-              <span>冷却 {formatDisplayInteger(skill.cooldown)} 息</span>
+              <span>冷卻 {formatDisplayInteger(skill.cooldown)} 息</span>
               <span>射程 {formatDisplayInteger(skill.range)}</span>
             </div>
             {skill.desc && <p>{skill.desc}</p>}

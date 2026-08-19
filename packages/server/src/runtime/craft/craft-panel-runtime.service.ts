@@ -332,7 +332,7 @@ export class CraftPanelRuntimeService {
     }
     async startEnhancementDurablyLocked(player, payload, deps = null) {
         if (player?.enhancementDurableCommitInFlight === true || player?.suppressImmediateDomainPersistence === true) {
-            return buildCraftMutationResult('强化状态正在同步，请稍后重试。');
+            return buildCraftMutationResult('強化狀態正在同步，請稍後重試。');
         }
         const durableEnabled = this.shouldUseDurableEnhancementPersistence(player);
         if (
@@ -342,7 +342,7 @@ export class CraftPanelRuntimeService {
                 reason: 'enhancement_start_handoff',
             })
         ) {
-            return buildCraftMutationResult('强化状态正在同步，请稍后重试。');
+            return buildCraftMutationResult('強化狀態正在同步，請稍後重試。');
         }
         const durablePresence = durableEnabled
             ? await this.resolveDurablePresenceFence(player.playerId)
@@ -465,7 +465,7 @@ export class CraftPanelRuntimeService {
     }
     async cancelEnhancementDurablyLocked(player, deps = null) {
         if (player?.enhancementDurableCommitInFlight === true || player?.suppressImmediateDomainPersistence === true) {
-            return buildCraftMutationResult('强化状态正在同步，请稍后重试。');
+            return buildCraftMutationResult('強化狀態正在同步，請稍後重試。');
         }
         const durableEnabled = this.shouldUseDurableEnhancementPersistence(player);
         const durablePresence = durableEnabled
@@ -706,7 +706,7 @@ export class CraftPanelRuntimeService {
                 const playerId = typeof player?.playerId === 'string' ? player.playerId.trim() : '';
                 this.markPlayerSessionFenceSuperseded(player, attemptedSessionFence);
                 this.logger.debug(
-                    `强化 tick 已让位于更新会话：playerId=${playerId || 'unknown'} expectedSessionEpoch=${attemptedSessionFence.sessionEpoch}`,
+                    `強化 tick 已讓位於更新會話：playerId=${playerId || 'unknown'} expectedSessionEpoch=${attemptedSessionFence.sessionEpoch}`,
                 );
                 return buildSupersededCraftTickResult();
             }
@@ -740,7 +740,7 @@ export class CraftPanelRuntimeService {
         }
         const playerId = typeof player?.playerId === 'string' ? player.playerId.trim() : '';
         if (!playerId) {
-            throw new Error('强化强事务提交失败：缺少玩家 ID');
+            throw new Error('強化強事務提交失敗：缺少玩家 ID');
         }
         const presence = options.presence ?? await this.resolveDurablePresenceFence(playerId);
         const payloadBuildStartedAt = beginCraftRuntimeSection(options.recordSectionDuration ?? null);
@@ -754,7 +754,7 @@ export class CraftPanelRuntimeService {
                 new Set(['inventory', 'wallet', 'equipment', 'profession', 'active_job', 'enhancement_record']),
             );
         if (!advancedPatch && !snapshot) {
-            throw new Error(`强化强事务提交失败：无法构建玩家快照 playerId=${playerId}`);
+            throw new Error(`強化強事務提交失敗：無法構建玩家快照 playerId=${playerId}`);
         }
         const inventoryItems = advancedPatch?.nextInventoryItems
             ?? buildDurableInventoryItemsFromSnapshot(snapshot);
@@ -788,7 +788,7 @@ export class CraftPanelRuntimeService {
         try {
             if (action === 'start') {
                 if (!activeJob) {
-                    throw new Error(`强化强事务启动失败：缺少 active job playerId=${playerId}`);
+                    throw new Error(`強化強事務啟動失敗：缺少 active job playerId=${playerId}`);
                 }
                 await this.durableOperationService.startActiveJobWithAssets({
                     operationId: `enhancement:start:${playerId}:${activeJob.jobRunId}:${activeJob.jobVersion}`,
@@ -807,7 +807,7 @@ export class CraftPanelRuntimeService {
             }
             else if (action === 'cancelled') {
                 if (!jobRunId) {
-                    throw new Error(`强化强事务取消失败：缺少 jobRunId playerId=${playerId}`);
+                    throw new Error(`強化強事務取消失敗：缺少 jobRunId playerId=${playerId}`);
                 }
                 await this.durableOperationService.cancelActiveJobWithAssets({
                     operationId: `enhancement:cancelled:${playerId}:${jobRunId}:${jobVersion}`,
@@ -824,7 +824,7 @@ export class CraftPanelRuntimeService {
             }
             else {
                 if (!jobRunId) {
-                    throw new Error(`强化强事务完成失败：缺少 jobRunId playerId=${playerId}`);
+                    throw new Error(`強化強事務完成失敗：缺少 jobRunId playerId=${playerId}`);
                 }
                 await this.durableOperationService.completeActiveJobWithAssets({
                     operationId: `enhancement:${action}:${playerId}:${jobRunId}:${jobVersion}`,
@@ -964,7 +964,7 @@ export class CraftPanelRuntimeService {
             }
         }
         if (!presence?.runtimeOwnerId || !presence?.sessionEpoch) {
-            throw new Error(`强化强事务提交失败：缺少运行态所有权围栏 playerId=${playerId}`);
+            throw new Error(`強化強事務提交失敗：缺少運行態所有權圍欄 playerId=${playerId}`);
         }
         const player = this.playerRuntimeService.getPlayer?.(playerId) ?? null;
         const presenceDirty = player?.dirtyDomains instanceof Set && player.dirtyDomains.has('presence');
@@ -1083,7 +1083,7 @@ export class CraftPanelRuntimeService {
     enqueueCraftQueueItem(player, item, mode) {
         const queued = enqueuePlayerTechniqueActivityQueueItem(player, item, mode);
         if (!queued) {
-            return buildCraftMutationResult('技艺任务队列已满。');
+            return buildCraftMutationResult('技藝任務隊列已滿。');
         }
         this.finalizeMutation(player, {
             persistentOnly: true,
@@ -1149,7 +1149,7 @@ export class CraftPanelRuntimeService {
         const outputNoun = jobKind === 'forging' ? '成器' : '成丹';
         const recipe = catalog.find((entry) => entry.recipeId === normalizeText(payload?.recipeId));
         if (!recipe) {
-            return { ok: false, error: jobKind === 'forging' ? '对应器方不存在。' : '对应丹方不存在。' };
+            return { ok: false, error: jobKind === 'forging' ? '對應器方不存在。' : '對應丹方不存在。' };
         }
         const normalizedSelection = validateAlchemySelection(this.contentTemplateRepository, recipe, normalizeIngredientSelections(payload?.ingredients));
         if ('error' in normalizedSelection) {
@@ -1228,12 +1228,12 @@ export class CraftPanelRuntimeService {
         for (const ingredient of ingredients) {
             const requiredCount = Math.max(1, Math.trunc(Number(ingredient.count) || 0));
             if (countInventoryItem(player, ingredient.itemId) < requiredCount) {
-                return { ok: false, error: `${resolvePlayerFacingContentName(ingredient.itemId, '未知物品', this.contentTemplateRepository.getItemName(ingredient.itemId))} 数量不足。` };
+                return { ok: false, error: `${resolvePlayerFacingContentName(ingredient.itemId, '未知物品', this.contentTemplateRepository.getItemName(ingredient.itemId))} 數量不足。` };
             }
         }
         const batchSpiritStoneCost = this.resolveAlchemyLikeBatchSpiritStoneCost(validatedOrJob);
         if (batchSpiritStoneCost > 0 && !this.playerRuntimeService.canAffordWallet(player.playerId, SPIRIT_STONE_ITEM_ID, batchSpiritStoneCost)) {
-            return { ok: false, error: `灵石不足，需要 ${batchSpiritStoneCost} 枚。` };
+            return { ok: false, error: `靈石不足，需要 ${batchSpiritStoneCost} 枚。` };
         }
         return { ok: true };
     }
@@ -1396,7 +1396,7 @@ export class CraftPanelRuntimeService {
     /** 构建炼丹/炼器启动提示。 */
     buildAlchemyLikeStartMessages(validated) {
         const recipe = validated.recipe;
-        const actionLabel = validated.jobKind === 'forging' ? '炼器' : '炼制';
+        const actionLabel = validated.jobKind === 'forging' ? '煉器' : '煉製';
         const successRateText = (validated.successRate * 100).toFixed(validated.successRate === 1 ? 0 : 1);
         return [{
             kind: validated.jobKind === 'forging' ? 'forging' : 'alchemy',
@@ -1459,7 +1459,7 @@ export class CraftPanelRuntimeService {
         const normalizedJobKind = jobKind === 'forging' ? 'forging' : 'alchemy';
         const job = getAlchemyLikeJob(player, normalizedJobKind);
         if (!job) {
-            return buildCraftMutationResult(normalizedJobKind === 'forging' ? '当前没有可取消的炼器任务。' : '当前没有可取消的炼丹任务。');
+            return buildCraftMutationResult(normalizedJobKind === 'forging' ? '當前沒有可取消的煉器任務。' : '當前沒有可取消的煉丹任務。');
         }
         this.playerRuntimeService.captureOfflineGainBeforeTick?.(player);
         const compatibility = this.ensureAlchemyLikeJobResourceCompatibility(player, normalizedJobKind, job);
@@ -1503,7 +1503,7 @@ export class CraftPanelRuntimeService {
         const recipeId = normalizeText(payload?.recipeId);
         const recipe = this.alchemyCatalog.find((entry) => entry.recipeId === recipeId);
         if (!recipe) {
-            return buildCraftMutationResult('对应丹方不存在。');
+            return buildCraftMutationResult('對應丹方不存在。');
         }
         const normalizedSelection = validateAlchemySelection(this.contentTemplateRepository, recipe, normalizeIngredientSelections(payload?.ingredients));
         if ('error' in normalizedSelection) {
@@ -1512,7 +1512,7 @@ export class CraftPanelRuntimeService {
         const requestedPresetId = normalizeText(payload?.presetId);
         const presetName = normalizeAlchemyPresetName(
             payload?.name,
-            resolvePlayerFacingContentName(recipe.recipeId, '未命名炼制预设', recipe.outputName),
+            resolvePlayerFacingContentName(recipe.recipeId, '未命名煉製預設', recipe.outputName),
         );
         const presetId = requestedPresetId || createAlchemyPresetId(recipe.recipeId);
         const existingIndex = player.alchemyPresets.findIndex((entry) => entry.presetId === presetId);
@@ -1534,7 +1534,7 @@ export class CraftPanelRuntimeService {
             dirtyDomains: ['alchemy_preset'],
         });
         void this.persistAlchemyPresets(player).catch((error) => {
-            console.warn(`炼丹预设直写失败，已标记脏数据等待重试：${error instanceof Error ? error.message : String(error)}`);
+            console.warn(`煉丹預設直寫失敗，已標記髒數據等待重試：${error instanceof Error ? error.message : String(error)}`);
             this.playerRuntimeService.markPersistenceDirtyDomains?.(player, ['alchemy_preset']);
         });
         return {
@@ -1542,7 +1542,7 @@ export class CraftPanelRuntimeService {
             panelChanged: true,
             messages: [{
                     kind: 'system',
-                    text: existingIndex >= 0 ? `已更新炼制预设：${presetName}` : `已保存炼制预设：${presetName}`,
+                    text: existingIndex >= 0 ? `已更新煉製預設：${presetName}` : `已保存煉製預設：${presetName}`,
                 }],
         };
     }
@@ -1559,11 +1559,11 @@ export class CraftPanelRuntimeService {
         this.ensureCraftSkills(player);
         const presetId = normalizeText(presetIdInput);
         if (!presetId) {
-            return buildCraftMutationResult('预设标识不能为空。');
+            return buildCraftMutationResult('預設標識不能為空。');
         }
         const index = player.alchemyPresets.findIndex((entry) => entry.presetId === presetId);
         if (index < 0) {
-            return buildCraftMutationResult('对应炼制预设不存在。');
+            return buildCraftMutationResult('對應煉製預設不存在。');
         }
         const [removed] = player.alchemyPresets.splice(index, 1);
         this.finalizeMutation(player, {
@@ -1571,7 +1571,7 @@ export class CraftPanelRuntimeService {
             dirtyDomains: ['alchemy_preset'],
         });
         void this.persistAlchemyPresets(player).catch((error) => {
-            console.warn(`炼丹预设直写失败，已标记脏数据等待重试：${error instanceof Error ? error.message : String(error)}`);
+            console.warn(`煉丹預設直寫失敗，已標記髒數據等待重試：${error instanceof Error ? error.message : String(error)}`);
             this.playerRuntimeService.markPersistenceDirtyDomains?.(player, ['alchemy_preset']);
         });
         return {
@@ -1579,7 +1579,7 @@ export class CraftPanelRuntimeService {
             panelChanged: true,
             messages: [{
                     kind: 'system',
-                    text: `已删除炼制预设：${resolvePlayerFacingContentName(presetId, '未命名炼制预设', removed?.name)}`,
+                    text: `已刪除煉製預設：${resolvePlayerFacingContentName(presetId, '未命名煉製預設', removed?.name)}`,
                 }],
         };
     }
@@ -1686,7 +1686,7 @@ export class CraftPanelRuntimeService {
     }
     buildAlchemyLikeCompletionMessage(jobKind, job) {
         const normalizedJobKind = jobKind === 'forging' ? 'forging' : 'alchemy';
-        const activityLabel = normalizedJobKind === 'forging' ? '炼器' : '炼制';
+        const activityLabel = normalizedJobKind === 'forging' ? '煉器' : '煉製';
         const successNoun = normalizedJobKind === 'forging' ? '成器' : '成丹';
         return {
             kind: normalizedJobKind,
@@ -1733,20 +1733,20 @@ export class CraftPanelRuntimeService {
         this.ensureCraftSkills(player);
         const target = this.resolveEnhancementTarget(player, payload?.target);
         if (!target) {
-            return { ok: false, error: '强化目标不存在。' };
+            return { ok: false, error: '強化目標不存在。' };
         }
         if (target.ref.source === 'equipment') {
-            return { ok: false, error: '身上装备不能直接强化，请先卸下放入背包。' };
+            return { ok: false, error: '身上裝備不能直接強化，請先卸下放入背包。' };
         }
         if ((target as Record<string, unknown>).mismatched) {
-            return { ok: false, error: '强化目标已变更，请重新选择。' };
+            return { ok: false, error: '強化目標已變更，請重新選擇。' };
         }
         if (!isEnhanceableItem(target.item)) {
-            return { ok: false, error: '当前仅支持强化装备或法宝。' };
+            return { ok: false, error: '當前僅支持強化裝備或法寶。' };
         }
         const currentLevel = normalizeEnhanceLevel(target.item.enhanceLevel);
         if (currentLevel >= MAX_ENHANCE_LEVEL) {
-            return { ok: false, error: `该目标已达到强化上限 +${MAX_ENHANCE_LEVEL}。` };
+            return { ok: false, error: `該目標已達到強化上限 +${MAX_ENHANCE_LEVEL}。` };
         }
         const targetLevel = currentLevel + 1;
         const desiredTargetLevel = this.resolveRequestedTargetLevel(currentLevel, payload?.targetLevel);
@@ -1755,7 +1755,7 @@ export class CraftPanelRuntimeService {
             ? this.resolveEnhancementProtection(player, payload.protection, target, config)
             : null;
         if (payload?.protection && !protection) {
-            return { ok: false, error: '保护物不存在或不符合本次强化规则。' };
+            return { ok: false, error: '保護物不存在或不符合本次強化規則。' };
         }
         const materials = this.getEnhancementRequirements(config, targetLevel);
         const protectionStartLevel = protection
@@ -1801,20 +1801,20 @@ export class CraftPanelRuntimeService {
         const target = validated.target;
         const protectionRequired = this.shouldUseProtectionForStep(validated.targetLevel, validated.protectionStartLevel);
         if (!this.hasEnoughEnhancementResources(player, target, validated.protection, validated.spiritStoneCost, validated.materials, protectionRequired)) {
-            return { ok: false, error: '所需灵石、材料或保护物不足。' };
+            return { ok: false, error: '所需靈石、材料或保護物不足。' };
         }
         const workingItem = target.ref.source === 'inventory'
             ? extractInventoryItemByInstanceId(player, target.ref.itemInstanceId)
             : extractEquipmentItem(player, target.ref.slot);
         if (!workingItem) {
-            return { ok: false, error: '强化目标不存在。' };
+            return { ok: false, error: '強化目標不存在。' };
         }
         assignItemInstanceIdIfNeeded(workingItem as ItemStack);
         const workingInstanceId = typeof (workingItem as ItemStack).itemInstanceId === 'string'
             ? (workingItem as ItemStack).itemInstanceId
             : '';
         if (!workingInstanceId) {
-            return { ok: false, error: '强化目标缺失实例标识。' };
+            return { ok: false, error: '強化目標缺失實例標識。' };
         }
         for (const material of validated.materials) {
             consumeInventoryItemByItemId(player, material.itemId, material.count);
@@ -1971,7 +1971,7 @@ export class CraftPanelRuntimeService {
         this.ensureCraftSkills(player);
         const job = player.enhancementJob;
         if (!job || job.remainingTicks <= 0) {
-            return buildCraftMutationResult('当前没有可取消的强化任务。');
+            return buildCraftMutationResult('當前沒有可取消的強化任務。');
         }
         this.playerRuntimeService.captureOfflineGainBeforeTick?.(player);
         const finishResult = this.finishEnhancementJob(player, job.currentLevel, 'cancelled');
@@ -1984,7 +1984,7 @@ export class CraftPanelRuntimeService {
             groundDrops: finishResult.groundDrops,
             messages: [{
                     kind: 'system',
-                    text: `你停止了 ${job.targetItemName} 的强化，已投入的本阶材料不会退回；保护物仅在失败且保护生效时扣除，灵石将在本阶成功后结算。`,
+                    text: `你停止了 ${job.targetItemName} 的強化，已投入的本階材料不會退回；保護物僅在失敗且保護生效時扣除，靈石將在本階成功後結算。`,
                 }],
         };
         this.recordTechniqueActivityStatisticMutation(player, result);
@@ -2049,7 +2049,7 @@ export class CraftPanelRuntimeService {
             return null;
         }
         if (player.enhancementJob?.target?.source === 'equipment' && player.enhancementJob.target.slot === slot) {
-            return `${player.enhancementJob.targetItemName} 强化进行中，暂时不能更换对应装备槽。`;
+            return `${player.enhancementJob.targetItemName} 強化進行中，暫時不能更換對應裝備槽。`;
         }
         return null;
     }
@@ -2825,7 +2825,7 @@ export class CraftPanelRuntimeService {
         });
         if (player?.suppressImmediateDomainPersistence !== true) {
             void this.persistEnhancementRecords(player).catch((error) => {
-                this.logger.warn(`强化记录直写失败，已标记脏数据等待重试：${error instanceof Error ? error.message : String(error)}`);
+                this.logger.warn(`強化記錄直寫失敗，已標記髒數據等待重試：${error instanceof Error ? error.message : String(error)}`);
                 this.playerRuntimeService.markPersistenceDirtyDomains?.(player, ['enhancement_record']);
             });
         }
@@ -3122,12 +3122,12 @@ export class CraftPanelRuntimeService {
             if (isConvergedPlayerProjectionFenceError(error)) {
                 // 更新会话已经接管该玩家；旧会话的投影应跳过，不重试也不打成业务告警。
                 this.logger.debug(
-                    `技艺任务投影已被更新会话取代，按 stale-safe 收敛：playerId=${playerId} reason=${reason} error=${error.message}`,
+                    `技藝任務投影已被更新會話取代，按 stale-safe 收斂：playerId=${playerId} reason=${reason} error=${error.message}`,
                 );
                 return false;
             }
             this.logger.warn(
-                `技艺任务投影收敛失败 playerId=${playerId} reason=${reason} error=${error instanceof Error ? error.message : String(error)}`,
+                `技藝任務投影收斂失敗 playerId=${playerId} reason=${reason} error=${error instanceof Error ? error.message : String(error)}`,
             );
             return false;
         }
@@ -3185,7 +3185,7 @@ export class CraftPanelRuntimeService {
             && !isFlushTaskConsumerMode()
         ) {
             void this.persistTechniqueActivitySnapshot(player).catch((error) => {
-                console.warn(`活跃任务直写失败，已标记脏数据等待重试：${error instanceof Error ? error.message : String(error)}`);
+                console.warn(`活躍任務直寫失敗，已標記髒數據等待重試：${error instanceof Error ? error.message : String(error)}`);
                 this.playerRuntimeService.markPersistenceDirtyDomains?.(player, ['active_job']);
             });
         }
@@ -3200,7 +3200,7 @@ export class CraftPanelRuntimeService {
 
         const filePath = resolveContentPath('alchemy', 'recipes.json');
         if (!existsSync(filePath)) {
-            this.logger.warn(`炼丹配方目录缺失：${filePath}`);
+            this.logger.warn(`煉丹配方目錄缺失：${filePath}`);
             this.alchemyCatalog = [];
             return;
         }
@@ -3219,7 +3219,7 @@ export class CraftPanelRuntimeService {
     loadForgingCatalog() {
         const filePath = resolveContentPath('forging', 'recipes.json');
         if (!existsSync(filePath)) {
-            this.logger.warn(`炼器配方目录缺失：${filePath}`);
+            this.logger.warn(`煉器配方目錄缺失：${filePath}`);
             this.forgingCatalog = [];
             return;
         }
@@ -3245,7 +3245,7 @@ export class CraftPanelRuntimeService {
         const root = resolveContentPath('enhancements');
         this.enhancementConfigs.clear();
         if (!existsSync(root)) {
-            this.logger.warn(`强化配置目录缺失：${root}`);
+            this.logger.warn(`強化配置目錄缺失：${root}`);
             return;
         }
         for (const filePath of walkJsonFiles(root)) {
@@ -3824,18 +3824,18 @@ function normalizeTechniqueActivityQueueItem(item) {
         kind,
         payload,
         label: normalizeText(item.label) || (kind === 'forging'
-            ? '炼器任务'
+            ? '煉器任務'
             : kind === 'enhancement'
-                ? '强化任务'
+                ? '強化任務'
                 : kind === 'gather'
-                    ? '采集任务'
+                    ? '採集任務'
                     : kind === 'building'
-                        ? '营造任务'
+                        ? '營造任務'
                         : kind === 'mining'
-                            ? '挖矿任务'
+                            ? '挖礦任務'
                             : kind === 'formation'
-                                ? '阵法任务'
-                                : '炼丹任务'),
+                                ? '陣法任務'
+                                : '煉丹任務'),
         state,
         createdAt: Math.max(1, Math.trunc(Number(item.createdAt ?? Date.now()))),
         cancelRef: {
@@ -3922,7 +3922,7 @@ function buildAlchemyQueueItem(recipe, ingredients, quantity, kind = 'alchemy') 
         kind: normalizedKind,
         label: resolvePlayerFacingContentName(
             recipe?.outputItemId,
-            normalizedKind === 'forging' ? '炼器任务' : '炼丹任务',
+            normalizedKind === 'forging' ? '煉器任務' : '煉丹任務',
             recipe?.outputName,
         ),
         quantity,
@@ -3947,7 +3947,7 @@ function buildEnhancementQueueItem(target, protection, payload, desiredTargetLev
     return {
         queueId: buildCraftQueueId('enhancement'),
         kind: 'enhancement',
-        label: targetItemName === '未知物品' ? '强化任务' : targetItemName,
+        label: targetItemName === '未知物品' ? '強化任務' : targetItemName,
         quantity: desiredTargetLevel,
         createdAt: Date.now(),
         payload: {
@@ -4727,7 +4727,7 @@ function validateAlchemySelection(contentTemplateRepository, recipe, submitted) 
   for (const ingredient of mainIngredients) {
     const submittedCount = submittedMap.get(ingredient.itemId) ?? 0;
     if (submittedCount !== ingredient.count) {
-      return { error: `${resolvePlayerFacingContentName(ingredient.itemId, '未知物品', ingredient.name, contentTemplateRepository.getItemName(ingredient.itemId))} 属于主药/主材，数量必须为 ${ingredient.count}。` };
+      return { error: `${resolvePlayerFacingContentName(ingredient.itemId, '未知物品', ingredient.name, contentTemplateRepository.getItemName(ingredient.itemId))} 屬於主藥/主材，數量必須為 ${ingredient.count}。` };
     }
     const item = contentTemplateRepository.createItem(ingredient.itemId, 1);
     if (item?.materialValues?.elements) {
@@ -4743,11 +4743,11 @@ function validateAlchemySelection(contentTemplateRepository, recipe, submitted) 
     const count = Math.max(1, Math.floor(Number(entry.count) || 1));
     const item = contentTemplateRepository.createItem(entry.itemId, 1);
     if (!item || item.type !== 'material') {
-      return { error: '辅药/辅材必须是材料。' };
+      return { error: '輔藥/輔材必須是材料。' };
     }
     const elements = item.materialValues?.elements;
     if (!elements || Object.keys(elements).length === 0) {
-      return { error: `${resolvePlayerFacingContentName(item.itemId, '未知物品', item.name, contentTemplateRepository.getItemName(item.itemId))} 没有五行值，不能作为辅药/辅材。` };
+      return { error: `${resolvePlayerFacingContentName(item.itemId, '未知物品', item.name, contentTemplateRepository.getItemName(item.itemId))} 沒有五行值，不能作為輔藥/輔材。` };
     }
     addCraftElementVector(inputElements, elements, count);
     normalizedIngredients.push({ itemId: entry.itemId, count });

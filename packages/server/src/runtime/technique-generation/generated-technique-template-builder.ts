@@ -139,7 +139,7 @@ export function buildGeneratedTechniqueTemplate(
 
   const template: TechniqueTemplate = {
     id: input.techniqueId,
-    name: normalizeText(fixedCandidate.name, '无名功法'),
+    name: normalizeText(fixedCandidate.name, '無名功法'),
     desc: normalizeOptionalText(fixedCandidate.desc),
     grade: input.grade,
     category: input.category,
@@ -194,7 +194,7 @@ function buildArtsStrengthGenerationReport(params: {
 }): ArtsStrengthGenerationReport {
   return {
     version: 1,
-    note: 'template.skills 是服务端展开后的运行时 SkillDef；rawCandidate/normalizedTemplate 保留原始权重草稿与归一化权重，expansion 记录预算分配和真实值展开结果。',
+    note: 'template.skills 是服務端展開後的運行時 SkillDef；rawCandidate/normalizedTemplate 保留原始權重草稿與歸一化權重，expansion 記錄預算分配和真實值展開結果。',
     rawCandidate: params.rawCandidate,
     normalizedTemplate: params.normalizedTemplate,
     expansion: params.expandedSkills.map((entry) => ({

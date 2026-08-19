@@ -16,7 +16,7 @@ export class AlchemyStrategy implements TechniqueActivityStrategy {
   readonly kind = 'alchemy' as const;
   readonly jobSlot = 'alchemyJob';
   readonly skillSlot = 'alchemySkill';
-  readonly activityLabel = '炼丹';
+  readonly activityLabel = '煉丹';
   readonly pauseTicks = 10;
   readonly conditional = false;
 

@@ -34,13 +34,13 @@ const TREASURE_VAULT_SLOT_DEFINITIONS = Object.freeze([
   Object.freeze({
     slot: TREASURE_VAULT_ACCESS_POLICY_SLOT.viewDeposit,
     label: '可看和可放',
-    description: '查看宝库内容并向宝库放入物品。',
+    description: '查看寶庫內容並向寶庫放入物品。',
     defaultPolicy: cloneAccessPolicy(EVERYONE_ACCESS_POLICY),
   }),
   Object.freeze({
     slot: TREASURE_VAULT_ACCESS_POLICY_SLOT.withdraw,
     label: '可拿',
-    description: '从宝库中取出物品。',
+    description: '從寶庫中取出物品。',
     defaultPolicy: cloneAccessPolicy(OWNER_ONLY_ACCESS_POLICY),
   }),
 ]);
@@ -48,14 +48,14 @@ const TREASURE_VAULT_SLOT_DEFINITIONS = Object.freeze([
 const TECHNIQUE_PLATFORM_SLOT_DEFINITIONS = Object.freeze([
   Object.freeze({
     slot: TECHNIQUE_UNIFICATION_ACCESS_POLICY_SLOT.read,
-    label: '参阅',
-    description: '查看并参悟统法台当前法脉。',
+    label: '參閱',
+    description: '查看並參悟統法臺當前法脈。',
     defaultPolicy: cloneAccessPolicy(EVERYONE_ACCESS_POLICY),
   }),
   Object.freeze({
     slot: TECHNIQUE_UNIFICATION_ACCESS_POLICY_SLOT.revision,
-    label: '修订',
-    description: '向统法台当前法脉续录自己的圆满功法。',
+    label: '修訂',
+    description: '向統法臺當前法脈續錄自己的圓滿功法。',
     defaultPolicy: cloneAccessPolicy(OWNER_ONLY_ACCESS_POLICY),
   }),
 ]);

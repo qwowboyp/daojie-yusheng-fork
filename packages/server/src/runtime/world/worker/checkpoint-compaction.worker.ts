@@ -96,7 +96,7 @@ export class CheckpointCompactionWorker {
         processed += 1;
       } catch (error: unknown) {
         this.logger.warn(
-          `玩家 checkpoint compaction 刷盘失败 playerId=${playerId} domain=${PLAYER_CHECKPOINT_WORKER_DOMAIN}: ${
+          `玩家 checkpoint compaction 刷盤失敗 playerId=${playerId} domain=${PLAYER_CHECKPOINT_WORKER_DOMAIN}: ${
             error instanceof Error ? error.stack || error.message : String(error)
           }`,
         );

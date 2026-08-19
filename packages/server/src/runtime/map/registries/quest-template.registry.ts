@@ -76,7 +76,7 @@ export class QuestTemplateRegistry {
   getRef(questId: string): Readonly<any> {
     const source = this.getQuestSource(questId);
     if (!source) {
-      throw new Error(`未找到任务模板：${questId}`);
+      throw new Error(`未找到任務模板：${questId}`);
     }
     return source.quest;
   }

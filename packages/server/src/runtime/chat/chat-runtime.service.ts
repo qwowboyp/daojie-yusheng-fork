@@ -129,22 +129,22 @@ export class ChatRuntimeService implements OnModuleDestroy {
   async onModuleInit(): Promise<void> {
     const databaseUrl = resolveServerDatabaseUrl();
     if (!databaseUrl.trim()) {
-      this.logger.log('聊天历史云端持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('聊天曆史雲端持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
     this.persistenceRequired = true;
     const pool = this.databasePoolProvider?.getPool?.('chat-runtime') as PoolLike | null;
     if (!pool) {
-      this.logger.warn('聊天历史云端持久化已禁用：数据库连接池不可用');
+      this.logger.warn('聊天曆史雲端持久化已禁用：數據庫連接池不可用');
       return;
     }
     try {
       await ensureChatTables(pool);
       this.pool = pool;
       this.enabled = true;
-      this.logger.log('聊天历史云端持久化已启用（server_chat_message）');
+      this.logger.log('聊天曆史雲端持久化已啟用（server_chat_message）');
     } catch (error) {
-      this.logger.error('聊天历史云端持久化初始化失败，已进入拒绝写入模式', error instanceof Error ? error.stack : String(error));
+      this.logger.error('聊天曆史雲端持久化初始化失敗，已進入拒絕寫入模式', error instanceof Error ? error.stack : String(error));
       this.pool = null;
       this.enabled = false;
     }
@@ -186,7 +186,7 @@ export class ChatRuntimeService implements OnModuleDestroy {
     if (!this.consumeAdmission(record, recipientCount)) {
       this.worldSessionService.getSocketByPlayerId(normalizedPlayerId)?.emit(S2C.Error, {
         code: 'CHAT_CHANNEL_BUSY',
-        message: '当前频道消息较多，请稍后再试',
+        message: '當前頻道消息較多，請稍後再試',
       });
       return;
     }
@@ -194,7 +194,7 @@ export class ChatRuntimeService implements OnModuleDestroy {
     if (!persisted) {
       this.worldSessionService.getSocketByPlayerId(normalizedPlayerId)?.emit(S2C.Error, {
         code: 'CHAT_PERSIST_FAILED',
-        message: '聊天消息暂时无法保存，请稍后重试',
+        message: '聊天消息暫時無法保存，請稍後重試',
       });
       return;
     }
@@ -230,7 +230,7 @@ export class ChatRuntimeService implements OnModuleDestroy {
     if (channel === 'sect' && !sectId) {
       this.worldSessionService.getSocketByPlayerId(playerId)?.emit(S2C.Error, {
         code: 'CHAT_SECT_REQUIRED',
-        message: '尚未加入宗门，无法发送宗门频道消息',
+        message: '尚未加入宗門，無法發送宗門頻道消息',
       });
       return null;
     }
@@ -341,7 +341,7 @@ export class ChatRuntimeService implements OnModuleDestroy {
       this.recordPersistedStreamWrite(buildChatStreamRef(record));
       return true;
     } catch (error) {
-      this.logger.warn(`聊天消息写入失败，已拒绝广播：${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`聊天消息寫入失敗，已拒絕廣播：${error instanceof Error ? error.message : String(error)}`);
       return false;
     }
   }
@@ -405,7 +405,7 @@ export class ChatRuntimeService implements OnModuleDestroy {
         try {
           await this.prunePersistedStream(stream);
         } catch (error) {
-          this.logger.warn(`聊天历史裁剪失败 stream=${stream.key} error=${error instanceof Error ? error.message : String(error)}`);
+          this.logger.warn(`聊天曆史裁剪失敗 stream=${stream.key} error=${error instanceof Error ? error.message : String(error)}`);
           this.pendingPruneStreams.set(stream.key, stream);
         }
       }
@@ -520,7 +520,7 @@ export class ChatRuntimeService implements OnModuleDestroy {
       try {
         return await this.loadPersistedHistory(player, normalizedCursors);
       } catch (error) {
-        this.logger.warn(`读取聊天历史失败，回退内存历史：${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`讀取聊天曆史失敗，回退記憶體歷史：${error instanceof Error ? error.message : String(error)}`);
       }
     }
     return this.loadMemoryHistory(player, normalizedCursors);

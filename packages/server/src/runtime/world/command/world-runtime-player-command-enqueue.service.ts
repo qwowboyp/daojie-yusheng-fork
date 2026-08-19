@@ -156,10 +156,10 @@ export class WorldRuntimePlayerCommandEnqueueService {
         const sourceId = typeof sourceIdInput === 'string' ? sourceIdInput.trim() : '';
         const itemKey = typeof itemKeyInput === 'string' ? itemKeyInput.trim() : '';
         if (!sourceId) {
-            throw new BadRequestException('来源 ID 不能为空');
+            throw new BadRequestException('來源 ID 不能為空');
         }
         if (!itemKey) {
-            throw new BadRequestException('物品键不能为空');
+            throw new BadRequestException('物品鍵不能為空');
         }
         deps.enqueuePendingCommand(playerId, {
             kind: 'takeGround',
@@ -183,7 +183,7 @@ export class WorldRuntimePlayerCommandEnqueueService {
 
         const sourceId = typeof sourceIdInput === 'string' ? sourceIdInput.trim() : '';
         if (!sourceId) {
-            throw new BadRequestException('来源 ID 不能为空');
+            throw new BadRequestException('來源 ID 不能為空');
         }
         deps.enqueuePendingCommand(playerId, {
             kind: 'takeGroundAll',
@@ -382,7 +382,7 @@ export class WorldRuntimePlayerCommandEnqueueService {
             ? actionInput
             : null;
         if (!queueId || queueId.length > 180 || !action) {
-            throw new BadRequestException('行动队列调整参数无效');
+            throw new BadRequestException('行動隊列調整參數無效');
         }
         return this.enqueueNormalizedPlayerCommand(playerId, {
             kind: 'reorderTechniqueActivityQueue',
@@ -402,7 +402,7 @@ export class WorldRuntimePlayerCommandEnqueueService {
     enqueueRedeemCodes(playerId, requestIdInput, codesInput, deps) {
         const requestId = typeof requestIdInput === 'string' ? requestIdInput.trim() : '';
         if (!requestId || requestId.length > 128) {
-            throw new BadRequestException('兑换请求 ID 无效');
+            throw new BadRequestException('兌換請求 ID 無效');
         }
         return this.enqueueNormalizedPlayerCommand(playerId, {
             kind: 'redeemCodes',
@@ -426,7 +426,7 @@ export class WorldRuntimePlayerCommandEnqueueService {
 
         const action = typeof actionInput === 'string' ? actionInput.trim() : '';
         if (action !== 'sever' && action !== 'restore' && action !== 'open' && action !== 'reroll' && action !== 'enter') {
-            throw new BadRequestException('天门动作不能为空');
+            throw new BadRequestException('天門動作不能為空');
         }
 
         const element = typeof elementInput === 'string' ? elementInput.trim() : '';
@@ -460,19 +460,19 @@ export class WorldRuntimePlayerCommandEnqueueService {
         const targetMonsterId = typeof targetMonsterIdInput === 'string' ? targetMonsterIdInput.trim() : '';
         const targetRef = typeof targetRefInput === 'string' ? targetRefInput.trim() : '';
         if (!skillId) {
-            throw new BadRequestException('技能 ID 不能为空');
+            throw new BadRequestException('技能 ID 不能為空');
         }
 
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const action = player.actions.actions.find((entry) => entry.id === skillId && entry.type === 'skill');
         if (!action) {
-            throw new NotFoundException(`技能动作不存在：${skillId}`);
+            throw new NotFoundException(`技能動作不存在：${skillId}`);
         }
         if (action.skillEnabled === false) {
-            throw new BadRequestException('技能未启用，无法释放');
+            throw new BadRequestException('技能未啟用，無法釋放');
         }
         if (!targetPlayerId && !targetMonsterId && !targetRef && action.requiresTarget !== false) {
-            throw new BadRequestException('必须指定目标');
+            throw new BadRequestException('必須指定目標');
         }
         deps.enqueuePendingCommand(playerId, {
             kind: 'castSkill',
@@ -524,7 +524,7 @@ export class WorldRuntimePlayerCommandEnqueueService {
             return direct;
         }
         this.playerRuntimeService.repairInventoryItemInstanceIds(playerId);
-        throw new BadRequestException('背包物品身份已修复，请重新选择。');
+        throw new BadRequestException('背包物品身份已修復，請重新選擇。');
     }
     /**
  * enqueueCombatTargetCommand：读取战斗目标Command并返回结果。
@@ -558,7 +558,7 @@ export class WorldRuntimePlayerCommandEnqueueService {
                 }
                 return deps.getPlayerViewOrThrow(playerId);
             }
-            throw new BadRequestException('必须指定目标');
+            throw new BadRequestException('必須指定目標');
         }
         deps.enqueuePendingCommand(playerId, {
             kind,

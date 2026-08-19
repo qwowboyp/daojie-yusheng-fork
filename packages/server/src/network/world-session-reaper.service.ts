@@ -111,7 +111,7 @@ export class WorldSessionReaperService {
             void this.reapExpiredSessions();
         }, SESSION_REAPER_INTERVAL_MS);
         this.timer.unref();
-        this.logger.log(`会话回收器已启动，间隔 ${SESSION_REAPER_INTERVAL_MS}ms`);
+        this.logger.log(`會話回收器已啟動，間隔 ${SESSION_REAPER_INTERVAL_MS}ms`);
     }
     /**
  * onModuleDestroy：执行on模块Destroy相关逻辑。
@@ -185,16 +185,16 @@ export class WorldSessionReaperService {
                 catch (error) {
                     const requeued = this.worldSessionService.requeueExpiredBinding(binding, { lastError: error });
                     if (requeued) {
-                        this.logger.warn(`回收玩家 ${binding.playerId} 的会话失败，已重入等待下次重试`, error instanceof Error ? error.stack : String(error));
+                        this.logger.warn(`回收玩家 ${binding.playerId} 的會話失敗，已重入等待下次重試`, error instanceof Error ? error.stack : String(error));
                     }
                     else {
-                        this.logger.error(`回收玩家 ${binding.playerId} 的会话连续失败超过上限，已转入死信队列`, error instanceof Error ? error.stack : String(error));
+                        this.logger.error(`回收玩家 ${binding.playerId} 的會話連續失敗超過上限，已轉入死信隊列`, error instanceof Error ? error.stack : String(error));
                     }
                 }
             }
         }
         catch (error) {
-            this.logger.error('会话回收执行失败', error instanceof Error ? error.stack : String(error));
+            this.logger.error('會話回收執行失敗', error instanceof Error ? error.stack : String(error));
         }
         finally {
             this.running = false;

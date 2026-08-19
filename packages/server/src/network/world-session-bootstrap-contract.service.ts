@@ -102,25 +102,25 @@ export class WorldSessionBootstrapContractService {
         if (!BOOTSTRAP_ALLOWED_IDENTITY_SOURCES.has(authSource ?? '')) {
             return {
                 stage: 'mainline_bootstrap_identity_source_blocked',
-                message: `主线协议 bootstrap 不接受 ${authSource || 'unknown'} 身份来源`,
+                message: `主線協議 bootstrap 不接受 ${authSource || 'unknown'} 身份來源`,
             };
         }
         if (!persistedSource) {
             return {
                 stage: 'mainline_bootstrap_persisted_source_missing',
-                message: '主线协议 bootstrap 缺少持久化身份来源',
+                message: '主線協議 bootstrap 缺少持久化身份來源',
             };
         }
         if (authSource === 'token' && !AUTHENTICATED_TOKEN_REUSE_PERSISTED_SOURCES.has(persistedSource)) {
             return {
                 stage: 'mainline_bootstrap_token_persisted_source_invalid',
-                message: `主线协议 token 身份不接受 ${persistedSource} 持久化来源`,
+                message: `主線協議 token 身份不接受 ${persistedSource} 持久化來源`,
             };
         }
         if (authSource === 'mainline' && !BOOTSTRAP_ALLOWED_MAINLINE_PERSISTED_SOURCES.has(persistedSource)) {
             return {
                 stage: 'mainline_bootstrap_mainline_persisted_source_invalid',
-                message: `主线协议主线身份不接受 ${persistedSource} 持久化来源`,
+                message: `主線協議主線身份不接受 ${persistedSource} 持久化來源`,
             };
         }
         return null;
@@ -178,7 +178,7 @@ export class WorldSessionBootstrapContractService {
             return undefined;
         }
         if (!this.shouldAllowRequestedDetachedResume(client)) {
-            this.logger.debug(`启动引导请求的 sessionId 已忽略：socket=${client?.id ?? '未知'} sessionId=${normalizedSessionId}`);
+            this.logger.debug(`啟動引導請求的 sessionId 已忽略：socket=${client?.id ?? '未知'} sessionId=${normalizedSessionId}`);
             return undefined;
         }
         return normalizedSessionId;

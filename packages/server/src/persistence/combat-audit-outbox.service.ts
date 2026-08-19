@@ -51,27 +51,27 @@ export class CombatAuditOutboxService implements OnModuleInit, OnModuleDestroy {
     if (this.flagService) {
       await this.flagService.ensureInitialized();
       if (!this.flagService.getFlag('combat_audit_enabled')) {
-        this.logger.log('战斗审计发件箱已禁用：运行时标志 combat_audit_enabled = false');
+        this.logger.log('戰鬥審計發件箱已禁用：運行時標誌 combat_audit_enabled = false');
         return;
       }
     } else if (process.env.SERVER_COMBAT_AUDIT_ENABLED !== 'true') {
-      this.logger.log('战斗审计发件箱已禁用：SERVER_COMBAT_AUDIT_ENABLED !== true');
+      this.logger.log('戰鬥審計發件箱已禁用：SERVER_COMBAT_AUDIT_ENABLED !== true');
       return;
     }
     try {
       this.pool = this.databasePoolProvider?.getPool('combat-audit-outbox') ?? null;
       if (!this.pool) {
-        this.logger.log('战斗审计发件箱已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+        this.logger.log('戰鬥審計發件箱已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
         return;
       }
       await ensureCombatAuditOutboxTables(this.pool);
       this.enabled = true;
-      this.logger.log('战斗审计发件箱已启用');
+      this.logger.log('戰鬥審計發件箱已啟用');
     } catch (error: unknown) {
       this.pool = null;
       this.enabled = false;
       this.logger.error(
-        `战斗审计发件箱初始化失败，已禁用审计写入：${error instanceof Error ? error.message : String(error)}`,
+        `戰鬥審計發件箱初始化失敗，已禁用審計寫入：${error instanceof Error ? error.message : String(error)}`,
         error instanceof Error ? error.stack : undefined,
       );
     }
@@ -79,7 +79,7 @@ export class CombatAuditOutboxService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleDestroy(): Promise<void> {
     await this.flushOnce().catch((error: unknown) => {
-      this.logger.warn(`战斗审计发件箱关闭前刷盘失败：${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`戰鬥審計發件箱關閉前刷盤失敗：${error instanceof Error ? error.message : String(error)}`);
     });
     this.queue = [];
     this.enabled = false;
@@ -99,7 +99,7 @@ export class CombatAuditOutboxService implements OnModuleInit, OnModuleDestroy {
       this.droppedCount += 1;
       const now = Date.now();
       if (now - this.lastDropWarnAt >= 10_000) {
-        this.logger.warn(`战斗审计发件箱队列溢出，已丢弃 ${this.droppedCount} 条事件`);
+        this.logger.warn(`戰鬥審計發件箱隊列溢出，已丟棄 ${this.droppedCount} 條事件`);
         this.lastDropWarnAt = now;
       }
     }
@@ -132,7 +132,7 @@ export class CombatAuditOutboxService implements OnModuleInit, OnModuleDestroy {
       return batch.length;
     } catch (error: unknown) {
       this.queue = batch.concat(this.queue).slice(0, MAX_QUEUE_SIZE);
-      this.logger.warn(`战斗审计发件箱刷盘失败：${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`戰鬥審計發件箱刷盤失敗：${error instanceof Error ? error.message : String(error)}`);
       return 0;
     } finally {
       this.flushing = false;
@@ -218,7 +218,7 @@ export class CombatAuditOutboxService implements OnModuleInit, OnModuleDestroy {
     const handle = setImmediate(async () => {
       this.flushScheduled = false;
       await this.flushOnce().catch((error: unknown) => {
-        this.logger.warn(`战斗审计发件箱异步刷盘失败：${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`戰鬥審計發件箱異步刷盤失敗：${error instanceof Error ? error.message : String(error)}`);
       });
     });
     if (typeof handle.unref === 'function') {

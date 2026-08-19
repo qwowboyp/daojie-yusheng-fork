@@ -36,7 +36,7 @@ export class NodeRegistryRuntimeService implements OnModuleInit, OnModuleDestroy
     this.config = config;
     for (const adjustment of config.adjustments) {
       this.logger.warn(
-        `节点配置 ${adjustment.key}=${JSON.stringify(adjustment.configuredValue.slice(0, 80))} 已归一化为 ${JSON.stringify(adjustment.normalizedValue)}：${adjustment.reason}`,
+        `節點配置 ${adjustment.key}=${JSON.stringify(adjustment.configuredValue.slice(0, 80))} 已歸一化為 ${JSON.stringify(adjustment.normalizedValue)}：${adjustment.reason}`,
       );
     }
     await this.nodeRegistryService.registerNode({
@@ -49,7 +49,7 @@ export class NodeRegistryRuntimeService implements OnModuleInit, OnModuleDestroy
       void this.runHeartbeatCycle();
     }, config.heartbeatIntervalMs);
     this.timer.unref();
-    this.logger.log(`节点注册运行时已启动，心跳间隔 ${config.heartbeatIntervalMs}ms`);
+    this.logger.log(`節點註冊運行時已啟動，心跳間隔 ${config.heartbeatIntervalMs}ms`);
   }
 
   async onModuleDestroy(): Promise<void> {
@@ -59,7 +59,7 @@ export class NodeRegistryRuntimeService implements OnModuleInit, OnModuleDestroy
     }
     await this.nodeRegistryService.deregisterNode().catch((error) => {
       this.logger.error(
-        '节点注销失败',
+        '節點註銷失敗',
         error instanceof Error ? error.stack : String(error),
       );
     });
@@ -81,12 +81,12 @@ export class NodeRegistryRuntimeService implements OnModuleInit, OnModuleDestroy
       });
       if (stale.suspectNodeIds.length > 0 || stale.deadNodeIds.length > 0) {
         this.logger.warn(
-          `节点状态推进：suspect=${stale.suspectNodeIds.join(',') || '-'} dead=${stale.deadNodeIds.join(',') || '-'}`,
+          `節點狀態推進：suspect=${stale.suspectNodeIds.join(',') || '-'} dead=${stale.deadNodeIds.join(',') || '-'}`,
         );
       }
     } catch (error: unknown) {
       this.logger.error(
-        '节点心跳周期执行失败',
+        '節點心跳週期執行失敗',
         error instanceof Error ? error.stack : String(error),
       );
     } finally {

@@ -108,7 +108,7 @@ export class InstanceGroundItemFlushWorker {
         processed += 1;
       } catch (error: unknown) {
         this.logger.warn(
-          `实例地面物品 worker 刷盘失败 instanceId=${instanceId} domain=${INSTANCE_GROUND_WORKER_DOMAIN}: ${
+          `實例地面物品 worker 刷盤失敗 instanceId=${instanceId} domain=${INSTANCE_GROUND_WORKER_DOMAIN}: ${
             error instanceof Error ? error.stack || error.message : String(error)
           }`,
         );

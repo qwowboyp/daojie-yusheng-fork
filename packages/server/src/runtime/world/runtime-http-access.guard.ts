@@ -35,13 +35,13 @@ class RuntimeHttpAccessGuard {
 
         if (!this.policy.enabled) {
             if (this.policy.misconfigured === true) {
-                throw new ServiceUnavailableException('运行时调试 HTTP 已请求启用，但生产环境未配置 SERVER_RUNTIME_ADMIN_TOKEN 或 SERVER_RUNTIME_HTTP_TOKEN');
+                throw new ServiceUnavailableException('運行時調試 HTTP 已請求啟用，但生產環境未配置 SERVER_RUNTIME_ADMIN_TOKEN 或 SERVER_RUNTIME_HTTP_TOKEN');
             }
-            throw new ServiceUnavailableException('运行时调试 HTTP 未启用；如需使用，请显式设置 SERVER_RUNTIME_HTTP=1');
+            throw new ServiceUnavailableException('運行時調試 HTTP 未啟用；如需使用，請顯式設置 SERVER_RUNTIME_HTTP=1');
         }
         if (this.policy.token === null) {
             if (this.policy.allowUnauthenticatedTestAccess !== true) {
-                throw new ServiceUnavailableException('运行时调试 HTTP 缺少管理 token');
+                throw new ServiceUnavailableException('運行時調試 HTTP 缺少管理 token');
             }
             return true;
         }
@@ -50,7 +50,7 @@ class RuntimeHttpAccessGuard {
 
         const token = readRuntimeAdminToken(request.headers);
         if (!hasEqualToken(token, this.policy.token)) {
-            throw new UnauthorizedException('运行时调试 HTTP 需要有效的 x-runtime-admin-token 请求头或 Authorization: Bearer <token>');
+            throw new UnauthorizedException('運行時調試 HTTP 需要有效的 x-runtime-admin-token 請求頭或 Authorization: Bearer <token>');
         }
         return true;
     }

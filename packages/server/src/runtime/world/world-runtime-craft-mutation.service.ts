@@ -144,7 +144,7 @@ export class WorldRuntimeCraftMutationService {
             && !isFlushTaskConsumerMode()
         ) {
             void this.persistActiveJobIfNeeded(playerId, deps).catch((error) => {
-                this.logger.warn(`活跃任务持久化记账失败：${error instanceof Error ? error.message : String(error)}`);
+                this.logger.warn(`活躍任務持久化記賬失敗：${error instanceof Error ? error.message : String(error)}`);
             });
         }
         if (Array.isArray(result.groundDrops) && result.groundDrops.length > 0) {
@@ -273,15 +273,15 @@ export class WorldRuntimeCraftMutationService {
         for (const item of items) {
             try {
                 deps.spawnGroundItem(instance, player.x, player.y, item);
-                const n = buildStructuredNotice('loot', 'notice.craft.overflow-ground', `${formatItemStackLabel(item)} 背包放不下，已落在你脚边。`, { vars: { itemLabel: formatItemStackLabel(item) }, pills: [{ key: 'itemLabel', style: 'target' }] });
+                const n = buildStructuredNotice('loot', 'notice.craft.overflow-ground', `${formatItemStackLabel(item)} 背包放不下，已落在你腳邊。`, { vars: { itemLabel: formatItemStackLabel(item) }, pills: [{ key: 'itemLabel', style: 'target' }] });
                 deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
             }
             catch (error) {
                 if (error instanceof TypeError || error instanceof ReferenceError) {
-                    console.error(`[制作变更] 生成地面物品错误 player=${playerId}：`, error);
+                    console.error(`[製作變更] 生成地面物品錯誤 player=${playerId}：`, error);
                 }
                 this.playerRuntimeService.receiveInventoryItem(playerId, item);
-                const n = buildStructuredNotice('warn', 'notice.craft.overflow-inventory', `${formatItemStackLabel(item)} 无法落地，已直接放回背包。`, { vars: { itemLabel: formatItemStackLabel(item) }, pills: [{ key: 'itemLabel', style: 'target' }] });
+                const n = buildStructuredNotice('warn', 'notice.craft.overflow-inventory', `${formatItemStackLabel(item)} 無法落地，已直接放回背包。`, { vars: { itemLabel: formatItemStackLabel(item) }, pills: [{ key: 'itemLabel', style: 'target' }] });
                 deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
             }
         }

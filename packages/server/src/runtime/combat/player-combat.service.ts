@@ -99,7 +99,7 @@ export class PlayerCombatService {
      */
     castSkill(attacker, target, skillId, currentTick, distance, options = undefined) {
         if (attacker.playerId === target.playerId) {
-            throw new BadRequestException('不能以自己为攻击目标');
+            throw new BadRequestException('不能以自己為攻擊目標');
         }
 
         const attackerFreshness = this.ensurePlayerAttributesFresh(attacker.playerId);
@@ -272,17 +272,17 @@ export class PlayerCombatService {
             throw new BadRequestException('施法者已死亡');
         }
         if (target.hp <= 0) {
-            throw new BadRequestException('目标已经死亡');
+            throw new BadRequestException('目標已經死亡');
         }
 
         // 射程校验
         const range = resolveEffectiveSkillCastRange(resolved.skill, options);
         if (options?.skipRangeValidation !== true && range > 0 && distance > range) {
-            throw new BadRequestException(`技能 ${resolved.skill.id} 超出范围`);
+            throw new BadRequestException(`技能 ${resolved.skill.id} 超出範圍`);
         }
         // 冷却校验
         if (options?.skipResourceAndCooldown !== true && !resolved.skipCooldownCheck && currentTick < resolved.readyTick) {
-            throw new BadRequestException(`技能 ${resolved.skill.id} 尚在冷却`);
+            throw new BadRequestException(`技能 ${resolved.skill.id} 尚在冷卻`);
         }
 
         // 元气消耗（受 maxQiOutputPerTick 限制）
@@ -292,7 +292,7 @@ export class PlayerCombatService {
             const standardQiCost = Math.round(calcQiCostWithOutputLimit(plannedCost, Math.max(0, attacker.attrs.numericStats.maxQiOutputPerTick)));
             qiCost = applyCombatAttackIntensityQiCost(standardQiCost, options?.combatAttackIntensity ?? attacker.combatAttackIntensity);
             if (!Number.isFinite(qiCost) || attacker.qi < qiCost) {
-                throw new BadRequestException(`技能 ${resolved.skill.id} 元气不足`);
+                throw new BadRequestException(`技能 ${resolved.skill.id} 元氣不足`);
             }
             if (qiCost > 0) {
                 handlers.spendQi?.(qiCost);
@@ -513,7 +513,7 @@ function resolvePlayerSkill(techniqueState, cooldownReadyTickBySkillId, skillId,
     }
     const unlockLevel = typeof entry.skill.unlockLevel === 'number' ? entry.skill.unlockLevel : 1;
     if ((entry.technique.level ?? 1) < unlockLevel) {
-        throw new BadRequestException(`技能 ${skillId} 尚未解锁`);
+        throw new BadRequestException(`技能 ${skillId} 尚未解鎖`);
     }
     return {
         skill: entry.skill,
@@ -555,7 +555,7 @@ function normalizeResolvedPlayerSkillCooldown(attacker, resolved, currentTick) {
 function resolveMonsterSkill(attacker, skillId) {
     const skill = attacker.skills.find((entry) => entry.id === skillId);
     if (!skill) {
-        throw new NotFoundException(`妖兽技能不存在：${skillId}`);
+        throw new NotFoundException(`妖獸技能不存在：${skillId}`);
     }
     return {
         skill,

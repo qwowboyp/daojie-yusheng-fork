@@ -209,7 +209,7 @@ export class LeaderboardRuntimeService implements OnModuleDestroy {
             this.cachedLeaderboard = payload;
             this.cachedLeaderboardSnapshotsByPlayerId = new Map(snapshots.map((snapshot) => [snapshot.playerId, snapshot]));
         } catch (_error) {
-            this.logger.warn(`排行榜缓存刷新失败: ${_error instanceof Error ? _error.message : String(_error)}`);
+            this.logger.warn(`排行榜緩存刷新失敗: ${_error instanceof Error ? _error.message : String(_error)}`);
         } finally {
             this._refreshing = false;
         }
@@ -228,7 +228,7 @@ export class LeaderboardRuntimeService implements OnModuleDestroy {
             if (taskResult.ok && taskResult.result) {
                 return taskResult.result.boards;
             }
-            this.logger.warn(`排行榜 worker 任务失败，回退主线程同步路径：${taskResult.errorMessage ?? 'unknown'}`);
+            this.logger.warn(`排行榜 worker 任務失敗，回退主線程同步路徑：${taskResult.errorMessage ?? 'unknown'}`);
         }
         return this.buildBoardsOnMainThreadWithYield(snapshots, sects, limit);
     }
@@ -320,7 +320,7 @@ export class LeaderboardRuntimeService implements OnModuleDestroy {
                     return {
                         playerId,
                         mapId: '',
-                        mapName: '离线',
+                        mapName: '離線',
                         x: 0,
                         y: 0,
                         online: false,
@@ -532,7 +532,7 @@ export class LeaderboardRuntimeService implements OnModuleDestroy {
             return player;
         }
         catch (_error) {
-            this.logger.warn(`排行榜离线玩家快照加载失败 [playerId=${playerId}]: ${_error instanceof Error ? _error.message : String(_error)}`);
+            this.logger.warn(`排行榜離線玩家快照加載失敗 [playerId=${playerId}]: ${_error instanceof Error ? _error.message : String(_error)}`);
             return null;
         }
     }
@@ -784,10 +784,10 @@ export class LeaderboardRuntimeService implements OnModuleDestroy {
     resolveMapName(mapId) {
         const normalizedMapId = typeof mapId === 'string' ? mapId.trim() : '';
         if (!normalizedMapId) {
-            return '未知地图';
+            return '未知地圖';
         }
         const summary = this.mapTemplateRepository.listSummaries().find((entry) => entry.id === normalizedMapId);
-        return resolvePlayerFacingContentName(normalizedMapId, '未知地图', summary?.name);
+        return resolvePlayerFacingContentName(normalizedMapId, '未知地圖', summary?.name);
     }
 };
 /**

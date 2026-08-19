@@ -72,12 +72,12 @@ export class EphemeralActorIdentityService implements OnModuleDestroy {
   issue(input: EphemeralActorIssueInput): EphemeralActorIdentity {
     const playerId = (input.playerId ?? '').trim();
     if (!playerId) {
-      throw new Error('EphemeralActorIdentityService.issue: playerId 不能为空');
+      throw new Error('EphemeralActorIdentityService.issue: playerId 不能為空');
     }
     const expectedPrefix = this.resolvePrefix(input.kind);
     if (!playerId.startsWith(expectedPrefix)) {
       throw new Error(
-        `EphemeralActorIdentityService.issue: playerId ${playerId} 缺少前缀 ${expectedPrefix}`,
+        `EphemeralActorIdentityService.issue: playerId ${playerId} 缺少前綴 ${expectedPrefix}`,
       );
     }
     if (this.registry.has(playerId)) {
@@ -87,7 +87,7 @@ export class EphemeralActorIdentityService implements OnModuleDestroy {
     const ownerSet = this.ensureOwnerBucket(ownerKey);
     if (ownerSet.size >= DEFAULT_OWNER_QUOTA) {
       throw new Error(
-        `EphemeralActorIdentityService.issue: owner ${ownerKey} 超过上限 ${DEFAULT_OWNER_QUOTA}`,
+        `EphemeralActorIdentityService.issue: owner ${ownerKey} 超過上限 ${DEFAULT_OWNER_QUOTA}`,
       );
     }
 
@@ -234,7 +234,7 @@ export class EphemeralActorIdentityService implements OnModuleDestroy {
       }
     }
     if (removed > 0) {
-      this.logger.debug(`垃圾回收清理过期临时身份 ${removed} 个，剩余 ${this.registry.size}`);
+      this.logger.debug(`垃圾回收清理過期臨時身份 ${removed} 個，剩餘 ${this.registry.size}`);
     }
   }
 }

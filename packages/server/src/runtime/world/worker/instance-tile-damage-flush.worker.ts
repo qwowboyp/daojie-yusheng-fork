@@ -108,7 +108,7 @@ export class InstanceTileDamageFlushWorker {
         processed += 1;
       } catch (error: unknown) {
         this.logger.warn(
-          `实例地块损坏 worker 刷盘失败 instanceId=${instanceId} domain=${INSTANCE_TILE_DAMAGE_WORKER_DOMAIN}: ${
+          `實例地塊損壞 worker 刷盤失敗 instanceId=${instanceId} domain=${INSTANCE_TILE_DAMAGE_WORKER_DOMAIN}: ${
             error instanceof Error ? error.stack || error.message : String(error)
           }`,
         );

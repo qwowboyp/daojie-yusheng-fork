@@ -89,15 +89,15 @@ export function* iterateSquareProtectedPlacementPoints(
 
 export function formatProtectedPlacementConflictReason(reason: string | undefined): string {
   if (reason === PROTECTED_PLACEMENT_CONFLICT_REASONS.portal) {
-    return '不能与传送点重叠';
+    return '不能與傳送點重疊';
   }
   if (reason === PROTECTED_PLACEMENT_CONFLICT_REASONS.npc) {
-    return '不能与场景人物重叠';
+    return '不能與場景人物重疊';
   }
   if (reason === PROTECTED_PLACEMENT_CONFLICT_REASONS.safeZone) {
-    return '不能与安全区重叠';
+    return '不能與安全區重疊';
   }
-  return '不能放置在受保护点位';
+  return '不能放置在受保護點位';
 }
 
 export function hasRuntimeNpcAtTile(instance: unknown, x: number, y: number): boolean {

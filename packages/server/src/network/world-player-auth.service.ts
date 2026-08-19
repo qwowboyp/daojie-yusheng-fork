@@ -407,7 +407,7 @@ export class WorldPlayerAuthService {
       && typeof this.nativePlayerAuthStore.isOperational === 'function'
       && !this.nativePlayerAuthStore.isOperational()
     ) {
-      this.logger.error('拒绝玩家令牌：主线账号真源未就绪');
+      this.logger.error('拒絕玩家令牌：主線賬號真源未就緒');
       return null;
     }
     if (await this.isBannedAccountPayload(payload)) {
@@ -444,7 +444,7 @@ export class WorldPlayerAuthService {
     if (nextIdentity) {
       const normalizedNextIdentity = normalizeLoadedPlayerIdentity(nextIdentity);
       if (!normalizedNextIdentity) {
-        this.logger.error(`玩家身份主线记录缺少必要字段：userId=${normalizeIdentityString(nextIdentity.userId) || payload.sub} playerId=${normalizeIdentityString(nextIdentity.playerId) || '未知'}`);
+        this.logger.error(`玩家身份主線記錄缺少必要字段：userId=${normalizeIdentityString(nextIdentity.userId) || payload.sub} playerId=${normalizeIdentityString(nextIdentity.playerId) || '未知'}`);
         recordAuthTrace({
           type: 'identity',
           source: 'mainline_invalid',
@@ -464,7 +464,7 @@ export class WorldPlayerAuthService {
       nextIdentity = normalizedNextIdentity;
       const nextPersistedSource = normalizePersistedSource(nextIdentity);
       if (!nextPersistedSource) {
-        this.logger.error(`玩家身份主线记录缺少 persistedSource：userId=${nextIdentity.userId} playerId=${nextIdentity.playerId}`);
+        this.logger.error(`玩家身份主線記錄缺少 persistedSource：userId=${nextIdentity.userId} playerId=${nextIdentity.playerId}`);
         recordAuthTrace({
           type: 'identity',
           source: 'mainline_invalid',
@@ -484,7 +484,7 @@ export class WorldPlayerAuthService {
       const mainlineProtocolBlockedPersistedSource = mainlineProtocolStrict
         && (nextPersistedSource === 'legacy_sync' || nextPersistedSource === 'legacy_backfill');
       if (mainlineProtocolBlockedPersistedSource) {
-        this.logger.warn(`主线协议拒绝旧版持久化来源身份：userId=${nextIdentity.userId} playerId=${nextIdentity.playerId} persistedSource=${nextPersistedSource}`);
+        this.logger.warn(`主線協議拒絕舊版持久化來源身份：userId=${nextIdentity.userId} playerId=${nextIdentity.playerId} persistedSource=${nextPersistedSource}`);
         recordAuthTrace({
           type: 'identity',
           source: 'miss',
@@ -507,7 +507,7 @@ export class WorldPlayerAuthService {
         && nextPersistedSource !== 'legacy_backfill'
         && nextPersistedSource !== 'token_seed'
       ) {
-        this.logger.error(`玩家身份主线记录存在不支持的 persistedSource：userId=${nextIdentity.userId} playerId=${nextIdentity.playerId} persistedSource=${nextPersistedSource}`);
+        this.logger.error(`玩家身份主線記錄存在不支持的 persistedSource：userId=${nextIdentity.userId} playerId=${nextIdentity.playerId} persistedSource=${nextPersistedSource}`);
         recordAuthTrace({
           type: 'identity',
           source: 'mainline_invalid',
@@ -623,7 +623,7 @@ export class WorldPlayerAuthService {
         updatedAt: Date.now(),
       }).catch((error: unknown) => {
         persistFailureStage = 'token_seed_save_failed';
-        this.logger.warn(`玩家身份令牌种子保存失败：userId=${tokenIdentity.userId} playerId=${tokenIdentity.playerId} error=${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`玩家身份令牌種子保存失敗：userId=${tokenIdentity.userId} playerId=${tokenIdentity.playerId} error=${error instanceof Error ? error.message : String(error)}`);
         return null;
       });
 
@@ -646,7 +646,7 @@ export class WorldPlayerAuthService {
 
       const persistedTokenSource = normalizePersistedSource(persistedTokenIdentity);
       if (persistedTokenIdentity && persistedTokenSource !== 'token_seed') {
-        this.logger.error(`玩家身份令牌种子保存返回了异常持久化来源：userId=${tokenIdentity.userId} playerId=${tokenIdentity.playerId} expected=token_seed actual=${persistedTokenSource ?? '未知'}`);
+        this.logger.error(`玩家身份令牌種子保存返回了異常持久化來源：userId=${tokenIdentity.userId} playerId=${tokenIdentity.playerId} expected=token_seed actual=${persistedTokenSource ?? '未知'}`);
         recordAuthTrace({
           type: 'identity',
           source: 'token_persist_blocked',
@@ -731,7 +731,7 @@ export class WorldPlayerAuthService {
     const user = this.nativePlayerAuthStore.getMemoryUserById(payload.sub);
     const identity = normalizeNativeAuthStoreIdentity(user, payload);
     if (!identity && user) {
-      this.logger.warn(`玩家原生认证存储身份与令牌不一致：userId=${payload.sub}`);
+      this.logger.warn(`玩家原生認證存儲身份與令牌不一致：userId=${payload.sub}`);
     }
     return identity;
   }
@@ -749,7 +749,7 @@ export class WorldPlayerAuthService {
     if (!user?.bannedAt) {
       return false;
     }
-    this.logger.debug(`拒绝玩家令牌：账号已封禁 userId=${payload.sub}`);
+    this.logger.debug(`拒絕玩家令牌：賬號已封禁 userId=${payload.sub}`);
     recordAuthTrace({
       type: 'token',
       outcome: 'reject',

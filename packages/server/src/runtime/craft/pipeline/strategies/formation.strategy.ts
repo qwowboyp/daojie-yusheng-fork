@@ -19,7 +19,7 @@ export class FormationStrategy implements TechniqueActivityStrategy<PlayerFormat
   readonly kind = 'formation' as const;
   readonly jobSlot = 'formationJob';
   readonly skillSlot = 'formationSkill';
-  readonly activityLabel = '阵法维护';
+  readonly activityLabel = '陣法維護';
   readonly pauseTicks = 10;
   readonly conditional = true;
 
@@ -36,7 +36,7 @@ export class FormationStrategy implements TechniqueActivityStrategy<PlayerFormat
       ? String((payload as { formationInstanceId: string }).formationInstanceId).trim()
       : '';
     if (!formationInstanceId) {
-      return { ok: false, error: '阵法实例 ID 不能为空。' };
+      return { ok: false, error: '陣法實例 ID 不能為空。' };
     }
     const formationService = resolveFormationService(ctx);
     const playerId = resolvePlayerId(player);
@@ -50,7 +50,7 @@ export class FormationStrategy implements TechniqueActivityStrategy<PlayerFormat
     if (!resolveAnyActiveTechniqueJob(player)) {
       const condition = formationService.checkFormationMaintenanceCondition(player, { formationInstanceId }, ctx);
       if (!condition.satisfied) {
-        return { ok: false, error: condition.reason || '当前不能维护该阵法。' };
+        return { ok: false, error: condition.reason || '當前不能維護該陣法。' };
       }
     }
     return { ok: true, validated: { formationInstanceId, formationName: normalizeFormationName(formation?.name) } };
@@ -70,7 +70,7 @@ export class FormationStrategy implements TechniqueActivityStrategy<PlayerFormat
     }
     const formationInstanceId = String((validated as { formationInstanceId?: unknown }).formationInstanceId ?? '').trim();
     if (!enqueueFormationMaintenance(player, formationInstanceId, formationName)) {
-      return { ok: false, error: '技艺行动队列已满。', panelChanged: false, messages: [] };
+      return { ok: false, error: '技藝行動隊列已滿。', panelChanged: false, messages: [] };
     }
     markFormationDirty(player, ctx);
     return {
@@ -141,7 +141,7 @@ function buildFormationNotice(
 }
 
 function normalizeFormationName(value: unknown): string {
-  return typeof value === 'string' && value.trim() ? value.trim() : '阵法';
+  return typeof value === 'string' && value.trim() ? value.trim() : '陣法';
 }
 
 function resolveFormationService(ctx: PipelineContext): any {
@@ -195,7 +195,7 @@ function enqueueFormationMaintenance(player: unknown, formationInstanceId: strin
     queueId: `formation_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`,
     kind: 'formation',
     payload: { formationInstanceId: normalizedId },
-    label: formationName ? `维护 ${formationName}` : '阵法维护',
+    label: formationName ? `維護 ${formationName}` : '陣法維護',
     state: 'pending',
     createdAt: Date.now(),
   });

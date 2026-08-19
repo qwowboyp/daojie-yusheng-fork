@@ -183,7 +183,7 @@ class WorldGateway implements WorldGatewayHelperContext {
     async handleConnection(client: Socket) {
         this.worldSessionService.attachSocketServer(this.server);
         if (this.draining) {
-            this.worldClientEventService.emitError(client, 'SERVER_SHUTTING_DOWN', '服务器正在关停，请稍后重连');
+            this.worldClientEventService.emitError(client, 'SERVER_SHUTTING_DOWN', '伺服器正在關停，請稍後重連');
             client.disconnect(true);
             return;
         }
@@ -213,7 +213,7 @@ class WorldGateway implements WorldGatewayHelperContext {
             presencePersisted = true;
         }
         catch (error) {
-            this.logger.error(`写入离线 presence 失败：${binding.playerId}`, error instanceof Error ? error.stack : String(error));
+            this.logger.error(`寫入離線 presence 失敗：${binding.playerId}`, error instanceof Error ? error.stack : String(error));
         }
         try {
             await this.playerPersistenceFlushService.flushPlayer(binding.playerId);
@@ -225,10 +225,10 @@ class WorldGateway implements WorldGatewayHelperContext {
                 // 权威数据由新会话按更高 epoch 持久化，此处不算失败，也无需保留 dirty 重试。
                 superseded = true;
                 flushSucceeded = true;
-                this.logger.debug(`脱机玩家刷盘已被更新会话取代（fence 收敛），跳过：${binding.playerId}`);
+                this.logger.debug(`脫機玩家刷盤已被更新會話取代（fence 收斂），跳過：${binding.playerId}`);
             }
             else {
-                this.logger.error(`刷新脱机玩家失败：${binding.playerId}`, error instanceof Error ? error.stack : String(error));
+                this.logger.error(`刷新脫機玩家失敗：${binding.playerId}`, error instanceof Error ? error.stack : String(error));
             }
         }
         return { playerId: binding.playerId, presencePersisted, flushSucceeded, skipped: false, superseded };
@@ -275,7 +275,7 @@ class WorldGateway implements WorldGatewayHelperContext {
         }
         this.partyRuntimeService.handlePlayerDisconnected(binding.playerId);
         await this.drainDetachedBinding(binding);
-        this.logger.debug(`套接字已脱离：${client.id} -> ${binding.playerId}, expiresAt=${binding.expireAt}`);
+        this.logger.debug(`套接字已脫離：${client.id} -> ${binding.playerId}, expiresAt=${binding.expireAt}`);
     }
         @SubscribeMessage(C2S.Hello)
         async handleHello(@ConnectedSocket() client: Socket, @MessageBody() payload: any) {

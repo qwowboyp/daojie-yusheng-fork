@@ -34,7 +34,7 @@ export class ItemTemplateRegistry {
     for (const file of itemFiles) {
       const parsed = JSON.parse(fs.readFileSync(file, 'utf-8'));
       if (!Array.isArray(parsed)) {
-        errors.push(`${file}: 物品配置文件必须是数组`);
+        errors.push(`${file}: 物品配置文件必須是數組`);
         continue;
       }
       parsed.forEach((entry, index) => {
@@ -48,7 +48,7 @@ export class ItemTemplateRegistry {
     }
     if (errors.length > 0) {
       this.itemTemplates.clear();
-      throw new Error(`物品模板加载失败:\n${errors.join('\n')}`);
+      throw new Error(`物品模板加載失敗:\n${errors.join('\n')}`);
     }
     freezeTemplateMap(this.itemTemplates);
   }

@@ -78,16 +78,16 @@ export class InstanceCatalogService implements OnModuleInit {
   async onModuleInit(): Promise<void> {
     this.pool = this.databasePoolProvider?.getPool('instance-catalog') ?? null;
     if (!this.pool) {
-      this.logger.log('实例目录持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('實例目錄持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
     try {
       await ensureInstanceCatalogTable(this.pool);
       this.enabled = true;
-      this.logger.log('实例目录持久化已启用（instance_catalog）');
+      this.logger.log('實例目錄持久化已啟用（instance_catalog）');
     } catch (error: unknown) {
       this.logger.error(
-        '实例目录持久化初始化失败，已回退为禁用模式',
+        '實例目錄持久化初始化失敗，已回退為禁用模式',
         error instanceof Error ? error.stack : String(error),
       );
       this.pool = null;

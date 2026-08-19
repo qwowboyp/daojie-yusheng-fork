@@ -74,7 +74,7 @@ async function activateOfflinePlayerTowerInstances(deps, positions) {
                 );
                 if (!instance) {
                     failed++;
-                    deps.logger?.warn?.(`离线挂机通天塔实例按需物化失败：${instanceId}`);
+                    deps.logger?.warn?.(`離線掛機通天塔實例按需物化失敗：${instanceId}`);
                     return;
                 }
                 const attachReady = typeof deps.instanceReadyForPlayerAttach === 'function'
@@ -87,7 +87,7 @@ async function activateOfflinePlayerTowerInstances(deps, positions) {
             } catch (error) {
                 failed++;
                 deps.logger?.warn?.(
-                    `离线挂机通天塔实例按需物化异常：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
+                    `離線掛機通天塔實例按需物化異常：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
                 );
             }
         }));
@@ -129,16 +129,16 @@ async function persistBuildingRoomStateAfterStartupRecovery(deps, domainPersiste
         );
     }
     if (skippedCount > 0) {
-        deps.logger?.warn?.(`启动清理了 ${skippedCount} 个未知建筑定义实例：${instanceId}`);
+        deps.logger?.warn?.(`啟動清理了 ${skippedCount} 個未知建築定義實例：${instanceId}`);
     }
     if (skippedProtectedPlacementCount > 0) {
-        deps.logger?.warn?.(`启动清理了 ${skippedProtectedPlacementCount} 个违规保护点位建筑：${instanceId}`);
+        deps.logger?.warn?.(`啟動清理了 ${skippedProtectedPlacementCount} 個違規保護點位建築：${instanceId}`);
     }
     if (restoredSkippedBuildingTileCellCount > 0) {
-        deps.logger?.warn?.(`启动恢复了 ${restoredSkippedBuildingTileCellCount} 个违规建筑占用地块：${instanceId}`);
+        deps.logger?.warn?.(`啟動恢復了 ${restoredSkippedBuildingTileCellCount} 個違規建築佔用地塊：${instanceId}`);
     }
     if (repairedBuildingCellCount > 0) {
-        deps.logger?.warn?.(`启动修复了 ${repairedBuildingCellCount} 个失配建筑占格：${instanceId}`);
+        deps.logger?.warn?.(`啟動修復了 ${repairedBuildingCellCount} 個失配建築佔格：${instanceId}`);
     }
 }
 
@@ -208,7 +208,7 @@ export class WorldRuntimeLifecycleService {
                 defaultEntry: true,
             });
         }
-        deps.logger.log(`已初始化 ${deps.getInstanceCount()} 个默认地图实例`);
+        deps.logger.log(`已初始化 ${deps.getInstanceCount()} 個預設地圖實例`);
     }    
     /**
  * restorePublicInstancePersistence：判断restorePublicInstancePersistence是否满足条件。
@@ -234,7 +234,7 @@ export class WorldRuntimeLifecycleService {
                     continue;
                 }
                 if (!(await preparePersistentInstanceHydration(deps, instanceId, instance))) {
-                    deps.logger?.warn?.(`实例未取得本地 lease，跳过持久化水合：${instanceId}`);
+                    deps.logger?.warn?.(`實例未取得本地 lease，跳過持久化水合：${instanceId}`);
                     continue;
                 }
                 if (typeof deps.worldRuntimeFormationService?.restoreInstanceFormations === 'function') {
@@ -257,7 +257,7 @@ export class WorldRuntimeLifecycleService {
                 continue;
             }
             if (!(await preparePersistentInstanceHydration(deps, instanceId, instance))) {
-                deps.logger?.warn?.(`实例未取得本地 lease，跳过持久化水合：${instanceId}`);
+                deps.logger?.warn?.(`實例未取得本地 lease，跳過持久化水合：${instanceId}`);
                 continue;
             }
             if (domainPersistenceEnabled) {
@@ -393,7 +393,7 @@ export class WorldRuntimeLifecycleService {
                     deps.worldRuntimeSectService.restoreCatalogSectTemplate(entry, deps);
                 }
                 if (typeof deps.templateRepository?.has === 'function' && !deps.templateRepository.has(templateId)) {
-                    await markMissingTemplateCatalogEntry(deps, entry, instanceId, templateId, '恢复');
+                    await markMissingTemplateCatalogEntry(deps, entry, instanceId, templateId, '恢復');
                     continue;
                 }
             }
@@ -504,12 +504,12 @@ export class WorldRuntimeLifecycleService {
             const expiredCount = await persistenceService.expireOfflineHangingPlayers(baseOfflineTimeoutMs, activeMonthCardPlayerIds, monthCardOfflineTimeoutMs, eternalMonthCardPlayerIds);
             result.expired = Number.isFinite(Number(expiredCount)) ? Math.max(0, Math.trunc(Number(expiredCount))) : 0;
             if (result.expired > 0) {
-                deps.logger?.log?.(`离线挂机超时离场：${result.expired} 名玩家已标记为彻底离线`);
+                deps.logger?.log?.(`離線掛機超時離場：${result.expired} 名玩家已標記為徹底離線`);
             }
         } catch (error) {
             expireFailed = true;
             markSkipped('expire_failed');
-            deps.logger?.warn?.(`清理超时离线玩家失败：${error instanceof Error ? error.message : String(error)}`);
+            deps.logger?.warn?.(`清理超時離線玩家失敗：${error instanceof Error ? error.message : String(error)}`);
         }
         // 恢复未超时的离线挂机玩家
         let positions: Array<{ playerId: string; instanceId: string; x: number; y: number }>;
@@ -518,7 +518,7 @@ export class WorldRuntimeLifecycleService {
         } catch (error) {
             markSkipped('query_failed');
             this.updateOfflineRestoreRetry(1);
-            deps.logger?.warn?.(`查询离线挂机玩家位置失败：${error instanceof Error ? error.message : String(error)}`);
+            deps.logger?.warn?.(`查詢離線掛機玩家位置失敗：${error instanceof Error ? error.message : String(error)}`);
             return result;
         }
         result.candidates = Array.isArray(positions) ? positions.length : 0;
@@ -658,7 +658,7 @@ export class WorldRuntimeLifecycleService {
                     restoreFailures++;
                     markSkipped('restore_error', entry, error);
                     deps.logger?.warn?.(
-                        `恢复离线挂机玩家失败：${entry.playerId} ${error instanceof Error ? error.message : String(error)}`,
+                        `恢復離線掛機玩家失敗：${entry.playerId} ${error instanceof Error ? error.message : String(error)}`,
                     );
                 }
             }));
@@ -666,7 +666,7 @@ export class WorldRuntimeLifecycleService {
         this.updateOfflineRestoreRetry(towerActivationFailures + restoreFailures + (expireFailed ? 1 : 0));
         result.restored = restored;
         if (restored > 0 || result.skipped > 0) {
-            deps.logger?.log?.(`离线挂机玩家恢复完成：成功 ${restored}，跳过 ${result.skipped}，总计 ${positions.length}`);
+            deps.logger?.log?.(`離線掛機玩家恢復完成：成功 ${restored}，跳過 ${result.skipped}，總計 ${positions.length}`);
         }
         return result;
     }
@@ -722,12 +722,12 @@ async function markMissingTemplateCatalogEntry(deps, entry, instanceId, template
         return;
     }
     if (typeof deps.instanceCatalogService?.markInstanceTemplateMissing !== 'function') {
-        deps.logger.warn(`实例目录引用的地图模板不存在，跳过${phase}：${instanceId} -> ${templateId}`);
+        deps.logger.warn(`實例目錄引用的地圖模板不存在，跳過${phase}：${instanceId} -> ${templateId}`);
         return;
     }
     const changed = await deps.instanceCatalogService.markInstanceTemplateMissing({ instanceId, templateId });
     if (changed) {
-        deps.logger.warn(`实例目录引用的地图模板不存在，已标记为待内容恢复：${instanceId} -> ${templateId}`);
+        deps.logger.warn(`實例目錄引用的地圖模板不存在，已標記為待內容恢復：${instanceId} -> ${templateId}`);
     }
 }
 
@@ -736,7 +736,7 @@ function logInstanceRestoreSummary(deps, restoredDomainInstances, restoredFormat
         return;
     }
     deps.logger.log(
-        `实例持久化恢复完成：分域回填 ${restoredDomainInstances} 个实例，阵法恢复 ${restoredFormationCount} 个 / ${restoredFormationInstances} 个实例`,
+        `實例持久化恢復完成：分域回填 ${restoredDomainInstances} 個實例，陣法恢復 ${restoredFormationCount} 個 / ${restoredFormationInstances} 個實例`,
     );
 }
 
@@ -790,7 +790,7 @@ async function preparePersistentInstanceHydration(deps, instanceId, instance) {
         });
     } catch (error) {
         deps.logger?.warn?.(
-            `实例水合前续租失败：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
+            `實例水合前續租失敗：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
         );
         return false;
     }
@@ -875,7 +875,7 @@ async function restoreCatalogInstanceShellsAfterReset(deps, catalogEntries) {
             deps.worldRuntimeSectService.restoreCatalogSectTemplate(entry, deps);
         }
         if (typeof deps.templateRepository?.has === 'function' && !deps.templateRepository.has(templateId)) {
-            await markMissingTemplateCatalogEntry(deps, entry, instanceId, templateId, '轻量启动');
+            await markMissingTemplateCatalogEntry(deps, entry, instanceId, templateId, '輕量啟動');
             continue;
         }
         const descriptor = parseRuntimeInstanceDescriptorForStartup(instanceId);

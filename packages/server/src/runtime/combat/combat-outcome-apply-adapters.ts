@@ -279,7 +279,7 @@ export function createContainerOutcomeApplyAdapter(handlers: OutcomeHandlers = {
       targetId,
       x,
       y,
-      title: resolvePlayerFacingContentName(targetId, '可攻击目标', applied?.title, result?.title, container?.name),
+      title: resolvePlayerFacingContentName(targetId, '可攻擊目標', applied?.title, result?.title, container?.name),
       appliedDamage: normalizeAppliedDamage(applied?.appliedDamage, damage),
       remainingCount: normalizeNumber(applied?.remainingCount ?? result?.remainingCount),
       respawnRemainingTicks: applied?.respawnRemainingTicks ?? result?.respawnRemainingTicks,

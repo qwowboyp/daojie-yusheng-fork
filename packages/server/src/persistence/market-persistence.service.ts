@@ -60,17 +60,17 @@ export class MarketPersistenceService {
         }
         const sharedPool = this.databasePoolProvider?.getPool?.('market');
         if (!sharedPool) {
-            this.logger.warn('坊市持久化已禁用：数据库连接池提供者未提供连接池');
+            this.logger.warn('坊市持久化已禁用：數據庫連接池提供者未提供連接池');
             return;
         }
         this.pool = sharedPool;
         try {
             await ensureMarketTables(this.pool);
             this.enabled = true;
-            this.logger.log('坊市持久化已启用（server_market_order + server_market_trade_history + player_market_storage_item）');
+            this.logger.log('坊市持久化已啟用（server_market_order + server_market_trade_history + player_market_storage_item）');
         }
         catch (error) {
-            this.logger.error('坊市持久化初始化失败，已回退为禁用模式', error instanceof Error ? error.stack : String(error));
+            this.logger.error('坊市持久化初始化失敗，已回退為禁用模式', error instanceof Error ? error.stack : String(error));
             this.releasePoolReference();
         }
     }

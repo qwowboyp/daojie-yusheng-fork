@@ -45,10 +45,10 @@ export class WorldRuntimeSystemCommandEnqueueService {
         const instanceId = typeof instanceIdInput === 'string' ? instanceIdInput.trim() : '';
         const monsterId = typeof monsterIdInput === 'string' ? monsterIdInput.trim() : '';
         if (!instanceId) {
-            throw new BadRequestException('地图实例 ID 不能为空');
+            throw new BadRequestException('地圖實例 ID 不能為空');
         }
         if (!monsterId) {
-            throw new BadRequestException('妖兽 ID 不能为空');
+            throw new BadRequestException('妖獸 ID 不能為空');
         }
         deps.getInstanceRuntimeOrThrow(instanceId);
         return this.worldRuntimeGmQueueService.enqueueSystemCommand({
@@ -74,10 +74,10 @@ export class WorldRuntimeSystemCommandEnqueueService {
         const instanceId = typeof instanceIdInput === 'string' ? instanceIdInput.trim() : '';
         const runtimeId = typeof runtimeIdInput === 'string' ? runtimeIdInput.trim() : '';
         if (!instanceId) {
-            throw new BadRequestException('地图实例 ID 不能为空');
+            throw new BadRequestException('地圖實例 ID 不能為空');
         }
         if (!runtimeId) {
-            throw new BadRequestException('运行时 ID 不能为空');
+            throw new BadRequestException('運行時 ID 不能為空');
         }
         deps.getInstanceRuntimeOrThrow(instanceId);
         return this.worldRuntimeGmQueueService.enqueueSystemCommand({
@@ -101,15 +101,15 @@ export class WorldRuntimeSystemCommandEnqueueService {
         const instanceId = typeof instanceIdInput === 'string' ? instanceIdInput.trim() : '';
         const runtimeId = typeof runtimeIdInput === 'string' ? runtimeIdInput.trim() : '';
         if (!instanceId) {
-            throw new BadRequestException('地图实例 ID 不能为空');
+            throw new BadRequestException('地圖實例 ID 不能為空');
         }
         if (!runtimeId) {
-            throw new BadRequestException('运行时 ID 不能为空');
+            throw new BadRequestException('運行時 ID 不能為空');
         }
 
         const amount = Math.max(1, Math.trunc(amountInput));
         if (!Number.isFinite(amount)) {
-            throw new BadRequestException('数量不能为空');
+            throw new BadRequestException('數量不能為空');
         }
         deps.getInstanceRuntimeOrThrow(instanceId);
         return this.worldRuntimeGmQueueService.enqueueSystemCommand({
@@ -132,12 +132,12 @@ export class WorldRuntimeSystemCommandEnqueueService {
 
         const playerId = typeof playerIdInput === 'string' ? playerIdInput.trim() : '';
         if (!playerId) {
-            throw new BadRequestException('玩家 ID 不能为空');
+            throw new BadRequestException('玩家 ID 不能為空');
         }
 
         const amount = Math.max(1, Math.trunc(amountInput));
         if (!Number.isFinite(amount)) {
-            throw new BadRequestException('数量不能为空');
+            throw new BadRequestException('數量不能為空');
         }
         deps.getPlayerLocationOrThrow(playerId);
         return this.worldRuntimeGmQueueService.enqueueSystemCommand({
@@ -158,7 +158,7 @@ export class WorldRuntimeSystemCommandEnqueueService {
 
         const playerId = typeof playerIdInput === 'string' ? playerIdInput.trim() : '';
         if (!playerId) {
-            throw new BadRequestException('玩家 ID 不能为空');
+            throw new BadRequestException('玩家 ID 不能為空');
         }
         deps.getPlayerLocationOrThrow(playerId);
         return this.worldRuntimeGmQueueService.enqueueSystemCommand({
@@ -178,7 +178,7 @@ export class WorldRuntimeSystemCommandEnqueueService {
 
         const playerId = typeof playerIdInput === 'string' ? playerIdInput.trim() : '';
         if (!playerId) {
-            throw new BadRequestException('玩家 ID 不能为空');
+            throw new BadRequestException('玩家 ID 不能為空');
         }
         deps.getPlayerLocationOrThrow(playerId);
         return this.worldRuntimeGmQueueService.enqueueSystemCommand({
@@ -198,7 +198,7 @@ export class WorldRuntimeSystemCommandEnqueueService {
 
         const playerId = typeof playerIdInput === 'string' ? playerIdInput.trim() : '';
         if (!playerId) {
-            throw new BadRequestException('玩家 ID 不能为空');
+            throw new BadRequestException('玩家 ID 不能為空');
         }
         deps.getPlayerLocationOrThrow(playerId);
         return this.worldRuntimeGmQueueService.enqueueSystemCommand({

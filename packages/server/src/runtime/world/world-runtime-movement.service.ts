@@ -77,7 +77,7 @@ export class WorldRuntimeMovementService {
             return;
         }
         syncPlayerMovementStateToInstance(instance, playerId, player);
-        deps.worldRuntimePlayerSkillDispatchService?.interruptPendingPlayerSkillCast?.(playerId, '你移动了身形。', deps);
+        deps.worldRuntimePlayerSkillDispatchService?.interruptPendingPlayerSkillCast?.(playerId, '你移動了身形。', deps);
         deps.playerRuntimeService.recordActivity(playerId, deps.resolveCurrentTickForPlayerId(playerId), {
             interruptCultivation: true,
             reason: 'move',
@@ -112,7 +112,7 @@ export class WorldRuntimeMovementService {
             interruptCultivation: true,
             reason: 'move',
         });
-        deps.worldRuntimePlayerSkillDispatchService?.interruptPendingPlayerSkillCast?.(playerId, '你移动了身形。', deps);
+        deps.worldRuntimePlayerSkillDispatchService?.interruptPendingPlayerSkillCast?.(playerId, '你移動了身形。', deps);
         deps.worldRuntimeCraftInterruptService.interruptCraftForReason(playerId, player, 'move', deps);
         const manualTransfer = instance.tryPortalTransfer(playerId, 'manual_portal');
         if (manualTransfer) {

@@ -42,18 +42,18 @@ export class OutboxDispatcherService implements OnModuleInit, OnModuleDestroy {
     try {
       this.pool = this.databasePoolProvider?.getPool('outbox-dispatcher') ?? null;
       if (!this.pool) {
-        this.logger.log('发件箱调度器已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+        this.logger.log('發件箱調度器已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
         return;
       }
       await ensureDeadLetterEventTable(this.pool);
       await ensureOutboxConsumerDedupeTable(this.pool);
       this.enabled = true;
-      this.logger.log('发件箱调度器已启用');
+      this.logger.log('發件箱調度器已啟用');
     } catch (error: unknown) {
       this.pool = null;
       this.enabled = false;
       this.logger.error(
-        `发件箱调度器初始化失败，已禁用事件消费：${error instanceof Error ? error.message : String(error)}`,
+        `發件箱調度器初始化失敗，已禁用事件消費：${error instanceof Error ? error.message : String(error)}`,
         error instanceof Error ? error.stack : undefined,
       );
     }

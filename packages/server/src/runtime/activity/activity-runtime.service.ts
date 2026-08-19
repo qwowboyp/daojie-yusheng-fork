@@ -706,19 +706,19 @@ export class ActivityRuntimeService {
       stages: [
         {
           key: 'registered',
-          label: '注册成功',
+          label: '註冊成功',
           count: stats.totalInvitees,
           rewardMerit: INVITATION_INVITER_BASE_MERIT_REWARD,
         },
         {
           key: 'qi',
-          label: `达到练气(${INVITATION_QI_REALM_MIN_LEVEL}级)`,
+          label: `達到練氣(${INVITATION_QI_REALM_MIN_LEVEL}級)`,
           count: stats.qiReachedCount,
           rewardMerit: INVITATION_INVITER_QI_REALM_MERIT_REWARD,
         },
         {
           key: 'foundation',
-          label: `达到筑基(${INVITATION_FOUNDATION_REALM_MIN_LEVEL}级)`,
+          label: `達到築基(${INVITATION_FOUNDATION_REALM_MIN_LEVEL}級)`,
           count: stats.foundationReachedCount,
           rewardMerit: INVITATION_INVITER_FOUNDATION_REALM_MERIT_REWARD,
         },
@@ -833,22 +833,22 @@ export function normalizeActivityError(error: unknown): BadRequestException {
     return new BadRequestException('功德月卡未激活');
   }
   if (message === 'month_card_already_claimed') {
-    return new BadRequestException('今日功德月卡奖励已领取');
+    return new BadRequestException('今日功德月卡獎勵已領取');
   }
   if (message === 'daily_sign_in_already_claimed') {
-    return new BadRequestException('今日已签到');
+    return new BadRequestException('今日已簽到');
   }
   if (message === 'activity_persistence_unavailable') {
-    return new BadRequestException('活动服务暂不可用');
+    return new BadRequestException('活動服務暫不可用');
   }
   if (message === 'activity_reward_snapshot_changed') {
-    return new BadRequestException('活动状态已变化，请重试');
+    return new BadRequestException('活動狀態已變化，請重試');
   }
   if (message === 'activity_item_changed' || message === 'activity_item_count_changed') {
-    return new BadRequestException('活动道具状态已变化，请重试');
+    return new BadRequestException('活動道具狀態已變化，請重試');
   }
   if (message === 'activity_benefit_limit' || message === 'activity_reward_item_limit') {
-    return new BadRequestException('活动权益或奖励数量已达到上限');
+    return new BadRequestException('活動權益或獎勵數量已達到上限');
   }
-  return new BadRequestException('活动服务暂不可用，请稍后重试');
+  return new BadRequestException('活動服務暫不可用，請稍後重試');
 }

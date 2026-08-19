@@ -87,11 +87,11 @@ export class WorldRuntimeNpcQuestInteractionQueryService {
         }
         return {
             id: `npc_quests:${npc.npcId}`,
-            name: npc.questMarker.state === 'ready' ? `交付任务：${npc.name}` : `任务：${npc.name}`,
+            name: npc.questMarker.state === 'ready' ? `交付任務：${npc.name}` : `任務：${npc.name}`,
             type: 'quest',
             desc: npc.questMarker.state === 'ready'
-                ? `向 ${npc.name} 提交当前可完成的任务。`
-                : `查看 ${npc.name} 相关的任务。`,
+                ? `向 ${npc.name} 提交當前可完成的任務。`
+                : `查看 ${npc.name} 相關的任務。`,
             cooldownLeft: 0,
         };
     }

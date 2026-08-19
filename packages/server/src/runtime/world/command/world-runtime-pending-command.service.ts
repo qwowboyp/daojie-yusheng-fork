@@ -10,8 +10,8 @@ import { chebyshevDistance } from '../world-runtime.path-planning.helpers';
 import { buildStructuredNotice } from '../structured-notice.helpers';
 
 function isOutOfRangeFailure(message) {
-    return message === '目标超出攻击距离'
-        || message === '目标超出技能范围'
+    return message === '目標超出攻擊距離'
+        || message === '目標超出技能範圍'
         || (typeof message === 'string' && /^技能 .+ 超出范围$/.test(message))
         || (typeof message === 'string' && /^Skill .+ out of range$/.test(message));
 }
@@ -43,7 +43,7 @@ function buildPendingCommandNotice(command, message) {
         return null;
     }
     if (command?.autoCombat === true && command?.manualEngage !== true) {
-        if (message === '该目标无法被攻击' || message === '没有可命中的目标' || message === '当前实例不允许玩家互攻' || isOutOfRangeFailure(message)) {
+        if (message === '該目標無法被攻擊' || message === '沒有可命中的目標' || message === '當前實例不允許玩家互攻' || isOutOfRangeFailure(message)) {
             return null;
         }
     }
@@ -52,12 +52,12 @@ function buildPendingCommandNotice(command, message) {
         return buildStructuredNotice(
             'warn',
             'notice.technique-aggregation.overlap',
-            '该功法与已有统合功法重叠，无法学习。',
+            '該功法與已有統合功法重疊，無法學習。',
             { vars: { sourceTechniqueNames: aggregationOverlap } },
         );
     }
-    if (message === '该目标无法被攻击') {
-        return buildStructuredNotice('warn', 'notice.command.no-target', '没有可命中的目标');
+    if (message === '該目標無法被攻擊') {
+        return buildStructuredNotice('warn', 'notice.command.no-target', '沒有可命中的目標');
     }
     if (typeof message === 'string' && /^Skill .+ out of range$/.test(message)) {
         return null;
@@ -94,93 +94,93 @@ function buildPendingCommandNotice(command, message) {
         return buildPendingTechniqueNotice(message);
     }
     if (command?.kind === 'useItem'
-        && message === '当前位于安全区、出生点、传送点或 NPC 附近，无法使用地块资源道具。') {
+        && message === '當前位於安全區、出生點、傳送點或 NPC 附近，無法使用地塊資源道具。') {
         return buildStructuredNotice(
             'warn',
             'notice.item.tile-resource-protected-area',
-            '当前位于受保护区域，无法使用地块资源道具。',
+            '當前位於受保護區域，無法使用地塊資源道具。',
         );
     }
     return buildStructuredNotice(
         'warn',
         'notice.command.failed',
-        '行动未能完成，请稍后重试。',
+        '行動未能完成，請稍後重試。',
     );
 }
 
 function buildPendingNavigationNotice(message) {
     if (!isExpectedNavigationReject(message)) {
-        return buildStructuredNotice('warn', 'notice.command.failed', '行动未能完成，请稍后重试。');
+        return buildStructuredNotice('warn', 'notice.command.failed', '行動未能完成，請稍後重試。');
     }
-    if (message === '目标超出地图范围') {
-        return buildStructuredNotice('warn', 'notice.navigation.target-out-of-bounds', '目标超出地图范围');
+    if (message === '目標超出地圖範圍') {
+        return buildStructuredNotice('warn', 'notice.navigation.target-out-of-bounds', '目標超出地圖範圍');
     }
-    if (message === '任务目标当前不可达') {
-        return buildStructuredNotice('warn', 'notice.navigation.quest-unreachable', '任务目标当前不可达');
+    if (message === '任務目標當前不可達') {
+        return buildStructuredNotice('warn', 'notice.navigation.quest-unreachable', '任務目標當前不可達');
     }
-    return buildStructuredNotice('warn', 'notice.navigation.unreachable', '无法到达该位置');
+    return buildStructuredNotice('warn', 'notice.navigation.unreachable', '無法到達該位置');
 }
 
 function buildPendingCombatNotice(message) {
-    if (message === '当前实例不允许攻击地形') {
-        return buildStructuredNotice('warn', 'notice.command.tile-damage-forbidden', '当前区域禁止攻击地形。');
+    if (message === '當前實例不允許攻擊地形') {
+        return buildStructuredNotice('warn', 'notice.command.tile-damage-forbidden', '當前區域禁止攻擊地形。');
     }
-    if (message === '没有可命中的目标' || message === '该目标无法被攻击') {
-        return buildStructuredNotice('warn', 'notice.command.no-target', '没有可命中的目标');
+    if (message === '沒有可命中的目標' || message === '該目標無法被攻擊') {
+        return buildStructuredNotice('warn', 'notice.command.no-target', '沒有可命中的目標');
     }
-    if (message === '正在吟唱中，无法继续施法。' || message === '正在吟唱中，无法执行战斗动作。') {
-        return buildStructuredNotice('warn', 'notice.command.casting-busy', '正在吟唱中，无法执行该动作。');
+    if (message === '正在吟唱中，無法繼續施法。' || message === '正在吟唱中，無法執行戰鬥動作。') {
+        return buildStructuredNotice('warn', 'notice.command.casting-busy', '正在吟唱中，無法執行該動作。');
     }
     if (isOutOfRangeFailure(message)) {
-        return buildStructuredNotice('warn', 'notice.command.target-out-of-range', '目标超出作用范围。');
+        return buildStructuredNotice('warn', 'notice.command.target-out-of-range', '目標超出作用範圍。');
     }
-    if (message === '目标被遮挡') {
-        return buildStructuredNotice('warn', 'notice.command.target-blocked', '目标被遮挡。');
+    if (message === '目標被遮擋') {
+        return buildStructuredNotice('warn', 'notice.command.target-blocked', '目標被遮擋。');
     }
-    if (message === '目标不在同一地图') {
-        return buildStructuredNotice('warn', 'notice.command.target-left-map', '目标已离开当前地图。');
+    if (message === '目標不在同一地圖') {
+        return buildStructuredNotice('warn', 'notice.command.target-left-map', '目標已離開當前地圖。');
     }
-    if (message === '目标已经死亡') {
-        return buildStructuredNotice('warn', 'notice.command.target-dead', '目标已经死亡。');
+    if (message === '目標已經死亡') {
+        return buildStructuredNotice('warn', 'notice.command.target-dead', '目標已經死亡。');
     }
     if (message === '施法者已死亡') {
-        return buildStructuredNotice('warn', 'notice.command.caster-dead', '你当前无法继续行动。');
+        return buildStructuredNotice('warn', 'notice.command.caster-dead', '你當前無法繼續行動。');
     }
-    if (message === '当前实例不允许玩家互攻') {
-        return buildStructuredNotice('warn', 'notice.command.pvp-forbidden', '当前区域不允许玩家互攻。');
+    if (message === '當前實例不允許玩家互攻') {
+        return buildStructuredNotice('warn', 'notice.command.pvp-forbidden', '當前區域不允許玩家互攻。');
     }
     if (isCooldownFailure(message)) {
-        return buildStructuredNotice('warn', 'notice.command.skill-cooldown', '技能尚在冷却。');
+        return buildStructuredNotice('warn', 'notice.command.skill-cooldown', '技能尚在冷卻。');
     }
     if (typeof message === 'string' && /^(技能|玩家) .+ 元气不足$/.test(message)) {
-        return buildStructuredNotice('warn', 'notice.command.qi-insufficient', '元气不足。');
+        return buildStructuredNotice('warn', 'notice.command.qi-insufficient', '元氣不足。');
     }
-    return buildStructuredNotice('warn', 'notice.command.failed', '行动未能完成，请稍后重试。');
+    return buildStructuredNotice('warn', 'notice.command.failed', '行動未能完成，請稍後重試。');
 }
 
 function buildPendingTechniqueNotice(message) {
-    if (message === '学习者已有进行中的技艺任务。') {
+    if (message === '學習者已有進行中的技藝任務。') {
         return buildStructuredNotice('warn', 'notice.command.technique-active', message);
     }
-    if (message === '技艺任务队列已满。') {
+    if (message === '技藝任務隊列已滿。') {
         return buildStructuredNotice('warn', 'notice.command.technique-queue-full', message);
     }
-    if (message === '当前没有进行中的任务。' || message === '没有进行中的传授') {
-        return buildStructuredNotice('warn', 'notice.command.technique-none', '当前没有进行中的技艺任务。');
+    if (message === '當前沒有進行中的任務。' || message === '沒有進行中的傳授') {
+        return buildStructuredNotice('warn', 'notice.command.technique-none', '當前沒有進行中的技藝任務。');
     }
-    if (message === '学习者已经掌握该功法。') {
+    if (message === '學習者已經掌握該功法。') {
         return buildStructuredNotice('warn', 'notice.command.technique-already-known', message);
     }
     if (typeof message === 'string' && /^当前没有可取消的.+任务。$/.test(message)) {
-        return buildStructuredNotice('warn', 'notice.command.technique-cancel-none', '当前没有可取消的技艺任务。');
+        return buildStructuredNotice('warn', 'notice.command.technique-cancel-none', '當前沒有可取消的技藝任務。');
     }
-    return buildStructuredNotice('warn', 'notice.command.failed', '行动未能完成，请稍后重试。');
+    return buildStructuredNotice('warn', 'notice.command.failed', '行動未能完成，請稍後重試。');
 }
 
 function isTerminalAutoCombatTargetFailure(message) {
-    return message === '该目标无法被攻击'
-        || message === '没有可命中的目标'
-        || message === '当前实例不允许玩家互攻'
+    return message === '該目標無法被攻擊'
+        || message === '沒有可命中的目標'
+        || message === '當前實例不允許玩家互攻'
         || isMissingMonsterFailure(message)
         || isOutOfRangeFailure(message);
 }
@@ -198,26 +198,26 @@ function shouldDowngradePendingCommandFailure(command, message) {
 }
 
 function isExpectedNavigationReject(message) {
-    return message === '无法到达该位置'
-        || message === '任务目标当前不可达'
-        || message === '目标超出地图范围'
-        || message === '前往界门的路径不可达'
+    return message === '無法到達該位置'
+        || message === '任務目標當前不可達'
+        || message === '目標超出地圖範圍'
+        || message === '前往界門的路徑不可達'
         || (typeof message === 'string' && /^无法规划前往 .+ 的跨图路线$/.test(message))
         || (typeof message === 'string' && /^当前地图没有通往 .+ 的界门$/.test(message));
 }
 
 function isExpectedCombatReject(message) {
-    return message === '没有可命中的目标'
-        || message === '该目标无法被攻击'
-        || message === '正在吟唱中，无法继续施法。'
-        || message === '正在吟唱中，无法执行战斗动作。'
-        || message === '目标超出攻击距离'
-        || message === '目标超出技能范围'
-        || message === '目标被遮挡'
-        || message === '目标不在同一地图'
-        || message === '目标已经死亡'
+    return message === '沒有可命中的目標'
+        || message === '該目標無法被攻擊'
+        || message === '正在吟唱中，無法繼續施法。'
+        || message === '正在吟唱中，無法執行戰鬥動作。'
+        || message === '目標超出攻擊距離'
+        || message === '目標超出技能範圍'
+        || message === '目標被遮擋'
+        || message === '目標不在同一地圖'
+        || message === '目標已經死亡'
         || message === '施法者已死亡'
-        || message === '当前实例不允许玩家互攻'
+        || message === '當前實例不允許玩家互攻'
         || isMissingMonsterFailure(message)
         || isCooldownFailure(message)
         || isOutOfRangeFailure(message)
@@ -226,11 +226,11 @@ function isExpectedCombatReject(message) {
 }
 
 function isExpectedTechniqueActivityReject(message) {
-    return message === '学习者已有进行中的技艺任务。'
-        || message === '技艺任务队列已满。'
-        || message === '当前没有进行中的任务。'
-        || message === '没有进行中的传授'
-        || message === '学习者已经掌握该功法。'
+    return message === '學習者已有進行中的技藝任務。'
+        || message === '技藝任務隊列已滿。'
+        || message === '當前沒有進行中的任務。'
+        || message === '沒有進行中的傳授'
+        || message === '學習者已經掌握該功法。'
         || resolveTechniqueAggregationOverlapMessage(message) !== null
         || (typeof message === 'string' && /^当前没有可取消的.+任务。$/.test(message));
 }
@@ -242,7 +242,7 @@ function isExpectedInventoryReject(message) {
 
 /** 地块资源道具的位置约束拒绝：确定性业务规则，非系统异常。 */
 function isExpectedUseItemReject(message) {
-    return message === '当前位于安全区、出生点、传送点或 NPC 附近，无法使用地块资源道具。'
+    return message === '當前位於安全區、出生點、傳送點或 NPC 附近，無法使用地塊資源道具。'
         || resolveTechniqueAggregationOverlapMessage(message) !== null;
 }
 
@@ -805,20 +805,20 @@ export class WorldRuntimePendingCommandService {
                 if (areEquivalentPendingCommands(sameRequestEntry.command, command)) {
                     return;
                 }
-                throw new ConflictException('兑换请求 ID 已被占用');
+                throw new ConflictException('兌換請求 ID 已被佔用');
             }
             const equivalentEntry = queue.find((entry) => !entry.policy.replaceable
                 && entry.policy.domain === policy.domain
                 && areEquivalentPendingCommands(entry.command, command));
             if (equivalentEntry) {
-                throw new ConflictException('相同指令已在等待执行');
+                throw new ConflictException('相同指令已在等待執行');
             }
         }
         if (queue.length >= MAX_PENDING_COMMANDS_PER_PLAYER) {
             if (queue.length === 0) {
                 this.pendingCommands.delete(playerId);
             }
-            throw new HttpException('待执行指令过多，请稍后再试', HttpStatus.TOO_MANY_REQUESTS);
+            throw new HttpException('待執行指令過多，請稍後再試', HttpStatus.TOO_MANY_REQUESTS);
         }
         queue.push(this.createPendingCommandEntry(command, policy, dispatchingParent));
     }
@@ -947,7 +947,7 @@ export class WorldRuntimePendingCommandService {
                 const retrySuffix = failedCommandForDiagnostics !== command ? ` retryOf=${command.kind}` : '';
                 emitPendingCommandFailureLog(
                     deps,
-                    `处理玩家 ${playerId} 的待执行指令失败：${failedCommandForDiagnostics.kind}（${message}） ${buildPendingCommandFailureDebug(playerId, failedCommandForDiagnostics, deps)}${retrySuffix}`,
+                    `處理玩家 ${playerId} 的待執行指令失敗：${failedCommandForDiagnostics.kind}（${message}） ${buildPendingCommandFailureDebug(playerId, failedCommandForDiagnostics, deps)}${retrySuffix}`,
                     failedCommandForDiagnostics,
                     message,
                     error,
@@ -1009,16 +1009,16 @@ export class WorldRuntimePendingCommandService {
 function resolveTimeChamberTransferNotice(reason: string): { key: string; text: string } {
     switch (reason) {
         case 'time_chamber_full':
-            return { key: 'notice.time-chamber.full', text: '密室当前已有修士，请稍后再试。' };
+            return { key: 'notice.time-chamber.full', text: '密室當前已有修士，請稍後再試。' };
         case 'time_chamber_too_far':
-            return { key: 'notice.time-chamber.too-far', text: '需要靠近密室入口才能进入。' };
+            return { key: 'notice.time-chamber.too-far', text: '需要靠近密室入口才能進入。' };
         case 'time_chamber_source_changed':
-            return { key: 'notice.time-chamber.source-changed', text: '密室入口已经发生变化，请重新操作。' };
+            return { key: 'notice.time-chamber.source-changed', text: '密室入口已經發生變化，請重新操作。' };
         case 'not_in_time_chamber':
-            return { key: 'notice.time-chamber.not-inside', text: '当前不在密室中。' };
+            return { key: 'notice.time-chamber.not-inside', text: '當前不在密室中。' };
         case 'time_chamber_exit_missing':
-            return { key: 'notice.time-chamber.exit-missing', text: '密室出口暂时不可用。' };
+            return { key: 'notice.time-chamber.exit-missing', text: '密室出口暫時不可用。' };
         default:
-            return { key: 'notice.time-chamber.unavailable', text: '密室暂时无法通行，请稍后再试。' };
+            return { key: 'notice.time-chamber.unavailable', text: '密室暫時無法通行，請稍後再試。' };
     }
 }

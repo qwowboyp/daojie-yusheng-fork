@@ -714,10 +714,10 @@ export class WorldRuntimeService {
         if (typeof this.worldRuntimeFormationService?.onModuleInit === 'function') {
             await this.worldRuntimeFormationService.onModuleInit();
         }
-        this.logger.log('世界运行时已注册，等待启动链路编排器恢复实例');
+        this.logger.log('世界運行時已註冊，等待啟動鏈路編排器恢復實例');
     }
     async onApplicationBootstrap() {
-        this.logger.log('世界运行时恢复已交由启动链路编排器执行');
+        this.logger.log('世界運行時恢復已交由啟動鏈路編排器執行');
     }
     startInstanceLeaseSyncForLifecycleCoordinator() {
         this.instanceLeaseSyncClosed = false;
@@ -731,7 +731,7 @@ export class WorldRuntimeService {
             const task = this.syncAllInstanceLeases();
             this.instanceLeaseSyncInFlight = task;
             void task.catch((error) => {
-                this.logger.warn(`实例租约周期同步失败：${error instanceof Error ? error.message : String(error)}`);
+                this.logger.warn(`實例租約週期同步失敗：${error instanceof Error ? error.message : String(error)}`);
             }).finally(() => {
                 if (this.instanceLeaseSyncInFlight === task) {
                     this.instanceLeaseSyncInFlight = null;

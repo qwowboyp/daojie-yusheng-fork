@@ -50,7 +50,7 @@ export class LandmarkTemplateRegistry {
   getRef(landmarkId: string): Readonly<any> {
     const template = this.tryGetRef(landmarkId);
     if (!template) {
-      throw new Error(`未找到地标模板：${landmarkId}`);
+      throw new Error(`未找到地標模板：${landmarkId}`);
     }
     return template;
   }

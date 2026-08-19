@@ -182,22 +182,22 @@ export class TechniqueGenerationService {
   }): Promise<GenerationJobResult> {
     const pool = this.pool;
     if (!pool) {
-      return { success: false, error: '功法领悟系统未就绪', errorCode: 'SERVICE_UNAVAILABLE' };
+      return { success: false, error: '功法領悟系統未就緒', errorCode: 'SERVICE_UNAVAILABLE' };
     }
 
     // 1. 历史最高境界校验，解锁后不因当前境界回落而关闭
     if (params.playerHighestRealmLv < TECHNIQUE_GENERATION_UNLOCK_REALM_LV) {
-      return { success: false, error: '需筑基期方可领悟', errorCode: 'REALM_LOCKED' };
+      return { success: false, error: '需築基期方可領悟', errorCode: 'REALM_LOCKED' };
     }
 
     // 2. category 限制
     if (params.category !== 'internal' && params.category !== 'arts') {
-      return { success: false, error: '当前仅开放内功和术法', errorCode: 'CATEGORY_LOCKED' };
+      return { success: false, error: '當前僅開放內功和術法', errorCode: 'CATEGORY_LOCKED' };
     }
 
     const activeJobs = await this.loadCurrentGenerationJobsForPlayer(params.playerId);
     if (activeJobs.length > 0) {
-      return { success: false, error: '请先处理未完成的功法领悟', errorCode: 'ACTIVE_JOB_EXISTS' };
+      return { success: false, error: '請先處理未完成的功法領悟', errorCode: 'ACTIVE_JOB_EXISTS' };
     }
 
     // 3. 功法境界按当前境界随机，品阶按历史最高境界随机；投入多个悟道玉简时，多次抽取并择优。
@@ -216,7 +216,7 @@ export class TechniqueGenerationService {
     const expectedRuntimeOwnerId = normalizeTechniqueGenerationOwnerId(params.expectedRuntimeOwnerId);
     const expectedSessionEpoch = normalizeTechniqueGenerationSessionEpoch(params.expectedSessionEpoch);
     if (!expectedRuntimeOwnerId || expectedSessionEpoch === null || typeof params.applyInventorySnapshot !== 'function') {
-      return { success: false, error: '玩家资产持久化上下文不可用', errorCode: 'PERSISTENCE_CONTEXT_UNAVAILABLE' };
+      return { success: false, error: '玩家資產持久化上下文不可用', errorCode: 'PERSISTENCE_CONTEXT_UNAVAILABLE' };
     }
 
     // 5. 玩家锁内原子扣除玉简并创建 pending job；并发请求只能成功一个。
@@ -237,15 +237,15 @@ export class TechniqueGenerationService {
     });
     if (!beginResult.ok) {
       if (beginResult.errorCode === 'ACTIVE_JOB_EXISTS') {
-        return { success: false, error: '请先处理未完成的功法领悟', errorCode: 'ACTIVE_JOB_EXISTS' };
+        return { success: false, error: '請先處理未完成的功法領悟', errorCode: 'ACTIVE_JOB_EXISTS' };
       }
-      return { success: false, error: '悟道玉简不足', errorCode: 'ITEM_NOT_ENOUGH' };
+      return { success: false, error: '悟道玉簡不足', errorCode: 'ITEM_NOT_ENOUGH' };
     }
     try {
       await params.applyInventorySnapshot(beginResult.inventoryItems);
     } catch (error: unknown) {
       this.logger.error(
-        `自创功法扣除玉简已提交但运行态同步失败 playerId=${params.playerId} jobId=${jobId}`,
+        `自創功法扣除玉簡已提交但運行態同步失敗 playerId=${params.playerId} jobId=${jobId}`,
         error instanceof Error ? error.stack : String(error),
       );
     }
@@ -283,14 +283,14 @@ export class TechniqueGenerationService {
   }): Promise<GenerationJobResult> {
     const pool = this.pool;
     if (!pool) {
-      return { success: false, error: '功法领悟系统未就绪', errorCode: 'SERVICE_UNAVAILABLE' };
+      return { success: false, error: '功法領悟系統未就緒', errorCode: 'SERVICE_UNAVAILABLE' };
     }
     if (params.playerHighestRealmLv < TECHNIQUE_GENERATION_UNLOCK_REALM_LV) {
-      return { success: false, error: '需筑基期方可领悟', errorCode: 'REALM_LOCKED' };
+      return { success: false, error: '需築基期方可領悟', errorCode: 'REALM_LOCKED' };
     }
     const activeJobs = await this.loadCurrentGenerationJobsForPlayer(params.playerId);
     if (activeJobs.length > 0) {
-      return { success: false, error: '请先处理未完成的功法领悟', errorCode: 'ACTIVE_JOB_EXISTS' };
+      return { success: false, error: '請先處理未完成的功法領悟', errorCode: 'ACTIVE_JOB_EXISTS' };
     }
     const modelConfig = await this.modelConfigResolver?.();
     if (!modelConfig) {
@@ -299,7 +299,7 @@ export class TechniqueGenerationService {
     const expectedRuntimeOwnerId = normalizeTechniqueGenerationOwnerId(params.expectedRuntimeOwnerId);
     const expectedSessionEpoch = normalizeTechniqueGenerationSessionEpoch(params.expectedSessionEpoch);
     if (!expectedRuntimeOwnerId || expectedSessionEpoch === null || typeof params.applyInventorySnapshot !== 'function') {
-      return { success: false, error: '玩家资产持久化上下文不可用', errorCode: 'PERSISTENCE_CONTEXT_UNAVAILABLE' };
+      return { success: false, error: '玩家資產持久化上下文不可用', errorCode: 'PERSISTENCE_CONTEXT_UNAVAILABLE' };
     }
 
     const batchCount = normalizeTechniqueGenerationItemSpend(params.itemSpend);
@@ -337,15 +337,15 @@ export class TechniqueGenerationService {
     });
     if (!beginResult.ok) {
       if (beginResult.errorCode === 'ACTIVE_JOB_EXISTS') {
-        return { success: false, error: '请先处理未完成的功法领悟', errorCode: 'ACTIVE_JOB_EXISTS' };
+        return { success: false, error: '請先處理未完成的功法領悟', errorCode: 'ACTIVE_JOB_EXISTS' };
       }
-      return { success: false, error: '悟道玉简不足', errorCode: 'ITEM_NOT_ENOUGH' };
+      return { success: false, error: '悟道玉簡不足', errorCode: 'ITEM_NOT_ENOUGH' };
     }
     try {
       await params.applyInventorySnapshot(beginResult.inventoryItems);
     } catch (error: unknown) {
       this.logger.error(
-        `批量内功扣除玉简已提交但运行态同步失败 playerId=${params.playerId} batchId=${identity.batchId}`,
+        `批量內功扣除玉簡已提交但運行態同步失敗 playerId=${params.playerId} batchId=${identity.batchId}`,
         error instanceof Error ? error.stack : String(error),
       );
     }
@@ -383,16 +383,16 @@ export class TechniqueGenerationService {
   }): Promise<GenerationExecutionResult> {
     const pool = this.pool;
     if (!pool) {
-      return { success: false, error: '功法领悟系统未就绪' };
+      return { success: false, error: '功法領悟系統未就緒' };
     }
     let claimed = false;
     try {
       claimed = await claimTechniqueGenerationExecution(pool, jobId);
     } catch (error: unknown) {
-      return { success: false, error: error instanceof Error ? error.message : '功法领悟任务认领失败' };
+      return { success: false, error: error instanceof Error ? error.message : '功法領悟任務認領失敗' };
     }
     if (!claimed) {
-      return { success: false, error: '功法领悟任务已由其他执行器处理' };
+      return { success: false, error: '功法領悟任務已由其他執行器處理' };
     }
     try {
 
@@ -442,7 +442,7 @@ export class TechniqueGenerationService {
 
         const aiResult = await executeAiTask(taskRequest);
         if (!aiResult.success) {
-          lastFailureReason = aiResult.error || 'AI 调用失败';
+          lastFailureReason = aiResult.error || 'AI 調用失敗';
           lastFailureCode = 'AI_FAILED';
           continue;
         }
@@ -450,8 +450,8 @@ export class TechniqueGenerationService {
         const parsedResult = parseAiJsonObject(aiResult.content);
         if (parsedResult.ok === false) {
           lastFailureReason = [
-            'JSON 解析失败，请只输出单个合法 JSON 对象，不要包含代码块标记或解释文本',
-            parsedResult.error ? `解析错误：${parsedResult.error}` : '',
+            'JSON 解析失敗，請只輸出單個合法 JSON 對象，不要包含代碼塊標記或解釋文本',
+            parsedResult.error ? `解析錯誤：${parsedResult.error}` : '',
             parsedResult.excerpt ? `原始返回片段：${parsedResult.excerpt}` : '',
           ].filter(Boolean).join('；');
           lastFailureCode = 'PARSE_FAILED';
@@ -481,7 +481,7 @@ export class TechniqueGenerationService {
       }
 
       if (!candidate || !successfulAiResult) {
-        const reason = lastFailureReason || '生成内容未通过校验';
+        const reason = lastFailureReason || '生成內容未通過校驗';
         await this.failGenerationAndRefundItem(jobId, lastFailureCode, reason, params);
         return { success: false, error: reason };
       }
@@ -499,7 +499,7 @@ export class TechniqueGenerationService {
       });
       if (builtTemplate.ok === false) {
         const reason = builtTemplate.errors.map((entry) => `${entry.field}: ${entry.message}`).join('; ')
-          || '生成功法模板无法构建';
+          || '生成功法模板無法構建';
         await this.failGenerationAndRefundItem(jobId, 'VALIDATION_FAILED', reason, params);
         return { success: false, error: reason };
       }
@@ -527,10 +527,10 @@ export class TechniqueGenerationService {
 
       return { success: true, techniqueId: persistedDraft.techniqueId };
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : '功法领悟失败';
+      const message = error instanceof Error ? error.message : '功法領悟失敗';
       if (error instanceof TechniqueGenerationCommitOutcomeUnknownError) {
-        this.logger.warn(`自创功法草稿事务结果待确认，保留 running 状态供幂等恢复 jobId=${jobId}`);
-        return { success: false, error: '功法草稿正在确认中，请稍后查看。' };
+        this.logger.warn(`自創功法草稿事務結果待確認，保留 running 狀態供冪等恢復 jobId=${jobId}`);
+        return { success: false, error: '功法草稿正在確認中，請稍後查看。' };
       }
       await this.failGenerationAndRefundItem(jobId, 'GENERATION_FAILED', message, params).catch(() => undefined);
       return { success: false, error: message };
@@ -546,15 +546,15 @@ export class TechniqueGenerationService {
     settleFailedRefund?: () => Promise<boolean>;
   }): Promise<GenerationExecutionResult> {
     const pool = this.pool;
-    if (!pool) return { success: false, error: '功法领悟系统未就绪' };
+    if (!pool) return { success: false, error: '功法領悟系統未就緒' };
     const jobIds = params.jobs.map((job) => job.jobId);
     let claimed = false;
     try {
       claimed = await claimTechniqueGenerationBatchExecution(pool, params.playerId, jobIds);
     } catch (error: unknown) {
-      return { success: false, error: error instanceof Error ? error.message : '批量领悟任务认领失败' };
+      return { success: false, error: error instanceof Error ? error.message : '批量領悟任務認領失敗' };
     }
-    if (!claimed) return { success: false, error: '批量领悟任务已由其他执行器处理' };
+    if (!claimed) return { success: false, error: '批量領悟任務已由其他執行器處理' };
 
     try {
       const modelConfig = params.modelConfig ?? await this.modelConfigResolver?.();
@@ -589,15 +589,15 @@ export class TechniqueGenerationService {
           maxAttempts: 1,
         });
         if (!aiResult.success) {
-          lastFailureReason = aiResult.error || 'AI 调用失败';
+          lastFailureReason = aiResult.error || 'AI 調用失敗';
           lastFailureCode = 'AI_FAILED';
           continue;
         }
         const parsedResult = parseAiJsonObject(aiResult.content);
         if (parsedResult.ok === false) {
           lastFailureReason = [
-            'JSON 解析失败，请只输出包含 techniques 数组的合法 JSON 对象',
-            parsedResult.error ? `解析错误：${parsedResult.error}` : '',
+            'JSON 解析失敗，請只輸出包含 techniques 數組的合法 JSON 對象',
+            parsedResult.error ? `解析錯誤：${parsedResult.error}` : '',
           ].filter(Boolean).join('；');
           lastFailureCode = 'PARSE_FAILED';
           continue;
@@ -610,7 +610,7 @@ export class TechniqueGenerationService {
         }
         const conflicts = await this.findPublishedTechniqueNameConflicts(normalized.value.map((entry) => entry.normalizedName));
         if (conflicts.length > 0) {
-          lastFailureReason = `以下名称已存在，请全部更换：${conflicts.join('、')}`;
+          lastFailureReason = `以下名稱已存在，請全部更換：${conflicts.join('、')}`;
           lastFailureCode = 'VALIDATION_FAILED';
           continue;
         }
@@ -619,7 +619,7 @@ export class TechniqueGenerationService {
         break;
       }
       if (!namingEntries || !successfulAiResult) {
-        const reason = lastFailureReason || '批量功法文案未通过校验';
+        const reason = lastFailureReason || '批量功法文案未通過校驗';
         await this.failBatchGenerationAndRefund(batchId, params, lastFailureCode, reason);
         return { success: false, error: reason };
       }
@@ -644,7 +644,7 @@ export class TechniqueGenerationService {
           totalBudget: job.totalBudget,
         });
         if (built.ok === false) {
-          throw new Error(built.errors.map((entry) => `${entry.field}: ${entry.message}`).join('; ') || '批量内功模板无法构建');
+          throw new Error(built.errors.map((entry) => `${entry.field}: ${entry.message}`).join('; ') || '批量內功模板無法構建');
         }
         return {
           id: techniqueId,
@@ -680,10 +680,10 @@ export class TechniqueGenerationService {
       }
       return { success: true, techniqueId: persisted.techniqueIds[0] };
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : '批量领悟失败';
+      const message = error instanceof Error ? error.message : '批量領悟失敗';
       if (error instanceof TechniqueGenerationCommitOutcomeUnknownError) {
-        this.logger.warn(`批量内功草稿事务结果待确认 batchId=${batchId}`);
-        return { success: false, error: '批量功法草稿正在确认中，请稍后查看。' };
+        this.logger.warn(`批量內功草稿事務結果待確認 batchId=${batchId}`);
+        return { success: false, error: '批量功法草稿正在確認中，請稍後查看。' };
       }
       await this.failBatchGenerationAndRefund(batchId, params, 'GENERATION_FAILED', message).catch(() => undefined);
       return { success: false, error: message };
@@ -749,7 +749,7 @@ export class TechniqueGenerationService {
   }): Promise<AdoptResult> {
     const pool = this.pool;
     if (!pool) {
-      return { success: false, error: '功法领悟系统未就绪', errorCode: 'SERVICE_UNAVAILABLE' };
+      return { success: false, error: '功法領悟系統未就緒', errorCode: 'SERVICE_UNAVAILABLE' };
     }
 
     // 命名校验
@@ -758,7 +758,7 @@ export class TechniqueGenerationService {
     if (!name || nameLength < CUSTOM_TECHNIQUE_NAME_MIN_LENGTH || nameLength > CUSTOM_TECHNIQUE_NAME_MAX_LENGTH) {
       return {
         success: false,
-        error: `功法名称需 ${CUSTOM_TECHNIQUE_NAME_MIN_LENGTH}~${CUSTOM_TECHNIQUE_NAME_MAX_LENGTH} 字`,
+        error: `功法名稱需 ${CUSTOM_TECHNIQUE_NAME_MIN_LENGTH}~${CUSTOM_TECHNIQUE_NAME_MAX_LENGTH} 字`,
         errorCode: 'NAME_INVALID',
       };
     }
@@ -785,7 +785,7 @@ export class TechniqueGenerationService {
       });
     } catch (error: unknown) {
       if (isPostgresUniqueViolation(error)) {
-        return { success: false, error: '名称已存在，请更换', errorCode: 'NAME_CONFLICT' };
+        return { success: false, error: '名稱已存在，請更換', errorCode: 'NAME_CONFLICT' };
       }
       throw error;
     }
@@ -799,12 +799,12 @@ export class TechniqueGenerationService {
       const applied = await params.applyPendingComprehension(adopted.techniqueId);
       if (!applied) {
         this.logger.warn(
-          `自创功法采纳已提交但运行态已存在冲突 playerId=${params.playerId} jobId=${params.jobId} techniqueId=${adopted.techniqueId}`,
+          `自創功法採納已提交但運行態已存在衝突 playerId=${params.playerId} jobId=${params.jobId} techniqueId=${adopted.techniqueId}`,
         );
       }
     } catch (error: unknown) {
       this.logger.error(
-        `自创功法采纳已提交但运行态同步失败 playerId=${params.playerId} jobId=${params.jobId} techniqueId=${adopted.techniqueId}`,
+        `自創功法採納已提交但運行態同步失敗 playerId=${params.playerId} jobId=${params.jobId} techniqueId=${adopted.techniqueId}`,
         error instanceof Error ? error.stack : String(error),
       );
     }
@@ -826,7 +826,7 @@ export class TechniqueGenerationService {
     applyPendingComprehensions?: (techniqueIds: string[]) => Promise<void> | void;
   }): Promise<BatchAdoptResult> {
     const pool = this.pool;
-    if (!pool) return { success: false, error: '功法领悟系统未就绪', errorCode: 'SERVICE_UNAVAILABLE' };
+    if (!pool) return { success: false, error: '功法領悟系統未就緒', errorCode: 'SERVICE_UNAVAILABLE' };
     const expectedRuntimeOwnerId = normalizeTechniqueGenerationOwnerId(params.expectedRuntimeOwnerId);
     const expectedSessionEpoch = normalizeTechniqueGenerationSessionEpoch(params.expectedSessionEpoch);
     if (!expectedRuntimeOwnerId || expectedSessionEpoch === null || typeof params.applyPendingComprehensions !== 'function') {
@@ -835,7 +835,7 @@ export class TechniqueGenerationService {
     const jobs = (await this.loadCurrentGenerationJobsForPlayer(params.playerId))
       .filter((job) => resolveTechniqueGenerationBatchId(job.id) === params.batchId)
       .sort(compareLoadedGenerationJobs);
-    if (jobs.length === 0) return { success: false, error: '批量领悟任务不存在', errorCode: 'JOB_NOT_FOUND' };
+    if (jobs.length === 0) return { success: false, error: '批量領悟任務不存在', errorCode: 'JOB_NOT_FOUND' };
     let adopted;
     try {
       adopted = await adoptDurableTechniqueDraftBatch(pool, {
@@ -849,7 +849,7 @@ export class TechniqueGenerationService {
       });
     } catch (error: unknown) {
       if (isPostgresUniqueViolation(error)) {
-        return { success: false, error: '部分功法名称已存在，请重新领悟', errorCode: 'NAME_CONFLICT' };
+        return { success: false, error: '部分功法名稱已存在，請重新領悟', errorCode: 'NAME_CONFLICT' };
       }
       throw error;
     }
@@ -862,7 +862,7 @@ export class TechniqueGenerationService {
       await params.applyPendingComprehensions(adopted.techniqueIds);
     } catch (error: unknown) {
       this.logger.error(
-        `批量内功采纳已提交但运行态同步失败 playerId=${params.playerId} batchId=${params.batchId}`,
+        `批量內功採納已提交但運行態同步失敗 playerId=${params.playerId} batchId=${params.batchId}`,
         error instanceof Error ? error.stack : String(error),
       );
     }
@@ -884,12 +884,12 @@ export class TechniqueGenerationService {
   }): Promise<DiscardResult> {
     const pool = this.pool;
     if (!pool) {
-      return { success: false, error: '功法领悟系统未就绪', errorCode: 'SERVICE_UNAVAILABLE' };
+      return { success: false, error: '功法領悟系統未就緒', errorCode: 'SERVICE_UNAVAILABLE' };
     }
     const expectedRuntimeOwnerId = normalizeTechniqueGenerationOwnerId(params.expectedRuntimeOwnerId);
     const expectedSessionEpoch = normalizeTechniqueGenerationSessionEpoch(params.expectedSessionEpoch);
     if (!expectedRuntimeOwnerId || expectedSessionEpoch === null || typeof params.applyInventorySnapshot !== 'function') {
-      return { success: false, error: '玩家资产持久化上下文不可用', errorCode: 'PERSISTENCE_CONTEXT_UNAVAILABLE' };
+      return { success: false, error: '玩家資產持久化上下文不可用', errorCode: 'PERSISTENCE_CONTEXT_UNAVAILABLE' };
     }
     const refundRatio = rollDiscardRefundRatio();
     const refundCurrencyItemId = HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID;
@@ -903,13 +903,13 @@ export class TechniqueGenerationService {
       expectedSessionEpoch,
     });
     if (!discarded.ok) {
-      return { success: false, error: '无可取消的草稿', errorCode: discarded.errorCode ?? 'JOB_STATE_INVALID' };
+      return { success: false, error: '無可取消的草稿', errorCode: discarded.errorCode ?? 'JOB_STATE_INVALID' };
     }
     try {
       await params.applyInventorySnapshot(discarded.inventoryItems);
     } catch (error: unknown) {
       this.logger.error(
-        `自创功法放弃返还已提交但运行态同步失败 playerId=${params.playerId} jobId=${params.jobId}`,
+        `自創功法放棄返還已提交但運行態同步失敗 playerId=${params.playerId} jobId=${params.jobId}`,
         error instanceof Error ? error.stack : String(error),
       );
     }
@@ -917,7 +917,7 @@ export class TechniqueGenerationService {
     const committedRefundRatio = Number(discarded.refundRatio ?? refundRatio);
     const committedRefundAmount = normalizeRefundItemSpend(discarded.refundAmount);
     this.logger.log(
-      `自创功法取消返还 playerId=${params.playerId} jobId=${params.jobId} itemSpend=${itemSpend} refundRatio=${Math.round(committedRefundRatio * 100)}% refundCurrency=${discarded.refundCurrencyItemId ?? refundCurrencyItemId} refundAmount=${committedRefundAmount}`,
+      `自創功法取消返還 playerId=${params.playerId} jobId=${params.jobId} itemSpend=${itemSpend} refundRatio=${Math.round(committedRefundRatio * 100)}% refundCurrency=${discarded.refundCurrencyItemId ?? refundCurrencyItemId} refundAmount=${committedRefundAmount}`,
     );
     return {
       success: true,
@@ -938,16 +938,16 @@ export class TechniqueGenerationService {
     applyInventorySnapshot?: (items: TechniqueGenerationRuntimeInventoryItem[]) => Promise<void> | void;
   }): Promise<DiscardResult> {
     const pool = this.pool;
-    if (!pool) return { success: false, error: '功法领悟系统未就绪', errorCode: 'SERVICE_UNAVAILABLE' };
+    if (!pool) return { success: false, error: '功法領悟系統未就緒', errorCode: 'SERVICE_UNAVAILABLE' };
     const expectedRuntimeOwnerId = normalizeTechniqueGenerationOwnerId(params.expectedRuntimeOwnerId);
     const expectedSessionEpoch = normalizeTechniqueGenerationSessionEpoch(params.expectedSessionEpoch);
     if (!expectedRuntimeOwnerId || expectedSessionEpoch === null || typeof params.applyInventorySnapshot !== 'function') {
-      return { success: false, error: '玩家资产持久化上下文不可用', errorCode: 'PERSISTENCE_CONTEXT_UNAVAILABLE' };
+      return { success: false, error: '玩家資產持久化上下文不可用', errorCode: 'PERSISTENCE_CONTEXT_UNAVAILABLE' };
     }
     const jobs = (await this.loadCurrentGenerationJobsForPlayer(params.playerId))
       .filter((job) => resolveTechniqueGenerationBatchId(job.id) === params.batchId)
       .sort(compareLoadedGenerationJobs);
-    if (jobs.length === 0) return { success: false, error: '无可取消的批量草稿', errorCode: 'JOB_STATE_INVALID' };
+    if (jobs.length === 0) return { success: false, error: '無可取消的批量草稿', errorCode: 'JOB_STATE_INVALID' };
     const refundRatio = rollDiscardRefundRatio();
     const refundCurrencyItemId = HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID;
     const discarded = await discardDurableTechniqueDraftBatch(pool, {
@@ -961,13 +961,13 @@ export class TechniqueGenerationService {
       expectedSessionEpoch,
     });
     if (!discarded.ok) {
-      return { success: false, error: '无可取消的批量草稿', errorCode: discarded.errorCode ?? 'JOB_STATE_INVALID' };
+      return { success: false, error: '無可取消的批量草稿', errorCode: discarded.errorCode ?? 'JOB_STATE_INVALID' };
     }
     try {
       await params.applyInventorySnapshot(discarded.inventoryItems);
     } catch (error: unknown) {
       this.logger.error(
-        `批量内功放弃返还已提交但运行态同步失败 playerId=${params.playerId} batchId=${params.batchId}`,
+        `批量內功放棄返還已提交但運行態同步失敗 playerId=${params.playerId} batchId=${params.batchId}`,
         error instanceof Error ? error.stack : String(error),
       );
     }
@@ -1070,7 +1070,7 @@ export class TechniqueGenerationService {
       await params.applyInventorySnapshot(result.inventoryItems);
     } catch (error: unknown) {
       this.logger.error(
-        `自创功法失败返还状态已回读但运行态同步失败 playerId=${params.playerId}`,
+        `自創功法失敗返還狀態已回讀但運行態同步失敗 playerId=${params.playerId}`,
         error instanceof Error ? error.stack : String(error),
       );
     }
@@ -1106,7 +1106,7 @@ export class TechniqueGenerationService {
         await params.settleFailedRefund();
       } catch (error: unknown) {
         this.logger.warn(
-          `自创功法失败返还暂未完成，保留 item_refunded=false 供幂等重试 jobId=${jobId} error=${error instanceof Error ? error.message : String(error)}`,
+          `自創功法失敗返還暫未完成，保留 item_refunded=false 供冪等重試 jobId=${jobId} error=${error instanceof Error ? error.message : String(error)}`,
         );
       }
     }
@@ -1136,7 +1136,7 @@ export class TechniqueGenerationService {
       await params.settleFailedRefund();
     } catch (error: unknown) {
       this.logger.warn(
-        `批量内功失败返还暂未完成 batchId=${batchId} error=${error instanceof Error ? error.message : String(error)}`,
+        `批量內功失敗返還暫未完成 batchId=${batchId} error=${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }
@@ -1372,13 +1372,13 @@ function normalizeBatchTechniqueNamingResponse(
 ): { ok: true; value: BatchTechniqueNamingEntry[] } | { ok: false; error: string } {
   const techniques = value.techniques;
   if (!Array.isArray(techniques) || techniques.length !== expectedCount) {
-    return { ok: false, error: `techniques 数量必须严格等于 ${expectedCount}` };
+    return { ok: false, error: `techniques 數量必須嚴格等於 ${expectedCount}` };
   }
   const entries: BatchTechniqueNamingEntry[] = [];
   for (let index = 0; index < techniques.length; index += 1) {
     const raw = techniques[index];
     if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
-      return { ok: false, error: `techniques[${index}] 必须是对象` };
+      return { ok: false, error: `techniques[${index}] 必須是對象` };
     }
     const record = raw as Record<string, unknown>;
     const extraKeys = Object.keys(record).filter((key) => key !== 'name' && key !== 'desc');
@@ -1390,10 +1390,10 @@ function normalizeBatchTechniqueNamingResponse(
     const nameLength = [...name].length;
     const descLength = [...desc].length;
     if (nameLength < CUSTOM_TECHNIQUE_NAME_MIN_LENGTH || nameLength > CUSTOM_TECHNIQUE_NAME_MAX_LENGTH) {
-      return { ok: false, error: `techniques[${index}].name 必须为 ${CUSTOM_TECHNIQUE_NAME_MIN_LENGTH}~${CUSTOM_TECHNIQUE_NAME_MAX_LENGTH} 字` };
+      return { ok: false, error: `techniques[${index}].name 必須為 ${CUSTOM_TECHNIQUE_NAME_MIN_LENGTH}~${CUSTOM_TECHNIQUE_NAME_MAX_LENGTH} 字` };
     }
     if (descLength < 20 || descLength > 60) {
-      return { ok: false, error: `techniques[${index}].desc 必须为 20~60 字` };
+      return { ok: false, error: `techniques[${index}].desc 必須為 20~60 字` };
     }
     entries.push({
       name,
@@ -1402,7 +1402,7 @@ function normalizeBatchTechniqueNamingResponse(
     });
   }
   if (new Set(entries.map((entry) => entry.normalizedName)).size !== entries.length) {
-    return { ok: false, error: '同批功法名称不得重复' };
+    return { ok: false, error: '同批功法名稱不得重複' };
   }
   return { ok: true, value: entries };
 }
@@ -1462,15 +1462,15 @@ function normalizeTechniqueGenerationSessionEpoch(value: unknown): number | null
 function mapTechniqueGenerationAdoptError(errorCode: string | undefined): AdoptResult {
   switch (errorCode) {
     case 'JOB_NOT_FOUND':
-      return { success: false, error: '任务不存在', errorCode };
+      return { success: false, error: '任務不存在', errorCode };
     case 'DRAFT_EXPIRED':
-      return { success: false, error: '草稿已过期', errorCode };
+      return { success: false, error: '草稿已過期', errorCode };
     case 'NAME_CONFLICT':
-      return { success: false, error: '名称已存在，请更换', errorCode };
+      return { success: false, error: '名稱已存在，請更換', errorCode };
     case 'TECHNIQUE_ALREADY_LEARNED':
-      return { success: false, error: '功法已经掌握', errorCode };
+      return { success: false, error: '功法已經掌握', errorCode };
     default:
-      return { success: false, error: '草稿状态异常', errorCode: errorCode ?? 'JOB_STATE_INVALID' };
+      return { success: false, error: '草稿狀態異常', errorCode: errorCode ?? 'JOB_STATE_INVALID' };
   }
 }
 
@@ -1533,7 +1533,7 @@ function parseAiJsonObject(content: string): ParseAiJsonObjectResult {
   }
   return {
     ok: false,
-    error: lastError || '未找到合法 JSON 对象',
+    error: lastError || '未找到合法 JSON 對象',
     excerpt: truncateAiContentExcerpt(content, 1000),
   };
 }
@@ -1542,7 +1542,7 @@ function tryParseJsonRecord(content: string): ParseAiJsonObjectResult {
   try {
     const parsed = JSON.parse(content) as unknown;
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-      return { ok: false, error: 'JSON 根节点必须是对象', excerpt: truncateAiContentExcerpt(content, 1000) };
+      return { ok: false, error: 'JSON 根節點必須是對象', excerpt: truncateAiContentExcerpt(content, 1000) };
     }
     return { ok: true, value: parsed as Record<string, unknown> };
   } catch (error) {

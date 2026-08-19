@@ -100,8 +100,8 @@ export class WorldRuntimeNpcQuestWriteService {
             changed = true;
             const questView = materializeQuestForNpcWrite(deps, playerId, quest);
             const relayText = questView.relayMessage?.trim()
-                ? `你向 ${npc.name} 传达了口信：“${questView.relayMessage.trim()}”`
-                : `你向 ${npc.name} 传达了来意。`;
+                ? `你向 ${npc.name} 傳達了口信：“${questView.relayMessage.trim()}”`
+                : `你向 ${npc.name} 傳達了來意。`;
             const nRelay = buildStructuredNotice('info', 'notice.quest.npc-relay', relayText, { vars: { npcName: npc.name, message: questView.relayMessage?.trim() || '' }, pills: [{ key: 'npcName', style: 'target' }] });
             deps.queuePlayerNotice(playerId, nRelay.text, nRelay.kind, undefined, undefined, nRelay.structured);
         }
@@ -125,23 +125,23 @@ export class WorldRuntimeNpcQuestWriteService {
         const questsView = deps.createNpcQuestsEnvelope(playerId, npcId).quests;
         const quest = questsView.find((entry) => entry.id === questId && entry.status === 'available');
         if (!quest) {
-            throw new NotFoundException('当前无法接取该任务');
+            throw new NotFoundException('當前無法接取該任務');
         }
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         if (player.quests.quests.some((entry) => entry.id === questId && entry.status !== 'completed')) {
-            throw new BadRequestException('该任务已经接取');
+            throw new BadRequestException('該任務已經接取');
         }
         const questView = materializeQuestForNpcWrite(deps, playerId, quest);
         if (typeof deps?.worldRuntimeQuestQueryService?.isQuestUnlockedForPlayer === 'function'
             && !deps.worldRuntimeQuestQueryService.isQuestUnlockedForPlayer(player.quests.quests, questView.id)) {
-            throw new BadRequestException('前置任务尚未完成');
+            throw new BadRequestException('前置任務尚未完成');
         }
         if (typeof deps?.worldRuntimeQuestQueryService?.isQuestAcceptRealmReachedForPlayer === 'function'
             && !deps.worldRuntimeQuestQueryService.isQuestAcceptRealmReachedForPlayer(player, questView.id)) {
-            throw new BadRequestException('境界不足，暂无法接取该任务');
+            throw new BadRequestException('境界不足，暫無法接取該任務');
         }
         if (normalizeQuestLine(questView.line) === 'main' && hasIncompleteQuestInLine(player.quests.quests, 'main', questId)) {
-            throw new BadRequestException('当前已有进行中的主线任务');
+            throw new BadRequestException('當前已有進行中的主線任務');
         }
         player.quests.quests.push(cloneQuestState(questView, 'active'));
         this.playerRuntimeService.markQuestStateDirty(playerId);
@@ -177,16 +177,16 @@ export class WorldRuntimeNpcQuestWriteService {
         if (durableEnabled) {
             await this.syncCurrentPresenceFence(playerId);
             if (!this.getCurrentRuntimeOwnerId(playerId, deps) || !this.getCurrentSessionEpoch(playerId, deps)) {
-                throw new BadRequestException('玩家资产事务围栏暂不可用，请稍后重试');
+                throw new BadRequestException('玩家資產事務圍欄暫不可用，請稍後重試');
             }
         }
         deps.refreshQuestStates(playerId);
         const quest = player.quests.quests.find((entry) => entry.id === questId);
         if (!quest || quest.status !== 'ready') {
-            throw new NotFoundException('该任务当前无法提交');
+            throw new NotFoundException('該任務當前無法提交');
         }
         if (quest.submitNpcId !== npcId) {
-            throw new BadRequestException('当前不是该任务的提交目标');
+            throw new BadRequestException('當前不是該任務的提交目標');
         }
         const questView = materializeQuestForNpcWrite(deps, playerId, quest);
         const rewards = deps.buildQuestRewardItems(questView);
@@ -202,13 +202,13 @@ export class WorldRuntimeNpcQuestWriteService {
             rewards,
         );
         if (nextInventoryItems == null) {
-            throw new BadRequestException('背包空间不足，无法领取奖励');
+            throw new BadRequestException('背包空間不足，無法領取獎勵');
         }
         if (durableEnabled) {
             const runtimeOwnerId = this.getCurrentRuntimeOwnerId(playerId, deps);
             const sessionEpoch = this.getCurrentSessionEpoch(playerId, deps);
             if (!runtimeOwnerId || !sessionEpoch) {
-                throw new BadRequestException('玩家资产事务围栏暂不可用，请稍后重试');
+                throw new BadRequestException('玩家資產事務圍欄暫不可用，請稍後重試');
             }
             const plannedNextQuest = buildNextQuestState(playerId, player, quest, questView, deps);
             const nextQuestEntries = buildQuestProgressSnapshots(plannedNextQuest.nextQuests);
@@ -273,11 +273,11 @@ export class WorldRuntimeNpcQuestWriteService {
         deps.getPlayerLocationOrThrow(playerId);
         const actionId = typeof actionIdInput === 'string' ? actionIdInput.trim() : '';
         if (!actionId.startsWith('npc:')) {
-            throw new BadRequestException('场景人物动作 ID 不能为空');
+            throw new BadRequestException('場景人物動作 ID 不能為空');
         }
         const npcId = actionId.slice('npc:'.length).trim();
         if (!npcId) {
-            throw new BadRequestException('场景人物 ID 不能为空');
+            throw new BadRequestException('場景人物 ID 不能為空');
         }
         deps.enqueuePendingCommand(playerId, { kind: 'npcInteraction', npcId });
         return deps.getPlayerViewOrThrow(playerId);
@@ -309,10 +309,10 @@ export class WorldRuntimeNpcQuestWriteService {
         const npcId = typeof npcIdInput === 'string' ? npcIdInput.trim() : '';
         const questId = typeof questIdInput === 'string' ? questIdInput.trim() : '';
         if (!npcId) {
-            throw new BadRequestException('场景人物 ID 不能为空');
+            throw new BadRequestException('場景人物 ID 不能為空');
         }
         if (!questId) {
-            throw new BadRequestException('任务 ID 不能为空');
+            throw new BadRequestException('任務 ID 不能為空');
         }
         deps.enqueuePendingCommand(playerId, { kind: 'acceptNpcQuest', npcId, questId });
         return deps.getPlayerViewOrThrow(playerId);
@@ -333,10 +333,10 @@ export class WorldRuntimeNpcQuestWriteService {
         const npcId = typeof npcIdInput === 'string' ? npcIdInput.trim() : '';
         const questId = typeof questIdInput === 'string' ? questIdInput.trim() : '';
         if (!npcId) {
-            throw new BadRequestException('场景人物 ID 不能为空');
+            throw new BadRequestException('場景人物 ID 不能為空');
         }
         if (!questId) {
-            throw new BadRequestException('任务 ID 不能为空');
+            throw new BadRequestException('任務 ID 不能為空');
         }
         deps.enqueuePendingCommand(playerId, { kind: 'submitNpcQuest', npcId, questId });
         return deps.getPlayerViewOrThrow(playerId);
@@ -354,7 +354,7 @@ export class WorldRuntimeNpcQuestWriteService {
 
         const normalizedNpcId = typeof npcId === 'string' ? npcId.trim() : '';
         if (!normalizedNpcId) {
-            throw new BadRequestException('场景人物 ID 不能为空');
+            throw new BadRequestException('場景人物 ID 不能為空');
         }
         const questsView = deps.buildNpcQuestsView(playerId, normalizedNpcId);
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
@@ -497,11 +497,11 @@ export class WorldRuntimeNpcQuestWriteService {
 };
 
 function notifyQuestSubmitted(deps, playerId, npc, questView, nextQuest) {
-    const nReward = buildStructuredNotice('success', 'notice.quest.reward', `${npc.name}：做得不错，这是你的奖励 ${questView.rewardText || '。'}`, { vars: { npcName: npc.name, rewardText: questView.rewardText || '。' }, pills: [{ key: 'npcName', style: 'target' }] });
+    const nReward = buildStructuredNotice('success', 'notice.quest.reward', `${npc.name}：做得不錯，這是你的獎勵 ${questView.rewardText || '。'}`, { vars: { npcName: npc.name, rewardText: questView.rewardText || '。' }, pills: [{ key: 'npcName', style: 'target' }] });
     deps.queuePlayerNotice(playerId, nReward.text, nReward.kind, undefined, undefined, nReward.structured);
     if (nextQuest) {
         const nextQuestView = materializeQuestForNpcWrite(deps, playerId, nextQuest);
-        const nAutoAccept = buildStructuredNotice('info', 'notice.quest.auto-accept', `新的任务《${nextQuestView.title}》已自动接取`, { vars: { questTitle: nextQuestView.title }, pills: [{ key: 'questTitle', style: 'target' }] });
+        const nAutoAccept = buildStructuredNotice('info', 'notice.quest.auto-accept', `新的任務《${nextQuestView.title}》已自動接取`, { vars: { questTitle: nextQuestView.title }, pills: [{ key: 'questTitle', style: 'target' }] });
         deps.queuePlayerNotice(playerId, nAutoAccept.text, nAutoAccept.kind, undefined, undefined, nAutoAccept.structured);
     }
 }
@@ -512,7 +512,7 @@ function buildNextQuestState(playerId, player, quest, questView, deps) {
         : [];
     const targetQuest = nextQuests.find((entry) => entry.id === quest.id);
     if (!targetQuest) {
-        throw new NotFoundException('该任务当前无法提交');
+        throw new NotFoundException('該任務當前無法提交');
     }
     targetQuest.status = 'completed';
     targetQuest.progress = targetQuest.required;
@@ -578,7 +578,7 @@ function buildNextQuestInventorySnapshots(currentItems, capacity, requiredItemId
             remainingToConsume -= consumed;
         }
         if (remainingToConsume > 0) {
-            throw new BadRequestException('任务提交物品不足');
+            throw new BadRequestException('任務提交物品不足');
         }
     }
     for (let index = nextItems.length - 1; index >= 0; index -= 1) {
@@ -599,7 +599,7 @@ function buildNextQuestInventorySnapshots(currentItems, capacity, requiredItemId
         assignItemInstanceIdIfNeeded(incoming);
         const mergeResult = mergeItemStackInto(nextItems, incoming);
         if (Math.max(0, Math.trunc(Number(mergeResult.entry.count ?? 0))) > QUEST_INVENTORY_ITEM_COUNT_MAX) {
-            throw new BadRequestException(`${resolvePlayerFacingContentName(itemId, '未知物品', reward?.name)}数量超过上限，无法领取奖励`);
+            throw new BadRequestException(`${resolvePlayerFacingContentName(itemId, '未知物品', reward?.name)}數量超過上限，無法領取獎勵`);
         }
         if (!mergeResult.merged && nextItems.length > normalizedCapacity) {
             return null;

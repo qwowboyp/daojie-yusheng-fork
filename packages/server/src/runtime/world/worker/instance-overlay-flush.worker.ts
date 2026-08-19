@@ -108,7 +108,7 @@ export class InstanceOverlayFlushWorker {
         processed += 1;
       } catch (error: unknown) {
         this.logger.warn(
-          `实例 overlay worker 刷盘失败 instanceId=${instanceId} domain=${INSTANCE_OVERLAY_WORKER_DOMAIN}: ${
+          `實例 overlay worker 刷盤失敗 instanceId=${instanceId} domain=${INSTANCE_OVERLAY_WORKER_DOMAIN}: ${
             error instanceof Error ? error.stack || error.message : String(error)
           }`,
         );

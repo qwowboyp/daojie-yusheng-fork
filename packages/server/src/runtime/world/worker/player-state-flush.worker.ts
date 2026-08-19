@@ -67,7 +67,7 @@ export class PlayerStateFlushWorker {
         processed += 1;
       } catch (error: unknown) {
         this.logger.warn(
-          `玩家状态 worker 刷盘失败 playerId=${entry.playerId} domain=${entry.domain}: ${
+          `玩家狀態 worker 刷盤失敗 playerId=${entry.playerId} domain=${entry.domain}: ${
             error instanceof Error ? error.stack || error.message : String(error)
           }`,
         );

@@ -24,7 +24,7 @@ export class FlushWakeupService {
       return;
     }
     this.rememberWakeupKey(key);
-    this.logger.debug(`刷盘唤醒提示：${key}`);
+    this.logger.debug(`刷盤喚醒提示：${key}`);
   }
 
   signalInstanceFlush(instanceId: string): void {
@@ -33,7 +33,7 @@ export class FlushWakeupService {
       return;
     }
     this.rememberWakeupKey(key);
-    this.logger.debug(`刷盘唤醒提示：${key}`);
+    this.logger.debug(`刷盤喚醒提示：${key}`);
   }
 
   listWakeupKeys(): string[] {

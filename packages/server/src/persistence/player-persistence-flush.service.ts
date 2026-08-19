@@ -174,7 +174,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
   }
 
   onModuleInit(): void {
-    this.logger.log('玩家持久化刷新服务已注册，等待启动链路编排器开闸');
+    this.logger.log('玩家持久化刷新服務已註冊，等待啟動鏈路編排器開閘');
   }
 
   startForLifecycleCoordinator(): void {
@@ -186,9 +186,9 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
         void this.flushDirtyPlayers();
       }, PLAYER_PERSISTENCE_FLUSH_INTERVAL_MS);
       this.timer.unref();
-      this.logger.log(`玩家持久化刷新已启动，间隔 ${PLAYER_PERSISTENCE_FLUSH_INTERVAL_MS}ms`);
+      this.logger.log(`玩家持久化刷新已啟動，間隔 ${PLAYER_PERSISTENCE_FLUSH_INTERVAL_MS}ms`);
     } else {
-      this.logger.log('玩家持久化直接定时器已停用，由统一刷盘任务运行时调度');
+      this.logger.log('玩家持久化直接定時器已停用，由統一刷盤任務運行時調度');
     }
   }
 
@@ -303,7 +303,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
         return false;
       }
       if (!this.isPlayerPersistenceWritable(playerId)) {
-        this.logger.debug(`跳过玩家在线状态刷盘：租约已失效 playerId=${playerId}`);
+        this.logger.debug(`跳過玩家線上狀態刷盤：租約已失效 playerId=${playerId}`);
         return false;
       }
       // 在 await IO 之前先拍 revision 快照，避免下面 markPersisted 误推到 IO 期间的新版本。
@@ -329,7 +329,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
       return false;
     }
     if (!this.isPlayerPersistenceWritable(playerId)) {
-      this.logger.debug(`跳过玩家持久化刷盘：租约已失效 playerId=${playerId}`);
+      this.logger.debug(`跳過玩家持久化刷盤：租約已失效 playerId=${playerId}`);
       return false;
     }
 
@@ -368,7 +368,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
     }
     if (this.isFlushPoolBackpressureActive()) {
       this.flushThrottleUntilAt = Date.now() + PLAYER_PERSISTENCE_SLOW_FLUSH_BACKOFF_MS;
-      this.logger.warn(`玩家刷盘因刷盘池等待排队而退避：waiting>=${PLAYER_PERSISTENCE_FLUSH_POOL_WAITING_THRESHOLD}`);
+      this.logger.warn(`玩家刷盤因刷盤池等待排隊而退避：waiting>=${PLAYER_PERSISTENCE_FLUSH_POOL_WAITING_THRESHOLD}`);
       return;
     }
     await this.runFlushCycle('interval');
@@ -414,7 +414,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
                   if (reason === 'shutdown') {
                     throw new Error(`player_flush_blocked_by_unresolved_durable_commit:${playerId}`);
                   }
-                  this.logger.warn(`跳过玩家刷盘：存在结果未确认的强事务 playerId=${playerId}`);
+                  this.logger.warn(`跳過玩家刷盤：存在結果未確認的強事務 playerId=${playerId}`);
                   return;
                 }
                 const plannedDirtyDomains = dirtyPlayerDomains.get(playerId) ?? new Set<string>();
@@ -429,7 +429,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
                     return;
                   }
                   if (!this.isPlayerPersistenceWritable(playerId)) {
-                    this.logger.debug(`跳过玩家在线状态刷盘：租约已失效 playerId=${playerId}`);
+                    this.logger.debug(`跳過玩家線上狀態刷盤：租約已失效 playerId=${playerId}`);
                     return;
                   }
                   const presenceSnapshotRevision = this.playerRuntimeService.getPersistenceRevision?.(playerId) ?? null;
@@ -455,7 +455,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
                   return;
                 }
                 if (!this.isPlayerPersistenceWritable(playerId)) {
-                  this.logger.debug(`跳过玩家快照刷盘：租约已失效 playerId=${playerId}`);
+                  this.logger.debug(`跳過玩家快照刷盤：租約已失效 playerId=${playerId}`);
                   return;
                 }
                 // retryFlush 内部把"真正写出去的 domain 集合"通过返回值传出来，
@@ -482,7 +482,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
             (playerId, error) => {
               cycleFailures.push(error);
               this.logger.error(
-                `玩家持久化刷新失败（${reason}） playerId=${playerId}`,
+                `玩家持久化刷新失敗（${reason}） playerId=${playerId}`,
                 error instanceof Error ? error.stack : String(error),
               );
             },
@@ -566,7 +566,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
       const presence = this.playerRuntimeService.describePersistencePresence(playerId);
       if (presence) {
         if (!this.isPlayerPersistenceWritable(playerId)) {
-          this.logger.debug(`跳过玩家在线状态提交：租约已失效 playerId=${playerId}`);
+          this.logger.debug(`跳過玩家線上狀態提交：租約已失效 playerId=${playerId}`);
           return { persistedDomains, leaseInvalidated: true };
         }
         await this.playerDomainPersistenceService.savePlayerPresence(playerId, {
@@ -579,7 +579,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
 
     if (projectedDomains.size > 0) {
       if (!this.isPlayerPersistenceWritable(playerId)) {
-        this.logger.debug(`跳过玩家分域增量提交：租约已失效 playerId=${playerId}`);
+        this.logger.debug(`跳過玩家分域增量提交：租約已失效 playerId=${playerId}`);
         // 关键：lease 失效时显式上报，外层据此跳过 markPersisted，dirty 留给下一轮重试。
         return { persistedDomains, leaseInvalidated: true };
       }
@@ -625,7 +625,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
       return true;
     }
     this.logger.error(
-      `拒绝空白角色覆盖已有存档：playerId=${playerId} — 玩家未从持久化恢复但数据库中已有 watermark`,
+      `拒絕空白角色覆蓋已有存檔：playerId=${playerId} — 玩家未從持久化恢復但數據庫中已有 watermark`,
     );
     return false;
   }
@@ -645,7 +645,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
     }
     this.flushThrottleUntilAt = Date.now() + PLAYER_PERSISTENCE_SLOW_FLUSH_BACKOFF_MS;
     this.logger.warn(
-      `玩家最终一致刷盘触发降级退避：durationMs=${Math.trunc(durationMs)} thresholdMs=${PLAYER_PERSISTENCE_SLOW_FLUSH_THRESHOLD_MS} backoffMs=${PLAYER_PERSISTENCE_SLOW_FLUSH_BACKOFF_MS}`,
+      `玩家最終一致刷盤觸發降級退避：durationMs=${Math.trunc(durationMs)} thresholdMs=${PLAYER_PERSISTENCE_SLOW_FLUSH_THRESHOLD_MS} backoffMs=${PLAYER_PERSISTENCE_SLOW_FLUSH_BACKOFF_MS}`,
     );
   }
 
@@ -690,7 +690,7 @@ export class PlayerPersistenceFlushService implements OnModuleInit, OnModuleDest
       } catch (error) {
         failedPlayerIds.push(playerId);
         this.logger.warn(
-          `刷新离线收益累积失败：${playerId} ${error instanceof Error ? error.message : String(error)}`,
+          `刷新離線收益累積失敗：${playerId} ${error instanceof Error ? error.message : String(error)}`,
         );
       }
     }

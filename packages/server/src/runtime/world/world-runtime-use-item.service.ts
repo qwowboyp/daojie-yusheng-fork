@@ -109,7 +109,7 @@ export class WorldRuntimeUseItemService {
         const item = this.resolveUseItemView(inventoryItem);
         const count = normalizeUseItemCount(payload?.count, item);
         if (typeof item.formationDiskTier === 'string' && item.formationDiskTier.length > 0) {
-            const n = buildStructuredNotice('info', 'notice.item.formation-hint', '阵盘需要通过背包中的布阵页面使用。', {});
+            const n = buildStructuredNotice('info', 'notice.item.formation-hint', '陣盤需要通過背包中的佈陣頁面使用。', {});
             deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
             return;
         }
@@ -126,7 +126,7 @@ export class WorldRuntimeUseItemService {
             return;
         }
         if (item.useBehavior === 'open_technique_generation') {
-            const n = buildStructuredNotice('info', 'notice.item.open-panel', '打开功法领悟', {
+            const n = buildStructuredNotice('info', 'notice.item.open-panel', '打開功法領悟', {
                 vars: { panel: 'technique_generation' },
             });
             deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
@@ -160,21 +160,21 @@ export class WorldRuntimeUseItemService {
             return;
         }
         if (count > 1) {
-            throw new BadRequestException('该物品不支持批量使用');
+            throw new BadRequestException('該物品不支持批量使用');
         }
         if (item.itemId === CUSTOM_TECHNIQUE_BOOK_ITEM_ID) {
             if (!learnedTechniqueId) {
-                throw new NotFoundException('功法书缺少功法 ID');
+                throw new NotFoundException('功法書缺少功法 ID');
             }
             const resolvedTechniqueId = typeof this.playerRuntimeService.resolveLatestTechniqueId === 'function'
                 ? this.playerRuntimeService.resolveLatestTechniqueId(learnedTechniqueId)
                 : learnedTechniqueId;
             if (isTechniqueAggregationId(resolvedTechniqueId)) {
-                throw new BadRequestException('统法只能从统法台参悟');
+                throw new BadRequestException('統法只能從統法臺參悟');
             }
             const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
             if (findPlayerLearnedTechnique(player, resolvedTechniqueId)) {
-                throw new BadRequestException('已经掌握该功法');
+                throw new BadRequestException('已經掌握該功法');
             }
             const aggregationConflict = this.playerRuntimeService.resolveTechniqueLearningConflict(player, resolvedTechniqueId);
             if (aggregationConflict) {
@@ -184,14 +184,14 @@ export class WorldRuntimeUseItemService {
                 const notice = buildStructuredNotice(
                     'warn',
                     'notice.technique-aggregation.overlap',
-                    '该功法与已有统合功法重叠，无法学习。',
+                    '該功法與已有統合功法重疊，無法學習。',
                     { vars: { sourceTechniqueNames: sourceTechniqueNames || resolvedTechniqueId } },
                 );
                 deps.queuePlayerNotice(playerId, notice.text, notice.kind, undefined, undefined, notice.structured);
                 return;
             }
             if (!this.contentTemplateRepository.createTechniqueState(resolvedTechniqueId)) {
-                throw new NotFoundException('功法书对应的功法不存在');
+                throw new NotFoundException('功法書對應的功法不存在');
             }
             const added = this.playerRuntimeService.addPendingTechniqueComprehensionById(
                 playerId,
@@ -212,7 +212,7 @@ export class WorldRuntimeUseItemService {
         if (learnedTechniqueId) {
             deps.refreshQuestStates(playerId);
             const itemName = getItemDisplayName(item);
-            const n = buildStructuredNotice('success', 'notice.item.technique-comprehension-added', `参悟 ${itemName}`, { vars: { itemName }, pills: [{ key: 'itemName', style: 'skill' }], displayTokens: [{ key: 'itemName', domain: 'items', id: item?.itemId }] });
+            const n = buildStructuredNotice('success', 'notice.item.technique-comprehension-added', `參悟 ${itemName}`, { vars: { itemName }, pills: [{ key: 'itemName', style: 'skill' }], displayTokens: [{ key: 'itemName', domain: 'items', id: item?.itemId }] });
             deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
             return;
         }
@@ -237,7 +237,7 @@ export class WorldRuntimeUseItemService {
         }
         deps.refreshQuestStates(playerId);
         const itemName = getItemDisplayName(item);
-        const n = buildStructuredNotice('success', 'notice.activity.month-card-activated', '已激活功德月卡，月卡总池已增加，领取时间已重置', {
+        const n = buildStructuredNotice('success', 'notice.activity.month-card-activated', '已激活功德月卡，月卡總池已增加，領取時間已重置', {
             vars: {
                 itemName,
                 count: normalizedCount,
@@ -265,7 +265,7 @@ export class WorldRuntimeUseItemService {
         }
         deps.refreshQuestStates(playerId);
         const itemName = getItemDisplayName(item);
-        const n = buildStructuredNotice('success', 'notice.activity.eternal-activated', '已激活永恒，永久拥有功德月卡权益', {
+        const n = buildStructuredNotice('success', 'notice.activity.eternal-activated', '已激活永恆，永久擁有功德月卡權益', {
             vars: {
                 itemName,
                 count: normalizedCount,
@@ -293,18 +293,18 @@ export class WorldRuntimeUseItemService {
         this.assertNearTechniqueRefiningTable(playerId, deps);
         const techniqueId = typeof techniqueIdInput === 'string' && techniqueIdInput.trim() ? techniqueIdInput.trim() : '';
         if (!techniqueId) {
-            throw new BadRequestException('请选择要抄录的功法');
+            throw new BadRequestException('請選擇要抄錄的功法');
         }
         if (isTechniqueAggregationId(techniqueId)) {
-            throw new BadRequestException('统法不能抄录为功法书，只能从统法台参悟');
+            throw new BadRequestException('統法不能抄錄為功法書，只能從統法臺參悟');
         }
         if (!isCreatedTechniqueId(techniqueId)) {
-            throw new BadRequestException('只能抄录自创功法');
+            throw new BadRequestException('只能抄錄自創功法');
         }
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const learnedTechnique = findPlayerLearnedTechnique(player, techniqueId);
         if (!learnedTechnique) {
-            throw new BadRequestException('只能抄录已掌握功法');
+            throw new BadRequestException('只能抄錄已掌握功法');
         }
         const technique = this.contentTemplateRepository.createTechniqueState(techniqueId);
         if (!technique) {
@@ -312,13 +312,13 @@ export class WorldRuntimeUseItemService {
         }
         const techniqueName = resolvePlayerFacingContentName(techniqueId, '未知功法', technique.name);
         if (technique.category === 'divine') {
-            throw new BadRequestException('神通不能抄录为功法书');
+            throw new BadRequestException('神通不能抄錄為功法書');
         }
         if (!isTechniqueFullyMastered({
             level: Math.max(1, Math.trunc(Number(learnedTechnique.level) || 1)),
             layers: Array.isArray(technique.layers) ? technique.layers : undefined,
         })) {
-            throw new BadRequestException('只有修至原功法满层后才能抄录');
+            throw new BadRequestException('只有修至原功法滿層後才能抄錄');
         }
         const maxTemplateLevel = getTechniqueMaxLevel(Array.isArray(technique.layers) ? technique.layers : undefined, technique.level ?? 1);
         const maxLevel = Number.isFinite(Number(maxLevelInput))
@@ -332,23 +332,23 @@ export class WorldRuntimeUseItemService {
         });
         const consumed = this.playerRuntimeService.consumeItemByItemId(playerId, TECHNIQUE_FRAGMENT_ITEM_ID, cost);
         if (!consumed) {
-            throw new BadRequestException('功法残页不足');
+            throw new BadRequestException('功法殘頁不足');
         }
         this.playerRuntimeService.receiveInventoryItem(playerId, {
             itemId: CUSTOM_TECHNIQUE_BOOK_ITEM_ID,
             count: 1,
             learnTechniqueId: techniqueId,
             ...(maxLevel < maxTemplateLevel ? { learnTechniqueMaxLevel: maxLevel } : {}),
-            name: maxLevel >= maxTemplateLevel ? `《${techniqueName}》` : `《${techniqueName}》残卷`,
+            name: maxLevel >= maxTemplateLevel ? `《${techniqueName}》` : `《${techniqueName}》殘卷`,
             type: 'skill_book',
             desc: maxLevel >= maxTemplateLevel
-                ? `完整记载${techniqueName}。`
-                : `记载${techniqueName}前 ${maxLevel} 层的残卷。`,
+                ? `完整記載${techniqueName}。`
+                : `記載${techniqueName}前 ${maxLevel} 層的殘卷。`,
             grade: technique.grade,
             level: technique.realmLv,
         });
         deps.refreshQuestStates?.(playerId);
-        const n = buildStructuredNotice('success', 'notice.item.technique-book-crafted', '功法书已抄录', {
+        const n = buildStructuredNotice('success', 'notice.item.technique-book-crafted', '功法書已抄錄', {
             vars: { techniqueName, count: cost, maxLevel },
             pills: [{ key: 'techniqueName', style: 'skill' }],
         });
@@ -358,13 +358,13 @@ export class WorldRuntimeUseItemService {
         this.assertNearTechniqueRefiningTable(playerId, deps);
         const item = this.resolveUseItemView(this.playerRuntimeService.peekInventoryItemByInstanceId(playerId, itemInstanceId));
         if (!item || item.type !== 'skill_book') {
-            throw new BadRequestException('只能分解功法书');
+            throw new BadRequestException('只能分解功法書');
         }
         const count = Math.max(1, Math.min(Math.trunc(Number(item.count) || 1), Math.trunc(Number(countInput) || 1)));
         const techniqueId = this.resolveLearnTechniqueId(item);
         const technique = techniqueId ? this.contentTemplateRepository.createTechniqueState(techniqueId) : null;
         if (!technique) {
-            throw new BadRequestException('功法书缺少有效功法模板');
+            throw new BadRequestException('功法書缺少有效功法模板');
         }
         const templateMaxLevel = technique
             ? getTechniqueMaxLevel(Array.isArray(technique.layers) ? technique.layers : undefined, technique.level ?? 1)
@@ -382,7 +382,7 @@ export class WorldRuntimeUseItemService {
         this.playerRuntimeService.consumeInventoryItemByInstanceId(playerId, itemInstanceId, count);
         this.playerRuntimeService.receiveInventoryItem(playerId, { itemId: TECHNIQUE_FRAGMENT_ITEM_ID, count: fragments });
         const itemName = getItemDisplayName(item);
-        const n = buildStructuredNotice('success', 'notice.item.technique-book-decomposed', '功法书已分解', {
+        const n = buildStructuredNotice('success', 'notice.item.technique-book-decomposed', '功法書已分解', {
             vars: { itemName, count: fragments },
             pills: [{ key: 'itemName', style: 'skill' }],
         });
@@ -398,7 +398,7 @@ export class WorldRuntimeUseItemService {
             : null;
         const buildings = instance?.buildingById?.values?.();
         if (!buildings || typeof buildings[Symbol.iterator] !== 'function') {
-            throw new BadRequestException('需要在炼法台 1 格范围内操作');
+            throw new BadRequestException('需要在煉法臺 1 格範圍內操作');
         }
         const playerX = Math.floor(Number(player?.x) || 0);
         const playerY = Math.floor(Number(player?.y) || 0);
@@ -412,7 +412,7 @@ export class WorldRuntimeUseItemService {
                 return;
             }
         }
-        throw new BadRequestException('需要在炼法台 1 格范围内操作');
+        throw new BadRequestException('需要在煉法臺 1 格範圍內操作');
     }
     /**
  * handleMapUnlockItem：处理地图Unlock道具并更新相关状态。
@@ -447,14 +447,14 @@ export class WorldRuntimeUseItemService {
                 continue;
             }
             if (!this.templateRepository.has(normalizedRef)) {
-                throw new BadRequestException(`地图解锁目标不存在：${normalizedRef}`);
+                throw new BadRequestException(`地圖解鎖目標不存在：${normalizedRef}`);
             }
             if (!resolvedMapIds.includes(normalizedRef)) {
                 resolvedMapIds.push(normalizedRef);
             }
         }
         if (resolvedMapIds.length === 0) {
-            throw new BadRequestException('地图解锁目标不存在');
+            throw new BadRequestException('地圖解鎖目標不存在');
         }
         return {
             mapIds: resolvedMapIds,
@@ -466,12 +466,12 @@ export class WorldRuntimeUseItemService {
             const currentItem = this.requireUnchangedInventoryItem(playerId, itemInstanceId, item.itemId);
             for (const mapId of mapUnlockIds) {
                 if (!this.templateRepository.has(mapId)) {
-                    throw new BadRequestException('地图解锁目标不存在');
+                    throw new BadRequestException('地圖解鎖目標不存在');
                 }
             }
             const unlockMapIds = mapUnlockIds.filter((mapId) => !this.playerRuntimeService.hasUnlockedMap(playerId, mapId));
             if (unlockMapIds.length === 0) {
-                throw new BadRequestException('地图已经解锁');
+                throw new BadRequestException('地圖已經解鎖');
             }
             const durable = deps?.durableOperationService ?? null;
             if (durable?.isEnabled?.() === true) {
@@ -512,8 +512,8 @@ export class WorldRuntimeUseItemService {
             deps.refreshQuestStates(playerId);
             const targetLabel = targetLabelOverride || (mapUnlockIds.length === 1
                 ? this.templateRepository.getOrThrow(mapUnlockIds[0]).name
-                : `${item.name ?? '地图'}记载的区域`);
-            const n = buildStructuredNotice('success', 'notice.item.map-unlocked', `已解锁地图：${targetLabel}`, { vars: { mapName: targetLabel }, pills: [{ key: 'mapName', style: 'target' }] });
+                : `${item.name ?? '地圖'}記載的區域`);
+            const n = buildStructuredNotice('success', 'notice.item.map-unlocked', `已解鎖地圖：${targetLabel}`, { vars: { mapName: targetLabel }, pills: [{ key: 'mapName', style: 'target' }] });
             deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
         });
     }
@@ -530,7 +530,7 @@ export class WorldRuntimeUseItemService {
     async handleRespawnBindItem(playerId, itemInstanceId, item, mapId, deps) {
         const normalizedMapId = typeof mapId === 'string' ? mapId.trim() : '';
         if (!normalizedMapId || !this.templateRepository.has(normalizedMapId)) {
-            throw new BadRequestException('复活绑定目标不存在');
+            throw new BadRequestException('復活綁定目標不存在');
         }
         const template = this.templateRepository.getOrThrow(normalizedMapId);
         await this.handleResolvedRespawnBindItem(playerId, itemInstanceId, item, {
@@ -546,7 +546,7 @@ export class WorldRuntimeUseItemService {
         const instance = deps.getInstanceRuntimeOrThrow(location.instanceId);
         const target = this.resolveCurrentRespawnBindTarget(player, instance);
         if (!target.allowed) {
-            throw new BadRequestException('命石只能在云来镇、栖真渡、云墟台或自己所属宗门使用');
+            throw new BadRequestException('命石只能在雲來鎮、棲真渡、雲墟臺或自己所屬宗門使用');
         }
         await this.handleResolvedRespawnBindItem(
             playerId,
@@ -565,10 +565,10 @@ export class WorldRuntimeUseItemService {
             const expectedRespawn = normalizeRuntimeRespawnPoint(player);
             const nextRespawn = normalizePlannedRespawnPoint(placement);
             if (!nextRespawn) {
-                throw new BadRequestException('复活绑定落点无效');
+                throw new BadRequestException('復活綁定落點無效');
             }
             if (isSameRuntimeRespawnPoint(expectedRespawn, nextRespawn)) {
-                throw new BadRequestException('已经绑定该复活点');
+                throw new BadRequestException('已經綁定該復活點');
             }
             const durable = deps?.durableOperationService ?? null;
             if (durable?.isEnabled?.() === true) {
@@ -595,12 +595,12 @@ export class WorldRuntimeUseItemService {
                 this.assertVolatilePersistentItemUseAllowed();
                 const changed = applyRespawn();
                 if (!changed) {
-                    throw new BadRequestException('已经绑定该复活点');
+                    throw new BadRequestException('已經綁定該復活點');
                 }
                 this.playerRuntimeService.consumeInventoryItemByInstanceId(playerId, itemInstanceId, 1);
             }
             deps.refreshQuestStates(playerId);
-            const n = buildStructuredNotice('success', 'notice.item.spawn-bound', `复活点与遁返落点已绑定：${mapName}`, { vars: { mapName }, pills: [{ key: 'mapName', style: 'target' }] });
+            const n = buildStructuredNotice('success', 'notice.item.spawn-bound', `復活點與遁返落點已綁定：${mapName}`, { vars: { mapName }, pills: [{ key: 'mapName', style: 'target' }] });
             deps.queuePlayerNotice(playerId, n.text, n.kind, undefined, undefined, n.structured);
         });
     }
@@ -618,27 +618,27 @@ export class WorldRuntimeUseItemService {
         }
         const resolved = this.resolveUseItemView(currentItem);
         if (resolved.itemId !== expectedItemId) {
-            throw new BadRequestException('物品状态已变化，请重试');
+            throw new BadRequestException('物品狀態已變化，請重試');
         }
         return resolved;
     }
     assertVolatilePersistentItemUseAllowed() {
         if (resolveServerDatabaseUrl().trim() && !isVolatileDurableItemFallbackAllowed()) {
-            throw new ServiceUnavailableException('物品资产事务暂不可用，请稍后重试');
+            throw new ServiceUnavailableException('物品資產事務暫不可用，請稍後重試');
         }
     }
     async commitPersistentPlayerItemUse(input) {
         if (typeof input.durable?.grantInventoryItems !== 'function') {
-            throw new ServiceUnavailableException('物品资产事务暂不可用，请稍后重试');
+            throw new ServiceUnavailableException('物品資產事務暫不可用，請稍後重試');
         }
         if (!await this.syncCurrentPlayerPresence(input.playerId)) {
-            throw new ServiceUnavailableException('玩家资产事务围栏暂不可用，请稍后重试');
+            throw new ServiceUnavailableException('玩家資產事務圍欄暫不可用，請稍後重試');
         }
         const fence = this.playerRuntimeService.getSessionFence?.(input.playerId)
             ?? this.playerRuntimeService.describePersistencePresence?.(input.playerId)
             ?? null;
         if (!fence?.runtimeOwnerId || !fence?.sessionEpoch) {
-            throw new ServiceUnavailableException('玩家资产事务围栏暂不可用，请稍后重试');
+            throw new ServiceUnavailableException('玩家資產事務圍欄暫不可用，請稍後重試');
         }
         const durableInput = {
             operationId: `${input.sourceType}:${input.playerId}:${randomUUID()}`,
@@ -674,7 +674,7 @@ export class WorldRuntimeUseItemService {
         catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             if (message.includes('player_map_unlock_snapshot_changed') || message.includes('player_respawn_snapshot_changed')) {
-                throw new BadRequestException('玩家持久化状态已变化，请重新进入后再试');
+                throw new BadRequestException('玩家持久化狀態已變化，請重新進入後再試');
             }
             throw error;
         }
@@ -735,25 +735,25 @@ export class WorldRuntimeUseItemService {
         return this.runExclusiveTileResourceUse(playerId, deps, async (location, instance) => {
             const currentInventoryItem = this.playerRuntimeService.peekInventoryItemByInstanceId(playerId, itemInstanceId);
             if (!currentInventoryItem) {
-                throw new NotFoundException('背包物品不存在或已变化');
+                throw new NotFoundException('背包物品不存在或已變化');
             }
             const currentItem = this.resolveUseItemView(currentInventoryItem);
             if (currentItem.itemId !== item.itemId) {
-                throw new BadRequestException('地块资源物品已变化，请重试');
+                throw new BadRequestException('地塊資源物品已變化，請重試');
             }
             const resourceGains = this.resolveTileResourceGains(currentItem);
             const normalizedCount = normalizeUseItemCount(count, currentItem);
             if (resourceGains.length <= 0) {
-                throw new BadRequestException(`无法解析${resolvePlayerFacingContentName(currentItem.itemId, '未知物品', currentItem.name)}的地块资源效果`);
+                throw new BadRequestException(`無法解析${resolvePlayerFacingContentName(currentItem.itemId, '未知物品', currentItem.name)}的地塊資源效果`);
             }
             const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
             if (isProtectedTileResourceUseTile(instance, player.x, player.y)) {
-                throw new BadRequestException('当前位于安全区、出生点、传送点或 NPC 附近，无法使用地块资源道具。');
+                throw new BadRequestException('當前位於安全區、出生點、傳送點或 NPC 附近，無法使用地塊資源道具。');
             }
             const durable = deps?.durableOperationService ?? null;
             if (durable?.isEnabled?.() !== true) {
                 if (resolveServerDatabaseUrl().trim() && !isVolatileDurableItemFallbackAllowed()) {
-                    throw new ServiceUnavailableException('地块资源资产事务暂不可用，请稍后重试');
+                    throw new ServiceUnavailableException('地塊資源資產事務暫不可用，請稍後重試');
                 }
                 this.applyVolatileTileResourceUse(
                     playerId,
@@ -801,14 +801,14 @@ export class WorldRuntimeUseItemService {
 
     applyVolatileTileResourceUse(playerId, itemInstanceId, item, count, resourceGains, player, instance, deps) {
         if (resourceGains.length <= 0) {
-            throw new BadRequestException(`无法解析${resolvePlayerFacingContentName(item.itemId, '未知物品', item.name)}的地块资源效果`);
+            throw new BadRequestException(`無法解析${resolvePlayerFacingContentName(item.itemId, '未知物品', item.name)}的地塊資源效果`);
         }
         const results = [];
         for (const entry of resourceGains) {
             const totalGain = entry.amount * count;
             const nextValue = instance.addTileResource(entry.resourceKey, player.x, player.y, totalGain);
             if (nextValue === null) {
-                throw new BadRequestException(`无法在 ${player.x},${player.y} 增加地块资源`);
+                throw new BadRequestException(`無法在 ${player.x},${player.y} 增加地塊資源`);
             }
             results.push({ ...entry, amount: totalGain, nextValue });
         }
@@ -826,7 +826,7 @@ export class WorldRuntimeUseItemService {
             || typeof instance?.capturePersistenceDomainFlushSnapshot !== 'function'
             || typeof instance?.buildTileResourcePersistenceDelta !== 'function'
         ) {
-            throw new BadRequestException('地块资源资产事务暂不可用，请稍后重试');
+            throw new BadRequestException('地塊資源資產事務暫不可用，請稍後重試');
         }
         const instanceId = typeof instance?.meta?.instanceId === 'string' ? instance.meta.instanceId.trim() : '';
         const assignedNodeId = typeof instance?.meta?.assignedNodeId === 'string' ? instance.meta.assignedNodeId.trim() : '';
@@ -842,14 +842,14 @@ export class WorldRuntimeUseItemService {
             || ownershipEpoch <= 0
             || (typeof deps?.isInstanceLeaseWritable === 'function' && deps.isInstanceLeaseWritable(instance) !== true)
         ) {
-            throw new BadRequestException('当前地图实例资产事务围栏暂不可用，请稍后重试');
+            throw new BadRequestException('當前地圖實例資產事務圍欄暫不可用，請稍後重試');
         }
         const runtimeOwnerId = typeof player?.runtimeOwnerId === 'string' ? player.runtimeOwnerId.trim() : '';
         const sessionEpoch = Number.isFinite(Number(player?.sessionEpoch))
             ? Math.max(0, Math.trunc(Number(player.sessionEpoch)))
             : 0;
         if (!runtimeOwnerId || sessionEpoch <= 0) {
-            throw new BadRequestException('玩家资产事务围栏暂不可用，请稍后重试');
+            throw new BadRequestException('玩家資產事務圍欄暫不可用，請稍後重試');
         }
         const tileIndex = instance.toTileIndex(player.x, player.y);
         const plannedGains = planTileResourceGains(instance, resourceGains, count, player.x, player.y, tileIndex);
@@ -859,7 +859,7 @@ export class WorldRuntimeUseItemService {
             : null;
         const pendingDelta = instance.buildTileResourcePersistenceDelta(flushSnapshot);
         if (!pendingDelta || pendingDelta.fullReplace === true) {
-            throw new BadRequestException('地块资源持久化正在收敛，请稍后重试');
+            throw new BadRequestException('地塊資源持久化正在收斂，請稍後重試');
         }
         const nextRuntimeInventoryItems = buildInventoryAfterConsume(
             player.inventory?.items,
@@ -895,13 +895,13 @@ export class WorldRuntimeUseItemService {
         let committedInventoryItems = nextRuntimeInventoryItems;
         try {
             if (!await this.syncCurrentPlayerPresence(playerId)) {
-                throw new BadRequestException('玩家资产事务围栏暂不可用，请稍后重试');
+                throw new BadRequestException('玩家資產事務圍欄暫不可用，請稍後重試');
             }
             const currentFence = this.playerRuntimeService.getSessionFence?.(playerId)
                 ?? this.playerRuntimeService.describePersistencePresence?.(playerId)
                 ?? null;
             if (!currentFence?.runtimeOwnerId || !currentFence?.sessionEpoch) {
-                throw new BadRequestException('玩家资产事务围栏暂不可用，请稍后重试');
+                throw new BadRequestException('玩家資產事務圍欄暫不可用，請稍後重試');
             }
             durableInput.expectedRuntimeOwnerId = currentFence.runtimeOwnerId;
             durableInput.expectedSessionEpoch = Math.max(1, Math.trunc(Number(currentFence.sessionEpoch)));
@@ -1021,14 +1021,14 @@ function normalizeUseItemCount(input, item) {
         ? 1
         : Math.trunc(Number(input));
     if (!Number.isFinite(count) || count <= 0) {
-        throw new BadRequestException('使用数量无效');
+        throw new BadRequestException('使用數量無效');
     }
     if (count > 1 && item.allowBatchUse !== true) {
-        throw new BadRequestException('该物品不支持批量使用');
+        throw new BadRequestException('該物品不支持批量使用');
     }
     const available = Math.trunc(Number(item.count ?? 1));
     if (Number.isFinite(available) && available > 0 && count > available) {
-        throw new BadRequestException('物品数量不足');
+        throw new BadRequestException('物品數量不足');
     }
     return count;
 }
@@ -1099,7 +1099,7 @@ function buildInventoryAfterConsume(items, itemInstanceId, count) {
     }
     const available = Math.max(1, Math.trunc(Number(nextItems[index]?.count ?? 1)));
     if (available < normalizedCount) {
-        throw new BadRequestException('物品数量不足');
+        throw new BadRequestException('物品數量不足');
     }
     if (available === normalizedCount) {
         nextItems.splice(index, 1);
@@ -1124,7 +1124,7 @@ function planTileResourceGains(instance, resourceGains, count, x, y, tileIndex) 
     for (const [resourceKey, amount] of amountByResourceKey.entries()) {
         const currentValue = Number(instance.getTileResource(resourceKey, x, y));
         if (!Number.isFinite(currentValue)) {
-            throw new BadRequestException(`无法读取当前地块资源 ${resourceKey}`);
+            throw new BadRequestException(`無法讀取當前地塊資源 ${resourceKey}`);
         }
         planned.push({
             resourceKey,
@@ -1135,7 +1135,7 @@ function planTileResourceGains(instance, resourceGains, count, x, y, tileIndex) 
     }
     planned.sort((left, right) => left.resourceKey.localeCompare(right.resourceKey));
     if (planned.length <= 0) {
-        throw new BadRequestException('地块资源效果无效');
+        throw new BadRequestException('地塊資源效果無效');
     }
     return planned;
 }
@@ -1187,7 +1187,7 @@ function buildTileResourceUseNotice(item, count, results) {
             count > 1
                 ? `notice.item.tile-${resourceKind.keySegment}-used-batch`
                 : `notice.item.tile-${resourceKind.keySegment}-used`,
-            `使用 ${itemName}${count > 1 ? ` x${count}` : ''}，当前地块${resourceKind.fallbackLabel}提升至 ${result.nextValue}`,
+            `使用 ${itemName}${count > 1 ? ` x${count}` : ''}，當前地塊${resourceKind.fallbackLabel}提升至 ${result.nextValue}`,
             {
                 vars: { itemName, count, nextValue: result.nextValue },
                 pills: [{ key: 'itemName', style: 'target' }],
@@ -1200,7 +1200,7 @@ function buildTileResourceUseNotice(item, count, results) {
     return buildStructuredNotice(
         'success',
         count > 1 ? 'notice.item.tile-resources-used-batch' : 'notice.item.tile-resources-used',
-        `使用 ${itemName}${count > 1 ? ` x${count}` : ''}，当前地块资源提升：${summary}`,
+        `使用 ${itemName}${count > 1 ? ` x${count}` : ''}，當前地塊資源提升：${summary}`,
         {
             vars: { itemName, count, resourceCount: results.length },
             pills: [{ key: 'itemName', style: 'target' }],
@@ -1222,12 +1222,12 @@ function queueTileResourceUseNotice(deps, playerId, item, count, results) {
 
 function resolveTileResourceNoticeKind(resourceKey) {
     if (resourceKey === REFINED_SHA_RESOURCE_KEY) {
-        return { keySegment: 'sha', fallbackLabel: '煞气' };
+        return { keySegment: 'sha', fallbackLabel: '煞氣' };
     }
     if (resourceKey === DEFAULT_TILE_AURA_RESOURCE_KEY) {
-        return { keySegment: 'aura', fallbackLabel: '灵气' };
+        return { keySegment: 'aura', fallbackLabel: '靈氣' };
     }
-    return { keySegment: 'resource', fallbackLabel: '资源' };
+    return { keySegment: 'resource', fallbackLabel: '資源' };
 }
 
 function isProtectedTileResourceUseTile(instance, x, y) {

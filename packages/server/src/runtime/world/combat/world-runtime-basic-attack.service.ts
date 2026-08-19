@@ -38,21 +38,21 @@ function ensureHostileRelation(resolution) {
         return;
     }
     if (resolution?.blockedReason === 'self_target') {
-        throw new BadRequestException('不能攻击自己');
+        throw new BadRequestException('不能攻擊自己');
     }
-    throw new BadRequestException('当前目标不在敌方判定规则内');
+    throw new BadRequestException('當前目標不在敵方判定規則內');
 }
 function ensureInstanceSupportsPlayerCombat(instance) {
     if (instance?.meta?.supportsPvp === true) {
         return;
     }
-    throw new BadRequestException('当前实例不允许玩家互攻');
+    throw new BadRequestException('當前實例不允許玩家互攻');
 }
 function ensureInstanceSupportsTileDamage(instance) {
     if (instance?.meta?.canDamageTile === true) {
         return;
     }
-    throw new BadRequestException('当前实例不允许攻击地块');
+    throw new BadRequestException('當前實例不允許攻擊地塊');
 }
 function isMiningJobIssuedTileAttack(attacker, targetX, targetY) {
     const jobRunId = typeof attacker?.suppressCraftInterruptForMiningJobRunId === 'string'
@@ -86,7 +86,7 @@ function resolveTileCombatTargetName(tileState) {
     if (typeof tileState?.targetName === 'string' && tileState.targetName.trim()) {
         return tileState.targetName.trim();
     }
-    return uiLabels.TILE_TYPE_LABELS[tileState?.tileType] ?? '地块';
+    return uiLabels.TILE_TYPE_LABELS[tileState?.tileType] ?? '地塊';
 }
 function buildBasicAttackNoticeResolution(resolvedDamage, damageKind) {
     const resolution: Record<string, unknown> = {
@@ -175,7 +175,7 @@ export class WorldRuntimeBasicAttackService {
             deps.worldRuntimeCraftInterruptService.interruptCraftForReason(playerId, attacker, 'attack', deps);
         }
         if (!attacker.instanceId) {
-            throw new BadRequestException('尚未进入地图实例');
+            throw new BadRequestException('尚未進入地圖實例');
         }
         deps.ensureAttackAllowed(attacker);
         const damageKind = attacker.attrs.numericStats.spellAtk > attacker.attrs.numericStats.physAtk ? 'spell' : 'physical';
@@ -206,7 +206,7 @@ export class WorldRuntimeBasicAttackService {
             }
             return this.dispatchBasicAttackToFormation(attacker, plannedTarget.runtime ?? {
                 id: plannedTarget.id,
-                name: resolvePlayerFacingContentName(plannedTarget.id, '未知阵法', plannedTarget.name),
+                name: resolvePlayerFacingContentName(plannedTarget.id, '未知陣法', plannedTarget.name),
                 x: plannedTarget.x,
                 y: plannedTarget.y,
             }, damageKind, baseDamage, deps, attackIntensityDamageMultiplier);
@@ -220,7 +220,7 @@ export class WorldRuntimeBasicAttackService {
         if (plannedTarget?.kind === CombatTargetKind.Tile || plannedTarget?.kind === CombatTargetKind.Container) {
             return this.dispatchBasicAttackToTile(attacker, plannedTarget.x, plannedTarget.y, damageKind, baseDamage, deps, currentTick, { plannedTarget, attackIntensityDamageMultiplier });
         }
-        throw new BadRequestException('必须指定目标');
+        throw new BadRequestException('必須指定目標');
     }
     resolvePlayerBasicAttackActionPlan(attacker, targetInput, instance, deps) {
         return this.worldRuntimeCombatActionService.resolvePlayerBasicAttackActionPlan({
@@ -251,35 +251,35 @@ export class WorldRuntimeBasicAttackService {
     createBasicAttackRejectException(actionPlan) {
         const reason = actionPlan?.reason;
         if (reason === CombatRejectReason.MissingMonster || reason === CombatRejectReason.MonsterDead) {
-            return new NotFoundException(`妖兽不存在：${actionPlan?.action?.target?.id ?? ''}`);
+            return new NotFoundException(`妖獸不存在：${actionPlan?.action?.target?.id ?? ''}`);
         }
         if (reason === CombatRejectReason.ActorDead) {
-            return new BadRequestException('你已经重伤，无法攻击');
+            return new BadRequestException('你已經重傷，無法攻擊');
         }
         if (reason === CombatRejectReason.TargetInstanceMismatch) {
-            return new BadRequestException('目标不在同一地图');
+            return new BadRequestException('目標不在同一地圖');
         }
         if (reason === CombatRejectReason.OutOfRange) {
-            return new BadRequestException('目标超出攻击距离');
+            return new BadRequestException('目標超出攻擊距離');
         }
         if (reason === CombatRejectReason.MapCapabilityDisabled) {
             const capability = actionPlan?.details?.rejectedTargets?.[0]?.details?.capability;
-            return new BadRequestException(capability === 'supportsPvp' ? '当前实例不允许玩家互攻' : '当前实例不允许攻击地块');
+            return new BadRequestException(capability === 'supportsPvp' ? '當前實例不允許玩家互攻' : '當前實例不允許攻擊地塊');
         }
         if (reason === CombatRejectReason.CombatRelationNotAllowed) {
-            return new BadRequestException('当前目标不在敌方判定规则内');
+            return new BadRequestException('當前目標不在敵方判定規則內');
         }
         if (reason === CombatRejectReason.TargetDead || reason === CombatRejectReason.MissingTargetRuntimeState) {
-            return new BadRequestException('该目标无法被攻击');
+            return new BadRequestException('該目標無法被攻擊');
         }
-        return new BadRequestException('必须指定目标');
+        return new BadRequestException('必須指定目標');
     }
     dispatchBasicAttackToFormation(attacker, formation, damageKind, baseDamage, deps, attackIntensityDamageMultiplier = 1) {
   // 阵法无生命条，承受伤害时直接按配置折算扣除阵眼剩余灵力。
 
         ensureHostileRelation(resolveCombatRelation(attacker, { kind: 'terrain' }));
         if (chebyshevDistance(attacker.x, attacker.y, formation.x, formation.y) > 1) {
-            throw new BadRequestException('目标超出攻击距离');
+            throw new BadRequestException('目標超出攻擊距離');
         }
         const instance = deps.getInstanceRuntimeOrThrow(attacker.instanceId);
         applyPlayerBasicAttackFacing(this.playerRuntimeService, instance, attacker, formation.x, formation.y);
@@ -305,13 +305,13 @@ export class WorldRuntimeBasicAttackService {
         emitCombatPresentation({
             deps,
             instanceId: attacker.instanceId,
-            actionLabel: { x: attacker.x, y: attacker.y, text: '攻击' },
+            actionLabel: { x: attacker.x, y: attacker.y, text: '攻擊' },
             attack: { fromX: attacker.x, fromY: attacker.y, toX: formation.x, toY: formation.y, color: effectColor },
             damageFloat: { x: formation.x, y: formation.y, damage: appliedDamage, color: effectColor },
             notices: [{
                 playerId: attacker.playerId,
-                text: `${formatCombatActionClause('你', formation.name, '攻击')}，造成 ${formatCombatDamageBreakdown(scaledDamage, appliedDamage, damageKind)} 伤害，削减阵眼灵力 ${formatAuraDamage(auraDamage)}。`,
-                combat: buildCombatNoticePayload({ caster: '你', target: formation.name, skill: '攻击', formationResolution: { rawDamage: scaledDamage, damage: appliedDamage, damageKind, auraDamage } }),
+                text: `${formatCombatActionClause('你', formation.name, '攻擊')}，造成 ${formatCombatDamageBreakdown(scaledDamage, appliedDamage, damageKind)} 傷害，削減陣眼靈力 ${formatAuraDamage(auraDamage)}。`,
+                combat: buildCombatNoticePayload({ caster: '你', target: formation.name, skill: '攻擊', formationResolution: { rawDamage: scaledDamage, damage: appliedDamage, damageKind, auraDamage } }),
             }],
         });
     }
@@ -338,11 +338,11 @@ export class WorldRuntimeBasicAttackService {
             : null;
         const monster = instance.getMonster(targetMonsterId);
         if (!monster || !monster.alive) {
-            throw new NotFoundException(`妖兽不存在：${targetMonsterId}`);
+            throw new NotFoundException(`妖獸不存在：${targetMonsterId}`);
         }
         ensureHostileRelation(resolveCombatRelation(attacker, { kind: 'monster' }));
         if (chebyshevDistance(attacker.x, attacker.y, monster.x, monster.y) > 1) {
-            throw new BadRequestException('目标超出攻击距离');
+            throw new BadRequestException('目標超出攻擊距離');
         }
         applyPlayerBasicAttackFacing(this.playerRuntimeService, instance, attacker, monster.x, monster.y);
         const resolvedDamage = this.resolveBasicAttackDamageAgainstMonster(attacker, monster, baseDamage, damageKind, deps, attackIntensityDamageMultiplier);
@@ -376,14 +376,14 @@ export class WorldRuntimeBasicAttackService {
         emitCombatPresentation({
             deps,
             instanceId: attacker.instanceId,
-            actionLabel: { x: attacker.x, y: attacker.y, text: '攻击' },
+            actionLabel: { x: attacker.x, y: attacker.y, text: '攻擊' },
             attack: { fromX: attacker.x, fromY: attacker.y, toX: monster.x, toY: monster.y, color: effectColor },
             resolutionFloat: { x: monster.x, y: monster.y, resolution: resolvedDamage, fallbackColor: effectColor },
             damageFloat: { x: monster.x, y: monster.y, damage: resolvedDamage.damage, color: effectColor },
             notices: [{
                 playerId: attacker.playerId,
-                text: `${formatCombatActionClause('你', formatTargetLabelWithHp(monster.name, outcome?.hp ?? monster.hp, monster.maxHp), '攻击')}，${formatCombatResolutionOutcome(resolvedDamage, damageKind)}`,
-                combat: buildCombatNoticePayload({ caster: '你', target: monster.name, targetHp: outcome?.hp ?? monster.hp, targetMaxHp: monster.maxHp, skill: '攻击', resolution: buildBasicAttackNoticeResolution(resolvedDamage, damageKind) }),
+                text: `${formatCombatActionClause('你', formatTargetLabelWithHp(monster.name, outcome?.hp ?? monster.hp, monster.maxHp), '攻擊')}，${formatCombatResolutionOutcome(resolvedDamage, damageKind)}`,
+                combat: buildCombatNoticePayload({ caster: '你', target: monster.name, targetHp: outcome?.hp ?? monster.hp, targetMaxHp: monster.maxHp, skill: '攻擊', resolution: buildBasicAttackNoticeResolution(resolvedDamage, damageKind) }),
             }],
         });
     }
@@ -402,30 +402,30 @@ export class WorldRuntimeBasicAttackService {
         const instance = deps.getInstanceRuntimeOrThrow(attacker.instanceId);
         ensureInstanceSupportsPlayerCombat(instance);
         if (instance.isPointInSafeZone(attacker.x, attacker.y)) {
-            throw new BadRequestException('安全区内无法对其他玩家造成伤害。');
+            throw new BadRequestException('安全區內無法對其他玩家造成傷害。');
         }
         const target = this.playerRuntimeService.getPlayer(targetPlayerId);
         if (!target) {
             return;
         }
         if (target.hp <= 0) {
-            throw new BadRequestException('目标已死亡');
+            throw new BadRequestException('目標已死亡');
         }
         if (instance.isPointInSafeZone(target.x, target.y)) {
-            throw new BadRequestException('目标处于安全区内，无法对其造成伤害。');
+            throw new BadRequestException('目標處於安全區內，無法對其造成傷害。');
         }
         if (target.instanceId !== attacker.instanceId) {
-            throw new BadRequestException('目标不在同一地图');
+            throw new BadRequestException('目標不在同一地圖');
         }
         ensureHostileRelation(resolveCombatRelation(attacker, {
             kind: 'player',
             target,
         }));
         if (chebyshevDistance(attacker.x, attacker.y, target.x, target.y) > 1) {
-            throw new BadRequestException('目标超出攻击距离');
+            throw new BadRequestException('目標超出攻擊距離');
         }
         if (typeof instance.canSeeTileFrom === 'function' && instance.canSeeTileFrom(attacker.x, attacker.y, target.x, target.y, 1) === false) {
-            throw new BadRequestException('目标被遮挡');
+            throw new BadRequestException('目標被遮擋');
         }
         applyPlayerBasicAttackFacing(this.playerRuntimeService, instance, attacker, target.x, target.y);
         const resolvedDamage = this.resolveBasicAttackDamageAgainstPlayer(attacker, target, baseDamage, damageKind, attackIntensityDamageMultiplier);
@@ -433,7 +433,7 @@ export class WorldRuntimeBasicAttackService {
         emitCombatPresentation({
             deps,
             instanceId: attacker.instanceId,
-            actionLabel: { x: attacker.x, y: attacker.y, text: '攻击' },
+            actionLabel: { x: attacker.x, y: attacker.y, text: '攻擊' },
             attack: { fromX: attacker.x, fromY: attacker.y, toX: target.x, toY: target.y, color: effectColor },
             damageFloat: { x: target.x, y: target.y, damage: resolvedDamage.damage, color: effectColor },
         });
@@ -487,13 +487,13 @@ export class WorldRuntimeBasicAttackService {
             notices: [
                 {
                     playerId: attacker.playerId,
-                    text: `${formatCombatActionClause('你', formatTargetLabelWithHp(resolvePlayerDisplayName(target, { playerId: target.playerId, fallback: '未知玩家' }), updated.hp, updated.maxHp ?? target.maxHp), '攻击')}，${formatCombatResolutionOutcome(resolvedDamage, damageKind)}`,
-                    combat: buildCombatNoticePayload({ caster: '你', target: resolvePlayerDisplayName(target, { playerId: target.playerId, fallback: '未知玩家' }), targetHp: updated.hp, targetMaxHp: updated.maxHp ?? target.maxHp, skill: '攻击', resolution: buildBasicAttackNoticeResolution(resolvedDamage, damageKind) }),
+                    text: `${formatCombatActionClause('你', formatTargetLabelWithHp(resolvePlayerDisplayName(target, { playerId: target.playerId, fallback: '未知玩家' }), updated.hp, updated.maxHp ?? target.maxHp), '攻擊')}，${formatCombatResolutionOutcome(resolvedDamage, damageKind)}`,
+                    combat: buildCombatNoticePayload({ caster: '你', target: resolvePlayerDisplayName(target, { playerId: target.playerId, fallback: '未知玩家' }), targetHp: updated.hp, targetMaxHp: updated.maxHp ?? target.maxHp, skill: '攻擊', resolution: buildBasicAttackNoticeResolution(resolvedDamage, damageKind) }),
                 },
                 {
                     playerId: target.playerId,
-                    text: `${formatCombatActionClause(resolvePlayerDisplayName(attacker, { playerId: attacker.playerId, fallback: '未知玩家' }), '你', '攻击')}，${formatCombatResolutionOutcome(resolvedDamage, damageKind)}`,
-                    combat: buildCombatNoticePayload({ caster: resolvePlayerDisplayName(attacker, { playerId: attacker.playerId, fallback: '未知玩家' }), target: '你', skill: '攻击', resolution: buildBasicAttackNoticeResolution(resolvedDamage, damageKind) }),
+                    text: `${formatCombatActionClause(resolvePlayerDisplayName(attacker, { playerId: attacker.playerId, fallback: '未知玩家' }), '你', '攻擊')}，${formatCombatResolutionOutcome(resolvedDamage, damageKind)}`,
+                    combat: buildCombatNoticePayload({ caster: resolvePlayerDisplayName(attacker, { playerId: attacker.playerId, fallback: '未知玩家' }), target: '你', skill: '攻擊', resolution: buildBasicAttackNoticeResolution(resolvedDamage, damageKind) }),
                 },
             ],
         });
@@ -524,7 +524,7 @@ export class WorldRuntimeBasicAttackService {
         if (boundary) {
             ensureHostileRelation(resolveCombatRelation(attacker, { kind: 'terrain' }));
             if (chebyshevDistance(attacker.x, attacker.y, targetX, targetY) > 1) {
-                throw new BadRequestException('目标超出攻击距离');
+                throw new BadRequestException('目標超出攻擊距離');
             }
             applyPlayerBasicAttackFacing(this.playerRuntimeService, instance, attacker, targetX, targetY);
             const effectColor = getDamageTrailColor(damageKind);
@@ -549,23 +549,23 @@ export class WorldRuntimeBasicAttackService {
             emitCombatPresentation({
                 deps,
                 instanceId: attacker.instanceId,
-                actionLabel: { x: attacker.x, y: attacker.y, text: '攻击' },
+                actionLabel: { x: attacker.x, y: attacker.y, text: '攻擊' },
                 attack: { fromX: attacker.x, fromY: attacker.y, toX: targetX, toY: targetY, color: effectColor },
                 damageFloat: { x: targetX, y: targetY, damage: appliedDamage, color: effectColor },
                 notices: [{
                     playerId: attacker.playerId,
-                    text: `${formatCombatActionClause('你', boundary.name, '攻击')}边界，造成 ${formatCombatDamageBreakdown(scaledBaseDamage, appliedDamage, damageKind)} 伤害，削减阵眼灵力 ${formatAuraDamage(auraDamage)}。`,
-                    combat: buildCombatNoticePayload({ caster: '你', target: boundary.name, skill: '攻击', formationResolution: { rawDamage: scaledBaseDamage, damage: appliedDamage, damageKind, auraDamage } }),
+                    text: `${formatCombatActionClause('你', boundary.name, '攻擊')}邊界，造成 ${formatCombatDamageBreakdown(scaledBaseDamage, appliedDamage, damageKind)} 傷害，削減陣眼靈力 ${formatAuraDamage(auraDamage)}。`,
+                    combat: buildCombatNoticePayload({ caster: '你', target: boundary.name, skill: '攻擊', formationResolution: { rawDamage: scaledBaseDamage, damage: appliedDamage, damageKind, auraDamage } }),
                 }],
             });
             return;
         }
         if (planTargetsBoundary) {
-            throw new BadRequestException('该目标无法被攻击');
+            throw new BadRequestException('該目標無法被攻擊');
         }
         ensureHostileRelation(resolveCombatRelation(attacker, { kind: 'terrain' }));
         if (chebyshevDistance(attacker.x, attacker.y, targetX, targetY) > 1) {
-            throw new BadRequestException('目标超出攻击距离');
+            throw new BadRequestException('目標超出攻擊距離');
         }
         applyPlayerBasicAttackFacing(this.playerRuntimeService, instance, attacker, targetX, targetY);
         const container = !planTargetsTile && !planTargetsBoundary && typeof instance.getContainerAtTile === 'function' ? instance.getContainerAtTile(targetX, targetY) : null;
@@ -605,9 +605,9 @@ export class WorldRuntimeBasicAttackService {
             const effectColor = getDamageTrailColor(damageKind);
             if (containerAttackResult.appliedDamage > 0) {
                 const countdown = containerAttackResult.remainingCount <= 0 && containerAttackResult.respawnRemainingTicks !== undefined
-                    ? `，药性回生还需 ${Math.max(1, containerAttackResult.respawnRemainingTicks)} 息`
+                    ? `，藥性回生還需 ${Math.max(1, containerAttackResult.respawnRemainingTicks)} 息`
                     : '';
-                const noticeText = `你攻击 ${containerAttackResult.title}，打落 1 朵，剩余 ${Math.max(0, containerAttackResult.remainingCount)} 朵${countdown}`;
+                const noticeText = `你攻擊 ${containerAttackResult.title}，打落 1 朵，剩餘 ${Math.max(0, containerAttackResult.remainingCount)} 朵${countdown}`;
                 const notice = buildStructuredNotice('combat', 'notice.combat.herb-container-hit', noticeText, {
                     vars: { title: containerAttackResult.title, remaining: Math.max(0, containerAttackResult.remainingCount), countdown },
                     pills: [{ key: 'title', style: 'target' }],
@@ -615,7 +615,7 @@ export class WorldRuntimeBasicAttackService {
                 emitCombatPresentation({
                     deps,
                     instanceId: attacker.instanceId,
-                    actionLabel: { x: attacker.x, y: attacker.y, text: '攻击' },
+                    actionLabel: { x: attacker.x, y: attacker.y, text: '攻擊' },
                     attack: { fromX: attacker.x, fromY: attacker.y, toX: targetX, toY: targetY, color: effectColor },
                     damageFloat: { x: targetX, y: targetY, damage: containerAttackResult.appliedDamage, color: effectColor },
                     notices: [{
@@ -627,9 +627,9 @@ export class WorldRuntimeBasicAttackService {
                 return;
             }
             const countdown = containerAttackResult.respawnRemainingTicks !== undefined
-                ? `还需 ${Math.max(1, containerAttackResult.respawnRemainingTicks)} 息。`
-                : '暂时无法再生。';
-            const noticeText = `${containerAttackResult.title} 当前没有可打落的草药，${countdown}`;
+                ? `還需 ${Math.max(1, containerAttackResult.respawnRemainingTicks)} 息。`
+                : '暫時無法再生。';
+            const noticeText = `${containerAttackResult.title} 當前沒有可打落的草藥，${countdown}`;
             const notice = buildStructuredNotice('combat', 'notice.combat.herb-container-empty', noticeText, {
                 vars: { title: containerAttackResult.title, countdown },
                 pills: [{ key: 'title', style: 'target' }],
@@ -637,7 +637,7 @@ export class WorldRuntimeBasicAttackService {
             emitCombatPresentation({
                 deps,
                 instanceId: attacker.instanceId,
-                actionLabel: { x: attacker.x, y: attacker.y, text: '攻击' },
+                actionLabel: { x: attacker.x, y: attacker.y, text: '攻擊' },
                 attack: { fromX: attacker.x, fromY: attacker.y, toX: targetX, toY: targetY, color: effectColor },
                 notices: [{
                     playerId: attacker.playerId,
@@ -648,16 +648,16 @@ export class WorldRuntimeBasicAttackService {
             return;
         }
         if (planTargetsContainer) {
-            throw new BadRequestException('该目标无法被攻击');
+            throw new BadRequestException('該目標無法被攻擊');
         }
         ensureInstanceSupportsTileDamage(instance);
         let tileType: string | undefined;
         let tileMaxHp = 0;
-        let tileTargetName = '地块';
+        let tileTargetName = '地塊';
         if (typeof instance.getTileCombatState === 'function') {
             const tileState = instance.getTileCombatState(targetX, targetY);
             if (!tileState || tileState.destroyed === true) {
-                throw new BadRequestException('该目标无法被攻击');
+                throw new BadRequestException('該目標無法被攻擊');
             }
             tileType = tileState.tileType;
             tileMaxHp = tileState.maxHp ?? 0;
@@ -687,7 +687,7 @@ export class WorldRuntimeBasicAttackService {
         });
         const result = appliedOutcome?.adapterResult;
         if (!result) {
-            throw new BadRequestException('该目标无法被攻击');
+            throw new BadRequestException('該目標無法被攻擊');
         }
         const appliedDamage = Number.isFinite(result.appliedDamage) ? Math.max(0, Math.round(result.appliedDamage)) : 0;
         spawnTileDrops({
@@ -709,13 +709,13 @@ export class WorldRuntimeBasicAttackService {
         emitCombatPresentation({
             deps,
             instanceId: attacker.instanceId,
-            actionLabel: { x: attacker.x, y: attacker.y, text: '攻击' },
+            actionLabel: { x: attacker.x, y: attacker.y, text: '攻擊' },
             attack: { fromX: attacker.x, fromY: attacker.y, toX: targetX, toY: targetY, color: effectColor },
             damageFloat: { x: targetX, y: targetY, damage: appliedDamage, color: effectColor },
             notices: [{
                 playerId: attacker.playerId,
-                text: `${formatCombatActionClause('你', formatTargetLabelWithHp(tileTargetName, result.hp ?? 0, tileMaxHp), '攻击')}，造成 ${formatCombatDamageBreakdown(effectiveBaseDamage, appliedDamage, damageKind)} 伤害`,
-                combat: buildCombatNoticePayload({ caster: '你', target: tileTargetName, targetHp: result.hp ?? 0, targetMaxHp: tileMaxHp, skill: '攻击', resolution: { rawDamage: effectiveBaseDamage, damage: appliedDamage, damageKind } }),
+                text: `${formatCombatActionClause('你', formatTargetLabelWithHp(tileTargetName, result.hp ?? 0, tileMaxHp), '攻擊')}，造成 ${formatCombatDamageBreakdown(effectiveBaseDamage, appliedDamage, damageKind)} 傷害`,
+                combat: buildCombatNoticePayload({ caster: '你', target: tileTargetName, targetHp: result.hp ?? 0, targetMaxHp: tileMaxHp, skill: '攻擊', resolution: { rawDamage: effectiveBaseDamage, damage: appliedDamage, damageKind } }),
             }],
         });
     }

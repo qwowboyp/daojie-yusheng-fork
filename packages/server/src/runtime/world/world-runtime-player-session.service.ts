@@ -174,7 +174,7 @@ export class WorldRuntimePlayerSessionService {
   async connectPlayerWhenReady(input: ConnectPlayerInput, deps: WorldRuntimePlayerSessionDeps): Promise<unknown> {
     const playerId = input.playerId.trim();
     if (!playerId) {
-      throw new BadRequestException('玩家 ID 不能为空');
+      throw new BadRequestException('玩家 ID 不能為空');
     }
     const targetRequest = {
       playerId,
@@ -201,14 +201,14 @@ export class WorldRuntimePlayerSessionService {
           throw error;
         }
         deps.logger.warn(
-          `玩家 ${playerId} 的通天塔实例恢复异常，将撤离至绑定复活点：instanceId=${targetRequest.requestedInstanceId} error=${error instanceof Error ? error.message : String(error)}`,
+          `玩家 ${playerId} 的通天塔實例恢復異常，將撤離至綁定復活點：instanceId=${targetRequest.requestedInstanceId} error=${error instanceof Error ? error.message : String(error)}`,
         );
       }
       if (!towerInstance) {
         if (input.allowUnavailableTowerRespawnFallback === true) {
           return this.connectPlayerToRespawnFallback(input, deps, targetRequest.requestedInstanceId);
         }
-        throw new ServiceUnavailableException('通天塔实例暂不可用');
+        throw new ServiceUnavailableException('通天塔實例暫不可用');
       }
     }
     const targetInstance = this.resolveTargetInstance(
@@ -217,7 +217,7 @@ export class WorldRuntimePlayerSessionService {
       { allowCreateFallback: input.allowCreateFallback !== false },
     );
     if (!targetInstance) {
-      throw new NotFoundException('目标实例不可用');
+      throw new NotFoundException('目標實例不可用');
     }
     if (typeof deps.waitForInstanceLeaseReady === 'function') {
       await deps.waitForInstanceLeaseReady(targetInstance.meta.instanceId);
@@ -235,7 +235,7 @@ export class WorldRuntimePlayerSessionService {
   connectPlayer(input: ConnectPlayerInput, deps: WorldRuntimePlayerSessionDeps): unknown {
     const playerId = input.playerId.trim();
     if (!playerId) {
-      throw new BadRequestException('玩家 ID 不能为空');
+      throw new BadRequestException('玩家 ID 不能為空');
     }
 
     const sessionId = input.sessionId === null
@@ -255,16 +255,16 @@ export class WorldRuntimePlayerSessionService {
       },
     );
     if (!targetInstance) {
-      throw new NotFoundException('目标实例不可用');
+      throw new NotFoundException('目標實例不可用');
     }
     const attachReady = deps.instanceReadyForPlayerAttach?.(targetInstance.meta.instanceId)
       ?? deps.worldRuntimeService?.instanceReadyForPlayerAttach?.(targetInstance.meta.instanceId)
       ?? resolveInstanceAttachReady(targetInstance);
     if (!attachReady.ok) {
       deps.logger.warn(
-        `玩家 ${playerId} 目标实例暂不可进入：instanceId=${targetInstance.meta.instanceId} reason=${attachReady.reason}`,
+        `玩家 ${playerId} 目標實例暫不可進入：instanceId=${targetInstance.meta.instanceId} reason=${attachReady.reason}`,
       );
-      throw new ServiceUnavailableException(`目标实例暂不可进入：${attachReady.reason}`);
+      throw new ServiceUnavailableException(`目標實例暫不可進入：${attachReady.reason}`);
     }
 
     const previous = deps.getPlayerLocation(playerId);
@@ -276,7 +276,7 @@ export class WorldRuntimePlayerSessionService {
       ? deps.playerRuntimeService.getPlayer(playerId) as PlayerRuntimeLike | null
       : deps.playerRuntimeService.ensurePlayer(playerId, sessionId);
     if (!playerState) {
-      throw new NotFoundException('玩家运行态不存在');
+      throw new NotFoundException('玩家運行態不存在');
     }
     deps.worldRuntimeSectService?.reconcilePlayerSectId?.(playerId);
 
@@ -300,7 +300,7 @@ export class WorldRuntimePlayerSessionService {
     if (!isDeadPlayerRuntime(connectedPlayer)) {
       deps.worldRuntimeGmQueueService.clearPendingRespawn(playerId);
     }
-    deps.logger.debug(`玩家 ${playerId} 已附着到实例 ${targetInstance.meta.instanceId}`);
+    deps.logger.debug(`玩家 ${playerId} 已附著到實例 ${targetInstance.meta.instanceId}`);
     const view = this.worldRuntimeWorldAccessService.getPlayerViewOrThrow(playerId, deps);
     if (typeof deps.refreshPlayerContextActions === 'function') {
       deps.refreshPlayerContextActions(playerId, view);
@@ -381,7 +381,7 @@ export class WorldRuntimePlayerSessionService {
     if (this.playerSessionRouteService) {
       void this.playerSessionRouteService.clearLocalRoute(normalizedPlayerId, routeSessionEpoch).catch((error) => {
         this.logger.error(
-          `清理玩家会话路由失败：${normalizedPlayerId}`,
+          `清理玩家會話路由失敗：${normalizedPlayerId}`,
           error instanceof Error ? error.stack : String(error),
         );
       });
@@ -453,7 +453,7 @@ export class WorldRuntimePlayerSessionService {
       if (requestedInstance) {
         if (input.requestedMapId && requestedInstance.template.id !== input.requestedMapId) {
           deps.logger.warn(
-            `玩家 ${input.playerId} 请求的 instanceId/templateId 不一致，已优先采用 instanceId：instanceId=${input.requestedInstanceId} templateId=${input.requestedMapId} resolvedTemplateId=${requestedInstance.template.id}`,
+            `玩家 ${input.playerId} 請求的 instanceId/templateId 不一致，已優先採用 instanceId：instanceId=${input.requestedInstanceId} templateId=${input.requestedMapId} resolvedTemplateId=${requestedInstance.template.id}`,
           );
         }
         return requestedInstance;
@@ -467,7 +467,7 @@ export class WorldRuntimePlayerSessionService {
     if (requestedInstance) {
       if (input.requestedMapId && requestedInstance.template.id !== input.requestedMapId) {
         deps.logger.warn(
-          `玩家 ${input.playerId} 请求的 instanceId/templateId 不一致，已优先采用 instanceId：instanceId=${input.requestedInstanceId} templateId=${input.requestedMapId} resolvedTemplateId=${requestedInstance.template.id}`,
+          `玩家 ${input.playerId} 請求的 instanceId/templateId 不一致，已優先採用 instanceId：instanceId=${input.requestedInstanceId} templateId=${input.requestedMapId} resolvedTemplateId=${requestedInstance.template.id}`,
         );
       }
       return requestedInstance;
@@ -494,12 +494,12 @@ export class WorldRuntimePlayerSessionService {
       || publicMapIdFromInstance
       || this.worldRuntimeWorldAccessService.resolveDefaultRespawnMapId(deps);
     if (!targetMapId) {
-      throw new NotFoundException('没有可用地图模板');
+      throw new NotFoundException('沒有可用地圖模板');
     }
 
     if (input.requestedInstanceId && !publicMapIdFromInstance) {
       deps.logger.warn(
-        `玩家 ${input.playerId} 恢复落点 instanceId 未命中现有实例，且无法映射为公共实例，已退回 mapId：instanceId=${input.requestedInstanceId} templateId=${targetMapId}`,
+        `玩家 ${input.playerId} 恢復落點 instanceId 未命中現有實例，且無法映射為公共實例，已退回 mapId：instanceId=${input.requestedInstanceId} templateId=${targetMapId}`,
       );
     }
     return this.worldRuntimeWorldAccessService.getOrCreateDefaultLineInstance(
@@ -522,7 +522,7 @@ export class WorldRuntimePlayerSessionService {
     const targetMapId = safeRespawnTemplateId
       || this.worldRuntimeWorldAccessService.resolveDefaultRespawnMapId(deps);
     deps.logger.warn(
-      `玩家 ${input.playerId} 的通天塔实例不可用，已改从绑定复活点恢复：instanceId=${unavailableTowerInstanceId || 'unknown'} respawnInstanceId=${safeRespawnInstanceId || 'default'} respawnTemplateId=${targetMapId || 'default'}`,
+      `玩家 ${input.playerId} 的通天塔實例不可用，已改從綁定復活點恢復：instanceId=${unavailableTowerInstanceId || 'unknown'} respawnInstanceId=${safeRespawnInstanceId || 'default'} respawnTemplateId=${targetMapId || 'default'}`,
     );
     return this.connectPlayerWhenReady({
       ...input,

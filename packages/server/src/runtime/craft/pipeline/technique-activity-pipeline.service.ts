@@ -239,7 +239,7 @@ export class TechniqueActivityPipelineService {
     // 3. 消耗资源
     const consumeResult = strategy.consumeResources(player, validation.validated, ctx);
     if (consumeResult && typeof consumeResult === 'object' && 'ok' in consumeResult && !consumeResult.ok) {
-      return errorStartLifecycleResult(kind, (consumeResult as { error?: string }).error ?? `${strategy.activityLabel}资源不足`);
+      return errorStartLifecycleResult(kind, (consumeResult as { error?: string }).error ?? `${strategy.activityLabel}資源不足`);
     }
 
     // 4. 创建 job
@@ -425,7 +425,7 @@ export class TechniqueActivityPipelineService {
     // 仅以 job 是否存在作为前置条件：remainingTicks<=0 的僵死/历史遗留 job 也必须能被取消清理，
     // 否则会既无法推进（tick 守卫）也无法取消，永久卡死。各策略 computeRefund 负责权威清理释放锁定资源，
     // 即便 computeRefund 未清理，骨架在下方也会兜底置空 active job 防止卡死。
-    if (!job) return errorCancelLifecycleResult(kind, '当前没有进行中的任务。');
+    if (!job) return errorCancelLifecycleResult(kind, '當前沒有進行中的任務。');
 
     // 计算退还
     const refund = strategy.computeRefund(player, job, ctx);
@@ -637,11 +637,11 @@ function isPromiseLike<T>(value: T | Promise<T>): value is Promise<T> {
 
 function interruptReasonLabel(reason: TechniqueActivityInterruptReason): string {
   switch (reason) {
-    case 'move': return '移动';
+    case 'move': return '移動';
     case 'attack': return '出手';
-    case 'cancel': return '手动取消';
+    case 'cancel': return '手動取消';
     case 'cultivate': return '打坐';
-    case 'defeat': return '身陨';
+    case 'defeat': return '身隕';
   }
 }
 
@@ -725,12 +725,12 @@ function buildSleepPayload(kind: RuntimeTechniqueActivityKind, label: string, jo
     kind,
     payload,
     label: resolveSleepLabel(kind, label, job),
-    reason: reason ?? '条件暂时不满足',
+    reason: reason ?? '條件暫時不滿足',
   };
 }
 
 function resolveSleepLabel(kind: RuntimeTechniqueActivityKind, fallback: string, job: any): string {
-  if (kind === 'formation' && typeof job?.formationName === 'string' && job.formationName.trim()) return `维护 ${job.formationName.trim()}`;
+  if (kind === 'formation' && typeof job?.formationName === 'string' && job.formationName.trim()) return `維護 ${job.formationName.trim()}`;
   if (kind === 'gather' && typeof job?.resourceNodeName === 'string' && job.resourceNodeName.trim()) return job.resourceNodeName.trim();
   if (kind === 'building' && typeof job?.buildingName === 'string' && job.buildingName.trim()) return job.buildingName.trim();
   if (kind === 'mining' && typeof job?.miningNodeName === 'string' && job.miningNodeName.trim()) return job.miningNodeName.trim();

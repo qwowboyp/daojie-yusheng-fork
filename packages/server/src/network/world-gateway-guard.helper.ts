@@ -47,7 +47,7 @@ class WorldGatewayGuardHelper {
             return false;
         }
         const isMaintenance = health.readiness.maintenance?.active === true;
-        this.worldClientEventService.emitError(client, isMaintenance ? 'SERVER_BUSY' : 'SERVER_NOT_READY', isMaintenance ? '数据库维护中，请稍后重连' : '服务未就绪，请稍后重连');
+        this.worldClientEventService.emitError(client, isMaintenance ? 'SERVER_BUSY' : 'SERVER_NOT_READY', isMaintenance ? '數據庫維護中，請稍後重連' : '服務未就緒，請稍後重連');
         client.disconnect(true);
         return true;
     }
@@ -84,7 +84,7 @@ class WorldGatewayGuardHelper {
         if (binding?.connected === true && binding.socketId === client.id) {
             return playerId;
         }
-        this.worldClientEventService.emitError(client, 'SESSION_EXPIRED', '当前会话已失效，请重新连接。');
+        this.worldClientEventService.emitError(client, 'SESSION_EXPIRED', '當前會話已失效，請重新連接。');
         if (typeof client?.disconnect === 'function') {
             client.disconnect(true);
         }
@@ -106,7 +106,7 @@ class WorldGatewayGuardHelper {
         if (client.data?.isGm === true) {
             return playerId;
         }
-        this.worldClientEventService.emitError(client, 'GM_FORBIDDEN', 'GM 权限不足');
+        this.worldClientEventService.emitError(client, 'GM_FORBIDDEN', 'GM 權限不足');
         return null;
     }
     checkRateLimit(client, eventCategory = 'default', maxPerWindow = 30, windowMs = 1000) {

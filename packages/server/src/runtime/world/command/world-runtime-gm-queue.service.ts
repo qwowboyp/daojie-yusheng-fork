@@ -45,7 +45,7 @@ export class WorldRuntimeGmQueueService {
 
         const playerId = typeof input?.playerId === 'string' ? input.playerId.trim() : '';
         if (!playerId) {
-            throw new BadRequestException('玩家 ID 不能为空');
+            throw new BadRequestException('玩家 ID 不能為空');
         }
         this.pendingSystemCommands.push({
             kind: 'gmUpdatePlayer',
@@ -70,7 +70,7 @@ export class WorldRuntimeGmQueueService {
 
         const playerId = typeof playerIdInput === 'string' ? playerIdInput.trim() : '';
         if (!playerId) {
-            throw new BadRequestException('玩家 ID 不能为空');
+            throw new BadRequestException('玩家 ID 不能為空');
         }
         this.pendingSystemCommands.push({ kind: 'gmResetPlayer', playerId });
         return { queued: true };
@@ -87,11 +87,11 @@ export class WorldRuntimeGmQueueService {
 
         const anchorPlayerId = typeof anchorPlayerIdInput === 'string' ? anchorPlayerIdInput.trim() : '';
         if (!anchorPlayerId) {
-            throw new BadRequestException('锚点玩家 ID 不能为空');
+            throw new BadRequestException('錨點玩家 ID 不能為空');
         }
         const count = Math.max(0, Math.min(200, Math.trunc(countInput)));
         if (!Number.isFinite(count) || count <= 0) {
-            throw new BadRequestException('数量必须大于 0');
+            throw new BadRequestException('數量必須大於 0');
         }
         this.pendingSystemCommands.push({ kind: 'gmSpawnBots', anchorPlayerId, count });
         return { queued: true };
@@ -212,7 +212,7 @@ export class WorldRuntimeGmQueueService {
             ? deps.getInstanceRuntime(requestedInstanceId)
             : null;
         if (requestedInstanceId && !targetInstance) {
-            throw new BadRequestException(`地图实例不存在：${requestedInstanceId}`);
+            throw new BadRequestException(`地圖實例不存在：${requestedInstanceId}`);
         }
         const nextMapId = command.mapId || player.templateId || deps.resolveDefaultRespawnMapId();
         const resolvedTargetInstance = targetInstance ?? deps.getOrCreatePublicInstance(nextMapId);
@@ -221,7 +221,7 @@ export class WorldRuntimeGmQueueService {
             ? deps.instanceReadyForPlayerAttach(resolvedTargetInstance.meta.instanceId)
             : { ok: true, reason: 'ready' };
         if (!readiness.ok) {
-            throw new BadRequestException(`目标地图实例尚未就绪：${readiness.reason ?? 'unknown'}`);
+            throw new BadRequestException(`目標地圖實例尚未就緒：${readiness.reason ?? 'unknown'}`);
         }
         const sessionId = previous?.sessionId ?? player.sessionId ?? `session:${playerId}`;
         const relocatesPlayer = !previous
@@ -275,8 +275,8 @@ export class WorldRuntimeGmQueueService {
             const sessionId = `bot:${playerId}`;
             deps.playerRuntimeService.ensurePlayer(playerId, sessionId);
             deps.playerRuntimeService.setIdentity(playerId, {
-                name: `挂机分身${sequence}`,
-                displayName: `挂机分身${sequence}`,
+                name: `掛機分身${sequence}`,
+                displayName: `掛機分身${sequence}`,
             });
             deps.connectPlayer({
                 playerId,

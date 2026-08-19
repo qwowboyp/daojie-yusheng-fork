@@ -193,10 +193,10 @@ export class BuffTemplateRegistry {
     }
     const template = deepFreezeTemplate({
       buffId: PVP_SOUL_INJURY_BUFF_ID,
-      name: '神魂受损',
-      desc: '六维降低 10%，之后每层额外降低 1%，最多降低 30%；身死与遁返都不会清除，需静养满一时辰。',
-      baseDesc: '六维降低 10%，之后每层额外降低 1%，最多降低 30%；身死与遁返都不会清除，需静养满一时辰。',
-      shortMark: '残',
+      name: '神魂受損',
+      desc: '六維降低 10%，之後每層額外降低 1%，最多降低 30%；身死與遁返都不會清除，需靜養滿一時辰。',
+      baseDesc: '六維降低 10%，之後每層額外降低 1%，最多降低 30%；身死與遁返都不會清除，需靜養滿一時辰。',
+      shortMark: '殘',
       category: 'debuff',
       visibility: 'public',
       remainingTicks: PVP_SOUL_INJURY_DURATION_TICKS,
@@ -204,7 +204,7 @@ export class BuffTemplateRegistry {
       stacks: 1,
       maxStacks: PVP_SOUL_INJURY_MAX_STACKS,
       sourceSkillId: PVP_SOUL_INJURY_SOURCE_ID,
-      sourceSkillName: '杀孽',
+      sourceSkillName: '殺孽',
       realmLv,
       color: '#8a5a64',
       persistOnDeath: true,
@@ -221,10 +221,10 @@ export class BuffTemplateRegistry {
     if (cached) {
       return cached;
     }
-    const desc = `每层攻击 +1%（最高 +${PVP_SHA_INFUSION_ATTACK_CAP_PERCENT}%）、防御 -2%；每十分钟自然消退一层，死亡时会按层数比例折损当前境界修为，不足时继续折损底蕴。`;
+    const desc = `每層攻擊 +1%（最高 +${PVP_SHA_INFUSION_ATTACK_CAP_PERCENT}%）、防禦 -2%；每十分鐘自然消退一層，死亡時會按層數比例折損當前境界修為，不足時繼續折損底蘊。`;
     const template = deepFreezeTemplate({
       buffId: PVP_SHA_INFUSION_BUFF_ID,
-      name: '煞气入体',
+      name: '煞氣入體',
       desc,
       baseDesc: desc,
       shortMark: '煞',
@@ -235,7 +235,7 @@ export class BuffTemplateRegistry {
       stacks: 1,
       maxStacks: 999999,
       sourceSkillId: PVP_SHA_INFUSION_SOURCE_ID,
-      sourceSkillName: '杀孽',
+      sourceSkillName: '殺孽',
       realmLv,
       color: '#7a2e2e',
       stats: deepFreezeTemplate({
@@ -259,13 +259,13 @@ export class BuffTemplateRegistry {
     if (cached) {
       return cached;
     }
-    const desc = `每层攻击 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%、防御 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%；每十分钟自然消退一层。`;
+    const desc = `每層攻擊 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%、防禦 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%；每十分鐘自然消退一層。`;
     const template = deepFreezeTemplate({
       buffId: PVP_SHA_BACKLASH_BUFF_ID,
-      name: '煞气反噬',
+      name: '煞氣反噬',
       desc,
       baseDesc: desc,
-      shortMark: '蚀',
+      shortMark: '蝕',
       category: 'debuff',
       visibility: 'public',
       remainingTicks: PVP_SHA_BACKLASH_DECAY_TICKS,
@@ -273,7 +273,7 @@ export class BuffTemplateRegistry {
       stacks: 1,
       maxStacks: 999999,
       sourceSkillId: PVP_SHA_BACKLASH_SOURCE_ID,
-      sourceSkillName: '煞气反噬',
+      sourceSkillName: '煞氣反噬',
       realmLv,
       color: '#6d2626',
       stats: deepFreezeTemplate({

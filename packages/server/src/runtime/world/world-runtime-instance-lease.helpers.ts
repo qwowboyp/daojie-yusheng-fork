@@ -64,16 +64,16 @@ async function persistBuildingRoomStateAfterStartupRecovery(runtime, domainPersi
     );
   }
   if (skippedCount > 0) {
-    runtime.logger?.warn?.(`启动清理了 ${skippedCount} 个未知建筑定义实例：${instanceId}`);
+    runtime.logger?.warn?.(`啟動清理了 ${skippedCount} 個未知建築定義實例：${instanceId}`);
   }
   if (skippedProtectedPlacementCount > 0) {
-    runtime.logger?.warn?.(`启动清理了 ${skippedProtectedPlacementCount} 个违规保护点位建筑：${instanceId}`);
+    runtime.logger?.warn?.(`啟動清理了 ${skippedProtectedPlacementCount} 個違規保護點位建築：${instanceId}`);
   }
   if (restoredSkippedBuildingTileCellCount > 0) {
-    runtime.logger?.warn?.(`启动恢复了 ${restoredSkippedBuildingTileCellCount} 个违规建筑占用地块：${instanceId}`);
+    runtime.logger?.warn?.(`啟動恢復了 ${restoredSkippedBuildingTileCellCount} 個違規建築佔用地塊：${instanceId}`);
   }
   if (repairedBuildingCellCount > 0) {
-    runtime.logger?.warn?.(`启动修复了 ${repairedBuildingCellCount} 个失配建筑占格：${instanceId}`);
+    runtime.logger?.warn?.(`啟動修復了 ${repairedBuildingCellCount} 個失配建築佔格：${instanceId}`);
   }
 }
 
@@ -162,7 +162,7 @@ export async function syncManagedInstanceRegistration(
       return { ok: false, reason: 'instance_replaced' };
     }
     if (isCatalogTombstone(existingCatalog)) {
-      runtime.logger.warn(`实例 catalog 已进入 tombstone，拒绝普通注册覆盖：${instanceId}`);
+      runtime.logger.warn(`實例 catalog 已進入 tombstone，拒絕普通註冊覆蓋：${instanceId}`);
       fenceInstanceRuntime(runtime, instanceId, 'catalog_tombstone', instance);
       return { ok: false, reason: 'catalog_tombstone' };
     }
@@ -179,7 +179,7 @@ export async function syncManagedInstanceRegistration(
       reason: isCurrent() ? 'lease_sync_completed' : 'instance_replaced',
     };
   } catch (error) {
-    runtime.logger.warn(`实例目录或租约同步失败：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
+    runtime.logger.warn(`實例目錄或租約同步失敗：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
     return { ok: false, reason: 'registration_or_lease_sync_failed' };
   }
 }
@@ -281,10 +281,10 @@ export function fenceInstanceRuntime(runtime, instanceId, reason = 'lease_lost',
     if (typeof runtime.worldRuntimeFormationService?.releaseInstance === 'function') {
       runtime.worldRuntimeFormationService.releaseInstance(instanceId);
     }
-    runtime.logger.warn(`实例 ${instanceId} 已因租约隔离被卸载：${reason}`);
+    runtime.logger.warn(`實例 ${instanceId} 已因租約隔離被卸載：${reason}`);
     return;
   }
-  runtime.logger.error(`实例 ${instanceId} 租约隔离命中但仍有在线玩家，已停止写入：${reason} players=${activePlayers.join(',')}`);
+  runtime.logger.error(`實例 ${instanceId} 租約隔離命中但仍有線上玩家，已停止寫入：${reason} players=${activePlayers.join(',')}`);
 }
 
 function shouldMarkLocalLeaseDegraded(runtime, instance, reason) {
@@ -311,7 +311,7 @@ function markLocalLeaseDegraded(runtime, instanceId, instance, reason) {
   instance.meta.runtimeStatus = 'lease_degraded';
   instance.meta.status = 'active';
   if (!wasDegraded) {
-    runtime.logger.warn(`实例 ${instanceId} 本节点租约续租降级，暂停写入并等待恢复：${reason}`);
+    runtime.logger.warn(`實例 ${instanceId} 本節點租約續租降級，暫停寫入並等待恢復：${reason}`);
   }
 }
 
@@ -387,7 +387,7 @@ export async function destroyManagedInstance(runtime, instanceId, reason = 'sche
   if (!current) {
     clearManagedInstanceDestroyAttempt(instance, destroyAttempt);
     cleanupManagedInstanceRuntimeState(runtime, instanceId, null);
-    runtime.logger.log(`实例 ${instanceId} 已在 catalog fence 后由并发链卸载：${reason}`);
+    runtime.logger.log(`實例 ${instanceId} 已在 catalog fence 後由併發鏈卸載：${reason}`);
     return { ok: true };
   }
   const playersAfterFence = listManagedInstancePlayerIds(current);
@@ -449,7 +449,7 @@ export async function destroyManagedInstance(runtime, instanceId, reason = 'sche
     }
     return { ok: false, reason: 'instance_replaced_before_runtime_cleanup', compensated: false };
   }
-  runtime.logger.log(`实例 ${instanceId} 已按生命周期销毁：${reason}`);
+  runtime.logger.log(`實例 ${instanceId} 已按生命週期銷燬：${reason}`);
   return { ok: true };
 }
 
@@ -526,7 +526,7 @@ async function quarantineOwnershipHydrateFailure(runtime, instanceId, instance, 
       }
     } catch (error) {
       runtime.logger.warn(
-        `实例水合失败且精确销毁异常：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
+        `實例水合失敗且精確銷燬異常：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }
@@ -546,7 +546,7 @@ async function quarantineOwnershipHydrateFailure(runtime, instanceId, instance, 
       }
     } catch (error) {
       runtime.logger.warn(
-        `实例接管收尾释放异常：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
+        `實例接管收尾釋放異常：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }
@@ -562,7 +562,7 @@ async function quarantineOwnershipHydrateFailure(runtime, instanceId, instance, 
     });
   } catch (error) {
     runtime.logger.warn(
-      `实例水合失败待清理状态持久化异常：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
+      `實例水合失敗待清理狀態持久化異常：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
     );
   }
 }
@@ -579,7 +579,7 @@ async function compensateManagedInstanceDestroyConflict(runtime, input) {
     || typeof runtime.instanceCatalogService?.reviveInstanceLeaseWithFence !== 'function') {
     markManagedInstanceDestroyCompensationFailed(target, input.destroyedOwnershipEpoch, input.destroyAt);
     runtime.logger.error(
-      `实例 ${input.instanceId} catalog 已销毁但运行态冲突无法补偿：${input.conflictReason}`,
+      `實例 ${input.instanceId} catalog 已銷燬但運行態衝突無法補償：${input.conflictReason}`,
     );
     return {
       ok: false,
@@ -620,7 +620,7 @@ async function compensateManagedInstanceDestroyConflict(runtime, input) {
   } catch (error) {
     markManagedInstanceDestroyCompensationFailed(target, input.destroyedOwnershipEpoch, input.destroyAt);
     runtime.logger.error(
-      `实例 ${input.instanceId} catalog 销毁冲突补偿异常：${error instanceof Error ? error.message : String(error)}`,
+      `實例 ${input.instanceId} catalog 銷燬衝突補償異常：${error instanceof Error ? error.message : String(error)}`,
     );
     return {
       ok: false,
@@ -633,7 +633,7 @@ async function compensateManagedInstanceDestroyConflict(runtime, input) {
   const compensatedOwnershipEpoch = parseOwnershipEpoch(revived?.ownershipEpoch);
   if (revived?.ok !== true || compensatedOwnershipEpoch !== input.destroyedOwnershipEpoch + 1) {
     markManagedInstanceDestroyCompensationFailed(target, input.destroyedOwnershipEpoch, input.destroyAt);
-    runtime.logger.error(`实例 ${input.instanceId} catalog 销毁冲突补偿 CAS 失败：${input.conflictReason}`);
+    runtime.logger.error(`實例 ${input.instanceId} catalog 銷燬衝突補償 CAS 失敗：${input.conflictReason}`);
     return {
       ok: false,
       reason: input.conflictReason,
@@ -696,7 +696,7 @@ async function compensateManagedInstanceDestroyConflict(runtime, input) {
     );
     markManagedInstanceDestroyCompensationFailed(target, compensatedOwnershipEpoch, null);
     runtime.logger.error(
-      `实例 ${input.instanceId} 销毁冲突补偿水合失败：${error instanceof Error ? error.message : String(error)}`,
+      `實例 ${input.instanceId} 銷燬衝突補償水合失敗：${error instanceof Error ? error.message : String(error)}`,
     );
     return {
       ok: false,
@@ -732,7 +732,7 @@ async function compensateManagedInstanceDestroyConflict(runtime, input) {
   target.meta.runtimeStatus = 'leased';
   target.meta.status = 'active';
   target.meta.destroyAt = null;
-  runtime.logger.warn(`实例 ${input.instanceId} 销毁后发现运行态冲突，已恢复 catalog lease：${input.conflictReason}`);
+  runtime.logger.warn(`實例 ${input.instanceId} 銷燬後發現運行態衝突，已恢復 catalog lease：${input.conflictReason}`);
   return {
     ok: false,
     reason: input.conflictReason,
@@ -762,7 +762,7 @@ async function retombstoneFailedDestroyCompensation(
     }
   } catch (error) {
     runtime.logger.error(
-      `实例 ${instanceId} 销毁补偿失败后的重新 tombstone 异常：${error instanceof Error ? error.message : String(error)}`,
+      `實例 ${instanceId} 銷燬補償失敗後的重新 tombstone 異常：${error instanceof Error ? error.message : String(error)}`,
     );
   }
   try {
@@ -773,15 +773,15 @@ async function retombstoneFailedDestroyCompensation(
       expectedOwnershipEpoch: ownershipEpoch,
     });
     if (pending === true) {
-      runtime.logger.error(`实例 ${instanceId} 无法重新 tombstone，已持久化为 cleanup_pending`);
+      runtime.logger.error(`實例 ${instanceId} 無法重新 tombstone，已持久化為 cleanup_pending`);
       return false;
     }
   } catch (error) {
     runtime.logger.error(
-      `实例 ${instanceId} 重新 tombstone 失败且待清理状态持久化异常：${error instanceof Error ? error.message : String(error)}`,
+      `實例 ${instanceId} 重新 tombstone 失敗且待清理狀態持久化異常：${error instanceof Error ? error.message : String(error)}`,
     );
   }
-  runtime.logger.error(`实例 ${instanceId} 销毁补偿失败后无法重新 tombstone，保留本地围栏`);
+  runtime.logger.error(`實例 ${instanceId} 銷燬補償失敗後無法重新 tombstone，保留本地圍欄`);
   return false;
 }
 
@@ -851,7 +851,7 @@ export async function releaseLocalInstanceLeasesForShutdown(runtime) {
       || instance?.meta?.runtimeStatus === 'stopped') {
       skipped++;
       skippedInstanceIds.push(instanceId);
-      runtime.logger.warn(`关闭释放跳过（实例生命周期处理中）：${instanceId} status=${instance?.meta?.runtimeStatus ?? 'unknown'}`);
+      runtime.logger.warn(`關閉釋放跳過（實例生命週期處理中）：${instanceId} status=${instance?.meta?.runtimeStatus ?? 'unknown'}`);
       continue;
     }
     const connectedPlayers = typeof runtime.worldSessionService?.listInstancePlayerIds === 'function'
@@ -860,7 +860,7 @@ export async function releaseLocalInstanceLeasesForShutdown(runtime) {
     if (Array.isArray(connectedPlayers) && connectedPlayers.length > 0) {
       skipped++;
       skippedInstanceIds.push(instanceId);
-      runtime.logger.warn(`关闭释放跳过（仍有连接玩家）：${instanceId} players=${connectedPlayers.join(',')}`);
+      runtime.logger.warn(`關閉釋放跳過（仍有連接玩家）：${instanceId} players=${connectedPlayers.join(',')}`);
       continue;
     }
     instance.meta.runtimeStatus = 'releasing';
@@ -871,7 +871,7 @@ export async function releaseLocalInstanceLeasesForShutdown(runtime) {
       }
       skipped++;
       failedInstanceIds.push(instanceId);
-      runtime.logger.warn(`关闭释放失败：${instanceId}`);
+      runtime.logger.warn(`關閉釋放失敗：${instanceId}`);
       continue;
     }
     if (runtime.getInstanceRuntime(instanceId) !== instance
@@ -880,7 +880,7 @@ export async function releaseLocalInstanceLeasesForShutdown(runtime) {
       || instance?.meta?.status === 'destroyed') {
       skipped++;
       skippedInstanceIds.push(instanceId);
-      runtime.logger.warn(`关闭释放后运行态已变化，跳过本地状态覆盖：${instanceId}`);
+      runtime.logger.warn(`關閉釋放後運行態已變化，跳過本地狀態覆蓋：${instanceId}`);
       continue;
     }
     instance.meta.assignedNodeId = null;
@@ -1021,7 +1021,7 @@ export async function syncInstanceLease(runtime, instanceId, {
         if (!restored) {
           return;
         }
-        runtime.logger.log(`启动恢复强制回收成功：${instanceId} newLeaseToken=${leaseToken}`);
+        runtime.logger.log(`啟動恢復強制回收成功：${instanceId} newLeaseToken=${leaseToken}`);
         return;
       }
     }
@@ -1057,7 +1057,7 @@ export async function syncInstanceLease(runtime, instanceId, {
         transitionToken: claimResult.transitionToken,
         destroyCatalog: reservationClaimed,
       });
-      runtime.logger.warn(`实例接管后水合失败，已隔离待清理：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
+      runtime.logger.warn(`實例接管後水合失敗，已隔離待清理：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
       return;
     }
   }
@@ -1109,14 +1109,14 @@ async function claimInstanceOwnershipAfterReplay(runtime, instance, input) {
     return { ok: false, ownershipEpoch: null };
   }
   if (isCatalogTombstone(catalog)) {
-    runtime.logger.warn(`实例 catalog tombstone 禁止普通接管：${input.instanceId}`);
+    runtime.logger.warn(`實例 catalog tombstone 禁止普通接管：${input.instanceId}`);
     return { ok: false, ownershipEpoch: null };
   }
   const catalogOwnershipEpoch = normalizeOwnershipEpoch(catalog.ownership_epoch, input.expectedOwnershipEpoch);
   const runtimeOwnershipEpoch = normalizeOwnershipEpoch(instance?.meta?.ownershipEpoch, catalogOwnershipEpoch);
   if (runtimeOwnershipEpoch !== catalogOwnershipEpoch) {
     runtime.logger.warn(
-      `实例 ownership epoch 不一致，拒绝接管：${input.instanceId} runtime=${runtimeOwnershipEpoch} catalog=${catalogOwnershipEpoch}`,
+      `實例 ownership epoch 不一致，拒絕接管：${input.instanceId} runtime=${runtimeOwnershipEpoch} catalog=${catalogOwnershipEpoch}`,
     );
     return { ok: false, ownershipEpoch: null };
   }
@@ -1170,7 +1170,7 @@ async function claimInstanceOwnershipAfterReplay(runtime, instance, input) {
         }
       } catch (cleanupError) {
         runtime.logger.warn(
-          `实例接管成功后运行态已替换，精确 lease 收尾异常：${input.instanceId} ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`,
+          `實例接管成功後運行態已替換，精確 lease 收尾異常：${input.instanceId} ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`,
         );
       }
       if (!cleaned) {
@@ -1494,7 +1494,7 @@ export async function acquireCatalogBackedInstanceLeaseForRestore(
           }) === true;
         } catch (releaseError) {
           runtime.logger?.warn?.(
-            `catalog-backed 实例取得 lease 后运行态已替换且释放异常：${normalizedInstanceId} ${releaseError instanceof Error ? releaseError.message : String(releaseError)}`,
+            `catalog-backed 實例取得 lease 後運行態已替換且釋放異常：${normalizedInstanceId} ${releaseError instanceof Error ? releaseError.message : String(releaseError)}`,
           );
         }
         if (!released) {
@@ -1579,13 +1579,13 @@ export async function acquireCatalogBackedInstanceLeaseForRestore(
         }) === true;
       } catch (releaseError) {
         runtime.logger?.warn?.(
-          `catalog-backed 实例恢复失败且 lease 释放异常：${normalizedInstanceId} ${releaseError instanceof Error ? releaseError.message : String(releaseError)}`,
+          `catalog-backed 實例恢復失敗且 lease 釋放異常：${normalizedInstanceId} ${releaseError instanceof Error ? releaseError.message : String(releaseError)}`,
         );
       }
     }
     stopAndClearRestoredInstanceLease(instance);
     runtime.logger?.warn?.(
-      `catalog-backed 实例恢复失败：${normalizedInstanceId} phase=${phase} ${error instanceof Error ? error.message : String(error)}`,
+      `catalog-backed 實例恢復失敗：${normalizedInstanceId} phase=${phase} ${error instanceof Error ? error.message : String(error)}`,
     );
     return {
       ok: false,
@@ -1638,7 +1638,7 @@ async function restoreInstanceAfterOwnershipClaim(runtime, instanceId, instance,
         transitionToken: input.transitionToken,
         destroyCatalog: false,
       });
-      runtime.logger.warn(`实例强制接管后水合失败，已隔离待清理：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
+      runtime.logger.warn(`實例強制接管後水合失敗，已隔離待清理：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
       return false;
     }
   }
@@ -1707,7 +1707,7 @@ async function reclaimMissingCatalogLeaseForLocalRuntime(
   if (!restored) {
     return false;
   }
-  runtime.logger.warn(`实例 ${instanceId} catalog 租约缺失，已由本地运行态重新接管`);
+  runtime.logger.warn(`實例 ${instanceId} catalog 租約缺失，已由本地運行態重新接管`);
   return true;
 }
 
@@ -1956,7 +1956,7 @@ export async function destroyExpiredManagedInstances(runtime) {
     }
     const result = await destroyManagedInstance(runtime, instanceId, 'expire_at_reached');
     if (result?.ok !== true) {
-      runtime.logger.warn(`过期实例销毁被拒绝：${instanceId} reason=${result?.reason ?? 'unknown'}`);
+      runtime.logger.warn(`過期實例銷燬被拒絕：${instanceId} reason=${result?.reason ?? 'unknown'}`);
     }
   }
 }
@@ -1965,7 +1965,7 @@ export async function syncAllInstanceLeases(runtime) {
   try {
     await destroyExpiredManagedInstances(runtime);
   } catch (error) {
-    runtime.logger.warn(`过期实例清理失败：${error instanceof Error ? error.message : String(error)}`);
+    runtime.logger.warn(`過期實例清理失敗：${error instanceof Error ? error.message : String(error)}`);
   }
   if (!runtime.instanceCatalogService?.isEnabled?.()) {
     return;
@@ -1979,7 +1979,7 @@ export async function syncAllInstanceLeases(runtime) {
       await runtime.instanceCatalogService.loadInstanceCatalog?.(instanceId);
       cleanupManagedInstanceRuntimeState(runtime, instanceId, instance);
     } catch (error) {
-      runtime.logger.warn(`空闲 fenced 实例回读失败，保留隔离等待重试：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
+      runtime.logger.warn(`空閒 fenced 實例回讀失敗，保留隔離等待重試：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
     }
   }
   for (const [instanceId, instance] of runtime.listInstanceEntries()) {
@@ -2034,7 +2034,7 @@ export async function syncAllInstanceLeases(runtime) {
         }
       }
     } catch (error) {
-      runtime.logger.warn(`实例待清理状态重试失败：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
+      runtime.logger.warn(`實例待清理狀態重試失敗：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
     }
   }
   if (typeof runtime.instanceCatalogService.cleanupStaleManualLineReservations === 'function') {
@@ -2048,10 +2048,10 @@ export async function syncAllInstanceLeases(runtime) {
             cleanupManagedInstanceRuntimeState(runtime, instanceId, instance);
           }
         }
-        runtime.logger.warn(`已回收 ${cleanedInstanceIds.length} 个超时的 GM 手动分线预留`);
+        runtime.logger.warn(`已回收 ${cleanedInstanceIds.length} 個超時的 GM 手動分線預留`);
       }
     } catch (error) {
-      runtime.logger.warn(`GM 手动分线预留回收失败：${error instanceof Error ? error.message : String(error)}`);
+      runtime.logger.warn(`GM 手動分線預留回收失敗：${error instanceof Error ? error.message : String(error)}`);
     }
   }
   if (typeof runtime.instanceCatalogService.cleanupAbandonedPendingInstances === 'function') {
@@ -2065,17 +2065,17 @@ export async function syncAllInstanceLeases(runtime) {
             cleanupManagedInstanceRuntimeState(runtime, instanceId, instance);
           }
         }
-        runtime.logger.warn(`已完成 ${cleanedInstanceIds.length} 个失去有效 owner 的实例清理任务`);
+        runtime.logger.warn(`已完成 ${cleanedInstanceIds.length} 個失去有效 owner 的實例清理任務`);
       }
     } catch (error) {
-      runtime.logger.warn(`实例待清理任务回收失败：${error instanceof Error ? error.message : String(error)}`);
+      runtime.logger.warn(`實例待清理任務回收失敗：${error instanceof Error ? error.message : String(error)}`);
     }
   }
   for (const [instanceId] of runtime.listInstanceEntries()) {
     try {
       await syncInstanceLease(runtime, instanceId, { allowForceReclaim: false });
     } catch (error) {
-      runtime.logger.warn(`实例租约同步失败：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
+      runtime.logger.warn(`實例租約同步失敗：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
     }
   }
   try {
@@ -2086,7 +2086,7 @@ export async function syncAllInstanceLeases(runtime) {
       await runtime.worldRuntimeLifecycleService.restoreOfflineHangingPlayers(runtime);
     }
   } catch (error) {
-    runtime.logger.warn(`可恢复实例租约接管失败：${error instanceof Error ? error.message : String(error)}`);
+    runtime.logger.warn(`可恢復實例租約接管失敗：${error instanceof Error ? error.message : String(error)}`);
   }
 }
 
@@ -2166,7 +2166,7 @@ export async function claimRecoverableCatalogInstances(runtime, {
         }) === true;
       } catch (error) {
         runtime.logger.warn(
-          `可恢复实例接管后发现并发运行态且 lease 释放异常：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
+          `可恢復實例接管後發現併發運行態且 lease 釋放異常：${instanceId} ${error instanceof Error ? error.message : String(error)}`,
         );
       }
       if (!released) {
@@ -2224,7 +2224,7 @@ export async function claimRecoverableCatalogInstances(runtime, {
         transitionToken: null,
         destroyCatalog: false,
       });
-      runtime.logger.warn(`可恢复实例自动接管水合失败，已释放并卸载：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
+      runtime.logger.warn(`可恢復實例自動接管水合失敗，已釋放並卸載：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
       continue;
     }
     if (runtime.getInstanceRuntime(instanceId) !== instance) {
@@ -2243,7 +2243,7 @@ export async function claimRecoverableCatalogInstances(runtime, {
       await runtime.worldRuntimeInstanceLeaseReadinessService.schedule(instanceId, instance, runtime);
     }
     claimedCount++;
-    runtime.logger.log(`实例租约自动接管成功：${instanceId} ownershipEpoch=${claim.ownershipEpoch ?? 0}`);
+    runtime.logger.log(`實例租約自動接管成功：${instanceId} ownershipEpoch=${claim.ownershipEpoch ?? 0}`);
   }
   return claimedCount;
 }
@@ -2257,11 +2257,11 @@ async function canClaimRecoverableCatalogEntry(runtime, entry, instanceId, nodeI
   }
   // dev/test 环境下强制回收未过期的 stale lease，避免上一轮 smoke 残留阻塞启动
   if (allowForceReclaim && shouldForceReclaimStaleLease()) {
-    runtime.logger.warn(`启动恢复强制回收过期租约：${instanceId} assignedNodeId=${assignedNodeId}`);
+    runtime.logger.warn(`啟動恢復強制回收過期租約：${instanceId} assignedNodeId=${assignedNodeId}`);
     return true;
   }
   if (Number.isFinite(leaseExpireAt) && leaseExpireAt > Date.now()) {
-    runtime.logger.debug(`启动恢复跳过仍由其他节点持有的实例：${instanceId} assignedNodeId=${assignedNodeId}`);
+    runtime.logger.debug(`啟動恢復跳過仍由其他節點持有的實例：${instanceId} assignedNodeId=${assignedNodeId}`);
     return false;
   }
   const persistenceService = runtime.playerRuntimeService?.playerDomainPersistenceService;
@@ -2269,7 +2269,7 @@ async function canClaimRecoverableCatalogEntry(runtime, entry, instanceId, nodeI
     ? await persistenceService.hasOnlinePlayersInInstance(instanceId)
     : false;
   if (hasOnlinePlayers) {
-    runtime.logger.warn(`启动恢复过期租约仍有在线玩家：${instanceId} assignedNodeId=${assignedNodeId}`);
+    runtime.logger.warn(`啟動恢復過期租約仍有線上玩家：${instanceId} assignedNodeId=${assignedNodeId}`);
     return false;
   }
   return true;
@@ -2356,7 +2356,7 @@ async function restorePersistentInstanceFormations(runtime, instanceId) {
   const instance = runtime.getInstanceRuntime?.(instanceId) ?? null;
   const restoredFormations = await runtime.worldRuntimeFormationService.restoreInstanceFormations(instanceId, instance);
   if (restoredFormations > 0) {
-    runtime.logger.debug?.(`实例阵法已恢复：${instanceId} x${restoredFormations}`);
+    runtime.logger.debug?.(`實例陣法已恢復：${instanceId} x${restoredFormations}`);
   }
 }
 
@@ -2383,12 +2383,12 @@ async function markMissingTemplateCatalogEntry(runtime, entry, instanceId, templ
     return;
   }
   if (typeof runtime.instanceCatalogService?.markInstanceTemplateMissing !== 'function') {
-    runtime.logger.warn(`实例目录引用的地图模板不存在，跳过 ${phase}：${instanceId} -> ${templateId}`);
+    runtime.logger.warn(`實例目錄引用的地圖模板不存在，跳過 ${phase}：${instanceId} -> ${templateId}`);
     return;
   }
   const changed = await runtime.instanceCatalogService.markInstanceTemplateMissing({ instanceId, templateId });
   if (changed) {
-    runtime.logger.warn(`实例目录引用的地图模板不存在，已标记为待内容恢复：${instanceId} -> ${templateId}`);
+    runtime.logger.warn(`實例目錄引用的地圖模板不存在，已標記為待內容恢復：${instanceId} -> ${templateId}`);
   }
 }
 

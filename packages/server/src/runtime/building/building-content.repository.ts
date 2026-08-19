@@ -65,7 +65,7 @@ export function compileBuildingDefinitions(definitions: readonly BuildingDef[]):
     }
     seenIds.add(id);
 
-    const name = resolvePlayerFacingContentName(id, '未知建筑', definition.name);
+    const name = resolvePlayerFacingContentName(id, '未知建築', definition.name);
     const layer = definition.placement?.layer;
     const layerId = BUILDING_LAYER_ID_BY_KEY[layer];
     if (!layerId) {

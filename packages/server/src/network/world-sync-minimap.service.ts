@@ -139,7 +139,7 @@ function buildMinimapMarkers(template, resolveMapName: (mapId: string) => string
             kind: portal.kind,
             x: portal.x,
             y: portal.y,
-            label: portal.kind === 'stairs' ? '楼梯' : '传送点',
+            label: portal.kind === 'stairs' ? '樓梯' : '傳送點',
             detail: resolveMapName(portal.targetMapId),
         });
     }

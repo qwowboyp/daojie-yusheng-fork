@@ -101,5 +101,5 @@ export function resolvePlayerAvatarDisplayName(
 }
 
 export function resolveSectMemberDisplayName(source: PlayerDisplayNameSource | null | undefined, playerId?: unknown): string {
-  return resolvePlayerDisplayName(source, { playerId, fallback: '未知成员' });
+  return resolvePlayerDisplayName(source, { playerId, fallback: '未知成員' });
 }

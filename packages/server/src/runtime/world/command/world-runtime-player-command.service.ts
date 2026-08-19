@@ -49,7 +49,7 @@ function assertCombatActionReady(player, currentTick) {
     const actionsPerTurn = resolveActionsPerTurn(player);
     const used = normalizeCombatActionCounter(player, currentTick);
     if (used >= actionsPerTurn) {
-        throw new BadRequestException('本回合行动次数已用尽');
+        throw new BadRequestException('本回合行動次數已用盡');
     }
 }
 
@@ -95,19 +95,19 @@ function normalizeTechniqueActivityKind(kind) {
 function buildCastingActivityBusyNotice(commandKind) {
     switch (commandKind) {
         case 'startEnhancement':
-            return buildStructuredNotice('system', 'notice.command.casting-busy-enhancement', '吟唱中无法分心强化。');
+            return buildStructuredNotice('system', 'notice.command.casting-busy-enhancement', '吟唱中無法分心強化。');
         case 'startGather':
-            return buildStructuredNotice('system', 'notice.command.casting-busy-gather', '吟唱中无法分心采集。');
+            return buildStructuredNotice('system', 'notice.command.casting-busy-gather', '吟唱中無法分心採集。');
         case 'startMining':
-            return buildStructuredNotice('system', 'notice.command.casting-busy-mining', '吟唱中无法分心挖矿。');
+            return buildStructuredNotice('system', 'notice.command.casting-busy-mining', '吟唱中無法分心挖礦。');
         case 'startBuilding':
-            return buildStructuredNotice('system', 'notice.command.casting-busy-building', '吟唱中无法分心营造。');
+            return buildStructuredNotice('system', 'notice.command.casting-busy-building', '吟唱中無法分心營造。');
         case 'startFormationMaintenance':
-            return buildStructuredNotice('system', 'notice.command.casting-busy-formation-maintenance', '吟唱中无法分心维护阵法。');
+            return buildStructuredNotice('system', 'notice.command.casting-busy-formation-maintenance', '吟唱中無法分心維護陣法。');
         case 'startAlchemy':
-            return buildStructuredNotice('system', 'notice.command.casting-busy-alchemy', '吟唱中无法分心炼丹。');
+            return buildStructuredNotice('system', 'notice.command.casting-busy-alchemy', '吟唱中無法分心煉丹。');
         default:
-            return buildStructuredNotice('system', 'notice.command.casting-busy', '正在吟唱中，无法执行该动作。');
+            return buildStructuredNotice('system', 'notice.command.casting-busy', '正在吟唱中，無法執行該動作。');
     }
 }
 
@@ -477,7 +477,7 @@ export class WorldRuntimePlayerCommandService {
                     deps,
                 );
                 if (!result.ok) {
-                    throw new BadRequestException(result.error ?? '启动传法失败');
+                    throw new BadRequestException(result.error ?? '啟動傳法失敗');
                 }
                 deps.worldRuntimeCraftMutationService.flushCraftMutation(learnerPlayerId, result, 'transmission', deps);
                 return;
@@ -898,8 +898,8 @@ export class WorldRuntimePlayerCommandService {
             : 0;
         if (player.combat?.pendingSkillCast) {
             throw new BadRequestException(command.kind === 'castSkill'
-                ? '正在吟唱中，无法继续施法。'
-                : '正在吟唱中，无法执行战斗动作。');
+                ? '正在吟唱中，無法繼續施法。'
+                : '正在吟唱中，無法執行戰鬥動作。');
         }
         if (shouldCheckActionReady) {
             assertCombatActionReady(player, currentTick);

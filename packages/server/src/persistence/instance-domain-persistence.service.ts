@@ -123,7 +123,7 @@ export class InstanceDomainPersistenceService implements OnModuleInit, OnModuleD
   async onModuleInit(): Promise<void> {
     this.pool = this.databasePoolProvider?.getPool('instance-domain') ?? null;
     if (!this.pool) {
-      this.logger.log('实例分域持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('實例分域持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
 
@@ -149,10 +149,10 @@ export class InstanceDomainPersistenceService implements OnModuleInit, OnModuleD
       await ensureInstanceBuildingAuditLogTable(this.pool);
       await ensureInstanceBuildingOperationIdempotencyTable(this.pool);
       this.enabled = true;
-      this.logger.log('实例分域持久化已启用');
+      this.logger.log('實例分域持久化已啟用');
     } catch (error: unknown) {
       this.logger.error(
-        '实例分域持久化初始化失败，已回退为禁用模式',
+        '實例分域持久化初始化失敗，已回退為禁用模式',
         error instanceof Error ? error.stack : String(error),
       );
       await this.safeClosePool();

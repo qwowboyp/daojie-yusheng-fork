@@ -74,7 +74,7 @@ export class TransmissionStrategy implements TechniqueActivityStrategy<PlayerTra
   readonly kind = 'transmission' as const;
   readonly jobSlot = 'transmissionJob';
   readonly skillSlot = 'transmissionSkill';
-  readonly activityLabel = '传法';
+  readonly activityLabel = '傳法';
   readonly pauseTicks = 10;
   readonly conditional = false;
 
@@ -96,13 +96,13 @@ export class TransmissionStrategy implements TechniqueActivityStrategy<PlayerTra
       || normalizeText((payload as { techId?: unknown } | null)?.techId);
     const techniqueId = runtime?.resolveLatestTechniqueId?.(requestedTechniqueId) || requestedTechniqueId;
     if (!learner?.playerId) {
-      return { ok: false, error: '学习者不存在。' };
+      return { ok: false, error: '學習者不存在。' };
     }
     if (!techniqueId) {
-      return { ok: false, error: '功法不能为空。' };
+      return { ok: false, error: '功法不能為空。' };
     }
     if (hasAnyActiveTechniqueJob(learner)) {
-      return { ok: false, error: '学习者已有进行中的技艺任务。' };
+      return { ok: false, error: '學習者已有進行中的技藝任務。' };
     }
     if (mode === 'scripture_recording') {
       return validateScriptureRecordingStart(learner, techniqueId, payload, ctx);
@@ -111,35 +111,35 @@ export class TransmissionStrategy implements TechniqueActivityStrategy<PlayerTra
       return validateScriptureContemplationStart(learner, payload, ctx);
     }
     if (isTechniqueAggregationId(techniqueId)) {
-      return { ok: false, error: '统法只能从统法台参悟，不能由玩家传授。' };
+      return { ok: false, error: '統法只能從統法臺參悟，不能由玩家傳授。' };
     }
     if (!teacherPlayerId) {
-      return { ok: false, error: '传授者不能为空。' };
+      return { ok: false, error: '傳授者不能為空。' };
     }
     const teacher = runtime?.getPlayer?.(teacherPlayerId) ?? null;
     if (!teacher) {
-      return { ok: false, error: '传授者不存在。' };
+      return { ok: false, error: '傳授者不存在。' };
     }
     const teacherTechnique = findTeacherTechniqueForTransmission(teacher, techniqueId, runtime);
     if (!teacherTechnique) {
-      return { ok: false, error: '传授者尚未掌握该功法。' };
+      return { ok: false, error: '傳授者尚未掌握該功法。' };
     }
     if (!isCreatedTechniqueId(techniqueId)) {
-      return { ok: false, error: '只能传授自创功法。' };
+      return { ok: false, error: '只能傳授自創功法。' };
     }
     const teacherTechniqueTemplate = resolveTechniqueTemplateState(ctx, teacherTechnique.techId);
     if (!isTechniqueEntryFullyMastered(teacherTechnique, teacherTechniqueTemplate)) {
-      return { ok: false, error: '只有修至原功法满层后才能传授。' };
+      return { ok: false, error: '只有修至原功法滿層後才能傳授。' };
     }
     if (learner.techniques?.techniques?.some((entry: any) => entry?.techId === techniqueId)) {
-      return { ok: false, error: '学习者已经掌握该功法。' };
+      return { ok: false, error: '學習者已經掌握該功法。' };
     }
     const aggregationConflict = runtime?.resolveTechniqueLearningConflict?.(learner, techniqueId);
     if (aggregationConflict) {
       return { ok: false, error: buildAggregationConflictError(aggregationConflict) };
     }
     if (!isPlayerInTransmissionRange(teacher, learner, 2)) {
-      return { ok: false, error: '传授距离超过 2 格。' };
+      return { ok: false, error: '傳授距離超過 2 格。' };
     }
     const learningTechnique = resolveTechniqueTemplateState(ctx, techniqueId) ?? teacherTechnique;
     const requiredProgress = calculateTechniqueComprehensionRequiredProgress({
@@ -466,42 +466,42 @@ function validateScriptureRecordingStart(
 ): TechniqueActivityStartValidationResult<TransmissionValidatedPayload> {
   const buildingId = normalizeText((payload as { buildingId?: unknown } | null)?.buildingId);
   if (!buildingId) {
-    return { ok: false, error: '藏经台不能为空。' };
+    return { ok: false, error: '藏經臺不能為空。' };
   }
   const { instance, building } = resolveScriptureBuilding(ctx, recorder, buildingId);
   if (!instance || !building || building.defId !== 'scripture_platform') {
-    return { ok: false, error: '藏经台不存在。' };
+    return { ok: false, error: '藏經臺不存在。' };
   }
   if (building.state !== 'active') {
-    return { ok: false, error: '藏经台尚未完工。' };
+    return { ok: false, error: '藏經臺尚未完工。' };
   }
   if (!isPlayerNearBuilding(recorder, building, 1)) {
-    return { ok: false, error: '不在藏经台 1 格范围内。' };
+    return { ok: false, error: '不在藏經臺 1 格範圍內。' };
   }
   const existingTechniqueId = normalizeText(building.scriptureTechniqueId);
   if (existingTechniqueId && existingTechniqueId !== techniqueId) {
-    return { ok: false, error: '藏经台已有藏书，不能修改。' };
+    return { ok: false, error: '藏經臺已有藏書，不能修改。' };
   }
   if (existingTechniqueId && Number(building.scriptureRecordedAtTick) > 0) {
-    return { ok: false, error: '藏经台已有藏书，不能修改。' };
+    return { ok: false, error: '藏經臺已有藏書，不能修改。' };
   }
   const activeRecordingJobRunId = normalizeText(building.scriptureRecordingJobRunId);
   if (activeRecordingJobRunId) {
-    return { ok: false, error: '藏经台已有录入任务进行中。' };
+    return { ok: false, error: '藏經臺已有錄入任務進行中。' };
   }
   const runtime = resolveTransmissionDeps(ctx)?.playerRuntimeService;
   if (isTechniqueAggregationId(techniqueId)) {
-    return { ok: false, error: '统法只能从统法台参悟，不能录入藏经台。' };
+    return { ok: false, error: '統法只能從統法臺參悟，不能錄入藏經臺。' };
   }
   const technique = findTeacherTechniqueForTransmission(recorder, techniqueId, runtime);
   if (!technique) {
-    return { ok: false, error: '尚未掌握该功法。' };
+    return { ok: false, error: '尚未掌握該功法。' };
   }
   if (!isCreatedTechniqueId(techniqueId)) {
-    return { ok: false, error: '只能录入自创功法。' };
+    return { ok: false, error: '只能錄入自創功法。' };
   }
   if (!isTechniqueEntryFullyMastered(technique, resolveTechniqueTemplateState(ctx, technique.techId))) {
-    return { ok: false, error: '只有练满的功法可以录入藏经台。' };
+    return { ok: false, error: '只有練滿的功法可以錄入藏經臺。' };
   }
   const learningTechnique = resolveTechniqueTemplateState(ctx, techniqueId) ?? technique;
   const requiredProgress = calculateTechniqueComprehensionRequiredProgress({
@@ -536,29 +536,29 @@ function validateScriptureContemplationStart(
 ): TechniqueActivityStartValidationResult<TransmissionValidatedPayload> {
   const buildingId = normalizeText((payload as { buildingId?: unknown } | null)?.buildingId);
   if (!buildingId) {
-    return { ok: false, error: '藏经台不能为空。' };
+    return { ok: false, error: '藏經臺不能為空。' };
   }
   const { building } = resolveScriptureBuilding(ctx, learner, buildingId);
   if (!building || building.defId !== 'scripture_platform') {
-    return { ok: false, error: '藏经台不存在。' };
+    return { ok: false, error: '藏經臺不存在。' };
   }
   if (building.state !== 'active') {
-    return { ok: false, error: '藏经台尚未完工。' };
+    return { ok: false, error: '藏經臺尚未完工。' };
   }
   if (!isPlayerNearBuilding(learner, building, 1)) {
-    return { ok: false, error: '不在藏经台 1 格范围内。' };
+    return { ok: false, error: '不在藏經臺 1 格範圍內。' };
   }
   const requestedTechniqueId = normalizeText(building.scriptureTechniqueId);
   const runtime = resolveTransmissionDeps(ctx)?.playerRuntimeService;
   const techniqueId = runtime?.resolveLatestTechniqueId?.(requestedTechniqueId) || requestedTechniqueId;
   if (!techniqueId || Number(building.scriptureRecordedAtTick) <= 0) {
-    return { ok: false, error: '藏经台尚未录入藏书。' };
+    return { ok: false, error: '藏經臺尚未錄入藏書。' };
   }
   if (isTechniqueAggregationId(techniqueId)) {
-    return { ok: false, error: '统法只能从统法台参悟。' };
+    return { ok: false, error: '統法只能從統法臺參悟。' };
   }
   if (learner.techniques?.techniques?.some((entry: any) => entry?.techId === techniqueId)) {
-    return { ok: false, error: '已经掌握该功法。' };
+    return { ok: false, error: '已經掌握該功法。' };
   }
   const aggregationConflict = runtime?.resolveTechniqueLearningConflict?.(learner, techniqueId);
   if (aggregationConflict) {
@@ -628,7 +628,7 @@ function createScriptureRecordingJob(recorder: any, validated: TransmissionValid
     jobRunId,
     jobType: 'scripture_recording',
     jobVersion: 1,
-    label: '藏经录入',
+    label: '藏經錄入',
     techniqueId: validated.techniqueId,
     techniqueName: validated.techniqueName,
     teacherPlayerId: recorder.playerId,
@@ -673,7 +673,7 @@ function createScriptureContemplationJob(learner: any, validated: TransmissionVa
     jobRunId: `scripture_contemplation:${validated.buildingId}:${validated.techniqueId}:${currentTick}`,
     jobType: 'scripture_contemplation',
     jobVersion: 1,
-    label: '藏经参悟',
+    label: '藏經參悟',
     techniqueId: validated.techniqueId,
     techniqueName: validated.techniqueName,
     teacherPlayerId: learner.playerId,

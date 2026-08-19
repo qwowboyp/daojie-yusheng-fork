@@ -37,7 +37,7 @@ export class DropTableRegistry {
   getRef(monsterId: string): readonly any[] {
     const table = this.tryGetRef(monsterId);
     if (!table) {
-      throw new Error(`未找到妖兽掉落表：${monsterId}`);
+      throw new Error(`未找到妖獸掉落表：${monsterId}`);
     }
     return table;
   }

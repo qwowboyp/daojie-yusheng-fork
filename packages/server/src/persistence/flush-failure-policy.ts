@@ -64,7 +64,7 @@ export function classifyFlushFailure(error: unknown): ClassifiedFlushFailure {
   if (
     normalized.includes('lease')
     || normalized.includes('ownership')
-    || normalized.includes('租约已失效')
+    || normalized.includes('租約已失效')
   ) {
     return buildFailure('lease_invalidated', message, code, 5_000, 120_000, 0, false);
   }
@@ -72,7 +72,7 @@ export function classifyFlushFailure(error: unknown): ClassifiedFlushFailure {
   if (
     normalized.includes('refused_empty_overwrite')
     || normalized.includes('empty overwrite')
-    || normalized.includes('空覆盖')
+    || normalized.includes('空覆蓋')
   ) {
     return buildFailure('empty_overwrite_guard', message, code, 60_000, 900_000, 0, true);
   }
@@ -80,7 +80,7 @@ export function classifyFlushFailure(error: unknown): ClassifiedFlushFailure {
   if (
     normalized.includes('invalid')
     || normalized.includes('非法')
-    || normalized.includes('拒绝写入')
+    || normalized.includes('拒絕寫入')
     || normalized.includes('duplicate item_instance_id')
     || normalized.includes('duplicate slot')
   ) {

@@ -52,7 +52,7 @@ class WorldGatewayPresenceHelper {
         } catch (error) {
             if (isConvergedPlayerPresenceFenceError(error)) {
                 // 玩家已被更新会话接管，离线 presence 写入过期即良性收敛，跳过而非报错。
-                this.logger.debug(`脱机在线状态已被更新会话取代（fence 收敛），跳过：${binding.playerId}`);
+                this.logger.debug(`脫機線上狀態已被更新會話取代（fence 收斂），跳過：${binding.playerId}`);
                 return;
             }
             // 非围栏错误必须传播给 disconnect/shutdown 编排器，不能伪报 presence 已落盘。
@@ -105,7 +105,7 @@ class WorldGatewayPresenceHelper {
             }
         }).catch((error) => {
             // 失败时不启动节流、不清 dirty；下一次心跳或常规 flush 会继续重试。
-            this.logger.error(`刷新心跳在线状态失败：${playerId}`, error instanceof Error ? error.stack : String(error));
+            this.logger.error(`刷新心跳線上狀態失敗：${playerId}`, error instanceof Error ? error.stack : String(error));
         }).finally(() => {
             if (this.presenceHeartbeatPersistInFlightByPlayerId.get(playerId) === persistPromise) {
                 this.presenceHeartbeatPersistInFlightByPlayerId.delete(playerId);

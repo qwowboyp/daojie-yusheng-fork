@@ -108,7 +108,7 @@ export class InstanceMonsterRuntimeFlushWorker {
         processed += 1;
       } catch (error: unknown) {
         this.logger.warn(
-          `实例妖兽运行态 worker 刷盘失败 instanceId=${instanceId} domain=${INSTANCE_MONSTER_RUNTIME_WORKER_DOMAIN}: ${
+          `實例妖獸運行態 worker 刷盤失敗 instanceId=${instanceId} domain=${INSTANCE_MONSTER_RUNTIME_WORKER_DOMAIN}: ${
             error instanceof Error ? error.stack || error.message : String(error)
           }`,
         );

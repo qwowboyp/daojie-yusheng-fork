@@ -86,21 +86,21 @@ export class SocialRuntimeService implements OnModuleDestroy {
   async onModuleInit(): Promise<void> {
     const databaseUrl = resolveServerDatabaseUrl();
     if (!databaseUrl.trim()) {
-      this.logger.log('道友关系持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('道友關係持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
     const pool = this.databasePoolProvider?.getPool?.('social-runtime') as PoolLike | null;
     if (!pool) {
-      this.logger.warn('道友关系持久化已禁用：数据库连接池不可用');
+      this.logger.warn('道友關係持久化已禁用：數據庫連接池不可用');
       return;
     }
     try {
       await ensureDaoistTables(pool);
       this.pool = pool;
       this.enabled = true;
-      this.logger.log('道友关系与私聊持久化已启用');
+      this.logger.log('道友關係與私聊持久化已啟用');
     } catch (error) {
-      this.logger.error('道友关系持久化初始化失败，已回退为禁用模式', error instanceof Error ? error.stack : String(error));
+      this.logger.error('道友關係持久化初始化失敗，已回退為禁用模式', error instanceof Error ? error.stack : String(error));
       this.pool = null;
       this.enabled = false;
     }
@@ -358,7 +358,7 @@ export class SocialRuntimeService implements OnModuleDestroy {
         ],
       );
     } catch (error) {
-      this.logger.warn(`私聊消息写入失败，已拒绝推送：${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`私聊消息寫入失敗，已拒絕推送：${error instanceof Error ? error.message : String(error)}`);
       return { ok: false, reason: 'message_persistence_failed' };
     }
     this.recordPersistedMessageWrite(pair);
@@ -743,7 +743,7 @@ export class SocialRuntimeService implements OnModuleDestroy {
             pair,
           );
         } catch (error) {
-          this.logger.warn(`私聊历史裁剪失败 pair=${key.replace('\n', ':')} error=${error instanceof Error ? error.message : String(error)}`);
+          this.logger.warn(`私聊歷史裁剪失敗 pair=${key.replace('\n', ':')} error=${error instanceof Error ? error.message : String(error)}`);
           this.pendingMessagePrunePairs.set(key, pair);
         }
       }
@@ -796,7 +796,7 @@ export class SocialRuntimeService implements OnModuleDestroy {
       try {
         listener(playerA, playerB);
       } catch (error) {
-        this.logger.warn(`道友关系变更监听器执行失败：${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`道友關係變更監聽器執行失敗：${error instanceof Error ? error.message : String(error)}`);
       }
     }
   }

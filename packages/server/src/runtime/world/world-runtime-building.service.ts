@@ -143,12 +143,12 @@ export function dispatchStartBuildingConstruction(runtime, playerId, buildingIdI
     const player = context.player;
     const buildingId = normalizeBuildingRequestId(buildingIdInput);
     if (!buildingId) {
-        throw new Error('建筑 ID 不能为空');
+        throw new Error('建築 ID 不能為空');
     }
     const activeJob = player?.buildingJob;
     if (activeJob && Number(activeJob.remainingTicks) > 0) {
         if (activeJob.buildingId !== buildingId) {
-            throw new Error('当前已有建造任务在进行中。');
+            throw new Error('當前已有建造任務在進行中。');
         }
     }
     const result: any = handleStartBuildingConstruction(runtime, playerId, buildingId);
@@ -157,7 +157,7 @@ export function dispatchStartBuildingConstruction(runtime, playerId, buildingIdI
     }
     const buildingName = resolvePlayerFacingContentName(
         result.building.defId,
-        '未知建筑',
+        '未知建築',
         resolveBuildingDisplayName(context.instance, result.building),
         result.building.name,
     );
@@ -229,7 +229,7 @@ export function dispatchStartBuildingDeconstruction(runtime, playerId, buildingI
     }
     const buildingName = resolvePlayerFacingContentName(
         result.building.defId,
-        '未知建筑',
+        '未知建築',
         resolveBuildingDisplayName(context.instance, result.building),
         result.building.name,
     );
@@ -240,7 +240,7 @@ export function dispatchStartBuildingDeconstruction(runtime, playerId, buildingI
         jobVersion: 1,
         buildingId: result.building.id,
         buildingName,
-        label: '拆除建筑',
+        label: '拆除建築',
         instanceId: context.instance.meta.instanceId,
         operation: 'deconstruct',
         startedAt,
@@ -562,7 +562,7 @@ async function recoverTreasureVaultItemsBeforeDeconstruct(runtime, instance, bui
         buildingId: building?.id,
         buildingName: resolvePlayerFacingContentName(
             building?.defId,
-            '未知宝库',
+            '未知寶庫',
             resolveBuildingDisplayName(instance, building),
             building?.name,
         ),
@@ -764,7 +764,7 @@ export function notifyBuildingConstructionCompletion(runtime, building) {
     const playerId = normalizeBuildingRequestId(building?.ownerPlayerId);
     const buildingName = resolvePlayerFacingContentName(
         building?.defId,
-        '未知建筑',
+        '未知建築',
         resolveBuildingDisplayNameByRuntime(runtime, building),
         building?.name,
     );
@@ -783,7 +783,7 @@ export function notifyBuildingConstructionCompletion(runtime, building) {
             building.id,
             runtime,
         ).catch((error) => {
-            runtime.logger?.warn?.(`密室完工后常驻实例创建失败：${building.instanceId}/${building.id} ${error instanceof Error ? error.message : String(error)}`);
+            runtime.logger?.warn?.(`密室完工後常駐實例建立失敗：${building.instanceId}/${building.id} ${error instanceof Error ? error.message : String(error)}`);
         });
     }
     return 0;
@@ -792,27 +792,27 @@ export function awardBuildingConstructionCompletion(runtime, building) {
     return notifyBuildingConstructionCompletion(runtime, building);
 }
 function buildBuildingInterruptMessage(buildingNameInput, reason) {
-    const buildingName = typeof buildingNameInput === 'string' && buildingNameInput.trim() ? buildingNameInput.trim() : '当前建筑';
+    const buildingName = typeof buildingNameInput === 'string' && buildingNameInput.trim() ? buildingNameInput.trim() : '當前建築';
     const reasonLabel = reason === 'move'
-        ? '移动'
+        ? '移動'
         : reason === 'attack'
             ? '出手'
             : reason === 'cultivate'
                 ? '打坐'
-                : '手动取消';
-    return `${buildingName} 的营造被${reasonLabel}打断。`;
+                : '手動取消';
+    return `${buildingName} 的營造被${reasonLabel}打斷。`;
 }
 function buildBuildingInterruptNotice(buildingNameInput, reason) {
-    const buildingName = typeof buildingNameInput === 'string' && buildingNameInput.trim() ? buildingNameInput.trim() : '当前建筑';
+    const buildingName = typeof buildingNameInput === 'string' && buildingNameInput.trim() ? buildingNameInput.trim() : '當前建築';
     const reasonLabel = reason === 'move'
-        ? '移动'
+        ? '移動'
         : reason === 'attack'
             ? '出手'
             : reason === 'cultivate'
                 ? '打坐'
                 : reason === 'defeat'
-                    ? '身陨'
-                    : '手动取消';
+                    ? '身隕'
+                    : '手動取消';
     return buildStructuredNotice(
         'building',
         'notice.craft.building.interrupted',
@@ -826,23 +826,23 @@ function buildBuildingInterruptNotice(buildingNameInput, reason) {
 function localizeStartBuildingFailure(reason) {
     switch (reason) {
         case 'building_not_found':
-            return '目标半成品不存在';
+            return '目標半成品不存在';
         case 'building_not_under_construction':
-            return '该建筑当前不可继续施工';
+            return '該建築當前不可繼續施工';
         case 'building_owner_mismatch':
             return '只能建造自己的半成品';
         case 'sect_build_permission_denied':
-            return '当前职位没有宗门建造权限';
+            return '當前職位沒有宗門建造權限';
         case 'virtual_world_building_forbidden':
-            return '虚境不能建造建筑，请前往现世';
+            return '虛境不能建造建築，請前往現世';
         case 'player_not_found':
-            return '当前角色不存在';
+            return '當前角色不存在';
         case 'building_too_far':
-            return '需要靠近半成品后才能开始建造';
+            return '需要靠近半成品後才能開始建造';
         case 'building_active_builder_mismatch':
-            return '建筑正在由其他玩家施工';
+            return '建築正在由其他玩家施工';
         default:
-            return '开始建造失败';
+            return '開始建造失敗';
     }
 }
 function consumeBuildingCost(playerRuntimeService, playerId, consumedItems) {

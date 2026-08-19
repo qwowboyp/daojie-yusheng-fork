@@ -45,7 +45,7 @@ export class WorldRuntimeCultivationService {
       '未知功法',
       this.playerRuntimeService.getTechniqueName(playerId, techniqueId),
     );
-    const n = buildStructuredNotice('success', 'notice.cultivation.set-primary', `已设为主修 ${techniqueName}`, {
+    const n = buildStructuredNotice('success', 'notice.cultivation.set-primary', `已設為主修 ${techniqueName}`, {
       vars: { techniqueName },
       pills: [{ key: 'techniqueName', style: 'target' }],
     });
@@ -58,7 +58,7 @@ export class WorldRuntimeCultivationService {
       '未知功法',
       this.playerRuntimeService.forgetTechnique(playerId, techniqueId),
     );
-    const n = buildStructuredNotice('warn', 'notice.cultivation.technique-forgotten', '已遗忘功法', {
+    const n = buildStructuredNotice('warn', 'notice.cultivation.technique-forgotten', '已遺忘功法', {
       vars: { techniqueName },
       pills: [{ key: 'techniqueName', style: 'skill' }],
     });
@@ -70,7 +70,7 @@ export class WorldRuntimeCultivationService {
     const n = buildStructuredNotice(
       'warn',
       'notice.cultivation.technique-comprehension-discarded',
-      '已放弃未领悟功法',
+      '已放棄未領悟功法',
       {
         vars: { techniqueName },
         pills: [{ key: 'techniqueName', style: 'skill' }],

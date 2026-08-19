@@ -145,9 +145,9 @@ export class WorldRuntimeTongtianTowerService {
     if (mapId === this.config.entryMapId && isNear(self.x, self.y, this.config.entryX, this.config.entryY)) {
       actions.push({
         id: TOWER_ENTER_ACTION_ID,
-        name: '进入通天塔',
+        name: '進入通天塔',
         type: 'travel',
-        desc: '进入通天塔，继续当前记录层数。',
+        desc: '進入通天塔，繼續當前記錄層數。',
         cooldownLeft: 0,
       });
       return actions;
@@ -164,18 +164,18 @@ export class WorldRuntimeTongtianTowerService {
     if (layer > 1) {
       actions.push({
         id: TOWER_PREVIOUS_ACTION_ID,
-        name: '退到上一层',
+        name: '退到上一層',
         type: 'travel',
-        desc: `退回通天塔第 ${layer - 1} 层。`,
+        desc: `退回通天塔第 ${layer - 1} 層。`,
         ...layerChangeCooldown,
       });
     }
     if (progress && progress.highestLayer >= layer + 1) {
       actions.push({
         id: TOWER_NEXT_ACTION_ID,
-        name: '前往下一层',
+        name: '前往下一層',
         type: 'travel',
-        desc: `前往通天塔第 ${layer + 1} 层。`,
+        desc: `前往通天塔第 ${layer + 1} 層。`,
         ...layerChangeCooldown,
       });
     }
@@ -183,7 +183,7 @@ export class WorldRuntimeTongtianTowerService {
       id: TOWER_EXIT_ACTION_ID,
       name: '退出通天塔',
       type: 'travel',
-      desc: '离开通天塔并返回栖真渡，保留当前层数记录。',
+      desc: '離開通天塔並返回棲真渡，保留當前層數記錄。',
       cooldownLeft: 0,
     });
     return actions;
@@ -192,7 +192,7 @@ export class WorldRuntimeTongtianTowerService {
   async executeAction(playerId: string, actionId: string, deps: any): Promise<any> {
     const player = deps.playerRuntimeService?.getPlayer?.(playerId);
     if (player && Number.isFinite(player.hp) && Number(player.hp) <= 0) {
-      throw new BadRequestException('重伤倒地时不能操作通天塔');
+      throw new BadRequestException('重傷倒地時不能操作通天塔');
     }
     if (actionId === TOWER_ENTER_ACTION_ID) {
       return this.enterTower(playerId, deps);
@@ -258,34 +258,34 @@ export class WorldRuntimeTongtianTowerService {
         continue;
       }
       if (typeof deps.flushInstanceDomains !== 'function') {
-        this.logger.warn(`通天塔空闲实例缺少落盘能力，保留运行态：${instanceId}`);
+        this.logger.warn(`通天塔空閒實例缺少落盤能力，保留運行態：${instanceId}`);
         continue;
       }
       try {
         await deps.flushInstanceDomains(instanceId);
       } catch (error) {
-        this.logger.warn(`通天塔空闲实例落盘失败，保留运行态：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`通天塔空閒實例落盤失敗，保留運行態：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
         continue;
       }
       const remainingDirtyInstanceIds = typeof deps.listDirtyPersistentInstances === 'function'
         ? deps.listDirtyPersistentInstances()
         : [];
       if (Array.isArray(remainingDirtyInstanceIds) && remainingDirtyInstanceIds.includes(instanceId)) {
-        this.logger.warn(`通天塔空闲实例落盘后仍有未持久化状态，保留运行态：${instanceId}`);
+        this.logger.warn(`通天塔空閒實例落盤後仍有未持久化狀態，保留運行態：${instanceId}`);
         continue;
       }
       let destroyResult: { ok?: boolean; reason?: string } | null = null;
       try {
         destroyResult = await destroyManagedInstance(deps, instanceId, 'tongtian_idle_timeout');
       } catch (error) {
-        this.logger.warn(`通天塔空闲实例销毁失败，保留运行态：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`通天塔空閒實例銷燬失敗，保留運行態：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
         continue;
       }
       if (destroyResult?.ok !== true) {
-        this.logger.warn(`通天塔空闲实例销毁被拒绝，保留运行态：${instanceId} reason=${destroyResult?.reason ?? 'unknown'}`);
+        this.logger.warn(`通天塔空閒實例銷燬被拒絕，保留運行態：${instanceId} reason=${destroyResult?.reason ?? 'unknown'}`);
         continue;
       }
-      this.logger.log(`通天塔空闲实例已销毁：${instanceId}`);
+      this.logger.log(`通天塔空閒實例已銷燬：${instanceId}`);
     }
   }
 
@@ -389,7 +389,7 @@ export class WorldRuntimeTongtianTowerService {
       return await task;
     } catch (error) {
       this.logger.warn(
-        `通天塔按需物化异常：${resolvedInstanceId} ${error instanceof Error ? error.message : String(error)}`,
+        `通天塔按需物化異常：${resolvedInstanceId} ${error instanceof Error ? error.message : String(error)}`,
       );
       return null;
     } finally {
@@ -433,7 +433,7 @@ export class WorldRuntimeTongtianTowerService {
     const instance = deps.getInstanceRuntime(current.instanceId);
     const position = instance?.getPlayerPosition?.(playerId);
     if (!instance || instance.template?.id !== this.config.entryMapId || !position || !isNear(position.x, position.y, this.config.entryX, this.config.entryY)) {
-      throw new BadRequestException('需要靠近栖真渡的通天塔入口');
+      throw new BadRequestException('需要靠近棲真渡的通天塔入口');
     }
     const progress = this.persistence.getOrCreateProgress(playerId);
     return this.connectPlayerToLayer(playerId, progress.currentLayer, deps);
@@ -444,14 +444,14 @@ export class WorldRuntimeTongtianTowerService {
     const progress = this.persistence.getOrCreateProgress(playerId);
     const nextLayer = layer + direction;
     if (nextLayer < 1) {
-      throw new BadRequestException('第一层不能退到上一层');
+      throw new BadRequestException('第一層不能退到上一層');
     }
     if (direction > 0 && progress.highestLayer < nextLayer) {
-      throw new BadRequestException('尚未通关当前层，不能前往下一层');
+      throw new BadRequestException('尚未通關當前層，不能前往下一層');
     }
     const cooldownLeft = this.resolveLayerChangeCooldownLeft(progress.layerChangeCooldownUntilMs, deps);
     if (cooldownLeft > 0) {
-      throw new BadRequestException(`通天塔换层冷却尚未结束，还需 ${cooldownLeft} 秒`);
+      throw new BadRequestException(`通天塔換層冷卻尚未結束，還需 ${cooldownLeft} 秒`);
     }
     const view = await this.connectPlayerToLayer(playerId, nextLayer, deps);
     this.persistence.updateCurrentLayer(playerId, nextLayer);
@@ -472,7 +472,7 @@ export class WorldRuntimeTongtianTowerService {
       preferredY: this.config.exitY,
       relocateExisting: true,
     }, deps);
-    const exitMapName = targetInstance.template?.name ?? '栖真渡';
+    const exitMapName = targetInstance.template?.name ?? '棲真渡';
     const exitNotice = buildStructuredNotice(
       'success',
       'notice.tower.exited',
@@ -488,7 +488,7 @@ export class WorldRuntimeTongtianTowerService {
       exitNotice.structured,
     );
     void this.cleanupIdleInstances(deps).catch((error) => {
-      this.logger.warn(`通天塔空闲实例清理失败：${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`通天塔空閒實例清理失敗：${error instanceof Error ? error.message : String(error)}`);
     });
     return view;
   }
@@ -504,7 +504,7 @@ export class WorldRuntimeTongtianTowerService {
       { allowCreateIfMissing: true },
     );
     if (!instance) {
-      throw new BadRequestException(`通天塔第 ${layer} 层暂不可进入`);
+      throw new BadRequestException(`通天塔第 ${layer} 層暫不可進入`);
     }
     deps.worldRuntimeNavigationService?.clearNavigationIntent?.(playerId);
     deps.clearPendingCommand?.(playerId);
@@ -527,7 +527,7 @@ export class WorldRuntimeTongtianTowerService {
     const enteredNotice = buildStructuredNotice(
       'success',
       'notice.tower.entered',
-      `你进入通天塔第 ${layer} 层。`,
+      `你進入通天塔第 ${layer} 層。`,
       { vars: { layer }, pills: [{ key: 'layer', style: 'damage' }] },
     );
     deps.queuePlayerNotice?.(
@@ -565,7 +565,7 @@ export class WorldRuntimeTongtianTowerService {
         return settledMounted;
       }
       if (settledMounted) {
-        this.logger.warn(`通天塔已有运行态尚未就绪，拒绝覆盖物化：${instanceId}`);
+        this.logger.warn(`通天塔已有運行態尚未就緒，拒絕覆蓋物化：${instanceId}`);
         return null;
       }
     }
@@ -586,7 +586,7 @@ export class WorldRuntimeTongtianTowerService {
         if (isTowerInstanceReady(current, deps)) {
           return current;
         }
-        this.logger.warn(`通天塔已有运行态尚未就绪，拒绝新建覆盖：${instanceId}`);
+        this.logger.warn(`通天塔已有運行態尚未就緒，拒絕新建覆蓋：${instanceId}`);
         return null;
       }
       let created: any | null = null;
@@ -598,7 +598,7 @@ export class WorldRuntimeTongtianTowerService {
           persistent: true,
           linePreset: 'peaceful',
           lineIndex: layer,
-          displayName: `通天塔 第 ${layer} 层`,
+          displayName: `通天塔 第 ${layer} 層`,
           instanceOrigin: 'gm_manual',
           routeDomain: 'system',
           supportsPvp: false,
@@ -620,7 +620,7 @@ export class WorldRuntimeTongtianTowerService {
     }
 
     if (!isExpectedTowerCatalogEntry(catalog, instanceId, templateId)) {
-      this.logger.warn(`通天塔 catalog 身份不一致，拒绝物化：${instanceId}`);
+      this.logger.warn(`通天塔 catalog 身份不一致，拒絕物化：${instanceId}`);
       return null;
     }
     const current = deps.getInstanceRuntime?.(instanceId) ?? null;
@@ -628,7 +628,7 @@ export class WorldRuntimeTongtianTowerService {
       if (isTowerInstanceReady(current, deps)) {
         return current;
       }
-      this.logger.warn(`通天塔已有运行态尚未就绪，拒绝 catalog 覆盖物化：${instanceId}`);
+      this.logger.warn(`通天塔已有運行態尚未就緒，拒絕 catalog 覆蓋物化：${instanceId}`);
       return null;
     }
     if (typeof deps.worldRuntimeInstanceStateService?.setInstanceRuntime !== 'function'
@@ -648,7 +648,7 @@ export class WorldRuntimeTongtianTowerService {
         { expectedTemplateId: templateId, expectedInstanceType: 'tower' },
       );
       if (acquired?.ok !== true) {
-        this.logger.warn(`通天塔按需物化未取得实例租约：${instanceId} reason=${acquired?.reason ?? 'unknown'}`);
+        this.logger.warn(`通天塔按需物化未取得實例租約：${instanceId} reason=${acquired?.reason ?? 'unknown'}`);
         await this.cleanupOwnedMaterialization(instanceId, instance, deps);
         return null;
       }
@@ -662,7 +662,7 @@ export class WorldRuntimeTongtianTowerService {
       return instance;
     } catch (error) {
       await this.cleanupOwnedMaterialization(instanceId, instance, deps);
-      this.logger.warn(`通天塔按需物化失败：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`通天塔按需物化失敗：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
       return null;
     }
   }
@@ -702,7 +702,7 @@ export class WorldRuntimeTongtianTowerService {
     const row = '.'.repeat(this.config.width);
     this.templateRepository.registerRuntimeMapTemplate({
       id: templateId,
-      name: `通天塔 第 ${layer} 层`,
+      name: `通天塔 第 ${layer} 層`,
       width: this.config.width,
       height: this.config.height,
       mapGroupId: 'secret_realm',
@@ -712,7 +712,7 @@ export class WorldRuntimeTongtianTowerService {
       routeDomain: 'system',
       terrainProfileId: 'tower_floor',
       mapLv: this.getLayerMonsterLevel(layer),
-      description: '通天塔内纯粹空白的一层，四面无墙，只有上下层与退出的塔内交互。',
+      description: '通天塔內純粹空白的一層，四面無牆，只有上下層與退出的塔內交互。',
       hideMinimap: true,
       tiles: Array.from({ length: this.config.height }, () => row),
       portals: [],
@@ -807,7 +807,7 @@ export class WorldRuntimeTongtianTowerService {
         instance.meta.runtimeStatus = 'running';
       }
     } catch (error) {
-      this.logger.warn(`通天塔缓存 lease 释放失败：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`通天塔緩存 lease 釋放失敗：${instanceId} ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
@@ -828,7 +828,7 @@ export class WorldRuntimeTongtianTowerService {
       persistent: true,
       persistentPolicy: 'persistent',
       createdAt: Date.now(),
-      displayName: `通天塔 第 ${layer} 层`,
+      displayName: `通天塔 第 ${layer} 層`,
       linePreset: 'peaceful',
       lineIndex: layer,
       instanceOrigin: 'gm_manual',
@@ -874,12 +874,12 @@ export class WorldRuntimeTongtianTowerService {
     const occupied = new Set<string>();
     let spawnIndex = 0;
     for (let index = 0; index < normalCount; index += 1) {
-      const runtimeId = this.spawnWaveMonster(instance, state, waveId, spawnIndex, this.config.monsterId, `虚影·${state.layer}层`, occupied);
+      const runtimeId = this.spawnWaveMonster(instance, state, waveId, spawnIndex, this.config.monsterId, `虛影·${state.layer}層`, occupied);
       monsterRuntimeIds.push(runtimeId);
       spawnIndex += 1;
     }
     for (let index = 0; index < eliteCount; index += 1) {
-      const runtimeId = this.spawnWaveMonster(instance, state, waveId, spawnIndex, this.config.eliteMonsterId, `虚影精英·${state.layer}层`, occupied);
+      const runtimeId = this.spawnWaveMonster(instance, state, waveId, spawnIndex, this.config.eliteMonsterId, `虛影精英·${state.layer}層`, occupied);
       monsterRuntimeIds.push(runtimeId);
       spawnIndex += 1;
     }
@@ -950,7 +950,7 @@ export class WorldRuntimeTongtianTowerService {
     const firstClearNotice = buildStructuredNotice(
       'success',
       'notice.tower.layer-cleared',
-      `通天塔第 ${state.layer} 层已通关，可前往第 ${unlockedLayer} 层。`,
+      `通天塔第 ${state.layer} 層已通關，可前往第 ${unlockedLayer} 層。`,
       {
         vars: { layer: state.layer, unlockedLayer },
         pills: [
@@ -962,7 +962,7 @@ export class WorldRuntimeTongtianTowerService {
     const cooldownNotice = buildStructuredNotice(
       'success',
       'notice.tower.layer-cleared-cooldown',
-      `通天塔第 ${state.layer} 层已清空，需等待 ${this.config.layerChangeCooldownSeconds} 秒后换层。`,
+      `通天塔第 ${state.layer} 層已清空，需等待 ${this.config.layerChangeCooldownSeconds} 秒後換層。`,
       {
         vars: {
           layer: state.layer,
@@ -1034,7 +1034,7 @@ export class WorldRuntimeTongtianTowerService {
     const location = deps.getPlayerLocationOrThrow(playerId);
     const layer = parseTowerLayerFromInstanceId(location.instanceId);
     if (layer <= 0) {
-      throw new BadRequestException('当前不在通天塔内');
+      throw new BadRequestException('當前不在通天塔內');
     }
     return layer;
   }
@@ -1043,10 +1043,10 @@ export class WorldRuntimeTongtianTowerService {
     const landmarks: Array<Record<string, unknown>> = [
       {
         id: `tongtian_tower_${layer}_next`,
-        name: '前往下一层',
+        name: '前往下一層',
         x: this.config.nextX,
         y: this.config.nextY,
-        desc: '通天塔向上的层阶，通关并解锁后可前往下一层。',
+        desc: '通天塔向上的層階，通關並解鎖後可前往下一層。',
         container: {
           grade: 'mortal',
           char: '上',
@@ -1060,7 +1060,7 @@ export class WorldRuntimeTongtianTowerService {
         name: '退出通天塔',
         x: this.config.exitPortalX,
         y: this.config.exitPortalY,
-        desc: '离开通天塔并返回栖真渡。',
+        desc: '離開通天塔並返回棲真渡。',
         container: {
           grade: 'mortal',
           char: '出',
@@ -1073,10 +1073,10 @@ export class WorldRuntimeTongtianTowerService {
     if (layer > 1) {
       landmarks.unshift({
         id: `tongtian_tower_${layer}_previous`,
-        name: '退到上一层',
+        name: '退到上一層',
         x: this.config.previousX,
         y: this.config.previousY,
-        desc: '通天塔向下的层阶，可退回上一层。',
+        desc: '通天塔向下的層階，可退回上一層。',
         container: {
           grade: 'mortal',
           char: '下',

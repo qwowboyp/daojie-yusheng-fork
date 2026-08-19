@@ -965,7 +965,7 @@ export class PlayerDomainPersistenceService implements OnModuleInit, OnModuleDes
 
     const sharedPool = this.databasePoolProvider?.getPool('player-domain') ?? null;
     if (!sharedPool) {
-      this.logger.warn('玩家分域持久化已禁用：数据库连接池提供者未提供连接池');
+      this.logger.warn('玩家分域持久化已禁用：數據庫連接池提供者未提供連接池');
       return;
     }
     this.pool = sharedPool;
@@ -973,10 +973,10 @@ export class PlayerDomainPersistenceService implements OnModuleInit, OnModuleDes
     try {
       await ensurePlayerDomainTables(this.pool);
       this.enabled = true;
-      this.logger.log('玩家分域持久化已启用');
+      this.logger.log('玩家分域持久化已啟用');
     } catch (error: unknown) {
       this.logger.error(
-        '玩家分域持久化初始化失败，已回退为禁用模式',
+        '玩家分域持久化初始化失敗，已回退為禁用模式',
         error instanceof Error ? error.stack : String(error),
       );
       this.releasePoolReference();
@@ -1033,7 +1033,7 @@ export class PlayerDomainPersistenceService implements OnModuleInit, OnModuleDes
     );
     const expiredCount = Number(result.rowCount ?? 0);
     if (expiredCount > 0) {
-      this.logger.log(`已清理陈旧玩家在线态：count=${expiredCount} timeoutMs=${PLAYER_HEARTBEAT_TIMEOUT_MS}`);
+      this.logger.log(`已清理陳舊玩家線上態：count=${expiredCount} timeoutMs=${PLAYER_HEARTBEAT_TIMEOUT_MS}`);
     }
   }
 
@@ -1094,7 +1094,7 @@ export class PlayerDomainPersistenceService implements OnModuleInit, OnModuleDes
     `);
     const cleanedCount = Number(result.rowCount ?? 0);
     if (cleanedCount > 0) {
-      this.logger.warn(`已清理玩家属性派生加成残留：count=${cleanedCount}`);
+      this.logger.warn(`已清理玩家屬性派生加成殘留：count=${cleanedCount}`);
     }
   }
 
@@ -1188,7 +1188,7 @@ export class PlayerDomainPersistenceService implements OnModuleInit, OnModuleDes
     );
     const affectedPlayerCount = Number(result.rowCount ?? 0);
     if (affectedPlayerCount > 0) {
-      this.logger.warn(`已自动恢复异常强化锁定物品：players=${affectedPlayerCount}`);
+      this.logger.warn(`已自動恢復異常強化鎖定物品：players=${affectedPlayerCount}`);
     }
   }
 
@@ -5064,7 +5064,7 @@ async function replacePlayerInventoryItems(
       // 上一次成功 flush 的状态；同时错误信息携带 playerId/index/原始 entry 摘要，便于排障。
       const entryDigest = safeStringifyInventoryEntry(sourceItems[index]);
       throw new Error(
-        `replacePlayerInventoryItems: 非法 inventory entry 拒绝写入 playerId=${playerId} index=${index} entry=${entryDigest}`,
+        `replacePlayerInventoryItems: 非法 inventory entry 拒絕寫入 playerId=${playerId} index=${index} entry=${entryDigest}`,
       );
     }
     const lockedBy = normalizeOptionalString(entry?.lockedBy);
@@ -5076,7 +5076,7 @@ async function replacePlayerInventoryItems(
       ? sourceItemInstanceId
       : `inv:${playerId}:${slotIndex}`;
     if (sourceItemInstanceId && isLegacyItemInstanceId(sourceItemInstanceId)) {
-      playerDomainModuleLogger.debug(`背包物品携带 legacy itemInstanceId，走 fallback：playerId=${playerId} slot=${slotIndex} id=${sourceItemInstanceId}`);
+      playerDomainModuleLogger.debug(`背包物品攜帶 legacy itemInstanceId，走 fallback：playerId=${playerId} slot=${slotIndex} id=${sourceItemInstanceId}`);
     }
     const rawPayload = asRecord(entry?.rawPayload);
     const count = normalizeMinimumInteger(entry?.count, rawPayload?.count, 1);
@@ -5429,7 +5429,7 @@ async function replacePlayerWalletRows(
     const walletType = normalizeRequiredString(row?.walletType);
     if (!walletType) {
       throw new Error(
-        `replacePlayerWalletRows: 非法 wallet entry 拒绝写入 playerId=${playerId} entry=${safeStringifyInventoryEntry(row)}`,
+        `replacePlayerWalletRows: 非法 wallet entry 拒絕寫入 playerId=${playerId} entry=${safeStringifyInventoryEntry(row)}`,
       );
     }
     const balance = normalizeMinimumInteger(row?.balance, 0, 0);
@@ -5591,7 +5591,7 @@ async function replacePlayerMarketStorageItems(
     const itemId = normalizeRequiredString(entry?.itemId);
     if (!itemId) {
       throw new Error(
-        `replacePlayerMarketStorageItems: 非法 market_storage entry 拒绝写入 playerId=${playerId} index=${index} entry=${safeStringifyInventoryEntry(entry)}`,
+        `replacePlayerMarketStorageItems: 非法 market_storage entry 拒絕寫入 playerId=${playerId} index=${index} entry=${safeStringifyInventoryEntry(entry)}`,
       );
     }
     const slotIndex = normalizeOptionalInteger(entry?.slotIndex) ?? index;
@@ -5782,7 +5782,7 @@ async function replacePlayerEquipmentSlots(
     const slotType = normalizeRequiredString(entry?.slot);
     if (!EQUIP_SLOTS.includes(slotType as (typeof EQUIP_SLOTS)[number])) {
       throw new Error(
-        `replacePlayerEquipmentSlots: 非法 equipment slot 拒绝写入 playerId=${playerId} slot=${slotType || 'null'} entry=${safeStringifyInventoryEntry(slotEntry)}`,
+        `replacePlayerEquipmentSlots: 非法 equipment slot 拒絕寫入 playerId=${playerId} slot=${slotType || 'null'} entry=${safeStringifyInventoryEntry(slotEntry)}`,
       );
     }
     const item = asRecord(entry?.item);
@@ -5792,7 +5792,7 @@ async function replacePlayerEquipmentSlots(
     const itemId = normalizeRequiredString(item?.itemId);
     if (!itemId) {
       throw new Error(
-        `replacePlayerEquipmentSlots: 非法 equipment item 拒绝写入 playerId=${playerId} slot=${slotType} entry=${safeStringifyInventoryEntry(slotEntry)}`,
+        `replacePlayerEquipmentSlots: 非法 equipment item 拒絕寫入 playerId=${playerId} slot=${slotType} entry=${safeStringifyInventoryEntry(slotEntry)}`,
       );
     }
     const itemInstanceId = assignStableItemInstanceId(
@@ -5905,14 +5905,14 @@ async function replacePlayerArtifactSlots(
     const slotType = normalizeRequiredString(entry?.slot);
     if (!ARTIFACT_SLOTS.includes(slotType as (typeof ARTIFACT_SLOTS)[number])) {
       throw new Error(
-        `replacePlayerArtifactSlots: 非法 artifact slot 拒绝写入 playerId=${playerId} slot=${slotType || 'null'} entry=${safeStringifyInventoryEntry(slotEntry)}`,
+        `replacePlayerArtifactSlots: 非法 artifact slot 拒絕寫入 playerId=${playerId} slot=${slotType || 'null'} entry=${safeStringifyInventoryEntry(slotEntry)}`,
       );
     }
     const item = asRecord(entry?.item);
     const itemId = item ? normalizeRequiredString(item.itemId) : '';
     if (item && !itemId) {
       throw new Error(
-        `replacePlayerArtifactSlots: 非法 artifact item 拒绝写入 playerId=${playerId} slot=${slotType} entry=${safeStringifyInventoryEntry(slotEntry)}`,
+        `replacePlayerArtifactSlots: 非法 artifact item 拒絕寫入 playerId=${playerId} slot=${slotType} entry=${safeStringifyInventoryEntry(slotEntry)}`,
       );
     }
     const itemInstanceId = item
@@ -9376,7 +9376,7 @@ function normalizeOfflineGainReportPayload(
           const amount = normalizeStatisticExpAmountRecord(entry);
           return {
             professionType: normalizeRequiredString(entry.professionType) || 'unknown',
-            label: normalizeOptionalString(entry.label) ?? '技艺',
+            label: normalizeOptionalString(entry.label) ?? '技藝',
             expGained: amount.gained,
             expLost: amount.lost,
             netExp: amount.net,

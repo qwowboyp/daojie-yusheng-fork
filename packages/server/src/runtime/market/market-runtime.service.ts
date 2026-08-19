@@ -125,7 +125,7 @@ export class MarketRuntimeService {
     }
     /** 应用完成启动后再回填坊市快照，避免早于持久化服务初始化导致空装载。 */
     async onApplicationBootstrap() {
-        this.logger.log('坊市运行态恢复已交由启动链路编排器执行');
+        this.logger.log('坊市運行態恢復已交由啟動鏈路編排器執行');
     }
     /** 关停前等待当前 marketOperationQueue 串行链跑完。 */
     async drainForShutdown(): Promise<void> {
@@ -134,7 +134,7 @@ export class MarketRuntimeService {
         }
         catch (error) {
             this.logger.error(
-                `等待坊市 mutation 队列收尾失败：${error instanceof Error ? error.stack : String(error)}`,
+                `等待坊市 mutation 隊列收尾失敗：${error instanceof Error ? error.stack : String(error)}`,
             );
         }
     }
@@ -153,11 +153,11 @@ export class MarketRuntimeService {
             const unitPrice = calculateHeavenlyDaoShopDiscountedPrice(shopItem.price, discountPercent);
             const totalCost = unitPrice * quantity;
             if (!Number.isSafeInteger(totalCost) || totalCost <= 0) {
-                return this.singleMessage(playerId, '天道商店价格异常，已拒绝本次购买。', 'warn');
+                return this.singleMessage(playerId, '天道商店價格異常，已拒絕本次購買。', 'warn');
             }
             const outputCount = shopItem.count * quantity;
             if (!Number.isSafeInteger(outputCount) || outputCount <= 0) {
-                return this.singleMessage(playerId, '天道商店商品数量异常，已拒绝本次购买。', 'warn');
+                return this.singleMessage(playerId, '天道商店商品數量異常，已拒絕本次購買。', 'warn');
             }
             const item = this.contentTemplateRepository.createItem(shopItem.itemId, outputCount);
             if (!item) {
@@ -165,11 +165,11 @@ export class MarketRuntimeService {
             }
             const currencyName = this.getHeavenlyDaoShopCurrencyName();
             if (!this.playerRuntimeService.canAffordWallet(playerId, HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID, totalCost)) {
-                return this.singleMessage(playerId, `${currencyName}不足，无法购买。`);
+                return this.singleMessage(playerId, `${currencyName}不足，無法購買。`);
             }
             this.captureOnlinePlayerState(playerId, context);
             if (!this.playerRuntimeService.canAffordWallet(playerId, HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID, totalCost)) {
-                return this.singleMessage(playerId, `${currencyName}不足，无法购买。`);
+                return this.singleMessage(playerId, `${currencyName}不足，無法購買。`);
             }
             this.playerRuntimeService.debitWallet(playerId, HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID, totalCost);
             this.deliverItemToPlayer(playerId, item, context);
@@ -186,7 +186,7 @@ export class MarketRuntimeService {
             if (this.durableOperationService?.isEnabled?.() && !durableCommitted) {
                 throw new Error('heavenly_dao_shop_purchase_durable_commit_failed');
             }
-            return this.singleStructuredMessage(playerId, 'success', 'notice.market.heavenly-dao-shop.purchased', `购买 ${itemLabel}，消耗 ${currencyName} x${totalCost}`, {
+            return this.singleStructuredMessage(playerId, 'success', 'notice.market.heavenly-dao-shop.purchased', `購買 ${itemLabel}，消耗 ${currencyName} x${totalCost}`, {
                 vars: { itemLabel, currency: currencyName, cost: totalCost },
                 pills: [{ key: 'itemLabel', style: 'target' }, { key: 'currency', style: 'target' }],
             });
@@ -425,7 +425,7 @@ export class MarketRuntimeService {
                 return { result, reloadError: null };
             }
             catch (firstError) {
-                this.logger.warn(`GM 兼容转换提交后首次重载坊市失败，立即重试：${firstError instanceof Error ? firstError.message : String(firstError)}`);
+                this.logger.warn(`GM 兼容轉換提交後首次重載坊市失敗，立即重試：${firstError instanceof Error ? firstError.message : String(firstError)}`);
             }
             try {
                 await this.reloadFromPersistence();
@@ -433,7 +433,7 @@ export class MarketRuntimeService {
             }
             catch (error) {
                 const reloadError = error instanceof Error ? error.message : String(error);
-                this.logger.error(`GM 兼容转换已提交，但坊市运行态重载失败：${reloadError}`);
+                this.logger.error(`GM 兼容轉換已提交，但坊市運行態重載失敗：${reloadError}`);
                 return { result, reloadError };
             }
         });
@@ -753,20 +753,20 @@ export class MarketRuntimeService {
             const itemInstanceId = this.resolveMarketInventoryItemInstanceId(playerId, payload, 'createSellOrder');
             const item = this.playerRuntimeService.peekInventoryItemByInstanceId(playerId, itemInstanceId);
             if (!item) {
-                return this.singleMessage(playerId, '要挂售的物品不存在。');
+                return this.singleMessage(playerId, '要掛售的物品不存在。');
             }
 
             const quantity = this.normalizeQuantity(payload.quantity);
 
             const unitPrice = this.normalizeUnitPrice(payload.unitPrice);
             if (!quantity || !unitPrice) {
-                return this.singleMessage(playerId, '挂售数量或单价无效。');
+                return this.singleMessage(playerId, '掛售數量或單價無效。');
             }
             if (listingMode === 'auction' && (!Number.isInteger(unitPrice) || unitPrice < 1)) {
-                return this.singleMessage(playerId, '拍卖总价必须是正整数。');
+                return this.singleMessage(playerId, '拍賣總價必須是正整數。');
             }
             if (listingMode === 'transmission' && (!Number.isInteger(unitPrice) || unitPrice < 1)) {
-                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.transmission-invalid-price', '传法台售价必须是正整数。', {});
+                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.transmission-invalid-price', '傳法臺售價必須是正整數。', {});
             }
             if (listingMode === 'market' && !isValidMarketTradeQuantity(unitPrice, quantity)) {
                 return this.singleMessage(playerId, this.buildTradeQuantityError(unitPrice));
@@ -781,34 +781,34 @@ export class MarketRuntimeService {
                 ? this.calculateAuctionListingFee(unitPrice)
                 : 0;
             if (item.count < quantity) {
-                return this.singleMessage(playerId, '挂售数量超过了当前持有数量。');
+                return this.singleMessage(playerId, '掛售數量超過了當前持有數量。');
             }
             if (!this.canTradeItemOnMarket(item)) {
                 return this.buildItemNotTradableResult(playerId);
             }
             if (listingMode === 'market' && item.itemId === CUSTOM_TECHNIQUE_BOOK_ITEM_ID) {
                 // 普通坊市按 itemId 聚合盘口，残卷共用 itemId 会导致 A 功法被当 B 功法成交。
-                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.custom-technique-order-book-forbidden', '自创功法残卷不能在普通坊市交易，请前往传法台或拍卖行。', {});
+                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.custom-technique-order-book-forbidden', '自創功法殘卷不能在普通坊市交易，請前往傳法臺或拍賣行。', {});
             }
             if (listingMode === 'transmission' && item.itemId !== CUSTOM_TECHNIQUE_BOOK_ITEM_ID) {
-                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.transmission-only-custom-technique', '传法台只流通自创功法残卷。', {});
+                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.transmission-only-custom-technique', '傳法臺只流通自創功法殘卷。', {});
             }
             if (listingMode === 'transmission' && !item.learnTechniqueId) {
                 // 空书（功法身份已丢失）不得再次流通，避免买家买到无法学习的残卷。
-                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.transmission-empty-book', '这卷残卷已残缺不全，无法寄售。', {});
+                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.transmission-empty-book', '這卷殘卷已殘缺不全，無法寄售。', {});
             }
             if (listingMode !== 'auction' && this.isOrdinaryMarketEnhancementLevelRestricted(item)) {
-                return this.singleMessage(playerId, `普通坊市只支持 +${MARKET_MAX_ENHANCE_LEVEL} 及以下装备，+${MARKET_MAX_ENHANCE_LEVEL + 1} 以上请走拍卖行寄拍。`);
+                return this.singleMessage(playerId, `普通坊市只支持 +${MARKET_MAX_ENHANCE_LEVEL} 及以下裝備，+${MARKET_MAX_ENHANCE_LEVEL + 1} 以上請走拍賣行寄拍。`);
             }
             if (auctionListingFee > 0 && !this.canAffordMarketCurrency(playerId, auctionListingFee)) {
-                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，发起拍卖需要上架费 ${this.formatUnitPrice(auctionListingFee)}。`);
+                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，發起拍賣需要上架費 ${this.formatUnitPrice(auctionListingFee)}。`);
             }
 
             let orderItem = this.toOrderItem(item);
 
             const itemKey = this.buildItemKey(orderItem);
             if (listingMode === 'market' && this.hasConflictingOpenOrder(playerId, itemKey, 'sell')) {
-                return this.singleMessage(playerId, '同一种物品已在求购中，不能同时挂售。');
+                return this.singleMessage(playerId, '同一種物品已在求購中，不能同時掛售。');
             }
             const buyOrders = listingMode !== 'market'
                 ? []
@@ -819,14 +819,14 @@ export class MarketRuntimeService {
                 async () => {
                     const currentItem = this.playerRuntimeService.peekInventoryItemByInstanceId(playerId, itemInstanceId);
                     if (!currentItem || Number(currentItem.count ?? 0) < quantity) {
-                        return this.singleMessage(playerId, '挂售物品已发生变化，请重新操作。');
+                        return this.singleMessage(playerId, '掛售物品已發生變化，請重新操作。');
                     }
                     if (auctionListingFee > 0 && !this.canAffordMarketCurrency(playerId, auctionListingFee)) {
-                        return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，发起拍卖需要上架费 ${this.formatUnitPrice(auctionListingFee)}。`);
+                        return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，發起拍賣需要上架費 ${this.formatUnitPrice(auctionListingFee)}。`);
                     }
             this.captureOnlinePlayerState(playerId, context);
             if (auctionListingFee > 0 && !this.consumeMarketCurrencyFromInventory(playerId, auctionListingFee)) {
-                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，发起拍卖需要上架费 ${this.formatUnitPrice(auctionListingFee)}。`);
+                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，發起拍賣需要上架費 ${this.formatUnitPrice(auctionListingFee)}。`);
             }
 
             const extractedItem = this.playerRuntimeService.splitInventoryItemByInstanceId(playerId, itemInstanceId, quantity);
@@ -857,8 +857,8 @@ export class MarketRuntimeService {
                 buyOrder.updatedAt = Date.now();
                 this.markOrderDirty(buyOrder.id, context);
                 this.touchAffectedPlayer(result, buyOrder.ownerId);
-                this.pushNotice(result, buyOrder.ownerId, `你的求购已成交：${getItemDisplayName(orderItem)} x${tradeQuantity}。`, 'loot');
-                this.pushNotice(result, playerId, `你卖出了 ${getItemDisplayName(orderItem)} x${tradeQuantity}，入账 ${this.getCurrencyItemName()} x${match.totalCost}。`, 'loot');
+                this.pushNotice(result, buyOrder.ownerId, `你的求購已成交：${getItemDisplayName(orderItem)} x${tradeQuantity}。`, 'loot');
+                this.pushNotice(result, playerId, `你賣出了 ${getItemDisplayName(orderItem)} x${tradeQuantity}，入賬 ${this.getCurrencyItemName()} x${match.totalCost}。`, 'loot');
                 if (buyOrder.remainingQuantity <= 0) {
                     buyOrder.status = 'filled';
                     this.deleteOrder(buyOrder.id, context);
@@ -892,7 +892,7 @@ export class MarketRuntimeService {
                 }
                 this.markOrderDirty(order.id, context, order);
                 if (listingMode === 'auction') {
-                    const listingText = `已寄拍 ${getItemDisplayName(orderItem)} x${remaining}，整包总价 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()}，已收上架费 ${this.formatUnitPrice(auctionListingFee)} ${this.getCurrencyItemName()}。`;
+                    const listingText = `已寄拍 ${getItemDisplayName(orderItem)} x${remaining}，整包總價 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()}，已收上架費 ${this.formatUnitPrice(auctionListingFee)} ${this.getCurrencyItemName()}。`;
                     this.pushStructuredNotice(result, playerId, 'success', 'notice.market.auction.consigned', listingText, {
                         vars: {
                             itemName: getItemDisplayName(orderItem),
@@ -905,7 +905,7 @@ export class MarketRuntimeService {
                     });
                 }
                 else if (listingMode === 'transmission') {
-                    const listingText = `已在传法台寄售 ${getItemDisplayName(orderItem)}，售价 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()}。`;
+                    const listingText = `已在傳法臺寄售 ${getItemDisplayName(orderItem)}，售價 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()}。`;
                     this.pushStructuredNotice(result, playerId, 'success', 'notice.market.transmission.consigned', listingText, {
                         vars: {
                             itemName: getItemDisplayName(orderItem),
@@ -916,7 +916,7 @@ export class MarketRuntimeService {
                     });
                 }
                 else {
-                    const listingText = `已挂售 ${getItemDisplayName(orderItem)} x${remaining}，单价 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()}。`;
+                    const listingText = `已掛售 ${getItemDisplayName(orderItem)} x${remaining}，單價 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()}。`;
                     this.pushNotice(result, playerId, listingText, 'success');
                 }
             }
@@ -946,7 +946,7 @@ export class MarketRuntimeService {
             return itemInstanceId;
         }
         this.playerRuntimeService.repairInventoryItemInstanceIds(playerId);
-        throw new BadRequestException('背包物品身份已修复，请重新选择。');
+        throw new BadRequestException('背包物品身份已修復，請重新選擇。');
     }
     /** 发起求购挂单，必要时直接撮合卖单。 */
     async createBuyOrder(playerId, payload) {
@@ -955,24 +955,24 @@ export class MarketRuntimeService {
 
             const item = this.resolveMarketItemForBuy(payload);
             if (!item) {
-                return this.singleMessage(playerId, '求购的物品不存在。');
+                return this.singleMessage(playerId, '求購的物品不存在。');
             }
             if (!this.canTradeItemOnMarket(item)) {
                 return this.buildItemNotTradableResult(playerId);
             }
             if (item.itemId === CUSTOM_TECHNIQUE_BOOK_ITEM_ID) {
                 // 求购单的物品由模板重建，不含 learnTechniqueId；一旦撮合成交会把空书交付买家。
-                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.custom-technique-order-book-forbidden', '自创功法残卷不能在普通坊市交易，请前往传法台或拍卖行。', {});
+                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.custom-technique-order-book-forbidden', '自創功法殘卷不能在普通坊市交易，請前往傳法臺或拍賣行。', {});
             }
             if (this.isOrdinaryMarketEnhancementLevelRestricted(item)) {
-                return this.singleMessage(playerId, `普通坊市只支持 +${MARKET_MAX_ENHANCE_LEVEL} 及以下装备求购，+${MARKET_MAX_ENHANCE_LEVEL + 1} 以上请走拍卖行。`);
+                return this.singleMessage(playerId, `普通坊市只支持 +${MARKET_MAX_ENHANCE_LEVEL} 及以下裝備求購，+${MARKET_MAX_ENHANCE_LEVEL + 1} 以上請走拍賣行。`);
             }
 
             const quantity = this.normalizeQuantity(payload.quantity);
 
             const unitPrice = this.normalizeUnitPrice(payload.unitPrice);
             if (!quantity || !unitPrice) {
-                return this.singleMessage(playerId, '求购数量或单价无效。');
+                return this.singleMessage(playerId, '求購數量或單價無效。');
             }
             if (!isValidMarketTradeQuantity(unitPrice, quantity)) {
                 return this.singleMessage(playerId, this.buildTradeQuantityError(unitPrice));
@@ -982,10 +982,10 @@ export class MarketRuntimeService {
 
             const itemKey = this.buildItemKey(orderItem);
             if (this.hasOpenOrder(playerId, itemKey, 'buy')) {
-                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.buy-order-duplicate', '同一种物品已有求购挂单，不能重复求购。', {});
+                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.buy-order-duplicate', '同一種物品已有求購掛單，不能重複求購。', {});
             }
             if (this.hasConflictingOpenOrder(playerId, itemKey, 'buy')) {
-                return this.singleMessage(playerId, '同一种物品已在挂售中，不能同时求购。');
+                return this.singleMessage(playerId, '同一種物品已在掛售中，不能同時求購。');
             }
 
             const totalCost = calculateMarketTradeTotalCost(quantity, unitPrice);
@@ -998,11 +998,11 @@ export class MarketRuntimeService {
                 [playerId, ...matchPlan.matches.map((match) => match.order.ownerId)],
                 async () => {
                     if (!this.canAffordMarketCurrency(playerId, totalCost)) {
-                        return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，无法挂出求购。`);
+                        return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，無法掛出求購。`);
                     }
             this.captureOnlinePlayerState(playerId, context);
             if (!this.consumeMarketCurrencyFromInventory(playerId, totalCost)) {
-                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，无法挂出求购。`);
+                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，無法掛出求購。`);
             }
 
             const result = this.createEmptyResult(playerId);
@@ -1034,8 +1034,8 @@ export class MarketRuntimeService {
                 sellOrder.updatedAt = Date.now();
                 this.markOrderDirty(sellOrder.id, context);
                 this.touchAffectedPlayer(result, sellOrder.ownerId);
-                this.pushNotice(result, playerId, `你买入了 ${getItemDisplayName(orderItem)} x${tradeQuantity}，成交价 ${this.formatUnitPrice(tradePrice)}。`, 'loot');
-                this.pushNotice(result, sellOrder.ownerId, `你的挂售已成交：${getItemDisplayName(orderItem)} x${tradeQuantity}，入账 ${this.getCurrencyItemName()} x${match.totalCost}。`, 'loot');
+                this.pushNotice(result, playerId, `你買入了 ${getItemDisplayName(orderItem)} x${tradeQuantity}，成交價 ${this.formatUnitPrice(tradePrice)}。`, 'loot');
+                this.pushNotice(result, sellOrder.ownerId, `你的掛售已成交：${getItemDisplayName(orderItem)} x${tradeQuantity}，入賬 ${this.getCurrencyItemName()} x${match.totalCost}。`, 'loot');
                 if (sellOrder.remainingQuantity <= 0) {
                     sellOrder.status = 'filled';
                     this.deleteOrder(sellOrder.id, context);
@@ -1060,7 +1060,7 @@ export class MarketRuntimeService {
                 };
                 this.openOrders.push(order);
                 this.markOrderDirty(order.id, context);
-                this.pushNotice(result, playerId, `已挂出求购 ${getItemDisplayName(orderItem)} x${remaining}，单价 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()}。`, 'success');
+                this.pushNotice(result, playerId, `已掛出求購 ${getItemDisplayName(orderItem)} x${remaining}，單價 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()}。`, 'success');
             }
             this.compactOpenOrders();
             const durableCommitted = await this.commitDurableMarketMutationIfAvailable(context, playerId, 'market_create_buy_order', {
@@ -1085,24 +1085,24 @@ export class MarketRuntimeService {
         return this.runExclusiveMarketMutation(playerId, async (context) => {
             const quantity = this.normalizeQuantity(payload.quantity);
             if (!quantity) {
-                return this.singleMessage(playerId, '买入数量无效。');
+                return this.singleMessage(playerId, '買入數量無效。');
             }
 
             const itemKey = this.resolveInternalMarketItemKey(payload.itemKey);
             if (this.buildAuctionListedItems().some((entry) => entry.orderItemKey === itemKey && this.getSortedAuctionBids(entry.itemKey).some((bid) => bid.reservedCost > 0))) {
-                return this.singleMessage(playerId, '该物品已有拍卖出价，请从拍卖行一口价或等待结算。');
+                return this.singleMessage(playerId, '該物品已有拍賣出價，請從拍賣行一口價或等待結算。');
             }
             const sells = this.getSortedOrders(itemKey, 'sell').filter((order) => order.ownerId !== playerId
                 && !this.isSpecialListingOrder(order)
                 && this.canTradeItemOnMarket(order.item)
                 && !this.isOrdinaryMarketEnhancementLevelRestricted(order.item));
             if (sells.length === 0) {
-                return this.singleMessage(playerId, '当前没有可买入的挂售。');
+                return this.singleMessage(playerId, '當前沒有可買入的掛售。');
             }
 
             const plan = this.planOrderMatches(sells, quantity, Number.POSITIVE_INFINITY);
             if (plan.fulfilledQuantity < quantity) {
-                return this.singleMessage(playerId, `当前最多只能买到 ${plan.fulfilledQuantity} 件。`);
+                return this.singleMessage(playerId, `當前最多隻能買到 ${plan.fulfilledQuantity} 件。`);
             }
 
             const totalCost = plan.totalCost;
@@ -1110,12 +1110,12 @@ export class MarketRuntimeService {
                 [playerId, ...plan.matches.map((match) => match.order.ownerId)],
                 async () => {
                     if (!this.canAffordMarketCurrency(playerId, totalCost)) {
-                        return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，无法完成买入。`);
+                        return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，無法完成買入。`);
                     }
 
                     this.captureOnlinePlayerState(playerId, context);
                     if (!this.consumeMarketCurrencyFromInventory(playerId, totalCost)) {
-                        return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，无法完成买入。`);
+                        return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，無法完成買入。`);
                     }
 
             const result = this.createEmptyResult(playerId);
@@ -1137,13 +1137,13 @@ export class MarketRuntimeService {
                 sellOrder.updatedAt = Date.now();
                 this.markOrderDirty(sellOrder.id, context);
                 this.touchAffectedPlayer(result, sellOrder.ownerId);
-                this.pushNotice(result, sellOrder.ownerId, `你的挂售已成交：${getItemDisplayName(item)} x${tradeQuantity}。`, 'loot');
+                this.pushNotice(result, sellOrder.ownerId, `你的掛售已成交：${getItemDisplayName(item)} x${tradeQuantity}。`, 'loot');
                 if (sellOrder.remainingQuantity <= 0) {
                     sellOrder.status = 'filled';
                     this.deleteOrder(sellOrder.id, context);
                 }
             }
-            this.pushNotice(result, playerId, `你买入了 ${getItemDisplayName(item)} x${quantity}，共花费 ${this.getCurrencyItemName()} x${totalCost}。`, 'loot');
+            this.pushNotice(result, playerId, `你買入了 ${getItemDisplayName(item)} x${quantity}，共花費 ${this.getCurrencyItemName()} x${totalCost}。`, 'loot');
             this.compactOpenOrders();
             const durableCommitted = await this.commitDurableMarketMutationIfAvailable(context, playerId, 'market_buy_now', {
                 operationId: payload?.operationId ?? payload?.requestId,
@@ -1173,16 +1173,16 @@ export class MarketRuntimeService {
 
             const quantity = this.normalizeQuantity(payload.quantity);
             if (!quantity) {
-                return this.singleMessage(playerId, '出售数量无效。');
+                return this.singleMessage(playerId, '出售數量無效。');
             }
             if (item.count < quantity) {
-                return this.singleMessage(playerId, '出售数量超过了当前持有数量。');
+                return this.singleMessage(playerId, '出售數量超過了當前持有數量。');
             }
             if (!this.canTradeItemOnMarket(item)) {
                 return this.buildItemNotTradableResult(playerId);
             }
             if (this.isOrdinaryMarketEnhancementLevelRestricted(item)) {
-                return this.singleMessage(playerId, `+${MARKET_MAX_ENHANCE_LEVEL + 1} 以上装备不能出售给普通求购盘，请走拍卖行寄拍。`);
+                return this.singleMessage(playerId, `+${MARKET_MAX_ENHANCE_LEVEL + 1} 以上裝備不能出售給普通求購盤，請走拍賣行寄拍。`);
             }
 
             const orderItem = this.toOrderItem(item);
@@ -1192,19 +1192,19 @@ export class MarketRuntimeService {
                 && this.canTradeItemOnMarket(order.item)
                 && !this.isOrdinaryMarketEnhancementLevelRestricted(order.item));
             if (buys.length === 0) {
-                return this.singleMessage(playerId, '当前没有可直接成交的求购。');
+                return this.singleMessage(playerId, '當前沒有可直接成交的求購。');
             }
 
             const plan = this.planOrderMatches(buys, quantity, Number.POSITIVE_INFINITY);
             if (plan.fulfilledQuantity < quantity) {
-                return this.singleMessage(playerId, `当前求购盘最多只能接下 ${plan.fulfilledQuantity} 件。`);
+                return this.singleMessage(playerId, `當前求購盤最多隻能接下 ${plan.fulfilledQuantity} 件。`);
             }
             return this.runExclusivePlayerAssetMutation(
                 [playerId, ...plan.matches.map((match) => match.order.ownerId)],
                 async () => {
                     const currentItem = this.playerRuntimeService.peekInventoryItemByInstanceId(playerId, itemInstanceId);
                     if (!currentItem || Number(currentItem.count ?? 0) < quantity) {
-                        return this.singleMessage(playerId, '出售物品已发生变化，请重新操作。');
+                        return this.singleMessage(playerId, '出售物品已發生變化，請重新操作。');
                     }
 
             this.captureOnlinePlayerState(playerId, context);
@@ -1230,13 +1230,13 @@ export class MarketRuntimeService {
                 buyOrder.updatedAt = Date.now();
                 this.markOrderDirty(buyOrder.id, context);
                 this.touchAffectedPlayer(result, buyOrder.ownerId);
-                this.pushNotice(result, buyOrder.ownerId, `你的求购已成交：${getItemDisplayName(orderItem)} x${tradeQuantity}。`, 'loot');
+                this.pushNotice(result, buyOrder.ownerId, `你的求購已成交：${getItemDisplayName(orderItem)} x${tradeQuantity}。`, 'loot');
                 if (buyOrder.remainingQuantity <= 0) {
                     buyOrder.status = 'filled';
                     this.deleteOrder(buyOrder.id, context);
                 }
             }
-            this.pushNotice(result, playerId, `你卖出了 ${getItemDisplayName(orderItem)} x${quantity}，共入账 ${this.getCurrencyItemName()} x${totalIncome}。`, 'loot');
+            this.pushNotice(result, playerId, `你賣出了 ${getItemDisplayName(orderItem)} x${quantity}，共入賬 ${this.getCurrencyItemName()} x${totalIncome}。`, 'loot');
             this.compactOpenOrders();
             const durableCommitted = await this.commitDurableMarketMutationIfAvailable(context, playerId, 'market_sell_now', {
                 operationId: payload?.operationId ?? payload?.requestId,
@@ -1259,7 +1259,7 @@ export class MarketRuntimeService {
         const requestedOrderId = String(payload.orderId ?? '').trim();
         const requestedOrder = this.openOrders.find((entry) => entry.id === requestedOrderId && entry.ownerId === playerId);
         if (requestedOrder?.side === 'sell' && this.isAuctionOrder(requestedOrder) && this.getSortedAuctionBids(this.buildAuctionLotKey(requestedOrder)).some((bid) => bid.reservedCost > 0)) {
-            return this.singleMessage(playerId, '这件寄拍已有出价，不能直接撤回。');
+            return this.singleMessage(playerId, '這件寄拍已有出價，不能直接撤回。');
         }
         return this.runExclusiveMarketMutation(playerId, async (context) => {
 
@@ -1267,7 +1267,7 @@ export class MarketRuntimeService {
 
             const order = this.openOrders.find((entry) => entry.id === orderId && entry.ownerId === playerId);
             if (!order) {
-                return this.singleMessage(playerId, '未找到可取消的订单。');
+                return this.singleMessage(playerId, '未找到可取消的訂單。');
             }
             return this.runExclusivePlayerAssetMutation([playerId], async () => {
             if (order.side === 'sell') {
@@ -1293,7 +1293,7 @@ export class MarketRuntimeService {
             if (this.durableOperationService?.isEnabled?.() && !durableCommitted) {
                 throw new Error('market_cancel_order_durable_commit_failed');
             }
-                return this.singleMessage(playerId, '订单已取消，剩余托管物已退回。', 'success');
+                return this.singleMessage(playerId, '訂單已取消，剩餘託管物已退回。', 'success');
             });
         });
     }
@@ -1353,7 +1353,7 @@ export class MarketRuntimeService {
                 if (order.side === 'sell') {
                     if (this.isAuctionOrder(order)) {
                         const lotKey = this.buildAuctionLotKey(order);
-                        this.refundAuctionBidReserves(lotKey, context, mutationResult, '拍卖行拍品已被撤下，冻结灵石已退回。');
+                        this.refundAuctionBidReserves(lotKey, context, mutationResult, '拍賣行拍品已被撤下，凍結靈石已退回。');
                         this.clearAuctionStateForItemKey(lotKey, context);
                     }
                     this.deliverItemToPlayer(normalizedPlayerId, { ...order.item, count: order.remainingQuantity }, context);
@@ -1442,15 +1442,15 @@ export class MarketRuntimeService {
                     try {
                         const storage = this.storageByPlayerId.get(playerId);
                         if (!storage || storage.items.length === 0) {
-                            return this.singleMessage(playerId, '坊市托管仓里暂时没有可领取的物品。');
+                            return this.singleMessage(playerId, '坊市託管倉裡暫時沒有可領取的物品。');
                         }
                         const playerSnapshot = this.playerRuntimeService.snapshot(playerId);
                         if (!playerSnapshot) {
-                            return this.singleMessage(playerId, '玩家当前不在运行态，暂时无法领取坊市托管仓物品。', 'warn');
+                            return this.singleMessage(playerId, '玩家當前不在運行態，暫時無法領取坊市託管倉物品。', 'warn');
                         }
                         const plan = this.buildClaimStoragePlan(playerSnapshot.inventory, storage.items);
                         if (plan.movedCount <= 0) {
-                            return this.singleMessage(playerId, '背包空间不足，托管仓物品暂时无法领取。');
+                            return this.singleMessage(playerId, '背包空間不足，託管倉物品暫時無法領取。');
                         }
                         const expectedRuntimeOwnerId = typeof playerSnapshot.runtimeOwnerId === 'string' && playerSnapshot.runtimeOwnerId.trim()
                             ? playerSnapshot.runtimeOwnerId.trim()
@@ -1483,9 +1483,9 @@ export class MarketRuntimeService {
                         context.skipPersistence = true;
                         this.evictStorageCacheIfOverLimit();
                         if (plan.remainingItems.length > 0) {
-                            return this.singleMessage(playerId, `已领取部分托管物，共 ${plan.movedCount} 件，其余仍保留在坊市托管仓。`, 'loot');
+                            return this.singleMessage(playerId, `已領取部分託管物，共 ${plan.movedCount} 件，其餘仍保留在坊市託管倉。`, 'loot');
                         }
-                        return this.singleMessage(playerId, `已领取坊市托管仓中的全部物品，共 ${plan.movedCount} 件。`, 'loot');
+                        return this.singleMessage(playerId, `已領取坊市託管倉中的全部物品，共 ${plan.movedCount} 件。`, 'loot');
                     }
                     catch (error) {
                         this.restoreMutationContext(context);
@@ -1493,23 +1493,23 @@ export class MarketRuntimeService {
                     }
                 });
             }).catch((error) => {
-                this.logger.error(`坊市托管仓领取失败，已回滚: ${error instanceof Error ? error.message : String(error)}`);
-                return this.singleMessage(playerId, '坊市结算失败，已回滚本次操作。', 'warn');
+                this.logger.error(`坊市託管倉領取失敗，已回滾: ${error instanceof Error ? error.message : String(error)}`);
+                return this.singleMessage(playerId, '坊市結算失敗，已回滾本次操作。', 'warn');
             });
         }
         return this.runExclusiveMarketMutation(playerId, async (context) => {
             return this.runExclusivePlayerAssetMutation([playerId], async () => {
                 const storage = this.storageByPlayerId.get(playerId);
                 if (!storage || storage.items.length === 0) {
-                    return this.singleMessage(playerId, '坊市托管仓里暂时没有可领取的物品。');
+                    return this.singleMessage(playerId, '坊市託管倉裡暫時沒有可領取的物品。');
                 }
                 const playerSnapshot = this.playerRuntimeService.snapshot(playerId);
                 if (!playerSnapshot) {
-                    return this.singleMessage(playerId, '玩家当前不在运行态，暂时无法领取坊市托管仓物品。', 'warn');
+                    return this.singleMessage(playerId, '玩家當前不在運行態，暫時無法領取坊市託管倉物品。', 'warn');
                 }
                 const plan = this.buildClaimStoragePlan(playerSnapshot.inventory, storage.items);
                 if (plan.movedCount <= 0) {
-                    return this.singleMessage(playerId, '背包空间不足，托管仓物品暂时无法领取。');
+                    return this.singleMessage(playerId, '背包空間不足，託管倉物品暫時無法領取。');
                 }
                 this.captureOnlinePlayerState(playerId, context);
                 for (const item of storage.items) {
@@ -1519,9 +1519,9 @@ export class MarketRuntimeService {
                 }
                 this.setStorage(playerId, { items: plan.remainingItems }, context);
                 if (plan.remainingItems.length > 0) {
-                    return this.singleMessage(playerId, `已领取部分托管物，共 ${plan.movedCount} 件，其余仍保留在坊市托管仓。`, 'loot');
+                    return this.singleMessage(playerId, `已領取部分託管物，共 ${plan.movedCount} 件，其餘仍保留在坊市託管倉。`, 'loot');
                 }
-                return this.singleMessage(playerId, `已领取坊市托管仓中的全部物品，共 ${plan.movedCount} 件。`, 'loot');
+                return this.singleMessage(playerId, `已領取坊市託管倉中的全部物品，共 ${plan.movedCount} 件。`, 'loot');
             });
         });
     }
@@ -1712,7 +1712,7 @@ export class MarketRuntimeService {
                 startAtMs: timing.startAtMs,
                 durationSeconds: timing.durationSeconds,
                 status: 'active',
-                statusLabel: '正在拍卖',
+                statusLabel: '正在拍賣',
                 sellerLabel: '匿名寄拍',
                 lotNo: `#${1000 + (seed % 9000)}`,
                 heat: entry.sellOrderCount * 3 + bids.length * 2,
@@ -1781,31 +1781,31 @@ export class MarketRuntimeService {
             const requestedKey = String(payload?.itemKey ?? payload?.lotId ?? '').trim();
             const itemKey = this.resolveAuctionLotKey(requestedKey);
             if (!itemKey) {
-                return this.singleMessage(playerId, '拍品不存在或已结束。');
+                return this.singleMessage(playerId, '拍品不存在或已結束。');
             }
             const sellOrders = this.getAuctionSellOrders(itemKey).filter((order) => order.ownerId !== playerId);
             if (sellOrders.length === 0) {
-                return this.singleMessage(playerId, '拍品不存在、已结束，或不能对自己的寄拍出价。');
+                return this.singleMessage(playerId, '拍品不存在、已結束，或不能對自己的寄拍出價。');
             }
             const lot = this.buildAuctionParticipateLotEntries(playerId).find((entry) => this.resolveAuctionLotKey(entry.itemKey) === itemKey);
             if (!lot) {
-                return this.singleMessage(playerId, '拍品不存在或已结束。');
+                return this.singleMessage(playerId, '拍品不存在或已結束。');
             }
             const timing = this.auctionTimingByItemKey.get(itemKey);
             if (!timing || timing.endAtMs <= Date.now()) {
-                return this.singleMessage(playerId, '拍品已经结束，不能继续出价。');
+                return this.singleMessage(playerId, '拍品已經結束，不能繼續出價。');
             }
             const unitPrice = this.normalizeUnitPrice(payload?.unitPrice);
             if (!unitPrice) {
-                return this.singleMessage(playerId, '拍卖出价无效。');
+                return this.singleMessage(playerId, '拍賣出價無效。');
             }
             const minBidPrice = this.getAuctionMinimumBidPrice(lot.currentPrice);
             if (unitPrice < minBidPrice) {
-                return this.singleMessage(playerId, `最低加价为 ${this.formatUnitPrice(minBidPrice)} ${this.getCurrencyItemName()}。`);
+                return this.singleMessage(playerId, `最低加價為 ${this.formatUnitPrice(minBidPrice)} ${this.getCurrencyItemName()}。`);
             }
             const totalCost = calculateMarketTradeTotalCost(1, unitPrice);
             if (totalCost === null) {
-                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，无法出价。`);
+                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，無法出價。`);
             }
             const existingBids = this.getSortedAuctionBids(itemKey);
             const previousHighest = existingBids[0] ?? null;
@@ -1817,7 +1817,7 @@ export class MarketRuntimeService {
                 [playerId, previousHighest?.bidderId].filter(Boolean),
                 async () => {
             if (previousBid && unitPrice <= previousBid.unitPrice) {
-                return this.singleMessage(playerId, '新的出价必须高于你当前的拍卖出价。');
+                return this.singleMessage(playerId, '新的出價必須高於你當前的拍賣出價。');
             }
             const now = Date.now();
             const previousReservedCost = previousBid?.reservedCost && previousHighest?.bidderId === playerId
@@ -1825,12 +1825,12 @@ export class MarketRuntimeService {
                 : 0;
             const debitCost = Math.max(0, totalCost - previousReservedCost);
             if (!this.canAffordMarketCurrency(playerId, debitCost)) {
-                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，无法出价。`);
+                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，無法出價。`);
             }
             if (debitCost > 0) {
                 this.captureOnlinePlayerState(playerId, context);
                 if (!this.consumeMarketCurrencyFromInventory(playerId, debitCost)) {
-                    return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，无法出价。`);
+                    return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，無法出價。`);
                 }
             }
             const result = this.createEmptyResult(playerId);
@@ -1869,8 +1869,8 @@ export class MarketRuntimeService {
             bids.sort((left, right) => right.unitPrice - left.unitPrice || left.createdAt - right.createdAt || left.bidderId.localeCompare(right.bidderId));
             this.auctionBidsByItemKey.set(itemKey, bids);
             this.persistAuctionStateToCarrier(itemKey, context);
-            const extensionText = extension.extended ? '，剩余时间已延长至 30 秒' : '';
-            this.pushStructuredNotice(result, playerId, 'success', 'notice.market.auction.bid-placed', `你在拍卖行出价 ${lotItemName}，当前总价 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()}${extensionText}。`, {
+            const extensionText = extension.extended ? '，剩餘時間已延長至 30 秒' : '';
+            this.pushStructuredNotice(result, playerId, 'success', 'notice.market.auction.bid-placed', `你在拍賣行出價 ${lotItemName}，當前總價 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()}${extensionText}。`, {
                 vars: {
                     itemName: lotItemName,
                     currencyName: this.getCurrencyItemName(),
@@ -1900,15 +1900,15 @@ export class MarketRuntimeService {
             const requestedKey = String(payload?.itemKey ?? payload?.lotId ?? '').trim();
             const itemKey = this.resolveAuctionLotKey(requestedKey);
             if (!itemKey) {
-                return this.singleMessage(playerId, '拍品不存在或已结束。');
+                return this.singleMessage(playerId, '拍品不存在或已結束。');
             }
             const timing = this.auctionTimingByItemKey.get(itemKey);
             if (timing && timing.endAtMs <= Date.now()) {
-                return this.singleMessage(playerId, '拍品已经结束，不能一口价。');
+                return this.singleMessage(playerId, '拍品已經結束，不能一口價。');
             }
             const sellOrder = this.getAuctionSellOrders(itemKey).find((order) => order.ownerId !== playerId);
             if (!sellOrder) {
-                return this.singleMessage(playerId, '拍品不存在、已结束，或不能一口价自己的寄拍。');
+                return this.singleMessage(playerId, '拍品不存在、已結束，或不能一口價自己的寄拍。');
             }
             const bids = this.getSortedAuctionBids(itemKey);
             return this.runExclusivePlayerAssetMutation(
@@ -1917,7 +1917,7 @@ export class MarketRuntimeService {
             const configuredBuyoutPrice = this.getAuctionOrderBuyoutPrice(sellOrder, Math.max(1, Math.floor(sellOrder.unitPrice)));
             const currentPrice = Math.max(1, Math.floor(bids[0]?.unitPrice ?? sellOrder.unitPrice));
             if (configuredBuyoutPrice === null || configuredBuyoutPrice < currentPrice) {
-                return this.singleMessage(playerId, '该拍品不支持一口价。');
+                return this.singleMessage(playerId, '該拍品不支持一口價。');
             }
             const buyoutUnitPrice = configuredBuyoutPrice;
             const tradeQuantity = Math.max(1, Math.trunc(Number(sellOrder.remainingQuantity) || 1));
@@ -1929,11 +1929,11 @@ export class MarketRuntimeService {
             const buyerReservedCost = Math.max(0, Math.trunc(Number(buyerBid?.reservedCost ?? 0)));
             const additionalCost = Math.max(0, totalCost - buyerReservedCost);
             if (!this.canAffordMarketCurrency(playerId, additionalCost)) {
-                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，无法一口价。`);
+                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，無法一口價。`);
             }
             this.captureOnlinePlayerState(playerId, context);
             if (additionalCost > 0 && !this.consumeMarketCurrencyFromInventory(playerId, additionalCost)) {
-                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，无法一口价。`);
+                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，無法一口價。`);
             }
             const result = this.createEmptyResult(playerId);
             for (const bid of bids) {
@@ -1949,7 +1949,7 @@ export class MarketRuntimeService {
                     continue;
                 }
                 this.deliverMarketCurrencyToPlayer(bid.bidderId, reservedCost, context);
-                this.pushNotice(result, bid.bidderId, `拍卖行 ${getItemDisplayName(sellOrder.item)} 已被一口价，冻结灵石已退回。`, 'info');
+                this.pushNotice(result, bid.bidderId, `拍賣行 ${getItemDisplayName(sellOrder.item)} 已被一口價，凍結靈石已退回。`, 'info');
             }
             this.deliverItemToPlayer(playerId, { ...sellOrder.item, count: tradeQuantity }, context);
             this.deliverMarketCurrencyToPlayer(sellOrder.ownerId, totalCost, context);
@@ -1965,11 +1965,11 @@ export class MarketRuntimeService {
             sellOrder.updatedAt = Date.now();
             this.markOrderDirty(sellOrder.id, context, sellOrder);
             this.touchAffectedPlayer(result, sellOrder.ownerId);
-            this.pushStructuredNotice(result, playerId, 'success', 'notice.market.auction.buyout-buyer', `你在拍卖行一口价竞得了 ${getItemDisplayName(sellOrder.item)} x${tradeQuantity}，一口价支付 ${this.getCurrencyItemName()} x${totalCost}。`, {
+            this.pushStructuredNotice(result, playerId, 'success', 'notice.market.auction.buyout-buyer', `你在拍賣行一口價競得了 ${getItemDisplayName(sellOrder.item)} x${tradeQuantity}，一口價支付 ${this.getCurrencyItemName()} x${totalCost}。`, {
                 vars: { itemName: getItemDisplayName(sellOrder.item), quantity: tradeQuantity, currencyName: this.getCurrencyItemName(), totalPrice: totalCost },
                 pills: [{ key: 'itemName', style: 'target' }, { key: 'totalPrice', style: 'damage' }],
             });
-            this.pushStructuredNotice(result, sellOrder.ownerId, 'success', 'notice.market.auction.buyout-seller', `你的寄拍已被一口价拍下：${getItemDisplayName(sellOrder.item)} x${tradeQuantity}，入账 ${this.getCurrencyItemName()} x${totalCost}。`, {
+            this.pushStructuredNotice(result, sellOrder.ownerId, 'success', 'notice.market.auction.buyout-seller', `你的寄拍已被一口價拍下：${getItemDisplayName(sellOrder.item)} x${tradeQuantity}，入賬 ${this.getCurrencyItemName()} x${totalCost}。`, {
                 vars: { itemName: getItemDisplayName(sellOrder.item), quantity: tradeQuantity, currencyName: this.getCurrencyItemName(), totalPrice: totalCost },
                 pills: [{ key: 'itemName', style: 'target' }, { key: 'totalPrice', style: 'damage' }],
             });
@@ -2121,7 +2121,7 @@ export class MarketRuntimeService {
                 techniqueGrade: summary.techniqueGrade,
                 techniqueRealmLv: summary.techniqueRealmLv,
                 price: Math.max(1, Math.trunc(Number(entry.order.unitPrice) || 1)),
-                sellerLabel: '匿名传法',
+                sellerLabel: '匿名傳法',
                 isMine: Boolean(ownerId) && entry.order.ownerId === ownerId,
                 remainingQuantity: entry.order.remainingQuantity,
                 createdAt: Number(entry.order.createdAt) || 0,
@@ -2266,10 +2266,10 @@ export class MarketRuntimeService {
             const itemKey = this.resolveTransmissionLotKey(requestedKey);
             const sellOrder = itemKey ? this.getTransmissionSellOrder(itemKey) : null;
             if (!sellOrder) {
-                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.transmission-lot-missing', '这卷功法残卷已不在传法台。', {});
+                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.transmission-lot-missing', '這卷功法殘卷已不在傳法臺。', {});
             }
             if (sellOrder.ownerId === playerId) {
-                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.transmission-own-lot', '不能求取自己寄售的功法残卷。', {});
+                return this.singleStructuredMessage(playerId, 'warn', 'notice.market.transmission-own-lot', '不能求取自己寄售的功法殘卷。', {});
             }
             return this.runExclusivePlayerAssetMutation([playerId, sellOrder.ownerId], async () => {
             const tradeQuantity = Math.max(1, Math.trunc(Number(sellOrder.remainingQuantity) || 1));
@@ -2279,11 +2279,11 @@ export class MarketRuntimeService {
                 return this.singleMessage(playerId, this.buildTradeQuantityError(unitPrice));
             }
             if (!this.canAffordMarketCurrency(playerId, totalCost)) {
-                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，无法求取。`);
+                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，無法求取。`);
             }
             this.captureOnlinePlayerState(playerId, context);
             if (!this.consumeMarketCurrencyFromInventory(playerId, totalCost)) {
-                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，无法求取。`);
+                return this.singleMessage(playerId, `${this.getCurrencyItemName()}不足，無法求取。`);
             }
             const result = this.createEmptyResult(playerId);
             const itemName = getItemDisplayName(sellOrder.item);
@@ -2302,11 +2302,11 @@ export class MarketRuntimeService {
             sellOrder.updatedAt = Date.now();
             this.markOrderDirty(sellOrder.id, context, sellOrder);
             this.touchAffectedPlayer(result, sellOrder.ownerId);
-            this.pushStructuredNotice(result, playerId, 'success', 'notice.market.transmission.bought', `你在传法台求得 ${itemName}，付出 ${this.getCurrencyItemName()} x${totalCost}。`, {
+            this.pushStructuredNotice(result, playerId, 'success', 'notice.market.transmission.bought', `你在傳法臺求得 ${itemName}，付出 ${this.getCurrencyItemName()} x${totalCost}。`, {
                 vars: { itemName, currencyName: this.getCurrencyItemName(), totalPrice: totalCost },
                 pills: [{ key: 'itemName', style: 'target' }, { key: 'totalPrice', style: 'damage' }],
             });
-            this.pushStructuredNotice(result, sellOrder.ownerId, 'success', 'notice.market.transmission.sold', `你的传法台寄售已成交：${itemName}，入账 ${this.getCurrencyItemName()} x${totalCost}。`, {
+            this.pushStructuredNotice(result, sellOrder.ownerId, 'success', 'notice.market.transmission.sold', `你的傳法臺寄售已成交：${itemName}，入賬 ${this.getCurrencyItemName()} x${totalCost}。`, {
                 vars: { itemName, currencyName: this.getCurrencyItemName(), totalPrice: totalCost },
                 pills: [{ key: 'itemName', style: 'target' }, { key: 'totalPrice', style: 'damage' }],
             });
@@ -2583,14 +2583,14 @@ export class MarketRuntimeService {
         const sellOrder = this.getAuctionSellOrders(normalizedItemKey)
             .find((order) => order.ownerId !== highestBid.bidderId && !context.deletedOrderIds.has(order.id));
         if (!sellOrder) {
-            this.refundAuctionBidReserves(normalizedItemKey, context, result, `拍卖行拍品已失效，冻结灵石已退回。`);
+            this.refundAuctionBidReserves(normalizedItemKey, context, result, `拍賣行拍品已失效，凍結靈石已退回。`);
             this.clearAuctionStateForItemKey(normalizedItemKey, context);
             return true;
         }
         const tradeQuantity = Math.max(1, Math.trunc(Number(sellOrder.remainingQuantity) || 1));
         const totalCost = calculateMarketTradeTotalCost(1, highestBid.unitPrice);
         if (totalCost === null || highestBid.reservedCost < totalCost) {
-            this.refundAuctionBidReserves(normalizedItemKey, context, result, `拍卖行拍品结算失败，冻结灵石已退回。`);
+            this.refundAuctionBidReserves(normalizedItemKey, context, result, `拍賣行拍品結算失敗，凍結靈石已退回。`);
             this.clearAuctionStateForItemKey(normalizedItemKey, context);
             this.reopenAuctionStateIfActive(normalizedItemKey, context);
             return true;
@@ -2601,7 +2601,7 @@ export class MarketRuntimeService {
                 continue;
             }
             this.deliverMarketCurrencyToPlayer(bid.bidderId, reservedCost, context);
-            this.pushNotice(result, bid.bidderId, `拍卖行 ${getItemDisplayName(sellOrder.item)} 已成交，冻结灵石已退回。`, 'info');
+            this.pushNotice(result, bid.bidderId, `拍賣行 ${getItemDisplayName(sellOrder.item)} 已成交，凍結靈石已退回。`, 'info');
         }
         const overpayRefund = Math.max(0, highestBid.reservedCost - totalCost);
         if (overpayRefund > 0) {
@@ -2620,11 +2620,11 @@ export class MarketRuntimeService {
         sellOrder.remainingQuantity -= tradeQuantity;
         sellOrder.updatedAt = now;
         this.markOrderDirty(sellOrder.id, context);
-        this.pushStructuredNotice(result, highestBid.bidderId, 'success', 'notice.market.auction.settled-buyer', `你竞得了 ${getItemDisplayName(sellOrder.item)} x${tradeQuantity}，整包成交价 ${this.formatUnitPrice(highestBid.unitPrice)} ${this.getCurrencyItemName()}。`, {
+        this.pushStructuredNotice(result, highestBid.bidderId, 'success', 'notice.market.auction.settled-buyer', `你競得了 ${getItemDisplayName(sellOrder.item)} x${tradeQuantity}，整包成交價 ${this.formatUnitPrice(highestBid.unitPrice)} ${this.getCurrencyItemName()}。`, {
             vars: { itemName: getItemDisplayName(sellOrder.item), quantity: tradeQuantity, currencyName: this.getCurrencyItemName(), totalPrice: this.formatUnitPrice(highestBid.unitPrice) },
             pills: [{ key: 'itemName', style: 'target' }, { key: 'totalPrice', style: 'damage' }],
         });
-        this.pushStructuredNotice(result, sellOrder.ownerId, 'success', 'notice.market.auction.settled-seller', `你的寄拍已成交：${getItemDisplayName(sellOrder.item)} x${tradeQuantity}，入账 ${this.getCurrencyItemName()} x${totalCost}。`, {
+        this.pushStructuredNotice(result, sellOrder.ownerId, 'success', 'notice.market.auction.settled-seller', `你的寄拍已成交：${getItemDisplayName(sellOrder.item)} x${tradeQuantity}，入賬 ${this.getCurrencyItemName()} x${totalCost}。`, {
             vars: { itemName: getItemDisplayName(sellOrder.item), quantity: tradeQuantity, currencyName: this.getCurrencyItemName(), totalPrice: totalCost },
             pills: [{ key: 'itemName', style: 'target' }, { key: 'totalPrice', style: 'damage' }],
         });
@@ -2661,20 +2661,20 @@ export class MarketRuntimeService {
         }
         for (const notice of result.notices) {
             if (notice.playerId === playerId) {
-                if (typeof notice.text === 'string' && notice.text.includes('你买入了')) {
-                    notice.text = notice.text.replace('你买入了', '你在拍卖行一口价竞得了').replace('共花费', '一口价支付');
+                if (typeof notice.text === 'string' && notice.text.includes('你買入了')) {
+                    notice.text = notice.text.replace('你買入了', '你在拍賣行一口價競得了').replace('共花費', '一口價支付');
                     notice.kind = 'success';
                 }
-                else if (typeof notice.text === 'string' && notice.text.includes('当前没有可买入的挂售')) {
-                    notice.text = '拍品不存在或已结束。';
+                else if (typeof notice.text === 'string' && notice.text.includes('當前沒有可買入的掛售')) {
+                    notice.text = '拍品不存在或已結束。';
                 }
-                else if (typeof notice.text === 'string' && notice.text.includes('不足，无法完成买入')) {
-                    notice.text = `${this.getCurrencyItemName()}不足，无法一口价。`;
+                else if (typeof notice.text === 'string' && notice.text.includes('不足，無法完成買入')) {
+                    notice.text = `${this.getCurrencyItemName()}不足，無法一口價。`;
                 }
                 continue;
             }
-            if (typeof notice.text === 'string' && notice.text.includes('你的挂售已成交')) {
-                notice.text = notice.text.replace('你的挂售已成交', '你的寄拍已被一口价拍下');
+            if (typeof notice.text === 'string' && notice.text.includes('你的掛售已成交')) {
+                notice.text = notice.text.replace('你的掛售已成交', '你的寄拍已被一口價拍下');
                 notice.kind = 'success';
             }
         }
@@ -3379,7 +3379,7 @@ export class MarketRuntimeService {
             name: this.getCurrencyItemName(),
             type: 'consumable',
             count,
-            desc: '坊市通行货币。',
+            desc: '坊市通行貨幣。',
         };
     }
     /**
@@ -3412,7 +3412,7 @@ export class MarketRuntimeService {
             this.playerRuntimeService.debitWallet(playerId, MARKET_CURRENCY_ITEM_ID, normalizedAmount);
         }
         catch (error) {
-            this.logger.warn(`坊市扣费失败 player=${playerId} amount=${normalizedAmount}：${error instanceof Error ? error.message : String(error)}`);
+            this.logger.warn(`坊市扣費失敗 player=${playerId} amount=${normalizedAmount}：${error instanceof Error ? error.message : String(error)}`);
             return false;
         }
         return true;
@@ -3627,9 +3627,9 @@ export class MarketRuntimeService {
 
         const minimumQuantity = getMarketMinimumTradeQuantity(unitPrice);
         if (minimumQuantity <= 1) {
-            return '挂售数量或单价无效。';
+            return '掛售數量或單價無效。';
         }
-        return `当前单价 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()} 时，数量必须是 ${minimumQuantity} 的倍数，才能按整灵石结算。`;
+        return `當前單價 ${this.formatUnitPrice(unitPrice)} ${this.getCurrencyItemName()} 時，數量必須是 ${minimumQuantity} 的倍數，才能按整靈石結算。`;
     }
     /**
  * formatUnitPrice：规范化或转换Unit价格。
@@ -3834,7 +3834,7 @@ export class MarketRuntimeService {
             return await this.playerIdentityPersistenceService.listPlayerIdentitiesByPlayerIds(playerIds);
         }
         catch (error) {
-            this.logger.warn(`补齐坊市成交记录玩家名失败：${error instanceof Error ? error.message : String(error)}`);
+            this.logger.warn(`補齊坊市成交記錄玩家名失敗：${error instanceof Error ? error.message : String(error)}`);
             return new Map();
         }
     }
@@ -4090,7 +4090,7 @@ export class MarketRuntimeService {
                     this.loadedStoragePlayerIds.add(normalized);
                 }
                 catch (error) {
-                    this.logger.error(`坊市仓库延迟加载失败 (playerId=${normalized}): ${error instanceof Error ? error.message : String(error)}`);
+                    this.logger.error(`坊市倉庫延遲加載失敗 (playerId=${normalized}): ${error instanceof Error ? error.message : String(error)}`);
                     throw error;
                 }
                 finally {
@@ -4202,7 +4202,7 @@ export class MarketRuntimeService {
  */
 
     getCurrencyItemName() {
-        return this.contentTemplateRepository.getItemName(MARKET_CURRENCY_ITEM_ID) ?? '灵石';
+        return this.contentTemplateRepository.getItemName(MARKET_CURRENCY_ITEM_ID) ?? '靈石';
     }
     /** 统一解析坊市玩家可见物品名，禁止用 itemId 作为兜底文案。 */
     resolveMarketItemDisplayName(item, itemIdInput) {
@@ -4353,7 +4353,7 @@ export class MarketRuntimeService {
                     ? Math.max(0, Math.trunc(Number(primarySnapshot.sessionEpoch)))
                     : 0;
                 if (!primarySnapshot || !runtimeOwnerId || sessionEpoch <= 0) {
-                    return this.singleMessage(playerId, '玩家资产事务围栏暂不可用，请稍后重试。', 'warn');
+                    return this.singleMessage(playerId, '玩家資產事務圍欄暫不可用，請稍後重試。', 'warn');
                 }
             }
             try {
@@ -4406,7 +4406,7 @@ export class MarketRuntimeService {
                 const message = error instanceof Error ? error.message : String(error);
                 if (error instanceof MarketDurableOperationCommittedError) {
                     return {
-                        ...this.singleMessage(playerId, '该请求已经处理，无需重复操作。', 'success'),
+                        ...this.singleMessage(playerId, '該請求已經處理，無需重複操作。', 'success'),
                         alreadyCommitted: true,
                         banCommitted: true,
                         cancelledOrderIds: [],
@@ -4420,16 +4420,16 @@ export class MarketRuntimeService {
                     }
                     catch (reloadError) {
                         this.logger.error(
-                            `坊市订单冲突后刷新失败: ${reloadError instanceof Error ? reloadError.stack : String(reloadError)}`,
+                            `坊市訂單衝突後刷新失敗: ${reloadError instanceof Error ? reloadError.stack : String(reloadError)}`,
                         );
                     }
                     return {
-                        ...this.singleMessage(playerId, '坊市订单已发生变化，已刷新最新状态，请重试。', 'warn'),
+                        ...this.singleMessage(playerId, '坊市訂單已發生變化，已刷新最新狀態，請重試。', 'warn'),
                         ...(context.transmissionListingsChanged ? { transmissionListingsChanged: true } : {}),
                     };
                 }
-                this.logger.error(`坊市结算失败，已回滚: ${message}`);
-                return this.singleMessage(playerId, '坊市结算失败，已回滚本次操作。', 'warn');
+                this.logger.error(`坊市結算失敗，已回滾: ${message}`);
+                return this.singleMessage(playerId, '坊市結算失敗，已回滾本次操作。', 'warn');
             }
         });
     }
@@ -4463,7 +4463,7 @@ export class MarketRuntimeService {
             }
             catch (error) {
                 this.logger.error(
-                    `坊市成交后玩家分域 flush 失败 playerId=${affectedPlayerId}：${error instanceof Error ? error.stack : String(error)}`,
+                    `坊市成交後玩家分域 flush 失敗 playerId=${affectedPlayerId}：${error instanceof Error ? error.stack : String(error)}`,
                 );
             }
         }

@@ -60,7 +60,7 @@ export class WorldRuntimeActionExecutionService {
                 if (typeof deps.fenceInstanceRuntime === 'function') {
                     deps.fenceInstanceRuntime(instance.meta.instanceId, 'action_execution_lease_check_failed');
                 }
-                throw new ServiceUnavailableException(`地图实例 ${instance.meta.instanceId} 租约不可写`);
+                throw new ServiceUnavailableException(`地圖實例 ${instance.meta.instanceId} 租約不可寫`);
             }
         }
 
@@ -68,7 +68,7 @@ export class WorldRuntimeActionExecutionService {
 
         const rawActionId = typeof actionIdInput === 'string' ? actionIdInput.trim() : '';
         if (!rawActionId) {
-            throw new BadRequestException('动作 ID 不能为空');
+            throw new BadRequestException('動作 ID 不能為空');
         }
         if (rawActionId.startsWith('npc:')) {
             return this.executeLegacyNpcAction(playerId, rawActionId.slice('npc:'.length), deps);
@@ -84,7 +84,7 @@ export class WorldRuntimeActionExecutionService {
         if (actionId.startsWith('tower:tongtian:')) {
             const finalizeTowerAction = (view) => {
                 if (!view) {
-                    throw new BadRequestException('未知的通天塔动作');
+                    throw new BadRequestException('未知的通天塔動作');
                 }
                 if (typeof deps.refreshPlayerContextActions === 'function') {
                     deps.refreshPlayerContextActions(playerId, view);
@@ -124,10 +124,10 @@ export class WorldRuntimeActionExecutionService {
             const target = typeof targetInput === 'string' ? targetInput.trim() : '';
             const foundationAmount = Number.parseInt(target, 10);
             if (!Number.isFinite(foundationAmount) || foundationAmount <= 0) {
-                throw new BadRequestException('底蕴数量不能为空');
+                throw new BadRequestException('底蘊數量不能為空');
             }
             const result = this.playerRuntimeService.infuseBodyTraining(playerId, foundationAmount);
-            const nBodyTraining = buildStructuredNotice('success', 'notice.action.body-training-convert', `你将 ${result.foundationSpent} 点底蕴灌入肉身，转化为 ${result.expGained} 点炼体经验`, {
+            const nBodyTraining = buildStructuredNotice('success', 'notice.action.body-training-convert', `你將 ${result.foundationSpent} 點底蘊灌入肉身，轉化為 ${result.expGained} 點煉體經驗`, {
                 vars: { foundationSpent: result.foundationSpent, expGained: result.expGained },
             });
             deps.queuePlayerNotice(playerId, nBodyTraining.text, nBodyTraining.kind, undefined, undefined, nBodyTraining.structured);
@@ -158,7 +158,7 @@ export class WorldRuntimeActionExecutionService {
                 deps.worldRuntimeCraftInterruptService?.interruptCraftForReason(playerId, player, 'cultivate', deps);
             }
             this.playerRuntimeService.updateCombatSettings(playerId, { cultivationActive: nextActive }, currentTick);
-            const cultText = nextActive ? '已恢复当前修炼' : '已停止当前修炼';
+            const cultText = nextActive ? '已恢復當前修煉' : '已停止當前修煉';
             const nCult = buildStructuredNotice('info', 'notice.action.cultivation-toggled', cultText, {
                 vars: { state: nextActive ? 'resumed' : 'stopped' },
             });
@@ -171,11 +171,11 @@ export class WorldRuntimeActionExecutionService {
         if (actionId.startsWith('combat:attack_intensity:')) {
             const rawIntensity = Number(actionId.slice('combat:attack_intensity:'.length));
             if (!isCombatAttackIntensity(rawIntensity)) {
-                throw new BadRequestException('出手力度档位无效');
+                throw new BadRequestException('出手力度檔位無效');
             }
             const intensity = normalizeCombatAttackIntensity(rawIntensity);
             this.playerRuntimeService.updateCombatSettings(playerId, { combatAttackIntensity: intensity }, currentTick);
-            const notice = buildStructuredNotice('info', 'notice.action.attack-intensity-updated', '出手力度已调整', {
+            const notice = buildStructuredNotice('info', 'notice.action.attack-intensity-updated', '出手力度已調整', {
                 vars: { intensity },
             });
             deps.queuePlayerNotice(playerId, notice.text, notice.kind, undefined, undefined, notice.structured);
@@ -198,10 +198,10 @@ export class WorldRuntimeActionExecutionService {
             }
             const enabledAfterUpdate = player?.combat?.autoRootFoundation === true;
             const noticeText = enabledAfterUpdate
-                ? '已开启自动凝练根基，修为和材料满足时会每息检测并自动凝练。'
+                ? '已開啟自動凝練根基，修為和材料滿足時會每息檢測並自動凝練。'
                 : enabled
-                    ? '根基已达当前境界上限，已关闭自动凝练根基。'
-                    : '已关闭自动凝练根基。';
+                    ? '根基已達當前境界上限，已關閉自動凝練根基。'
+                    : '已關閉自動凝練根基。';
             const noticeKey = enabledAfterUpdate
                 ? 'notice.action.auto-root-foundation-enabled'
                 : enabled
@@ -222,7 +222,7 @@ export class WorldRuntimeActionExecutionService {
             const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
             const nextActive = !player.combat.senseQiActive;
             this.playerRuntimeService.updateCombatSettings(playerId, { senseQiActive: nextActive, wangQiActive: nextActive ? false : player.combat.wangQiActive === true }, currentTick);
-            const senseText = nextActive ? '已开启感气视角' : '已关闭感气视角';
+            const senseText = nextActive ? '已開啟感氣視角' : '已關閉感氣視角';
             const nSense = buildStructuredNotice('info', 'notice.action.aura-sense-toggled', senseText, {
                 vars: { state: nextActive ? 'on' : 'off' },
             });
@@ -232,13 +232,13 @@ export class WorldRuntimeActionExecutionService {
         if (actionId === 'wang_qi:toggle') {
             const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
             if (!hasEquippedItem(player, 'equip.copper_luopan')) {
-                const nCompass = buildStructuredNotice('warn', 'notice.action.compass-required', '需要装备铜罗盘才能望气');
+                const nCompass = buildStructuredNotice('warn', 'notice.action.compass-required', '需要裝備銅羅盤才能望氣');
                 deps.queuePlayerNotice(playerId, nCompass.text, nCompass.kind, undefined, undefined, nCompass.structured);
                 return { kind: 'queued', view: deps.getPlayerViewOrThrow(playerId) };
             }
             const nextActive = !player.combat.wangQiActive;
             this.playerRuntimeService.updateCombatSettings(playerId, { wangQiActive: nextActive, senseQiActive: nextActive ? false : player.combat.senseQiActive === true }, currentTick);
-            const wangText = nextActive ? '已开启望气视角' : '已关闭望气视角';
+            const wangText = nextActive ? '已開啟望氣視角' : '已關閉望氣視角';
             const nWang = buildStructuredNotice('info', 'notice.action.qi-sense-toggled', wangText, {
                 vars: { state: nextActive ? 'on' : 'off' },
             });
@@ -283,7 +283,7 @@ export class WorldRuntimeActionExecutionService {
         if (actionId.startsWith('building:start:')) {
             const buildingId = actionId.slice('building:start:'.length).trim();
             if (!buildingId) {
-                throw new BadRequestException('建筑 ID 不能为空');
+                throw new BadRequestException('建築 ID 不能為空');
             }
             deps.enqueuePendingCommand(playerId, {
                 kind: 'startBuilding',
@@ -298,7 +298,7 @@ export class WorldRuntimeActionExecutionService {
             || actionId.startsWith('time_chamber:management:')
             || actionId.startsWith('time_chamber:enter:')
             || actionId.startsWith('time_chamber:console:')) {
-            throw new BadRequestException('密室使用或管理面板应由客户端界面打开');
+            throw new BadRequestException('密室使用或管理面板應由客戶端界面打開');
         }
         if (actionId === 'time_chamber:leave') {
             deps.enqueuePendingCommand(playerId, {
@@ -317,7 +317,7 @@ export class WorldRuntimeActionExecutionService {
             const encodedTechniqueId = separator >= 0 ? rest.slice(separator + 1).trim() : '';
             const techniqueId = encodedTechniqueId ? safeDecodeActionPart(encodedTechniqueId) : '';
             if (!buildingId || !techniqueId) {
-                throw new BadRequestException('藏经录入目标不能为空');
+                throw new BadRequestException('藏經錄入目標不能為空');
             }
             deps.enqueuePendingCommand(playerId, {
                 kind: 'startTechniqueTransmission',
@@ -334,7 +334,7 @@ export class WorldRuntimeActionExecutionService {
         if (actionId.startsWith('scripture:contemplate:')) {
             const buildingId = safeDecodeActionPart(actionId.slice('scripture:contemplate:'.length).trim());
             if (!buildingId) {
-                throw new BadRequestException('藏经台目标不能为空');
+                throw new BadRequestException('藏經臺目標不能為空');
             }
             deps.enqueuePendingCommand(playerId, {
                 kind: 'startTechniqueTransmission',
@@ -351,7 +351,7 @@ export class WorldRuntimeActionExecutionService {
         if (actionId === 'mining:start') {
             const targetRef = typeof targetInput === 'string' ? targetInput.trim() : '';
             if (!targetRef) {
-                throw new BadRequestException('挖矿目标不能为空');
+                throw new BadRequestException('挖礦目標不能為空');
             }
             deps.enqueuePendingCommand(playerId, {
                 kind: 'startMining',
@@ -374,11 +374,11 @@ export class WorldRuntimeActionExecutionService {
         if (actionId.startsWith('npc_quests:')) {
             const npcId = actionId.slice('npc_quests:'.length).trim();
             if (!npcId) {
-                throw new BadRequestException('场景人物 ID 不能为空');
+                throw new BadRequestException('場景人物 ID 不能為空');
             }
             return this.worldRuntimeNpcQuestWriteService.executeNpcQuestAction(playerId, npcId, deps);
         }
-        throw new BadRequestException(`不支持的动作：${actionId}`);
+        throw new BadRequestException(`不支持的動作：${actionId}`);
     }    
     /**
  * executeLegacyNpcAction：执行executeLegacyNPCAction相关逻辑。
@@ -402,15 +402,15 @@ export class WorldRuntimeActionExecutionService {
     executeWorldMigration(playerId, targetInput, deps) {
         const linePreset = normalizeWorldMigrationTarget(targetInput);
         if (!linePreset) {
-            throw new BadRequestException('跨界目标不能为空');
+            throw new BadRequestException('跨界目標不能為空');
         }
         const currentView = deps.getPlayerViewOrThrow(playerId);
         if (!hasNearbyManualPortal(currentView)) {
-            throw new BadRequestException('需要站在界门附近才能进行世界迁移');
+            throw new BadRequestException('需要站在界門附近才能進行世界遷移');
         }
         if (linePreset === 'peaceful' && (this.playerRuntimeService.hasActiveBuff?.(playerId, PVP_SHA_INFUSION_BUFF_ID)
             || this.playerRuntimeService.hasActiveBuff?.(playerId, PVP_SHA_BACKLASH_BUFF_ID))) {
-            throw new BadRequestException('煞气入体或煞气反噬期间无法迁回虚境');
+            throw new BadRequestException('煞氣入體或煞氣反噬期間無法遷回虛境');
         }
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const currentLinePreset = resolveLinePresetFromInstanceId(currentView?.instance?.instanceId ?? player.instanceId);
@@ -427,7 +427,7 @@ export class WorldRuntimeActionExecutionService {
             ? player.templateId.trim()
             : currentView?.instance?.templateId;
         if (!targetMapId) {
-            throw new BadRequestException('当前未处于有效地图，无法切换世界');
+            throw new BadRequestException('當前未處於有效地圖，無法切換世界');
         }
         deps.worldRuntimeNavigationService?.clearNavigationIntent?.(playerId);
         deps.clearPendingCommand?.(playerId);
@@ -519,11 +519,11 @@ function buildWorldMigrationNotice(linePreset, alreadyThere) {
     const isReal = linePreset === 'real';
     const text = isReal
         ? alreadyThere
-            ? '默认世界已保持为现世，后续跨图会继续进入现世线。'
-            : '你已切入现世，后续跨图会默认进入现世线。'
+            ? '預設世界已保持為現世，後續跨圖會繼續進入現世線。'
+            : '你已切入現世，後續跨圖會預設進入現世線。'
         : alreadyThere
-            ? '默认世界已保持为虚境，后续跨图会继续进入虚境线。'
-            : '你已切入虚境，后续跨图会默认进入虚境线。';
+            ? '預設世界已保持為虛境，後續跨圖會繼續進入虛境線。'
+            : '你已切入虛境，後續跨圖會預設進入虛境線。';
     const key = isReal
         ? alreadyThere
             ? 'notice.action.world-migration-real-kept'

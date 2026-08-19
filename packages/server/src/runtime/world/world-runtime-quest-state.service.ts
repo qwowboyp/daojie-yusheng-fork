@@ -11,9 +11,9 @@ import { WorldRuntimeQuestQueryService } from './query/world-runtime-quest-query
 import * as world_runtime_normalization_helpers_1 from './world-runtime.normalization.helpers';
 
 const { cloneQuestState, normalizeQuestLine } = world_runtime_normalization_helpers_1;
-const QUEST_REWARD_COMPENSATION_MAIL_TITLE = '任务奖励补发';
-const QUEST_REWARD_COMPENSATION_MAIL_BODY = '检测到历史任务进度已推进，现补发未领取的任务奖励。';
-const QUEST_REWARD_COMPENSATION_MAIL_SENDER = '司命台';
+const QUEST_REWARD_COMPENSATION_MAIL_TITLE = '任務獎勵補發';
+const QUEST_REWARD_COMPENSATION_MAIL_BODY = '檢測到歷史任務進度已推進，現補發未領取的任務獎勵。';
+const QUEST_REWARD_COMPENSATION_MAIL_SENDER = '司命臺';
 const NORMALIZED_QUEST_OBJECTIVE_TYPES = new Set([
     'kill',
     'talk',
@@ -334,7 +334,7 @@ export class WorldRuntimeQuestStateService {
                 if (nextProgress !== currentQuest.progress) {
                     currentQuest.progress = nextProgress;
                     if (!currentQuest.targetName || currentQuest.targetName === currentQuest.targetMonsterId) {
-                        currentQuest.targetName = resolvePlayerFacingContentName(monsterId, '未知妖兽', monsterName);
+                        currentQuest.targetName = resolvePlayerFacingContentName(monsterId, '未知妖獸', monsterName);
                     }
                     changed = true;
                 }
@@ -356,7 +356,7 @@ export class WorldRuntimeQuestStateService {
             if (nextProgress !== quest.progress) {
                 quest.progress = nextProgress;
                 if (!quest.targetName || quest.targetName === quest.targetMonsterId) {
-                    quest.targetName = resolvePlayerFacingContentName(monsterId, '未知妖兽', monsterName);
+                    quest.targetName = resolvePlayerFacingContentName(monsterId, '未知妖獸', monsterName);
                 }
                 changed = true;
             }
@@ -469,7 +469,7 @@ export class WorldRuntimeQuestStateService {
             fallbackBody: QUEST_REWARD_COMPENSATION_MAIL_BODY,
             attachments,
         }).catch((error) => {
-            this.logger.warn(`任务奖励补发邮件发送失败：${error instanceof Error ? error.message : String(error)}`);
+            this.logger.warn(`任務獎勵補發郵件發送失敗：${error instanceof Error ? error.message : String(error)}`);
         });
     }
 };

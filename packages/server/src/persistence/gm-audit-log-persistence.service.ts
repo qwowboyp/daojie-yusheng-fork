@@ -85,21 +85,21 @@ export class GmAuditLogPersistenceService implements OnModuleInit, OnModuleDestr
   async onModuleInit(): Promise<void> {
     const databaseUrl = resolveServerDatabaseUrl();
     if (!databaseUrl.trim()) {
-      this.logger.warn('GM 审计日志持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL；GM 写操作将仅记录到日志而不入库。');
+      this.logger.warn('GM 審計日誌持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL；GM 寫操作將僅記錄到日誌而不入庫。');
       return;
     }
     const sharedPool = this.databasePoolProvider?.getPool('gm-audit-log') ?? null;
     if (!sharedPool) {
-      this.logger.warn('GM 审计日志持久化已禁用：数据库连接池提供者未提供连接池');
+      this.logger.warn('GM 審計日誌持久化已禁用：數據庫連接池提供者未提供連接池');
       return;
     }
     this.pool = sharedPool;
     try {
       await this.ensureTable();
       this.enabled = true;
-      this.logger.log('GM 审计日志持久化已启用（gm_audit_log）');
+      this.logger.log('GM 審計日誌持久化已啟用（gm_audit_log）');
     } catch (error) {
-      this.logger.error('GM 审计日志表初始化失败', error instanceof Error ? error.stack : String(error));
+      this.logger.error('GM 審計日誌表初始化失敗', error instanceof Error ? error.stack : String(error));
       this.pool = null;
     }
   }
@@ -125,13 +125,13 @@ export class GmAuditLogPersistenceService implements OnModuleInit, OnModuleDestr
     const auditId = randomUUID();
     const op = (entry.op || '').trim();
     if (!op) {
-      this.logger.warn('GM 审计日志条目缺失 op，已忽略');
+      this.logger.warn('GM 審計日誌條目缺失 op，已忽略');
       return;
     }
     if (!this.enabled || !this.pool) {
       // 未就绪时打 info 日志保证至少有可追溯条目（生产应保证 enable，否则属配置缺陷）。
       this.logger.warn(
-        `GM 审计未持久化（持久化未就绪）：op=${op} target=${entry.targetType ?? ''}:${entry.targetId ?? ''} actor_ip=${entry.actor?.ip ?? ''} success=${entry.success}`,
+        `GM 審計未持久化（持久化未就緒）：op=${op} target=${entry.targetType ?? ''}:${entry.targetId ?? ''} actor_ip=${entry.actor?.ip ?? ''} success=${entry.success}`,
       );
       return;
     }
@@ -174,7 +174,7 @@ export class GmAuditLogPersistenceService implements OnModuleInit, OnModuleDestr
       );
     } catch (error) {
       this.logger.error(
-        `GM 审计日志写入失败：op=${op} target=${entry.targetType ?? ''}:${entry.targetId ?? ''} - ${error instanceof Error ? error.message : String(error)}`,
+        `GM 審計日誌寫入失敗：op=${op} target=${entry.targetType ?? ''}:${entry.targetId ?? ''} - ${error instanceof Error ? error.message : String(error)}`,
         error instanceof Error ? error.stack : undefined,
       );
     }

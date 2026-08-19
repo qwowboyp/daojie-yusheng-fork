@@ -20,7 +20,7 @@ export class EnhancementStrategy implements TechniqueActivityStrategy {
   readonly kind = 'enhancement' as const;
   readonly jobSlot = 'enhancementJob';
   readonly skillSlot = 'enhancementSkill';
-  readonly activityLabel = '强化';
+  readonly activityLabel = '強化';
   readonly pauseTicks = 10;
   readonly conditional = false;
 

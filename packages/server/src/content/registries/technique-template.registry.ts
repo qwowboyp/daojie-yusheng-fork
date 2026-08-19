@@ -56,7 +56,7 @@ export class TechniqueTemplateRegistry {
     for (const file of techniqueFiles) {
       const parsed = JSON.parse(fs.readFileSync(file, 'utf-8'));
       if (!Array.isArray(parsed)) {
-        errors.push(`${file}: 功法配置文件必须是数组`);
+        errors.push(`${file}: 功法配置文件必須是數組`);
         continue;
       }
       parsed.forEach((entry, index) => {
@@ -70,7 +70,7 @@ export class TechniqueTemplateRegistry {
     }
     if (errors.length > 0) {
       this.techniqueTemplates.clear();
-      throw new Error(`功法模板加载失败:\n${errors.join('\n')}`);
+      throw new Error(`功法模板加載失敗:\n${errors.join('\n')}`);
     }
     freezeTemplateMap(this.techniqueTemplates);
   }
@@ -200,7 +200,7 @@ function hydrateMissingTechniqueState(input: Record<string, unknown>): Record<st
 /** 将 TechniqueTemplate（生成功法缓存格式）转为 TechniqueTemplateRecord（Registry 内部格式） */
 function generatedTemplateToRecord(template: TechniqueTemplate): TechniqueTemplateRecord {
   if (hasLegacyTechniqueDraftField(template)) {
-    throw new Error(`生成功法模板 ${template.id} 含 artsStrength/raw* 旧草稿字段，请先执行显式兼容转换`);
+    throw new Error(`生成功法模板 ${template.id} 含 artsStrength/raw* 舊草稿字段，請先執行顯式兼容轉換`);
   }
   const normalized = normalizeTechniqueTemplate(template);
   if (normalized) {

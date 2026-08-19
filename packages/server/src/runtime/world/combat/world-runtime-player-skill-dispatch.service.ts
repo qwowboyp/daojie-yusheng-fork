@@ -43,7 +43,7 @@ const BASE_CHANT_TICK_DURATION_MS = 1000;
 const CHANT_LABEL_EXTRA_DURATION_MS = 240;
 
 function resolveMonsterDisplayName(monster) {
-    return resolvePlayerFacingContentName(monster?.monsterId ?? monster?.runtimeId, '未知妖兽', monster?.name);
+    return resolvePlayerFacingContentName(monster?.monsterId ?? monster?.runtimeId, '未知妖獸', monster?.name);
 }
 
 const { findPlayerSkill, getSkillEffectColor, resolveRuntimeSkillRange } = world_runtime_normalization_helpers_1;
@@ -62,21 +62,21 @@ function ensureHostileRelation(resolution) {
         return;
     }
     if (resolution?.blockedReason === 'self_target') {
-        throw new BadRequestException('不能攻击自己');
+        throw new BadRequestException('不能攻擊自己');
     }
-    throw new BadRequestException('当前目标不在敌方判定规则内');
+    throw new BadRequestException('當前目標不在敵方判定規則內');
 }
 function ensureInstanceSupportsPlayerCombat(instance) {
     if (instance?.meta?.supportsPvp === true) {
         return;
     }
-    throw new BadRequestException('当前实例不允许玩家互攻');
+    throw new BadRequestException('當前實例不允許玩家互攻');
 }
 function ensureInstanceSupportsTileDamage(instance) {
     if (instance?.meta?.canDamageTile === true) {
         return;
     }
-    throw new BadRequestException('当前实例不允许攻击地块');
+    throw new BadRequestException('當前實例不允許攻擊地塊');
 }
 function resolveMiningJobTargetRef(job) {
     if (!job || !Number.isFinite(Number(job.targetX)) || !Number.isFinite(Number(job.targetY))) {
@@ -218,7 +218,7 @@ function resolveTileCombatTargetName(tileState) {
     if (typeof tileState?.targetName === 'string' && tileState.targetName.trim()) {
         return tileState.targetName.trim();
     }
-    return uiLabels.TILE_TYPE_LABELS[tileState?.tileType] ?? '地块';
+    return uiLabels.TILE_TYPE_LABELS[tileState?.tileType] ?? '地塊';
 }
 
 function recordPlayerSkillDispatchPerf(deps, key, startedAt, count = 1) {
@@ -350,14 +350,14 @@ function resolveTechniqueLevelForSkill(player, skillId) {
 function spendSkillCostAndStartCooldown(playerRuntimeService, attacker, skill, currentTick, instance = null) {
     const readyTick = normalizePlayerSkillCooldownReadyTick(attacker, skill, currentTick);
     if (currentTick < readyTick) {
-        throw new BadRequestException(`技能 ${skill.id} 尚在冷却`);
+        throw new BadRequestException(`技能 ${skill.id} 尚在冷卻`);
     }
     const plannedCost = Math.max(0, Math.round(Number(skill.cost) || 0));
     const standardQiCost = Math.round(calcQiCostWithOutputLimit(plannedCost, Math.max(0, attacker.attrs?.numericStats?.maxQiOutputPerTick ?? 0)));
     const qiCost = applyCombatAttackIntensityQiCost(standardQiCost, attacker.combat?.combatAttackIntensity);
     if (qiCost > 0) {
         if (!Number.isFinite(qiCost) || attacker.qi < qiCost) {
-            throw new BadRequestException(`技能 ${skill.id} 元气不足`);
+            throw new BadRequestException(`技能 ${skill.id} 元氣不足`);
         }
         playerRuntimeService.spendQi(attacker.playerId, qiCost);
         instance?.disperseQiAt?.(attacker.x, attacker.y, qiCost);
@@ -633,10 +633,10 @@ function isResolvedSkillTargetInsideCells(attacker, target, cells, instance, pla
 function ensurePlayerSkillActionEnabled(player, skillId) {
     const action = player.actions?.actions?.find((entry) => entry.id === skillId && entry.type === 'skill');
     if (!action) {
-        throw new NotFoundException(`技能动作不存在：${skillId}`);
+        throw new NotFoundException(`技能動作不存在：${skillId}`);
     }
     if (action.skillEnabled === false) {
-        throw new BadRequestException('技能未启用，无法释放');
+        throw new BadRequestException('技能未啟用，無法釋放');
     }
 }
 
@@ -705,7 +705,7 @@ export class WorldRuntimePlayerSkillDispatchService {
 
         const attacker = this.playerRuntimeService.getPlayerOrThrow(playerId);
         if (attacker.combat?.pendingSkillCast) {
-            throw new BadRequestException('正在吟唱中，无法继续施法。');
+            throw new BadRequestException('正在吟唱中，無法繼續施法。');
         }
         ensurePlayerSkillActionEnabled(attacker, skillId);
         const currentTick = deps.resolveCurrentTickForPlayerId(playerId);
@@ -714,7 +714,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             deps.worldRuntimeCraftInterruptService.interruptCraftForReason(playerId, attacker, 'attack', deps);
         }
         if (!attacker.instanceId) {
-            throw new BadRequestException('尚未进入地图实例');
+            throw new BadRequestException('尚未進入地圖實例');
         }
         const skill = findPlayerSkill(attacker, skillId);
         if (!skill) {
@@ -723,11 +723,11 @@ export class WorldRuntimePlayerSkillDispatchService {
         deps.ensureAttackAllowed(attacker, skill);
         if (isTemporaryTileSkill(skill)) {
             if (!targetRef) {
-                throw new BadRequestException('必须选择地块目标');
+                throw new BadRequestException('必須選擇地塊目標');
             }
             const tile = parseTileTargetRef(targetRef);
             if (!tile) {
-                throw new BadRequestException('必须选择地块目标');
+                throw new BadRequestException('必須選擇地塊目標');
             }
             return this.dispatchTemporaryTileSkill(attacker, skill, tile.x, tile.y, currentTick, deps);
         }
@@ -749,7 +749,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             const tileAnchor = parseTileTargetRef(targetRef);
             const resolvedTarget = this.resolveLegacySkillTargetRef(attacker, skill, targetRef, deps);
             if (!resolvedTarget) {
-                throw new BadRequestException('没有可命中的目标');
+                throw new BadRequestException('沒有可命中的目標');
             }
             if (tileAnchor) {
                 if (getPlayerSkillWindupTicks(skill) > 0) {
@@ -760,7 +760,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             if (getPlayerSkillWindupTicks(skill) > 0) {
                 const anchor = resolveResolvedTargetAnchor(attacker, resolvedTarget, deps);
                 if (!anchor) {
-                    throw new BadRequestException('目标不存在或不可选中');
+                    throw new BadRequestException('目標不存在或不可選中');
                 }
                 return this.beginPlayerSkillCast(attacker, skill, anchor, targetRef, deps);
             }
@@ -792,7 +792,7 @@ export class WorldRuntimePlayerSkillDispatchService {
                 const instanceForAnchor = deps.getInstanceRuntimeOrThrow(attacker.instanceId);
                 const monster = instanceForAnchor.getMonster(targetMonsterId);
                 if (!monster) {
-                    throw new NotFoundException(`妖兽不存在：${targetMonsterId}`);
+                    throw new NotFoundException(`妖獸不存在：${targetMonsterId}`);
                 }
                 return this.beginPlayerSkillCast(attacker, skill, { x: monster.x, y: monster.y }, targetMonsterId, deps);
             }
@@ -814,22 +814,22 @@ export class WorldRuntimePlayerSkillDispatchService {
                 }
                 return this.dispatchCastSkillAtAnchor(attacker, skillId, skill, anchor, null, deps);
             }
-            throw new BadRequestException('必须指定玩家或妖兽目标');
+            throw new BadRequestException('必須指定玩家或妖獸目標');
         }
         const instance = deps.getInstanceRuntimeOrThrow(attacker.instanceId);
         ensureInstanceSupportsPlayerCombat(instance);
         if (instance.isPointInSafeZone(attacker.x, attacker.y)) {
-            throw new BadRequestException('安全区内无法对其他玩家造成伤害。');
+            throw new BadRequestException('安全區內無法對其他玩家造成傷害。');
         }
         const target = this.playerRuntimeService.getPlayer(targetPlayerId);
         if (!target) {
-            throw new BadRequestException('目标玩家已离线');
+            throw new BadRequestException('目標玩家已離線');
         }
         if (instance.isPointInSafeZone(target.x, target.y)) {
-            throw new BadRequestException('目标处于安全区内，无法对其造成伤害。');
+            throw new BadRequestException('目標處於安全區內，無法對其造成傷害。');
         }
         if (attacker.instanceId !== target.instanceId) {
-            throw new BadRequestException(`目标 ${targetPlayerId} 不在同一地图实例`);
+            throw new BadRequestException(`目標 ${targetPlayerId} 不在同一地圖實例`);
         }
         ensureHostileRelation(resolveCombatRelation(attacker, {
             kind: 'player',
@@ -842,7 +842,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             y: target.y,
         });
         if (targets.length === 0) {
-            throw new BadRequestException('没有可命中的目标');
+            throw new BadRequestException('沒有可命中的目標');
         }
         if (getPlayerSkillWindupTicks(skill) > 0) {
             return this.beginPlayerSkillCast(attacker, skill, { x: target.x, y: target.y }, `player:${target.playerId}`, deps);
@@ -860,7 +860,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             if (hasHealOrAlliesEffect(skill) || resolveSkillRequiresTarget(skill) === false) {
                 targets = [{ kind: 'self', playerId: attacker.playerId, x: attacker.x, y: attacker.y }];
             } else {
-                throw new BadRequestException('没有可命中的目标');
+                throw new BadRequestException('沒有可命中的目標');
             }
         }
         await this.dispatchSkillTargets(attacker, skillId, skill, targets, deps, {
@@ -876,7 +876,7 @@ export class WorldRuntimePlayerSkillDispatchService {
         const anchor = { x: Math.trunc(Number(targetX)), y: Math.trunc(Number(targetY)) };
         const cells = computeAffectedCellsFromAnchor({ x: attacker.x, y: attacker.y }, anchor, geometry);
         if (cells.length === 0) {
-            throw new BadRequestException(`技能 ${skill.id} 超出范围`);
+            throw new BadRequestException(`技能 ${skill.id} 超出範圍`);
         }
         const effects = getTemporaryTileEffects(skill);
         const techLevel = resolveTechniqueLevelForSkill(attacker, skill.id);
@@ -895,7 +895,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             plans.push({ effect, cells: availableCells, hp, durationTicks, tileType });
         }
         if (plans.length <= 0) {
-            throw new BadRequestException('没有可生成石头的地块');
+            throw new BadRequestException('沒有可生成石頭的地塊');
         }
         spendSkillCostAndStartCooldown(this.playerRuntimeService, attacker, skill, currentTick, instance);
         applyPlayerHorizontalFacingToward(this.playerRuntimeService, instance, attacker, anchor);
@@ -932,7 +932,7 @@ export class WorldRuntimePlayerSkillDispatchService {
                 }
             }
         }
-        const notice = buildStructuredNotice('combat', 'notice.combat.temporary-tiles-created', `${skill.name}生成了 ${created} 处临时石头。`, {
+        const notice = buildStructuredNotice('combat', 'notice.combat.temporary-tiles-created', `${skill.name}生成了 ${created} 處臨時石頭。`, {
             vars: { skillName: skill.name, count: created },
             pills: [{ key: 'skillName', style: 'skill' }],
         });
@@ -955,7 +955,7 @@ export class WorldRuntimePlayerSkillDispatchService {
         const geometry = buildEffectivePlayerSkillGeometry(attacker, skill);
         const warningCells = buildPlayerSkillAffectedCells(attacker, skill, anchor, geometry);
         if (warningCells.length === 0) {
-            throw new BadRequestException('目标超出技能范围');
+            throw new BadRequestException('目標超出技能範圍');
         }
         const currentTick = deps.resolveCurrentTickForPlayerId(attacker.playerId);
         const instance = deps.getInstanceRuntime?.(attacker.instanceId) ?? null;
@@ -1050,7 +1050,7 @@ export class WorldRuntimePlayerSkillDispatchService {
                 resourcePolicy: expiredCancellation.cancellation?.resourcePolicy,
                 cooldownPolicy: expiredCancellation.cancellation?.cooldownPolicy,
             });
-            deps.queuePlayerNotice?.(attacker.playerId, '当前神通的吟唱已过期。', 'combat', undefined, undefined, buildStructuredNotice('combat', 'notice.combat.chant-expired', '当前神通的吟唱已过期。', {}).structured);
+            deps.queuePlayerNotice?.(attacker.playerId, '當前神通的吟唱已過期。', 'combat', undefined, undefined, buildStructuredNotice('combat', 'notice.combat.chant-expired', '當前神通的吟唱已過期。', {}).structured);
             return true;
         }
         if (pendingCast.skipProgressThisTick) {
@@ -1100,7 +1100,7 @@ export class WorldRuntimePlayerSkillDispatchService {
                     requiredQi: effectiveCost,
                     currentQi: attacker.qi,
                 });
-                deps.queuePlayerNotice?.(attacker.playerId, `${skill.name}的吟唱结算失败：元气不足。`, 'combat', undefined, undefined, buildStructuredNotice('combat', 'notice.combat.chant-fail-qi', `${skill.name}的吟唱结算失败：元气不足。`, { vars: { skillName: skill.name }, pills: [{ key: 'skillName', style: 'skill' }] }).structured);
+                deps.queuePlayerNotice?.(attacker.playerId, `${skill.name}的吟唱結算失敗：元氣不足。`, 'combat', undefined, undefined, buildStructuredNotice('combat', 'notice.combat.chant-fail-qi', `${skill.name}的吟唱結算失敗：元氣不足。`, { vars: { skillName: skill.name }, pills: [{ key: 'skillName', style: 'skill' }] }).structured);
                 return true;
             }
         }
@@ -1166,8 +1166,8 @@ export class WorldRuntimePlayerSkillDispatchService {
             cooldownPolicy: cancelled.cancellation?.cooldownPolicy,
         });
         if (reason) {
-            const skillName = findPlayerSkillName(player, pendingCast.skillId) ?? '当前神通';
-            deps.queuePlayerNotice?.(playerId, `${skillName}的吟唱被打断：${reason}`, 'combat', undefined, undefined, buildStructuredNotice('combat', 'notice.combat.chant-interrupted', `${skillName}的吟唱被打断：${reason}`, { vars: { skillName, reason }, pills: [{ key: 'skillName', style: 'skill' }] }).structured);
+            const skillName = findPlayerSkillName(player, pendingCast.skillId) ?? '當前神通';
+            deps.queuePlayerNotice?.(playerId, `${skillName}的吟唱被打斷：${reason}`, 'combat', undefined, undefined, buildStructuredNotice('combat', 'notice.combat.chant-interrupted', `${skillName}的吟唱被打斷：${reason}`, { vars: { skillName, reason }, pills: [{ key: 'skillName', style: 'skill' }] }).structured);
         }
         return true;
     }
@@ -1422,7 +1422,7 @@ export class WorldRuntimePlayerSkillDispatchService {
 
     async dispatchSkillTargets(attacker, skillId, skill, targets, deps, castOptions = undefined) {
         if (targets.length === 0) {
-            throw new BadRequestException('没有可命中的目标');
+            throw new BadRequestException('沒有可命中的目標');
         }
         const attributedSkillResolveStartedAt = performance.now();
         const isTimeChamber = isTimeChamberSkillDispatch(attacker, deps);
@@ -1469,7 +1469,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             this.recordRejectedPlayerSkillPlanTargets(deps, attacker, skill, actionPlan);
             const plannedTargets = this.toLegacyPlayerSkillTargets(actionPlan.selectedTargets ?? [], attacker);
             if (plannedTargets.length === 0) {
-                throw new BadRequestException('没有可命中的目标');
+                throw new BadRequestException('沒有可命中的目標');
             }
             targets = plannedTargets;
         }
@@ -1588,8 +1588,8 @@ export class WorldRuntimePlayerSkillDispatchService {
                 }
                 if (effects.length > 0) {
                     const parts = [];
-                    if (selfHeal > 0) parts.push(`恢复生命 ${selfHeal}`);
-                    if (buffs.length > 0) parts.push(`获得 ${buffs.map(b => b.name).join('、')}`);
+                    if (selfHeal > 0) parts.push(`恢復生命 ${selfHeal}`);
+                    if (buffs.length > 0) parts.push(`獲得 ${buffs.map(b => b.name).join('、')}`);
                     const presentationStartedAt = performance.now();
                     emitCombatPresentation({
                         deps,
@@ -1987,8 +1987,8 @@ export class WorldRuntimePlayerSkillDispatchService {
                     damageFloat: { x: formation.x, y: formation.y, damage: appliedDamage, color: effectColor },
                     notices: [{
                         playerId: attacker.playerId,
-                        text: `${formatCombatActionClause('你', formation.name, '攻击')}，造成 ${formatCombatDamageBreakdown(result.totalDamage, appliedDamage, result.damageKind ?? 'spell', result.damageElement)} 伤害，削减阵法灵力 ${formatAuraDamage(auraDamage)}。`,
-                        combat: buildCombatNoticePayload({ caster: '你', target: formation.name, skill: '攻击', formationResolution: { rawDamage: result.totalDamage, damage: appliedDamage, damageKind: result.damageKind ?? 'spell', element: result.damageElement, auraDamage } }),
+                        text: `${formatCombatActionClause('你', formation.name, '攻擊')}，造成 ${formatCombatDamageBreakdown(result.totalDamage, appliedDamage, result.damageKind ?? 'spell', result.damageElement)} 傷害，削減陣法靈力 ${formatAuraDamage(auraDamage)}。`,
+                        combat: buildCombatNoticePayload({ caster: '你', target: formation.name, skill: '攻擊', formationResolution: { rawDamage: result.totalDamage, damage: appliedDamage, damageKind: result.damageKind ?? 'spell', element: result.damageElement, auraDamage } }),
                     }],
                 });
                 recordPlayerSkillDispatchPerf(deps, 'pendingCommands.castSkill.presentationMs', presentationStartedAt);
@@ -2078,8 +2078,8 @@ export class WorldRuntimePlayerSkillDispatchService {
                     damageFloat: { x: target.x, y: target.y, damage: appliedDamage, color: effectColor },
                     notices: [{
                         playerId: attacker.playerId,
-                        text: `${formatCombatActionClause('你', boundary.name, '攻击')}边界，造成 ${formatCombatDamageBreakdown(result.totalDamage, appliedDamage, result.damageKind ?? 'spell', result.damageElement)} 伤害，削减阵法灵力 ${formatAuraDamage(auraDamage)}。`,
-                        combat: buildCombatNoticePayload({ caster: '你', target: boundary.name, skill: '攻击', formationResolution: { rawDamage: result.totalDamage, damage: appliedDamage, damageKind: result.damageKind ?? 'spell', element: result.damageElement, auraDamage } }),
+                        text: `${formatCombatActionClause('你', boundary.name, '攻擊')}邊界，造成 ${formatCombatDamageBreakdown(result.totalDamage, appliedDamage, result.damageKind ?? 'spell', result.damageElement)} 傷害，削減陣法靈力 ${formatAuraDamage(auraDamage)}。`,
+                        combat: buildCombatNoticePayload({ caster: '你', target: boundary.name, skill: '攻擊', formationResolution: { rawDamage: result.totalDamage, damage: appliedDamage, damageKind: result.damageKind ?? 'spell', element: result.damageElement, auraDamage } }),
                     }],
                 });
                 recordPlayerSkillDispatchPerf(deps, 'pendingCommands.castSkill.presentationMs', presentationStartedAt);
@@ -2226,7 +2226,7 @@ export class WorldRuntimePlayerSkillDispatchService {
                 damageFloat: { x: target.x, y: target.y, damage: appliedDamage, color: effectColor },
                 notices: [{
                     playerId: attacker.playerId,
-                    text: `${formatCombatActionClause('你', formatTargetLabelWithHp(tileTargetName, tileDamageResult?.hp ?? 0, tileState.maxHp), skill.name)}，造成 ${formatCombatDamageBreakdown(result.totalDamage, appliedDamage, damageKind, damageElement)} 伤害`,
+                    text: `${formatCombatActionClause('你', formatTargetLabelWithHp(tileTargetName, tileDamageResult?.hp ?? 0, tileState.maxHp), skill.name)}，造成 ${formatCombatDamageBreakdown(result.totalDamage, appliedDamage, damageKind, damageElement)} 傷害`,
                     combat: buildCombatNoticePayload({ caster: '你', target: tileTargetName, targetHp: tileDamageResult?.hp ?? 0, targetMaxHp: tileState.maxHp, skill: skill.name, resolution: { rawDamage: result.totalDamage, damage: appliedDamage, damageKind, element: damageElement } }),
                 }],
             });
@@ -2348,7 +2348,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             );
         }
         if (castIndex === 0) {
-            throw new BadRequestException('没有可命中的目标');
+            throw new BadRequestException('沒有可命中的目標');
         }
         if (syncKillRewardCalls > 0) {
             recordPlayerSkillDispatchDuration(
@@ -2413,8 +2413,8 @@ export class WorldRuntimePlayerSkillDispatchService {
                 effects.push({ type: 'buff', buffId: buff.buffId, name: buff.name, category: buff.category, duration: buff.duration });
             }
             const parts = [];
-            if (totalSkillHeal > 0) parts.push(`恢复生命 ${totalSkillHeal}`);
-            if (selfBuffs.length > 0) parts.push(`获得 ${selfBuffs.map(b => b.name).join('、')}`);
+            if (totalSkillHeal > 0) parts.push(`恢復生命 ${totalSkillHeal}`);
+            if (selfBuffs.length > 0) parts.push(`獲得 ${selfBuffs.map(b => b.name).join('、')}`);
             emitCombatPresentation({
                 deps,
                 instanceId: attacker.instanceId,
@@ -2594,37 +2594,37 @@ export class WorldRuntimePlayerSkillDispatchService {
             return new BadRequestException(`技能不存在：${skill?.id ?? actionPlan?.action?.actionId ?? ''}`);
         }
         if (reason === CombatRejectReason.MissingInstance) {
-            return new BadRequestException('当前地图实例不存在');
+            return new BadRequestException('當前地圖實例不存在');
         }
         if (reason === CombatRejectReason.InsufficientResource) {
-            return new BadRequestException(`技能 ${skill?.id ?? actionPlan?.action?.actionId ?? ''} 元气不足`);
+            return new BadRequestException(`技能 ${skill?.id ?? actionPlan?.action?.actionId ?? ''} 元氣不足`);
         }
         if (reason === CombatRejectReason.CooldownNotReady) {
-            return new BadRequestException(`技能 ${skill?.id ?? actionPlan?.action?.actionId ?? ''} 尚在冷却`);
+            return new BadRequestException(`技能 ${skill?.id ?? actionPlan?.action?.actionId ?? ''} 尚在冷卻`);
         }
         if (reason === CombatRejectReason.OutOfRange) {
-            return new BadRequestException(`技能 ${skill?.id ?? actionPlan?.action?.actionId ?? ''} 超出范围`);
+            return new BadRequestException(`技能 ${skill?.id ?? actionPlan?.action?.actionId ?? ''} 超出範圍`);
         }
         if (reason === CombatRejectReason.LineOfSightBlocked) {
-            return new BadRequestException('目标被遮挡');
+            return new BadRequestException('目標被遮擋');
         }
         if (reason === CombatRejectReason.MapCapabilityDisabled) {
             const capability = actionPlan?.details?.rejectedTargets?.[0]?.details?.capability;
-            return new BadRequestException(capability === 'supportsPvp' ? '当前实例不允许玩家互攻' : '当前实例不允许攻击地块');
+            return new BadRequestException(capability === 'supportsPvp' ? '當前實例不允許玩家互攻' : '當前實例不允許攻擊地塊');
         }
         if (reason === CombatRejectReason.CombatRelationNotAllowed) {
-            return new BadRequestException('当前目标不在敌方判定规则内');
+            return new BadRequestException('當前目標不在敵方判定規則內');
         }
         if (reason === CombatRejectReason.TargetDead) {
-            return new BadRequestException('目标已经死亡');
+            return new BadRequestException('目標已經死亡');
         }
         if (reason === CombatRejectReason.MissingMonster
             || reason === CombatRejectReason.MissingTargetRuntimeState
             || reason === CombatRejectReason.TargetInstanceMismatch
             || reason === CombatRejectReason.TargetTypeNotAllowed) {
-            return new BadRequestException('没有可命中的目标');
+            return new BadRequestException('沒有可命中的目標');
         }
-        return new BadRequestException('没有可命中的目标');
+        return new BadRequestException('沒有可命中的目標');
     }
     resolvePlayerSkillActionPlanShadow(attacker, skill, input, instance, deps) {
         try {
@@ -2816,7 +2816,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             ? deps.worldRuntimeFormationService.getFormationCombatState(attacker.instanceId, formationInstanceId)
             : null;
         if (!formation) {
-            throw new NotFoundException(`阵法不存在：${formationInstanceId}`);
+            throw new NotFoundException(`陣法不存在：${formationInstanceId}`);
         }
         ensureHostileRelation(resolveCombatRelation(attacker, { kind: 'terrain' }));
         const skill = findPlayerSkill(attacker, skillId);
@@ -2830,7 +2830,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             y: formation.y,
         });
         if (targets.length === 0) {
-            throw new BadRequestException('没有可命中的目标');
+            throw new BadRequestException('沒有可命中的目標');
         }
         await this.dispatchSkillTargets(attacker, skillId, skill, targets, deps, {
             prevalidatedTargets: true,
@@ -2854,7 +2854,7 @@ export class WorldRuntimePlayerSkillDispatchService {
         const instance = deps.getInstanceRuntimeOrThrow(attacker.instanceId);
         const target = instance.getMonster(targetMonsterId);
         if (!target) {
-            throw new NotFoundException(`妖兽不存在：${targetMonsterId}`);
+            throw new NotFoundException(`妖獸不存在：${targetMonsterId}`);
         }
         ensureHostileRelation(resolveCombatRelation(attacker, { kind: 'monster' }));
         const skill = findPlayerSkill(attacker, skillId);
@@ -2868,7 +2868,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             y: target.y,
         });
         if (targets.length === 0) {
-            throw new BadRequestException('没有可命中的目标');
+            throw new BadRequestException('沒有可命中的目標');
         }
         await this.dispatchSkillTargets(attacker, skillId, skill, targets, deps, {
             prevalidatedTargets: true,
@@ -2907,7 +2907,7 @@ export class WorldRuntimePlayerSkillDispatchService {
                 y: targetY,
             });
             if (targets.length === 0) {
-                throw new BadRequestException('没有可命中的目标');
+                throw new BadRequestException('沒有可命中的目標');
             }
             await this.dispatchSkillTargets(attacker, skillId, skill, targets, deps, {
                 prevalidatedTargets: true,
@@ -2919,7 +2919,7 @@ export class WorldRuntimePlayerSkillDispatchService {
         ensureInstanceSupportsTileDamage(instance);
         const tileState = instance.getTileCombatState(targetX, targetY);
         if (!tileState || tileState.destroyed) {
-            throw new BadRequestException('该目标无法被攻击');
+            throw new BadRequestException('該目標無法被攻擊');
         }
         ensureHostileRelation(resolveCombatRelation(attacker, { kind: 'terrain' }));
         const skill = findPlayerSkill(attacker, skillId);
@@ -2932,7 +2932,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             y: targetY,
         });
         if (targets.length === 0) {
-            throw new BadRequestException('没有可命中的目标');
+            throw new BadRequestException('沒有可命中的目標');
         }
         await this.dispatchSkillTargets(attacker, skillId, skill, targets, deps, {
             prevalidatedTargets: true,

@@ -118,7 +118,7 @@ export function executeEnhancementTick(craftService: any, player: any, ctx: Pipe
       craftService.playerRuntimeService.debitWallet(player.playerId, ENHANCEMENT_SPIRIT_STONE_ITEM_ID, job.spiritStoneCost);
     } catch (error) {
       if (error instanceof TypeError || error instanceof ReferenceError) {
-        console.error(`[制作] 扣费异常 player=${player.playerId}：`, error);
+        console.error(`[製作] 扣費異常 player=${player.playerId}：`, error);
       }
       const finishResult = craftService.finishEnhancementJob(player, job.currentLevel, 'stopped');
       return buildEnhancementTickResult(true, [{

@@ -495,7 +495,7 @@ function resolveInventoryItemInstanceId(playerRuntimeService: any, playerId: str
         return itemInstanceId;
     }
     playerRuntimeService.repairInventoryItemInstanceIds(playerId);
-    throw new BadRequestException('背包物品身份已修复，请重新选择。');
+    throw new BadRequestException('背包物品身份已修復，請重新選擇。');
 }
 
 function normalizeInventoryItemInstanceId(value: unknown): string {

@@ -22,7 +22,7 @@ import { assignItemInstanceIdIfNeeded } from '../world/item-instance-id.helpers'
 const MAIL_WELCOME_TEMPLATE_ID = 'mail.welcome.v1';
 
 /** 默认系统发件人名称。 */
-const MAIL_DEFAULT_SENDER_LABEL = '司命台';
+const MAIL_DEFAULT_SENDER_LABEL = '司命臺';
 const MAILBOX_CACHE_MAX_PLAYERS = normalizePositiveInteger(process.env.SERVER_MAILBOX_CACHE_MAX_PLAYERS, 5_000, 100, 50_000);
 const MAIL_ATTACHMENT_ITEM_COUNT_MAX = 2_147_483_647;
 
@@ -220,7 +220,7 @@ export class MailRuntimeService {
                     operation: 'markRead',
                     ok: false,
                     mailIds: [],
-                    message: '未选择要标记已读的邮件。',
+                    message: '未選擇要標記已讀的郵件。',
                 };
             }
             const visible = this.findVisibleMails(mailbox, normalizedIds);
@@ -229,7 +229,7 @@ export class MailRuntimeService {
                     operation: 'markRead',
                     ok: false,
                     mailIds: [],
-                    message: '目标邮件不存在、已过期，或已被删除。',
+                    message: '目標郵件不存在、已過期，或已被刪除。',
                 };
             }
             const now = Date.now();
@@ -273,7 +273,7 @@ export class MailRuntimeService {
                     operation: 'claim',
                     ok: false,
                     mailIds: [],
-                    message: '未选择要领取附件的邮件。',
+                    message: '未選擇要領取附件的郵件。',
                 };
             }
             const visible = this.findVisibleMails(mailbox, normalizedIds)
@@ -283,7 +283,7 @@ export class MailRuntimeService {
                     operation: 'claim',
                     ok: false,
                     mailIds: [],
-                    message: '当前没有可领取附件的邮件。',
+                    message: '當前沒有可領取附件的郵件。',
                 };
             }
             const resolution = this.resolveAttachmentItems(visible);
@@ -292,7 +292,7 @@ export class MailRuntimeService {
                     operation: 'claim',
                     ok: false,
                     mailIds: visible.map((entry) => entry.mailId),
-                    message: '邮件附件包含无效物品，暂时无法领取。',
+                    message: '郵件附件包含無效物品，暫時無法領取。',
                 };
             }
             const nextInventoryItems = this.buildNextInventoryItems(playerId, resolution.inventoryItems);
@@ -301,7 +301,7 @@ export class MailRuntimeService {
                     operation: 'claim',
                     ok: false,
                     mailIds: visible.map((entry) => entry.mailId),
-                    message: '邮件附件数量超过背包单堆上限，暂时无法领取。',
+                    message: '郵件附件數量超過背包單堆上限，暫時無法領取。',
                 };
             }
             if (!nextInventoryItems) {
@@ -309,7 +309,7 @@ export class MailRuntimeService {
                     operation: 'claim',
                     ok: false,
                     mailIds: visible.map((entry) => entry.mailId),
-                    message: '背包空间不足，无法领取全部附件。',
+                    message: '背包空間不足，無法領取全部附件。',
                 };
             }
             if (this.durableOperationService?.isEnabled?.()) {
@@ -327,7 +327,7 @@ export class MailRuntimeService {
                             operation: 'claim',
                             ok: false,
                             mailIds: visible.map((entry) => entry.mailId),
-                            message: '邮件附件数量超过背包单堆上限，暂时无法领取。',
+                            message: '郵件附件數量超過背包單堆上限，暫時無法領取。',
                         };
                     }
                     if (!revalidatedInventory) {
@@ -335,7 +335,7 @@ export class MailRuntimeService {
                             operation: 'claim',
                             ok: false,
                             mailIds: visible.map((entry) => entry.mailId),
-                            message: '背包空间不足，无法领取全部附件。',
+                            message: '背包空間不足，無法領取全部附件。',
                         };
                     }
                     this.playerRuntimeService.replaceInventoryItems(playerId, revalidatedInventory.map((entry) => ({ ...entry.rawPayload })));
@@ -344,7 +344,7 @@ export class MailRuntimeService {
                         operation: 'claim',
                         ok: true,
                         mailIds: visible.map((entry) => entry.mailId),
-                        message: `已领取 ${visible.length} 封邮件的附件。`,
+                        message: `已領取 ${visible.length} 封郵件的附件。`,
                     };
                 }
                 catch (error) {
@@ -360,7 +360,7 @@ export class MailRuntimeService {
                 operation: 'claim',
                 ok: false,
                 mailIds: visible.map((entry) => entry.mailId),
-                message: '邮件附件领取事务暂不可用，请稍后再试。',
+                message: '郵件附件領取事務暫不可用，請稍後再試。',
             };
         });
         const coordinator = this.playerRuntimeService?.runExclusiveAssetMutation;
@@ -490,7 +490,7 @@ export class MailRuntimeService {
                     operation: 'delete',
                     ok: false,
                     mailIds: [],
-                    message: '未选择要删除的邮件。',
+                    message: '未選擇要刪除的郵件。',
                 };
             }
             const visible = this.findVisibleMails(mailbox, normalizedIds);
@@ -499,7 +499,7 @@ export class MailRuntimeService {
                     operation: 'delete',
                     ok: false,
                     mailIds: [],
-                    message: '目标邮件不存在、已过期，或已被删除。',
+                    message: '目標郵件不存在、已過期，或已被刪除。',
                 };
             }
             if (visible.some((entry) => entry.attachments.length > 0 && entry.claimedAt == null)) {
@@ -507,7 +507,7 @@ export class MailRuntimeService {
                     operation: 'delete',
                     ok: false,
                     mailIds: [],
-                    message: '仍有未领取附件的邮件，不能直接删除。',
+                    message: '仍有未領取附件的郵件，不能直接刪除。',
                 };
             }
             const now = Date.now();
@@ -962,19 +962,19 @@ function resolveClaimErrorMessage(error) {
         const auditDebugEnabled = typeof process.env.SERVER_PROTOCOL_AUDIT_CASES === 'string'
             && process.env.SERVER_PROTOCOL_AUDIT_CASES.trim().length > 0;
         return auditDebugEnabled
-            ? `当前会话已失效，请重新连接后再领取附件。 [${code}]`
-            : '当前会话已失效，请重新连接后再领取附件。';
+            ? `當前會話已失效，請重新連接後再領取附件。 [${code}]`
+            : '當前會話已失效，請重新連接後再領取附件。';
     }
     if (code === 'mail_already_claimed_or_deleted') {
-        return '目标邮件已经领取或删除，请刷新邮箱后重试。';
+        return '目標郵件已經領取或刪除，請刷新郵箱後重試。';
     }
     if (code === 'mail_claim_targets_missing' || code === 'mail_claim_attachments_missing') {
-        return '目标邮件已变化，请刷新邮箱后重试。';
+        return '目標郵件已變化，請刷新郵箱後重試。';
     }
     if (code === 'mail_already_expired') {
-        return '目标邮件已过期，无法再领取附件。';
+        return '目標郵件已過期，無法再領取附件。';
     }
-    return '邮件附件领取失败，请稍后重试。';
+    return '郵件附件領取失敗，請稍後重試。';
 }
 
 function shouldRetryClaimFence(error) {

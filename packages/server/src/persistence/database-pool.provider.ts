@@ -67,7 +67,7 @@ export class DatabasePoolProvider implements OnModuleDestroy {
     const scopeKey = `${group}:${name}`;
     if (!this.registeredScopes.has(scopeKey)) {
       this.registeredScopes.add(scopeKey);
-      this.logger.debug(`数据库连接池作用域已挂载到 ${group} 池：${name}`);
+      this.logger.debug(`數據庫連接池作用域已掛載到 ${group} 池：${name}`);
     }
     const cached = this.pools.get(group);
     if (cached) {
@@ -86,17 +86,17 @@ export class DatabasePoolProvider implements OnModuleDestroy {
     pool.on('error', (error) => {
       const message = error instanceof Error ? error.message : String(error);
       if (isTransientPostgresError(error)) {
-        this.logger.warn(`数据库连接池 ${group} 捕获瞬态空闲连接错误，已淘汰失效连接并等待自动重连：${message}`);
+        this.logger.warn(`數據庫連接池 ${group} 捕獲瞬態空閒連接錯誤，已淘汰失效連接並等待自動重連：${message}`);
         return;
       }
       this.logger.error(
-        `数据库连接池 ${group} 捕获非瞬态空闲连接错误：${message}`,
+        `數據庫連接池 ${group} 捕獲非瞬態空閒連接錯誤：${message}`,
         error instanceof Error ? error.stack : undefined,
       );
     });
     this.pools.set(group, pool);
     this.logger.log(
-      `数据库连接池 ${group} 已创建：最大连接=${resolveDatabasePoolMax(group)} 空闲超时=${resolveDatabasePoolIdleTimeoutMillis(group)}ms 连接超时=${resolveDatabasePoolConnectionTimeoutMillis(group)}ms SQL超时=${resolveDatabasePoolStatementTimeoutMillis(group)}ms 锁超时=${resolveDatabasePoolLockTimeoutMillis(group)}ms`,
+      `數據庫連接池 ${group} 已建立：最大連接=${resolveDatabasePoolMax(group)} 空閒超時=${resolveDatabasePoolIdleTimeoutMillis(group)}ms 連接超時=${resolveDatabasePoolConnectionTimeoutMillis(group)}ms SQL超時=${resolveDatabasePoolStatementTimeoutMillis(group)}ms 鎖超時=${resolveDatabasePoolLockTimeoutMillis(group)}ms`,
     );
     return pool;
   }
@@ -160,7 +160,7 @@ export class DatabasePoolProvider implements OnModuleDestroy {
     this.registeredScopes.clear();
     await Promise.all(
       pools.map(async (pool) => pool.end().catch((error: unknown) => {
-        this.logger.warn(`关闭数据库连接池失败：${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`關閉數據庫連接池失敗：${error instanceof Error ? error.message : String(error)}`);
       })),
     );
   }

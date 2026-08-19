@@ -45,7 +45,7 @@ export async function recoverVaultsBeforePlacementPrune(
   }
   const service = runtime?.treasureVaultRuntimeService;
   if (typeof service?.recoverVaultItemsToOwnerMail !== 'function') {
-    logger?.error?.(`启动摧毁违规宝库时返还服务不可用，全部豁免摧毁：${instanceId}`);
+    logger?.error?.(`啟動摧毀違規寶庫時返還服務不可用，全部豁免摧毀：${instanceId}`);
     for (const vault of vaults) {
       markBlocked(blocked, vault);
     }
@@ -65,14 +65,14 @@ export async function recoverVaultsBeforePlacementPrune(
       });
       if (result?.ok === true) {
         if (result.itemCount > 0) {
-          logger?.warn?.(`启动摧毁违规宝库前返还了 ${result.itemCount} 件物品 instance=${instanceId} building=${buildingId} owner=${vault?.ownerPlayerId ?? ''}`);
+          logger?.warn?.(`啟動摧毀違規寶庫前返還了 ${result.itemCount} 件物品 instance=${instanceId} building=${buildingId} owner=${vault?.ownerPlayerId ?? ''}`);
         }
         continue;
       }
-      logger?.error?.(`启动摧毁违规宝库时库存无法返还，${describeBlockOutcome(vault)} instance=${instanceId} building=${buildingId} reason=${result?.reason ?? ''}`);
+      logger?.error?.(`啟動摧毀違規寶庫時庫存無法返還，${describeBlockOutcome(vault)} instance=${instanceId} building=${buildingId} reason=${result?.reason ?? ''}`);
       markBlocked(blocked, vault);
     } catch (error) {
-      logger?.error?.(`启动摧毁违规宝库时返还库存异常，${describeBlockOutcome(vault)} instance=${instanceId} building=${buildingId} ${(error as Error)?.message ?? error}`);
+      logger?.error?.(`啟動摧毀違規寶庫時返還庫存異常，${describeBlockOutcome(vault)} instance=${instanceId} building=${buildingId} ${(error as Error)?.message ?? error}`);
       markBlocked(blocked, vault);
     }
   }
@@ -97,7 +97,7 @@ export async function releaseTimeChambersBeforePlacementPrune(
   }
   const service = runtime?.timeChamberRuntimeService;
   if (typeof service?.prepareDeconstruct !== 'function') {
-    logger?.error?.(`启动摧毁违规密室时释放服务不可用，全部可恢复密室豁免摧毁：${instanceId}`);
+    logger?.error?.(`啟動摧毀違規密室時釋放服務不可用，全部可恢復密室豁免摧毀：${instanceId}`);
     for (const chamber of chambers) {
       markBlocked(blocked, chamber);
     }
@@ -112,10 +112,10 @@ export async function releaseTimeChambersBeforePlacementPrune(
       if (result?.ok === true) {
         continue;
       }
-      logger?.error?.(`启动摧毁违规密室时无法释放独立实例，${describeChamberBlockOutcome(chamber)} instance=${instanceId} building=${chamber.id} reason=${result?.reason ?? ''}`);
+      logger?.error?.(`啟動摧毀違規密室時無法釋放獨立實例，${describeChamberBlockOutcome(chamber)} instance=${instanceId} building=${chamber.id} reason=${result?.reason ?? ''}`);
       markBlocked(blocked, chamber);
     } catch (error) {
-      logger?.error?.(`启动摧毁违规密室时释放异常，${describeChamberBlockOutcome(chamber)} instance=${instanceId} building=${chamber.id} ${(error as Error)?.message ?? error}`);
+      logger?.error?.(`啟動摧毀違規密室時釋放異常，${describeChamberBlockOutcome(chamber)} instance=${instanceId} building=${chamber.id} ${(error as Error)?.message ?? error}`);
       markBlocked(blocked, chamber);
     }
   }
@@ -127,15 +127,15 @@ export function logPrunedBuildingAudit(instanceId: string, hydrateResult: unknow
   const skipped = resolveSkippedBuildings(hydrateResult);
   for (const entry of skipped.slice(0, PRUNE_AUDIT_LOG_LIMIT)) {
     logger?.warn?.(
-      `启动摧毁违规建筑 instance=${instanceId} building=${entry?.id ?? ''} def=${entry?.defId ?? ''} owner=${entry?.ownerPlayerId ?? ''} reason=${entry?.reason ?? ''}`,
+      `啟動摧毀違規建築 instance=${instanceId} building=${entry?.id ?? ''} def=${entry?.defId ?? ''} owner=${entry?.ownerPlayerId ?? ''} reason=${entry?.reason ?? ''}`,
     );
   }
   if (skipped.length > PRUNE_AUDIT_LOG_LIMIT) {
-    logger?.warn?.(`启动摧毁违规建筑共 ${skipped.length} 个，已省略 ${skipped.length - PRUNE_AUDIT_LOG_LIMIT} 条明细：${instanceId}`);
+    logger?.warn?.(`啟動摧毀違規建築共 ${skipped.length} 個，已省略 ${skipped.length - PRUNE_AUDIT_LOG_LIMIT} 條明細：${instanceId}`);
   }
   const kept = Math.max(0, Math.trunc(Number((hydrateResult as any)?.keptProtectedPlacementCount) || 0));
   if (kept > 0) {
-    logger?.error?.(`有 ${kept} 个违规宝库因库存无法返还而豁免摧毁，仍占据禁建区，需要 GM 处理：${instanceId}`);
+    logger?.error?.(`有 ${kept} 個違規寶庫因庫存無法返還而豁免摧毀，仍佔據禁建區，需要 GM 處理：${instanceId}`);
   }
 }
 
@@ -148,14 +148,14 @@ function markBlocked(blocked: Set<string>, vault: SkippedBuildingRecord): void {
 
 function describeBlockOutcome(vault: SkippedBuildingRecord): string {
   return vault?.reason === 'unknown_def'
-    ? '该宝库定义已删除、无法保留，库存仍留在 instance_building_storage_item'
-    : '已豁免摧毁并原地保留';
+    ? '該寶庫定義已刪除、無法保留，庫存仍留在 instance_building_storage_item'
+    : '已豁免摧毀並原地保留';
 }
 
 function describeChamberBlockOutcome(chamber: SkippedBuildingRecord): string {
   return chamber?.reason === 'unknown_def'
-    ? '该密室定义已删除、无法保留，独立实例需由 GM 检查'
-    : '已豁免摧毁并原地保留';
+    ? '該密室定義已刪除、無法保留，獨立實例需由 GM 檢查'
+    : '已豁免摧毀並原地保留';
 }
 
 function resolveSkippedBuildings(hydrateResult: unknown): SkippedBuildingRecord[] {

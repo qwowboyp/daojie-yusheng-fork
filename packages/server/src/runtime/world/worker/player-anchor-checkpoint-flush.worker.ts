@@ -62,7 +62,7 @@ export class PlayerAnchorCheckpointFlushWorker {
         processed += 1;
       } catch (error: unknown) {
         this.logger.warn(
-          `玩家锚点/检查点 worker 刷盘失败 playerId=${entry.playerId} domain=${entry.domain}: ${
+          `玩家錨點/檢查點 worker 刷盤失敗 playerId=${entry.playerId} domain=${entry.domain}: ${
             error instanceof Error ? error.stack || error.message : String(error)
           }`,
         );

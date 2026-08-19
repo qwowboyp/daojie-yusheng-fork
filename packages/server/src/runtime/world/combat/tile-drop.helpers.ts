@@ -258,7 +258,7 @@ export function spawnTileDrops(input: {
     return;
   }
   const itemLabel = labels.join('、');
-  const notice = buildStructuredNotice('loot', 'notice.loot.tile-drop-inventory', `获得 ${itemLabel}`, {
+  const notice = buildStructuredNotice('loot', 'notice.loot.tile-drop-inventory', `獲得 ${itemLabel}`, {
     vars: { itemLabel },
     pills: [{ key: 'itemLabel', style: 'target' }],
   });

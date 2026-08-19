@@ -159,7 +159,7 @@ function buildArtifactOverchargeBuff(stacks: number): Record<string, unknown> {
   return {
     buffId: ARTIFACT_OVERCHARGE_BUFF_ID,
     name: '盈能',
-    desc: '法宝持续启用积蓄的盈能，每层使法宝固定灵力消耗提高 1%。无启用法宝时每息减少一层。',
+    desc: '法寶持續啟用積蓄的盈能，每層使法寶固定靈力消耗提高 1%。無啟用法寶時每息減少一層。',
     shortMark: '盈',
     category: 'buff',
     visibility: 'public',
@@ -168,7 +168,7 @@ function buildArtifactOverchargeBuff(stacks: number): Record<string, unknown> {
     stacks,
     maxStacks: ARTIFACT_OVERCHARGE_MAX_STACKS,
     sourceSkillId: 'artifact:enabled',
-    sourceSkillName: '法宝',
+    sourceSkillName: '法寶',
     color: '#44b3d2',
     infiniteDuration: true,
   };

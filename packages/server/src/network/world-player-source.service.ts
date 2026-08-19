@@ -42,7 +42,7 @@ function assertExplicitMigrationAccess(options, logger, action) {
     if (isMigrationAccessExplicit(options)) {
         return true;
     }
-    logger?.warn?.(`旧玩家源 ${action} 已拦截：reason=explicit_migration_access_required`);
+    logger?.warn?.(`舊玩家源 ${action} 已攔截：reason=explicit_migration_access_required`);
     return false;
 }
 
@@ -135,7 +135,7 @@ export class WorldPlayerSourceService {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
         if (isMigrationAccessExplicit(options) && !isMigrationSourceDisabled()) {
-            this.logger.warn(`旧玩家源身份来源已移除：原因=旧版用户玩家表已删除 仅迁移=true userId=${typeof payload?.sub === 'string' ? payload.sub : '未知'}`);
+            this.logger.warn(`舊玩家源身份來源已移除：原因=舊版用戶玩家表已刪除 僅遷移=true userId=${typeof payload?.sub === 'string' ? payload.sub : '未知'}`);
         }
         return null;
     }
@@ -150,7 +150,7 @@ export class WorldPlayerSourceService {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
         if (isMigrationAccessExplicit(options) && !isMigrationSourceDisabled()) {
-            this.logger.warn(`旧玩家源快照来源已移除：原因=旧版用户玩家表已删除 仅迁移=true playerId=${typeof playerId === 'string' ? playerId : '未知'}`);
+            this.logger.warn(`舊玩家源快照來源已移除：原因=舊版用戶玩家表已刪除 僅遷移=true playerId=${typeof playerId === 'string' ? playerId : '未知'}`);
         }
         return null;
     }
@@ -335,7 +335,7 @@ function resolveRequiredCompatMapId(value) {
 
     const normalized = typeof value === 'string' ? value.trim() : '';
     if (!normalized) {
-        throw new Error('迁移玩家快照的 mapId 无效');
+        throw new Error('遷移玩家快照的 mapId 無效');
     }
     return normalized;
 }
@@ -511,7 +511,7 @@ function normalizeUnlockedMapIds(value) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     if (!Array.isArray(value)) {
-        throw new Error('迁移玩家快照的 unlockedMinimapIds 无效');
+        throw new Error('遷移玩家快照的 unlockedMinimapIds 無效');
     }
 
     const result = new Set<string>();
@@ -776,7 +776,7 @@ function normalizePendingLogbookKind(value) {
 function isRetiredRedeemSuccessLogbookMessage(entry) {
     const id = typeof entry?.id === 'string' ? entry.id.trim() : '';
     const text = typeof entry?.text === 'string' ? entry.text.trim() : '';
-    return id.startsWith('redeem:') && text.startsWith('兑换成功：');
+    return id.startsWith('redeem:') && text.startsWith('兌換成功：');
 }
 /**
  * normalizeRuntimeBonuses：规范化或转换运行态Bonuse。

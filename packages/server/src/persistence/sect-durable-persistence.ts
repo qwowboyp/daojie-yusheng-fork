@@ -229,7 +229,7 @@ export async function repairPersistedSectCoreStateWithClient(
           'kind', 'sect_core',
           'trigger', 'manual',
           'hidden', false,
-          'name', name || '宗门核心',
+          'name', name || '宗門核心',
           'char', '${SECT_CORE_CHAR}',
           'color', '#d8c37a',
           'sectId', sect_id

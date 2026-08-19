@@ -30,7 +30,7 @@ export class WorldRuntimeNpcAccessService {
     const instance = deps.getInstanceRuntimeOrThrow(location.instanceId);
     const npc = instance.getAdjacentNpc(playerId, npcId);
     if (!npc) {
-      throw new NotFoundException('你离这位商人太远了');
+      throw new NotFoundException('你離這位商人太遠了');
     }
     return npc;
   }

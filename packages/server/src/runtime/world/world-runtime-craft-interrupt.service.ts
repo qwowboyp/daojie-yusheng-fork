@@ -134,12 +134,12 @@ export class WorldRuntimeCraftInterruptService {
           void Promise.resolve(pendingFlush)
             .then((flushed) => {
               if (flushed !== true) {
-                this.logger.warn(`建造中断任务投影收敛未完成 playerId=${playerId} reason=${reason}`);
+                this.logger.warn(`建造中斷任務投影收斂未完成 playerId=${playerId} reason=${reason}`);
               }
             })
             .catch((error) => {
               this.logger.warn(
-                `建造中断任务投影收敛失败 playerId=${playerId} error=${error instanceof Error ? error.message : String(error)}`,
+                `建造中斷任務投影收斂失敗 playerId=${playerId} error=${error instanceof Error ? error.message : String(error)}`,
               );
             });
         }
@@ -161,8 +161,8 @@ export class WorldRuntimeCraftInterruptService {
           resourceNodeId: gatherJob.resourceNodeId,
           instanceId: gatherJob.instanceId,
         },
-        gatherJob.resourceNodeName ?? '采集',
-        reason === 'move' ? '离开采集点' : '被打断',
+        gatherJob.resourceNodeName ?? '採集',
+        reason === 'move' ? '離開採集點' : '被打斷',
       );
     }
     if (kind === 'building' && player.buildingJob && Number(player.buildingJob.remainingTicks) > 0) {
@@ -170,8 +170,8 @@ export class WorldRuntimeCraftInterruptService {
       this.queueService.sleepToQueue(
         player, 'building',
         { buildingId: buildingJob.buildingId, operation: buildingJob.operation ?? 'construct' },
-        buildingJob.operation === 'deconstruct' ? '拆除建筑' : (buildingJob.buildingName ?? '建造'),
-        reason === 'move' ? '离开建筑' : '被打断',
+        buildingJob.operation === 'deconstruct' ? '拆除建築' : (buildingJob.buildingName ?? '建造'),
+        reason === 'move' ? '離開建築' : '被打斷',
       );
     }
   }

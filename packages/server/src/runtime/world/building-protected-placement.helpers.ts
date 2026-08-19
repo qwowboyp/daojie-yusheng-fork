@@ -78,18 +78,18 @@ export function findBuildingProtectedPlacementConflict(
 
 export function formatBuildingProtectedPlacementConflictReason(reason: string | undefined): string {
   if (reason === BUILDING_PROTECTED_PLACEMENT_CONFLICT_REASONS.portal) {
-    return '不能建造在传送点附近';
+    return '不能建造在傳送點附近';
   }
   if (reason === BUILDING_PROTECTED_PLACEMENT_CONFLICT_REASONS.npc) {
-    return '不能建造在场景人物附近';
+    return '不能建造在場景人物附近';
   }
   if (reason === BUILDING_PROTECTED_PLACEMENT_CONFLICT_REASONS.spawn) {
-    return '不能建造在出生点附近';
+    return '不能建造在出生點附近';
   }
   if (reason === BUILDING_PROTECTED_PLACEMENT_CONFLICT_REASONS.safeZone) {
-    return '不能建造在安全区内';
+    return '不能建造在安全區內';
   }
-  return '不能建造在受保护点位';
+  return '不能建造在受保護點位';
 }
 
 function findConflictAtCell(

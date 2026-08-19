@@ -16,7 +16,7 @@ export class MapPersistenceService {
   private readonly logger = new Logger(MapPersistenceService.name);
 
   async onModuleInit() {
-    this.logger.log('旧地图整档快照服务已禁用：地图真源必须使用 instance_* 分域表');
+    this.logger.log('舊地圖整檔快照服務已禁用：地圖真源必須使用 instance_* 分域表');
   }
 
   /** 永远返回 false：旧快照链路已完全禁用。 */

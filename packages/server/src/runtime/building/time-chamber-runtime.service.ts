@@ -223,7 +223,7 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
           [state.sourceInstanceId, state.buildingId, ownerPlayerId, state.revision],
         );
         if ((result.rowCount ?? 0) !== 1) {
-          this.logger.warn(`密室创建者恢复冲突：${state.chamberInstanceId}`);
+          this.logger.warn(`密室建立者恢復衝突：${state.chamberInstanceId}`);
           continue;
         }
         state.ownerPlayerId = ownerPlayerId;
@@ -252,11 +252,11 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
         instance,
         requiresPersistentHydration,
       )) {
-        this.logger.warn(`密室实例当前不归本节点写入，跳过恢复应用：${state.chamberInstanceId}`);
+        this.logger.warn(`密室實例當前不歸本節點寫入，跳過恢復應用：${state.chamberInstanceId}`);
         continue;
       }
       if (requiresPersistentHydration) {
-        this.logger.log(`密室运行态已从持久化状态完成水合：${state.chamberInstanceId}`);
+        this.logger.log(`密室運行態已從持久化狀態完成水合：${state.chamberInstanceId}`);
       }
       instance.meta.ownerPlayerId = state.ownerPlayerId;
       instance.meta.displayName = state.displayName;
@@ -400,7 +400,7 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
           usageDetail: this.buildUsageDetailView(playerId, resolved.state, resolved.chamberInstance),
         };
       } catch (error) {
-        this.logger.warn(`密室开启失败：${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`密室開啟失敗：${error instanceof Error ? error.message : String(error)}`);
         return {
           ok: false,
           operation: 'activate',
@@ -880,7 +880,7 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
     }
     const pool = this.databasePoolProvider.getPool('time-chamber-runtime') as PoolLike | null;
     if (!pool) {
-      this.logger.warn('密室持久化已禁用：数据库连接池不可用');
+      this.logger.warn('密室持久化已禁用：數據庫連接池不可用');
       return;
     }
     try {
@@ -889,11 +889,11 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
       this.enabled = true;
       await this.reloadAllStates();
       this.scheduleNextActivationExpiry();
-      this.logger.log(`密室持久化已启用：恢复 ${this.stateByBuildingKey.size} 条状态`);
+      this.logger.log(`密室持久化已啟用：恢復 ${this.stateByBuildingKey.size} 條狀態`);
     } catch (error) {
       this.pool = null;
       this.enabled = false;
-      this.logger.error('密室持久化初始化失败，已禁用密室管理', error instanceof Error ? error.stack : String(error));
+      this.logger.error('密室持久化初始化失敗，已禁用密室管理', error instanceof Error ? error.stack : String(error));
     }
   }
 
@@ -1052,7 +1052,7 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
         if (building?.state !== 'active' || !isTimeChamberBuilding(instance, building)) continue;
         const result = await this.ensurePersistentChamberForBuilding(instanceId, building.id, runtime);
         if (result.ok !== true) {
-          this.logger.warn(`密室常驻实例补建失败：${instanceId}/${building.id} reason=${result.reason ?? ''}`);
+          this.logger.warn(`密室常駐實例補建失敗：${instanceId}/${building.id} reason=${result.reason ?? ''}`);
         }
       }
     }
@@ -1064,7 +1064,7 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
     try {
       await runtime.waitForInstanceLeaseReady?.(state.chamberInstanceId);
     } catch (error) {
-      this.logger.warn(`密室孤儿实例等待租约失败：${state.chamberInstanceId} ${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`密室孤兒實例等待租約失敗：${state.chamberInstanceId} ${error instanceof Error ? error.message : String(error)}`);
     }
     const result = await this.prepareDeconstruct(state.sourceInstanceId, state.buildingId, runtime);
     if (result.ok === true) {
@@ -1076,7 +1076,7 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
       this.scheduleOrphanCleanupRetry(runtime);
       return;
     }
-    this.logger.warn(`密室孤儿状态清理失败：${state.chamberInstanceId} reason=${result.reason ?? ''}`);
+    this.logger.warn(`密室孤兒狀態清理失敗：${state.chamberInstanceId} reason=${result.reason ?? ''}`);
   }
 
   private scheduleOrphanCleanupRetry(runtime: any): void {
@@ -1090,7 +1090,7 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
           await this.cleanupRecoveredOrphanState(entry.state, runtime, entry.attempt);
         }
       })().catch((error) => {
-        this.logger.warn(`密室孤儿状态重试队列失败：${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`密室孤兒狀態重試隊列失敗：${error instanceof Error ? error.message : String(error)}`);
       });
     }, ORPHAN_CLEANUP_RETRY_DELAY_MS);
     this.orphanCleanupRetryTimer.unref?.();
@@ -1231,8 +1231,8 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
       if (reconciliation.outcome === 'unknown') throw error;
       this.playerRuntimeService.replaceInventoryItems(playerId, reconciliation.inventoryItems);
       this.logger.warn(reconciliation.replayReadFailed
-        ? `密室资产事务已确认提交，但 operation 明细暂不可读，已按同一请求后态收敛：operationId=${operationId}`
-        : `密室资产事务 COMMIT 回包不确定，已按 durable operation 回读收敛：operationId=${operationId}`);
+        ? `密室資產事務已確認提交，但 operation 明細暫不可讀，已按同一請求後態收斂：operationId=${operationId}`
+        : `密室資產事務 COMMIT 回包不確定，已按 durable operation 回讀收斂：operationId=${operationId}`);
       return false;
     }
   }
@@ -1261,7 +1261,7 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
     try {
       runtime.applyTransfer?.(transfer);
     } catch (error) {
-      this.logger.warn(`密室传送失败：playerId=${playerId} target=${targetInstanceId} ${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`密室傳送失敗：playerId=${playerId} target=${targetInstanceId} ${error instanceof Error ? error.message : String(error)}`);
       return false;
     }
     return normalizeString(runtime.getPlayerLocation?.(playerId)?.instanceId) === normalizeString(targetInstanceId);
@@ -1353,7 +1353,7 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
     this.expiryTimer = setTimeout(() => {
       this.expiryTimer = null;
       void this.expireActivations().catch((error) => {
-        this.logger.warn(`密室开启时段到期处理失败：${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`密室開啟時段到期處理失敗：${error instanceof Error ? error.message : String(error)}`);
         this.scheduleActivationExpiryRetry();
       });
     }, delay);
@@ -1364,7 +1364,7 @@ export class TimeChamberRuntimeService implements OnModuleInit, OnModuleDestroy 
     this.expiryTimer = setTimeout(() => {
       this.expiryTimer = null;
       void this.expireActivations().catch((error) => {
-        this.logger.warn(`密室开启时段到期重试失败：${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`密室開啟時段到期重試失敗：${error instanceof Error ? error.message : String(error)}`);
         this.scheduleActivationExpiryRetry();
       });
     }, EXPIRY_RETRY_DELAY_MS);

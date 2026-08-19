@@ -16,7 +16,7 @@ export class ForgingStrategy implements TechniqueActivityStrategy {
   readonly kind = 'forging' as const;
   readonly jobSlot = 'forgingJob';
   readonly skillSlot = 'forgingSkill';
-  readonly activityLabel = '炼器';
+  readonly activityLabel = '煉器';
   readonly pauseTicks = 10;
   readonly conditional = false;
 

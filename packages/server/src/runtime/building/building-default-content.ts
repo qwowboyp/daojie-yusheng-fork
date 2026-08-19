@@ -19,7 +19,7 @@ import { compileFengShuiRules, type FengShuiRuleDef } from './fengshui-calculato
 const DEFAULT_BUILDING_DEFS: BuildingDef[] = [
   {
     id: 'stone_wall',
-    name: '石墙',
+    name: '石牆',
     visual: { tileType: TileType.Wall, layer: 'structure' },
     placement: { layer: 'structure', footprint: [{ dx: 0, dy: 0 }] },
     topology: { blocksMove: true, blocksSight: true, roomBoundary: 100, shaShield: 20 },
@@ -28,7 +28,7 @@ const DEFAULT_BUILDING_DEFS: BuildingDef[] = [
   },
   {
     id: 'wooden_door',
-    name: '木门',
+    name: '木門',
     visual: { tileType: TileType.Door, layer: 'structure' },
     placement: { layer: 'structure', footprint: [{ dx: 0, dy: 0 }] },
     topology: { blocksMove: false, blocksSight: false, roomBoundary: 100, opening: 'door' },
@@ -55,7 +55,7 @@ const DEFAULT_BUILDING_DEFS: BuildingDef[] = [
   },
   {
     id: 'scripture_platform',
-    name: '藏经台',
+    name: '藏經臺',
     placement: { layer: 'facility', footprint: [{ dx: 0, dy: 0 }] },
     topology: { blocksMove: true },
     fengShui: {
@@ -69,8 +69,8 @@ const DEFAULT_BUILDING_DEFS: BuildingDef[] = [
   },
   {
     id: 'treasure_vault',
-    name: '宝库',
-    visual: { glyph: '宝', color: '#d69e2e', layer: 'furniture' },
+    name: '寶庫',
+    visual: { glyph: '寶', color: '#d69e2e', layer: 'furniture' },
     placement: { layer: 'furniture', footprint: [{ dx: 0, dy: 0 }] },
     topology: { blocksMove: false },
     fengShui: {
@@ -89,7 +89,7 @@ const DEFAULT_BUILDING_DEFS: BuildingDef[] = [
   },
   {
     id: 'meditation_mat',
-    name: '蒲团',
+    name: '蒲團',
     visual: { glyph: '蒲', color: '#8b5e34', layer: 'furniture' },
     placement: { layer: 'facility', footprint: [{ dx: 0, dy: 0 }] },
     topology: { blocksMove: false },

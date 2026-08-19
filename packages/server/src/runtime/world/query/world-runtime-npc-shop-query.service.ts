@@ -49,7 +49,7 @@ export class WorldRuntimeNpcShopQueryService {
 
     getCurrencyItemName() {
         const item = this.contentTemplateRepository.createItem(NPC_SHOP_CURRENCY_ITEM_ID, 1);
-        return resolvePlayerFacingContentName(NPC_SHOP_CURRENCY_ITEM_ID, '未知货币', item?.name);
+        return resolvePlayerFacingContentName(NPC_SHOP_CURRENCY_ITEM_ID, '未知貨幣', item?.name);
     }
     /**
  * buildNpcShopView：构建并返回目标对象。
@@ -90,7 +90,7 @@ export class WorldRuntimeNpcShopQueryService {
             return {
                 npcId: npc.npcId,
                 shop: null,
-                error: '对方现在没有经营商店',
+                error: '對方現在沒有經營商店',
             };
         }
 
@@ -99,7 +99,7 @@ export class WorldRuntimeNpcShopQueryService {
             return {
                 npcId: npc.npcId,
                 shop: null,
-                error: '商铺货架还没有可售物品',
+                error: '商鋪貨架還沒有可售物品',
             };
         }
         return {
@@ -155,22 +155,22 @@ export class WorldRuntimeNpcShopQueryService {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
         if (!npc.hasShop) {
-            throw new BadRequestException('对方现在没有经营商店');
+            throw new BadRequestException('對方現在沒有經營商店');
         }
 
         const shopItem = npc.shopItems.find((entry) => entry.itemId === itemId);
         if (!shopItem) {
-            throw new NotFoundException('这位商人没有出售该物品');
+            throw new NotFoundException('這位商人沒有出售該物品');
         }
 
         const totalCost = quantity * shopItem.price;
         if (!Number.isSafeInteger(totalCost) || totalCost <= 0) {
-            throw new BadRequestException('购买总价过大，暂时无法结算');
+            throw new BadRequestException('購買總價過大，暫時無法結算');
         }
 
         const item = this.contentTemplateRepository.createItem(itemId, quantity);
         if (!item) {
-            throw new NotFoundException('商品配置异常，暂时无法购买');
+            throw new NotFoundException('商品配置異常，暫時無法購買');
         }
         if (!this.playerRuntimeService.canAffordWallet(playerId, NPC_SHOP_CURRENCY_ITEM_ID, totalCost)) {
             throw new BadRequestException(`${this.getCurrencyItemName()}不足`);
@@ -180,7 +180,7 @@ export class WorldRuntimeNpcShopQueryService {
                 ? this.playerRuntimeService.getWalletBalanceByType(playerId, NPC_SHOP_CURRENCY_ITEM_ID)
                 : null;
             if (!Number.isSafeInteger(currentCurrencyBalance) || currentCurrencyBalance !== totalCost) {
-                throw new BadRequestException('背包空间不足，无法购买');
+                throw new BadRequestException('背包空間不足，無法購買');
             }
         }
         return {

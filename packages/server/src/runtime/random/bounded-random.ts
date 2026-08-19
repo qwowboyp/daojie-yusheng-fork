@@ -37,12 +37,12 @@ export function buildTruncatedGeometricDistribution(
   const normalizedMin = Math.trunc(Number(min));
   const normalizedMax = Math.trunc(Number(max));
   if (!Number.isFinite(normalizedMin) || !Number.isFinite(normalizedMax) || normalizedMax < normalizedMin) {
-    throw new RangeError('随机区间必须是有效整数闭区间');
+    throw new RangeError('隨機區間必須是有效整數閉區間');
   }
 
   const normalizedTargetMean = Number(targetMean);
   if (!Number.isFinite(normalizedTargetMean) || normalizedTargetMean < normalizedMin || normalizedTargetMean > normalizedMax) {
-    throw new RangeError('目标均值必须落在随机区间内');
+    throw new RangeError('目標均值必須落在隨機區間內');
   }
 
   const span = normalizedMax - normalizedMin;

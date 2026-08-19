@@ -256,6 +256,8 @@ const smokeCases = [
   { name: 'gm-world-nodes', scriptFile: 'gm-world-nodes-smoke.js', standalone: true },
   { name: 'gm-world-abnormal-temporary-tile-cleanup', scriptFile: 'gm-world-abnormal-temporary-tile-cleanup-smoke.js', standalone: true },
   { name: 'mail-expiration-cleanup-worker', scriptFile: 'mail-expiration-cleanup-worker-smoke.js', standalone: true },
+  { name: 'mail-traditionalize-conversion', scriptFile: 'mail-traditionalize-conversion-smoke.js', standalone: true },
+  { name: 'tw-vocabulary-consistency', scriptFile: 'tw-vocabulary-consistency-smoke.js', standalone: true },
   { name: 'mail-expiration-archive-worker', scriptFile: 'mail-expiration-archive-worker-smoke.js', standalone: true },
   { name: 'mail-soft-delete-purge-worker', scriptFile: 'mail-soft-delete-purge-worker-smoke.js', standalone: true },
   { name: 'mail-structured-mutation', scriptFile: 'mail-structured-mutation-smoke.js', standalone: true },
@@ -387,6 +389,8 @@ const SMOKE_CASE_GROUPS = Object.freeze({
     'mail-soft-delete-purge-worker',
     'mail-structured-mutation',
     'mail-wallet-attachment',
+    'mail-traditionalize-conversion',
+    'tw-vocabulary-consistency',
     'treasure-vault-asset-safety',
     'time-chamber-durable-fuel',
     'mail-schema-report',
@@ -429,6 +433,7 @@ const DB_SMOKE_CASES = new Set([
     'gm-database',
     'shutdown-drain',
     'flush-task-startup-stall-quarantine',
+    'mail-traditionalize-conversion',
 ]);
 const PARALLEL_STANDALONE_CASES = new Set([
     'snapshot-retirement',

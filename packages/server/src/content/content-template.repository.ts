@@ -342,7 +342,7 @@ export class ContentTemplateRepository {
         this.buffRegistry.freezeAll();
         freezeTemplateMap(this.terrainEffectsByTerrainType);
         this.monsterTemplateRegistry.freezeAll();
-        this.logger.log(`已加载 ${this.itemTemplates.size} 个物品模板、${this.techniqueTemplates.size} 个功法、${this.monsterDropsByMonsterId.size} 张妖兽掉落表和 ${this.starterInventoryEntries.length} 条初始物品记录`);
+        this.logger.log(`已加載 ${this.itemTemplates.size} 個物品模板、${this.techniqueTemplates.size} 個功法、${this.monsterDropsByMonsterId.size} 張妖獸掉落表和 ${this.starterInventoryEntries.length} 條初始物品記錄`);
     }
 
     /** 按地形类型读取每息地块效果。 */
@@ -572,7 +572,7 @@ export class ContentTemplateRepository {
 
             const skill = this.getSkillRef(skillId);
             if (!skill) {
-                this.logger.warn(`妖兽 ${monsterId} 配置了不存在的技能 ${skillId}，已忽略`);
+                this.logger.warn(`妖獸 ${monsterId} 配置了不存在的技能 ${skillId}，已忽略`);
                 continue;
             }
             normalized.push(skill);
@@ -1295,14 +1295,14 @@ function normalizeItemTags(raw, materialCategory) {
     const tags = new Set(Array.isArray(raw) ? raw.filter((entry) => typeof entry === 'string' && entry.trim()).map((entry) => entry.trim()) : []);
     switch (materialCategory) {
         case 'herb':
-            tags.add('药材');
+            tags.add('藥材');
             break;
         case 'exotic':
-            tags.add('异材');
+            tags.add('異材');
             break;
         case 'ore':
-            tags.add('矿石');
-            tags.add('矿材');
+            tags.add('礦石');
+            tags.add('礦材');
             break;
     }
     return tags.size > 0 ? [...tags] : undefined;

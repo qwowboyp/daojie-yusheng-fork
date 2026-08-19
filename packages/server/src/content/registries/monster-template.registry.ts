@@ -51,7 +51,7 @@ export class MonsterTemplateRegistry {
   getRef(monsterId: string): Readonly<MonsterRuntimeTemplate> {
     const template = this.tryGetRef(monsterId);
     if (!template) {
-      throw new Error(`未找到妖兽模板：${monsterId}`);
+      throw new Error(`未找到妖獸模板：${monsterId}`);
     }
     return template;
   }

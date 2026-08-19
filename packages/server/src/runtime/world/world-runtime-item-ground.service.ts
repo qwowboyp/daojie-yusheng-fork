@@ -63,7 +63,7 @@ export class WorldRuntimeItemGroundService {
                 const displayItem = normalizeGroundNoticeItem(this.playerRuntimeService, item);
                 const pile = instance.dropGroundItem(player.x, player.y, displayItem);
                 if (!pile) {
-                    throw new BadRequestException(`无法在 ${player.x},${player.y} 掉落物品`);
+                    throw new BadRequestException(`無法在 ${player.x},${player.y} 掉落物品`);
                 }
                 droppedGroundItems.push({ ...displayItem });
                 sourceRevisionAfterMutation = readInstancePersistenceDomainRevision(instance, 'ground_item');
@@ -89,7 +89,7 @@ export class WorldRuntimeItemGroundService {
             }
             catch (error) {
                 if (isDurableCommitOutcomeUnknownError(error)) {
-                    this.logger.error(`地面丢弃事务结果仍未确认，保留运行态与 dirty 等待后续 flush：playerId=${playerId} instanceId=${location.instanceId}`);
+                    this.logger.error(`地面丟棄事務結果仍未確認，保留運行態與 dirty 等待後續 flush：playerId=${playerId} instanceId=${location.instanceId}`);
                     throw error;
                 }
                 restoreGroundDropRollbackState(
@@ -118,7 +118,7 @@ export class WorldRuntimeItemGroundService {
             const instance = deps.getInstanceRuntimeOrThrow(location.instanceId);
             const normalizedIds = normalizeBulkDropItemInstanceIds(itemInstanceIds);
             if (normalizedIds.length === 0) {
-                throw new BadRequestException('请选择要丢弃的物品。');
+                throw new BadRequestException('請選擇要丟棄的物品。');
             }
             const tileIndex = resolveGroundDropTileIndex(instance, player.x, player.y);
             const groundSourceId = tileIndex >= 0 ? `g:${tileIndex}` : `coord:${player.x}:${player.y}`;
@@ -143,7 +143,7 @@ export class WorldRuntimeItemGroundService {
                     const displayItem = normalizeGroundNoticeItem(this.playerRuntimeService, item);
                     const pile = instance.dropGroundItem(player.x, player.y, displayItem);
                     if (!pile) {
-                        throw new BadRequestException(`无法在 ${player.x},${player.y} 掉落物品`);
+                        throw new BadRequestException(`無法在 ${player.x},${player.y} 掉落物品`);
                     }
                     sourceId = pile.sourceId;
                     affectedItems.push(item);
@@ -152,7 +152,7 @@ export class WorldRuntimeItemGroundService {
                     droppedCount += Math.max(1, Math.trunc(Number(displayItem.count ?? 1) || 1));
                 }
                 if (droppedStacks === 0) {
-                    throw new BadRequestException('选中的物品已不在背包中。');
+                    throw new BadRequestException('選中的物品已不在背包中。');
                 }
                 sourceRevisionAfterMutation = readInstancePersistenceDomainRevision(instance, 'ground_item');
                 const durableCommit = this.commitGroundDropDurably({
@@ -168,7 +168,7 @@ export class WorldRuntimeItemGroundService {
                     await durableCommit;
                 }
                 deps.refreshQuestStates(playerId);
-                const n = buildStructuredNotice('info', 'notice.item.bulk_dropped', `已丢弃 ${droppedStacks} 组物品`, {
+                const n = buildStructuredNotice('info', 'notice.item.bulk_dropped', `已丟棄 ${droppedStacks} 組物品`, {
                     vars: { stackCount: String(droppedStacks), itemCount: String(droppedCount) },
                     pills: [{ key: 'stackCount', style: 'target' }],
                 });
@@ -176,7 +176,7 @@ export class WorldRuntimeItemGroundService {
             }
             catch (error) {
                 if (isDurableCommitOutcomeUnknownError(error)) {
-                    this.logger.error(`批量地面丢弃事务结果仍未确认，保留运行态与 dirty 等待后续 flush：playerId=${playerId} instanceId=${location.instanceId}`);
+                    this.logger.error(`批量地面丟棄事務結果仍未確認，保留運行態與 dirty 等待後續 flush：playerId=${playerId} instanceId=${location.instanceId}`);
                     throw error;
                 }
                 restoreGroundDropRollbackState(
@@ -306,13 +306,13 @@ export class WorldRuntimeItemGroundService {
             throw result.error;
         }
         if (result.outcome === 'unknown') {
-            this.logger.error(`地面丢弃 operation 仍无法确认，保留 dirty 等待后续 flush：operationId=${operationId}`);
+            this.logger.error(`地面丟棄 operation 仍無法確認，保留 dirty 等待後續 flush：operationId=${operationId}`);
             return false;
         }
         this.playerRuntimeService.replaceInventoryItems(playerId, result.inventoryItems);
         this.logger.warn(result.replayReadFailed
-            ? `地面丢弃已确认提交，但 operation 明细暂不可读，已按同一请求后态收敛：operationId=${operationId}`
-            : `地面丢弃 COMMIT 回包不确定，已按 durable operation 回读收敛：operationId=${operationId}`);
+            ? `地面丟棄已確認提交，但 operation 明細暫不可讀，已按同一請求後態收斂：operationId=${operationId}`
+            : `地面丟棄 COMMIT 回包不確定，已按 durable operation 回讀收斂：operationId=${operationId}`);
         return true;
     }
     /**
@@ -352,7 +352,7 @@ export class WorldRuntimeItemGroundService {
 
         const pile = instance.dropGroundItem(x, y, item);
         if (!pile) {
-            throw new BadRequestException(`无法在 ${x},${y} 生成掉落`);
+            throw new BadRequestException(`無法在 ${x},${y} 生成掉落`);
         }
     }
 };

@@ -67,7 +67,7 @@ export class WorldSyncWorkerEncodeService {
           };
         } catch (error: unknown) {
           this.logger.warn(
-            `AOI envelope worker 编码失败，回退同步发送：playerId=${pending.playerId} error=${error instanceof Error ? error.message : String(error)}`,
+            `AOI envelope worker 編碼失敗，回退同步發送：playerId=${pending.playerId} error=${error instanceof Error ? error.message : String(error)}`,
           );
           return {
             ...pending,

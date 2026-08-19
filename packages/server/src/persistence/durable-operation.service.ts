@@ -696,13 +696,13 @@ export class DurableOperationService implements OnModuleInit, OnModuleDestroy {
     this.unresolvedCommitInstanceIds.clear();
     const databaseUrl = resolveServerDatabaseUrl();
     if (!databaseUrl.trim()) {
-      this.logger.log('强持久化事务服务已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('強持久化事務服務已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
 
     const sharedPool = this.databasePoolProvider?.getPool('durable-operation') ?? null;
     if (!sharedPool) {
-      this.logger.warn('强持久化事务服务已禁用：数据库连接池提供者未提供连接池');
+      this.logger.warn('強持久化事務服務已禁用：數據庫連接池提供者未提供連接池');
       return;
     }
     this.pool = sharedPool;
@@ -710,10 +710,10 @@ export class DurableOperationService implements OnModuleInit, OnModuleDestroy {
     try {
       await ensureDurableOperationTables(this.pool);
       this.enabled = true;
-      this.logger.log('强持久化事务服务已启用');
+      this.logger.log('強持久化事務服務已啟用');
     } catch (error: unknown) {
       this.logger.error(
-        '强持久化事务服务初始化失败，已回退为禁用模式',
+        '強持久化事務服務初始化失敗，已回退為禁用模式',
         error instanceof Error ? error.stack : String(error),
       );
       this.releasePoolReference();
@@ -4405,7 +4405,7 @@ export class DurableOperationService implements OnModuleInit, OnModuleDestroy {
         reconciliationFailureCount += 1;
         if (attempt === 1 || attempt % 20 === 0) {
           this.logger.error(
-            `强事务 COMMIT 结果查询失败，继续持锁重试 operationId=${input.operationId} attempt=${attempt}`,
+            `強事務 COMMIT 結果查詢失敗，繼續持鎖重試 operationId=${input.operationId} attempt=${attempt}`,
             error instanceof Error ? error.stack : String(error),
           );
         }
@@ -4433,7 +4433,7 @@ export class DurableOperationService implements OnModuleInit, OnModuleDestroy {
         reconciliationFailureCount += 1;
         if (attempt === 1 || attempt % 20 === 0) {
           this.logger.warn(
-            `强事务 COMMIT 幂等重放遇到瞬态数据库失败，继续持锁收敛 operationId=${input.operationId} attempt=${attempt}`,
+            `強事務 COMMIT 冪等重放遇到瞬態數據庫失敗，繼續持鎖收斂 operationId=${input.operationId} attempt=${attempt}`,
           );
         }
         if (this.closing) {
@@ -5646,7 +5646,7 @@ async function replacePlayerInventoryItems(
       ? sourceItemInstanceId
       : `inv:${playerId}:${index}`;
     if (sourceItemInstanceId && isLegacyItemInstanceId(sourceItemInstanceId)) {
-      durableModuleLogger.debug(`durable 背包物品携带 legacy itemInstanceId，走 fallback：playerId=${playerId} index=${index} id=${sourceItemInstanceId}`);
+      durableModuleLogger.debug(`durable 背包物品攜帶 legacy itemInstanceId，走 fallback：playerId=${playerId} index=${index} id=${sourceItemInstanceId}`);
     }
     const row = {
       item_instance_id: itemInstanceId,
@@ -8092,7 +8092,7 @@ async function persistDurableMarketBanUser(client: import('pg').PoolClient, banU
   if (!playerId || !bannedAt) {
     throw new Error('invalid_durable_market_ban_user');
   }
-  const banReason = normalizeRequiredString(banUser?.banReason).slice(0, 255) || 'GM 风险复核封禁';
+  const banReason = normalizeRequiredString(banUser?.banReason).slice(0, 255) || 'GM 風險複核封禁';
   const bannedBy = normalizeRequiredString(banUser?.bannedBy).slice(0, 64) || 'gm';
   const updateResult = await client.query(
     `

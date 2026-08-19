@@ -226,7 +226,7 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
     } catch (error: unknown) {
       this.consecutiveTickFailures += 1;
       this.logger.error(
-        `世界 Tick 执行失败（连续第 ${this.consecutiveTickFailures} 次）`,
+        `世界 Tick 執行失敗（連續第 ${this.consecutiveTickFailures} 次）`,
         error instanceof Error ? error.stack : String(error),
       );
     } finally {
@@ -294,7 +294,7 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
       this.lastLoggedDroppedLogicalStepCount = droppedLogicalStepCount;
       this.lastDroppedStepWarningAtMs = observedAtMs;
       this.logger.warn(
-        `实例 Tick 积压丢弃：本次观测新增 ${newlyDropped} 个逻辑息（累计 ${droppedLogicalStepCount}），已丢弃超出当前倍率有界补偿上限的旧债务`,
+        `實例 Tick 積壓丟棄：本次觀測新增 ${newlyDropped} 個邏輯息（累計 ${droppedLogicalStepCount}），已丟棄超出當前倍率有界補償上限的舊債務`,
       );
       return;
     }
@@ -307,7 +307,7 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
     const dropped = Math.max(1, Math.floor(this.lastIntervalMs / targetIntervalMs) - 1);
     this.skippedFrameCount += dropped;
     this.logger.warn(
-      `世界 Tick 慢帧：实际间隔 ${this.lastIntervalMs.toFixed(0)}ms，逻辑周期 ${targetIntervalMs}ms，估计跳过 ${dropped} 帧（累计 ${this.skippedFrameCount}）`,
+      `世界 Tick 慢幀：實際間隔 ${this.lastIntervalMs.toFixed(0)}ms，邏輯週期 ${targetIntervalMs}ms，估計跳過 ${dropped} 幀（累計 ${this.skippedFrameCount}）`,
     );
   }
 
@@ -321,7 +321,7 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
         await this.runTickOnce();
         return 1;
       }).catch((error: unknown) => {
-        this.logger.error('世界 Tick 调度管理器调度失败', error instanceof Error ? error.stack : String(error));
+        this.logger.error('世界 Tick 調度管理器調度失敗', error instanceof Error ? error.stack : String(error));
       });
     } finally {
       // 启动闸门关闭或调度管理器未真正执行 callback 时，也必须保留下一次唤醒。
@@ -348,15 +348,15 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
 
   onModuleInit(): void {
     if (!shouldStartAuthoritativeRuntime()) {
-      this.logger.log('世界 Tick 已跳过：当前 role 不持有权威运行态');
+      this.logger.log('世界 Tick 已跳過：當前 role 不持有權威運行態');
       return;
     }
-    this.logger.log('世界 Tick 已注册，等待启动链路编排器开闸');
+    this.logger.log('世界 Tick 已註冊，等待啟動鏈路編排器開閘');
   }
 
   startForLifecycleCoordinator(): void {
     if (!shouldStartAuthoritativeRuntime()) {
-      this.logger.log('世界 Tick 已跳过：当前 role 不持有权威运行态');
+      this.logger.log('世界 Tick 已跳過：當前 role 不持有權威運行態');
       return;
     }
     if (this.lifecycleStarted) {
@@ -388,7 +388,7 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
     });
     this.schedulerManagerService?.setPaused(WORLD_TICK_SCHEDULER_TASK_ID, false);
     this.scheduleNextTick();
-    this.logger.log(`世界 Tick 已启动（实例 deadline 自调度），基准间隔 ${BASE_TICK_INTERVAL_MS}ms，最小间隔 ${MIN_TICK_INTERVAL_MS}ms`);
+    this.logger.log(`世界 Tick 已啟動（實例 deadline 自調度），基準間隔 ${BASE_TICK_INTERVAL_MS}ms，最小間隔 ${MIN_TICK_INTERVAL_MS}ms`);
   }
 
   private collectDueInstancePlans(nowMs: number): InstanceTickSchedulePlan[] | null {
@@ -435,7 +435,7 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
       await sleep(25);
     }
     if (this.tickInFlight) {
-      this.logger.warn('关停超时：tick 仍在执行，强制继续关停流程');
+      this.logger.warn('關停超時：tick 仍在執行，強制繼續關停流程');
     }
   }
 

@@ -21,12 +21,12 @@ import { resolveSectMemberDisplayName } from '../player/player-display-name';
 
 const SECT_ROLE_LABELS = {
   leader: '宗主',
-  supreme_elder: '太上长老',
+  supreme_elder: '太上長老',
   deputy: '副宗主',
-  elder: '长老',
-  inner: '内门',
-  outer: '外门',
-  labor: '杂役',
+  elder: '長老',
+  inner: '內門',
+  outer: '外門',
+  labor: '雜役',
 };
 
 export const SECT_ROLES = SECT_MEMBER_ROLE_HIERARCHY.map((id) => ({
@@ -41,10 +41,10 @@ const SECT_ASSIGNABLE_ROLE_IDS = new Set(
 );
 
 const SECT_PERMISSION_LABELS = {
-  guardian: '护宗大阵',
-  member_remove: '逐出宗门',
+  guardian: '護宗大陣',
+  member_remove: '逐出宗門',
   member_approve: '同意入宗',
-  member_role: '修改职位',
+  member_role: '修改職位',
   building_create: '建造',
   building_remove: '拆除',
 };
@@ -90,7 +90,7 @@ export function resolveSectTemplateIdForBounds(sectId, _candidateTemplateId, _bo
 }
 
 function buildDefaultSectName(player) {
-  const raw = normalizeOptionalString(player?.displayName) || normalizeOptionalString(player?.name) || '无名';
+  const raw = normalizeOptionalString(player?.displayName) || normalizeOptionalString(player?.name) || '無名';
   return `${raw}宗`;
 }
 
@@ -105,10 +105,10 @@ export function normalizeSectName(input, player) {
     ? getGraphemeCount(sanitized)
     : Array.from(sanitized).length;
   if (count < 2 || count > 12) {
-    throw new BadRequestException('宗门名称需为 2 到 12 个字');
+    throw new BadRequestException('宗門名稱需為 2 到 12 個字');
   }
   if (/[<>`"'\\]/.test(sanitized)) {
-    throw new BadRequestException('宗门名称包含不可用字符');
+    throw new BadRequestException('宗門名稱包含不可用字符');
   }
   return sanitized;
 }
@@ -121,13 +121,13 @@ export function normalizeSectMark(input, fallbackText) {
     ? getFirstGrapheme(normalized)
     : (Array.from(normalized)[0] ?? '');
   if (!first || /[\s<>`"'\\]/.test(first)) {
-    throw new BadRequestException('宗门印记需为一个可见字符');
+    throw new BadRequestException('宗門印記需為一個可見字符');
   }
   const count = typeof getGraphemeCount === 'function'
     ? getGraphemeCount(normalized)
     : Array.from(normalized).length;
   if (hasExplicitInput && count !== 1) {
-    throw new BadRequestException('宗门印记只能是一个字');
+    throw new BadRequestException('宗門印記只能是一個字');
   }
   return first;
 }
@@ -135,14 +135,14 @@ export function normalizeSectMark(input, fallbackText) {
 export function assertSectMarkAvailable(sects, mark) {
   const normalizedMark = normalizeOptionalString(mark);
   if (!normalizedMark) {
-    throw new BadRequestException('宗门印记需为一个可见字符');
+    throw new BadRequestException('宗門印記需為一個可見字符');
   }
   for (const sect of sects) {
     if (normalizeOptionalString(sect?.status) === 'dissolved') {
       continue;
     }
     if (normalizeOptionalString(sect?.mark) === normalizedMark) {
-      throw new BadRequestException('宗门印记已被占用');
+      throw new BadRequestException('宗門印記已被佔用');
     }
   }
 }
@@ -150,15 +150,15 @@ export function assertSectMarkAvailable(sects, mark) {
 export function normalizeNonNegativeInteger(input) {
   const value = Math.trunc(Number(input));
   if (!Number.isFinite(value) || value < 0) {
-    throw new BadRequestException('注入数量不能为负');
+    throw new BadRequestException('注入數量不能為負');
   }
   return value;
 }
 
-export function normalizePositiveInteger(input, label = '数值') {
+export function normalizePositiveInteger(input, label = '數值') {
   const value = Math.trunc(Number(input));
   if (!Number.isFinite(value) || value <= 0) {
-    throw new BadRequestException(`${label}必须大于 0`);
+    throw new BadRequestException(`${label}必須大於 0`);
   }
   return value;
 }
@@ -185,9 +185,9 @@ export function formatSectGuardianStatusLabel(formation) {
   const qiBudget = resolveFormationQiBudget(formation);
   const spiritStoneBudget = Number(formation.remainingSpiritStoneBudget ?? formation.spiritStoneCount) || 0;
   if (formation.active === false || qiBudget <= 0 || spiritStoneBudget <= 0) {
-    return '停摆';
+    return '停擺';
   }
-  return '开启';
+  return '開啟';
 }
 
 export function resolveFormationQiBudget(formation) {
@@ -201,7 +201,7 @@ export function formatSectGuardianAuraLabel(formation) {
   const stoneValue = Math.max(0, Math.floor(Number(
     formation?.remainingSpiritStoneBudget ?? formation?.spiritStoneCount,
   ) || 0));
-  return `${formatInteger(qiValue)} / 灵石 ${formatInteger(stoneValue)}`;
+  return `${formatInteger(qiValue)} / 靈石 ${formatInteger(stoneValue)}`;
 }
 
 export function buildSectGuardianManagementData(formation, formationService = null, player = null) {
@@ -252,7 +252,7 @@ export function dispatchSectGuardianTechniqueActivity(playerId, mode, formationI
       deps,
     );
     if (!result?.ok) {
-      throw new BadRequestException(result?.error ?? '启动护宗大阵维护失败');
+      throw new BadRequestException(result?.error ?? '啟動護宗大陣維護失敗');
     }
     deps.worldRuntimeCraftMutationService.flushCraftMutation(playerId, result, 'formation', deps);
     return;
@@ -266,7 +266,7 @@ export function dispatchSectGuardianTechniqueActivity(playerId, mode, formationI
       deps,
     );
     if (!result?.ok) {
-      throw new BadRequestException(result?.error ?? '停止护宗大阵维护失败');
+      throw new BadRequestException(result?.error ?? '停止護宗大陣維護失敗');
     }
     deps.worldRuntimeCraftMutationService.flushCraftMutation(playerId, result, 'formation', deps);
     return;
@@ -353,7 +353,7 @@ export function upsertSectApplication(sect, player, now = Date.now()) {
   ensureSectState(sect);
   const playerId = normalizeOptionalString(player?.playerId) || normalizeOptionalString(player?.id);
   if (!playerId) {
-    throw new BadRequestException('申请人无效');
+    throw new BadRequestException('申請人無效');
   }
   const existing = (sect.applications ?? []).find((entry) => entry.playerId === playerId) ?? null;
   if (existing) {
@@ -432,7 +432,7 @@ export function buildSectMemberEntry(player, roleId, joinedAt = Date.now()) {
   const playerId = normalizeOptionalString(player?.playerId) || normalizeOptionalString(player?.id) || '';
   return {
     playerId,
-    name: resolvePlayerDisplayName(player, playerId || '未知成员'),
+    name: resolvePlayerDisplayName(player, playerId || '未知成員'),
     roleId: normalizeSectRoleId(roleId, { allowSupreme: true, fallback: 'outer' }),
     joinedAt,
   };
@@ -448,11 +448,11 @@ export function resolvePlayerDisplayName(player, fallback = '') {
 
 export function resolveSectMemberPresenceLabel(player) {
   if (!player) {
-    return '离线';
+    return '離線';
   }
   return typeof player.sessionId === 'string' && player.sessionId.trim()
-    ? '在线'
-    : '离线挂机';
+    ? '線上'
+    : '離線掛機';
 }
 
 export function resolveSectMemberRealmLv(player) {
@@ -496,10 +496,10 @@ export function normalizeSectRoleId(input, options: any = {}) {
     if (options.fallback) {
       return fallback;
     }
-    throw new BadRequestException('未知宗门职位');
+    throw new BadRequestException('未知宗門職位');
   }
   if (options.requireAssignable === true && !SECT_ASSIGNABLE_ROLE_IDS.has(normalized)) {
-    throw new BadRequestException('该职位不能直接任命');
+    throw new BadRequestException('該職位不能直接任命');
   }
   return normalized;
 }
@@ -507,13 +507,13 @@ export function normalizeSectRoleId(input, options: any = {}) {
 export function normalizeSectPermissionId(input) {
   const normalized = normalizeOptionalString(input);
   if (!normalized || !SECT_PERMISSION_ID_SET.has(normalized)) {
-    throw new BadRequestException('未知宗门权限');
+    throw new BadRequestException('未知宗門權限');
   }
   return normalized;
 }
 
 export function getSectRoleLabel(roleId) {
-  return SECT_ROLES.find((entry) => entry.id === roleId)?.label ?? '外门';
+  return SECT_ROLES.find((entry) => entry.id === roleId)?.label ?? '外門';
 }
 
 function roleSortWeight(roleId) {
@@ -567,32 +567,32 @@ export function canChangeSectMemberRole(sect, operatorPlayerId, targetMember, ne
 export function assertSectMemberRoleChange(sect, operatorPlayerId, targetMember, nextRoleId) {
   const operatorId = normalizeOptionalString(operatorPlayerId);
   if (!operatorId) {
-    throw new ForbiddenException('宗门成员身份无效');
+    throw new ForbiddenException('宗門成員身份無效');
   }
   if (targetMember?.playerId === operatorId) {
-    throw new BadRequestException('不能修改自己的职位');
+    throw new BadRequestException('不能修改自己的職位');
   }
   const operator = Array.isArray(sect?.members)
     ? sect.members.find((entry) => entry.playerId === operatorId)
     : null;
   if (!operator || !isSectMemberRoleLowerThan(targetMember?.roleId, operator.roleId)) {
-    throw new ForbiddenException('只能修改比自己职位低的成员');
+    throw new ForbiddenException('只能修改比自己職位低的成員');
   }
   if (!isSectMemberRoleLowerThan(nextRoleId, operator.roleId)) {
-    throw new ForbiddenException('只能任命比自己职位低的职位');
+    throw new ForbiddenException('只能任命比自己職位低的職位');
   }
 }
 
 export function assertSectLeader(sect, playerId) {
   if (sect.leaderPlayerId !== playerId) {
-    throw new ForbiddenException('只有宗主可以执行该操作');
+    throw new ForbiddenException('只有宗主可以執行該操作');
   }
 }
 
 export function assertSectLeaderOrDeputy(sect, playerId) {
   const normalizedPlayerId = normalizeOptionalString(playerId);
   if (!normalizedPlayerId) {
-    throw new ForbiddenException('只有宗主或副宗主可以执行该操作');
+    throw new ForbiddenException('只有宗主或副宗主可以執行該操作');
   }
   if (sect.leaderPlayerId === normalizedPlayerId) {
     return;
@@ -603,12 +603,12 @@ export function assertSectLeaderOrDeputy(sect, playerId) {
   if (member?.roleId === 'leader' || member?.roleId === 'deputy') {
     return;
   }
-  throw new ForbiddenException('只有宗主或副宗主可以执行该操作');
+  throw new ForbiddenException('只有宗主或副宗主可以執行該操作');
 }
 
 export function assertSectPermission(sect, playerId, permissionId) {
   if (!hasSectPermission(sect, playerId, permissionId)) {
-    throw new ForbiddenException('当前职位没有该宗门权限');
+    throw new ForbiddenException('當前職位沒有該宗門權限');
   }
 }
 

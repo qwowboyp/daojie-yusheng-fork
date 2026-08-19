@@ -274,9 +274,9 @@ function normalizeOptionalNonNegativeInteger(value: unknown): number | undefined
 function resolvePortalRenderChar(portal: ProjectorPortalLike): string {
     const portalRecord = portal as unknown as Record<string, unknown>;
     if (typeof portalRecord.char === 'string' && portalRecord.char.trim()) {
-        return portalRecord.char.trim()[0] ?? '阵';
+        return portalRecord.char.trim()[0] ?? '陣';
     }
-    return portal.kind === 'stairs' ? '' : '阵';
+    return portal.kind === 'stairs' ? '' : '陣';
 }
 
 function resolveBuffPresentationScale(source: { buffs?: unknown[] | null } | unknown[] | null | undefined): number | undefined {
@@ -348,7 +348,7 @@ function resolvePortalDisplayName(
     if (typeof explicitName === 'string' && explicitName.trim()) {
         return explicitName.trim();
     }
-    const kindLabel = portal.kind === 'stairs' ? '楼梯' : '传送阵';
+    const kindLabel = portal.kind === 'stairs' ? '樓梯' : '傳送陣';
     const targetMapName = resolveMapName?.(portal.targetMapId) ?? null;
     if (typeof targetMapName === 'string' && targetMapName.trim()) {
         return `${kindLabel} · ${targetMapName.trim()}`;

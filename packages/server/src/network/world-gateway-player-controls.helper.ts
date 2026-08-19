@@ -114,7 +114,7 @@ export class WorldGatewayPlayerControlsHelper {
     if (!playerId) {
       return;
     }
-    if (!this.allowChatRequest(client, 'chat-send', 5, 5_000, 'CHAT_RATE_LIMITED', '聊天发送过于频繁，请稍后再试')) {
+    if (!this.allowChatRequest(client, 'chat-send', 5, 5_000, 'CHAT_RATE_LIMITED', '聊天發送過於頻繁，請稍後再試')) {
       return;
     }
     this.gateway.worldClientEventService.broadcastChat(playerId, payload, this.gateway.worldRuntimeService);
@@ -128,7 +128,7 @@ export class WorldGatewayPlayerControlsHelper {
     if (!playerId) {
       return;
     }
-    if (!this.allowChatRequest(client, 'chat-history', 4, 5_000, 'CHAT_HISTORY_RATE_LIMITED', '聊天记录同步过于频繁')) {
+    if (!this.allowChatRequest(client, 'chat-history', 4, 5_000, 'CHAT_HISTORY_RATE_LIMITED', '聊天記錄同步過於頻繁')) {
       return;
     }
     try {
@@ -366,7 +366,7 @@ export class WorldGatewayPlayerControlsHelper {
     if (!playerId) {
       return;
     }
-    if (!this.allowChatRequest(client, 'social-panel', 4, 5_000, 'SOCIAL_PANEL_RATE_LIMITED', '社交信息刷新过于频繁')) {
+    if (!this.allowChatRequest(client, 'social-panel', 4, 5_000, 'SOCIAL_PANEL_RATE_LIMITED', '社交訊息刷新過於頻繁')) {
       return;
     }
     try {
@@ -387,7 +387,7 @@ export class WorldGatewayPlayerControlsHelper {
     if (!playerId) {
       return;
     }
-    if (!this.allowChatRequest(client, 'social-nearby', 4, 5_000, 'SOCIAL_NEARBY_RATE_LIMITED', '附近道友刷新过于频繁')) {
+    if (!this.allowChatRequest(client, 'social-nearby', 4, 5_000, 'SOCIAL_NEARBY_RATE_LIMITED', '附近道友刷新過於頻繁')) {
       return;
     }
     try {
@@ -476,7 +476,7 @@ export class WorldGatewayPlayerControlsHelper {
     if (!playerId) {
       return;
     }
-    if (!this.allowChatRequest(client, 'daoist-message-send', 5, 5_000, 'DAOIST_MESSAGE_RATE_LIMITED', '私聊发送过于频繁，请稍后再试')) {
+    if (!this.allowChatRequest(client, 'daoist-message-send', 5, 5_000, 'DAOIST_MESSAGE_RATE_LIMITED', '私聊發送過於頻繁，請稍後再試')) {
       return;
     }
     try {
@@ -503,7 +503,7 @@ export class WorldGatewayPlayerControlsHelper {
     if (!playerId) {
       return;
     }
-    if (!this.allowChatRequest(client, 'daoist-message-history', 4, 5_000, 'DAOIST_HISTORY_RATE_LIMITED', '私聊记录同步过于频繁')) {
+    if (!this.allowChatRequest(client, 'daoist-message-history', 4, 5_000, 'DAOIST_HISTORY_RATE_LIMITED', '私聊記錄同步過於頻繁')) {
       return;
     }
     try {
@@ -534,7 +534,7 @@ export class WorldGatewayPlayerControlsHelper {
     if (!playerId) {
       return;
     }
-    if (!this.allowChatRequest(client, 'daoist-message-read', 10, 5_000, 'DAOIST_READ_RATE_LIMITED', '私聊已读同步过于频繁')) {
+    if (!this.allowChatRequest(client, 'daoist-message-read', 10, 5_000, 'DAOIST_READ_RATE_LIMITED', '私聊已讀同步過於頻繁')) {
       return;
     }
     try {

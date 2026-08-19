@@ -22,7 +22,7 @@ export class GatherStrategy implements TechniqueActivityStrategy {
   readonly kind = 'gather' as const;
   readonly jobSlot = 'gatherJob';
   readonly skillSlot = 'gatherSkill';
-  readonly activityLabel = '采集';
+  readonly activityLabel = '採集';
   readonly pauseTicks = 0;
   readonly conditional = true;
 
@@ -38,7 +38,7 @@ export class GatherStrategy implements TechniqueActivityStrategy {
     const playerId = resolvePlayerId(player);
     const service = resolveGatherRuntimeService(ctx);
     if (!playerId || !service || typeof service.dispatchStartGather !== 'function') {
-      return { ok: false, error: '采集运行时不可用。' };
+      return { ok: false, error: '採集運行時不可用。' };
     }
     return { ok: true, validated: { playerId, payload: normalizeGatherStartPayload(playerId, payload, ctx) } };
   }
@@ -51,10 +51,10 @@ export class GatherStrategy implements TechniqueActivityStrategy {
     const service = resolveGatherRuntimeService(ctx);
     const result = service?.dispatchStartGather?.(playerId, payload, ctx.deps) as { ok?: boolean; error?: string } | undefined;
     if (!result || result.ok !== true) {
-      return { ok: false, error: result?.error ?? '开始采集失败。' };
+      return { ok: false, error: result?.error ?? '開始採集失敗。' };
     }
     if (!this.getActiveJob(player)) {
-      return { ok: false, error: '采集任务创建失败。' };
+      return { ok: false, error: '採集任務建立失敗。' };
     }
     return { ok: true };
   }
@@ -257,5 +257,5 @@ function normalizeGatherStartPayload(playerId: string, payload: unknown, ctx: Pi
 
 function normalizeGatherResourceNodeName(job: unknown): string {
   const name = (job as { resourceNodeName?: unknown } | null | undefined)?.resourceNodeName;
-  return typeof name === 'string' && name.trim() ? name.trim() : '采集目标';
+  return typeof name === 'string' && name.trim() ? name.trim() : '採集目標';
 }

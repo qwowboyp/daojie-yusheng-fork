@@ -36,7 +36,7 @@ export class WorldSessionBootstrapFinalizeService {
         } | null;
     }) {
         this.logger.debug(
-            `会话引导已就绪：playerId=${input.playerId} sessionId=${input.sessionId} mapId=${input.mapId || '未知'} requestedSessionId=${input.requestedSessionId ?? ''} protocol=${input.protocol ?? '未知'} gm=${input.isGm === true} entryPath=${input.entryPath ?? '未知'} identitySource=${input.identitySource ?? '未知'}`,
+            `會話引導已就緒：playerId=${input.playerId} sessionId=${input.sessionId} mapId=${input.mapId || '未知'} requestedSessionId=${input.requestedSessionId ?? ''} protocol=${input.protocol ?? '未知'} gm=${input.isGm === true} entryPath=${input.entryPath ?? '未知'} identitySource=${input.identitySource ?? '未知'}`,
         );
         recordAuthTrace({
             type: 'bootstrap',

@@ -661,14 +661,14 @@ function normalizeItemTags(raw, materialCategory) {
     const tags = new Set(Array.isArray(raw) ? raw.filter((entry) => typeof entry === 'string' && entry.trim()).map((entry) => entry.trim()) : []);
     switch (materialCategory) {
         case 'herb':
-            tags.add('药材');
+            tags.add('藥材');
             break;
         case 'exotic':
-            tags.add('异材');
+            tags.add('異材');
             break;
         case 'ore':
-            tags.add('矿石');
-            tags.add('矿材');
+            tags.add('礦石');
+            tags.add('礦材');
             break;
     }
     return tags.size > 0 ? [...tags] : undefined;

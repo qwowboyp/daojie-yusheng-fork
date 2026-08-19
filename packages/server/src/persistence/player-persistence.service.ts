@@ -286,7 +286,7 @@ export class PlayerPersistenceService implements OnModuleInit, OnModuleDestroy {
 
     const sharedPool = this.databasePoolProvider?.getPool('player-snapshot') ?? null;
     if (!sharedPool) {
-      this.logger.warn('玩家快照持久化已禁用：数据库连接池提供者未提供连接池');
+      this.logger.warn('玩家快照持久化已禁用：數據庫連接池提供者未提供連接池');
       return;
     }
     this.pool = sharedPool;
@@ -294,10 +294,10 @@ export class PlayerPersistenceService implements OnModuleInit, OnModuleDestroy {
     try {
       await ensurePlayerSnapshotTable(this.pool);
       this.enabled = true;
-      this.logger.log('玩家快照持久化已启用（server_player_snapshot）');
+      this.logger.log('玩家快照持久化已啟用（server_player_snapshot）');
     } catch (error: unknown) {
       this.logger.error(
-        '玩家快照持久化初始化失败，已回退为禁用模式',
+        '玩家快照持久化初始化失敗，已回退為禁用模式',
         error instanceof Error ? error.stack : String(error),
       );
       this.releasePoolReference();

@@ -184,7 +184,7 @@ class WorldRuntimeSectService {
             }
             hintedMembershipSectId = result.retryMembershipSectId;
         }
-        throw new BadRequestException('成员宗门归属正在变化，请稍后重试');
+        throw new BadRequestException('成員宗門歸屬正在變化，請稍後重試');
     }
 
     /** 先锁定宗门再读取当前成员集合，随后一次性持有所有成员资产锁。 */
@@ -251,7 +251,7 @@ class WorldRuntimeSectService {
         const pool = await this.ensurePersistencePool();
         if (!pool) {
             if (resolveServerDatabaseUrl().trim()) {
-                throw new ServiceUnavailableException('宗门持久化暂不可用');
+                throw new ServiceUnavailableException('宗門持久化暫不可用');
             }
             return false;
         }
@@ -283,7 +283,7 @@ class WorldRuntimeSectService {
                 onReadbackError: (error, attempt) => {
                     if (attempt === 1 || attempt % 20 === 0) {
                         this.logger.error(
-                            `宗门事务 COMMIT 结果回读失败，继续持锁重试 attempt=${attempt}：${error instanceof Error ? error.stack : String(error)}`,
+                            `宗門事務 COMMIT 結果回讀失敗，繼續持鎖重試 attempt=${attempt}：${error instanceof Error ? error.stack : String(error)}`,
                         );
                     }
                 },
@@ -364,7 +364,7 @@ class WorldRuntimeSectService {
         return this.runExclusiveSectPlayerMutation([sectId], [playerId], async () => {
             const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
             if (normalizeOptionalString(player.sectId)) {
-                throw new BadRequestException('你已经有所属宗门');
+                throw new BadRequestException('你已經有所屬宗門');
             }
             const sectName = normalizeSectName(payload?.sectName, player);
             const sectMark = normalizeSectMark(payload?.sectMark, sectName);
@@ -374,7 +374,7 @@ class WorldRuntimeSectService {
             const descriptor = parseRuntimeInstanceDescriptor(location.instanceId);
             assertCanCreateSectAtInstance(entranceInstance, descriptor);
             if (entranceInstance.meta.kind !== 'public' && descriptor?.instanceOrigin !== 'public') {
-                throw new BadRequestException('当前地点无法开辟宗门入口');
+                throw new BadRequestException('當前地點無法開闢宗門入口');
             }
             assertSectFoundingAreaClear(Array.from(this.sectsById.values()), entranceInstance, location.instanceId, player.x, player.y);
             const bounds = buildInitialSectBounds();
@@ -442,7 +442,7 @@ class WorldRuntimeSectService {
                     this.persistSectsSoon();
                     deps.worldRuntimeFormationService?.persistFormationSnapshotSoon?.(guardian);
                 }
-                const nFounded = buildStructuredNotice('success', 'notice.sect.founded', `建宗令化作山门，你开辟了${sect.name}。`, {
+                const nFounded = buildStructuredNotice('success', 'notice.sect.founded', `建宗令化作山門，你開闢了${sect.name}。`, {
                     vars: { sectName: sect.name },
                     pills: [{ key: 'sectName', style: 'target' }],
                 });
@@ -469,24 +469,24 @@ class WorldRuntimeSectService {
         const initialPlayer = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const initialSectId = this.reconcilePlayerSectId(playerId) || normalizeOptionalString(initialPlayer.sectId);
         if (!initialSectId) {
-            throw new BadRequestException('你当前没有宗门');
+            throw new BadRequestException('你當前沒有宗門');
         }
         return this.runExclusiveSectPlayerMutation([initialSectId], [playerId], async () => {
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const sectId = this.reconcilePlayerSectId(playerId) || normalizeOptionalString(player.sectId);
         if (!sectId || sectId !== initialSectId) {
-            throw new BadRequestException('你当前没有有效宗门');
+            throw new BadRequestException('你當前沒有有效宗門');
         }
         const sect = this.findSectById(sectId);
         if (!sect || sect.status === 'dissolved') {
-            throw new BadRequestException('你当前没有有效宗门');
+            throw new BadRequestException('你當前沒有有效宗門');
         }
         ensureSectState(sect, this.playerRuntimeService);
         assertSectLeaderOrDeputy(sect, playerId);
         const now = Date.now();
         const cooldownUntil = normalizeIntegerWithDefault(sect.entranceRelocationCooldownUntil, 0);
         if (cooldownUntil > now) {
-            throw new BadRequestException(`宗门迁移冷却尚未结束，剩余 ${formatDurationMs(cooldownUntil - now)}`);
+            throw new BadRequestException(`宗門遷移冷卻尚未結束，剩餘 ${formatDurationMs(cooldownUntil - now)}`);
         }
         const location = deps.getPlayerLocationOrThrow(playerId);
         const entranceInstance = deps.getInstanceRuntimeOrThrow(location.instanceId);
@@ -495,10 +495,10 @@ class WorldRuntimeSectService {
         const targetX = Math.trunc(Number(player.x));
         const targetY = Math.trunc(Number(player.y));
         if (!Number.isFinite(targetX) || !Number.isFinite(targetY)) {
-            throw new BadRequestException('当前位置无法迁移宗门山门');
+            throw new BadRequestException('當前位置無法遷移宗門山門');
         }
         if (sect.entranceInstanceId === location.instanceId && sect.entranceX === targetX && sect.entranceY === targetY) {
-            throw new BadRequestException('宗门山门已经位于当前位置');
+            throw new BadRequestException('宗門山門已經位於當前位置');
         }
         assertSectFoundingAreaClear(
             Array.from(this.sectsById.values()),
@@ -511,7 +511,7 @@ class WorldRuntimeSectService {
         const previousEntranceInstanceId = sect.entranceInstanceId;
         const previousEntranceInstance = deps.getInstanceRuntime?.(previousEntranceInstanceId);
         if (!previousEntranceInstance) {
-            throw new ServiceUnavailableException('原宗门山门实例尚未就绪');
+            throw new ServiceUnavailableException('原宗門山門實例尚未就緒');
         }
         const sectInstance = this.ensureSectRuntimeInstance(sect, deps);
         await waitForSectInstancesLeaseReady([previousEntranceInstance, entranceInstance, sectInstance], deps);
@@ -578,8 +578,8 @@ class WorldRuntimeSectService {
         }
         deps.refreshQuestStates?.(playerId);
         deps.refreshPlayerContextActions?.(playerId);
-        const itemName = normalizeOptionalString(item?.name) || '迁宗令';
-        const nRelocated = buildStructuredNotice('success', 'notice.sect.entrance-relocated', `${itemName}化作新山门，${sect.name}入口已迁至当前位置。`, {
+        const itemName = normalizeOptionalString(item?.name) || '遷宗令';
+        const nRelocated = buildStructuredNotice('success', 'notice.sect.entrance-relocated', `${itemName}化作新山門，${sect.name}入口已遷至當前位置。`, {
             vars: { itemName, sectName: sect.name, cooldownDays: 3 },
             pills: [
                 { key: 'itemName', style: 'target' },
@@ -705,7 +705,7 @@ class WorldRuntimeSectService {
             targetInstanceId: sect.sectInstanceId,
             targetX: sect.coreX,
             targetY: sect.coreY,
-            name: `${sect.name}山门`,
+            name: `${sect.name}山門`,
             char: normalizeOptionalString(sect.mark) || SECT_ENTRANCE_CHAR,
             color: '#c8a15a',
             sectId: sect.sectId,
@@ -719,7 +719,7 @@ class WorldRuntimeSectService {
             targetInstanceId: sect.entranceInstanceId,
             targetX: sect.entranceX,
             targetY: sect.entranceY,
-            name: `${sect.name}宗门核心`,
+            name: `${sect.name}宗門核心`,
             char: SECT_CORE_CHAR,
             color: '#d8c37a',
             sectId: sect.sectId,
@@ -829,7 +829,7 @@ class WorldRuntimeSectService {
         const guardian = resolveSectGuardianFormation(sect, deps);
         const actions = [{
             id: 'sect:manage',
-            name: '管理宗门',
+            name: '管理宗門',
             type: 'interact',
             desc: buildSectManagementActionDesc(sect, view, deps, guardian, this.sectMemberProfilesByPlayerId),
             cooldownLeft: 0,
@@ -845,9 +845,9 @@ class WorldRuntimeSectService {
         if (!hasUsableCorePortal) {
             actions.push({
                 id: 'sect:exit',
-                name: '离开宗门领地',
+                name: '離開宗門領地',
                 type: 'travel',
-                desc: `返回${sect.name}山门入口，不会退出宗门成员关系。`,
+                desc: `返回${sect.name}山門入口，不會退出宗門成員關係。`,
                 cooldownLeft: 0,
             });
         }
@@ -856,11 +856,11 @@ class WorldRuntimeSectService {
             && player.formationJob.formationInstanceId === `formation:sect_guardian:${sect.sectId}`;
         actions.push({
             id: maintainingGuardian ? 'sect:guardian:cancel_maintain' : 'sect:guardian:maintain',
-            name: maintainingGuardian ? '停止补充：护宗大阵' : '补充灵力：护宗大阵',
+            name: maintainingGuardian ? '停止補充：護宗大陣' : '補充靈力：護宗大陣',
             type: 'interact',
             desc: maintainingGuardian
-                ? `停止持续向护宗大阵注入自身灵力。当前大阵灵力 ${formatInteger(resolveFormationQiBudget(guardian))}。`
-                : `持续向护宗大阵注入自身灵力，每息获得阵法技艺经验。当前大阵灵力 ${formatInteger(resolveFormationQiBudget(guardian))}。`,
+                ? `停止持續向護宗大陣注入自身靈力。當前大陣靈力 ${formatInteger(resolveFormationQiBudget(guardian))}。`
+                : `持續向護宗大陣注入自身靈力，每息獲得陣法技藝經驗。當前大陣靈力 ${formatInteger(resolveFormationQiBudget(guardian))}。`,
             cooldownLeft: 0,
         });
         return actions;
@@ -870,17 +870,17 @@ class WorldRuntimeSectService {
     buildSectApplicationPage(playerId, payload = null) {
         const normalizedPlayerId = normalizeOptionalString(playerId);
         if (!normalizedPlayerId) {
-            throw new BadRequestException('玩家身份无效');
+            throw new BadRequestException('玩家身份無效');
         }
         this.playerRuntimeService.getPlayerOrThrow(normalizedPlayerId);
         const sectId = this.resolvePlayerSectId(normalizedPlayerId);
         const sect = sectId ? this.findSectById(sectId) : null;
         if (!sect || sect.status === 'dissolved') {
-            throw new NotFoundException('宗门已不存在');
+            throw new NotFoundException('宗門已不存在');
         }
         ensureSectState(sect, this.playerRuntimeService);
         if (!isSectMember(sect, normalizedPlayerId)) {
-            throw new ForbiddenException('你不在该宗门成员名册中');
+            throw new ForbiddenException('你不在該宗門成員名冊中');
         }
         assertSectPermission(sect, normalizedPlayerId, 'member_approve');
         return buildSectApplicationPageView(sect, payload);
@@ -896,11 +896,11 @@ class WorldRuntimeSectService {
         }
         const sect = this.findSectById(player.sectId);
         if (!sect || sect.status === 'dissolved') {
-            throw new BadRequestException('你尚未加入宗门');
+            throw new BadRequestException('你尚未加入宗門');
         }
         ensureSectState(sect, this.playerRuntimeService);
         if (!isSectMember(sect, playerId)) {
-            throw new ForbiddenException('你不在该宗门成员名册中');
+            throw new ForbiddenException('你不在該宗門成員名冊中');
         }
         if (actionId === 'sect:exit') {
             return this.exitSectToEntrance(playerId, sect, deps);
@@ -921,7 +921,7 @@ class WorldRuntimeSectService {
                 formationInstanceId: guardianId,
                 active: !(formation?.active !== false),
             }, deps);
-            const nToggled = buildStructuredNotice('success', 'notice.sect.formation-toggled', '护宗大阵状态已切换。');
+            const nToggled = buildStructuredNotice('success', 'notice.sect.formation-toggled', '護宗大陣狀態已切換。');
             deps.queuePlayerNotice(playerId, nToggled.text, nToggled.kind, undefined, undefined, nToggled.structured);
             return { kind: 'queued', view: deps.getPlayerViewOrThrow(playerId) };
         }
@@ -961,7 +961,7 @@ class WorldRuntimeSectService {
                 spiritStoneCount: normalizeNonNegativeInteger(stoneText),
                 qiAmount: normalizeNonNegativeInteger(qiText),
             }, deps);
-            const nCharged = buildStructuredNotice('success', 'notice.sect.formation-charged', '护宗大阵灵力已注入。');
+            const nCharged = buildStructuredNotice('success', 'notice.sect.formation-charged', '護宗大陣靈力已注入。');
             deps.queuePlayerNotice(playerId, nCharged.text, nCharged.kind, undefined, undefined, nCharged.structured);
             return { kind: 'queued', view: deps.getPlayerViewOrThrow(playerId) };
         }
@@ -973,7 +973,7 @@ class WorldRuntimeSectService {
             deps.worldRuntimeFormationService.dispatchSetPersistentFormationStrength(playerId, {
                 instanceId: sect.entranceInstanceId,
                 formationInstanceId: formation?.id ?? guardianId,
-                strength: normalizePositiveInteger(strengthText, '大阵强度'),
+                strength: normalizePositiveInteger(strengthText, '大陣強度'),
             }, deps);
             return { kind: 'queued', view: deps.getPlayerViewOrThrow(playerId) };
         }
@@ -990,7 +990,7 @@ class WorldRuntimeSectService {
                     qiAmount: SECT_GUARDIAN_INITIAL_AURA,
                 }, deps);
             }
-            const nReplenished = buildStructuredNotice('success', 'notice.sect.formation-replenished', '护宗大阵已补充灵力。');
+            const nReplenished = buildStructuredNotice('success', 'notice.sect.formation-replenished', '護宗大陣已補充靈力。');
             deps.queuePlayerNotice(playerId, nReplenished.text, nReplenished.kind, undefined, undefined, nReplenished.structured);
             return { kind: 'queued', view: deps.getPlayerViewOrThrow(playerId) };
         }
@@ -1039,7 +1039,7 @@ class WorldRuntimeSectService {
             await this.toggleSectRolePermission(sect, roleId, permissionId, playerId, deps);
             return { kind: 'queued', view: deps.getPlayerViewOrThrow(playerId) };
         }
-        throw new BadRequestException(`不支持的宗门动作：${actionId}`);
+        throw new BadRequestException(`不支持的宗門動作：${actionId}`);
     }
 
     buildSectEntranceActions(view, deps = null) {
@@ -1078,9 +1078,9 @@ class WorldRuntimeSectService {
             if (portalDistance <= 1) {
                 actions.push({
                     id: `sect:enter:${encodeURIComponent(sect.sectId)}`,
-                    name: `进入宗门：${sect.name}`,
+                    name: `進入宗門：${sect.name}`,
                     type: 'travel',
-                    desc: `从${sect.name}山门进入宗门核心。`,
+                    desc: `從${sect.name}山門進入宗門核心。`,
                     cooldownLeft: 0,
                 });
             }
@@ -1093,9 +1093,9 @@ class WorldRuntimeSectService {
             }
             actions.push({
                 id: `sect:apply:${encodeURIComponent(sect.sectId)}`,
-                name: `递拜帖：申请加入${sect.name}`,
+                name: `遞拜帖：申請加入${sect.name}`,
                 type: 'interact',
-                desc: `你在${sect.name}护宗大阵前整理衣冠，向守阵执事递上拜帖。若愿受门规，便以外门弟子身份入山。`,
+                desc: `你在${sect.name}護宗大陣前整理衣冠，向守陣執事遞上拜帖。若願受門規，便以外門弟子身份入山。`,
                 cooldownLeft: 0,
             });
         }
@@ -1107,15 +1107,15 @@ class WorldRuntimeSectService {
         const sectId = decodeActionPart(encodedSectId);
         const sect = this.findSectById(sectId);
         if (!sect || sect.status === 'dissolved') {
-            throw new NotFoundException('山门气机已散，无法返回宗门');
+            throw new NotFoundException('山門氣機已散，無法返回宗門');
         }
         ensureSectState(sect, this.playerRuntimeService);
         const location = deps.getPlayerLocationOrThrow(playerId);
         if (location.instanceId !== sect.entranceInstanceId) {
-            throw new BadRequestException('需要在该宗门山门前返回宗门');
+            throw new BadRequestException('需要在該宗門山門前返回宗門');
         }
         if (chebyshevDistance(player.x, player.y, sect.entranceX, sect.entranceY) > 1) {
-            throw new BadRequestException('需要靠近护宗大阵前的山门传送点');
+            throw new BadRequestException('需要靠近護宗大陣前的山門傳送點');
         }
         if (isSectMember(sect, playerId)) {
             if (typeof this.playerRuntimeService.setPlayerSectId === 'function') {
@@ -1135,7 +1135,7 @@ class WorldRuntimeSectService {
             targetY: sect.coreY,
             reason: 'manual_portal',
         });
-        queueStructuredSectNotice(deps, playerId, 'travel', 'notice.sect.entered-core', `你穿过${sect.name}山门，返回宗门核心。`, {
+        queueStructuredSectNotice(deps, playerId, 'travel', 'notice.sect.entered-core', `你穿過${sect.name}山門，返回宗門核心。`, {
             vars: { sectName: sect.name },
             pills: [{ key: 'sectName', style: 'target' }],
         });
@@ -1146,16 +1146,16 @@ class WorldRuntimeSectService {
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const location = deps.getPlayerLocationOrThrow(playerId);
         if (location.instanceId !== sect.sectInstanceId) {
-            throw new BadRequestException('需要在宗门领地内离开');
+            throw new BadRequestException('需要在宗門領地內離開');
         }
         if (chebyshevDistance(player.x, player.y, sect.coreX, sect.coreY) > 1) {
-            throw new BadRequestException('需要靠近宗门核心才能离开宗门领地');
+            throw new BadRequestException('需要靠近宗門核心才能離開宗門領地');
         }
         const sourceInstance = deps.getInstanceRuntime?.(sect.sectInstanceId);
         const entranceInstance = deps.getInstanceRuntime?.(sect.entranceInstanceId);
         await waitForSectInstancesLeaseReady([sourceInstance, entranceInstance], deps);
         if (typeof deps.applyTransfer !== 'function') {
-            throw new ServiceUnavailableException('宗门传送服务尚未就绪');
+            throw new ServiceUnavailableException('宗門傳送服務尚未就緒');
         }
         deps.applyTransfer({
             playerId,
@@ -1167,7 +1167,7 @@ class WorldRuntimeSectService {
             targetY: sect.entranceY,
             reason: 'manual_portal',
         });
-        queueStructuredSectNotice(deps, playerId, 'travel', 'notice.sect.exited-core', `你离开${sect.name}宗门领地，返回山门入口。`, {
+        queueStructuredSectNotice(deps, playerId, 'travel', 'notice.sect.exited-core', `你離開${sect.name}宗門領地，返回山門入口。`, {
             vars: { sectName: sect.name },
             pills: [{ key: 'sectName', style: 'target' }],
         });
@@ -1180,7 +1180,7 @@ class WorldRuntimeSectService {
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const sect = this.findSectById(sectId);
         if (!sect || sect.status === 'dissolved') {
-            throw new NotFoundException('山门气机已散，无法递交拜帖');
+            throw new NotFoundException('山門氣機已散，無法遞交拜帖');
         }
         ensureSectState(sect, this.playerRuntimeService);
         if (isSectMember(sect, playerId)) {
@@ -1193,14 +1193,14 @@ class WorldRuntimeSectService {
         }
         const ledSect = this.findSectLedByPlayer(playerId);
         if (ledSect && ledSect.sectId !== sect.sectId) {
-            throw new BadRequestException(`你身为${ledSect.name}宗主，不能加入其他宗门，请先转让宗主之位或解散原宗门`);
+            throw new BadRequestException(`你身為${ledSect.name}宗主，不能加入其他宗門，請先轉讓宗主之位或解散原宗門`);
         }
         const location = deps.getPlayerLocationOrThrow(playerId);
         if (location.instanceId !== sect.entranceInstanceId) {
-            throw new BadRequestException('需要在该宗门山门前递交拜帖');
+            throw new BadRequestException('需要在該宗門山門前遞交拜帖');
         }
         if (chebyshevDistance(player.x, player.y, sect.entranceX, sect.entranceY) > SECT_ENTRANCE_INTERACTION_RADIUS) {
-            throw new BadRequestException('需要靠近护宗大阵前的山门传送点');
+            throw new BadRequestException('需要靠近護宗大陣前的山門傳送點');
         }
         const rollback = captureSectMembershipRollback(this, [sect.sectId], []);
         const beforeSnapshots = rollback.sects.map((entry) => entry.snapshot);
@@ -1211,11 +1211,11 @@ class WorldRuntimeSectService {
         await this.commitDurableSectMembershipMutation(beforeSnapshots, new Map());
         this.deliverSectMail(playerId, {
             senderLabel: sect.name,
-            fallbackTitle: `已向${sect.name}递交拜帖`,
-            fallbackBody: `你的入宗申请已递交给${sect.name}宗主审批。审批通过后，你会收到入宗邮件并获得山门通行权限。`,
+            fallbackTitle: `已向${sect.name}遞交拜帖`,
+            fallbackBody: `你的入宗申請已遞交給${sect.name}宗主審批。審批通過後，你會收到入宗郵件並獲得山門通行權限。`,
         }, deps);
         if (sect.leaderPlayerId !== playerId && this.playerRuntimeService.getPlayer?.(sect.leaderPlayerId)) {
-            queueStructuredSectNotice(deps, sect.leaderPlayerId, 'info', 'notice.sect.application-received', `${application.name}递交了加入${sect.name}的拜帖，待审批。`, {
+            queueStructuredSectNotice(deps, sect.leaderPlayerId, 'info', 'notice.sect.application-received', `${application.name}遞交了加入${sect.name}的拜帖，待審批。`, {
                 vars: { applicantName: application.name, sectName: sect.name },
                 pills: [
                     { key: 'applicantName', style: 'target' },
@@ -1224,11 +1224,11 @@ class WorldRuntimeSectService {
             });
         }
         this.deliverSectMail(sect.leaderPlayerId, {
-            senderLabel: '宗门执事',
-            fallbackTitle: `${application.name}申请加入${sect.name}`,
-            fallbackBody: `${application.name}在山门前递交拜帖。请前往宗门核心的“管理宗门 -> 管理事务”审批。`,
+            senderLabel: '宗門執事',
+            fallbackTitle: `${application.name}申請加入${sect.name}`,
+            fallbackBody: `${application.name}在山門前遞交拜帖。請前往宗門核心的“管理宗門 -> 管理事務”審批。`,
         }, deps);
-        queueStructuredSectNotice(deps, playerId, 'success', 'notice.sect.application-submitted', `拜帖已递交给${sect.name}宗主审批。`, {
+        queueStructuredSectNotice(deps, playerId, 'success', 'notice.sect.application-submitted', `拜帖已遞交給${sect.name}宗主審批。`, {
             vars: { sectName: sect.name },
             pills: [{ key: 'sectName', style: 'target' }],
         });
@@ -1250,16 +1250,16 @@ class WorldRuntimeSectService {
             async () => {
         const currentSect = this.findSectById(sect?.sectId);
         if (!currentSect || currentSect.status === 'dissolved') {
-            throw new NotFoundException('宗门已不存在');
+            throw new NotFoundException('宗門已不存在');
         }
         assertSectPermission(currentSect, operatorPlayerId, 'member_approve');
         const application = targetId ? findPendingSectApplication(currentSect, targetId) : null;
         if (!application) {
-            throw new NotFoundException('未找到待审批拜帖');
+            throw new NotFoundException('未找到待審批拜帖');
         }
         const ledSect = this.findSectLedByPlayer(targetId);
         if (ledSect && ledSect.sectId !== currentSect.sectId) {
-            throw new BadRequestException(`${application.name}是${ledSect.name}宗主，无法直接入宗，请其先转让宗主之位或解散原宗门`);
+            throw new BadRequestException(`${application.name}是${ledSect.name}宗主，無法直接入宗，請其先轉讓宗主之位或解散原宗門`);
         }
         const applicant = this.playerRuntimeService.getPlayer?.(targetId) ?? null;
         if (applicant) {
@@ -1295,17 +1295,17 @@ class WorldRuntimeSectService {
         if (applicant) {
             deps.refreshQuestStates?.(targetId);
             deps.refreshPlayerContextActions?.(targetId);
-            queueStructuredSectNotice(deps, targetId, 'success', 'notice.sect.application-approved', `${currentSect.name}已准你入山，护宗大阵会放行同门。`, {
+            queueStructuredSectNotice(deps, targetId, 'success', 'notice.sect.application-approved', `${currentSect.name}已準你入山，護宗大陣會放行同門。`, {
                 vars: { sectName: currentSect.name },
                 pills: [{ key: 'sectName', style: 'target' }],
             });
         }
         this.deliverSectMail(targetId, {
             senderLabel: currentSect.name,
-            fallbackTitle: `${currentSect.name}已准你入山`,
-            fallbackBody: `你的拜帖已通过审批，现列为${currentSect.name}外门弟子。前往山门附近即可返回宗门核心，护宗大阵会识别你的同门身份。`,
+            fallbackTitle: `${currentSect.name}已準你入山`,
+            fallbackBody: `你的拜帖已通過審批，現列為${currentSect.name}外門弟子。前往山門附近即可返回宗門核心，護宗大陣會識別你的同門身份。`,
         }, deps);
-        queueStructuredSectNotice(deps, operatorPlayerId, 'success', 'notice.sect.application-approved-operator', `已准 ${application.name} 入宗。`, {
+        queueStructuredSectNotice(deps, operatorPlayerId, 'success', 'notice.sect.application-approved-operator', `已準 ${application.name} 入宗。`, {
             vars: { applicantName: application.name },
             pills: [{ key: 'applicantName', style: 'target' }],
         });
@@ -1322,12 +1322,12 @@ class WorldRuntimeSectService {
         return this.runExclusiveSectPlayerMutation([sect?.sectId], [operatorPlayerId], async () => {
         const currentSect = this.findSectById(sect?.sectId);
         if (!currentSect || currentSect.status === 'dissolved') {
-            throw new NotFoundException('宗门已不存在');
+            throw new NotFoundException('宗門已不存在');
         }
         assertSectPermission(currentSect, operatorPlayerId, 'member_approve');
         const application = targetId ? findPendingSectApplication(currentSect, targetId) : null;
         if (!application) {
-            throw new NotFoundException('未找到待审批拜帖');
+            throw new NotFoundException('未找到待審批拜帖');
         }
         const rollback = captureSectMembershipRollback(this, [currentSect.sectId], []);
         const beforeSnapshots = rollback.sects.map((entry) => entry.snapshot);
@@ -1341,7 +1341,7 @@ class WorldRuntimeSectService {
         this.deliverSectMail(targetId, {
             senderLabel: currentSect.name,
             fallbackTitle: `${currentSect.name}退回了你的拜帖`,
-            fallbackBody: `你的入宗申请未通过审批，可稍后重新递交拜帖。`,
+            fallbackBody: `你的入宗申請未通過審批，可稍後重新遞交拜帖。`,
         }, deps);
         queueStructuredSectNotice(deps, operatorPlayerId, 'success', 'notice.sect.application-rejected-operator', `已退回 ${application.name} 的拜帖。`, {
             vars: { applicantName: application.name },
@@ -1358,13 +1358,13 @@ class WorldRuntimeSectService {
         return this.runExclusiveStableSectMembershipMutation([sect?.sectId], [playerId], playerId, async () => {
         const currentSect = this.findSectById(sect?.sectId);
         if (!currentSect || currentSect.status === 'dissolved') {
-            throw new NotFoundException('宗门已不存在');
+            throw new NotFoundException('宗門已不存在');
         }
         if (this.resolvePlayerSectId(playerId) !== currentSect.sectId) {
-            throw new BadRequestException('你的宗门归属已经变化，请刷新后重试');
+            throw new BadRequestException('你的宗門歸屬已經變化，請刷新後重試');
         }
         if (currentSect.leaderPlayerId === playerId) {
-            throw new BadRequestException('宗主不能直接离开宗门，请先转让宗主之位或解散宗门');
+            throw new BadRequestException('宗主不能直接離開宗門，請先轉讓宗主之位或解散宗門');
         }
         const rollback = captureSectMembershipRollback(this, [currentSect.sectId], [playerId]);
         const beforeSnapshots = rollback.sects.map((entry) => entry.snapshot);
@@ -1372,7 +1372,7 @@ class WorldRuntimeSectService {
         const before = currentSect.members.length;
         currentSect.members = currentSect.members.filter((entry) => entry.playerId !== playerId);
         if (currentSect.members.length === before) {
-            throw new NotFoundException('你不在该宗门成员名册中');
+            throw new NotFoundException('你不在該宗門成員名冊中');
         }
         const player = this.playerRuntimeService.getPlayer?.(playerId);
         if (typeof this.playerRuntimeService.setPlayerSectId === 'function') {
@@ -1389,13 +1389,13 @@ class WorldRuntimeSectService {
         this.releaseSectMemberProfileIfUnused(playerId);
         deps.refreshQuestStates?.(playerId);
         deps.refreshPlayerContextActions?.(playerId);
-        queueStructuredSectNotice(deps, playerId, 'success', 'notice.sect.left', `你已离开${currentSect.name}。`, {
+        queueStructuredSectNotice(deps, playerId, 'success', 'notice.sect.left', `你已離開${currentSect.name}。`, {
             vars: { sectName: currentSect.name },
             pills: [{ key: 'sectName', style: 'target' }],
         });
         if (currentSect.leaderPlayerId && this.playerRuntimeService.getPlayer?.(currentSect.leaderPlayerId)) {
             const memberName = resolvePlayerDisplayName(player, playerId);
-            queueStructuredSectNotice(deps, currentSect.leaderPlayerId, 'info', 'notice.sect.member-left', `${memberName}已离开${currentSect.name}。`, {
+            queueStructuredSectNotice(deps, currentSect.leaderPlayerId, 'info', 'notice.sect.member-left', `${memberName}已離開${currentSect.name}。`, {
                 vars: { memberName, sectName: currentSect.name },
                 pills: [
                     { key: 'memberName', style: 'target' },
@@ -1426,7 +1426,7 @@ class WorldRuntimeSectService {
             }
             return undefined;
         }).catch((error) => {
-            this.logger.warn(`宗门邮件发送失败：${error instanceof Error ? error.message : String(error)}`);
+            this.logger.warn(`宗門郵件發送失敗：${error instanceof Error ? error.message : String(error)}`);
         });
     }
 
@@ -1443,7 +1443,7 @@ class WorldRuntimeSectService {
         }
         ensureSectState(currentSect, this.playerRuntimeService);
         if (currentSect.leaderPlayerId === playerId || currentSect.members.some((entry) => entry.playerId === playerId && entry.roleId === 'leader')) {
-            throw new BadRequestException('宗主不能直接改投其他宗门，请先转让宗主之位或解散原宗门');
+            throw new BadRequestException('宗主不能直接改投其他宗門，請先轉讓宗主之位或解散原宗門');
         }
         const before = currentSect.members.length;
         currentSect.members = currentSect.members.filter((entry) => entry.playerId !== playerId);
@@ -1451,7 +1451,7 @@ class WorldRuntimeSectService {
             advanceSectUpdatedAt(currentSect);
             if (this.playerRuntimeService.getPlayer?.(currentSect.leaderPlayerId)) {
                 const memberName = resolvePlayerDisplayName(player, playerId);
-                queueStructuredSectNotice(deps, currentSect.leaderPlayerId, 'info', 'notice.sect.member-left', `${memberName}已离开${currentSect.name}。`, {
+                queueStructuredSectNotice(deps, currentSect.leaderPlayerId, 'info', 'notice.sect.member-left', `${memberName}已離開${currentSect.name}。`, {
                     vars: { memberName, sectName: currentSect.name },
                     pills: [
                         { key: 'memberName', style: 'target' },
@@ -1473,7 +1473,7 @@ class WorldRuntimeSectService {
             async () => {
         const currentSect = this.findSectById(sect?.sectId);
         if (!currentSect || currentSect.status === 'dissolved') {
-            throw new NotFoundException('宗门已不存在');
+            throw new NotFoundException('宗門已不存在');
         }
         assertSectPermission(currentSect, operatorPlayerId, 'member_remove');
         if (!targetId || targetId === currentSect.leaderPlayerId) {
@@ -1483,7 +1483,7 @@ class WorldRuntimeSectService {
             throw new BadRequestException('不能移除自己');
         }
         if (this.resolvePlayerSectId(targetId) !== currentSect.sectId) {
-            throw new BadRequestException('该成员宗门归属已经变化，请刷新后重试');
+            throw new BadRequestException('該成員宗門歸屬已經變化，請刷新後重試');
         }
         const rollback = captureSectMembershipRollback(this, [currentSect.sectId], [targetId]);
         const beforeSnapshots = rollback.sects.map((entry) => entry.snapshot);
@@ -1491,7 +1491,7 @@ class WorldRuntimeSectService {
         const before = currentSect.members.length;
         currentSect.members = currentSect.members.filter((entry) => entry.playerId !== targetId);
         if (currentSect.members.length === before) {
-            throw new NotFoundException('该成员不在宗门名册中');
+            throw new NotFoundException('該成員不在宗門名冊中');
         }
         this.playerSectId.delete(targetId);
         this.clearPlayerSectIdIfLoaded(targetId, currentSect.sectId);
@@ -1501,7 +1501,7 @@ class WorldRuntimeSectService {
             new Map([[targetId, null]]),
         );
         this.releaseSectMemberProfileIfUnused(targetId);
-        queueStructuredSectNotice(deps, operatorPlayerId, 'success', 'notice.sect.member-removed-operator', '已移除宗门成员。');
+        queueStructuredSectNotice(deps, operatorPlayerId, 'success', 'notice.sect.member-removed-operator', '已移除宗門成員。');
         deps.refreshQuestStates?.(targetId);
         } catch (error) {
             restoreSectMembershipRollback(this, rollback);
@@ -1516,15 +1516,15 @@ class WorldRuntimeSectService {
         return this.runExclusiveSectPlayerMutation([sect?.sectId], [operatorPlayerId], async () => {
         const currentSect = this.findSectById(sect?.sectId);
         if (!currentSect || currentSect.status === 'dissolved') {
-            throw new NotFoundException('宗门已不存在');
+            throw new NotFoundException('宗門已不存在');
         }
         assertSectPermission(currentSect, operatorPlayerId, 'member_role');
         const member = targetId ? currentSect.members.find((entry) => entry.playerId === targetId) : null;
         if (!member) {
-            throw new NotFoundException('该成员不在宗门名册中');
+            throw new NotFoundException('該成員不在宗門名冊中');
         }
         if (targetId === currentSect.leaderPlayerId || member.roleId === 'leader') {
-            throw new BadRequestException('宗主职位只能通过转让改变');
+            throw new BadRequestException('宗主職位只能通過轉讓改變');
         }
         assertSectMemberRoleChange(currentSect, operatorPlayerId, member, roleId);
         const rollback = captureSectMembershipRollback(this, [currentSect.sectId], []);
@@ -1535,7 +1535,7 @@ class WorldRuntimeSectService {
         advanceSectUpdatedAt(currentSect);
         await this.commitDurableSectMembershipMutation(beforeSnapshots, new Map());
         const roleName = getSectRoleLabel(roleId);
-        queueStructuredSectNotice(deps, operatorPlayerId, 'success', 'notice.sect.role-changed-operator', `已将 ${member.name} 调整为 ${roleName}。`, {
+        queueStructuredSectNotice(deps, operatorPlayerId, 'success', 'notice.sect.role-changed-operator', `已將 ${member.name} 調整為 ${roleName}。`, {
             vars: { memberName: member.name, roleName },
             pills: [{ key: 'memberName', style: 'target' }],
         });
@@ -1554,15 +1554,15 @@ class WorldRuntimeSectService {
             async () => {
         const currentSect = this.findSectById(sect?.sectId);
         if (!currentSect || currentSect.status === 'dissolved') {
-            throw new NotFoundException('宗门已不存在');
+            throw new NotFoundException('宗門已不存在');
         }
         assertSectLeader(currentSect, operatorPlayerId);
         if (!targetId || targetId === operatorPlayerId) {
-            throw new BadRequestException('请选择其他成员接任宗主');
+            throw new BadRequestException('請選擇其他成員接任宗主');
         }
         const target = currentSect.members.find((entry) => entry.playerId === targetId);
         if (!target) {
-            throw new NotFoundException('接任者不在宗门名册中');
+            throw new NotFoundException('接任者不在宗門名冊中');
         }
         const rollback = captureSectMembershipRollback(this, [currentSect.sectId], []);
         const beforeSnapshots = rollback.sects.map((entry) => entry.snapshot);
@@ -1582,7 +1582,7 @@ class WorldRuntimeSectService {
             new Map(),
             [this.buildDurableGuardianFormationWrite(guardian, deps)].filter(Boolean),
         );
-        queueStructuredSectNotice(deps, operatorPlayerId, 'success', 'notice.sect.leadership-transferred-operator', `已将宗主之位转让给 ${target.name}。`, {
+        queueStructuredSectNotice(deps, operatorPlayerId, 'success', 'notice.sect.leadership-transferred-operator', `已將宗主之位轉讓給 ${target.name}。`, {
             vars: { memberName: target.name },
             pills: [{ key: 'memberName', style: 'target' }],
         });
@@ -1609,13 +1609,13 @@ class WorldRuntimeSectService {
             async (lockedSect, lockedMemberIds) => {
         const currentSect = lockedSect;
         if (!currentSect || currentSect.status === 'dissolved') {
-            throw new NotFoundException('宗门已不存在');
+            throw new NotFoundException('宗門已不存在');
         }
         assertSectLeader(currentSect, operatorPlayerId);
         const memberIds = currentSect.members.map((entry) => entry.playerId);
         if (memberIds.length !== lockedMemberIds.length
             || memberIds.some((memberId) => !lockedMemberIds.includes(memberId))) {
-            throw new BadRequestException('宗门成员正在变化，请稍后重试解散');
+            throw new BadRequestException('宗門成員正在變化，請稍後重試解散');
         }
         const membershipRollback = captureSectMembershipRollback(this, [currentSect.sectId], memberIds);
         const beforeSnapshots = membershipRollback.sects.map((entry) => entry.snapshot);
@@ -1700,11 +1700,11 @@ class WorldRuntimeSectService {
         return this.runExclusiveSectPlayerMutation([sect?.sectId], [playerId], async () => {
             const currentSect = this.findSectById(sect?.sectId);
             if (!currentSect || currentSect.status === 'dissolved') {
-                throw new NotFoundException('宗门已不存在');
+                throw new NotFoundException('宗門已不存在');
             }
             assertSectLeader(currentSect, playerId);
             if (roleId === 'leader' || roleId === 'supreme_elder') {
-                throw new BadRequestException('宗主与太上长老固定拥有全部职位权限');
+                throw new BadRequestException('宗主與太上長老固定擁有全部職位權限');
             }
             const rollback = captureSectMembershipRollback(this, [currentSect.sectId], []);
             const beforeSnapshots = rollback.sects.map((entry) => entry.snapshot);
@@ -1717,7 +1717,7 @@ class WorldRuntimeSectService {
                 advanceSectUpdatedAt(currentSect);
                 await this.commitDurableSectMembershipMutation(beforeSnapshots, new Map());
                 const roleName = getSectRoleLabel(roleId);
-                queueStructuredSectNotice(deps, playerId, 'success', 'notice.sect.permission-updated', `${roleName}权限已更新。`, {
+                queueStructuredSectNotice(deps, playerId, 'success', 'notice.sect.permission-updated', `${roleName}權限已更新。`, {
                     vars: { roleName },
                 });
             }
@@ -1760,7 +1760,7 @@ class WorldRuntimeSectService {
             const currentSect = this.findSectById(sectId);
             return currentSect ? this.expandSectBoundsLocked(currentSect, dirs, deps) : false;
         }).catch((error) => {
-            this.logger.warn(`宗门边界扩张排队失败 sectId=${sectId}：${error instanceof Error ? error.message : String(error)}`);
+            this.logger.warn(`宗門邊界擴張排隊失敗 sectId=${sectId}：${error instanceof Error ? error.message : String(error)}`);
         });
         return true;
     }
@@ -1819,7 +1819,7 @@ class WorldRuntimeSectService {
         void this.runExclusiveSectPlayerMutation([target.sect.sectId], [], () => (
             this.expandSectForDestroyedTileLocked(instanceId, x, y, deps)
         )).catch((error) => {
-            this.logger.warn(`宗门地块扩张排队失败 sectId=${target.sect.sectId}：${error instanceof Error ? error.message : String(error)}`);
+            this.logger.warn(`宗門地塊擴張排隊失敗 sectId=${target.sect.sectId}：${error instanceof Error ? error.message : String(error)}`);
         });
         return true;
     }
@@ -1881,7 +1881,7 @@ class WorldRuntimeSectService {
             this.ensureSectPortalsAttached(sect, entranceInstance, instance);
         }
         this.persistSectsSoon();
-        queueStructuredSectNotice(deps, sect.leaderPlayerId, 'info', 'notice.sect.boundary-expanded', `${sect.name}边界被凿开，地脉向外扩展了。`, {
+        queueStructuredSectNotice(deps, sect.leaderPlayerId, 'info', 'notice.sect.boundary-expanded', `${sect.name}邊界被鑿開，地脈向外擴展了。`, {
             vars: { sectName: sect.name },
             pills: [{ key: 'sectName', style: 'target' }],
         });
@@ -1896,7 +1896,7 @@ class WorldRuntimeSectService {
             down: SECT_EXPAND_CHUNK,
         }, deps);
         if (expanded) {
-            queueStructuredSectNotice(deps, sect.leaderPlayerId, 'info', 'notice.sect.terrain-manifested', '宗门地脉已向四方显化。');
+            queueStructuredSectNotice(deps, sect.leaderPlayerId, 'info', 'notice.sect.terrain-manifested', '宗門地脈已向四方顯化。');
         }
         return expanded;
     }
@@ -1928,7 +1928,7 @@ class WorldRuntimeSectService {
                 return {
                     rank: 0,
                     sectId: sect.sectId,
-                    sectName: resolvePlayerFacingContentName(sect.sectId, '未知宗门', sect.name),
+                    sectName: resolvePlayerFacingContentName(sect.sectId, '未知宗門', sect.name),
                     mark: normalizeOptionalString(sect.mark),
                     memberCount: visibleMembers.length,
                     leaderPlayerId: normalizeOptionalString(leader?.playerId),
@@ -2129,7 +2129,7 @@ class WorldRuntimeSectService {
         }
 
         const profileResult = await this.loadPersistedSectMemberProfiles(normalizedPlayerIds).catch((error) => {
-            this.logger.warn(`宗门成员资料批量水合失败：${error instanceof Error ? error.message : String(error)}`);
+            this.logger.warn(`宗門成員資料批量水合失敗：${error instanceof Error ? error.message : String(error)}`);
             return new Map();
         });
         const profiles = profileResult instanceof Map ? profileResult : new Map();
@@ -2209,7 +2209,7 @@ class WorldRuntimeSectService {
         const existing = this.findSectById(parsed.sectId);
         const sect = existing ?? {
             sectId: parsed.sectId,
-            name: '未知宗门',
+            name: '未知宗門',
             mark: SECT_CORE_CHAR,
             founderPlayerId: '',
             leaderPlayerId: '',
@@ -2282,7 +2282,7 @@ class WorldRuntimeSectService {
             this._sectPersistTimer = null;
             if (this.isSectMutationBlocked()) return;
             void this.saveSectDocument().catch((error) => {
-                this.logger.warn(`宗门持久化失败：${error instanceof Error ? error.message : String(error)}`);
+                this.logger.warn(`宗門持久化失敗：${error instanceof Error ? error.message : String(error)}`);
             });
         }, 5000);
     }
@@ -2413,13 +2413,13 @@ class WorldRuntimeSectService {
         }
         const sharedPool = this.databasePoolProvider?.getPool?.('sect') ?? null;
         if (!sharedPool) {
-            throw new ServiceUnavailableException('宗门持久化连接池不可用');
+            throw new ServiceUnavailableException('宗門持久化連接池不可用');
         }
         try {
             await ensureSectTable(sharedPool);
             const repairReport = await repairPersistedSectCoreState(sharedPool);
             if (repairReport.sectRowsUpdated > 0 || repairReport.overlayRowsUpdated > 0) {
-                this.logger.log(`宗门核心坐标持久化自愈完成：sects=${repairReport.sectRowsUpdated}, overlays=${repairReport.overlayRowsUpdated}`);
+                this.logger.log(`宗門核心座標持久化自愈完成：sects=${repairReport.sectRowsUpdated}, overlays=${repairReport.overlayRowsUpdated}`);
             }
             this.persistencePool = sharedPool;
             this.persistenceReady = true;
@@ -2429,7 +2429,7 @@ class WorldRuntimeSectService {
         } catch (error) {
             this.persistencePool = null;
             this.persistenceReady = false;
-            this.logger.error(`宗门持久化初始化失败：${error instanceof Error ? error.stack : String(error)}`);
+            this.logger.error(`宗門持久化初始化失敗：${error instanceof Error ? error.stack : String(error)}`);
             throw error;
         }
     }
@@ -2483,9 +2483,9 @@ class WorldRuntimeSectService {
 export { WorldRuntimeSectService, repairPersistedSectCoreStateWithClient };
 
 function resolveOptionalSectMemberName(source, playerId) {
-    const name = resolvePlayerDisplayName(source, '未知成员');
+    const name = resolvePlayerDisplayName(source, '未知成員');
     return name === normalizeOptionalString(playerId)
-        || name === '未知成员' || name === '未知玩家' || name === '未知申请人'
+        || name === '未知成員' || name === '未知玩家' || name === '未知申請人'
         ? null
         : name;
 }
@@ -2495,13 +2495,13 @@ function resolveSectMemberManagementProfile(member, runtimePlayer, profilesByPla
     const cached = profilesByPlayerId?.get?.(playerId) ?? null;
     const runtimeName = resolveOptionalSectMemberName(runtimePlayer, playerId);
     const storedName = resolveOptionalSectMemberName(member, playerId);
-    const name = runtimeName || cached?.name || storedName || '未知成员';
+    const name = runtimeName || cached?.name || storedName || '未知成員';
     const runtimeRealmLv = resolveSectMemberRealmLv(runtimePlayer);
     const cachedRealmLv = resolveSectMemberRealmLv(cached);
     const realmLv = runtimeRealmLv ?? cachedRealmLv;
-    if (playerId && profilesByPlayerId?.set && (name !== '未知成员' || realmLv !== null)) {
+    if (playerId && profilesByPlayerId?.set && (name !== '未知成員' || realmLv !== null)) {
         profilesByPlayerId.set(playerId, {
-            name: name !== '未知成员' ? name : null,
+            name: name !== '未知成員' ? name : null,
             realmLv,
         });
     }
@@ -2509,8 +2509,8 @@ function resolveSectMemberManagementProfile(member, runtimePlayer, profilesByPla
 }
 
 function buildSectManagementActionDesc(sect, view, deps, guardian, profilesByPlayerId = null) {
-    const sectName = resolvePlayerFacingContentName(sect?.sectId, '未知宗门', sect?.name);
-    const base = `${sectName} · 印记 ${normalizeOptionalString(sect.mark) || '无'} · 地域 ${formatSectTileCountLabel(sect, view, deps)} · 大阵 ${formatSectGuardianStatusLabel(guardian)} · 灵力 ${formatSectGuardianAuraLabel(guardian)}。`;
+    const sectName = resolvePlayerFacingContentName(sect?.sectId, '未知宗門', sect?.name);
+    const base = `${sectName} · 印記 ${normalizeOptionalString(sect.mark) || '無'} · 地域 ${formatSectTileCountLabel(sect, view, deps)} · 大陣 ${formatSectGuardianStatusLabel(guardian)} · 靈力 ${formatSectGuardianAuraLabel(guardian)}。`;
     const data = buildSectManagementData(sect, view?.playerId, deps?.playerRuntimeService, guardian, deps?.worldRuntimeFormationService, profilesByPlayerId);
     return `${base}\n${SECT_MANAGEMENT_DATA_MARKER}${encodeURIComponent(JSON.stringify(data))}${SECT_MANAGEMENT_DATA_MARKER_END}`;
 }
@@ -2583,7 +2583,7 @@ function buildSectApplicationPageView(sect, payload) {
                 name: resolvePlayerDisplayName({
                     playerId: application.playerId,
                     name: application.name,
-                }, '未知申请人'),
+                }, '未知申請人'),
                 appliedAt: Number.isFinite(Number(application.appliedAt))
                     ? Math.max(0, Math.trunc(Number(application.appliedAt)))
                     : 0,
@@ -2621,7 +2621,7 @@ function normalizeSectApplicationRevision(value) {
 function normalizeSectApplicationPageRequestId(value) {
     const requestId = typeof value === 'string' ? value.trim() : '';
     if (!requestId || requestId.length > 80) {
-        throw new BadRequestException('宗门申请分页请求 ID 无效');
+        throw new BadRequestException('宗門申請分頁請求 ID 無效');
     }
     return requestId;
 }
@@ -2747,10 +2747,10 @@ async function restoreSectCreationRollback(input) {
         try {
             const destroyed = await destroyManagedInstance(input.deps, input.instanceId, 'sect_creation_rollback');
             if (destroyed?.ok !== true && destroyed?.reason !== 'instance_not_found') {
-                input.service.logger.warn(`建宗失败后的实例销毁被拒绝：${input.instanceId} reason=${destroyed?.reason ?? 'unknown'}`);
+                input.service.logger.warn(`建宗失敗後的實例銷燬被拒絕：${input.instanceId} reason=${destroyed?.reason ?? 'unknown'}`);
             }
         } catch (error) {
-            input.service.logger.warn(`建宗失败后的实例销毁异常：${input.instanceId} ${error instanceof Error ? error.message : String(error)}`);
+            input.service.logger.warn(`建宗失敗後的實例銷燬異常：${input.instanceId} ${error instanceof Error ? error.message : String(error)}`);
         }
     }
     input.service.sectsById.delete(input.sectId);
@@ -2986,7 +2986,7 @@ function normalizeSectEntry(entry) {
         maxY: entry.mapMaxY,
     }) ?? fallbackBounds;
     const templateId = resolveSectTemplateIdForBounds(sectId, entry.sectTemplateId, bounds);
-    const sectName = resolvePlayerFacingContentName(sectId, '未知宗门', entry.name);
+    const sectName = resolvePlayerFacingContentName(sectId, '未知宗門', entry.name);
     const leaderName = resolvePlayerDisplayName(null, normalizeOptionalString(entry.leaderName) || leaderPlayerId);
         return {
             sectId,
@@ -3124,7 +3124,7 @@ function assertCanCreateSectAtInstance(instance, descriptor) {
     if (kind === 'public' && linePreset === 'real') {
         return;
     }
-    throw new BadRequestException('只能在大地图现世线建立宗门。');
+    throw new BadRequestException('只能在大地圖現世線建立宗門。');
 }
 
 function assertSectFoundingAreaClear(sects, instance, instanceId, centerX, centerY, ignoredSectId = null) {
@@ -3132,7 +3132,7 @@ function assertSectFoundingAreaClear(sects, instance, instanceId, centerX, cente
     const y0 = Math.trunc(Number(centerY));
     const ignored = normalizeOptionalString(ignoredSectId);
     if (!Number.isFinite(x0) || !Number.isFinite(y0)) {
-        throw new BadRequestException('当前位置无法开辟宗门入口');
+        throw new BadRequestException('當前位置無法開闢宗門入口');
     }
     const conflict = findProtectedPlacementConflict(
         instance,
@@ -3140,7 +3140,7 @@ function assertSectFoundingAreaClear(sects, instance, instanceId, centerX, cente
         { ignoredPortalSectId: ignored },
     );
     if (conflict.ok !== true) {
-        throw new BadRequestException(`宗门山门五格阵基内${formatProtectedPlacementConflictReason(conflict.reason)}`);
+        throw new BadRequestException(`宗門山門五格陣基內${formatProtectedPlacementConflictReason(conflict.reason)}`);
     }
     const normalizedInstanceId = normalizeOptionalString(instanceId);
     for (const sect of Array.isArray(sects) ? sects : []) {
@@ -3151,7 +3151,7 @@ function assertSectFoundingAreaClear(sects, instance, instanceId, centerX, cente
             continue;
         }
         if (chebyshevDistance(x0, y0, sect.entranceX, sect.entranceY) <= SECT_FOUNDING_CLEAR_RADIUS) {
-            throw new BadRequestException('宗门山门五格阵基内不能有其他宗门');
+            throw new BadRequestException('宗門山門五格陣基內不能有其他宗門');
         }
     }
 }
@@ -3171,7 +3171,7 @@ function logSectEntranceProtectedPlacementConflict(logger, sect, instance) {
         { ignoredPortalSectId: normalizeOptionalString(sect.sectId) },
     );
     if (conflict.ok !== true) {
-        logger?.warn?.(`启动发现宗门山门五格阵基保护点位冲突，暂不清理：${normalizeOptionalString(sect.sectId) ?? ''} ${formatProtectedPlacementConflictReason(conflict.reason)} (${conflict.x},${conflict.y})`);
+        logger?.warn?.(`啟動發現宗門山門五格陣基保護點位衝突，暫不清理：${normalizeOptionalString(sect.sectId) ?? ''} ${formatProtectedPlacementConflictReason(conflict.reason)} (${conflict.x},${conflict.y})`);
     }
 }
 
@@ -3216,12 +3216,12 @@ function formatDurationMs(ms) {
     const hours = Math.floor((totalSeconds % 86400) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     if (days > 0) {
-        return hours > 0 ? `${days}天${hours}小时` : `${days}天`;
+        return hours > 0 ? `${days}天${hours}小時` : `${days}天`;
     }
     if (hours > 0) {
-        return minutes > 0 ? `${hours}小时${minutes}分钟` : `${hours}小时`;
+        return minutes > 0 ? `${hours}小時${minutes}分鐘` : `${hours}小時`;
     }
-    return `${Math.max(1, minutes)}分钟`;
+    return `${Math.max(1, minutes)}分鐘`;
 }
 
 function touchRuntimeInstanceRevision(deps, instanceId) {
@@ -3352,7 +3352,7 @@ async function waitForSectInstancesLeaseReady(instances, deps) {
         await deps.waitForInstanceLeaseReady?.(instanceId);
     }
     if (currentInstances.length === 0) {
-        throw new ServiceUnavailableException('宗门实例尚未就绪');
+        throw new ServiceUnavailableException('宗門實例尚未就緒');
     }
     const writable = currentInstances.every((instance) => {
         const instanceId = normalizeOptionalString(instance?.meta?.instanceId);
@@ -3360,13 +3360,13 @@ async function waitForSectInstancesLeaseReady(instances, deps) {
             && (typeof deps.isInstanceLeaseWritable !== 'function' || deps.isInstanceLeaseWritable(instance));
     });
     if (!writable) {
-        throw new ServiceUnavailableException('宗门实例租约尚未就绪');
+        throw new ServiceUnavailableException('宗門實例租約尚未就緒');
     }
 }
 
 async function prepareSectRuntimeApply(sect, entranceInstance, sectInstance, deps, logger) {
     if (!entranceInstance || !sectInstance) {
-        logger.warn(`宗门运行态应用跳过：${sect.sectId} 入口或宗门实例不存在`);
+        logger.warn(`宗門運行態應用跳過：${sect.sectId} 入口或宗門實例不存在`);
         return false;
     }
     const instances: any[] = [];
@@ -3391,7 +3391,7 @@ async function prepareSectRuntimeApply(sect, entranceInstance, sectInstance, dep
             }
         }
     } catch (error) {
-        logger.warn(`宗门运行态应用前续租失败：${sect.sectId} ${error instanceof Error ? error.message : String(error)}`);
+        logger.warn(`宗門運行態應用前續租失敗：${sect.sectId} ${error instanceof Error ? error.message : String(error)}`);
         return false;
     }
     const writable = instances.every((instance) => {
@@ -3400,7 +3400,7 @@ async function prepareSectRuntimeApply(sect, entranceInstance, sectInstance, dep
             && (typeof deps.isInstanceLeaseWritable !== 'function' || deps.isInstanceLeaseWritable(instance));
     });
     if (!writable) {
-        logger.warn(`宗门运行态应用跳过：${sect.sectId} 入口或宗门实例租约不可写`);
+        logger.warn(`宗門運行態應用跳過：${sect.sectId} 入口或宗門實例租約不可寫`);
     }
     return writable;
 }

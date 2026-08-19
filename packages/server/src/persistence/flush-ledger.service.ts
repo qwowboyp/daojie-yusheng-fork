@@ -165,16 +165,16 @@ export class FlushLedgerService implements OnModuleInit, OnModuleDestroy {
   async onModuleInit(): Promise<void> {
     this.pool = this.databasePoolProvider?.getPool('flush-ledger') ?? null;
     if (!this.pool) {
-      this.logger.log('刷盘账本已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('刷盤賬本已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
     try {
       await ensurePlayerFlushLedgerTable(this.pool);
       await ensureInstanceFlushLedgerTable(this.pool);
       this.enabled = true;
-      this.logger.log('刷盘账本已启用');
+      this.logger.log('刷盤賬本已啟用');
     } catch (error: unknown) {
-      this.logger.error('刷盘账本初始化失败，已回退为禁用模式', error instanceof Error ? error.stack : String(error));
+      this.logger.error('刷盤賬本初始化失敗，已回退為禁用模式', error instanceof Error ? error.stack : String(error));
       await this.safeClosePool();
     }
   }
@@ -969,7 +969,7 @@ export class FlushLedgerService implements OnModuleInit, OnModuleDestroy {
     summary.unresolvedPlayers = Array.from(new Set(summary.unresolvedPlayers)).sort();
     if (summary.repairedPlayers > 0) {
       this.logger.warn(
-        `已修复玩家资产刷盘隔离：players=${summary.repairedPlayers}`
+        `已修復玩家資產刷盤隔離：players=${summary.repairedPlayers}`
         + ` payloads=${summary.releasedPayloads} rekeyedItems=${summary.rekeyedItems}`
         + ` rebasedFences=${summary.rebasedFences}`
         + ` coveredByWatermarkPlayers=${summary.coveredByWatermarkPlayers}`
@@ -978,7 +978,7 @@ export class FlushLedgerService implements OnModuleInit, OnModuleDestroy {
     }
     if (summary.unresolvedPlayers.length > 0 && options.logUnresolved !== false) {
       this.logger.error(
-        `玩家资产刷盘隔离无法自动裁定：players=${summary.unresolvedPlayers.join(',')}`,
+        `玩家資產刷盤隔離無法自動裁定：players=${summary.unresolvedPlayers.join(',')}`,
       );
     }
     return summary;

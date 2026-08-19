@@ -122,7 +122,7 @@ export class WorldRuntimePlayerViewQueryService {
                         groundLabel: entry.groundLabel,
                     },
                 })),
-                emptyText: '地面上已经没有东西了。',
+                emptyText: '地面上已經沒有東西了。',
             });
         }
         const container = instance.getContainerAtTile(tileX, tileY);
@@ -138,7 +138,7 @@ export class WorldRuntimePlayerViewQueryService {
         return {
             tileX,
             tileY,
-            title: sources.some((source) => source.variant === 'herb') ? `采集 · (${tileX}, ${tileY})` : `搜索 · (${tileX}, ${tileY})`,
+            title: sources.some((source) => source.variant === 'herb') ? `採集 · (${tileX}, ${tileY})` : `搜索 · (${tileX}, ${tileY})`,
             sources,
         };
     }    

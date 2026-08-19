@@ -79,7 +79,7 @@ export class PartyChatService implements OnModuleDestroy {
       const partyIds = Array.from(this.pendingPrunes).slice(0, 100);
       partyIds.forEach((id) => this.pendingPrunes.delete(id));
       void Promise.all(partyIds.map((id) => this.repository.prune(id).catch((error) => {
-        this.logger.warn(`队伍聊天裁剪失败 party=${id}: ${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`隊伍聊天裁剪失敗 party=${id}: ${error instanceof Error ? error.message : String(error)}`);
       })));
       if (this.pendingPrunes.size > 0) this.schedulePrune(this.pendingPrunes.values().next().value);
     }, 1_000);

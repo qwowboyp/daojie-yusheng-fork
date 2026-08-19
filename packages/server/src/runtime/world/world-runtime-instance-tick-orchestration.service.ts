@@ -135,7 +135,7 @@ export class WorldRuntimeInstanceTickOrchestrationService {
       .filter(([, value]) => value !== undefined && value !== null)
       .map(([key, value]) => `${key}=${String(value)}`)
       .join(' ');
-    const line = `tick 操作隔离失败 phase=${phase}${context ? ` ${context}` : ''}：${message}`;
+    const line = `tick 操作隔離失敗 phase=${phase}${context ? ` ${context}` : ''}：${message}`;
     const logger = deps?.logger ?? this.logger;
     if (typeof logger?.warn === 'function') {
       logger.warn(line, stack);
@@ -1349,7 +1349,7 @@ function applyTileQiDrainForPlayers(instance, playerIds, deps) {
                 instance.cancelPendingCommand?.(playerId);
                 deps.worldRuntimeNavigationService?.clearNavigationIntent?.(playerId);
                 deps.clearPendingCommand?.(playerId);
-                const notice = buildStructuredNotice('warn', 'notice.world.tile-qi-drained-relocated', '灵力被地脉道压抽空，你被震回起点。');
+                const notice = buildStructuredNotice('warn', 'notice.world.tile-qi-drained-relocated', '靈力被地脈道壓抽空，你被震回起點。');
                 deps.queuePlayerNotice?.(playerId, notice.text, notice.kind, undefined, undefined, notice.structured);
             }
         }

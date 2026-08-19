@@ -123,7 +123,7 @@ export class WorldRuntimeWorldAccessService {
         }
         rejectUnavailableTongtianTowerTemplate(templateId);
         if (!deps.templateRepository.has(templateId)) {
-            throw new NotFoundException(`地图模板不存在：${templateId}`);
+            throw new NotFoundException(`地圖模板不存在：${templateId}`);
         }
         return deps.createInstance({
             instanceId: buildPublicInstanceId(templateId),
@@ -155,7 +155,7 @@ export class WorldRuntimeWorldAccessService {
             return this.getOrCreatePublicInstance(templateId, deps);
         }
         if (!deps.templateRepository.has(templateId)) {
-            throw new NotFoundException(`地图模板不存在：${templateId}`);
+            throw new NotFoundException(`地圖模板不存在：${templateId}`);
         }
         return deps.createInstance({
             instanceId: buildRealInstanceId(templateId),
@@ -182,7 +182,7 @@ export class WorldRuntimeWorldAccessService {
         }
         const fallback = deps.templateRepository.list()[0]?.id;
         if (!fallback) {
-            throw new NotFoundException('没有可用地图模板');
+            throw new NotFoundException('沒有可用地圖模板');
         }
         return fallback;
     }    
@@ -209,7 +209,7 @@ export class WorldRuntimeWorldAccessService {
 
         const location = deps.getPlayerLocation(playerId);
         if (!location) {
-            throw new NotFoundException('玩家尚未连接');
+            throw new NotFoundException('玩家尚未連接');
         }
         return location;
     }    
@@ -225,7 +225,7 @@ export class WorldRuntimeWorldAccessService {
 
         const instance = deps.getInstanceRuntime(instanceId);
         if (!instance) {
-            throw new NotFoundException('地图实例不存在');
+            throw new NotFoundException('地圖實例不存在');
         }
         return instance;
     }    
@@ -300,6 +300,6 @@ function resolveTongtianTowerInstance(templateId, deps) {
 
 function rejectUnavailableTongtianTowerTemplate(templateId) {
     if (typeof templateId === 'string' && templateId.startsWith('tongtian_tower_layer_')) {
-        throw new ServiceUnavailableException(`通天塔实例暂不可用：${templateId}`);
+        throw new ServiceUnavailableException(`通天塔實例暫不可用：${templateId}`);
     }
 }

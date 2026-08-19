@@ -124,13 +124,13 @@ export class MailPersistenceService implements OnModuleInit, OnModuleDestroy {
   async onModuleInit(): Promise<void> {
     const databaseUrl = resolveServerDatabaseUrl();
     if (!databaseUrl.trim()) {
-      this.logger.log('邮件持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('郵件持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
 
     const sharedPool = this.databasePoolProvider?.getPool('mail') ?? null;
     if (!sharedPool) {
-      this.logger.warn('邮件持久化已禁用：数据库连接池提供者未提供连接池');
+      this.logger.warn('郵件持久化已禁用：數據庫連接池提供者未提供連接池');
       return;
     }
 
@@ -138,10 +138,10 @@ export class MailPersistenceService implements OnModuleInit, OnModuleDestroy {
       await ensureStructuredMailTables(sharedPool);
       this.pool = sharedPool;
       this.enabled = true;
-      this.logger.log('邮件持久化已启用（player_mail + player_mail_attachment + player_mail_counter + player_recovery_watermark）');
+      this.logger.log('郵件持久化已啟用（player_mail + player_mail_attachment + player_mail_counter + player_recovery_watermark）');
     } catch (error: unknown) {
       this.logger.error(
-        '邮件持久化初始化失败，已回退为禁用模式',
+        '郵件持久化初始化失敗，已回退為禁用模式',
         error instanceof Error ? error.stack : String(error),
       );
       this.pool = null;
@@ -283,7 +283,7 @@ export class MailPersistenceService implements OnModuleInit, OnModuleDestroy {
         const currentFence = await loadMailboxWriteFence(client, normalizedPlayerId);
         if (currentFence.counterVersion > normalizedMailbox.revision) {
           this.logger.warn(
-            `收到旧邮箱快照，仅合并单调状态：playerId=${normalizedPlayerId} currentRevision=${currentFence.counterVersion} incomingRevision=${normalizedMailbox.revision}`,
+            `收到舊郵箱快照，僅合併單調狀態：playerId=${normalizedPlayerId} currentRevision=${currentFence.counterVersion} incomingRevision=${normalizedMailbox.revision}`,
           );
         }
         if (stableMailboxMails.length > 0) {
@@ -600,7 +600,7 @@ export class MailPersistenceService implements OnModuleInit, OnModuleDestroy {
         processed += 1;
       } catch (error: unknown) {
         await client.query('ROLLBACK').catch(() => undefined);
-        this.logger.warn(`邮件过期清理失败 playerId=${playerId}: ${error instanceof Error ? error.stack || error.message : String(error)}`);
+        this.logger.warn(`郵件過期清理失敗 playerId=${playerId}: ${error instanceof Error ? error.stack || error.message : String(error)}`);
       } finally {
         client.release();
       }
@@ -675,7 +675,7 @@ export class MailPersistenceService implements OnModuleInit, OnModuleDestroy {
         await client.query('COMMIT');
       } catch (error: unknown) {
         await client.query('ROLLBACK').catch(() => undefined);
-        this.logger.warn(`邮件软删清理失败 playerId=${playerId}: ${error instanceof Error ? error.stack || error.message : String(error)}`);
+        this.logger.warn(`郵件軟刪清理失敗 playerId=${playerId}: ${error instanceof Error ? error.stack || error.message : String(error)}`);
       } finally {
         client.release();
       }

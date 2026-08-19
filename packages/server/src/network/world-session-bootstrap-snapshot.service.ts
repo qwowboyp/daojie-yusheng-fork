@@ -177,9 +177,9 @@ export class WorldSessionBootstrapSnapshotService {
     buildAuthenticatedSnapshotRecoveryMessage(recovery: BootstrapRecoveryContext | null | undefined) {
         const identityPersistedSource = typeof recovery?.identityPersistedSource === 'string' ? recovery.identityPersistedSource.trim() : '';
         if (identityPersistedSource === 'token_seed') {
-            return '检测到你是首次以主线真源入场，角色数据已自动补齐为初始快照。';
+            return '檢測到你是首次以主線真源入場，角色數據已自動補齊為初始快照。';
         }
-        return '检测到角色快照缺失，已自动补齐为主线初始快照。';
+        return '檢測到角色快照缺失，已自動補齊為主線初始快照。';
     }
 
     emitAuthenticatedSnapshotRecoveryNotice(client: BootstrapClientLike, playerId: string): BootstrapRecoveryNoticeResult | null {
@@ -319,7 +319,7 @@ export class WorldSessionBootstrapSnapshotService {
             });
         }
         catch (error) {
-            this.logger.warn(`玩家身份令牌种子原生提升失败：userId=${normalizedUserId} playerId=${normalizedPlayerId} error=${error instanceof Error ? error.message : String(error)}`);
+            this.logger.warn(`玩家身份令牌種子原生提升失敗：userId=${normalizedUserId} playerId=${normalizedPlayerId} error=${error instanceof Error ? error.message : String(error)}`);
             return identity;
         }
 
@@ -327,7 +327,7 @@ export class WorldSessionBootstrapSnapshotService {
             ? promotedIdentity.persistedSource.trim()
             : '';
         if (promotedPersistedSource !== 'native') {
-            this.logger.warn(`玩家身份 token_seed 原生提升返回了异常 persistedSource：userId=${normalizedUserId} playerId=${normalizedPlayerId} actual=${promotedPersistedSource || '未知'}`);
+            this.logger.warn(`玩家身份 token_seed 原生提升返回了異常 persistedSource：userId=${normalizedUserId} playerId=${normalizedPlayerId} actual=${promotedPersistedSource || '未知'}`);
             return identity;
         }
         identity.persistedSource = promotedPersistedSource;
@@ -360,7 +360,7 @@ export class WorldSessionBootstrapSnapshotService {
                 ? 'token_seed_native_promotion_invalid_result'
                 : 'token_seed_native_promotion_failed';
         this.getContextHelper().clearAuthenticatedSnapshotRecovery(client);
-        this.logger.warn(`玩家身份 token_seed 原生归一失败：userId=${normalizedUserId} playerId=${normalizedPlayerId} recoveryReason=${recoveryReason} stage=${failureStage} authSource=${promotedAuthSource || '未知'} persistedSource=${promotedPersistedSource || '未知'}`);
+        this.logger.warn(`玩家身份 token_seed 原生歸一失敗：userId=${normalizedUserId} playerId=${normalizedPlayerId} recoveryReason=${recoveryReason} stage=${failureStage} authSource=${promotedAuthSource || '未知'} persistedSource=${promotedPersistedSource || '未知'}`);
         const normalizationError: BootstrapNormalizationError = new Error(`Authenticated mainline player identity normalization failed after native snapshot selection: playerId=${normalizedPlayerId || 'unknown'} recoveryReason=${recoveryReason} stage=${failureStage}`);
         normalizationError.failureStage = failureStage;
         throw normalizationError;

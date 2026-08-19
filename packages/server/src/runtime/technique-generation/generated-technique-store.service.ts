@@ -63,7 +63,7 @@ export class GeneratedTechniqueStoreService implements OnModuleDestroy {
       void this.reload();
     }, GENERATED_TECHNIQUE_CATALOG_REFRESH_INTERVAL_MS);
     this.catalogRefreshTimer.unref();
-    this.logger.log(`生成功法目录刷新已启动，间隔 ${GENERATED_TECHNIQUE_CATALOG_REFRESH_INTERVAL_MS}ms`);
+    this.logger.log(`生成功法目錄刷新已啟動，間隔 ${GENERATED_TECHNIQUE_CATALOG_REFRESH_INTERVAL_MS}ms`);
   }
 
   onModuleDestroy(): void {
@@ -263,7 +263,7 @@ export class GeneratedTechniqueStoreService implements OnModuleDestroy {
           listener(change);
         } catch (error) {
           this.logger.error(
-            `统法目录变更监听失败：${familyId} v${latestRevision}`,
+            `統法目錄變更監聽失敗：${familyId} v${latestRevision}`,
             error instanceof Error ? error.stack : String(error),
           );
         }

@@ -72,13 +72,13 @@ export class WorldRuntimeAlchemyService {
 
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const activityKind = resolveAlchemyLikeActivityKind(payload);
-        const activityLabel = activityKind === 'forging' ? '炼器' : '炼丹';
+        const activityLabel = activityKind === 'forging' ? '煉器' : '煉丹';
         if (player.suppressImmediateDomainPersistence === true) {
             return;
         }
         const result = this.craftPanelRuntimeService.startTechniqueActivity(player, activityKind, payload, deps);
         if (!result.ok) {
-            throw new BadRequestException(result.error ?? `启动${activityLabel}失败`);
+            throw new BadRequestException(result.error ?? `啟動${activityLabel}失敗`);
         }
         this.worldRuntimeCraftMutationService.flushCraftMutation(playerId, result, activityKind, deps);
     }    
@@ -94,13 +94,13 @@ export class WorldRuntimeAlchemyService {
 
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const normalizedActivityKind = activityKind === 'forging' ? 'forging' : 'alchemy';
-        const activityLabel = normalizedActivityKind === 'forging' ? '炼器' : '炼丹';
+        const activityLabel = normalizedActivityKind === 'forging' ? '煉器' : '煉丹';
         if (player.suppressImmediateDomainPersistence === true) {
             return;
         }
         const result = this.craftPanelRuntimeService.cancelTechniqueActivity(player, normalizedActivityKind, deps);
         if (!result.ok) {
-            throw new BadRequestException(result.error ?? `取消${activityLabel}失败`);
+            throw new BadRequestException(result.error ?? `取消${activityLabel}失敗`);
         }
         this.worldRuntimeCraftMutationService.flushCraftMutation(playerId, result, normalizedActivityKind, deps);
     }    
@@ -118,7 +118,7 @@ export class WorldRuntimeAlchemyService {
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const result = this.craftPanelRuntimeService.saveAlchemyPreset(player, payload);
         if (!result.ok) {
-            throw new BadRequestException(result.error ?? '保存炼制预设失败');
+            throw new BadRequestException(result.error ?? '保存煉製預設失敗');
         }
         this.worldRuntimeCraftMutationService.flushCraftMutation(playerId, result, 'alchemy', deps);
     }    
@@ -136,7 +136,7 @@ export class WorldRuntimeAlchemyService {
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const result = this.craftPanelRuntimeService.deleteAlchemyPreset(player, presetId);
         if (!result.ok) {
-            throw new BadRequestException(result.error ?? '删除炼制预设失败');
+            throw new BadRequestException(result.error ?? '刪除煉製預設失敗');
         }
         this.worldRuntimeCraftMutationService.flushCraftMutation(playerId, result, 'alchemy', deps);
     }    

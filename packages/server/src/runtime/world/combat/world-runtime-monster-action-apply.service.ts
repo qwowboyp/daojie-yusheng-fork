@@ -29,7 +29,7 @@ const BASE_CHANT_TICK_DURATION_MS = 1000;
 const CHANT_LABEL_EXTRA_DURATION_MS = 240;
 
 function resolveMonsterDisplayName(monster, fallbackId) {
-    return resolvePlayerFacingContentName(monster?.monsterId ?? fallbackId, '未知妖兽', monster?.name);
+    return resolvePlayerFacingContentName(monster?.monsterId ?? fallbackId, '未知妖獸', monster?.name);
 }
 
 function resolveMonsterSkillDisplayName(skill, skillId) {
@@ -303,14 +303,14 @@ export class WorldRuntimeMonsterActionApplyService {
             deps,
             effectsService: this.worldRuntimeCombatEffectsService,
             instanceId: action.instanceId,
-            actionLabel: { x: monster.x, y: monster.y, text: '攻击' },
+            actionLabel: { x: monster.x, y: monster.y, text: '攻擊' },
             attack: { fromX: monster.x, fromY: monster.y, toX: runtimeTargetPosition.x, toY: runtimeTargetPosition.y, color: effectColor },
             resolutionFloat: { x: runtimeTargetPosition.x, y: runtimeTargetPosition.y, resolution: resolvedDamage, fallbackColor: effectColor },
             damageFloat: { x: runtimeTargetPosition.x, y: runtimeTargetPosition.y, damage: resolvedDamage.damage, color: effectColor },
             notices: [{
                 playerId: action.targetPlayerId,
-                text: `${formatCombatActionClause(resolveMonsterDisplayName(monster, action.runtimeId), '你', '攻击')}，${formatCombatResolutionOutcome(resolvedDamage, damageKind)}`,
-                combat: buildCombatNoticePayload({ caster: resolveMonsterDisplayName(monster, action.runtimeId), target: '你', skill: '攻击', resolution: { ...resolvedDamage, damageKind } }),
+                text: `${formatCombatActionClause(resolveMonsterDisplayName(monster, action.runtimeId), '你', '攻擊')}，${formatCombatResolutionOutcome(resolvedDamage, damageKind)}`,
+                combat: buildCombatNoticePayload({ caster: resolveMonsterDisplayName(monster, action.runtimeId), target: '你', skill: '攻擊', resolution: { ...resolvedDamage, damageKind } }),
             }],
         });
         recordMonsterActionPerf(deps, 'monsterActions.basicPresentationMs', presentationStartedAt);
@@ -510,7 +510,7 @@ export class WorldRuntimeMonsterActionApplyService {
             return this.worldRuntimeCombatActionService.recordMonsterActionReject(deps, action, reason, details, options);
         }
         const logger = deps?.logger ?? this.logger;
-        const message = `战斗动作被拒绝 原因=${reason} 动作=${action?.skillId ?? action?.kind ?? '未知'} 实例=${action?.instanceId ?? '未知'} 运行时=${action?.runtimeId ?? '未知'}`;
+        const message = `戰鬥動作被拒絕 原因=${reason} 動作=${action?.skillId ?? action?.kind ?? '未知'} 實例=${action?.instanceId ?? '未知'} 運行時=${action?.runtimeId ?? '未知'}`;
         const severity = options?.severity ?? 'debug';
         if (severity === 'error') {
             logger.error?.(message);

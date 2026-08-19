@@ -865,11 +865,11 @@ export class WorldSessionService {
       const operation = socket.join(buildWorldInstanceRoomId(normalizedInstanceId));
       if (operation) {
         void operation.catch((error) => {
-          this.logger.warn(`Socket 加入实例房间失败 socketId=${socketId} instanceId=${normalizedInstanceId} error=${error instanceof Error ? error.message : String(error)}`);
+          this.logger.warn(`Socket 加入實例房間失敗 socketId=${socketId} instanceId=${normalizedInstanceId} error=${error instanceof Error ? error.message : String(error)}`);
         });
       }
     } catch (error) {
-      this.logger.warn(`Socket 加入实例房间失败 socketId=${socketId} instanceId=${normalizedInstanceId} error=${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`Socket 加入實例房間失敗 socketId=${socketId} instanceId=${normalizedInstanceId} error=${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
@@ -882,11 +882,11 @@ export class WorldSessionService {
       const operation = socket.join(WORLD_CONNECTED_PLAYERS_ROOM_ID);
       if (operation) {
         void operation.catch((error) => {
-          this.logger.warn(`Socket 加入认证玩家房间失败 socketId=${socketId} error=${error instanceof Error ? error.message : String(error)}`);
+          this.logger.warn(`Socket 加入認證玩家房間失敗 socketId=${socketId} error=${error instanceof Error ? error.message : String(error)}`);
         });
       }
     } catch (error) {
-      this.logger.warn(`Socket 加入认证玩家房间失败 socketId=${socketId} error=${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`Socket 加入認證玩家房間失敗 socketId=${socketId} error=${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
@@ -900,11 +900,11 @@ export class WorldSessionService {
       const operation = socket.join(buildWorldSectRoomId(normalizedSectId));
       if (operation) {
         void operation.catch((error) => {
-          this.logger.warn(`Socket 加入宗门房间失败 socketId=${socketId} sectId=${normalizedSectId} error=${error instanceof Error ? error.message : String(error)}`);
+          this.logger.warn(`Socket 加入宗門房間失敗 socketId=${socketId} sectId=${normalizedSectId} error=${error instanceof Error ? error.message : String(error)}`);
         });
       }
     } catch (error) {
-      this.logger.warn(`Socket 加入宗门房间失败 socketId=${socketId} sectId=${normalizedSectId} error=${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`Socket 加入宗門房間失敗 socketId=${socketId} sectId=${normalizedSectId} error=${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
@@ -917,11 +917,11 @@ export class WorldSessionService {
       const operation = socket.leave(WORLD_CONNECTED_PLAYERS_ROOM_ID);
       if (operation) {
         void operation.catch((error) => {
-          this.logger.warn(`Socket 离开认证玩家房间失败 socketId=${socketId} error=${error instanceof Error ? error.message : String(error)}`);
+          this.logger.warn(`Socket 離開認證玩家房間失敗 socketId=${socketId} error=${error instanceof Error ? error.message : String(error)}`);
         });
       }
     } catch (error) {
-      this.logger.warn(`Socket 离开认证玩家房间失败 socketId=${socketId} error=${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`Socket 離開認證玩家房間失敗 socketId=${socketId} error=${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
@@ -935,11 +935,11 @@ export class WorldSessionService {
       const operation = socket.leave(buildWorldInstanceRoomId(normalizedInstanceId));
       if (operation) {
         void operation.catch((error) => {
-          this.logger.warn(`Socket 离开实例房间失败 socketId=${socketId} instanceId=${normalizedInstanceId} error=${error instanceof Error ? error.message : String(error)}`);
+          this.logger.warn(`Socket 離開實例房間失敗 socketId=${socketId} instanceId=${normalizedInstanceId} error=${error instanceof Error ? error.message : String(error)}`);
         });
       }
     } catch (error) {
-      this.logger.warn(`Socket 离开实例房间失败 socketId=${socketId} instanceId=${normalizedInstanceId} error=${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`Socket 離開實例房間失敗 socketId=${socketId} instanceId=${normalizedInstanceId} error=${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
@@ -953,11 +953,11 @@ export class WorldSessionService {
       const operation = socket.leave(buildWorldSectRoomId(normalizedSectId));
       if (operation) {
         void operation.catch((error) => {
-          this.logger.warn(`Socket 离开宗门房间失败 socketId=${socketId} sectId=${normalizedSectId} error=${error instanceof Error ? error.message : String(error)}`);
+          this.logger.warn(`Socket 離開宗門房間失敗 socketId=${socketId} sectId=${normalizedSectId} error=${error instanceof Error ? error.message : String(error)}`);
         });
       }
     } catch (error) {
-      this.logger.warn(`Socket 离开宗门房间失败 socketId=${socketId} sectId=${normalizedSectId} error=${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`Socket 離開宗門房間失敗 socketId=${socketId} sectId=${normalizedSectId} error=${error instanceof Error ? error.message : String(error)}`);
     }
   }
 }

@@ -42,7 +42,7 @@ function loadRealmCombatExpByLevel() {
     catch (error) {
         // 启动期或测试桩缺少内容文件时保持 0，调用方不再退回旧的 level * 100 口径。
         if (error instanceof TypeError || error instanceof ReferenceError) {
-            console.error('[妖兽战斗经验] 构建境界战斗经验表时发生意外错误：', error);
+            console.error('[妖獸戰鬥經驗] 構建境界戰鬥經驗表時發生意外錯誤：', error);
         }
     }
     realmCombatExpByLevel = next;

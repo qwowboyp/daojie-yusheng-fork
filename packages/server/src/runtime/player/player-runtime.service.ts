@@ -1350,7 +1350,7 @@ export class PlayerRuntimeService {
                     catch (error) {
                         // 资产事务已经成功，统计派生失败不能把已提交结果伪装成事务失败。
                         this.logger.warn(
-                            `提交后资产统计结算失败：${entry.player?.playerId ?? 'unknown'} ${error instanceof Error ? error.message : String(error)}`,
+                            `提交後資產統計結算失敗：${entry.player?.playerId ?? 'unknown'} ${error instanceof Error ? error.message : String(error)}`,
                         );
                     }
                 }
@@ -1739,7 +1739,7 @@ export class PlayerRuntimeService {
             techniqueId,
         }, ctx);
         if (!result.ok) {
-            throw new BadRequestException(result.error ?? '启动传法失败');
+            throw new BadRequestException(result.error ?? '啟動傳法失敗');
         }
         this.recordAssetStatisticMutation(learner, this.captureOfflineGainBeforeTick(learner));
         return learner;
@@ -1748,13 +1748,13 @@ export class PlayerRuntimeService {
         const learner = this.getPlayerOrThrow(learnerPlayerId);
         const normalizedTechId = typeof techniqueId === 'string' && techniqueId.trim() ? techniqueId.trim() : '';
         if (normalizedTechId && learner.transmissionJob?.techniqueId !== normalizedTechId) {
-            throw new BadRequestException('没有进行中的传授');
+            throw new BadRequestException('沒有進行中的傳授');
         }
         this.captureOfflineGainBeforeTick(learner);
         const { pipeline, ctx } = createTransmissionCompatPipeline(this);
         const result = pipeline.cancel(learner, 'transmission', ctx);
         if (!result.ok) {
-            throw new BadRequestException(result.error ?? '取消传法失败');
+            throw new BadRequestException(result.error ?? '取消傳法失敗');
         }
         this.recordAssetStatisticMutation(learner, this.captureOfflineGainBeforeTick(learner));
         return learner;
@@ -2575,13 +2575,13 @@ export class PlayerRuntimeService {
         }
         const item = this.contentTemplateRepository.createItem(normalizedWalletType, normalizedAmount);
         if (!item) {
-            throw new NotFoundException(`钱包物品不存在：${normalizedWalletType}`);
+            throw new NotFoundException(`錢包物品不存在：${normalizedWalletType}`);
         }
         const existing = player.inventory.items.find((entry) => entry.itemId === item.itemId);
         if (existing) {
             const newCount = existing.count + item.count;
             if (newCount > MAX_ITEM_COUNT) {
-                this.logger.warn(`物品数量达到上限 [playerId=${player.id}, itemId=${item.itemId}, attempted=${newCount}, capped=${MAX_ITEM_COUNT}]`);
+                this.logger.warn(`物品數量達到上限 [playerId=${player.id}, itemId=${item.itemId}, attempted=${newCount}, capped=${MAX_ITEM_COUNT}]`);
             }
             existing.count = Math.min(newCount, MAX_ITEM_COUNT);
         } else {
@@ -2615,7 +2615,7 @@ export class PlayerRuntimeService {
         }
         const inventoryBalance = readInventoryItemCount(player, normalizedWalletType);
         if (inventoryBalance < normalizedAmount) {
-            throw new NotFoundException(`${normalizedWalletType} 余额不足`);
+            throw new NotFoundException(`${normalizedWalletType} 餘額不足`);
         }
         consumeInventoryItemCount(player.inventory.items, normalizedWalletType, normalizedAmount);
         player.inventory.revision += 1;
@@ -2850,7 +2850,7 @@ export class PlayerRuntimeService {
         markPlayerDirtyDomains(player, ['logbook']);
         this.bumpPersistentRevision(player);
         void this.persistLogbookMessages(player).catch((error) => {
-            console.warn(`日志本直写失败：${error instanceof Error ? error.message : String(error)}`);
+            console.warn(`日誌本直寫失敗：${error instanceof Error ? error.message : String(error)}`);
         });
         return player;
     }
@@ -2928,7 +2928,7 @@ export class PlayerRuntimeService {
         markPlayerDirtyDomains(player, ['logbook']);
         this.bumpPersistentRevision(player);
         void this.persistLogbookMessages(player).catch((error) => {
-            console.warn(`日志本直写失败：${error instanceof Error ? error.message : String(error)}`);
+            console.warn(`日誌本直寫失敗：${error instanceof Error ? error.message : String(error)}`);
         });
         return player;
     }
@@ -3028,7 +3028,7 @@ export class PlayerRuntimeService {
         }
         catch (error) {
             this.logger.error(
-                `离线挂机玩家登录资产隔离恢复失败：playerId=${playerId} error=${error instanceof Error ? error.message : String(error)}`,
+                `離線掛機玩家登入資產隔離恢復失敗：playerId=${playerId} error=${error instanceof Error ? error.message : String(error)}`,
             );
         }
         throw new ServiceUnavailableException(`player_asset_flush_quarantined:${playerId}`);
@@ -3101,7 +3101,7 @@ export class PlayerRuntimeService {
                 this.bumpPersistentRevision(player);
             }
             this.logger.warn(
-                `离线挂机玩家登录前已同步资产冲突换号：playerId=${playerId} remaps=${remaps.length}`,
+                `離線掛機玩家登入前已同步資產衝突換號：playerId=${playerId} remaps=${remaps.length}`,
             );
         });
         return true;
@@ -3112,7 +3112,7 @@ export class PlayerRuntimeService {
             return;
         }
         this.noticeFallbackWarned = true;
-        console.warn('玩家运行时服务通知缺失运行时事件总线服务，已退回到玩家本地受限队列。生产环境应在启动期快速失败。');
+        console.warn('玩家運行時服務通知缺失運行時事件總線服務，已退回到玩家本地受限隊列。生產環境應在啟動期快速失敗。');
     }
     /**
      * 受限缓冲区追加：与 RuntimeEventBusService.queuePlayerNotice 对齐，
@@ -3270,7 +3270,7 @@ export class PlayerRuntimeService {
         }
         if (mergeResult.merged && mergeResult.entry.count > MAX_ITEM_COUNT) {
             const attemptedCount = normalizeOfflineGainCount(mergeResult.entry.count);
-            this.logger.warn(`物品数量达到上限 [playerId=${player.id}, itemId=${normalized.itemId}, attempted=${attemptedCount}, capped=${MAX_ITEM_COUNT}]`);
+            this.logger.warn(`物品數量達到上限 [playerId=${player.id}, itemId=${normalized.itemId}, attempted=${attemptedCount}, capped=${MAX_ITEM_COUNT}]`);
             mergeResult.entry.count = MAX_ITEM_COUNT;
             if (inventoryItemDeltaHint) {
                 inventoryItemDeltaHint.countDelta = Math.max(
@@ -3327,7 +3327,7 @@ export class PlayerRuntimeService {
         const currentTick = resolvePlayerRuntimeTick(player, 0);
         if (learnTechniqueId) {
             if (isTechniqueAggregationId(learnTechniqueId)) {
-                throw new BadRequestException('统法只能从统法台参悟');
+                throw new BadRequestException('統法只能從統法臺參悟');
             }
             const aggregationConflict = this.resolveTechniqueLearningConflict(player, learnTechniqueId);
             if (aggregationConflict) {
@@ -3337,7 +3337,7 @@ export class PlayerRuntimeService {
                 throw new BadRequestException('TECHNIQUE_AGGREGATE_OVERLAP:' + sourceTechniqueNames);
             }
             if (player.techniques.techniques.some((entry) => entry.techId === learnTechniqueId)) {
-                throw new NotFoundException(`功法已经学会：${learnTechniqueId}`);
+                throw new NotFoundException(`功法已經學會：${learnTechniqueId}`);
             }
 
             const technique = this.contentTemplateRepository.createTechniqueState(learnTechniqueId);
@@ -3407,7 +3407,7 @@ export class PlayerRuntimeService {
             consumed = this.applyConsumableItem(player, item);
         }
         if (!consumed) {
-            throw new NotFoundException(`${resolvePlayerFacingContentName(item.itemId, '未知物品', item.name)}没有可用效果`);
+            throw new NotFoundException(`${resolvePlayerFacingContentName(item.itemId, '未知物品', item.name)}沒有可用效果`);
         }
         consumeInventoryItemAt(player.inventory.items, slotIndex, 1);
         if (!learnTechniqueId) {
@@ -3515,11 +3515,11 @@ export class PlayerRuntimeService {
 
         const normalizedCount = Math.max(1, Math.trunc(count));
         if (!Number.isFinite(normalizedCount) || normalizedCount <= 0) {
-            throw new NotFoundException('使用数量无效');
+            throw new NotFoundException('使用數量無效');
         }
         const available = readInventoryItemCount(player, itemId);
         if (available < normalizedCount) {
-            throw new NotFoundException(`${resolvePlayerFacingContentName(itemId, '未知物品', this.contentTemplateRepository.getItemName(itemId))}数量不足`);
+            throw new NotFoundException(`${resolvePlayerFacingContentName(itemId, '未知物品', this.contentTemplateRepository.getItemName(itemId))}數量不足`);
         }
         const statisticBefore = this.captureOfflineGainBeforeTick(player);
         let remaining = normalizedCount;
@@ -3664,10 +3664,10 @@ export class PlayerRuntimeService {
         if (player.unlockedMapIds.includes(mapId)) {
             const mapName = resolvePlayerFacingContentName(
                 mapId,
-                '未知地图',
+                '未知地圖',
                 this.mapTemplateRepository.has(mapId) ? this.mapTemplateRepository.getOrThrow(mapId).name : undefined,
             );
-            throw new NotFoundException(`${mapName}已经解锁`);
+            throw new NotFoundException(`${mapName}已經解鎖`);
         }
         player.unlockedMapIds = [...player.unlockedMapIds, mapId]
             .sort((left, right) => left.localeCompare(right, 'zh-Hans-CN'));
@@ -3697,7 +3697,7 @@ export class PlayerRuntimeService {
 
         const normalizedMapId = typeof mapId === 'string' ? mapId.trim() : '';
         if (!normalizedMapId) {
-            throw new BadRequestException('复活绑定地图 ID 不能为空');
+            throw new BadRequestException('復活綁定地圖 ID 不能為空');
         }
         const template = this.mapTemplateRepository.getOrThrow(normalizedMapId);
         const player = this.getPlayerOrThrow(playerId);
@@ -3726,10 +3726,10 @@ export class PlayerRuntimeService {
         const normalizedMapId = typeof placement?.templateId === 'string' ? placement.templateId.trim() : '';
         const normalizedInstanceId = normalizePlayerPlacementInstanceId(placement?.instanceId);
         if (!normalizedMapId) {
-            throw new BadRequestException('复活绑定地图 ID 不能为空');
+            throw new BadRequestException('復活綁定地圖 ID 不能為空');
         }
         if (!normalizedInstanceId) {
-            throw new BadRequestException('复活绑定实例 ID 不能为空');
+            throw new BadRequestException('復活綁定實例 ID 不能為空');
         }
         const template = this.mapTemplateRepository.getOrThrow(normalizedMapId);
         const player = this.getPlayerOrThrow(playerId);
@@ -3814,7 +3814,7 @@ export class PlayerRuntimeService {
             return this.equipArtifactItem(player, slotIndex, normalizedItem, expectedItemInstanceId);
         }
         if (!normalizedItem.equipSlot) {
-            throw new NotFoundException(`${resolvePlayerFacingContentName(normalizedItem.itemId, '未知物品', normalizedItem.name)}不能装备`);
+            throw new NotFoundException(`${resolvePlayerFacingContentName(normalizedItem.itemId, '未知物品', normalizedItem.name)}不能裝備`);
         }
         // 装备类必须有稳定 instanceId；迁移期老装备此处 lazy 升级
         assignItemInstanceIdIfNeeded(normalizedItem);
@@ -3830,7 +3830,7 @@ export class PlayerRuntimeService {
                 + `expected=${expectedItemInstanceId} actual=${normalizedItem.itemInstanceId} hardCheck=${hardCheck}`,
             );
             if (hardCheck) {
-                throw new BadRequestException('装备目标已变更，请重新选择。');
+                throw new BadRequestException('裝備目標已變更，請重新選擇。');
             }
         }
 
@@ -3838,7 +3838,7 @@ export class PlayerRuntimeService {
 
         const equipmentEntry = player.equipment.slots.find((entry) => entry.slot === slot);
         if (!equipmentEntry) {
-            throw new NotFoundException(`装备槽位不存在：${slot}`);
+            throw new NotFoundException(`裝備槽位不存在：${slot}`);
         }
 
         const equippedItem = takeSingleInventoryItemForEquipment(player.inventory.items, slotIndex);
@@ -3900,7 +3900,7 @@ export class PlayerRuntimeService {
 
         const equipmentEntry = player.equipment.slots.find((entry) => entry.slot === slot);
         if (!equipmentEntry || !equipmentEntry.item) {
-            throw new NotFoundException(`装备槽位为空：${slot}`);
+            throw new NotFoundException(`裝備槽位為空：${slot}`);
         }
         const unequippedItem = equipmentEntry.item;
         // 装备类必须有稳定 instanceId；迁移期老装备此处 lazy 升级
@@ -3917,7 +3917,7 @@ export class PlayerRuntimeService {
                 + `expected=${expectedItemInstanceId} actual=${unequippedItem.itemInstanceId} hardCheck=${hardCheck}`,
             );
             if (hardCheck) {
-                throw new BadRequestException('装备目标已变更，请重新选择。');
+                throw new BadRequestException('裝備目標已變更，請重新選擇。');
             }
         }
         // 卸下的装备回背包：优先与同 (itemId, enhanceLevel) 签名的现有堆叠合并 count。
@@ -3936,10 +3936,10 @@ export class PlayerRuntimeService {
         this.ensureArtifactUnlockState(player);
         const entry = player.artifacts?.slots?.find((candidate) => candidate.slot === slot);
         if (!entry) {
-            throw new NotFoundException(`法宝槽位不存在：${slot}`);
+            throw new NotFoundException(`法寶槽位不存在：${slot}`);
         }
         if (entry.unlocked !== true) {
-            throw new BadRequestException('法宝槽尚未开启');
+            throw new BadRequestException('法寶槽尚未開啟');
         }
         const requestedEnabled = enabled === true;
         const sustainCost = requestedEnabled
@@ -3962,7 +3962,7 @@ export class PlayerRuntimeService {
         this.ensureArtifactUnlockState(player);
         const artifactEntry = player.artifacts?.slots?.find((entry) => entry.unlocked === true);
         if (!artifactEntry) {
-            throw new BadRequestException('法宝槽尚未开启');
+            throw new BadRequestException('法寶槽尚未開啟');
         }
         assignItemInstanceIdIfNeeded(normalizedItem);
         const compare = compareItemInstanceId(
@@ -3976,7 +3976,7 @@ export class PlayerRuntimeService {
                 + `expected=${expectedItemInstanceId} actual=${normalizedItem.itemInstanceId} hardCheck=${hardCheck}`,
             );
             if (hardCheck) {
-                throw new BadRequestException('法宝目标已变更，请重新选择。');
+                throw new BadRequestException('法寶目標已變更，請重新選擇。');
             }
         }
         const equippedItem = takeSingleInventoryItemForEquipment(player.inventory.items, slotIndex);
@@ -4006,7 +4006,7 @@ export class PlayerRuntimeService {
     unequipArtifactItem(player, slot, expectedItemInstanceId) {
         const artifactEntry = player.artifacts?.slots?.find((entry) => entry.slot === slot);
         if (!artifactEntry || !artifactEntry.item) {
-            throw new NotFoundException(`法宝槽位为空：${slot}`);
+            throw new NotFoundException(`法寶槽位為空：${slot}`);
         }
         const unequippedItem = artifactEntry.item;
         assignItemInstanceIdIfNeeded(unequippedItem);
@@ -4021,7 +4021,7 @@ export class PlayerRuntimeService {
                 + `expected=${expectedItemInstanceId} actual=${unequippedItem.itemInstanceId} hardCheck=${hardCheck}`,
             );
             if (hardCheck) {
-                throw new BadRequestException('法宝目标已变更，请重新选择。');
+                throw new BadRequestException('法寶目標已變更，請重新選擇。');
             }
         }
         mergeItemStackInto(player.inventory.items, unequippedItem);
@@ -4054,10 +4054,10 @@ export class PlayerRuntimeService {
             : null;
         const hasPending = Boolean(pending);
         if (normalized && !hasLearned && !hasPending) {
-            throw new NotFoundException(`尚未学会功法：${normalized}`);
+            throw new NotFoundException(`尚未學會功法：${normalized}`);
         }
         if (pending && pending.selfComprehensionAllowed === false) {
-            throw new BadRequestException('该功法只能通过传法领悟，不能设为主修。');
+            throw new BadRequestException('該功法只能通過傳法領悟，不能設為主修。');
         }
         const previousCultivatingTechId = player.techniques.cultivatingTechId;
         player.techniques.cultivatingTechId = normalized;
@@ -4084,11 +4084,11 @@ export class PlayerRuntimeService {
 
         const normalized = typeof techniqueId === 'string' && techniqueId.trim() ? techniqueId.trim() : '';
         if (!normalized) {
-            throw new BadRequestException('缺少要遗忘的功法。');
+            throw new BadRequestException('缺少要遺忘的功法。');
         }
         const index = player.techniques.techniques.findIndex((entry) => entry.techId === normalized);
         if (index < 0) {
-            throw new NotFoundException('尚未学会该功法。');
+            throw new NotFoundException('尚未學會該功法。');
         }
         const [removed] = player.techniques.techniques.splice(index, 1);
         const techniqueName = typeof removed?.name === 'string' && removed.name.trim() ? removed.name.trim() : normalized;
@@ -4110,17 +4110,17 @@ export class PlayerRuntimeService {
         const player = this.getPlayerOrThrow(playerId);
         const normalized = typeof techniqueId === 'string' && techniqueId.trim() ? techniqueId.trim() : '';
         if (!normalized) {
-            throw new BadRequestException('缺少要放弃的未领悟功法。');
+            throw new BadRequestException('缺少要放棄的未領悟功法。');
         }
         if (player.transmissionJob?.techniqueId === normalized) {
-            throw new BadRequestException('该功法仍在传法中，请先取消传法。');
+            throw new BadRequestException('該功法仍在傳法中，請先取消傳法。');
         }
         const pending = Array.isArray(player.pendingTechniqueComprehensions)
             ? player.pendingTechniqueComprehensions
             : [];
         const index = pending.findIndex((entry) => entry?.techId === normalized);
         if (index < 0) {
-            throw new NotFoundException('未找到待领悟功法。');
+            throw new NotFoundException('未找到待領悟功法。');
         }
         const [removed] = pending.splice(index, 1);
         player.pendingTechniqueComprehensions = pending;
@@ -4156,10 +4156,10 @@ export class PlayerRuntimeService {
 
         const requested = normalizeCounter(foundationAmount);
         if (requested <= 0) {
-            throw new BadRequestException('底蕴数量不能为空');
+            throw new BadRequestException('底蘊數量不能為空');
         }
         if (player.foundation <= 0) {
-            throw new BadRequestException('底蕴不足');
+            throw new BadRequestException('底蘊不足');
         }
 
         const consumed = Math.min(player.foundation, requested);
@@ -4290,7 +4290,7 @@ export class PlayerRuntimeService {
             return player;
         }
         if (player.qi < normalized) {
-            throw new NotFoundException('元气不足');
+            throw new NotFoundException('元氣不足');
         }
         player.qi -= normalized;
         player.selfRevision += 1;
@@ -4371,7 +4371,7 @@ export class PlayerRuntimeService {
         markPlayerDirtyDomains(player, ['technique', 'auto_battle_skill']);
         this.bumpPersistentRevision(player);
         void this.persistAutoBattleSkills(player).catch((error) => {
-            console.warn(`自动战斗技能直写失败：${error instanceof Error ? error.message : String(error)}`);
+            console.warn(`自動戰鬥技能直寫失敗：${error instanceof Error ? error.message : String(error)}`);
         });
         return player;
     }
@@ -4395,7 +4395,7 @@ export class PlayerRuntimeService {
         markPlayerDirtyDomains(player, ['auto_use_item_rule']);
         this.bumpPersistentRevision(player);
         void this.persistAutoUseItemRules(player).catch((error) => {
-            console.warn(`自动使用规则直写失败：${error instanceof Error ? error.message : String(error)}`);
+            console.warn(`自動使用規則直寫失敗：${error instanceof Error ? error.message : String(error)}`);
         });
         return player;
     }
@@ -5548,7 +5548,7 @@ export class PlayerRuntimeService {
             void this.flushPendingPlayerStatisticLedger(normalizedPlayerId).catch((error) => {
                 this.scheduledPlayerStatisticLedgerFlushes.delete(normalizedPlayerId);
                 this.logger.error(
-                    `统计总账后台调度失败 playerId=${normalizedPlayerId}`,
+                    `統計總賬後臺調度失敗 playerId=${normalizedPlayerId}`,
                     error instanceof Error ? error.stack : String(error),
                 );
             });
@@ -5577,7 +5577,7 @@ export class PlayerRuntimeService {
                     mergePlayerStatisticDayTotalMap(this.pendingPlayerStatisticDayTotalsByPlayerId, normalizedPlayerId, dayKey, delta);
                     shouldRetry = true;
                     if (error instanceof TypeError || error instanceof ReferenceError) {
-                        this.logger.error(`统计总账落盘编程错误 playerId=${normalizedPlayerId} dayKey=${dayKey}`, error.stack);
+                        this.logger.error(`統計總賬落盤編程錯誤 playerId=${normalizedPlayerId} dayKey=${dayKey}`, error.stack);
                     }
                 }
             }
@@ -5588,7 +5588,7 @@ export class PlayerRuntimeService {
                     this.schedulePlayerStatisticLedgerFlush(normalizedPlayerId);
                 } else {
                     this.playerStatisticLedgerRetryCount.delete(normalizedPlayerId);
-                    this.logger.warn(`统计总账落盘重试超限 playerId=${normalizedPlayerId}，放弃本轮重试`);
+                    this.logger.warn(`統計總賬落盤重試超限 playerId=${normalizedPlayerId}，放棄本輪重試`);
                 }
             } else {
                 this.playerStatisticLedgerRetryCount.delete(normalizedPlayerId);
@@ -6957,7 +6957,7 @@ export class PlayerRuntimeService {
         this.rebuildActionState(player, currentTick);
         markPlayerDirtyDomains(player, ['combat_pref']);
         this.bumpPersistentRevision(player);
-        const text = '根基已达当前境界上限，已关闭自动凝练根基。';
+        const text = '根基已達當前境界上限，已關閉自動凝練根基。';
         if (emitNotice) {
             this.queuePlayerStructuredNotice(player, {
                 kind: 'info',
@@ -7062,7 +7062,7 @@ export class PlayerRuntimeService {
             const result = this.playerProgressionService.applySpiritualRootSeed(player, spiritualRootSeedTier);
             if (!result.changed) {
                 const message = result.notices?.find((notice) => typeof notice?.text === 'string' && notice.text.trim())?.text.trim()
-                    ?? '当前无法使用灵根幼苗';
+                    ?? '當前無法使用靈根幼苗';
                 throw new BadRequestException(message);
             }
             this.applyProgressionResultWithStatistics(player, result, statisticBefore);
@@ -7075,7 +7075,7 @@ export class PlayerRuntimeService {
                 : this.playerProgressionService.applyWangshengPill(player);
             if (!result.changed) {
                 const message = result.notices?.find((notice) => typeof notice?.text === 'string' && notice.text.trim())?.text.trim()
-                    ?? '当前无法使用该丹药';
+                    ?? '當前無法使用該丹藥';
                 throw new BadRequestException(message);
             }
             this.applyProgressionResultWithStatistics(player, result, statisticBefore);
@@ -8702,7 +8702,7 @@ function normalizeOfflineGainProfessionGainList(value) {
             });
             return {
                 professionType: normalizeOfflineGainString(entry?.professionType) || 'unknown',
-                label: normalizeOfflineGainString(entry?.label) || '技艺',
+                label: normalizeOfflineGainString(entry?.label) || '技藝',
                 expGained: amount.gained,
                 expLost: amount.lost,
                 netExp: amount.net,
@@ -9005,12 +9005,12 @@ function buildOfflineGainSnapshot(player, contentTemplateRepository = null, play
 }
 function buildOfflineGainProfessionSnapshots(player, resolveProfessionExpToNext) {
     return [
-        buildOfflineGainProfessionSnapshot('alchemy', '炼丹', player?.alchemySkill, resolveProfessionExpToNext),
-        buildOfflineGainProfessionSnapshot('forging', '炼器', player?.forgingSkill, resolveProfessionExpToNext),
-        buildOfflineGainProfessionSnapshot('building', '营造', player?.buildingSkill, resolveProfessionExpToNext),
-        buildOfflineGainProfessionSnapshot('gather', '采集', player?.gatherSkill, resolveProfessionExpToNext),
-        buildOfflineGainProfessionSnapshot('enhancement', '强化', player?.enhancementSkill, resolveProfessionExpToNext),
-        buildOfflineGainProfessionSnapshot('mining', '挖矿', player?.miningSkill, resolveProfessionExpToNext),
+        buildOfflineGainProfessionSnapshot('alchemy', '煉丹', player?.alchemySkill, resolveProfessionExpToNext),
+        buildOfflineGainProfessionSnapshot('forging', '煉器', player?.forgingSkill, resolveProfessionExpToNext),
+        buildOfflineGainProfessionSnapshot('building', '營造', player?.buildingSkill, resolveProfessionExpToNext),
+        buildOfflineGainProfessionSnapshot('gather', '採集', player?.gatherSkill, resolveProfessionExpToNext),
+        buildOfflineGainProfessionSnapshot('enhancement', '強化', player?.enhancementSkill, resolveProfessionExpToNext),
+        buildOfflineGainProfessionSnapshot('mining', '挖礦', player?.miningSkill, resolveProfessionExpToNext),
     ].filter((entry) => Boolean(entry));
 }
 function buildOfflineGainInventorySnapshot(items, contentTemplateRepository = null) {
@@ -9465,7 +9465,7 @@ function diffOfflineGainProgress(before, after) {
     if (realmDelta.expGained > 0 || realmDelta.expLost > 0 || realmDelta.levelGain > 0 || realmDelta.levelLoss > 0) {
         progress.push({
             kind: 'realmExp',
-            label: '修为',
+            label: '修為',
             gained: realmDelta.expGained,
             lost: realmDelta.expLost,
             net: realmDelta.netExp,
@@ -9475,9 +9475,9 @@ function diffOfflineGainProgress(before, after) {
             currentLevel: normalizeOfflineGainCount(after.realm?.realmLv),
         });
     }
-    appendOfflineGainProgressDelta(progress, 'foundation', '底蕴', before.foundation, after.foundation);
+    appendOfflineGainProgressDelta(progress, 'foundation', '底蘊', before.foundation, after.foundation);
     appendOfflineGainProgressDelta(progress, 'rootFoundation', '根基', before.rootFoundation, after.rootFoundation);
-    appendOfflineGainProgressDelta(progress, 'combatExp', '战斗经验', before.combatExp, after.combatExp);
+    appendOfflineGainProgressDelta(progress, 'combatExp', '戰鬥經驗', before.combatExp, after.combatExp);
     const bodyTrainingDelta = calculateOfflineGainExpChange(before.bodyTraining, after.bodyTraining, {
         resolveExpToNext: (level) => typeof getBodyTrainingExpToNext === 'function'
             ? getBodyTrainingExpToNext(level)
@@ -9486,7 +9486,7 @@ function diffOfflineGainProgress(before, after) {
     if (bodyTrainingDelta.expGained > 0 || bodyTrainingDelta.expLost > 0 || bodyTrainingDelta.levelGain > 0 || bodyTrainingDelta.levelLoss > 0) {
         progress.push({
             kind: 'bodyTrainingExp',
-            label: '炼体经验',
+            label: '煉體經驗',
             gained: bodyTrainingDelta.expGained,
             lost: bodyTrainingDelta.expLost,
             net: bodyTrainingDelta.netExp,
@@ -9550,7 +9550,7 @@ function diffOfflineGainProfessions(beforeProfessions, afterProfessions, resolve
             }
             return {
                 professionType: after.professionType,
-                label: normalizeOfflineGainString(after.label) || '技艺',
+                label: normalizeOfflineGainString(after.label) || '技藝',
                 expGained: delta.expGained,
                 expLost: delta.expLost,
                 netExp: delta.netExp,
@@ -10355,7 +10355,7 @@ function normalizeAlchemyPresets(value) {
         .map((entry) => ({
         presetId: String(entry.presetId),
         recipeId: String(entry.recipeId),
-        name: resolvePlayerFacingContentName(entry.recipeId, '未命名炼制预设', entry.name),
+        name: resolvePlayerFacingContentName(entry.recipeId, '未命名煉製預設', entry.name),
         ingredients: Array.isArray(entry.ingredients)
             ? entry.ingredients
                 .filter((ingredient) => typeof ingredient?.itemId === 'string')
@@ -10691,18 +10691,18 @@ function normalizeTechniqueActivityQueue(value) {
             kind,
             payload: cloneTechniqueActivityQueuePayload(entry.payload),
             label: normalizeTechniqueActivityQueueText(entry.label) || (kind === 'forging'
-                ? '炼器任务'
+                ? '煉器任務'
                 : kind === 'enhancement'
-                    ? '强化任务'
+                    ? '強化任務'
                     : kind === 'gather'
-                        ? '采集任务'
+                        ? '採集任務'
                         : kind === 'building'
-                            ? '营造任务'
+                            ? '營造任務'
                             : kind === 'mining'
-                                ? '挖矿任务'
+                                ? '挖礦任務'
                                 : kind === 'formation'
-                                    ? '阵法任务'
-                                    : '炼丹任务'),
+                                    ? '陣法任務'
+                                    : '煉丹任務'),
             state: entry.state === 'sleeping' ? 'sleeping' : 'pending',
             createdAt,
             cancelRef: {
@@ -10953,7 +10953,7 @@ function repairEnhancementQueueDisplayNames(player, contentTemplateRepository) {
 
 function normalizeEnhancementQueueItemName(value, itemId) {
     const normalized = normalizeTechniqueActivityQueueText(value);
-    if (!normalized || normalized === '未知物品' || normalized === '强化任务' || normalized === itemId) {
+    if (!normalized || normalized === '未知物品' || normalized === '強化任務' || normalized === itemId) {
         return undefined;
     }
     return normalized;
@@ -11195,7 +11195,7 @@ function assertConsumableItemCooldownReady(player, item, currentTick) {
     const cooldownLeft = getConsumableItemCooldownRemainingTicks(player, item, currentTick);
     syncConsumableInventoryCooldownProjection(player, currentTick);
     if (cooldownLeft > 0) {
-        throw new BadRequestException(`${resolvePlayerFacingContentName(item?.itemId, '未知物品', item?.name)}冷却中，还需 ${cooldownLeft} 息。`);
+        throw new BadRequestException(`${resolvePlayerFacingContentName(item?.itemId, '未知物品', item?.name)}冷卻中，還需 ${cooldownLeft} 息。`);
     }
 }
 
@@ -11250,8 +11250,8 @@ function upsertPersistentConsumableCooldownBuff(player, group, cooldown) {
 function buildPersistentConsumableCooldownBuff(group, cooldown) {
     return {
         buffId: `${CONSUMABLE_COOLDOWN_BUFF_ID_PREFIX}${group}`,
-        name: '消耗品冷却',
-        desc: '服务端内部持久化的消耗品共享冷却。',
+        name: '消耗品冷卻',
+        desc: '服務端內部持久化的消耗品共享冷卻。',
         shortMark: '冷',
         category: 'buff',
         visibility: 'hidden',
@@ -11260,7 +11260,7 @@ function buildPersistentConsumableCooldownBuff(group, cooldown) {
         stacks: 1,
         maxStacks: 1,
         sourceSkillId: `${CONSUMABLE_COOLDOWN_SOURCE_ID_PREFIX}${group}`,
-        sourceSkillName: '消耗品冷却',
+        sourceSkillName: '消耗品冷卻',
         realmLv: 1,
         infiniteDuration: false,
         persistOnDeath: true,
@@ -11576,7 +11576,7 @@ function clonePendingLogbookMessage(entry) {
 function isRetiredRedeemSuccessLogbookMessage(entry) {
     const id = typeof entry?.id === 'string' ? entry.id.trim() : '';
     const text = typeof entry?.text === 'string' ? entry.text.trim() : '';
-    return id.startsWith('redeem:') && text.startsWith('兑换成功：');
+    return id.startsWith('redeem:') && text.startsWith('兌換成功：');
 }
 /**
  * isSamePendingLogbookMessages：判断Same待处理LogbookMessage是否满足条件。
@@ -12752,10 +12752,10 @@ function buildPvPSoulInjuryBuffState(sourceRealmLv) {
     }
     const buff = freezeRuntimeBuffTemplate({
         buffId: PVP_SOUL_INJURY_BUFF_ID,
-        name: '神魂受损',
-        desc: '六维降低 10%，之后每层额外降低 1%，最多降低 30%；身死与遁返都不会清除，需静养满一时辰。',
-        baseDesc: '六维降低 10%，之后每层额外降低 1%，最多降低 30%；身死与遁返都不会清除，需静养满一时辰。',
-        shortMark: '残',
+        name: '神魂受損',
+        desc: '六維降低 10%，之後每層額外降低 1%，最多降低 30%；身死與遁返都不會清除，需靜養滿一時辰。',
+        baseDesc: '六維降低 10%，之後每層額外降低 1%，最多降低 30%；身死與遁返都不會清除，需靜養滿一時辰。',
+        shortMark: '殘',
         category: 'debuff',
         visibility: 'public',
         remainingTicks: PVP_SOUL_INJURY_DURATION_TICKS,
@@ -12763,7 +12763,7 @@ function buildPvPSoulInjuryBuffState(sourceRealmLv) {
         stacks: 1,
         maxStacks: PVP_SOUL_INJURY_MAX_STACKS,
         sourceSkillId: PVP_SOUL_INJURY_SOURCE_ID,
-        sourceSkillName: '杀孽',
+        sourceSkillName: '殺孽',
         realmLv,
         color: '#8a5a64',
         persistOnDeath: true,
@@ -12785,9 +12785,9 @@ function buildPvPShaInfusionBuffState(sourceRealmLv) {
     }
     const buff = freezeRuntimeBuffTemplate({
         buffId: PVP_SHA_INFUSION_BUFF_ID,
-        name: '煞气入体',
-        desc: `每层攻击 +1%（最高 +${PVP_SHA_INFUSION_ATTACK_CAP_PERCENT}%）、防御 -2%；每十分钟自然消退一层，死亡时会按层数比例折损当前境界修为，不足时继续折损底蕴。`,
-        baseDesc: `每层攻击 +1%（最高 +${PVP_SHA_INFUSION_ATTACK_CAP_PERCENT}%）、防御 -2%；每十分钟自然消退一层，死亡时会按层数比例折损当前境界修为，不足时继续折损底蕴。`,
+        name: '煞氣入體',
+        desc: `每層攻擊 +1%（最高 +${PVP_SHA_INFUSION_ATTACK_CAP_PERCENT}%）、防禦 -2%；每十分鐘自然消退一層，死亡時會按層數比例折損當前境界修為，不足時繼續折損底蘊。`,
+        baseDesc: `每層攻擊 +1%（最高 +${PVP_SHA_INFUSION_ATTACK_CAP_PERCENT}%）、防禦 -2%；每十分鐘自然消退一層，死亡時會按層數比例折損當前境界修為，不足時繼續折損底蘊。`,
         shortMark: '煞',
         category: 'buff',
         visibility: 'public',
@@ -12796,7 +12796,7 @@ function buildPvPShaInfusionBuffState(sourceRealmLv) {
         stacks: 1,
         maxStacks: 999999,
         sourceSkillId: PVP_SHA_INFUSION_SOURCE_ID,
-        sourceSkillName: '杀孽',
+        sourceSkillName: '殺孽',
         realmLv,
         color: '#7a2e2e',
         stats: freezeRuntimeBuffTemplate({
@@ -12819,10 +12819,10 @@ function buildPvPShaBacklashBuffState(sourceRealmLv, stacks) {
     if (!cached) {
         cached = freezeRuntimeBuffTemplate({
         buffId: PVP_SHA_BACKLASH_BUFF_ID,
-        name: '煞气反噬',
-        desc: `每层攻击 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%、防御 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%；每十分钟自然消退一层。`,
-        baseDesc: `每层攻击 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%、防御 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%；每十分钟自然消退一层。`,
-        shortMark: '蚀',
+        name: '煞氣反噬',
+        desc: `每層攻擊 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%、防禦 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%；每十分鐘自然消退一層。`,
+        baseDesc: `每層攻擊 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%、防禦 -${PVP_SHA_BACKLASH_PERCENT_PER_STACK}%；每十分鐘自然消退一層。`,
+        shortMark: '蝕',
         category: 'debuff',
         visibility: 'public',
         remainingTicks: PVP_SHA_BACKLASH_DECAY_TICKS,
@@ -12830,7 +12830,7 @@ function buildPvPShaBacklashBuffState(sourceRealmLv, stacks) {
         stacks: 1,
         maxStacks: 999999,
         sourceSkillId: PVP_SHA_BACKLASH_SOURCE_ID,
-        sourceSkillName: '煞气反噬',
+        sourceSkillName: '煞氣反噬',
         realmLv,
         color: '#6d2626',
         stats: freezeRuntimeBuffTemplate({
@@ -12854,10 +12854,10 @@ function buildHeavenlyDaoSuppressionBuffState(sourceRealmLv) {
     if (!cached) {
         cached = freezeRuntimeBuffTemplate({
             buffId: HEAVENLY_DAO_SUPPRESSION_BUFF_ID,
-            name: '天道压制',
-            desc: '六维与全部战斗属性按 1000 / (1000 + 层数) 衰减；再次触发会叠层并刷新一小时，身死与遁返不能清除。',
-            baseDesc: '六维与全部战斗属性按 1000 / (1000 + 层数) 衰减；再次触发会叠层并刷新一小时，身死与遁返不能清除。',
-            shortMark: '压',
+            name: '天道壓制',
+            desc: '六維與全部戰鬥屬性按 1000 / (1000 + 層數) 衰減；再次觸發會疊層並刷新一小時，身死與遁返不能清除。',
+            baseDesc: '六維與全部戰鬥屬性按 1000 / (1000 + 層數) 衰減；再次觸發會疊層並刷新一小時，身死與遁返不能清除。',
+            shortMark: '壓',
             category: 'debuff',
             visibility: 'public',
             remainingTicks: HEAVENLY_DAO_SUPPRESSION_DURATION_TICKS,
@@ -13258,7 +13258,7 @@ function ensureVitalBaselineBonus(player, vitals) {
     }
     nextBonuses.push({
         source: VITAL_BASELINE_BONUS_SOURCE,
-        label: '生命灵力基线补正',
+        label: '生命靈力基線補正',
         stats,
         meta: {
             baselineHp,

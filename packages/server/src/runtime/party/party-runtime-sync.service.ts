@@ -168,7 +168,7 @@ export class PartyRuntimeSyncService implements OnModuleInit, OnModuleDestroy {
       } catch (error) {
         failed = true;
         this.pendingCursorTargets.set(partyId, Math.max(this.pendingCursorTargets.get(partyId) ?? 0, cursor));
-        this.logger.warn(`队伍掉落游标刷盘失败 party=${partyId}: ${error instanceof Error ? error.message : String(error)}`);
+        this.logger.warn(`隊伍掉落遊標刷盤失敗 party=${partyId}: ${error instanceof Error ? error.message : String(error)}`);
       }
     }
     if (failed && !this.cursorTimer) {

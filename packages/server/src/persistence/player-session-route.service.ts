@@ -67,17 +67,17 @@ export class PlayerSessionRouteService implements OnModuleInit, OnModuleDestroy 
   async onModuleInit(): Promise<void> {
     this.pool = this.databasePoolProvider?.getPool('player-session-route') ?? null;
     if (!this.pool) {
-      this.logger.log('玩家会话路由已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
+      this.logger.log('玩家會話路由已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL');
       return;
     }
 
     try {
       await ensurePlayerSessionRouteTable(this.pool);
       this.enabled = true;
-      this.logger.log(`玩家会话路由已启用（${PLAYER_SESSION_ROUTE_TABLE}），nodeId=${this.nodeRegistryService.getNodeId()}`);
+      this.logger.log(`玩家會話路由已啟用（${PLAYER_SESSION_ROUTE_TABLE}），nodeId=${this.nodeRegistryService.getNodeId()}`);
     } catch (error: unknown) {
       this.logger.error(
-        '玩家会话路由初始化失败，已回退为禁用模式',
+        '玩家會話路由初始化失敗，已回退為禁用模式',
         error instanceof Error ? error.stack : String(error),
       );
       this.pool = null;

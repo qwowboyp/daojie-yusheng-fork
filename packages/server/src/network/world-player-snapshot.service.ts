@@ -170,7 +170,7 @@ export class WorldPlayerSnapshotService {
       );
     } catch (error: unknown) {
       this.logger.error(
-        `原生新手分域快照读取失败，拒绝写入 starter 以避免覆盖现有玩家：playerId=${normalizedPlayerId} error=${error instanceof Error ? error.message : String(error)}`,
+        `原生新手分域快照讀取失敗，拒絕寫入 starter 以避免覆蓋現有玩家：playerId=${normalizedPlayerId} error=${error instanceof Error ? error.message : String(error)}`,
       );
       return {
         ok: false,
@@ -195,7 +195,7 @@ export class WorldPlayerSnapshotService {
         hasExistingWatermark = await this.playerDomainPersistenceService!.hasRecoveryWatermark(normalizedPlayerId);
       } catch (error: unknown) {
         this.logger.error(
-          `原生新手分域快照 watermark 检查失败，拒绝写入 starter：playerId=${normalizedPlayerId} error=${error instanceof Error ? error.message : String(error)}`,
+          `原生新手分域快照 watermark 檢查失敗，拒絕寫入 starter：playerId=${normalizedPlayerId} error=${error instanceof Error ? error.message : String(error)}`,
         );
         return {
           ok: false,
@@ -204,7 +204,7 @@ export class WorldPlayerSnapshotService {
       }
       if (hasExistingWatermark) {
         this.logger.error(
-          `拒绝用 starter snapshot 覆盖已有 watermark 的老玩家：playerId=${normalizedPlayerId}`,
+          `拒絕用 starter snapshot 覆蓋已有 watermark 的老玩家：playerId=${normalizedPlayerId}`,
         );
         return {
           ok: false,
@@ -215,7 +215,7 @@ export class WorldPlayerSnapshotService {
 
     const starterSnapshot = this.playerRuntimeService.buildStarterPersistenceSnapshot(normalizedPlayerId);
     if (!starterSnapshot) {
-      this.logger.warn(`原生新手分域快照构建失败：playerId=${normalizedPlayerId}`);
+      this.logger.warn(`原生新手分域快照構建失敗：playerId=${normalizedPlayerId}`);
       return {
         ok: false,
         failureStage: 'native_snapshot_recovery_build_failed',
@@ -234,7 +234,7 @@ export class WorldPlayerSnapshotService {
           allowBuffEmptyOverwrite: true,
         },
       );
-      this.logger.debug(`原生新手分域快照已补种：playerId=${normalizedPlayerId}`);
+      this.logger.debug(`原生新手分域快照已補種：playerId=${normalizedPlayerId}`);
       return {
         ok: true,
         seeded: true,
@@ -242,7 +242,7 @@ export class WorldPlayerSnapshotService {
         persistedSource: 'native',
       };
     } catch (error: unknown) {
-      this.logger.warn(`原生新手分域快照补种失败：playerId=${normalizedPlayerId} error=${error instanceof Error ? error.message : String(error)}`);
+      this.logger.warn(`原生新手分域快照補種失敗：playerId=${normalizedPlayerId} error=${error instanceof Error ? error.message : String(error)}`);
       return {
         ok: false,
         failureStage: 'native_snapshot_recovery_seed_failed',
@@ -261,7 +261,7 @@ export class WorldPlayerSnapshotService {
       );
       if (projectedSnapshot) {
         const projectedFallbackReason = appendProjectionFallbackReason(fallbackReason);
-        this.logger.debug(`玩家快照来源=主线 持久化来源=原生 投影=玩家分域 playerId=${playerId}`);
+        this.logger.debug(`玩家快照來源=主線 持久化來源=原生 投影=玩家分域 playerId=${playerId}`);
         recordAuthTrace({
           type: 'snapshot',
           playerId,
@@ -320,7 +320,7 @@ function buildPersistedSnapshotMissResult(
   fallbackReason: string | null,
   logger: Logger,
 ): LoadPlayerSnapshotResult {
-  logger.debug(`玩家快照来源=未命中 playerId=${playerId} 仅主线=true 回退原因=${fallbackReason ?? '无'}`);
+  logger.debug(`玩家快照來源=未命中 playerId=${playerId} 僅主線=true 回退原因=${fallbackReason ?? '無'}`);
   recordAuthTrace({
     type: 'snapshot',
     playerId,

@@ -76,22 +76,22 @@ export class RedeemCodePersistenceService {
 
         const databaseUrl = resolveRedeemCodeDatabaseUrl();
         if (!databaseUrl.trim()) {
-            this.logger.log('兑换码持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL/SERVER_DATABASE_POOLER_URL/DATABASE_POOLER_URL');
+            this.logger.log('兌換碼持久化已禁用：未提供 SERVER_DATABASE_URL/DATABASE_URL/SERVER_DATABASE_POOLER_URL/DATABASE_POOLER_URL');
             return;
         }
         const sharedPool = this.databasePoolProvider?.getPool?.('redeem-code');
         if (!sharedPool) {
-            this.logger.warn('兑换码持久化已禁用：数据库连接池提供者未提供连接池');
+            this.logger.warn('兌換碼持久化已禁用：數據庫連接池提供者未提供連接池');
             return;
         }
         this.pool = sharedPool;
         try {
             await ensureRedeemCodeTables(this.pool);
             this.enabled = true;
-            this.logger.log('兑换码持久化已启用（server_redeem_code_group + server_redeem_code）');
+            this.logger.log('兌換碼持久化已啟用（server_redeem_code_group + server_redeem_code）');
         }
         catch (error) {
-            this.logger.error('兑换码持久化初始化失败，已回退为禁用模式', error instanceof Error ? error.stack : String(error));
+            this.logger.error('兌換碼持久化初始化失敗，已回退為禁用模式', error instanceof Error ? error.stack : String(error));
             this.releasePoolReference();
         }
     }

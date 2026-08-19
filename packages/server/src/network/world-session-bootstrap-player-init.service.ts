@@ -139,7 +139,7 @@ export class WorldSessionBootstrapPlayerInitService {
             if (!isRecoveryTimeoutError(error)) {
                 throw error;
             }
-            this.logger.warn(`启动引导恢复超时，硬切模式拒绝旧快照或出生点兜底：playerId=${input.playerId}`);
+            this.logger.warn(`啟動引導恢復超時，硬切模式拒絕舊快照或出生點兜底：playerId=${input.playerId}`);
             throw new ServiceUnavailableException(`bootstrap_recovery_timeout:${input.playerId}`);
         }
         const projectionLoadedSnapshot = Boolean(

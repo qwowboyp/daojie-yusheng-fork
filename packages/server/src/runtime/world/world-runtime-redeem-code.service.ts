@@ -79,11 +79,11 @@ export class WorldRuntimeRedeemCodeService {
       }
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : String(error);
-      emitCaughtErrorLog(deps.logger, `处理玩家 ${playerId} 的兑换码失败：${message}`, error);
+      emitCaughtErrorLog(deps.logger, `處理玩家 ${playerId} 的兌換碼失敗：${message}`, error);
       const notice = buildStructuredNotice(
         'warn',
         'notice.redeem.execution-failed',
-        '兑换执行失败，请先查看行囊再重试。',
+        '兌換執行失敗，請先查看行囊再重試。',
       );
       deps.queuePlayerNotice(
         playerId,

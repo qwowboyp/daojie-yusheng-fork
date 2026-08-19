@@ -167,5 +167,5 @@ function buildFormationNotice(
 }
 
 function normalizeFormationName(value: unknown): string {
-  return typeof value === 'string' && value.trim() ? value.trim() : '阵法';
+  return typeof value === 'string' && value.trim() ? value.trim() : '陣法';
 }

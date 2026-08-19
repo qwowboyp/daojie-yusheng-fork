@@ -182,7 +182,7 @@ export class WorldPlayerTokenCodecService {
     const normalizedSub = String(payload?.sub ?? '').trim();
     const normalizedUsername = String(payload?.username ?? '').trim();
     if (!normalizedSub || !normalizedUsername) {
-      throw new Error('玩家令牌载荷缺少 sub 或 username');
+      throw new Error('玩家令牌載荷缺少 sub 或 username');
     }
 
     const normalizedDisplayName = normalizeOptionalString(payload?.displayName);
@@ -243,7 +243,7 @@ function resolvePlayerTokenSecrets(): string[] {
   }
 
   if (!isDevelopmentLikeEnv()) {
-    throw new Error('非开发环境必须配置 SERVER_PLAYER_TOKEN_SECRET；JWT_SECRET 仅作为旧本地配置兼容，禁止回退内置开发密钥。');
+    throw new Error('非開發環境必須配置 SERVER_PLAYER_TOKEN_SECRET；JWT_SECRET 僅作為舊本地配置兼容，禁止回退內置開發密鑰。');
   }
 
   secrets.push(DEFAULT_DEV_PLAYER_TOKEN_SECRET);

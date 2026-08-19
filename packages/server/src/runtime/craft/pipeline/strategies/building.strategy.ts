@@ -23,7 +23,7 @@ export class BuildingStrategy implements TechniqueActivityStrategy {
   readonly kind = 'building' as const;
   readonly jobSlot = 'buildingJob';
   readonly skillSlot = 'buildingSkill';
-  readonly activityLabel = '营造';
+  readonly activityLabel = '營造';
   readonly pauseTicks = 0;
   readonly conditional = true;
 
@@ -44,7 +44,7 @@ export class BuildingStrategy implements TechniqueActivityStrategy {
       ? deps?.dispatchStartBuildingDeconstruction
       : deps?.dispatchStartBuildingConstruction;
     if (!playerId || !buildingId || typeof dispatcher !== 'function') {
-      return { ok: false, error: '建造运行时不可用。' };
+      return { ok: false, error: '建造運行時不可用。' };
     }
     return { ok: true, validated: { playerId, buildingId, operation, payload } };
   }
@@ -55,7 +55,7 @@ export class BuildingStrategy implements TechniqueActivityStrategy {
     }
     const queue = ensureTechniqueActivityQueue(player);
     if (queue.length >= TECHNIQUE_ACTIVITY_QUEUE_MAX_LENGTH) {
-      return { ok: false, error: '技艺任务队列已满。', panelChanged: true, messages: [], groundDrops: [] };
+      return { ok: false, error: '技藝任務隊列已滿。', panelChanged: true, messages: [], groundDrops: [] };
     }
     const buildingId = resolveBuildingId(validated) || resolveBuildingId(payload);
     const operation = resolveBuildingOperation(validated) || resolveBuildingOperation(payload);
@@ -68,7 +68,7 @@ export class BuildingStrategy implements TechniqueActivityStrategy {
       queueId: createBuildingQueueId(buildingId),
       kind: 'building',
       payload: nextPayload,
-      label: operation === 'deconstruct' ? '拆除建筑' : '营造任务',
+      label: operation === 'deconstruct' ? '拆除建築' : '營造任務',
       state: 'pending',
       createdAt: Date.now(),
       cancelRef: { kind: 'building', queueId: '' },
@@ -112,7 +112,7 @@ export class BuildingStrategy implements TechniqueActivityStrategy {
         };
       }
       if (!this.getActiveJob(player)) {
-        return { ok: false, error: '建造任务创建失败。' };
+        return { ok: false, error: '建造任務建立失敗。' };
       }
       return { ok: true };
     } catch (error) {
@@ -131,7 +131,7 @@ export class BuildingStrategy implements TechniqueActivityStrategy {
   buildStartMessages(_player: unknown, _validated: unknown, job: any): TechniqueActivityNoticeMessage[] {
     const buildingName = typeof job?.buildingName === 'string' && job.buildingName.trim()
       ? job.buildingName.trim()
-      : '建筑';
+      : '建築';
     const totalTicks = Math.max(1, Math.trunc(Number(job?.totalTicks ?? job?.workTotalTicks ?? 1) || 1));
     return [{
       kind: 'building',
@@ -192,7 +192,7 @@ export class BuildingStrategy implements TechniqueActivityStrategy {
     const buildingId = resolveBuildingId(job);
     const deps = resolveBuildingDeps(ctx);
     if (!playerId || !buildingId) {
-      return { satisfied: false, reason: '建造目标无效。', shouldCancel: true };
+      return { satisfied: false, reason: '建造目標無效。', shouldCancel: true };
     }
     const instanceId = resolveInstanceId(player, job, deps);
     const instance = instanceId && typeof deps?.getInstanceRuntime === 'function'
@@ -200,29 +200,29 @@ export class BuildingStrategy implements TechniqueActivityStrategy {
       : null;
     const building = instance?.buildingById?.get?.(buildingId);
     if (!instance || !building) {
-      return { satisfied: false, reason: '建造目标已经不存在。', shouldCancel: true };
+      return { satisfied: false, reason: '建造目標已經不存在。', shouldCancel: true };
     }
     const operation = resolveBuildingOperation(job);
     if (operation === 'deconstruct') {
       if (building.state !== 'deconstructing' || building.activeDeconstructorPlayerId !== playerId) {
-        return { satisfied: false, reason: '建筑当前不可继续拆除。', shouldCancel: true };
+        return { satisfied: false, reason: '建築當前不可繼續拆除。', shouldCancel: true };
       }
       const sectRemovePermission = typeof deps?.worldRuntimeSectService?.resolveSectInstancePermission === 'function'
         ? deps.worldRuntimeSectService.resolveSectInstancePermission(playerId, instanceId, 'building_remove')
         : null;
       if (sectRemovePermission === false) {
-        return { satisfied: false, reason: '当前职位没有宗门拆除权限。', shouldCancel: true };
+        return { satisfied: false, reason: '當前職位沒有宗門拆除權限。', shouldCancel: true };
       }
       return { satisfied: true };
     }
     if (building.state !== 'building') {
-      return { satisfied: false, reason: '建筑当前不可继续施工。', shouldCancel: true };
+      return { satisfied: false, reason: '建築當前不可繼續施工。', shouldCancel: true };
     }
     const sectBuildPermission = typeof deps?.worldRuntimeSectService?.resolveSectInstancePermission === 'function'
       ? deps.worldRuntimeSectService.resolveSectInstancePermission(playerId, instanceId, 'building_create')
       : null;
     if (sectBuildPermission === false) {
-      return { satisfied: false, reason: '当前职位没有宗门建造权限。', shouldCancel: true };
+      return { satisfied: false, reason: '當前職位沒有宗門建造權限。', shouldCancel: true };
     }
     return { satisfied: true };
   }
@@ -289,19 +289,19 @@ function resolveBuildingOperation(value: unknown): 'construct' | 'deconstruct' {
 function localizeBuildingDeconstructionFailure(reason: unknown): string {
   switch (reason) {
     case 'sect_demolish_permission_denied':
-      return '当前职位没有宗门拆除权限。';
+      return '當前職位沒有宗門拆除權限。';
     case 'building_job_active':
-      return '当前已有营造任务在进行中。';
+      return '當前已有營造任務在進行中。';
     case 'technique_activity_busy':
-      return '当前已有其他技艺任务在进行中。';
+      return '當前已有其他技藝任務在進行中。';
     case 'building_deconstructing':
-      return '该建筑正在被其他玩家拆除。';
+      return '該建築正在被其他玩家拆除。';
     case 'building_too_far':
-      return '需要靠近建筑后才能开始拆除。';
+      return '需要靠近建築後才能開始拆除。';
     case 'building_not_found':
-      return '拆除目标已经不存在。';
+      return '拆除目標已經不存在。';
     default:
-      return '无法开始拆除建筑。';
+      return '無法開始拆除建築。';
   }
 }
 

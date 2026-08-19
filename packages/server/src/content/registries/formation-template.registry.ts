@@ -34,7 +34,7 @@ export class FormationTemplateRegistry {
   getRef(formationId: string): Readonly<FormationTemplate> {
     const template = this.tryGetRef(formationId);
     if (!template) {
-      throw new Error(`未找到阵法模板：${formationId}`);
+      throw new Error(`未找到陣法模板：${formationId}`);
     }
     return template;
   }

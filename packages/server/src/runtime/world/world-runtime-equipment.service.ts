@@ -123,7 +123,7 @@ export class WorldRuntimeEquipmentService {
       const notice = buildStructuredNotice(
         'success',
         'notice.equip.equipped',
-        `装备 ${itemName}`,
+        `裝備 ${itemName}`,
         { vars: { itemName }, pills: [{ key: 'itemName', style: 'target' }] },
       );
       deps.queuePlayerNotice(playerId, notice.text, notice.kind, undefined, undefined, notice.structured);
@@ -142,7 +142,7 @@ export class WorldRuntimeEquipmentService {
     await this.runExclusivePlayerAssetMutation(playerId, async () => {
       const item = this.playerRuntimeService.peekEquippedItem(playerId, slot) as RuntimeItem | null;
       if (!item) {
-        throw new NotFoundException(`装备槽位为空：${slot}`);
+        throw new NotFoundException(`裝備槽位為空：${slot}`);
       }
       const player = this.playerRuntimeService.getPlayerOrThrow(playerId) as RuntimePlayerEquipmentState;
       const lockReason = (EQUIP_SLOTS as readonly string[]).includes(slot)
@@ -182,7 +182,7 @@ export class WorldRuntimeEquipmentService {
   async dispatchSetArtifactSlotEnabled(playerId: string, slot: string, enabled: boolean, deps: any): Promise<void> {
     await this.runExclusivePlayerAssetMutation(playerId, () => {
       if (!(ARTIFACT_SLOTS as readonly string[]).includes(slot)) {
-        throw new NotFoundException(`法宝槽位不存在：${slot}`);
+        throw new NotFoundException(`法寶槽位不存在：${slot}`);
       }
       this.playerRuntimeService.setArtifactSlotEnabled(playerId, slot, enabled === true);
       deps?.requestPlayerDeltaSync?.(playerId);
@@ -197,7 +197,7 @@ export class WorldRuntimeEquipmentService {
     deps: any,
   ): Promise<void> {
     if (!(await this.syncCurrentPresenceFence(playerId))) {
-      throw new ServiceUnavailableException('装备资产事务围栏暂不可用，请稍后重试');
+      throw new ServiceUnavailableException('裝備資產事務圍欄暫不可用，請稍後重試');
     }
     const location = typeof deps?.getPlayerLocation === 'function'
       ? deps.getPlayerLocation(playerId)
@@ -212,7 +212,7 @@ export class WorldRuntimeEquipmentService {
       const runtimeOwnerId = normalizeOptionalString(player.runtimeOwnerId);
       const sessionEpoch = normalizePositiveInteger(player.sessionEpoch);
       if (!runtimeOwnerId || sessionEpoch <= 0) {
-        throw new ServiceUnavailableException('装备资产事务围栏暂不可用，请稍后重试');
+        throw new ServiceUnavailableException('裝備資產事務圍欄暫不可用，請稍後重試');
       }
       await durableOperationService.updateEquipmentLoadout({
         operationId,
@@ -246,7 +246,7 @@ export class WorldRuntimeEquipmentService {
 
   private assertDurableEquipmentPathAvailable(durableEnabled: boolean): void {
     if (this.playerDomainPersistenceService?.isEnabled?.() === true && !durableEnabled) {
-      throw new ServiceUnavailableException('装备资产事务暂不可用，请稍后重试');
+      throw new ServiceUnavailableException('裝備資產事務暫不可用，請稍後重試');
     }
   }
 
@@ -262,10 +262,10 @@ export class WorldRuntimeEquipmentService {
     }
     const hardCheck = isItemInstanceIdHardCheckEnabled();
     this.logger.warn(
-      `卸装目标实例不一致 player=${playerId} slot=${slot} expected=${expectedItemInstanceId} actual=${item.itemInstanceId ?? ''} hardCheck=${hardCheck}`,
+      `卸裝目標實例不一致 player=${playerId} slot=${slot} expected=${expectedItemInstanceId} actual=${item.itemInstanceId ?? ''} hardCheck=${hardCheck}`,
     );
     if (hardCheck) {
-      throw new BadRequestException('装备目标已变更，请重新选择。');
+      throw new BadRequestException('裝備目標已變更，請重新選擇。');
     }
   }
 
@@ -335,13 +335,13 @@ function buildEquipLoadoutMutation(
   const displayItem = normalizeRuntimeItem(sourceItem, normalizer);
   const slot = normalizeOptionalString(displayItem.equipSlot);
   if (!slot || !(EQUIP_SLOTS as readonly string[]).includes(slot)) {
-    throw new NotFoundException(`${getItemDisplayName(displayItem)}不能装备`);
+    throw new NotFoundException(`${getItemDisplayName(displayItem)}不能裝備`);
   }
 
   const nextEquipmentSlots = cloneRuntimeEquipmentSlots(player.equipment?.slots);
   const equipmentEntry = nextEquipmentSlots.find((entry) => entry.slot === slot);
   if (!equipmentEntry) {
-    throw new NotFoundException(`装备槽位不存在：${slot}`);
+    throw new NotFoundException(`裝備槽位不存在：${slot}`);
   }
 
   const equippedItem = takeSingleInventoryItem(nextInventoryItems, inventoryIndex);
@@ -370,7 +370,7 @@ function buildUnequipLoadoutMutation(
   const nextEquipmentSlots = cloneRuntimeEquipmentSlots(player.equipment?.slots);
   const equipmentEntry = nextEquipmentSlots.find((entry) => entry.slot === slot);
   if (!equipmentEntry?.item) {
-    throw new NotFoundException(`装备槽位为空：${slot}`);
+    throw new NotFoundException(`裝備槽位為空：${slot}`);
   }
   const unequippedItem = cloneRuntimeItem(equipmentEntry.item);
   assignItemInstanceIdIfNeeded(unequippedItem);

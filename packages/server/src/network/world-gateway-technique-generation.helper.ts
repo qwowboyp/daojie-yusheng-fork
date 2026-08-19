@@ -61,12 +61,12 @@ export class WorldGatewayTechniqueGenerationHelper {
     if (!playerId) return undefined;
 
     if (!this.techniqueGenerationService) {
-      this.deps.worldClientEventService.emitGatewayError(client, 'TECHNIQUE_GENERATION_UNAVAILABLE', new Error('功法领悟系统未就绪'));
+      this.deps.worldClientEventService.emitGatewayError(client, 'TECHNIQUE_GENERATION_UNAVAILABLE', new Error('功法領悟系統未就緒'));
       return undefined;
     }
 
     if (!payload || typeof payload !== 'object') {
-      this.deps.worldClientEventService.emitGatewayError(client, 'INVALID_PAYLOAD', new Error('无效请求'));
+      this.deps.worldClientEventService.emitGatewayError(client, 'INVALID_PAYLOAD', new Error('無效請求'));
       return undefined;
     }
 
@@ -108,7 +108,7 @@ export class WorldGatewayTechniqueGenerationHelper {
     const unlocked = (highestRealmLv ?? 0) >= TECHNIQUE_GENERATION_UNLOCK_REALM_LV;
     const status = {
       available: unlocked,
-      unavailableReason: unlocked ? undefined : '需筑基期方可领悟',
+      unavailableReason: unlocked ? undefined : '需築基期方可領悟',
       rollRange: realmLv && unlocked
         ? {
           ...buildTechniqueGenerationRollRange(
@@ -159,12 +159,12 @@ export class WorldGatewayTechniqueGenerationHelper {
     const realmLv = this.deps.playerRuntimeService.getPlayerRealmLv(playerId);
 
     if (!realmLv) {
-      return { success: false, error: '玩家状态异常' };
+      return { success: false, error: '玩家狀態異常' };
     }
     const highestRealmLv = this.deps.playerRuntimeService.getPlayerHighestRealmLv(playerId) ?? realmLv;
 
     if (mode === 'batch' && category !== 'internal') {
-      return { success: false, error: '批量领悟当前仅支持内功', errorCode: 'CATEGORY_LOCKED' };
+      return { success: false, error: '批量領悟當前僅支持內功', errorCode: 'CATEGORY_LOCKED' };
     }
 
     let result: Awaited<ReturnType<TechniqueGenerationService['requestGeneration']>>;
@@ -192,9 +192,9 @@ export class WorldGatewayTechniqueGenerationHelper {
       client.emit(S2C.TechniqueGenerationResult, {
         jobId: '',
         result: 'failed',
-        errorMessage: error instanceof Error ? error.message : '功法领悟失败',
+        errorMessage: error instanceof Error ? error.message : '功法領悟失敗',
       });
-      return { success: false, error: '功法领悟失败', errorCode: 'GENERATION_FAILED' };
+      return { success: false, error: '功法領悟失敗', errorCode: 'GENERATION_FAILED' };
     }
 
     if (result.success && result.jobId) {
@@ -215,7 +215,7 @@ export class WorldGatewayTechniqueGenerationHelper {
     client.emit(S2C.TechniqueGenerationResult, {
       jobId: '',
       result: 'failed',
-      errorMessage: result.error ?? '功法领悟失败',
+      errorMessage: result.error ?? '功法領悟失敗',
     });
     return result;
   }
@@ -244,7 +244,7 @@ export class WorldGatewayTechniqueGenerationHelper {
         jobId,
         batchId,
         result: 'failed',
-        errorMessage: '批量领悟超时，请稍后重试',
+        errorMessage: '批量領悟超時，請稍後重試',
       });
       return;
     }
@@ -262,7 +262,7 @@ export class WorldGatewayTechniqueGenerationHelper {
     } : {
       jobId,
       result: 'failed',
-      errorMessage: '功法领悟超时，请稍后重试',
+      errorMessage: '功法領悟超時，請稍後重試',
     });
   }
 
@@ -290,7 +290,7 @@ export class WorldGatewayTechniqueGenerationHelper {
         });
       });
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : '批量功法采纳失败';
+      const errorMessage = error instanceof Error ? error.message : '批量功法採納失敗';
       client.emit(S2C.TechniqueGenerationResult, { jobId: '', batchId, result: 'failed', errorMessage });
       return { success: false, error: errorMessage, errorCode: 'ADOPT_FAILED' };
     }
@@ -304,7 +304,7 @@ export class WorldGatewayTechniqueGenerationHelper {
       jobId: '',
       batchId,
       result: 'failed',
-      errorMessage: result.error ?? '批量功法采纳失败',
+      errorMessage: result.error ?? '批量功法採納失敗',
     });
     if (result.success) this.deps.worldSyncService?.emitDeltaSync(playerId, client);
     return result;
@@ -325,7 +325,7 @@ export class WorldGatewayTechniqueGenerationHelper {
         });
       });
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : '批量功法放弃失败';
+      const errorMessage = error instanceof Error ? error.message : '批量功法放棄失敗';
       client.emit(S2C.TechniqueGenerationResult, { jobId: '', batchId, result: 'failed', errorMessage });
       return { success: false, error: errorMessage };
     }
@@ -333,7 +333,7 @@ export class WorldGatewayTechniqueGenerationHelper {
       jobId: '',
       batchId,
       result: result.success ? 'discarded' : 'failed',
-      errorMessage: result.success ? undefined : result.error ?? '批量功法放弃失败',
+      errorMessage: result.success ? undefined : result.error ?? '批量功法放棄失敗',
       discardRefund: result.success ? result.refund : undefined,
     });
     if (result.success) this.deps.worldSyncService?.emitDeltaSync(playerId, client);
@@ -373,7 +373,7 @@ export class WorldGatewayTechniqueGenerationHelper {
         });
       });
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : '功法采纳失败';
+      const errorMessage = error instanceof Error ? error.message : '功法採納失敗';
       client.emit(S2C.TechniqueGenerationResult, {
         jobId,
         result: 'failed',
@@ -396,7 +396,7 @@ export class WorldGatewayTechniqueGenerationHelper {
     client.emit(S2C.TechniqueGenerationResult, {
       jobId,
       result: 'failed',
-      errorMessage: result.error ?? '功法采纳失败',
+      errorMessage: result.error ?? '功法採納失敗',
     });
     return result;
   }
@@ -418,7 +418,7 @@ export class WorldGatewayTechniqueGenerationHelper {
         });
       });
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : '功法放弃失败';
+      const errorMessage = error instanceof Error ? error.message : '功法放棄失敗';
       client.emit(S2C.TechniqueGenerationResult, {
         jobId,
         result: 'failed',
@@ -429,7 +429,7 @@ export class WorldGatewayTechniqueGenerationHelper {
     client.emit(S2C.TechniqueGenerationResult, {
       jobId,
       result: result.success ? 'discarded' : 'failed',
-      errorMessage: result.success ? undefined : result.error ?? '功法放弃失败',
+      errorMessage: result.success ? undefined : result.error ?? '功法放棄失敗',
       discardRefund: result.success ? result.refund : undefined,
     });
     if (result.success) {

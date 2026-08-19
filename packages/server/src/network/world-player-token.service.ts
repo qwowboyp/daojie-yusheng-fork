@@ -1054,24 +1054,24 @@ export class WorldPlayerTokenService {
 
     const payload = this.worldPlayerTokenCodecService.validateAccessToken(token);
     if (!payload) {
-      this.logger.debug('拒绝玩家令牌：访问令牌无效');
+      this.logger.debug('拒絕玩家令牌：訪問令牌無效');
       recordAuthTrace({ type: 'token', outcome: 'reject', reason: 'invalid_access_token' });
       return null;
     }
 
     const tokenKind = resolvePlayerTokenKind(payload);
     if (payload.role === 'gm') {
-      this.logger.debug('拒绝玩家令牌：GM 令牌不能当作玩家令牌使用');
+      this.logger.debug('拒絕玩家令牌：GM 令牌不能當作玩家令牌使用');
       recordAuthTrace({ type: 'token', outcome: 'reject', reason: 'gm_role_not_player' });
       return null;
     }
     if (tokenKind === 'refresh') {
-      this.logger.debug('拒绝玩家令牌：不允许使用刷新令牌');
+      this.logger.debug('拒絕玩家令牌：不允許使用刷新令牌');
       recordAuthTrace({ type: 'token', outcome: 'reject', reason: 'refresh_token_not_allowed' });
       return null;
     }
     if (typeof payload.sub !== 'string' || typeof payload.username !== 'string') {
-      this.logger.debug('拒绝玩家令牌：缺少 sub 或 username');
+      this.logger.debug('拒絕玩家令牌：缺少 sub 或 username');
       recordAuthTrace({ type: 'token', outcome: 'reject', reason: 'missing_sub_or_username' });
       return null;
     }

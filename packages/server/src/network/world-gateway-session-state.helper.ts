@@ -67,7 +67,7 @@ class WorldGatewaySessionStateHelper {
         if (typeof this.playerRuntimeService.beginOfflineGainSession === 'function') {
             await this.playerRuntimeService.beginOfflineGainSession(binding.playerId).catch((error) => {
                 this.logger.warn(
-                    `记录离线收益基线失败：${binding.playerId} ${error instanceof Error ? error.message : String(error)}`,
+                    `記錄離線收益基線失敗：${binding.playerId} ${error instanceof Error ? error.message : String(error)}`,
                 );
             });
         }

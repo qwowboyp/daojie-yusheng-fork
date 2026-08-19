@@ -62,7 +62,7 @@ export class InstanceStatePurgeWorker {
     });
     let processed = orphanedRecovery?.recoveredVaults ?? 0;
     if ((orphanedRecovery?.blockedVaults ?? 0) > 0) {
-      this.logger.warn(`宝库孤儿库存回收存在阻塞：blocked=${orphanedRecovery?.blockedVaults} reason=${orphanedRecovery?.reason ?? 'unknown'}`);
+      this.logger.warn(`寶庫孤兒庫存回收存在阻塞：blocked=${orphanedRecovery?.blockedVaults} reason=${orphanedRecovery?.reason ?? 'unknown'}`);
     }
     if (performance.now() - startedAt >= INSTANCE_STATE_PURGE_RUN_BUDGET_MS) {
       return processed;
@@ -101,7 +101,7 @@ export class InstanceStatePurgeWorker {
         break;
       }
       if (recovery && recovery.ok !== true) {
-        this.logger.warn(`实例 ${instanceId} 清理前宝库库存回收未完成，跳过实例状态清理：blocked=${recovery.blockedVaults} reason=${recovery.reason ?? 'unknown'}`);
+        this.logger.warn(`實例 ${instanceId} 清理前寶庫庫存回收未完成，跳過實例狀態清理：blocked=${recovery.blockedVaults} reason=${recovery.reason ?? 'unknown'}`);
         this.catalogCursor = instanceId;
         continue;
       }
