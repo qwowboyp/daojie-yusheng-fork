@@ -25,14 +25,11 @@ export const UI_STYLE_STORAGE_KEY = 'mud-ui-style-config:v1';
 /** GM 管理台最近一次可用密码的本地存储键。 */
 export const GM_PASSWORD_STORAGE_KEY = 'mud:gm-password:v1';
 
-/** 客户端语言偏好的本地存储键。 */
-export const LANGUAGE_STORAGE_KEY = 'mud:language-preference:v1';
-
-/** 支持的语言 locale 白名单。 */
-export const SUPPORTED_LOCALES = ['zh-CN', 'zh-TW'] as const;
+/** 支持的语言 locale 白名单（已收敛为单一繁体中文）。 */
+export const SUPPORTED_LOCALES = ['zh-TW'] as const;
 
 /** 客户端语言 locale 型别。 */
 export type ClientLocale = (typeof SUPPORTED_LOCALES)[number];
 
-/** 默认语言（简体中文）。 */
+/** 默认语言（繁体中文）。 */
 export const DEFAULT_CLIENT_LOCALE: ClientLocale = 'zh-TW';

@@ -50,14 +50,14 @@ export class TimeChamberUsageModal {
     detailModalHost.open({
       ownerId: MODAL_OWNER,
       variantClass: MODAL_VARIANT,
-      title: '开启密室',
+      title: '開啟密室',
       size: 'md',
-      subtitle: '正在读取密室状态…',
+      subtitle: '正在讀取密室狀態…',
       onClose: () => this.callbacks?.onClose(),
       renderBody: (body) => {
         const loading = document.createElement('div');
         loading.className = 'time-chamber-loading';
-        loading.textContent = '正在读取密室信息…';
+        loading.textContent = '正在讀取密室訊息…';
         body.replaceChildren(loading);
       },
     });
@@ -78,7 +78,7 @@ export class TimeChamberUsageModal {
     this.durationHours = clampHours(this.durationHours, detail);
     if (this.passwordAction && detail.passwordProtected && detailModalHost.isOpenFor(MODAL_OWNER)) {
       this.detailSignature = nextSignature;
-      detailModalHost.patch({ ownerId: MODAL_OWNER, title: '输入进入密码', subtitle: detail.displayName });
+      detailModalHost.patch({ ownerId: MODAL_OWNER, title: '輸入進入密碼', subtitle: detail.displayName });
       this.syncPasswordPrompt();
       return;
     }
@@ -213,7 +213,7 @@ export class TimeChamberUsageModal {
     this.shell = null;
     detailModalHost.patch({
       ownerId: MODAL_OWNER,
-      title: '输入进入密码',
+      title: '輸入進入密碼',
       subtitle: this.detail.displayName,
       renderBody: (body) => body.replaceChildren(buildPasswordPrompt(action)),
       onAfterRender: (body, signal) => {
@@ -236,7 +236,7 @@ export class TimeChamberUsageModal {
     if (!(input instanceof HTMLInputElement)) return;
     const password = input.value.normalize('NFC');
     if (!password || password.trim().length === 0) {
-      this.passwordError = '请输入进入密码';
+      this.passwordError = '請輸入進入密碼';
       this.syncPasswordPrompt();
       input.focus();
       return;
@@ -274,8 +274,8 @@ export class TimeChamberUsageModal {
     if (submit) {
       submit.disabled = this.pending;
       submit.textContent = this.pending
-        ? '验证中…'
-        : action.operation === 'activate' ? '确认开启并进入' : '确认进入';
+        ? '驗證中…'
+        : action.operation === 'activate' ? '確認開啟並進入' : '確認進入';
     }
     if (cancel) cancel.disabled = this.pending;
     if (error) {
@@ -287,14 +287,14 @@ export class TimeChamberUsageModal {
   private patchDuration(shell: HTMLElement): void {
     if (!this.detail) return;
     const durationValue = shell.querySelector<HTMLElement>('[data-time-chamber-field="duration"] strong');
-    if (durationValue) durationValue.textContent = `${this.durationHours} 小时`;
+    if (durationValue) durationValue.textContent = `${this.durationHours} 小時`;
     const total = calculateTimeChamberActivationCost(
       this.detail.configuredSpeed,
       this.detail.capacity,
       this.durationHours,
       this.detail.sizeTier,
     );
-    setField(shell, 'total', `${formatDisplayNumber(total)} 灵石`);
+    setField(shell, 'total', `${formatDisplayNumber(total)} 靈石`);
     for (const button of shell.querySelectorAll<HTMLButtonElement>('[data-time-chamber-duration-action]')) {
       const action = button.dataset.timeChamberDurationAction;
       const atMin = this.durationHours <= this.detail.minUsageHours;
@@ -313,13 +313,13 @@ export class TimeChamberUsageModal {
     if (activateButton) {
       activateButton.hidden = this.detail?.active === true || !activationRequired;
       activateButton.disabled = this.pending || this.detail?.active === true || !activationRequired;
-      activateButton.textContent = this.pending ? '处理中…' : '支付并开启';
+      activateButton.textContent = this.pending ? '處理中…' : '支付並開啟';
     }
     const enterButton = shell.querySelector<HTMLButtonElement>('[data-time-chamber-enter]');
     if (enterButton) {
       enterButton.hidden = !entryAvailable;
       enterButton.disabled = this.pending || !entryAvailable;
-      enterButton.textContent = this.pending ? '处理中…' : '进入密室';
+      enterButton.textContent = this.pending ? '處理中…' : '進入密室';
     }
     this.patchDuration(shell);
   }
@@ -339,7 +339,7 @@ function buildPasswordPrompt(action: TimeChamberPasswordAction): HTMLFormElement
   const label = document.createElement('label');
   label.className = 'time-chamber-setting-field';
   const caption = document.createElement('span');
-  caption.textContent = '进入密码';
+  caption.textContent = '進入密碼';
   const input = document.createElement('input');
   input.className = 'ui-input';
   input.type = 'password';
@@ -364,7 +364,7 @@ function buildPasswordPrompt(action: TimeChamberPasswordAction): HTMLFormElement
   submit.type = 'submit';
   submit.className = 'small-btn';
   submit.dataset.timeChamberPasswordSubmit = 'true';
-  submit.textContent = action.operation === 'activate' ? '确认开启并进入' : '确认进入';
+  submit.textContent = action.operation === 'activate' ? '確認開啟並進入' : '確認進入';
   actions.append(cancel, submit);
   form.append(label, error, actions);
   return form;
@@ -380,10 +380,10 @@ function buildUsageShell(detail: TimeChamberUsageDetailView, durationHours: numb
   const metrics = document.createElement('section');
   metrics.className = 'time-chamber-metrics';
   metrics.append(
-    buildMetric('时间流速', 'speed'),
-    buildMetric('当前人数', 'users'),
-    buildMetric('开启成本', 'cost'),
-    buildMetric('密室状态', 'status'),
+    buildMetric('時間流速', 'speed'),
+    buildMetric('當前人數', 'users'),
+    buildMetric('開啟成本', 'cost'),
+    buildMetric('密室狀態', 'status'),
   );
 
   const purchase = document.createElement('section');
@@ -391,28 +391,28 @@ function buildUsageShell(detail: TimeChamberUsageDetailView, durationHours: numb
   purchase.dataset.timeChamberPurchase = 'true';
   const heading = document.createElement('h3');
   heading.dataset.timeChamberPurchaseOnly = 'true';
-  heading.textContent = '开启时长';
+  heading.textContent = '開啟時長';
   const durationControl = document.createElement('div');
   durationControl.className = 'time-chamber-duration-control';
   durationControl.dataset.timeChamberPurchaseOnly = 'true';
   durationControl.innerHTML = renderTradePriceStepControl({
-    value: `${durationHours} 小时`,
-    currencyName: '开启时长',
+    value: `${durationHours} 小時`,
+    currencyName: '開啟時長',
     displayAttrs: { 'data-time-chamber-field': 'duration' },
     leftButtons: [
-      { label: '÷2', attrs: { 'data-time-chamber-duration-action': 'half', title: '时长减半' } },
-      { label: '-1', attrs: { 'data-time-chamber-duration-action': 'minus', title: '减少一小时' } },
+      { label: '÷2', attrs: { 'data-time-chamber-duration-action': 'half', title: '時長減半' } },
+      { label: '-1', attrs: { 'data-time-chamber-duration-action': 'minus', title: '減少一小時' } },
     ],
     rightButtons: [
-      { label: '+1', attrs: { 'data-time-chamber-duration-action': 'plus', title: '增加一小时' } },
-      { label: '×2', attrs: { 'data-time-chamber-duration-action': 'double', title: '时长翻倍' } },
+      { label: '+1', attrs: { 'data-time-chamber-duration-action': 'plus', title: '增加一小時' } },
+      { label: '×2', attrs: { 'data-time-chamber-duration-action': 'double', title: '時長翻倍' } },
     ],
   });
   const checkout = document.createElement('div');
   checkout.className = 'time-chamber-checkout';
   const totalLabel = document.createElement('span');
   totalLabel.dataset.timeChamberPurchaseOnly = 'true';
-  totalLabel.textContent = '合计';
+  totalLabel.textContent = '合計';
   const total = document.createElement('strong');
   total.dataset.timeChamberField = 'total';
   total.dataset.timeChamberPurchaseOnly = 'true';
@@ -423,13 +423,13 @@ function buildUsageShell(detail: TimeChamberUsageDetailView, durationHours: numb
   enter.className = 'small-btn ghost';
   enter.dataset.timeChamberEnter = 'true';
   enter.hidden = !entryAvailable;
-  enter.textContent = '进入密室';
+  enter.textContent = '進入密室';
   const activate = document.createElement('button');
   activate.type = 'button';
   activate.className = 'small-btn';
   activate.dataset.timeChamberActivate = 'true';
   activate.hidden = detail.active || !activationRequired;
-  activate.textContent = '支付并开启';
+  activate.textContent = '支付並開啟';
   actions.append(enter, activate);
   checkout.append(totalLabel, total, actions);
   purchase.append(heading, durationControl, checkout);
@@ -437,9 +437,9 @@ function buildUsageShell(detail: TimeChamberUsageDetailView, durationHours: numb
   const details = document.createElement('dl');
   details.className = 'time-chamber-detail-list';
   details.append(
-    buildDetailRow('空间', 'space'),
-    buildDetailRow('进入限制', 'access'),
-    buildDetailRow('本轮运行至', 'active-until'),
+    buildDetailRow('空間', 'space'),
+    buildDetailRow('進入限制', 'access'),
+    buildDetailRow('本輪運行至', 'active-until'),
   );
   shell.append(metrics, purchase, details);
   patchUsageFields(shell, detail);
@@ -448,7 +448,7 @@ function buildUsageShell(detail: TimeChamberUsageDetailView, durationHours: numb
     detail.capacity,
     durationHours,
     detail.sizeTier,
-  ))} 灵石`);
+  ))} 靈石`);
   return shell;
 }
 
@@ -457,15 +457,15 @@ function patchUsageFields(shell: HTMLElement, detail: TimeChamberUsageDetailView
   const entryAvailable = detail.active || !activationRequired;
   setField(shell, 'speed', detail.configuredSpeed === detail.effectiveSpeed
     ? `${detail.effectiveSpeed} 倍`
-    : `设定 ${detail.configuredSpeed} 倍 / 当前 ${detail.effectiveSpeed} 倍`);
+    : `設定 ${detail.configuredSpeed} 倍 / 當前 ${detail.effectiveSpeed} 倍`);
   setField(shell, 'users', `${detail.occupancy}/${detail.capacity} 人`);
-  setField(shell, 'cost', `${formatDisplayNumber(detail.activationCostSpiritStonesPerHour)} 灵石/小时`);
-  setField(shell, 'status', detail.active ? '已开启' : activationRequired ? '未开启' : '常驻开放');
+  setField(shell, 'cost', `${formatDisplayNumber(detail.activationCostSpiritStonesPerHour)} 靈石/小時`);
+  setField(shell, 'status', detail.active ? '已開啟' : activationRequired ? '未開啟' : '常駐開放');
   setField(shell, 'space', `${detail.width}×${detail.height}`);
-  setField(shell, 'access', detail.passwordProtected ? '需要密码' : '公开进入');
+  setField(shell, 'access', detail.passwordProtected ? '需要密碼' : '公開進入');
   setField(shell, 'active-until', detail.activeUntil
     ? formatDateTime(detail.activeUntil)
-    : activationRequired ? '当前未激活' : '无需开启时段');
+    : activationRequired ? '當前未激活' : '無需開啟時段');
   for (const element of shell.querySelectorAll<HTMLElement>('[data-time-chamber-purchase-only]')) {
     element.hidden = detail.active || !activationRequired;
   }

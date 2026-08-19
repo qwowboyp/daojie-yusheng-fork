@@ -49,7 +49,7 @@ interface RenderInlineItemChipOptions {
 
 const INLINE_REFERENCE_SELECTOR = '[data-inline-item-id], [data-inline-monster-id]';
 const UNKNOWN_INLINE_ITEM_NAME = '未知物品';
-const UNKNOWN_INLINE_MONSTER_NAME = '未知妖兽';
+const UNKNOWN_INLINE_MONSTER_NAME = '未知妖獸';
 /** inlineItemTooltip：内嵌物品提示浮层实例。 */
 const inlineItemTooltip = new FloatingTooltip('floating-tooltip inline-item-tooltip');
 /** boundRoots：bound Roots。 */
@@ -177,8 +177,8 @@ async function resolveTooltipPayload(node: HTMLElement) {
   return {
       title: location.monsterName || fallbackName,
       lines: [
-        `出没地图：${location.mapName}`,
-      ...(typeof location.mapLv === 'number' ? [`推荐境界：${formatMapRecommendedRealmLabel(location.mapLv)}`] : []),
+        `出沒地圖：${location.mapName}`,
+      ...(typeof location.mapLv === 'number' ? [`推薦境界：${formatMapRecommendedRealmLabel(location.mapLv)}`] : []),
     ],
     asideCards: [],
     allowHtml: false,

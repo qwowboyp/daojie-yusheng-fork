@@ -313,8 +313,8 @@ export function createMainRuntimeMonitorSource(
       elements.fpsRateEl.setAttribute(
         'title',
         stats.fps === null
-          ? '客户端当前渲染帧率未采样'
-          : `客户端当前渲染帧率约 ${Math.round(stats.fps)} FPS，LOW ${Math.round(stats.low ?? stats.fps)}，1% LOW ${Math.round(stats.onePercentLow ?? stats.fps)}`,
+          ? '客戶端當前渲染幀率未採樣'
+          : `客戶端當前渲染幀率約 ${Math.round(stats.fps)} FPS，LOW ${Math.round(stats.low ?? stats.fps)}，1% LOW ${Math.round(stats.onePercentLow ?? stats.fps)}`,
       );
     }
   }  
@@ -541,7 +541,7 @@ export function createMainRuntimeMonitorSource(
     if (elements.currentTimeMinBEl) elements.currentTimeMinBEl.textContent = minutes[1] ?? '-';
     if (elements.currentTimePhaseEl) elements.currentTimePhaseEl.textContent = phaseLabel;
     if (elements.currentTimeEl) {
-      elements.currentTimeEl.setAttribute('aria-label', state ? `${phaseLabel} ${hours}:${minutes}` : '时辰未定');
+      elements.currentTimeEl.setAttribute('aria-label', state ? `${phaseLabel} ${hours}:${minutes}` : '時辰未定');
     }
   }  
   /**
@@ -618,8 +618,8 @@ export function createMainRuntimeMonitorSource(
     if (elements.pingUnitEl) elements.pingUnitEl.textContent = status;
     if (elements.pingLatencyEl) {
       const title = latencyMs === null
-        ? `当前域名 ${options.locationHost} 的服务器延迟${status === '离线' ? '不可用' : `状态：${status}`}`
-        : `当前域名 ${options.locationHost} 上游戏连接往返约 ${Math.round(latencyMs)}ms`;
+        ? `當前域名 ${options.locationHost} 的伺服器延遲${status === '離線' ? '不可用' : `狀態：${status}`}`
+        : `當前域名 ${options.locationHost} 上游戲連接往返約 ${Math.round(latencyMs)}ms`;
       elements.pingLatencyEl.setAttribute('aria-label', title);
     }
   }  
@@ -719,7 +719,7 @@ export function createMainRuntimeMonitorSource(
       return;
     }
     pendingSocketPing = null;
-    renderPingLatency(null, options.connection.connected ? '无回音' : '离线');
+    renderPingLatency(null, options.connection.connected ? '無迴音' : '離線');
   }  
   /**
  * sampleServerPing：执行sampleServerPing相关逻辑。
@@ -735,11 +735,11 @@ export function createMainRuntimeMonitorSource(
     }
     clearPendingSocketPing();
     if (!navigator.onLine) {
-      renderPingLatency(null, '离线');
+      renderPingLatency(null, '離線');
       return;
     }
     if (!options.connection.connected) {
-      renderPingLatency(null, options.login.hasRefreshToken() ? '重归' : '离线');
+      renderPingLatency(null, options.login.hasRefreshToken() ? '重歸' : '離線');
       return;
     }
     const serial = ++pingRequestSerial;
@@ -839,7 +839,7 @@ export function createMainRuntimeMonitorSource(
     renderTickRate(1);
     syncFpsMonitorVisibility(showFpsMonitor);
     renderCurrentTime(null);
-    renderPingLatency(null, '待测');
+    renderPingLatency(null, '待測');
     if (currentTimeIntervalId !== null) {
       options.windowRef.clearInterval(currentTimeIntervalId);
     }

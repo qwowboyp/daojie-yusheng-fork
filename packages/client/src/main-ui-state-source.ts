@@ -154,7 +154,7 @@ export function createMainUiStateSource(options: MainUiStateSourceOptions) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     if (player.realm?.path === 'immortal') {
-      return player.realm.shortName === '筑基' ? t('hud.title.immortal-path') : t('hud.title.immortal-gate');
+      return player.realm.shortName === '築基' ? t('hud.title.immortal-path') : t('hud.title.immortal-gate');
     }
     const top = getTopTechniqueByLevel(player);
     if (!top) return t('hud.title.no-technique');

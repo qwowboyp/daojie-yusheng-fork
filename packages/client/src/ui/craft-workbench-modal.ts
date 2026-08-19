@@ -1306,7 +1306,7 @@ export class CraftWorkbenchModal {
     if (this.activeMode === 'technique_refining') {
       const isUnification = this.transmissionView.isTechniqueAggregationOpen();
       return {
-        title: isUnification ? '统法台' : '炼法台',
+        title: isUnification ? '統法臺' : '煉法臺',
         subtitle: this.getCraftSubtitle(),
         variantClass: `detail-modal--craft detail-modal--craft-technique-refining${isUnification ? ' detail-modal--technique-unification' : ''}`,
         body: includeBody ? this.transmissionView.renderTechniqueRefiningBody() : '',
@@ -1326,10 +1326,10 @@ export class CraftWorkbenchModal {
       return t('craft.workbench.modal.subtitle.enhancement', { level: formatDisplayInteger(this.enhancementSkillLevel) });
     }
     if (this.activeMode === 'transmission') {
-      return '功法领悟与传授';
+      return '功法領悟與傳授';
     }
     if (this.activeMode === 'technique_refining') {
-      return this.transmissionView.isTechniqueAggregationOpen() ? '统合诸法，立脉传承' : '功法书分解与抄录';
+      return this.transmissionView.isTechniqueAggregationOpen() ? '統合諸法，立脈傳承' : '功法書分解與抄錄';
     }
     return t('craft.workbench.modal.subtitle.default');
   }
@@ -1486,7 +1486,7 @@ export class CraftWorkbenchModal {
     if (!this.queueFloatingPanel) {
       this.queueFloatingPanel = new FloatingListPanel({
         id: 'floating-action-queue',
-        title: '行动队列',
+        title: '行動隊列',
         storageKey: 'mud:floating-action-queue:v2',
         className: 'floating-list-panel--queue',
         defaultLeft: Math.max(12, window.innerWidth - 300),
@@ -1575,17 +1575,17 @@ export class CraftWorkbenchModal {
             type="button"
             data-floating-queue-action="move_to_top"
             ${actionData}
-            aria-label="${escapeHtmlAttr(`将 ${entry.label} 移至等待队首`)}"
-            title="移动到顶部"
+            aria-label="${escapeHtmlAttr(`將 ${entry.label} 移至等待隊首`)}"
+            title="移動到頂部"
             ${canMoveToTop ? '' : 'disabled'}
-          >置顶</button>
+          >置頂</button>
           <button
             class="floating-job-action"
             type="button"
             data-floating-queue-action="move_down"
             ${actionData}
-            aria-label="${escapeHtmlAttr(`将 ${entry.label} 向下移动一位`)}"
-            title="向下一个"
+            aria-label="${escapeHtmlAttr(`將 ${entry.label} 向下移動一位`)}"
+            title="向下一個"
             ${canMoveDown ? '' : 'disabled'}
           >下移</button>
           <button
@@ -1594,7 +1594,7 @@ export class CraftWorkbenchModal {
             data-floating-queue-action="remove"
             ${actionData}
             aria-label="${escapeHtmlAttr(`移除 ${entry.label}`)}"
-            title="移除任务"
+            title="移除任務"
             ${canRemove ? '' : 'disabled'}
           >移除</button>
         </div>
@@ -1704,7 +1704,7 @@ export class CraftWorkbenchModal {
       { mode: 'alchemy', label: t('craft.workbench.mode.alchemy'), note: t('craft.workbench.level.short', { level: formatDisplayInteger(this.alchemySkillLevel) }) },
       { mode: 'forging', label: t('craft.workbench.mode.forging'), note: t('craft.workbench.level.short', { level: formatDisplayInteger(this.forgingSkillLevel) }) },
       { mode: 'enhancement', label: t('craft.workbench.mode.enhancement'), note: t('craft.workbench.level.short', { level: formatDisplayInteger(this.enhancementSkillLevel) }) },
-      { mode: 'transmission', label: '传法', note: '功法' },
+      { mode: 'transmission', label: '傳法', note: '功法' },
     ];
     return tabs.map((tab) => `
       <button class="craft-mode-tab ${this.activeMode === tab.mode ? 'active' : ''}" type="button" data-craft-action="switch-craft-mode" data-mode="${tab.mode}" data-guided-tour-craft-mode="${tab.mode}">
@@ -1743,10 +1743,10 @@ export class CraftWorkbenchModal {
       return t('craft.workbench.mode.enhancement');
     }
     if (this.activeMode === 'transmission') {
-      return '传法';
+      return '傳法';
     }
     if (this.activeMode === 'technique_refining') {
-      return this.transmissionView.isTechniqueAggregationOpen() ? '统法台' : '炼法台';
+      return this.transmissionView.isTechniqueAggregationOpen() ? '統法臺' : '煉法臺';
     }
     return t('craft.workbench.mode.craft');
   }
@@ -1762,12 +1762,12 @@ export class CraftWorkbenchModal {
       return t('craft.workbench.profession.description.enhancement');
     }
     if (this.activeMode === 'transmission') {
-      return '用于功法领悟与传授。';
+      return '用於功法領悟與傳授。';
     }
     if (this.activeMode === 'technique_refining') {
       return this.transmissionView.isTechniqueAggregationOpen()
-        ? '承载一脉功法，并依权限向有缘之人开放参阅与修订。'
-        : '分解功法书为残页，也可以用残页抄录指定层数的功法书。';
+        ? '承載一脈功法，並依權限向有緣之人開放參閱與修訂。'
+        : '分解功法書為殘頁，也可以用殘頁抄錄指定層數的功法書。';
     }
     return t('craft.workbench.profession.description.default');
   }
@@ -2128,7 +2128,7 @@ export class CraftWorkbenchModal {
     const preset: PlayerAlchemyPreset = {
       presetId: existingIndex >= 0 ? list[existingIndex].presetId : `local:${kind}:${recipe.recipeId}:${now.toString(36)}`,
       recipeId: recipe.recipeId,
-      name: existingIndex >= 0 ? list[existingIndex].name : `${recipe.outputName}${kind === 'forging' ? '自定义器方' : '自定义丹方'}${list.length + 1}`,
+      name: existingIndex >= 0 ? list[existingIndex].name : `${recipe.outputName}${kind === 'forging' ? '自定義器方' : '自定義丹方'}${list.length + 1}`,
       ingredients: this.getAlchemySubmittedDraftIngredients(recipe.recipeId),
       updatedAt: now,
     };
@@ -2317,7 +2317,7 @@ export class CraftWorkbenchModal {
     }
     confirmModalHost.open({
       ownerId: CraftWorkbenchModal.ALCHEMY_MATERIAL_PICKER_OWNER,
-      title: this.activeMode === 'forging' ? '选择辅材' : '选择辅药',
+      title: this.activeMode === 'forging' ? '選擇輔材' : '選擇輔藥',
       subtitle: recipe.outputName,
       bodyHtml: this.renderAlchemyMaterialPickerBody(recipe),
       hideActions: true,
@@ -2337,15 +2337,15 @@ export class CraftWorkbenchModal {
         <input class="alchemy-material-picker-search" type="search" value="${escapeHtml(this.alchemyMaterialPickerQuery)}" placeholder="搜索材料" data-alchemy-material-search="true">
         <div class="alchemy-material-picker-table">
           <div class="alchemy-material-picker-head">
-            ${sortButton('name', '名称')}
-            ${sortButton('level', '等级')}
-            ${sortButton('grade', '品阶')}
+            ${sortButton('name', '名稱')}
+            ${sortButton('level', '等級')}
+            ${sortButton('grade', '品階')}
             ${sortButton('metal', '金')}
             ${sortButton('wood', '木')}
             ${sortButton('water', '水')}
             ${sortButton('fire', '火')}
             ${sortButton('earth', '土')}
-            ${sortButton('count', '数量')}
+            ${sortButton('count', '數量')}
             <span></span>
           </div>
           <div class="alchemy-material-picker-list">
@@ -2358,7 +2358,7 @@ export class CraftWorkbenchModal {
                 <span>${formatDisplayInteger(candidate.count)}</span>
                 <span class="alchemy-material-picker-add">添加</span>
               </button>
-            `).join('') : '<div class="alchemy-material-picker-empty">没有可用材料</div>'}
+            `).join('') : '<div class="alchemy-material-picker-empty">沒有可用材料</div>'}
           </div>
         </div>
       </div>
@@ -2467,7 +2467,7 @@ export class CraftWorkbenchModal {
       : presets[0]?.presetId ?? null;
     confirmModalHost.open({
       ownerId: CraftWorkbenchModal.ALCHEMY_PRESET_PICKER_OWNER,
-      title: this.activeMode === 'forging' ? '加载自定义器方' : '加载自定义丹方',
+      title: this.activeMode === 'forging' ? '加載自定義器方' : '加載自定義丹方',
       subtitle: recipe.outputName,
       bodyHtml: this.renderAlchemyPresetPickerBody(recipe),
       hideActions: true,
@@ -2484,8 +2484,8 @@ export class CraftWorkbenchModal {
       ? presets.find((preset) => preset.presetId === this.alchemyPresetPickerSelectedId) ?? null
       : null;
     const emptyText = this.activeMode === 'forging'
-      ? '当前器物还没有保存的自定义器方。'
-      : '当前丹药还没有保存的自定义丹方。';
+      ? '當前器物還沒有保存的自定義器方。'
+      : '當前丹藥還沒有保存的自定義丹方。';
     return `
       <div class="alchemy-preset-picker">
         <div class="alchemy-preset-picker-list" data-alchemy-preset-picker-list="true">
@@ -2518,13 +2518,13 @@ export class CraftWorkbenchModal {
       <div class="alchemy-preset-picker-detail-head">
         <div>
           <div class="alchemy-preset-picker-title">${escapeHtml(preset.name)}</div>
-          <div class="alchemy-preset-picker-subtitle">${escapeHtml(this.activeMode === 'forging' ? '自定义器方' : '自定义丹方')}</div>
+          <div class="alchemy-preset-picker-subtitle">${escapeHtml(this.activeMode === 'forging' ? '自定義器方' : '自定義丹方')}</div>
         </div>
-        <button class="small-btn" type="button" data-alchemy-preset-load="${escapeHtmlAttr(preset.presetId)}">${escapeHtml(this.activeMode === 'forging' ? '加载选中器方' : '加载选中丹方')}</button>
+        <button class="small-btn" type="button" data-alchemy-preset-load="${escapeHtmlAttr(preset.presetId)}">${escapeHtml(this.activeMode === 'forging' ? '加載選中器方' : '加載選中丹方')}</button>
       </div>
       <section class="alchemy-fivephase-panel alchemy-preset-picker-fivephase">
         <div class="alchemy-fivephase-block">
-          <div class="alchemy-fivephase-title">五行 当前 / 需要</div>
+          <div class="alchemy-fivephase-title">五行 當前 / 需要</div>
           ${this.renderAlchemyElementRatioGrid(inputElements, requiredElements)}
         </div>
       </section>
@@ -2534,7 +2534,7 @@ export class CraftWorkbenchModal {
           return `
             <div class="alchemy-preset-picker-material-row">
               <span>${this.renderAlchemyItemReference(ingredient.itemId, this.resolveAlchemyMaterialName(recipe, ingredient.itemId), 'material')}</span>
-              <span class="alchemy-ingredient-role ${isMain ? 'main' : 'aux'}">${escapeHtml(this.activeMode === 'forging' ? (isMain ? '主材' : '辅材') : (isMain ? '主药' : '辅药'))}</span>
+              <span class="alchemy-ingredient-role ${isMain ? 'main' : 'aux'}">${escapeHtml(this.activeMode === 'forging' ? (isMain ? '主材' : '輔材') : (isMain ? '主藥' : '輔藥'))}</span>
               <span>${formatDisplayInteger(ingredient.count)}</span>
               <span>${escapeHtml(this.formatAlchemyElementVector(this.getAlchemyMaterialElements(ingredient.itemId)))}</span>
             </div>
@@ -2592,11 +2592,11 @@ export class CraftWorkbenchModal {
   private formatAlchemyPresetUpdatedAt(value: number | undefined): string {
     const timestamp = Math.floor(Number(value) || 0);
     if (timestamp <= 0) {
-      return '未记录时间';
+      return '未記錄時間';
     }
     const date = new Date(timestamp);
     if (Number.isNaN(date.getTime())) {
-      return '未记录时间';
+      return '未記錄時間';
     }
     return date.toLocaleString('zh-CN', {
       month: '2-digit',
@@ -2747,7 +2747,7 @@ export class CraftWorkbenchModal {
         return value !== 0 ? `${labels[element]}${formatDisplaySignedNumber(value)}` : '';
       })
       .filter(Boolean);
-    return parts.length > 0 ? parts.join(' / ') : '无';
+    return parts.length > 0 ? parts.join(' / ') : '無';
   }
 
   private getAlchemyMaxCraftQuantity(

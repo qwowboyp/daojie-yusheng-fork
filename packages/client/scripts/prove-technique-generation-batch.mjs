@@ -11,8 +11,8 @@ const [panelSource, styleSource, senderSource] = await Promise.all([
 ]);
 
 assert.match(panelSource, /单部领悟/);
-assert.match(panelSource, /批量领悟/);
-assert.match(panelSource, /确认批量领悟/);
+assert.match(panelSource, /批量領悟/);
+assert.match(panelSource, /確認批量領悟/);
 assert.match(panelSource, /全部采纳并学习/);
 assert.match(panelSource, /放弃本批功法/);
 assert.match(panelSource, /六维权重均衡/);

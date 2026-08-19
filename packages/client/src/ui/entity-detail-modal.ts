@@ -26,7 +26,7 @@ import { formatDisplayCurrentMax, formatDisplayInteger } from '../utils/number';
 
 const LEADERBOARD_PLAYER_LOCATION_EVENT = 'mud:leaderboard-player-locations';
 const UNKNOWN_PORTAL_TARGET_MAP_NAME = '未知地域';
-const UNKNOWN_MONSTER_TIER_LABEL = '未知等阶';
+const UNKNOWN_MONSTER_TIER_LABEL = '未知等階';
 type LeaderboardTrackedLocation = S2C_LeaderboardPlayerLocations['entries'][number];
 
 let trackedLeaderboardLocations = new Map<string, LeaderboardTrackedLocation>();
@@ -374,7 +374,7 @@ export class EntityDetailModal {
     if (!tracked) {
       return `
         <div class="ui-detail-field ui-detail-field--section">
-          <strong>天机追索</strong>
+          <strong>天機追索</strong>
           <div>${t('entity-detail.player.tracking.empty', undefined)}</div>
         </div>
       `;

@@ -613,7 +613,7 @@ function resolvePreviewVar(varName: SkillFormulaVar, context: SkillTooltipPrevie
 
 /** getFormulaVarLabel：读取公式变量展示名。 */
 function getFormulaVarLabel(varName: SkillFormulaVar): string {
-  return FORMULA_VAR_LABELS[varName] ?? '未知变量';
+  return FORMULA_VAR_LABELS[varName] ?? '未知變量';
 }
 
 /** renderVariableFormula：渲染Variable Formula。 */
@@ -840,7 +840,7 @@ function previewPercentPart(formula: SkillFormula, context: SkillTooltipPreviewC
       };
     }
     if (formula.var === 'techLevel') {
-      const badge = `<span class="skill-scaling skill-scaling-tech"><span class="skill-scaling-icon">◎</span><span>${escapeHtml(`${formatDisplayNumber(resolved.value)}层`)}</span></span>`;
+      const badge = `<span class="skill-scaling skill-scaling-tech"><span class="skill-scaling-icon">◎</span><span>${escapeHtml(`${formatDisplayNumber(resolved.value)}層`)}</span></span>`;
       return {
         html: renderFormulaTerm(
           resolved.known ? `${formatPercent(resolvedPercent)}（${badge}×${formatPercent(formula.scale ?? 1)}）` : `${escapeHtml(getFormulaVarLabel(formula.var))}×${formatPercent(formula.scale ?? 1)}`,

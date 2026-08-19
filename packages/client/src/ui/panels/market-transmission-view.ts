@@ -1002,7 +1002,7 @@ export class MarketTransmissionView {
 
   private renderTransmissionConsignFields(selected: TransmissionConsignItemView | null): string {
     const price = this.normalizeTransmissionConsignPrice(this.panel.transmissionConsignPanel.unitPrice);
-    const currencyName = this.panel.transmissionListings?.currencyItemName ?? '灵石';
+    const currencyName = this.panel.transmissionListings?.currencyItemName ?? '靈石';
     return `
       <div class="transmission-consign-fields">
         <div class="transmission-consign-selection ui-surface-card ui-surface-card--compact">
@@ -1234,7 +1234,7 @@ export class MarketTransmissionView {
     if (!body) return;
     const selected = allItems.find((entry) => entry.itemInstanceId === this.panel.transmissionConsignPanel.itemInstanceId) ?? null;
     const price = this.normalizeTransmissionConsignPrice(this.panel.transmissionConsignPanel.unitPrice);
-    const currencyName = this.panel.transmissionListings?.currencyItemName ?? '灵石';
+    const currencyName = this.panel.transmissionListings?.currencyItemName ?? '靈石';
     const selectedName = body.querySelector<HTMLElement>('[data-transmission-consign-selected-name]');
     const selectedMeta = body.querySelector<HTMLElement>('[data-transmission-consign-selected-meta]');
     if (selectedName) selectedName.textContent = selected?.name ?? t('market.transmission.consign.no-selection', undefined);

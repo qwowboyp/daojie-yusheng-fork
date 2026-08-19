@@ -619,7 +619,7 @@ function resolveInvitationCodeFromUrl(): string {
   const candidates = new URLSearchParams(window.location.search);
   const hash = window.location.hash.startsWith('#') ? window.location.hash.slice(1) : window.location.hash;
   const hashParams = new URLSearchParams(hash.includes('=') ? hash : '');
-  for (const key of ['invite', 'inviteCode', 'invitationCode', '邀请码']) {
+  for (const key of ['invite', 'inviteCode', 'invitationCode', '邀請碼']) {
     const value = candidates.get(key) ?? hashParams.get(key);
     if (value?.trim()) {
       return value.normalize('NFC').trim();

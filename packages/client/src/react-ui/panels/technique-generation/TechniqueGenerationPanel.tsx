@@ -140,10 +140,10 @@ type BatchConfirmation =
   | { action: 'discard'; count: number; batchId: string };
 
 const CATEGORY_TABS: Array<{ value: CategoryTab; label: string; locked: boolean }> = [
-  { value: 'internal', label: '内功', locked: false },
-  { value: 'arts', label: '术法', locked: false },
+  { value: 'internal', label: '內功', locked: false },
+  { value: 'arts', label: '術法', locked: false },
   { value: 'divine', label: '神通', locked: true },
-  { value: 'secret', label: '秘术', locked: true },
+  { value: 'secret', label: '秘術', locked: true },
 ];
 
 const TECHNIQUE_GRADE_COLORS: Record<TechniqueGrade, string> = {
@@ -336,7 +336,7 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
       {!state.available && (
         <div className="technique-generation-panel__state technique-generation-panel__state--locked">
           <strong>暂不可用</strong>
-          <span>{state.unavailableReason || '当前无法使用'}</span>
+          <span>{state.unavailableReason || '當前無法使用'}</span>
         </div>
       )}
 
@@ -350,7 +350,7 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
           <div className="technique-generation-panel__main">
             <section className="technique-generation-panel__section">
               <div className="technique-generation-panel__section-title">功法类型</div>
-              <div className="technique-generation-panel__tabs" role="tablist" aria-label="功法类型">
+              <div className="technique-generation-panel__tabs" role="tablist" aria-label="功法類型">
                 {CATEGORY_TABS.map((tab) => (
                   <button
                     key={tab.value}
@@ -369,7 +369,7 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
             {selectedCategory === 'internal' && (
               <section className="technique-generation-panel__section">
                 <div className="technique-generation-panel__section-title">参悟方式</div>
-                <div className="technique-generation-panel__tabs technique-generation-panel__mode-tabs" role="tablist" aria-label="参悟方式">
+                <div className="technique-generation-panel__tabs technique-generation-panel__mode-tabs" role="tablist" aria-label="參悟方式">
                   <button
                     type="button"
                     className={`technique-generation-panel__tab ${selectedMode === 'single' ? 'active' : ''}`}
@@ -404,7 +404,7 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
                 id="technique-generation-context"
                 value={playerContext}
                 onChange={(e) => setPlayerContext([...e.target.value].slice(0, CUSTOM_TECHNIQUE_PROMPT_MAX_LENGTH).join(''))}
-                placeholder="描述功法风格、属性倾向或修行意象"
+                placeholder="描述功法風格、屬性傾向或修行意象"
                 maxLength={CUSTOM_TECHNIQUE_PROMPT_MAX_LENGTH}
                 rows={5}
               />
@@ -416,7 +416,7 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
               className="technique-generation-panel__generate-btn small-btn"
               onClick={handleGenerate}
             >
-              {selectedMode === 'batch' ? `批量领悟 ${itemSpend} 部` : '开始领悟'}
+              {selectedMode === 'batch' ? `批量領悟 ${itemSpend} 部` : '開始領悟'}
             </button>
           </div>
 
@@ -493,7 +493,7 @@ export const TechniqueGenerationPanel = memo(function TechniqueGenerationPanel()
               type="text"
               value={customName}
               onChange={(e) => setCustomName([...e.target.value].slice(0, CUSTOM_TECHNIQUE_NAME_MAX_LENGTH).join(''))}
-              placeholder={state.currentDraft.suggestedName || '输入功法名'}
+              placeholder={state.currentDraft.suggestedName || '輸入功法名'}
               maxLength={CUSTOM_TECHNIQUE_NAME_MAX_LENGTH}
             />
           </div>
@@ -599,7 +599,7 @@ function renderTechniqueAttrRadar(attrs: Partial<Attributes> | undefined): React
         <div className="attr-radar-scale">刻度 {formatDisplaySignedNumber(scale)}</div>
       </div>
       <div className="attr-radar-body technique-generation-panel__attr-radar-body">
-        <svg className="attr-radar" viewBox="0 0 340 340" role="img" aria-label="满层六维加成">
+        <svg className="attr-radar" viewBox="0 0 340 340" role="img" aria-label="滿層六維加成">
           <defs>
             <linearGradient id={gradientId} gradientUnits="userSpaceOnUse" x1="0%" y1="0%" x2="100%" y2="100%">
               {nodes.map((node, index) => {
@@ -691,7 +691,7 @@ function renderRealmRange(range: TechniqueGenerationPanelState['rollRange']): Re
       <div
         className="technique-generation-panel__rail-label"
         onPointerMove={(event) => {
-          showTechniqueGenerationTooltip('境界等级区间', [
+          showTechniqueGenerationTooltip('境界等級區間', [
             `${formatTechniqueGenerationRealmLabel(range.realmLvMin)} - ${formatTechniqueGenerationRealmLabel(range.realmLvMax)}`,
           ], event);
           moveTechniqueGenerationTooltip(event);
@@ -701,7 +701,7 @@ function renderRealmRange(range: TechniqueGenerationPanelState['rollRange']): Re
         境界
       </div>
       <div className="technique-generation-panel__range-group technique-generation-panel__range-group--realm">
-        <div className="technique-generation-panel__range-stack" aria-label="境界等级概率分布">
+        <div className="technique-generation-panel__range-stack" aria-label="境界等級概率分佈">
           {realmLvChances.map((entry, index) => (
             <div
               key={entry.realmLv}
@@ -739,9 +739,9 @@ function renderGradeRange(range: TechniqueGenerationPanelState['rollRange']): Re
       <div
         className="technique-generation-panel__rail-label"
         onPointerMove={(event) => {
-          showTechniqueGenerationTooltip('品阶区间', [
+          showTechniqueGenerationTooltip('品階區間', [
             `${getTechniqueGradeLabel(range.gradeMin)} - ${getTechniqueGradeLabel(range.gradeMax)}`,
-            `基准 ${getTechniqueGradeLabel(range.baseGrade)}`,
+            `基準 ${getTechniqueGradeLabel(range.baseGrade)}`,
           ], event);
           moveTechniqueGenerationTooltip(event);
         }}
@@ -750,7 +750,7 @@ function renderGradeRange(range: TechniqueGenerationPanelState['rollRange']): Re
         品阶
       </div>
       <div className="technique-generation-panel__range-group technique-generation-panel__range-group--grade">
-        <div className="technique-generation-panel__range-stack" aria-label="品阶概率分布">
+        <div className="technique-generation-panel__range-stack" aria-label="品階概率分佈">
           {range.gradeChances.map((entry) => (
             <div
               key={entry.grade}
@@ -814,7 +814,7 @@ function renderBatchPreview(
               <span>{getTechniqueGradeLabel(draft.grade)} · {formatTechniqueGenerationRealmLabel(draft.realmLv)}</span>
             </header>
             <p>{draft.desc}</p>
-            <div className="technique-generation-panel__batch-attrs" aria-label={`${draft.suggestedName}满层六维`}>
+            <div className="technique-generation-panel__batch-attrs" aria-label={`${draft.suggestedName}滿層六維`}>
               {ATTR_KEYS.map((key) => (
                 <span key={key}>
                   {ATTR_KEY_LABELS[key]}
@@ -851,23 +851,23 @@ function renderBatchConfirmation(
 ): ReactElement {
   const content = confirmation.action === 'generate'
     ? {
-        title: '确认批量领悟',
-        detail: `本次将消耗 ${confirmation.count} 枚悟道玉简，分别推演 ${confirmation.count} 部内功。`,
-        note: '每部功法独立随机品阶、境界与强度，六维权重均衡；提交后需整批采纳或整批放弃。',
-        confirmLabel: '确认推演',
+        title: '確認批量領悟',
+        detail: `本次將消耗 ${confirmation.count} 枚悟道玉簡，分別推演 ${confirmation.count} 部內功。`,
+        note: '每部功法獨立隨機品階、境界與強度，六維權重均衡；提交後需整批採納或整批放棄。',
+        confirmLabel: '確認推演',
       }
     : confirmation.action === 'adopt'
       ? {
-          title: '确认采纳本批功法',
-          detail: `共 ${confirmation.count} 部内功将一并纳入待领悟功法。`,
-          note: '采纳后各部功法仍需分别完成领悟进度。',
-          confirmLabel: '全部采纳',
+          title: '確認採納本批功法',
+          detail: `共 ${confirmation.count} 部內功將一併納入待領悟功法。`,
+          note: '採納後各部功法仍需分別完成領悟進度。',
+          confirmLabel: '全部採納',
         }
       : {
-          title: '确认放弃本批功法',
-          detail: `共 ${confirmation.count} 部内功草稿将一并放弃。`,
-          note: '放弃后的功德返还比例由服务端统一结算，本批草稿无法恢复。',
-          confirmLabel: '确认放弃',
+          title: '確認放棄本批功法',
+          detail: `共 ${confirmation.count} 部內功草稿將一併放棄。`,
+          note: '放棄後的功德返還比例由服務端統一結算，本批草稿無法恢復。',
+          confirmLabel: '確認放棄',
         };
   return (
     <div className="technique-generation-panel__confirm-backdrop" role="presentation" onPointerDown={onCancel}>
@@ -902,10 +902,10 @@ function renderItemSpendSelector(
 ): ReactElement {
   const min = range?.itemSpendMin ?? 1;
   const max = range?.itemSpendMax ?? 1;
-  const label = mode === 'batch' ? '批量数量' : '玉简';
+  const label = mode === 'batch' ? '批量數量' : '玉簡';
   const tooltipLine = mode === 'batch'
-    ? `本次领悟 ${itemSpend} 部内功，消耗 ${itemSpend} 枚悟道玉简`
-    : `投入 ${itemSpend} 枚悟道玉简，择优凝成一部功法`;
+    ? `本次領悟 ${itemSpend} 部內功，消耗 ${itemSpend} 枚悟道玉簡`
+    : `投入 ${itemSpend} 枚悟道玉簡，擇優凝成一部功法`;
   return (
     <section className="technique-generation-panel__section technique-generation-panel__boost-card">
       <div
@@ -920,7 +920,7 @@ function renderItemSpendSelector(
       </div>
       <input
         id="technique-generation-item-spend"
-        aria-label={mode === 'batch' ? '批量领悟数量' : '悟道玉简投入数量'}
+        aria-label={mode === 'batch' ? '批量領悟數量' : '悟道玉簡投入數量'}
         type="range"
         min={min}
         max={max}
@@ -928,7 +928,7 @@ function renderItemSpendSelector(
         value={itemSpend}
         onChange={(event) => onChange(Number(event.currentTarget.value))}
       />
-      <div className="technique-generation-panel__stepper" role="group" aria-label={mode === 'batch' ? '调整批量领悟数量' : '调整悟道玉简数量'}>
+      <div className="technique-generation-panel__stepper" role="group" aria-label={mode === 'batch' ? '調整批量領悟數量' : '調整悟道玉簡數量'}>
         <button type="button" className="small-btn ghost" onClick={() => onChange(itemSpend + 1)} disabled={itemSpend >= max}>+</button>
         <strong
           onPointerMove={(event) => {

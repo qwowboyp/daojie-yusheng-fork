@@ -35,8 +35,8 @@ export class WorkspaceModalPanel {
     closeButton.type = 'button';
     closeButton.className = 'small-btn ghost feature-workspace-close';
     closeButton.dataset.workspaceClose = 'true';
-    closeButton.setAttribute('aria-label', `关闭${options.title}`);
-    closeButton.textContent = '关闭';
+    closeButton.setAttribute('aria-label', `關閉${options.title}`);
+    closeButton.textContent = '關閉';
     closeButton.addEventListener('click', () => this.close());
     toolbar.appendChild(closeButton);
     this.root.append(this.body, toolbar);
@@ -47,7 +47,7 @@ export class WorkspaceModalPanel {
       ownerId: this.options.ownerId,
       title: this.title,
       subtitle: this.options.subtitle,
-      hint: '点击空白处或按 Esc 关闭',
+      hint: '點擊空白處或按 Esc 關閉',
       size: 'lg',
       variantClass: 'detail-modal--feature-workspace',
       renderBody: (body) => body.appendChild(this.root),

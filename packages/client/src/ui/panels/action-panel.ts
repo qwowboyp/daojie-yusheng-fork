@@ -832,9 +832,9 @@ export class ActionPanel {
 
   private getFloatingInteractionGroups(actions: ActionDef[]): Array<{ label: string; actions: ActionDef[] }> {
     const order: Array<{ type: ActionDef['type']; label: string }> = [
-      { type: 'craft', label: '技艺' },
-      { type: 'quest', label: '任务' },
-      { type: 'travel', label: '传送' },
+      { type: 'craft', label: '技藝' },
+      { type: 'quest', label: '任務' },
+      { type: 'travel', label: '傳送' },
       { type: 'interact', label: '交互' },
     ];
     return order
@@ -857,7 +857,7 @@ export class ActionPanel {
         data-action-range="${action.range ?? ''}"
         data-action-target="${action.requiresTarget ? '1' : '0'}"
         data-action-target-mode="${action.targetMode ?? ''}"
-        ${onCd ? 'disabled aria-disabled="true" title="冷却中"' : ''}
+        ${onCd ? 'disabled aria-disabled="true" title="冷卻中"' : ''}
       >${escapeHtml(action.name)}</button>
     `;
   }
@@ -1218,11 +1218,11 @@ export class ActionPanel {
         3: '刃',
         7: '芒',
         10: '御',
-        12: '极'
+        12: '極'
       };
 
       container.innerHTML = `
-        <!-- 头部信息 -->
+        <!-- 頭部訊息 -->
         <div class="mystic-force-header">
           <div class="mystic-force-title-container">
             <div class="mystic-force-icon"></div>
@@ -1231,17 +1231,17 @@ export class ActionPanel {
         </div>
 
         <div class="mystic-sword-box" id="swordBox">
-          <!-- 特殊背景光效层 -->
+          <!-- 特殊背景光效層 -->
           <div class="mystic-box-glow-effect glow-state-${active}" id="boxGlow"></div>
 
-          <!-- 万剑大阵：覆盖整个横条 -->
+          <!-- 萬劍大陣：覆蓋整個橫條 -->
           <div class="mystic-sword-domain" id="swordDomain">
             ${domainHtml}
           </div>
 
-          <!-- 武器层 -->
+          <!-- 武器層 -->
           <div class="mystic-weapon-layer">
-            <!-- 剑身: 剑柄在右，剑刃指向左 -->
+            <!-- 劍身: 劍柄在右，劍刃指向左 -->
             <div class="mystic-sword-body">
               <svg viewBox="0 0 1000 200" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -1301,7 +1301,7 @@ export class ActionPanel {
               </svg>
             </div>
             
-            <!-- 剑鞘 -->
+            <!-- 劍鞘 -->
             <div class="mystic-sheath-body">
               <svg viewBox="0 0 1000 200" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -1552,7 +1552,7 @@ export class ActionPanel {
     const techniqueId = normalizeActionText(action.scriptureTechniqueId);
     const techniqueName = resolveClientTechniqueName(techniqueId, action.scriptureTechniqueName, this.resolveKnownTechniqueName(techniqueId));
     const chip = `<span class="action-technique-chip" data-action-technique-tooltip="true">${escapeHtml(techniqueName)}</span>`;
-    return `参悟藏经台内的${chip}。`;
+    return `參悟藏經臺內的${chip}。`;
   }
 
   private buildActionTechniqueTooltip(node: HTMLElement): { title: string; lines: string[] } | null {
@@ -1570,17 +1570,17 @@ export class ActionPanel {
     const category = knownTechnique?.category ?? action.scriptureTechniqueCategory;
     const realmLv = Math.max(1, Math.trunc(Number(knownTechnique?.realmLv ?? action.scriptureTechniqueRealmLv) || 1));
     const lines = [
-      `品阶：${getTechniqueGradeLabel(grade)}`,
-      `类别：${getTechniqueCategoryLabel(category)}`,
+      `品階：${getTechniqueGradeLabel(grade)}`,
+      `類別：${getTechniqueCategoryLabel(category)}`,
       `境界：${getLocalRealmLevelEntry(realmLv)?.displayName ?? `Lv.${formatDisplayInteger(realmLv)}`}`,
     ];
     if (knownTechnique) {
       const level = Math.max(1, Math.trunc(Number(knownTechnique.level) || 1));
       const maxLevel = getTechniqueMaxLevel(Array.isArray(knownTechnique.layers) ? knownTechnique.layers : undefined, level);
-      lines.push(`层数：第 ${formatDisplayInteger(level)}/${formatDisplayInteger(maxLevel)} 层`);
+      lines.push(`層數：第 ${formatDisplayInteger(level)}/${formatDisplayInteger(maxLevel)} 層`);
       const skillCount = Array.isArray(knownTechnique.skills) ? knownTechnique.skills.length : 0;
       if (skillCount > 0) {
-        lines.push(`术法：${formatDisplayInteger(skillCount)} 个`);
+        lines.push(`術法：${formatDisplayInteger(skillCount)} 個`);
       }
     }
     return { title, lines };
@@ -2017,7 +2017,7 @@ export class ActionPanel {
         if (action && action.cooldownLeft > 0) {
           return;
         }
-        this.onAction?.(actionId, action?.requiresTarget, action?.targetMode, action?.range, action?.name?.trim() || '未知行动');
+        this.onAction?.(actionId, action?.requiresTarget, action?.targetMode, action?.range, action?.name?.trim() || '未知行動');
       }, { signal });
     });
   }
@@ -2033,7 +2033,7 @@ export class ActionPanel {
           this.openSectManagementModal();
           return;
         }
-        const actionName = button.dataset.actionName?.trim() || '未知行动';
+        const actionName = button.dataset.actionName?.trim() || '未知行動';
         const requiresTarget = button.dataset.actionTarget === '1';
         const targetMode = button.dataset.actionTargetMode || undefined;
         const rangeText = button.dataset.actionRange;
@@ -2151,7 +2151,7 @@ export class ActionPanel {
 
   /** 汇总当前技能槽启用情况，供方案弹层摘要复用。 */
   private getSkillSlotSummary(actions: ActionDef[] = this.currentActions): string {
-    return `${this.getEnabledSkillCount(actions)}/${this.getSkillSlotLimit()} 项`;
+    return `${this.getEnabledSkillCount(actions)}/${this.getSkillSlotLimit()} 項`;
   }
 
   /** 按槽位上限规整自动战斗技能配置。 */

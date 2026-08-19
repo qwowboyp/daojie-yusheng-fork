@@ -184,8 +184,8 @@ await withClientBrowserProof(
         host.querySelector('[data-party-tab="invites"]')?.click();
         const result = {
           recruitment: !!host.querySelector('.party-recruit-filter'),
-          match: host.textContent.includes('自动匹配'),
-          leaderOnlyHint: host.textContent.includes('仅队长可以直接邀请玩家'),
+          match: host.textContent.includes('自動匹配'),
+          leaderOnlyHint: host.textContent.includes('僅隊長可以直接邀請玩家'),
         };
         host.querySelector('[data-party-tab="members"]')?.click();
         return result;
@@ -341,7 +341,7 @@ await withClientBrowserProof(
         const managementTab = host.querySelector('[data-party-tab="management"]');
         managementTab?.click();
         const hasSettings = !!host.querySelector('[data-party-setting="expMode"]') && !!host.querySelector('[data-party-setting="friendlyFireEnabled"]');
-        const hasFriendlyFireHint = host.textContent.includes('双重门槛') && host.textContent.includes('默认互为友方');
+        const hasFriendlyFireHint = host.textContent.includes('雙重門檻') && host.textContent.includes('預設互為友方');
         const hasKick = !!host.querySelector('[data-party-action="kick"]');
         const hasTransfer = !!host.querySelector('[data-party-action="transfer"]');
         const hasDisband = !!host.querySelector('[data-party-action="disband"]');
@@ -465,7 +465,7 @@ await withClientBrowserProof(
           incomingInvites: [], incomingApplications: [], recruitments: [], matchQueue: { queued: false }, serverTime: Date.now(),
         });
         host.querySelector('[data-party-tab="members"]')?.click();
-        return { hint: host.textContent.includes('队长离线期间无法执行移交、解散等管理操作，请等待队长归来') };
+        return { hint: host.textContent.includes('隊長離線期間無法執行移交、解散等管理操作，請等待隊長歸來') };
       })()
     `);
     assert.equal(offlineResult.hint, true, '队长离线管理等待提示缺失');

@@ -1211,7 +1211,7 @@ export class MarketPanel {
           </div>
           <div class="market-item-cell-prices">
             <span>${formatDisplayInteger(unitPrice)} ${escapeHtml(currencyName)}${discountLabel ? `（${escapeHtml(discountLabel)}）` : ''}</span>
-            <span>${insufficient ? `${escapeHtml(currencyName)}不足` : '可兑换'}</span>
+            <span>${insufficient ? `${escapeHtml(currencyName)}不足` : '可兌換'}</span>
           </div>
         </button>
       `;
@@ -1221,7 +1221,7 @@ export class MarketPanel {
   private renderHeavenlyDaoShopDetailPanel(): string {
     const entry = this.ensureHeavenlyDaoShopSelection();
     if (!entry) {
-      return '<div class="empty-hint">暂无可兑换物资。</div>';
+      return '<div class="empty-hint">暫無可兌換物資。</div>';
     }
     const item = this.buildHeavenlyDaoShopItemStack(entry.itemId, entry.count);
     if (!item) {
@@ -1244,7 +1244,7 @@ export class MarketPanel {
     const countText = entry.count > 1 ? ` x${formatDisplayInteger(entry.count)}` : '';
     const effectLines = describeItemEffectDetails(item);
     const errorText = invalidTotal
-      ? `请输入 1 至 ${formatDisplayInteger(HEAVENLY_DAO_SHOP_MAX_QUANTITY)} 之间的购买数量。`
+      ? `請輸入 1 至 ${formatDisplayInteger(HEAVENLY_DAO_SHOP_MAX_QUANTITY)} 之間的購買數量。`
       : `${currencyName}不足，需要 ${displayTotal} ${currencyName}。`;
     return `
       <div class="market-book-header">
@@ -1263,16 +1263,16 @@ export class MarketPanel {
       ` : ''}
       <div class="market-book-column ui-surface-pane ui-surface-pane--stack ui-scroll-panel" data-heavenly-dao-shop-detail-scroll="true">
         <div class="market-book-column-head">
-          <div class="market-book-column-title">兑换数量</div>
-          <button class="small-btn" data-heavenly-dao-shop-buy="${escapeHtmlAttr(entry.itemId)}" type="button" ${invalidTotal || insufficientCurrency ? 'disabled' : ''}>购买</button>
+          <div class="market-book-column-title">兌換數量</div>
+          <button class="small-btn" data-heavenly-dao-shop-buy="${escapeHtmlAttr(entry.itemId)}" type="button" ${invalidTotal || insufficientCurrency ? 'disabled' : ''}>購買</button>
         </div>
         <div class="market-action-row">
           <span class="market-order-meta">已持有：${escapeHtml(formatDisplayCountBadge(ownedCount))}</span>
-          <span class="market-order-meta">最多可买：${formatDisplayInteger(maxPurchasable)}</span>
+          <span class="market-order-meta">最多可買：${formatDisplayInteger(maxPurchasable)}</span>
         </div>
         <div class="market-trade-dialog-section ui-surface-pane ui-surface-pane--stack ui-surface-pane--muted">
           <div class="market-trade-dialog-field">
-            <span>单价</span>
+            <span>單價</span>
             <div class="market-price-display">
               <strong>${formatDisplayInteger(unitPrice)}</strong>
               <span>${escapeHtml(currencyName)}</span>
@@ -1282,7 +1282,7 @@ export class MarketPanel {
         </div>
         <div class="market-trade-dialog-section ui-surface-pane ui-surface-pane--stack ui-surface-pane--muted">
           <div class="market-trade-dialog-field">
-            <span>数量</span>
+            <span>數量</span>
             ${renderTradeQuantityControl({
               value: quantityText || '1',
               max: HEAVENLY_DAO_SHOP_MAX_QUANTITY,
@@ -1297,14 +1297,14 @@ export class MarketPanel {
             })}
           </div>
           <div class="market-trade-dialog-total ${invalidTotal || insufficientCurrency ? 'error' : ''}">
-            <span>总价</span>
+            <span>總價</span>
             <strong data-heavenly-dao-shop-total="${escapeHtmlAttr(entry.itemId)}">${displayTotal} ${escapeHtml(currencyName)}</strong>
           </div>
         </div>
         <div class="market-action-hint market-action-hint--error" data-heavenly-dao-shop-error="${escapeHtmlAttr(entry.itemId)}" ${invalidTotal || insufficientCurrency ? '' : 'hidden'}>
           ${escapeHtml(errorText)}
         </div>
-        <div class="market-action-hint">商品与价格由服务端固定表权威结算，只消耗 ${escapeHtml(currencyName)}。</div>
+        <div class="market-action-hint">商品與價格由服務端固定表權威結算，只消耗 ${escapeHtml(currencyName)}。</div>
       </div>
     `;
   }
@@ -1509,7 +1509,7 @@ export class MarketPanel {
     totalNode.parentElement?.classList.toggle('error', invalidTotal || insufficientCurrency);
     errorNode.hidden = !(invalidTotal || insufficientCurrency);
     errorNode.textContent = invalidTotal
-      ? `请输入 1 至 ${formatDisplayInteger(HEAVENLY_DAO_SHOP_MAX_QUANTITY)} 之间的购买数量。`
+      ? `請輸入 1 至 ${formatDisplayInteger(HEAVENLY_DAO_SHOP_MAX_QUANTITY)} 之間的購買數量。`
       : `${currencyName}不足，需要 ${displayTotal} ${currencyName}。`;
     buttonNode.disabled = invalidTotal || insufficientCurrency;
   }
@@ -2508,8 +2508,8 @@ export class MarketPanel {
       if (priceNodes.length < 2) {
         return;
       }
-      priceNodes[0]!.textContent = `卖 ${entry?.lowestSellPrice !== undefined ? this.formatMarketUnitPrice(entry.lowestSellPrice) : '--'}`;
-      priceNodes[1]!.textContent = `买 ${entry?.highestBuyPrice !== undefined ? this.formatMarketUnitPrice(entry.highestBuyPrice) : '--'}`;
+      priceNodes[0]!.textContent = `賣 ${entry?.lowestSellPrice !== undefined ? this.formatMarketUnitPrice(entry.lowestSellPrice) : '--'}`;
+      priceNodes[1]!.textContent = `買 ${entry?.highestBuyPrice !== undefined ? this.formatMarketUnitPrice(entry.highestBuyPrice) : '--'}`;
     };
     body.querySelectorAll<HTMLElement>('[data-market-select-item]').forEach((button) => {
       syncPriceText(button, this.resolveMarketTooltipEntry(button.dataset.marketSelectItem ?? ''));
@@ -2620,7 +2620,7 @@ export class MarketPanel {
       })),
       {
         id: 'technique',
-        label: '技艺',
+        label: '技藝',
         count: this.getMarketEquipmentSlotCount('technique', listedItems.filter((item) => item.item.type === 'equipment' && isTechniqueEquipmentSlot(item.item.equipSlot)).length),
       },
     ];
@@ -3314,10 +3314,10 @@ export class MarketPanel {
       return this.formatMarketUnitPrice(value);
     }
     if (value >= 1_000_000) {
-      return '一百万';
+      return '一百萬';
     }
     if (value >= 10_000) {
-      return '一万';
+      return '一萬';
     }
     return formatDisplayInteger(value);
   }
@@ -3370,7 +3370,7 @@ export class MarketPanel {
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
     if (hours > 0) {
-      return `${formatDisplayInteger(hours)}时${formatDisplayInteger(minutes)}分${formatDisplayInteger(seconds)}秒`;
+      return `${formatDisplayInteger(hours)}時${formatDisplayInteger(minutes)}分${formatDisplayInteger(seconds)}秒`;
     }
     return `${formatDisplayInteger(minutes)}分${formatDisplayInteger(seconds)}秒`;
   }
@@ -3536,9 +3536,9 @@ export class MarketPanel {
         : t('market.enhance.none', undefined);
     const baseTicksPerAttempt = this.computeEnhancementJobBaseTicks(itemLevel);
     const expectedBaseDurationTicks = strategy.expectedAttempts * baseTicksPerAttempt;
-    const costLine = `总灵石 ${this.formatEnhancementEstimateCost(expectedTotalCost)} · 强化消耗 ${this.formatEnhancementEstimateCost(strategy.expectedSpiritStones)} · 保护消耗 ${this.formatEnhancementEstimateCost(expectedProtectionCost)} · +0价格 ${zeroPriceText}`;
-    const attemptsLine = `${this.formatEnhancementAttemptCount(strategy.expectedAttempts)} 次 · 从${protectionStartText}开始保护 · 期望保护 ${this.formatEnhancementEstimateCost(strategy.expectedProtectionCount)} 个`;
-    const timeLine = `${this.formatEnhancementDurationFromTicks(expectedBaseDurationTicks)}（基准每次 ${this.formatEnhancementDurationFromTicks(baseTicksPerAttempt)}）`;
+    const costLine = `總靈石 ${this.formatEnhancementEstimateCost(expectedTotalCost)} · 強化消耗 ${this.formatEnhancementEstimateCost(strategy.expectedSpiritStones)} · 保護消耗 ${this.formatEnhancementEstimateCost(expectedProtectionCost)} · +0價格 ${zeroPriceText}`;
+    const attemptsLine = `${this.formatEnhancementAttemptCount(strategy.expectedAttempts)} 次 · 從${protectionStartText}開始保護 · 期望保護 ${this.formatEnhancementEstimateCost(strategy.expectedProtectionCount)} 個`;
+    const timeLine = `${this.formatEnhancementDurationFromTicks(expectedBaseDurationTicks)}（基準每次 ${this.formatEnhancementDurationFromTicks(baseTicksPerAttempt)}）`;
     return {
       strategy,
       costLine,

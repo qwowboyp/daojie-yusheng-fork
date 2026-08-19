@@ -56,11 +56,6 @@ import {
 } from '../../../ui/offline-gain-render';
 import { MAP_TARGET_FPS_RANGE } from '../../../constants/ui/performance';
 import { t } from '../../../ui/i18n';
-import {
-  getLanguagePreference,
-  updateLanguagePreference,
-  type ClientLocale,
-} from '../../../ui/language-preferences';
 
 type MapPerformanceRenderToggleKey =
   | 'renderRuntimeTileSprites'
@@ -108,18 +103,18 @@ const FLOATING_PANEL_TOGGLES: Array<{
 }> = [
   {
     key: 'actionQueue',
-    title: '行动队列',
-    desc: '显示技艺通用 jobs 的任务名、数量和当前进度。',
+    title: '行動隊列',
+    desc: '顯示技藝通用 jobs 的任務名、數量和當前進度。',
   },
   {
     key: 'interactionList',
     title: '交互列表',
-    desc: '显示附近技艺、任务、传送和交互的快捷按钮。',
+    desc: '顯示附近技藝、任務、傳送和交互的快捷按鈕。',
   },
   {
     key: 'party',
-    title: '队伍状态',
-    desc: '显示队伍成员状态与队伍聊天快捷入口。',
+    title: '隊伍狀態',
+    desc: '顯示隊伍成員狀態與隊伍聊天快捷入口。',
   },
 ];
 
@@ -170,7 +165,7 @@ const TABS: { id: SettingsTab; label: () => string }[] = [
   { id: 'redeem', label: () => t('settings.tab.redeem', undefined) },
   { id: 'ui', label: () => t('settings.tab.ui', undefined) },
   { id: 'performance', label: () => t('settings.tab.performance', undefined) },
-  { id: 'resourceReload', label: () => '资源重载' },
+  { id: 'resourceReload', label: () => '資源重載' },
   { id: 'offlineGain', label: () => t('settings.tab.offline-gain', undefined) },
 ];
 
@@ -181,7 +176,7 @@ function formatGlobalFontOffset(offset: number): string {
 }
 
 function formatRuntimeImageOverrideTime(value: number): string {
-  if (!Number.isFinite(value) || value <= 0) return '本地覆盖';
+  if (!Number.isFinite(value) || value <= 0) return '本地覆蓋';
   return new Date(value).toLocaleString('zh-CN', { hour12: false });
 }
 
@@ -198,7 +193,7 @@ function filterRuntimeImageResources(resources: RuntimeImageResourceEntry[], que
 }
 
 function formatRuntimeImageDefaultMeta(entry: RuntimeImageResourceEntry): string {
-  return entry.src.startsWith('data:image/') ? '本地图片' : `默认资源 · ${entry.src}`;
+  return entry.src.startsWith('data:image/') ? '本地圖片' : `預設資源 · ${entry.src}`;
 }
 
 function parseRedeemCodes(raw: string): string[] {
@@ -530,18 +525,6 @@ const UiTab = memo(function UiTab() {
   const [floatingPanels, setFloatingPanels] = useState(() => getFloatingPanelPreferences());
   const [status, setStatus] = useState(t('settings.ui.status.saved-local', undefined));
 
-  const handleLanguageChange = useCallback((locale: ClientLocale) => {
-    if (locale === getLanguagePreference()) {
-      return;
-    }
-    const confirmed = window.confirm(t('settings.language.reload-confirm', undefined));
-    if (!confirmed) {
-      return;
-    }
-    updateLanguagePreference(locale);
-    window.location.reload();
-  }, []);
-
   const handleColorMode = useCallback((mode: UiColorMode) => {
     const next = updateUiColorMode(mode);
     setColorMode(mode);
@@ -594,33 +577,11 @@ const UiTab = memo(function UiTab() {
   const handleFloatingPanelToggle = useCallback((key: FloatingPanelPreferenceKey, enabled: boolean) => {
     const next = updateFloatingPanelPreference(key, enabled);
     setFloatingPanels(next);
-    setStatus(enabled ? '悬浮窗已开启' : '悬浮窗已关闭，可在这里重新开启');
+    setStatus(enabled ? '懸浮窗已開啟' : '懸浮窗已關閉，可在這裡重新開啟');
   }, []);
 
   return (
     <>
-      <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
-        <div className="panel-section-title">{t('settings.language.section', undefined)}</div>
-        <div className="settings-ui-copy ui-form-copy">{t('settings.language.copy', undefined)}</div>
-        <div className="settings-ui-mode-row">
-          <button
-            className={`small-btn ghost${getLanguagePreference() === 'zh-CN' ? ' active' : ''}`}
-            type="button"
-            aria-pressed={getLanguagePreference() === 'zh-CN' ? 'true' : 'false'}
-            onClick={() => handleLanguageChange('zh-CN')}
-          >
-            {t('settings.language.option.simplified', undefined)}
-          </button>
-          <button
-            className={`small-btn ghost${getLanguagePreference() === 'zh-TW' ? ' active' : ''}`}
-            type="button"
-            aria-pressed={getLanguagePreference() === 'zh-TW' ? 'true' : 'false'}
-            onClick={() => handleLanguageChange('zh-TW')}
-          >
-            {t('settings.language.option.traditional', undefined)}
-          </button>
-        </div>
-      </div>
       <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
         <div className="panel-section-title">{t('settings.ui.section.color-mode', undefined)}</div>
         <div className="settings-ui-copy ui-form-copy">{t('settings.ui.copy.color-mode', undefined)}</div>
@@ -688,8 +649,8 @@ const UiTab = memo(function UiTab() {
                 <div className="settings-performance-desc ui-data-table-desc">{item.desc}</div>
               </div>
               <div className="settings-performance-actions ui-inline-actions-end-wrap">
-                <button className={`small-btn ghost${!floatingPanels[item.key] ? ' active' : ''}`} type="button" aria-label={`${item.title}关闭`} aria-pressed={!floatingPanels[item.key] ? 'true' : 'false'} data-floating-panel-enabled="false" onClick={() => handleFloatingPanelToggle(item.key, false)}>关</button>
-                <button className={`small-btn ghost${floatingPanels[item.key] ? ' active' : ''}`} type="button" aria-label={`${item.title}开启`} aria-pressed={floatingPanels[item.key] ? 'true' : 'false'} data-floating-panel-enabled="true" onClick={() => handleFloatingPanelToggle(item.key, true)}>开</button>
+                <button className={`small-btn ghost${!floatingPanels[item.key] ? ' active' : ''}`} type="button" aria-label={`${item.title}關閉`} aria-pressed={!floatingPanels[item.key] ? 'true' : 'false'} data-floating-panel-enabled="false" onClick={() => handleFloatingPanelToggle(item.key, false)}>关</button>
+                <button className={`small-btn ghost${floatingPanels[item.key] ? ' active' : ''}`} type="button" aria-label={`${item.title}開啟`} aria-pressed={floatingPanels[item.key] ? 'true' : 'false'} data-floating-panel-enabled="true" onClick={() => handleFloatingPanelToggle(item.key, true)}>开</button>
               </div>
             </div>
           ))}
@@ -802,7 +763,7 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
   const [addedKeys, setAddedKeys] = useState<string[]>(() => getRuntimeImageReloadListKeys());
   const [overrides, setOverrides] = useState<RuntimeImageOverrideEntry[]>(() => getRuntimeImageOverrides());
   const [query, setQuery] = useState('');
-  const [status, setStatus] = useState('默认列表为空，请先搜索资源名称并添加到本地重载列表。');
+  const [status, setStatus] = useState('預設列表為空，請先搜索資源名稱並添加到本地重載列表。');
 
   useEffect(() => {
     let active = true;
@@ -813,7 +774,7 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
       })
       .catch(() => {
         if (!active) return;
-        setStatus('资源目录加载失败，请稍后重试。');
+        setStatus('資源目錄加載失敗，請稍後重試。');
       });
     return () => {
       active = false;
@@ -842,7 +803,7 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
       return next;
     });
     setQuery('');
-    setStatus(`已添加 ${entry.label}，可选择本地图片进行重载。`);
+    setStatus(`已添加 ${entry.label}，可選擇本地圖片進行重載。`);
   }, []);
 
   const handleRemoveResource = useCallback((key: string) => {
@@ -851,7 +812,7 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
       setRuntimeImageReloadListKeys(next);
       return next;
     });
-    setStatus('已从本地重载列表移除。');
+    setStatus('已從本地重載列表移除。');
   }, []);
 
   const handleFileChange = useCallback(async (key: string, file: File | undefined) => {
@@ -859,12 +820,12 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
     try {
       await saveRuntimeImageOverrideFromFile(key, file);
       refreshOverrides();
-      setStatus('图片已保存到本机，并已通知地图渲染刷新。');
+      setStatus('圖片已保存到本機，並已通知地圖渲染刷新。');
     } catch (error) {
       if (error instanceof Error && error.message === 'local_runtime_image_override_superseded') return;
       const message = error instanceof Error && error.message === 'local_runtime_image_override_storage_failed'
-        ? '保存失败：浏览器本地存储空间不足。'
-        : '保存失败：请选择有效图片文件。';
+        ? '保存失敗：瀏覽器本地存儲空間不足。'
+        : '保存失敗：請選擇有效圖片文件。';
       setStatus(message);
     }
   }, [refreshOverrides]);
@@ -875,13 +836,13 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
       await saveRuntimeImageOverrideEntryFromFile(entry, file);
       refreshOverrides();
       setStatus(entry.key.startsWith('player:')
-        ? '我的形象已保存到本机，并已通知地图渲染刷新。'
-        : '图片已保存到本机，并已通知地图渲染刷新。');
+        ? '我的形象已保存到本機，並已通知地圖渲染刷新。'
+        : '圖片已保存到本機，並已通知地圖渲染刷新。');
     } catch (error) {
       if (error instanceof Error && error.message === 'local_runtime_image_override_superseded') return;
       const message = error instanceof Error && error.message === 'local_runtime_image_override_storage_failed'
-        ? '保存失败：浏览器本地存储空间不足。'
-        : '保存失败：请选择有效图片文件。';
+        ? '保存失敗：瀏覽器本地存儲空間不足。'
+        : '保存失敗：請選擇有效圖片文件。';
       setStatus(message);
     }
   }, [refreshOverrides]);
@@ -890,9 +851,9 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
     try {
       removeRuntimeImageOverride(key);
       refreshOverrides();
-      setStatus('已恢复默认图片。');
+      setStatus('已恢復預設圖片。');
     } catch {
-      setStatus('恢复失败：浏览器本地存储不可用。');
+      setStatus('恢復失敗：瀏覽器本地存儲不可用。');
     }
   }, [refreshOverrides]);
 
@@ -916,7 +877,7 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
                 <div className="settings-performance-meta ui-data-table-meta">
                   <div className="settings-performance-name ui-data-table-name">{playerResource.label}</div>
                   <div className="settings-performance-desc ui-data-table-desc">{playerResource.key}</div>
-                  <div className="settings-resource-reload-meta">{override ? `${override.fileName || '本地图片'} · ${formatRuntimeImageOverrideTime(override.updatedAt)}` : '当前玩家专属覆盖，不影响其他玩家显示。'}</div>
+                  <div className="settings-resource-reload-meta">{override ? `${override.fileName || '本地圖片'} · ${formatRuntimeImageOverrideTime(override.updatedAt)}` : '當前玩家專屬覆蓋，不影響其他玩家顯示。'}</div>
                 </div>
                 <div className="settings-resource-reload-actions ui-inline-actions-end-wrap">
                   <label className="small-btn ghost settings-resource-reload-file">
@@ -936,7 +897,7 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
           className="ui-input"
           type="search"
           value={query}
-          placeholder="例如 草地、刃竹螳、竹隐客、npc_bamboo"
+          placeholder="例如 草地、刃竹螳、竹隱客、npc_bamboo"
           onChange={(event) => setQuery(event.target.value)}
         />
       </div>
@@ -969,7 +930,7 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
                 <div className="settings-performance-meta ui-data-table-meta">
                   <div className="settings-performance-name ui-data-table-name">{entry.label}</div>
                   <div className="settings-performance-desc ui-data-table-desc">{entry.key}</div>
-                  <div className="settings-resource-reload-meta">{override ? `${override.fileName || '本地图片'} · ${formatRuntimeImageOverrideTime(override.updatedAt)}` : formatRuntimeImageDefaultMeta(entry)}</div>
+                  <div className="settings-resource-reload-meta">{override ? `${override.fileName || '本地圖片'} · ${formatRuntimeImageOverrideTime(override.updatedAt)}` : formatRuntimeImageDefaultMeta(entry)}</div>
                 </div>
                 <div className="settings-resource-reload-actions ui-inline-actions-end-wrap">
                   <label className="small-btn ghost settings-resource-reload-file">

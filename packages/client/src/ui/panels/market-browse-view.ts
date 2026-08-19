@@ -112,8 +112,8 @@ export class MarketBrowseView {
           ${ownedLabel}
         </div>
         <div class="market-item-cell-prices">
-          <span>卖 ${entry.lowestSellPrice !== undefined ? p.formatMarketUnitPrice(entry.lowestSellPrice) : '--'}</span>
-          <span>买 ${entry.highestBuyPrice !== undefined ? p.formatMarketUnitPrice(entry.highestBuyPrice) : '--'}</span>
+          <span>賣 ${entry.lowestSellPrice !== undefined ? p.formatMarketUnitPrice(entry.lowestSellPrice) : '--'}</span>
+          <span>買 ${entry.highestBuyPrice !== undefined ? p.formatMarketUnitPrice(entry.highestBuyPrice) : '--'}</span>
         </div>
       </button>
     `;
@@ -138,8 +138,8 @@ export class MarketBrowseView {
           ${ownedLabel}
         </div>
         <div class="market-item-cell-prices">
-          <span>卖 ${referenceEntry?.lowestSellPrice !== undefined ? p.formatMarketUnitPrice(referenceEntry.lowestSellPrice) : '--'}</span>
-          <span>买 ${referenceEntry?.highestBuyPrice !== undefined ? p.formatMarketUnitPrice(referenceEntry.highestBuyPrice) : '--'}</span>
+          <span>賣 ${referenceEntry?.lowestSellPrice !== undefined ? p.formatMarketUnitPrice(referenceEntry.lowestSellPrice) : '--'}</span>
+          <span>買 ${referenceEntry?.highestBuyPrice !== undefined ? p.formatMarketUnitPrice(referenceEntry.highestBuyPrice) : '--'}</span>
         </div>
       </button>
     `;
@@ -216,7 +216,7 @@ export class MarketBrowseView {
       <div class="market-book-level ui-surface-card ui-surface-card--compact">
         <div class="market-book-level-main">
           <span class="market-book-level-price">${p.formatMarketUnitPrice(level.unitPrice)} ${escapeHtml(currencyName)}</span>
-          <span class="market-book-level-qty">总量 ${formatDisplayCountBadge(level.quantity)}</span>
+          <span class="market-book-level-qty">總量 ${formatDisplayCountBadge(level.quantity)}</span>
         </div>
         ${quickAction && index === 0
           ? `<button class="small-btn ghost market-book-level-action" data-market-open-dialog="${quickAction.kind}" data-market-open-dialog-price="${level.unitPrice}" data-market-open-dialog-confirm-purchase="${quickAction.confirmPurchase ? 'true' : 'false'}" type="button" ${quickAction.disabled ? 'disabled' : ''}>${quickAction.label}</button>`
@@ -264,13 +264,13 @@ export class MarketBrowseView {
     return `
       <div class="market-trade-history">
         <div class="market-list-toolbar ui-action-row">
-          <div class="market-list-toolbar-meta">仅显示最近 ${formatDisplayInteger(Math.min(100, totalVisible))} 条中的第 ${formatDisplayInteger(page)} / ${formatDisplayInteger(totalPages)} 页</div>
+          <div class="market-list-toolbar-meta">僅顯示最近 ${formatDisplayInteger(Math.min(100, totalVisible))} 條中的第 ${formatDisplayInteger(page)} / ${formatDisplayInteger(totalPages)} 頁</div>
           <div class="market-list-toolbar-actions">
-            <button class="small-btn ghost" data-market-history-page="${page - 1}" type="button" ${page <= 1 ? 'disabled' : ''}>上一页</button>
-            <button class="small-btn ghost" data-market-history-page="${page + 1}" type="button" ${page >= totalPages ? 'disabled' : ''}>下一页</button>
+            <button class="small-btn ghost" data-market-history-page="${page - 1}" type="button" ${page <= 1 ? 'disabled' : ''}>上一頁</button>
+            <button class="small-btn ghost" data-market-history-page="${page + 1}" type="button" ${page >= totalPages ? 'disabled' : ''}>下一頁</button>
           </div>
         </div>
-        <div class="market-trade-history-hint">只显示你自己的成交记录，不显示交易双方。</div>
+        <div class="market-trade-history-hint">只顯示你自己的成交記錄，不顯示交易雙方。</div>
         <div class="market-trade-history-list ui-surface-pane ui-surface-pane--stack ui-scroll-panel">
           ${records.length > 0
             ? records.map((record) => `
@@ -279,7 +279,7 @@ export class MarketBrowseView {
                   <span class="market-order-name">${escapeHtml(record.itemName)}</span>
                   <span class="market-order-side ${record.side === 'buy' ? 'buy' : 'sell'}">${escapeHtml(record.side === 'buy' ? t('market.history.side.buy', undefined) : t('market.history.side.sell', undefined))}</span>
                 </div>
-                <div class="market-order-meta">数量 ${formatDisplayCountBadge(record.quantity)} · 单价 ${p.formatMarketUnitPrice(record.unitPrice)} ${escapeHtml(currencyName)}</div>
+                <div class="market-order-meta">數量 ${formatDisplayCountBadge(record.quantity)} · 單價 ${p.formatMarketUnitPrice(record.unitPrice)} ${escapeHtml(currencyName)}</div>
               </div>
             `).join('')
             : `<div class="empty-hint">${escapeHtml(p.tradeHistoryLoading ? t('market.history.loading', undefined) : t('market.history.empty', undefined))}</div>`}
@@ -296,7 +296,7 @@ export class MarketBrowseView {
           <span class="market-order-name">${escapeHtml(p.getMarketDisplayName(order.item))}</span>
           <span class="market-order-side ${order.side === 'buy' ? 'buy' : 'sell'}">${escapeHtml(order.side === 'buy' ? t('market.order.side.buy', undefined) : t('market.order.side.sell', undefined))}</span>
         </div>
-        <div class="market-order-meta">剩余 ${formatDisplayCountBadge(order.remainingQuantity)} · 单价 ${p.formatMarketUnitPrice(order.unitPrice)} ${escapeHtml(currencyName)}</div>
+        <div class="market-order-meta">剩餘 ${formatDisplayCountBadge(order.remainingQuantity)} · 單價 ${p.formatMarketUnitPrice(order.unitPrice)} ${escapeHtml(currencyName)}</div>
         <button class="small-btn ghost" data-market-cancel-order="${order.id}" type="button">${escapeHtml(t('market.order.cancel', undefined))}</button>
       </div>
     `;
@@ -320,10 +320,10 @@ export class MarketBrowseView {
   renderListToolbar(page: number, totalPages: number, totalItems: number): string {
     return `
       <div class="market-list-toolbar ui-action-row">
-        <div class="market-list-toolbar-meta">共 ${formatDisplayInteger(totalItems)} 件，第 ${formatDisplayInteger(page)} / ${formatDisplayInteger(totalPages)} 页</div>
+        <div class="market-list-toolbar-meta">共 ${formatDisplayInteger(totalItems)} 件，第 ${formatDisplayInteger(page)} / ${formatDisplayInteger(totalPages)} 頁</div>
         <div class="market-list-toolbar-actions">
-          <button class="small-btn ghost" data-market-page="${page - 1}" type="button" ${page <= 1 ? 'disabled' : ''}>上一页</button>
-          <button class="small-btn ghost" data-market-page="${page + 1}" type="button" ${page >= totalPages ? 'disabled' : ''}>下一页</button>
+          <button class="small-btn ghost" data-market-page="${page - 1}" type="button" ${page <= 1 ? 'disabled' : ''}>上一頁</button>
+          <button class="small-btn ghost" data-market-page="${page + 1}" type="button" ${page >= totalPages ? 'disabled' : ''}>下一頁</button>
         </div>
       </div>
     `;
@@ -333,7 +333,7 @@ export class MarketBrowseView {
     const itemName = this.panel.getMarketDisplayName(group.item);
     return `
       <div class="market-list-toolbar ui-action-row">
-        <div class="market-list-toolbar-meta">${escapeHtml(itemName)} · 共 ${formatDisplayInteger(totalVariants)} 个强化等级</div>
+        <div class="market-list-toolbar-meta">${escapeHtml(itemName)} · 共 ${formatDisplayInteger(totalVariants)} 個強化等級</div>
         <div class="market-list-toolbar-actions">
           <button class="small-btn ghost" data-market-back-to-groups type="button">返回物品列表</button>
         </div>
@@ -403,7 +403,7 @@ export class MarketBrowseView {
       ...COMBAT_EQUIP_SLOTS.map((slot) => ({ id: slot, label: getEquipSlotLabel(slot), count: this.getMarketEquipmentSlotCount(slot, listedItems.filter((item) => item.item.type === 'equipment' && item.item.equipSlot === slot).length) })),
       {
         id: 'technique',
-        label: '技艺',
+        label: '技藝',
         count: this.getMarketEquipmentSlotCount('technique', listedItems.filter((item) => item.item.type === 'equipment' && isTechniqueEquipmentSlot(item.item.equipSlot)).length),
       },
     ];

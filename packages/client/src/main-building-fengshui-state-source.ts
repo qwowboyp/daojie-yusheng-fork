@@ -112,11 +112,11 @@ const BUILD_CATEGORY_META: Record<BuildCategoryKey, {
   layers: string[];
 }> = {
   structure: {
-    label: '结构',
+    label: '結構',
     layers: ['structure'],
   },
   facility: {
-    label: '设施',
+    label: '設施',
     layers: ['facility', 'furniture', 'decoration'],
   },
   floor: {
@@ -134,7 +134,7 @@ const BUILD_MATERIAL_CATEGORY_META: Record<BuildMaterialCategoryKey, {
   tint: string;
 }> = {
   stone: {
-    label: '石头',
+    label: '石頭',
     fallbackItemLabel: '石材',
     accent: '#6f7d8c',
     tint: 'rgba(111, 125, 140, 0.14)',
@@ -152,8 +152,8 @@ const BUILD_MATERIAL_CATEGORY_META: Record<BuildMaterialCategoryKey, {
     tint: 'rgba(176, 122, 43, 0.14)',
   },
   metal: {
-    label: '金属',
-    fallbackItemLabel: '金属材',
+    label: '金屬',
+    fallbackItemLabel: '金屬材',
     accent: '#5b6d7a',
     tint: 'rgba(91, 109, 122, 0.14)',
   },
@@ -164,8 +164,8 @@ const BUILD_MATERIAL_CATEGORY_META: Record<BuildMaterialCategoryKey, {
     tint: 'rgba(76, 143, 148, 0.14)',
   },
   other: {
-    label: '杂项',
-    fallbackItemLabel: '杂项材料',
+    label: '雜項',
+    fallbackItemLabel: '雜項材料',
     accent: '#8b6b57',
     tint: 'rgba(139, 107, 87, 0.14)',
   },
@@ -189,7 +189,7 @@ const BUILD_GENERIC_MATERIAL_META: Record<string, {
   },
   metal: {
     categoryKey: 'metal',
-    label: '金属材',
+    label: '金屬材',
   },
   glass: {
     categoryKey: 'transparent',
@@ -389,21 +389,21 @@ function buildMaterialSlots(
 
 function formatSelectedMaterialSummary(slots: BuildMaterialSlot[]): string {
   if (slots.length === 0) {
-    return '无耗材';
+    return '無耗材';
   }
   return slots.map((slot) => `${slot.selectedLabel ?? slot.requirement.label} x${formatDisplayInteger(slot.requirement.count)}`).join('、');
 }
 
 function resolveBuildingDisplayLabel(entry: BuildingCatalogEntry): string {
-  const name = String(entry.name || '未命名建筑').trim();
-  if (entry.opening === 'door' || name.endsWith('门')) {
-    return '门';
+  const name = String(entry.name || '未命名建築').trim();
+  if (entry.opening === 'door' || name.endsWith('門')) {
+    return '門';
   }
   if (entry.opening === 'window' || name.endsWith('窗')) {
     return '窗';
   }
-  if (entry.visualTileType === 'wall' || name.endsWith('墙')) {
-    return '墙';
+  if (entry.visualTileType === 'wall' || name.endsWith('牆')) {
+    return '牆';
   }
   if (entry.visualTileType === 'floor' || /地板|地砖|回廊/.test(name)) {
     return '地';
@@ -427,86 +427,86 @@ function resolveBuildingBaseBuildTicks(entry: BuildingCatalogEntry | null): numb
 
 function normalizeMaterialFailure(reason: string | undefined): string {
   if (!reason) {
-    return '建造失败';
+    return '建造失敗';
   }
   const [kind, itemId, count] = reason.split(':');
   if (kind === 'material_insufficient' && itemId) {
     return `材料不足：${resolveBuildMaterialLabel(itemId)}${count ? ` 缺少 ${count}` : ''}`;
   }
   if (kind === 'build_material_required' && itemId) {
-    return `请先选择一种${BUILD_GENERIC_MATERIAL_META[itemId]?.label ?? '真实材料'}`;
+    return `請先選擇一種${BUILD_GENERIC_MATERIAL_META[itemId]?.label ?? '真實材料'}`;
   }
   if (kind === 'build_material_invalid' && itemId) {
-    return `所选材料无效：${resolveBuildMaterialLabel(itemId)}`;
+    return `所選材料無效：${resolveBuildMaterialLabel(itemId)}`;
   }
   if (kind === 'build_material_category_mismatch' && itemId) {
-    return `所选材料不能用于当前造物：${resolveBuildMaterialLabel(itemId)}`;
+    return `所選材料不能用於當前造物：${resolveBuildMaterialLabel(itemId)}`;
   }
   if (reason === 'not_in_world') {
-    return '当前不在可建造世界';
+    return '當前不在可建造世界';
   }
   if (reason === 'virtual_world_building_forbidden') {
-    return '虚境不能建造建筑，请前往现世';
+    return '虛境不能建造建築，請前往現世';
   }
   if (reason === 'invalid_building_def' || reason === 'building_def_not_found') {
-    return '建筑配置不存在';
+    return '建築配置不存在';
   }
   if (reason === 'time_chamber_nested_forbidden') {
-    return '密室内部不能再次建造密室';
+    return '密室內部不能再次建造密室';
   }
   if (reason === 'tile_blocked' || reason === 'occupied') {
-    return '目标地块已被占用';
+    return '目標地塊已被佔用';
   }
   if (reason === 'out_of_bounds') {
-    return '目标地块超出可建造范围';
+    return '目標地塊超出可建造範圍';
   }
   if (reason === 'structure_overlap') {
-    return '目标位置已有结构';
+    return '目標位置已有結構';
   }
   if (reason === 'protected_placement_portal') {
-    return '目标位置不能建造在传送点附近';
+    return '目標位置不能建造在傳送點附近';
   }
   if (reason === 'protected_placement_npc') {
-    return '目标位置不能建造在场景人物附近';
+    return '目標位置不能建造在場景人物附近';
   }
   if (reason === 'protected_placement_spawn') {
-    return '目标位置不能建造在出生点附近';
+    return '目標位置不能建造在出生點附近';
   }
   if (reason === 'protected_placement_safe_zone') {
-    return '目标位置不能建造在安全区内';
+    return '目標位置不能建造在安全區內';
   }
   if (reason === 'building_not_found') {
-    return '建筑不存在';
+    return '建築不存在';
   }
   if (reason === 'building_target_mismatch') {
-    return '目标建筑已发生变化，请重新选择';
+    return '目標建築已發生變化，請重新選擇';
   }
   if (reason === 'building_out_of_range') {
-    return '目标建筑超出当前可操作范围';
+    return '目標建築超出當前可操作範圍';
   }
   if (reason === 'building_not_visible') {
-    return '目标建筑不在当前视野内';
+    return '目標建築不在當前視野內';
   }
   if (reason === 'not_owner' || reason === 'building_owner_mismatch') {
-    return '该建筑当前不允许由你拆除';
+    return '該建築當前不允許由你拆除';
   }
   if (reason === 'building_job_active') {
-    return '当前已有营造任务在进行中';
+    return '當前已有營造任務在進行中';
   }
   if (reason === 'technique_activity_busy') {
-    return '当前已有其他技艺任务在进行中';
+    return '當前已有其他技藝任務在進行中';
   }
   if (reason === 'building_deconstructing') {
-    return '该建筑正在被其他玩家拆除';
+    return '該建築正在被其他玩家拆除';
   }
   if (reason === 'building_deconstruct_unavailable') {
-    return '该建筑当前不可拆除';
+    return '該建築當前不可拆除';
   }
   if (reason === 'sect_build_permission_denied') {
-    return '当前职位没有宗门建造权限';
+    return '當前職位沒有宗門建造權限';
   }
   if (reason === 'sect_demolish_permission_denied') {
-    return '当前职位没有宗门拆除权限';
+    return '當前職位沒有宗門拆除權限';
   }
   return reason;
 }
@@ -805,7 +805,7 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
         pendingPlacementHover = null;
         options.setBuildPreviewOverlay(null);
         pendingDeconstructTargeting = true;
-        options.beginTargeting('building:deconstruct', '拆除建筑', 'entity', Math.max(1, options.getInfoRadius()));
+        options.beginTargeting('building:deconstruct', '拆除建築', 'entity', Math.max(1, options.getInfoRadius()));
         syncActiveBuildMode(true);
       },
       onToggleContinuous: () => {
@@ -917,7 +917,7 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
       if (!continuousSelection) {
         pendingDeconstructTargeting = false;
       }
-      options.showToast('拆除请求已提交', 'system');
+      options.showToast('拆除請求已提交', 'system');
       syncActiveBuildMode(true);
       return continuousSelection;
     },
@@ -953,13 +953,13 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
         options.showToast(
           operation === 'deconstruct'
             ? data.deconstructStarted
-              ? `已开始拆除，预计 ${Math.max(1, Math.trunc(Number(data.deconstructTicks) || 1))} 息`
-              : '建筑已拆除'
+              ? `已開始拆除，預計 ${Math.max(1, Math.trunc(Number(data.deconstructTicks) || 1))} 息`
+              : '建築已拆除'
             : data.building?.state === 'building'
-            ? '已开始建造'
+            ? '已開始建造'
             : data.building
               ? '建造完成'
-              : '建造请求已处理',
+              : '建造請求已處理',
           'success',
         );
         syncActiveBuildMode(true);
@@ -1017,7 +1017,7 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
         return null;
       }
       const room = rooms.get(cell.roomId);
-      const roomLabel = room ? formatRoomRole(room.role) : `房间 ${cell.roomId.slice(0, 8)}`;
+      const roomLabel = room ? formatRoomRole(room.role) : `房間 ${cell.roomId.slice(0, 8)}`;
       const detail = latestDetail?.room.id === cell.roomId
         ? {
           shapeScore: latestDetail.fengShui.shapeScore,
@@ -1130,7 +1130,7 @@ function patchBuildModeMaterialProjection(
   }
   const summary = root.querySelector<HTMLElement>('[data-role="building-material-summary"]');
   if (summary && selected) {
-    const prefix = summary.dataset.materialSummaryPrefix ?? '点击地图选择建造位置';
+    const prefix = summary.dataset.materialSummaryPrefix ?? '點擊地圖選擇建造位置';
     summary.textContent = `${prefix} · ${formatSelectedMaterialSummary(materialSlots)}`;
   }
   const placeButton = root.querySelector<HTMLButtonElement>('[data-action="place"]');
@@ -1193,7 +1193,7 @@ function patchBuildModeMaterialGrid(
       const emptySlot = existing ?? document.createElement('div');
       emptySlot.dataset.materialKey = key;
       emptySlot.className = 'building-mode-material-empty';
-      emptySlot.textContent = `背包里没有可用于${slot.requirement.label}的真实材料`;
+      emptySlot.textContent = `背包裡沒有可用於${slot.requirement.label}的真實材料`;
       ordered.push(emptySlot);
     }
   }
@@ -1203,7 +1203,7 @@ function patchBuildModeMaterialGrid(
     const empty = existing ?? document.createElement('div');
     empty.dataset.materialKey = key;
     empty.className = 'building-mode-material-empty';
-    empty.textContent = selected ? '当前造物无需额外材料' : '先选中一个造物';
+    empty.textContent = selected ? '當前造物無需額外材料' : '先選中一個造物';
     ordered.push(empty);
   }
   materialGrid.replaceChildren(...ordered);
@@ -1238,7 +1238,7 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
   strengthPanel.className = 'building-mode-panel building-mode-strength-panel';
   const strengthTitle = document.createElement('div');
   strengthTitle.className = 'building-mode-panel-title';
-  strengthTitle.textContent = '结构强度';
+  strengthTitle.textContent = '結構強度';
   const strengthInputWrap = document.createElement('label');
   strengthInputWrap.className = 'building-mode-strength-input-wrap';
   const strengthInput = document.createElement('input');
@@ -1256,12 +1256,12 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
   const strengthHint = document.createElement('div');
   strengthHint.className = 'building-mode-strength-hint';
   strengthHint.textContent = selected
-    ? `建造 ${formatDisplayInteger(projectedBuildTicks)} 息，完工耐久 ${formatDisplayInteger(projectedMaxHp)} 生命值，营造等级 Lv.${formatDisplayInteger(builderSkillLevel)}`
-    : '每 1 强度 = 1 息工时 = 1x 生命倍率';
+    ? `建造 ${formatDisplayInteger(projectedBuildTicks)} 息，完工耐久 ${formatDisplayInteger(projectedMaxHp)} 生命值，營造等級 Lv.${formatDisplayInteger(builderSkillLevel)}`
+    : '每 1 強度 = 1 息工時 = 1x 生命倍率';
   strengthHint.dataset.role = 'building-strength-summary';
   const strengthHintSecondary = document.createElement('div');
   strengthHintSecondary.className = 'building-mode-strength-hint';
-  strengthHintSecondary.textContent = '营造经验按原始建造时间结算。';
+  strengthHintSecondary.textContent = '營造經驗按原始建造時間結算。';
   strengthPanel.replaceChildren(strengthTitle, strengthInputWrap, strengthHint, strengthHintSecondary);
 
   const stage = document.createElement('section');
@@ -1271,13 +1271,13 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
   const title = document.createElement('div');
   title.className = 'building-mode-title';
   const titleMain = document.createElement('strong');
-  titleMain.textContent = selected?.name ?? '暂无符合条件的造物';
+  titleMain.textContent = selected?.name ?? '暫無符合條件的造物';
   const titleSub = document.createElement('span');
   titleSub.dataset.role = 'building-material-summary';
-  titleSub.dataset.materialSummaryPrefix = `点击地图选择建造位置 · 营造 Lv.${formatDisplayInteger(builderSkillLevel)}`;
+  titleSub.dataset.materialSummaryPrefix = `點擊地圖選擇建造位置 · 營造 Lv.${formatDisplayInteger(builderSkillLevel)}`;
   titleSub.textContent = selected
     ? `${titleSub.dataset.materialSummaryPrefix} · ${formatSelectedMaterialSummary(options.materialSlots)}`
-    : '请选择造物';
+    : '請選擇造物';
   title.replaceChildren(titleMain, titleSub);
   const stageStatus = document.createElement('div');
   stageStatus.className = 'building-mode-stage-status';
@@ -1287,7 +1287,7 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
       ? pendingPlacementHint(options)
     : selected
       ? `建造 ${formatDisplayInteger(projectedBuildTicks)} 息 · 完工耐久 ${formatDisplayInteger(projectedMaxHp)} 生命值`
-      : '未选中造物';
+      : '未選中造物';
   stageStatus.dataset.role = 'building-stage-status';
   const headMain = document.createElement('div');
   headMain.className = 'building-mode-stage-summary';
@@ -1295,20 +1295,20 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
   const actions = document.createElement('div');
   actions.className = 'building-mode-actions';
 
-  const placeButton = buildModeActionButton(options.mobileLayoutActive ? '选位置' : '选择位置', 'place', true);
-  placeButton.setAttribute('aria-label', '选择位置');
+  const placeButton = buildModeActionButton(options.mobileLayoutActive ? '選位置' : '選擇位置', 'place', true);
+  placeButton.setAttribute('aria-label', '選擇位置');
   const placeBaseDisabled = !(player && selected);
   placeButton.dataset.baseDisabled = String(placeBaseDisabled);
   placeButton.disabled = placeBaseDisabled || options.materialSlots.some((slot) => slot.selectionRequired && !slot.ready);
   actions.appendChild(placeButton);
-  const deconstructButton = buildModeActionButton(options.mobileLayoutActive ? '拆除' : '拆除建筑', 'deconstruct');
-  deconstructButton.setAttribute('aria-label', '拆除建筑');
+  const deconstructButton = buildModeActionButton(options.mobileLayoutActive ? '拆除' : '拆除建築', 'deconstruct');
+  deconstructButton.setAttribute('aria-label', '拆除建築');
   deconstructButton.classList.toggle('active', options.pendingDeconstructActive);
   deconstructButton.disabled = !player;
   actions.appendChild(deconstructButton);
-  const continuousLabel = options.continuousSelection ? '连续选择：开' : '连续选择：关';
+  const continuousLabel = options.continuousSelection ? '連續選擇：開' : '連續選擇：關';
   const continuousButton = buildModeActionButton(options.mobileLayoutActive
-    ? `连选：${options.continuousSelection ? '开' : '关'}`
+    ? `連選：${options.continuousSelection ? '開' : '關'}`
     : continuousLabel, 'continuous');
   continuousButton.setAttribute('aria-label', continuousLabel);
   continuousButton.classList.toggle('active', options.continuousSelection);
@@ -1319,8 +1319,8 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
   exitButton.className = 'building-mode-exit';
   exitButton.dataset.action = 'exit';
   exitButton.dataset.uiKey = 'building-mode-action:exit';
-  exitButton.textContent = options.mobileLayoutActive ? '退出' : '退出营造';
-  exitButton.setAttribute('aria-label', '退出营造');
+  exitButton.textContent = options.mobileLayoutActive ? '退出' : '退出營造';
+  exitButton.setAttribute('aria-label', '退出營造');
   actions.appendChild(exitButton);
   stageHead.replaceChildren(headMain, actions);
 
@@ -1346,7 +1346,7 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
   if (options.filteredEntries.length === 0) {
     const empty = document.createElement('div');
     empty.className = 'building-mode-empty';
-    empty.textContent = '当前分类没有可建造的造物';
+    empty.textContent = '當前分類沒有可建造的造物';
     itemGrid.appendChild(empty);
   }
   stage.replaceChildren(stageHead, itemGrid);
@@ -1475,8 +1475,8 @@ function patchBuildModeStrengthProjection(
   const strengthSummary = root.querySelector<HTMLElement>('[data-role="building-strength-summary"]');
   if (strengthSummary) {
     strengthSummary.textContent = selected
-      ? `建造 ${formatDisplayInteger(projectedBuildTicks)} 息，完工耐久 ${formatDisplayInteger(projectedMaxHp)} 生命值，营造等级 Lv.${formatDisplayInteger(builderSkillLevel)}`
-      : '每 1 强度 = 1 息工时 = 1x 生命倍率';
+      ? `建造 ${formatDisplayInteger(projectedBuildTicks)} 息，完工耐久 ${formatDisplayInteger(projectedMaxHp)} 生命值，營造等級 Lv.${formatDisplayInteger(builderSkillLevel)}`
+      : '每 1 強度 = 1 息工時 = 1x 生命倍率';
   }
   const stageStatus = root.querySelector<HTMLElement>('[data-role="building-stage-status"]');
   if (stageStatus && selected && latestBuildResult == null && !pendingPlacementActive) {
@@ -1496,15 +1496,15 @@ function buildModeActionButton(label: string, action: 'place' | 'deconstruct' | 
 
 function pendingPlacementHint(options: BuildModeToolbarOptions): string | null {
   if (options.pendingDeconstructActive) {
-    return options.continuousSelection ? '请选择建筑拆除，完成后可继续选择' : '请选择要拆除的建筑';
+    return options.continuousSelection ? '請選擇建築拆除，完成後可繼續選擇' : '請選擇要拆除的建築';
   }
   if (options.pendingPlacementActive) {
     return options.continuousSelection
-      ? '请选择目标格，放下后可继续选择'
-      : '请选择目标格，放下半成品后再靠近施工';
+      ? '請選擇目標格，放下後可繼續選擇'
+      : '請選擇目標格，放下半成品後再靠近施工';
   }
   return options.latestBuildResult?.ok === true && options.latestBuildResult.building?.state === 'building'
-    ? '半成品已放置，靠近后在交互列表中开始施工'
+    ? '半成品已放置，靠近後在交互列表中開始施工'
     : null;
 }
 
@@ -1513,12 +1513,12 @@ function formatPlayerCoord(player: PlayerState | null): string {
 }
 
 function formatBuildingLayer(layer: string): string {
-  return { structure: '结构', floor: '地面', facility: '设施', furniture: '家具', decoration: '装饰' }[layer] ?? layer;
+  return { structure: '結構', floor: '地面', facility: '設施', furniture: '傢俱', decoration: '裝飾' }[layer] ?? layer;
 }
 
 function formatMaterialSummary(cost: Array<{ itemId: string; count: number }> | undefined): string {
   if (!cost?.length) {
-    return '无耗材';
+    return '無耗材';
   }
   return cost.map((entry) => `${resolveBuildMaterialLabel(entry.itemId)} x${formatDisplayInteger(entry.count)}`).join('、');
 }
@@ -1543,26 +1543,26 @@ function buildBuildingTooltipText(def: BuildingCatalogEntry, buildStrength: numb
   const projectedDuration = resolveProjectedBuildDurationTicks(buildStrength);
   const projectedMaxHp = resolveProjectedBuildMaxHp(def, buildStrength, builderSkillLevel);
   const lines = [
-    `显示：${resolveBuildingDisplayLabel(def)}`,
-    `类型：${formatBuildingLayer(def.layer)}`,
+    `顯示：${resolveBuildingDisplayLabel(def)}`,
+    `類型：${formatBuildingLayer(def.layer)}`,
     `材料：${formatMaterialSummary(def.cost)}`,
-    `耐久系数：${formatBuildingDurabilityMultiplier(def)}`,
-    `当前建造强度：${formatDisplayInteger(projectedDuration)}`,
-    `当前完工耐久：${formatDisplayInteger(projectedMaxHp)}`,
-    `营造等级：Lv.${formatDisplayInteger(builderSkillLevel)}`,
-    `稳定：${formatDisplayInteger(Math.max(0, Math.trunc(Number(def.stability) || 0)))}`,
+    `耐久係數：${formatBuildingDurabilityMultiplier(def)}`,
+    `當前建造強度：${formatDisplayInteger(projectedDuration)}`,
+    `當前完工耐久：${formatDisplayInteger(projectedMaxHp)}`,
+    `營造等級：Lv.${formatDisplayInteger(builderSkillLevel)}`,
+    `穩定：${formatDisplayInteger(Math.max(0, Math.trunc(Number(def.stability) || 0)))}`,
     `五行：${formatElementVectorVerbose(def.elementVector)}`,
-    `标签：${(def.traits ?? []).join('、') || '无'}`,
-    `占地：${formatDisplayInteger(Math.max(1, def.footprint?.length ?? 1))} 格`,
+    `標籤：${(def.traits ?? []).join('、') || '無'}`,
+    `佔地：${formatDisplayInteger(Math.max(1, def.footprint?.length ?? 1))} 格`,
   ];
   if (typeof def.comfort === 'number' && def.comfort !== 0) {
-    lines.push(`舒适：${formatSignedNumber(def.comfort)}`);
+    lines.push(`舒適：${formatSignedNumber(def.comfort)}`);
   }
   if (def.blocksMove === true || def.blocksSight === true) {
-    lines.push(`阻挡：${def.blocksMove === true ? '移动' : ''}${def.blocksMove === true && def.blocksSight === true ? ' / ' : ''}${def.blocksSight === true ? '视线' : ''}`);
+    lines.push(`阻擋：${def.blocksMove === true ? '移動' : ''}${def.blocksMove === true && def.blocksSight === true ? ' / ' : ''}${def.blocksSight === true ? '視線' : ''}`);
   }
   if (def.opening && def.opening !== 'none') {
-    lines.push(`开口：${def.opening === 'door' ? '门' : def.opening === 'window' ? '窗' : def.opening}`);
+    lines.push(`開口：${def.opening === 'door' ? '門' : def.opening === 'window' ? '窗' : def.opening}`);
   }
   return lines.join('\n');
 }
@@ -1616,9 +1616,9 @@ function splitTooltipLines(value: string): string[] {
 function openOrPatchFengShuiDetail(data: FengShuiDetailPayload): void {
   const options = {
     ownerId: FENGSHUI_DETAIL_MODAL_OWNER,
-    title: `风水：${formatGrade(data.fengShui.grade)} ${formatDisplayInteger(data.fengShui.score)}`,
+    title: `風水：${formatGrade(data.fengShui.grade)} ${formatDisplayInteger(data.fengShui.score)}`,
     subtitle: `${formatRoomRole(data.room.role)} · ${data.fengShui.primaryElement} / ${data.fengShui.functionElement}`,
-    hint: '点击空白处关闭',
+    hint: '點擊空白處關閉',
     size: 'md' as const,
     renderBody: (body: HTMLElement) => renderFengShuiDetailBody(body, data),
   };
@@ -1633,10 +1633,10 @@ function renderFengShuiDetailBody(body: HTMLElement, data: FengShuiDetailPayload
   const metrics = document.createElement('div');
   metrics.className = 'fengshui-detail-metrics';
   for (const entry of [
-    ['面积', formatDisplayInteger(data.room.area)],
-    ['门窗', `${formatDisplayInteger(data.room.doorCount)}/${formatDisplayInteger(data.room.windowCount)}`],
-    ['封闭', data.room.enclosed ? '完整' : '开放'],
-    ['幸运', formatSignedNumber(Math.trunc(data.fengShui.score / 10))],
+    ['面積', formatDisplayInteger(data.room.area)],
+    ['門窗', `${formatDisplayInteger(data.room.doorCount)}/${formatDisplayInteger(data.room.windowCount)}`],
+    ['封閉', data.room.enclosed ? '完整' : '開放'],
+    ['幸運', formatSignedNumber(Math.trunc(data.fengShui.score / 10))],
   ]) {
     const item = document.createElement('span');
     item.className = 'fengshui-detail-metric';
@@ -1645,17 +1645,17 @@ function renderFengShuiDetailBody(body: HTMLElement, data: FengShuiDetailPayload
   }
   const dimensionsTitle = document.createElement('div');
   dimensionsTitle.className = 'fengshui-detail-section-title';
-  dimensionsTitle.textContent = '分项汇总';
+  dimensionsTitle.textContent = '分項彙總';
   const dimensions = document.createElement('div');
   dimensions.className = 'fengshui-detail-metrics';
   for (const entry of [
     ['形制', data.fengShui.shapeScore],
-    ['围合', data.fengShui.enclosureScore],
-    ['灵气', data.fengShui.qiScore],
-    ['煞气', data.fengShui.shaScore],
-    ['舒适/用途', data.fengShui.comfortScore],
+    ['圍合', data.fengShui.enclosureScore],
+    ['靈氣', data.fengShui.qiScore],
+    ['煞氣', data.fengShui.shaScore],
+    ['舒適/用途', data.fengShui.comfortScore],
     ['五行', data.fengShui.elementScore],
-    ['阵法', data.fengShui.formationScore],
+    ['陣法', data.fengShui.formationScore],
     ['完整性', data.fengShui.integrityScore],
   ] as const) {
     const item = document.createElement('span');
@@ -1665,7 +1665,7 @@ function renderFengShuiDetailBody(body: HTMLElement, data: FengShuiDetailPayload
   }
   const reasonsTitle = document.createElement('div');
   reasonsTitle.className = 'fengshui-detail-section-title';
-  reasonsTitle.textContent = '具体加减项';
+  reasonsTitle.textContent = '具體加減項';
   const reasons = document.createElement('div');
   reasons.className = 'fengshui-detail-reasons';
   const visibleReasons = data.fengShui.reasons
@@ -1688,7 +1688,7 @@ function renderFengShuiDetailBody(body: HTMLElement, data: FengShuiDetailPayload
   if (visibleReasons.length === 0) {
     const item = document.createElement('div');
     item.className = 'fengshui-detail-reason is-info';
-    item.textContent = '暂无有效加减项';
+    item.textContent = '暫無有效加減項';
     reasons.appendChild(item);
   }
   root.replaceChildren(metrics, dimensionsTitle, dimensions, reasonsTitle, reasons);
@@ -1706,10 +1706,10 @@ function formatSignedNumber(value: number): string {
 function formatGrade(grade: string): string {
   return {
     calamity: '天厄',
-    disaster: '绝凶',
+    disaster: '絕兇',
     great_bad: '大凶',
-    bad: '凶',
-    minor_bad: '小凶',
+    bad: '兇',
+    minor_bad: '小兇',
     plain: '平',
     minor_good: '小吉',
     good: '吉',
@@ -1721,11 +1721,11 @@ function formatGrade(grade: string): string {
 
 function formatRoomRole(role: string): string {
   return {
-    generic: '普通房间',
-    meditation: '静室',
+    generic: '普通房間',
+    meditation: '靜室',
     alchemy: '丹房',
-    bedroom: '卧房',
-    storage: '仓库',
+    bedroom: '臥房',
+    storage: '倉庫',
     courtyard: '庭院',
     outdoor: '室外',
   }[role] ?? role;
@@ -1733,43 +1733,43 @@ function formatRoomRole(role: string): string {
 
 function localizeReasonCode(code: string): string {
   return {
-    'room.role.alchemy': '识别为丹房',
-    'room.role.meditation': '识别为静室',
-    'room.role.bedroom': '识别为卧房',
-    'room.role.storage': '识别为仓库',
-    'room.role.courtyard': '识别为庭院',
-    'room.role.generic_mixed': '用途混杂，按普通房间处理',
-    'room.role.generic_cap': '普通房间未形成明确风水用途',
-    'shell.closed': '房间封闭完整',
-    'shell.open': '房间连通外界',
-    'shell.no_door': '封闭但缺少房门',
-    'shell.area_balanced': '面积适中',
-    'shell.roof_covered': '屋顶覆盖充足',
-    'enclosure.closed': '房间封闭完整',
-    'enclosure.open': '房间连通外界',
-    'enclosure.no_door': '封闭但缺少房门',
-    'shape.area_balanced': '面积适中',
-    'shape.roof_covered': '屋顶覆盖充足',
-    'trait.courtyard_corridor': '半室外回廊格局匹配',
-    'trait.alchemy_heat_source': '丹炉火源匹配',
-    'trait.meditation_facility': '静修设施匹配',
-    'trait.rest_comfort': '休息家具舒适',
-    'trait.storage_shelf': '仓储设施匹配',
+    'room.role.alchemy': '識別為丹房',
+    'room.role.meditation': '識別為靜室',
+    'room.role.bedroom': '識別為臥房',
+    'room.role.storage': '識別為倉庫',
+    'room.role.courtyard': '識別為庭院',
+    'room.role.generic_mixed': '用途混雜，按普通房間處理',
+    'room.role.generic_cap': '普通房間未形成明確風水用途',
+    'shell.closed': '房間封閉完整',
+    'shell.open': '房間連通外界',
+    'shell.no_door': '封閉但缺少房門',
+    'shell.area_balanced': '面積適中',
+    'shell.roof_covered': '屋頂覆蓋充足',
+    'enclosure.closed': '房間封閉完整',
+    'enclosure.open': '房間連通外界',
+    'enclosure.no_door': '封閉但缺少房門',
+    'shape.area_balanced': '面積適中',
+    'shape.roof_covered': '屋頂覆蓋充足',
+    'trait.courtyard_corridor': '半室外迴廊格局匹配',
+    'trait.alchemy_heat_source': '丹爐火源匹配',
+    'trait.meditation_facility': '靜修設施匹配',
+    'trait.rest_comfort': '休息傢俱舒適',
+    'trait.storage_shelf': '倉儲設施匹配',
     'element.same_function': '主五行契合用途',
     'element.generates_function': '主五行生助用途',
-    'element.conflicts_function': '主五行克制用途',
-    'qi.dense': '灵气密度较高',
-    'qi.low': '灵气密度偏低',
-    'qi.leak': '房间存在泄气',
-    'qi.affinity': '聚气布置生效',
-    'comfort.good': '舒适度较高',
-    'comfort.bad': '舒适度偏低',
-    'stability.good': '结构稳定',
-    'stability.bad': '结构稳定不足',
-    'sha.exposed': '煞气外露',
-    'sha.reduced': '煞气已被化解',
+    'element.conflicts_function': '主五行剋制用途',
+    'qi.dense': '靈氣密度較高',
+    'qi.low': '靈氣密度偏低',
+    'qi.leak': '房間存在洩氣',
+    'qi.affinity': '聚氣佈置生效',
+    'comfort.good': '舒適度較高',
+    'comfort.bad': '舒適度偏低',
+    'stability.good': '結構穩定',
+    'stability.bad': '結構穩定不足',
+    'sha.exposed': '煞氣外露',
+    'sha.reduced': '煞氣已被化解',
     'sha.screen': '影壁化煞',
-    'integrity.penalty': '建筑完整性不足',
-    integrity_penalty: '建筑完整性不足',
+    'integrity.penalty': '建築完整性不足',
+    integrity_penalty: '建築完整性不足',
   }[code] ?? code;
 }

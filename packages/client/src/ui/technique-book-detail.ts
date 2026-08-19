@@ -57,9 +57,9 @@ export function buildTechniqueBookDetailContent(item: ItemStack): TechniqueBookD
       renderPlainLine(t('equipment-tooltip.label.category', undefined), getTechniqueCategoryLabel(previewTechnique.category)),
       renderPlainLine(t('equipment-tooltip.technique-book.realm', undefined), realmLabel),
       renderPlainLine(t('equipment-tooltip.technique-book.grade', undefined), getTechniqueGradeLabel(previewTechnique.grade)),
-      renderPlainLine('可修至', learnMaxLevel >= maxLevel ? `满层（${formatDisplayInteger(maxLevel)} 层）` : `${formatDisplayInteger(learnMaxLevel)} / ${formatDisplayInteger(maxLevel)} 层`),
+      renderPlainLine('可修至', learnMaxLevel >= maxLevel ? `滿層（${formatDisplayInteger(maxLevel)} 層）` : `${formatDisplayInteger(learnMaxLevel)} / ${formatDisplayInteger(maxLevel)} 層`),
       renderPlainLine(
-        learnMaxLevel >= maxLevel ? t('equipment-tooltip.technique-book.max-attrs', undefined) : '可修上限属性',
+        learnMaxLevel >= maxLevel ? t('equipment-tooltip.technique-book.max-attrs', undefined) : '可修上限屬性',
         formatTechniqueCumulativeBonusSummary(learnMaxLevel, previewTechnique.layers),
       ),
       renderPlainLine(
@@ -127,7 +127,7 @@ function buildTechniqueBookFallbackLines(item: ItemStack): string[] {
     renderPlainLine(t('equipment-tooltip.technique-book.desc', undefined), item.desc?.trim() || t('equipment-tooltip.technique-book.no-desc', undefined)),
   ];
   if (learnMaxLevel !== null) {
-    lines.push(renderPlainLine('可修至', `${formatDisplayInteger(learnMaxLevel)} 层`));
+    lines.push(renderPlainLine('可修至', `${formatDisplayInteger(learnMaxLevel)} 層`));
   }
   return lines;
 }

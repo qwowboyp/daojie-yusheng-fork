@@ -121,14 +121,14 @@ function formatSkillAffinityLabel(
       ? '法'
       : kind === 'mixed'
         ? '混'
-        : '辅';
+        : '輔';
   const fullKindLabel = kind === 'physical'
     ? '物理'
     : kind === 'spell'
-      ? '法术'
+      ? '法術'
       : kind === 'mixed'
         ? '混合'
-        : '辅助';
+        : '輔助';
   const elementLabel = element === 'multi'
     ? '五行'
     : element === 'neutral'
@@ -136,8 +136,8 @@ function formatSkillAffinityLabel(
       : `${getElementKeyLabel(element)}行`;
   if (!elementLabel) {
     return {
-      label: kind === 'utility' ? '辅助' : fullKindLabel,
-      title: kind === 'utility' ? '辅助型技能' : fullKindLabel,
+      label: kind === 'utility' ? '輔助' : fullKindLabel,
+      title: kind === 'utility' ? '輔助型技能' : fullKindLabel,
     };
   }
   return {

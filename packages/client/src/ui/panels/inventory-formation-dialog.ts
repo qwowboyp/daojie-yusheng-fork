@@ -216,13 +216,13 @@ export class InventoryFormationDialogController {
     if (stoneCostOutput) {
       stoneCostOutput.value = formatDisplayInteger(plan.spiritStoneCount);
       stoneCostOutput.textContent = formatDisplayInteger(plan.spiritStoneCount);
-      stoneCostOutput.setAttribute('aria-label', `当前 ${formatDisplayInteger(spiritStoneTotal)}，需要 ${formatDisplayInteger(plan.spiritStoneCount)}`);
+      stoneCostOutput.setAttribute('aria-label', `當前 ${formatDisplayInteger(spiritStoneTotal)}，需要 ${formatDisplayInteger(plan.spiritStoneCount)}`);
     }
     const qiCostOutput = body.querySelector<HTMLOutputElement>('[data-formation-qi-cost]');
     if (qiCostOutput) {
       qiCostOutput.value = formatDisplayInteger(plan.qiCost);
       qiCostOutput.textContent = formatDisplayInteger(plan.qiCost);
-      qiCostOutput.setAttribute('aria-label', `当前 ${formatDisplayInteger(playerQi)}，需要 ${formatDisplayInteger(plan.qiCost)}`);
+      qiCostOutput.setAttribute('aria-label', `當前 ${formatDisplayInteger(playerQi)}，需要 ${formatDisplayInteger(plan.qiCost)}`);
     }
     const currentQiOutput = body.querySelector<HTMLOutputElement>('[data-formation-current-qi]');
     if (currentQiOutput) {
@@ -233,10 +233,10 @@ export class InventoryFormationDialogController {
     if (stoneState) stoneState.dataset.formationCostState = hasEnoughStones ? 'ready' : 'insufficient';
     if (previewSummary) {
       previewSummary.textContent = !hasEnoughStones
-        ? `灵石不足 ${formatDisplayInteger(plan.spiritStoneCount - spiritStoneTotal)}`
+        ? `靈石不足 ${formatDisplayInteger(plan.spiritStoneCount - spiritStoneTotal)}`
         : hasEnoughQi
-          ? `阵盘增幅 ${formatDisplayNumber(diskMultiplier)} 倍 · 阵法 ${formatDisplayNumber(skillLevel)} 级`
-          : `灵力不足 ${formatDisplayInteger(plan.qiCost - playerQi)}`;
+          ? `陣盤增幅 ${formatDisplayNumber(diskMultiplier)} 倍 · 陣法 ${formatDisplayNumber(skillLevel)} 級`
+          : `靈力不足 ${formatDisplayInteger(plan.qiCost - playerQi)}`;
     }
     this.setStatText(body, 'totalAura', stats.totalQiBudget ?? stats.totalAuraBudget);
     this.setStatText(body, 'totalStones', stats.totalSpiritStoneBudget ?? plan.spiritStoneCount);
@@ -253,15 +253,15 @@ export class InventoryFormationDialogController {
         confirmButton.removeAttribute('aria-label');
       } else {
         confirmButton.setAttribute('aria-label', !hasEnoughStones
-          ? `灵石不足：当前 ${formatDisplayInteger(spiritStoneTotal)}，需要 ${formatDisplayInteger(plan.spiritStoneCount)}`
-          : `灵力不足：当前 ${formatDisplayInteger(playerQi)}，需要 ${formatDisplayInteger(plan.qiCost)}`);
+          ? `靈石不足：當前 ${formatDisplayInteger(spiritStoneTotal)}，需要 ${formatDisplayInteger(plan.spiritStoneCount)}`
+          : `靈力不足：當前 ${formatDisplayInteger(playerQi)}，需要 ${formatDisplayInteger(plan.qiCost)}`);
       }
-      confirmButton.textContent = hasEnoughStones && hasEnoughQi ? '确认布阵' : !hasEnoughStones ? '灵石不足' : '灵力不足';
+      confirmButton.textContent = hasEnoughStones && hasEnoughQi ? '確認佈陣' : !hasEnoughStones ? '靈石不足' : '靈力不足';
     }
     const previewButton = body.querySelector<HTMLButtonElement>('[data-formation-range-preview]');
     if (previewButton) {
-      const shapeLabel = template.range.shape === 'circle' ? '圆形' : template.range.shape === 'square' ? '方形' : '棋盘';
-      previewButton.textContent = `预览范围：${shapeLabel}半径 ${formatDisplayInteger(stats.radius)}`;
+      const shapeLabel = template.range.shape === 'circle' ? '圓形' : template.range.shape === 'square' ? '方形' : '棋盤';
+      previewButton.textContent = `預覽範圍：${shapeLabel}半徑 ${formatDisplayInteger(stats.radius)}`;
     }
     this.options.previewRange({
       shape: template.range.shape,
@@ -301,22 +301,22 @@ export class InventoryFormationDialogController {
       const halfLifeTicks = Math.max(1, Math.trunc(template.effect.convergenceHalfLifeTicks ?? FORMATION_TICKS_PER_DAY));
       const perTickGain = stats.effectValue > 0 ? stats.effectValue / halfLifeTicks : 0;
       return [
-        { label: '每息增加灵力', value: formatDisplayNumber(perTickGain, { maximumFractionDigits: 2, compactMaximumFractionDigits: 2 }) },
-        { label: '预计最大灵力', value: formatDisplayInteger(stats.effectValue) },
+        { label: '每息增加靈力', value: formatDisplayNumber(perTickGain, { maximumFractionDigits: 2, compactMaximumFractionDigits: 2 }) },
+        { label: '預計最大靈力', value: formatDisplayInteger(stats.effectValue) },
       ];
     }
     if (template.effect.kind === 'terrain_stabilizer') {
       const reduction = resolveFormationDamageReduction(template, stats.effectValue);
       return [
-        { label: '地块受击减伤', value: this.formatPercent(reduction) },
-        { label: '实际承伤比例', value: this.formatPercent(1 - reduction) },
+        { label: '地塊受擊減傷', value: this.formatPercent(reduction) },
+        { label: '實際承傷比例', value: this.formatPercent(1 - reduction) },
       ];
     }
     if (template.effect.kind === 'monster_suppression') {
       const layers = Math.max(0, Math.floor(stats.effectValue));
       return [
-        { label: '压制层数', value: formatDisplayInteger(layers) },
-        { label: '经验剩余比例', value: this.formatPercent(percentModifierToMultiplier(-layers)) },
+        { label: '壓制層數', value: formatDisplayInteger(layers) },
+        { label: '經驗剩餘比例', value: this.formatPercent(percentModifierToMultiplier(-layers)) },
       ];
     }
     if (template.effect.kind === 'vision_suppression') {
@@ -325,16 +325,16 @@ export class InventoryFormationDialogController {
         : 10;
       const reductionPercent = Math.max(0, Math.floor(stats.effectValue) * percentPerStrength);
       return [
-        { label: '视野削减', value: `${formatDisplayNumber(reductionPercent)}%` },
-        { label: '视野剩余比例', value: this.formatPercent(percentModifierToMultiplier(-reductionPercent)) },
+        { label: '視野削減', value: `${formatDisplayNumber(reductionPercent)}%` },
+        { label: '視野剩餘比例', value: this.formatPercent(percentModifierToMultiplier(-reductionPercent)) },
       ];
     }
     const reduction = resolveFormationDamageReduction(template, stats.effectValue);
     const rawDurability = Math.max(1, Math.ceil((stats.totalQiBudget ?? stats.totalAuraBudget) * resolveFormationDamagePerAura(template)));
     const effectiveDurability = Math.max(1, Math.ceil(rawDurability / Math.max(0.000001, 1 - reduction)));
     return [
-      { label: '预计承受伤害', value: formatDisplayInteger(effectiveDurability) },
-      { label: '阵法减伤', value: this.formatPercent(reduction) },
+      { label: '預計承受傷害', value: formatDisplayInteger(effectiveDurability) },
+      { label: '陣法減傷', value: this.formatPercent(reduction) },
     ];
   }
 
@@ -342,46 +342,46 @@ export class InventoryFormationDialogController {
     const effectValue = formatDisplayInteger(stats.effectValue);
     if (kind === 'tile_aura_source') {
       return {
-        kindLabel: '灵气增幅',
-        fallbackDesc: '持续抬升范围内地块灵气，使地块资源逐步接近目标灵气。',
-        target: '范围内地块',
-        scaling: `基础强度按阵盘与技艺增幅后，每 1 强度对应 100 灵气，当前目标 ${effectValue}`,
-        visibility: '感气后可查看范围与阵眼',
+        kindLabel: '靈氣增幅',
+        fallbackDesc: '持續抬升範圍內地塊靈氣，使地塊資源逐步接近目標靈氣。',
+        target: '範圍內地塊',
+        scaling: `基礎強度按陣盤與技藝增幅後，每 1 強度對應 100 靈氣，當前目標 ${effectValue}`,
+        visibility: '感氣後可查看範圍與陣眼',
       };
     }
     if (kind === 'terrain_stabilizer') {
       return {
-        kindLabel: '地脉稳固',
-        fallbackDesc: '稳固范围内地脉，抑制地块复生、消散与被拆损耗。',
-        target: '可攻击地块与临时地块',
-        scaling: `实际强度 ${effectValue}，每 10 强度约降低 1% 地块受击伤害`,
-        visibility: '范围内自动生效',
+        kindLabel: '地脈穩固',
+        fallbackDesc: '穩固範圍內地脈，抑制地塊復生、消散與被拆損耗。',
+        target: '可攻擊地塊與臨時地塊',
+        scaling: `實際強度 ${effectValue}，每 10 強度約降低 1% 地塊受擊傷害`,
+        visibility: '範圍內自動生效',
       };
     }
     if (kind === 'monster_suppression') {
       return {
-        kindLabel: '封魔压制',
-        fallbackDesc: '压制范围内妖兽的主要战斗属性，并按实际压制幅度降低击杀经验。',
-        target: '范围内妖兽',
-        scaling: `实际强度 ${effectValue}，每 1 强度提供 1 层压制`,
-        visibility: '范围内自动生效，多阵重叠取最高压制层数',
+        kindLabel: '封魔壓制',
+        fallbackDesc: '壓制範圍內妖獸的主要戰鬥屬性，並按實際壓制幅度降低擊殺經驗。',
+        target: '範圍內妖獸',
+        scaling: `實際強度 ${effectValue}，每 1 強度提供 1 層壓制`,
+        visibility: '範圍內自動生效，多陣重疊取最高壓制層數',
       };
     }
     if (kind === 'vision_suppression') {
       return {
-        kindLabel: '视野压制',
-        fallbackDesc: '遮蔽范围内修士感知，降低服务端视野半径。',
-        target: '范围内玩家',
-        scaling: `实际强度 ${effectValue}，每 1 强度提供 10% 视野削减`,
-        visibility: '范围内自动生效，多阵重叠取最高视野削减',
+        kindLabel: '視野壓制',
+        fallbackDesc: '遮蔽範圍內修士感知，降低服務端視野半徑。',
+        target: '範圍內玩家',
+        scaling: `實際強度 ${effectValue}，每 1 強度提供 10% 視野削減`,
+        visibility: '範圍內自動生效，多陣重疊取最高視野削減',
       };
     }
     return {
-      kindLabel: '边界封锁',
-      fallbackDesc: '在阵法边界形成阻挡，封锁通行与视线。',
-      target: '阵法边界与阵眼',
-      scaling: `实际强度 ${effectValue}，每 10 强度约降低 1% 边界受击损耗`,
-      visibility: '边界可见并阻挡，归属方按规则通行',
+      kindLabel: '邊界封鎖',
+      fallbackDesc: '在陣法邊界形成阻擋，封鎖通行與視線。',
+      target: '陣法邊界與陣眼',
+      scaling: `實際強度 ${effectValue}，每 10 強度約降低 1% 邊界受擊損耗`,
+      visibility: '邊界可見並阻擋，歸屬方按規則通行',
     };
   }
 
@@ -429,14 +429,14 @@ export class InventoryFormationDialogController {
       input.step = '1';
       input.value = String(durationMinutes);
     }
-    radiusInput?.setAttribute('aria-label', `阵法范围，${FORMATION_SETUP_MIN_RADIUS} 到 ${FORMATION_SETUP_MAX_RADIUS} 格`);
+    radiusInput?.setAttribute('aria-label', `陣法範圍，${FORMATION_SETUP_MIN_RADIUS} 到 ${FORMATION_SETUP_MAX_RADIUS} 格`);
     if (effectInput) {
       effectInput.min = String(cost.minEffectValue);
       effectInput.step = '1';
       effectInput.value = String(setup.effectValue);
     }
     this.setOutputText(body, '[data-formation-default-radius]', cost.defaultRadius, ' 格');
-    this.setOutputText(body, '[data-formation-default-duration]', defaultDurationMinutes, ' 分钟');
+    this.setOutputText(body, '[data-formation-default-duration]', defaultDurationMinutes, ' 分鐘');
     this.setOutputText(body, '[data-formation-min-effect]', cost.minEffectValue);
     return { ...setup, radius, durationHours: durationMinutes / 60 };
   }
@@ -490,9 +490,9 @@ export class InventoryFormationDialogController {
 
   private describeRange(template: FormationTemplate, stats: FormationResolvedStats): string {
     const radius = formatDisplayInteger(stats.radius);
-    if (template.range.shape === 'circle') return `圆形半径 ${radius}，覆盖圆内地块`;
-    if (template.range.shape === 'checkerboard') return `棋盘半径 ${radius}，只覆盖交错格`;
-    return `方形半径 ${radius}，覆盖外框内地块`;
+    if (template.range.shape === 'circle') return `圓形半徑 ${radius}，覆蓋圓內地塊`;
+    if (template.range.shape === 'checkerboard') return `棋盤半徑 ${radius}，只覆蓋交錯格`;
+    return `方形半徑 ${radius}，覆蓋外框內地塊`;
   }
 
   private formatPercent(value: number): string {
@@ -504,14 +504,14 @@ export class InventoryFormationDialogController {
 
   private formatDuration(durationHours: number): string {
     const minutes = Math.max(1, Math.round(durationHours * 60));
-    if (minutes < 60) return `${formatDisplayInteger(minutes)}分钟`;
-    if (minutes % 60 === 0) return `${formatDisplayInteger(minutes / 60)}小时`;
+    if (minutes < 60) return `${formatDisplayInteger(minutes)}分鐘`;
+    if (minutes % 60 === 0) return `${formatDisplayInteger(minutes / 60)}小時`;
     const hours = Math.floor(minutes / 60);
-    return `${formatDisplayInteger(hours)}小时${formatDisplayInteger(minutes - hours * 60)}分钟`;
+    return `${formatDisplayInteger(hours)}小時${formatDisplayInteger(minutes - hours * 60)}分鐘`;
   }
 
   private formatResourceCost(qiCost: number, spiritStoneCost: number): string {
-    return `每日 ${formatDisplayInteger(qiCost)}灵力 / ${formatDisplayInteger(spiritStoneCost)}灵石`;
+    return `每日 ${formatDisplayInteger(qiCost)}靈力 / ${formatDisplayInteger(spiritStoneCost)}靈石`;
   }
 
   private setText(body: HTMLElement, selector: string, text: string): void {

@@ -73,19 +73,19 @@ export class CraftQueueView {
       return t('craft.workbench.mode.enhancement');
     }
     if (kind === 'gather') {
-      return '采集';
+      return '採集';
     }
     if (kind === 'building') {
       return '建造';
     }
     if (kind === 'mining') {
-      return '挖矿';
+      return '挖礦';
     }
     if (kind === 'formation') {
-      return '阵法维护';
+      return '陣法維護';
     }
     if (kind === 'transmission') {
-      return '传法';
+      return '傳法';
     }
     return t('craft.workbench.mode.technique');
   }
@@ -104,7 +104,7 @@ export class CraftQueueView {
     const progress = entry.progress ?? {
       ratio: 0,
       label: entry.isActive ? '--' : '等待中',
-      detail: entry.isActive ? '进度未知' : '等待上一项完成',
+      detail: entry.isActive ? '進度未知' : '等待上一項完成',
     };
     return `
       <div class="craft-queue-progress" data-craft-queue-progress="true">
@@ -118,7 +118,7 @@ export class CraftQueueView {
       </div>
       <div class="craft-queue-progress craft-queue-progress--interrupt ${entry.interruptProgress ? '' : 'is-hidden'}" data-craft-queue-interrupt-progress="true">
         <div class="craft-queue-progress-head">
-          <span data-craft-queue-interrupt-detail="true">${escapeHtml(entry.interruptProgress?.detail ?? '等待恢复')}</span>
+          <span data-craft-queue-interrupt-detail="true">${escapeHtml(entry.interruptProgress?.detail ?? '等待恢復')}</span>
           <strong data-craft-queue-interrupt-label="true">${escapeHtml(entry.interruptProgress?.label ?? '')}</strong>
         </div>
         <div class="craft-queue-progress-bar" aria-hidden="true">
@@ -139,7 +139,7 @@ export class CraftQueueView {
       const progress = entry.progress ?? {
         ratio: 0,
         label: entry.isActive ? '--' : '等待中',
-        detail: entry.isActive ? '进度未知' : '等待上一项完成',
+        detail: entry.isActive ? '進度未知' : '等待上一項完成',
       };
       item.classList.toggle('active', Boolean(entry.isActive));
       const detail = item.querySelector<HTMLElement>('[data-craft-queue-progress-detail="true"]');
@@ -239,7 +239,7 @@ export class CraftQueueView {
         progress: {
           ratio: 0,
           label: entry.state === 'sleeping' ? '休眠中' : '等待中',
-          detail: entry.sleepReason || (entry.state === 'sleeping' ? '等待条件恢复' : '等待上一项完成'),
+          detail: entry.sleepReason || (entry.state === 'sleeping' ? '等待條件恢復' : '等待上一項完成'),
         },
       })),
     ];
@@ -264,7 +264,7 @@ export class CraftQueueView {
         : {
           ratio: 0,
           label: task.state === 'sleeping' ? '休眠中' : '等待中',
-          detail: task.sleepReason || (task.state === 'blocked' || task.state === 'sleeping' ? '等待条件恢复' : '等待上一项完成'),
+          detail: task.sleepReason || (task.state === 'blocked' || task.state === 'sleeping' ? '等待條件恢復' : '等待上一項完成'),
         },
       interruptProgress: this.buildTechniqueTaskInterruptProgress(task),
     };
@@ -277,27 +277,27 @@ export class CraftQueueView {
       return {
         ratio: 0,
         label: '--',
-        detail: task.state === 'interrupt_wait' ? '等待恢复' : '进度未知',
+        detail: task.state === 'interrupt_wait' ? '等待恢復' : '進度未知',
       };
     }
     const ratio = Math.max(0, Math.min(1, 1 - (Math.min(remaining, total) / total)));
     const stateLabel = task.state === 'interrupt_wait'
-      ? '工作暂停'
+      ? '工作暫停'
       : task.state === 'completing'
-        ? '结算中'
-        : '进行中';
+        ? '結算中'
+        : '進行中';
     const rateText = task.kind === 'transmission' && Number(task.progressGainPerTick) > 0
       ? ` · 速率 ${formatProgressRate(task.progressGainPerTick)}`
       : '';
     const etaText = task.kind === 'transmission' && Number(task.estimatedRemainingTicks) > 0
-      ? ` · 预计 ${formatTicks(task.estimatedRemainingTicks)}`
+      ? ` · 預計 ${formatTicks(task.estimatedRemainingTicks)}`
       : '';
     const batchText = task.batchTotalTicks
       ? this.buildBatchProgressDetail(task.kind, task.completedCount, task.quantity, task.outputCount)
       : '';
     const timeText = task.batchTotalTicks
-      ? `当前批剩余 ${formatTicks(remaining)} / 每批 ${formatTicks(total)}`
-      : `剩余 ${formatTicks(remaining)} / 共 ${formatTicks(total)}`;
+      ? `當前批剩餘 ${formatTicks(remaining)} / 每批 ${formatTicks(total)}`
+      : `剩餘 ${formatTicks(remaining)} / 共 ${formatTicks(total)}`;
     return {
       ratio,
       label: `${formatDisplayInteger(Math.round(ratio * 100))}%`,
@@ -314,7 +314,7 @@ export class CraftQueueView {
     return {
       ratio: Math.max(0, Math.min(1, 1 - (remaining / total))),
       label: formatTicks(remaining),
-      detail: '打断等待',
+      detail: '打斷等待',
     };
   }
 
@@ -342,24 +342,24 @@ export class CraftQueueView {
       return {
         ratio: 0,
         label: '--',
-        detail: '进度未知',
+        detail: '進度未知',
       };
     }
     const ratio = Math.max(0, Math.min(1, 1 - (Math.min(remaining, total) / total)));
     const label = `${formatDisplayInteger(Math.round(ratio * 100))}%`;
     const phaseText = phase === 'paused'
-      ? '等待恢复'
+      ? '等待恢復'
       : phase === 'brewing'
-        ? '制作'
+        ? '製作'
         : phase === 'enhancing'
-          ? '强化'
-          : '进行中';
+          ? '強化'
+          : '進行中';
     return {
       ratio,
       label,
       detail: hasBatchProgress
-        ? `${phaseText} · 当前批剩余 ${formatTicks(remaining)} / 每批 ${formatTicks(total)}${this.buildBatchProgressDetail(batch?.kind, batch?.completedCount, batch?.quantity, batch?.outputCount)}`
-        : `${phaseText} · 剩余 ${formatTicks(remaining)} / 共 ${formatTicks(total)}`,
+        ? `${phaseText} · 當前批剩餘 ${formatTicks(remaining)} / 每批 ${formatTicks(total)}${this.buildBatchProgressDetail(batch?.kind, batch?.completedCount, batch?.quantity, batch?.outputCount)}`
+        : `${phaseText} · 剩餘 ${formatTicks(remaining)} / 共 ${formatTicks(total)}`,
     };
   }
 
@@ -401,7 +401,7 @@ export class CraftQueueView {
     return {
       ratio,
       label: formatTicks(remaining),
-      detail: '打断等待',
+      detail: '打斷等待',
     };
   }
 }

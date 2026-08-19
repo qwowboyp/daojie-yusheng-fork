@@ -61,19 +61,19 @@ export interface AccessPolicyEditorOptions {
 }
 
 const CONDITION_TYPE_LABELS: Readonly<Record<AccessPolicyEditorConditionType, string>> = {
-  relation: '好友关系',
-  sect: '同宗门',
+  relation: '好友關係',
+  sect: '同宗門',
   players: '指定玩家',
   role_name: '角色名字',
   realm: '境界',
-  attribute: '属性',
-  party: '同队伍',
+  attribute: '屬性',
+  party: '同隊伍',
 };
 
 const RELATION_LABELS: Readonly<Record<AccessPolicyRelationKind, string>> = {
   dao_friend: '道友',
   close_friend: '至交',
-  master: '师父',
+  master: '師父',
   apprentice: '徒弟',
   enemy: '仇家',
 };
@@ -203,19 +203,19 @@ export class AccessPolicyEditor {
       const hintMark = document.createElement('span');
       hintMark.className = 'access-policy-hint-mark';
       hintMark.setAttribute('aria-hidden', 'true');
-      hintMark.textContent = '则';
+      hintMark.textContent = '則';
       const hintText = document.createElement('span');
-      hintText.textContent = '最多设置两种不同类别的条件；条件内部为任一匹配，两组之间可选择或/且。';
+      hintText.textContent = '最多設置兩種不同類別的條件；條件內部為任一匹配，兩組之間可選擇或/且。';
       hint.append(hintMark, hintText);
       shell.append(hint);
       shell.append(this.renderConditionalBody());
     } else {
       shell.append(this.renderModeSelector());
       hint.textContent = this.draft.mode === 'owner_only'
-        ? '只有资源所有者可以使用。'
+        ? '只有資源所有者可以使用。'
         : this.draft.mode === 'everyone'
-          ? '任何玩家均可使用；业务系统仍会执行距离、状态和资产校验。'
-          : `已启用自定义策略：${describeConditionalPolicy(this.draft)}。`;
+          ? '任何玩家均可使用；業務系統仍會執行距離、狀態和資產校驗。'
+          : `已啟用自定義策略：${describeConditionalPolicy(this.draft)}。`;
       shell.append(hint);
       if (this.draft.mode === 'conditional') shell.append(this.renderCustomPolicyEntry());
     }
@@ -229,11 +229,11 @@ export class AccessPolicyEditor {
     const modeGroup = document.createElement('div');
     modeGroup.className = 'access-policy-mode-group';
     modeGroup.setAttribute('role', 'group');
-    modeGroup.setAttribute('aria-label', '权限模式');
+    modeGroup.setAttribute('aria-label', '權限模式');
     for (const entry of [
       { value: 'everyone' as const, label: '所有人' },
-      { value: 'owner_only' as const, label: '仅所有者' },
-      { value: 'conditional' as const, label: '自定义策略' },
+      { value: 'owner_only' as const, label: '僅所有者' },
+      { value: 'conditional' as const, label: '自定義策略' },
     ]) {
       const button = document.createElement('button');
       button.type = 'button';
@@ -260,7 +260,7 @@ export class AccessPolicyEditor {
     const edit = document.createElement('button');
     edit.type = 'button';
     edit.className = 'small-btn ghost';
-    edit.textContent = '编辑自定义策略';
+    edit.textContent = '編輯自定義策略';
     edit.disabled = this.disabled || this.saving;
     edit.addEventListener('click', () => this.openCustomPanel());
     entry.append(summary, edit);
@@ -277,7 +277,7 @@ export class AccessPolicyEditor {
     this.saveButton = document.createElement('button');
     this.saveButton.type = 'button';
     this.saveButton.className = 'small-btn';
-    this.saveButton.textContent = this.saving ? '保存中...' : '保存权限';
+    this.saveButton.textContent = this.saving ? '保存中...' : '保存權限';
     this.saveButton.disabled = this.disabled || this.saving || !this.dirty;
     this.saveButton.addEventListener('click', () => void this.save());
     footer.append(this.saveButton);
@@ -293,15 +293,15 @@ export class AccessPolicyEditor {
       const operatorCopy = document.createElement('div');
       operatorCopy.className = 'access-policy-operator-copy';
       const operatorLabel = document.createElement('strong');
-      operatorLabel.textContent = '条件关系';
+      operatorLabel.textContent = '條件關係';
       const operatorHint = document.createElement('span');
-      operatorHint.textContent = '两组规则如何共同生效';
+      operatorHint.textContent = '兩組規則如何共同生效';
       operatorCopy.append(operatorLabel, operatorHint);
       const operatorControls = document.createElement('div');
       operatorControls.className = 'access-policy-operator-controls';
       operatorControls.setAttribute('role', 'group');
-      operatorControls.setAttribute('aria-label', '两组权限条件的关系');
-      operatorControls.append(this.createOperatorButton('any', '满足任一'), this.createOperatorButton('all', '必须同时满足'));
+      operatorControls.setAttribute('aria-label', '兩組權限條件的關係');
+      operatorControls.append(this.createOperatorButton('any', '滿足任一'), this.createOperatorButton('all', '必須同時滿足'));
       operator.append(operatorCopy, operatorControls);
       body.append(operator);
     }
@@ -313,9 +313,9 @@ export class AccessPolicyEditor {
       const empty = document.createElement('div');
       empty.className = 'access-policy-condition-empty';
       const emptyTitle = document.createElement('strong');
-      emptyTitle.textContent = '尚未设置权限条件';
+      emptyTitle.textContent = '尚未設置權限條件';
       const emptyHint = document.createElement('span');
-      emptyHint.textContent = '添加一组条件后才能保存自定义策略。';
+      emptyHint.textContent = '添加一組條件後才能保存自定義策略。';
       empty.append(emptyTitle, emptyHint);
       list.append(empty);
     }
@@ -324,7 +324,7 @@ export class AccessPolicyEditor {
       const add = document.createElement('button');
       add.type = 'button';
       add.className = 'small-btn ghost access-policy-add-condition';
-      add.textContent = this.draft.conditions.length === 0 ? '添加权限条件' : '添加第二组条件';
+      add.textContent = this.draft.conditions.length === 0 ? '添加權限條件' : '添加第二組條件';
       add.disabled = this.disabled || this.saving || this.getAvailableConditionTypes(-1).length === 0;
       add.addEventListener('click', () => this.addCondition());
       body.append(add);
@@ -362,7 +362,7 @@ export class AccessPolicyEditor {
     const heading = document.createElement('div');
     heading.className = 'access-policy-condition-heading';
     const title = document.createElement('strong');
-    title.textContent = `规则组 ${index + 1}`;
+    title.textContent = `規則組 ${index + 1}`;
     const summary = document.createElement('span');
     summary.textContent = CONDITION_TYPE_LABELS[condition.type];
     heading.append(title, summary);
@@ -371,8 +371,8 @@ export class AccessPolicyEditor {
     const remove = document.createElement('button');
     remove.type = 'button';
     remove.className = 'access-policy-condition-remove';
-    remove.setAttribute('aria-label', `移除规则组 ${index + 1}`);
-    remove.title = '移除规则组';
+    remove.setAttribute('aria-label', `移除規則組 ${index + 1}`);
+    remove.title = '移除規則組';
     remove.textContent = '×';
     remove.disabled = this.disabled || this.saving;
     remove.addEventListener('click', () => this.removeCondition(index));
@@ -381,7 +381,7 @@ export class AccessPolicyEditor {
 
     const typeRow = document.createElement('label');
     typeRow.className = 'access-policy-field access-policy-condition-type';
-    typeRow.append(createFieldLabel('条件类别'));
+    typeRow.append(createFieldLabel('條件類別'));
     const typeSelect = document.createElement('select');
     typeSelect.className = 'ui-select';
     const availableTypes = this.getAvailableConditionTypes(index);
@@ -408,7 +408,7 @@ export class AccessPolicyEditor {
     switch (condition.type) {
       case 'relation':
         fields.append(this.renderCheckboxGroup(
-          '关系类别',
+          '關係類別',
           this.relationKinds.map((value) => ({ value, label: RELATION_LABELS[value] })),
           new Set(condition.relations),
           (value, checked) => {
@@ -436,7 +436,7 @@ export class AccessPolicyEditor {
       case 'party': {
         const note = document.createElement('div');
         note.className = 'access-policy-inline-note';
-        note.textContent = '访问者与资源所有者处于同一队伍时满足条件。';
+        note.textContent = '訪問者與資源所有者處於同一隊伍時滿足條件。';
         fields.append(note);
         break;
       }
@@ -457,18 +457,18 @@ export class AccessPolicyEditor {
       this.markChanged();
       this.render();
     });
-    anyMember.append(checkbox, document.createTextNode('同宗门全部成员'));
+    anyMember.append(checkbox, document.createTextNode('同宗門全部成員'));
     wrapper.append(anyMember);
     if (condition.roles.length > 0) {
       wrapper.append(this.renderCheckboxGroup(
-        '精确职位',
+        '精確職位',
         SECT_MEMBER_ROLE_HIERARCHY.map((value) => ({ value, label: SECT_MEMBER_ROLE_LABELS[value] })),
         new Set(condition.roles),
         (value, checked) => {
           const nextRoles = updateOrderedSelection(condition.roles, value as any, checked, SECT_MEMBER_ROLE_HIERARCHY);
           if (!checked && nextRoles.length === 0) {
             this.render();
-            this.setStatus('精确职位至少保留一项；如需全部成员，请勾选“同宗门全部成员”。', true);
+            this.setStatus('精確職位至少保留一項；如需全部成員，請勾選“同宗門全部成員”。', true);
             return;
           }
           condition.roles = nextRoles;
@@ -492,12 +492,12 @@ export class AccessPolicyEditor {
     input.inputMode = 'numeric';
     input.min = '1';
     input.step = '1';
-    input.placeholder = '输入玩家序号';
+    input.placeholder = '輸入玩家序號';
     input.disabled = this.disabled || this.saving || condition.players.length >= this.maxSpecifiedPlayers;
     const resolve = document.createElement('button');
     resolve.type = 'button';
     resolve.className = 'small-btn';
-    resolve.textContent = '查询并添加';
+    resolve.textContent = '查詢並添加';
     resolve.disabled = input.disabled;
     const result = document.createElement('div');
     result.className = 'access-policy-player-result';
@@ -534,7 +534,7 @@ export class AccessPolicyEditor {
     wrapper.append(chips);
     const note = document.createElement('div');
     note.className = 'access-policy-inline-note';
-    note.textContent = `只能通过数字序号添加，最多 ${this.maxSpecifiedPlayers} 人；保存时服务端会重新解析身份。`;
+    note.textContent = `只能通過數字序號添加，最多 ${this.maxSpecifiedPlayers} 人；保存時服務端會重新解析身份。`;
     wrapper.append(note);
     return wrapper;
   }
@@ -545,8 +545,8 @@ export class AccessPolicyEditor {
     const match = createSelectField('匹配方式', [
       ['exact', '完全匹配'],
       ['contains', '包含'],
-      ['prefix', '前缀匹配'],
-      ['suffix', '后缀匹配'],
+      ['prefix', '前綴匹配'],
+      ['suffix', '後綴匹配'],
     ], condition.match, this.disabled || this.saving);
     match.select.addEventListener('change', () => {
       condition.match = match.select.value as typeof condition.match;
@@ -560,7 +560,7 @@ export class AccessPolicyEditor {
     input.className = 'ui-input';
     input.type = 'text';
     input.value = condition.pattern;
-    input.placeholder = '输入角色名规则';
+    input.placeholder = '輸入角色名規則';
     input.disabled = this.disabled || this.saving;
     input.addEventListener('input', () => {
       condition.pattern = input.value.normalize('NFC').trim();
@@ -575,10 +575,10 @@ export class AccessPolicyEditor {
   private renderRealmFields(condition: Extract<AccessPolicyCondition, { type: 'realm' }>): HTMLElement {
     const row = document.createElement('div');
     row.className = 'access-policy-two-column';
-    const comparison = createSelectField('比较方式', [
-      ['gt', '大于'],
-      ['lt', '小于'],
-      ['eq', '等于'],
+    const comparison = createSelectField('比較方式', [
+      ['gt', '大於'],
+      ['lt', '小於'],
+      ['eq', '等於'],
     ], condition.comparison, this.disabled || this.saving);
     comparison.select.addEventListener('change', () => {
       condition.comparison = comparison.select.value as typeof condition.comparison;
@@ -622,7 +622,7 @@ export class AccessPolicyEditor {
     const grid = document.createElement('div');
     grid.className = 'access-policy-three-column';
     const attr = createSelectField(
-      '属性',
+      '屬性',
       (Object.keys(ATTR_KEY_LABELS) as AttrKey[]).map((key) => [key, ATTR_KEY_LABELS[key]]),
       condition.attr,
       this.disabled || this.saving,
@@ -632,7 +632,7 @@ export class AccessPolicyEditor {
       this.markChanged();
       this.patchSaveButton();
     });
-    const comparison = createSelectField('比较方式', [['gt', '大于'], ['lt', '小于']], condition.comparison, this.disabled || this.saving);
+    const comparison = createSelectField('比較方式', [['gt', '大於'], ['lt', '小於']], condition.comparison, this.disabled || this.saving);
     comparison.select.addEventListener('change', () => {
       condition.comparison = comparison.select.value as typeof condition.comparison;
       this.markChanged();
@@ -640,7 +640,7 @@ export class AccessPolicyEditor {
     });
     const value = document.createElement('label');
     value.className = 'access-policy-field';
-    value.append(createFieldLabel('数值'));
+    value.append(createFieldLabel('數值'));
     const input = createNumberInput(condition.value, 0, this.disabled || this.saving);
     input.addEventListener('input', () => {
       condition.value = Math.max(0, Number(input.value) || 0);
@@ -690,11 +690,11 @@ export class AccessPolicyEditor {
     const startsDirty = this.dirty || this.draft.mode !== 'conditional';
     const opened = accessPolicyPanelHost.open({
       ownerId: this.customPanelOwnerId,
-      title: '自定义权限策略',
+      title: '自定義權限策略',
       subtitle: this.options.customPanelContext,
       onRequestClose: () => (
         !this.customEditor?.hasUnsavedChanges()
-        || window.confirm('自定义权限策略尚未保存，确认放弃本次修改？')
+        || window.confirm('自定義權限策略尚未保存，確認放棄本次修改？')
       ),
       onClose: () => this.releaseCustomEditor(),
       renderBody: (body) => {
@@ -725,7 +725,7 @@ export class AccessPolicyEditor {
     this.releaseCustomEditor();
     accessPolicyPanelHost.close(this.customPanelOwnerId);
     this.render();
-    this.setStatus('权限已保存。', false);
+    this.setStatus('權限已保存。', false);
     this.focusActiveMode();
     this.emitDirtyChange();
     this.options.onSaved?.(cloneAccessPolicy(policy));
@@ -739,7 +739,7 @@ export class AccessPolicyEditor {
     this.releaseCustomEditor();
     accessPolicyPanelHost.close(this.customPanelOwnerId);
     this.render();
-    this.setStatus('权限已被其他操作修改，已加载最新配置，请重新修改。', true);
+    this.setStatus('權限已被其他操作修改，已加載最新配置，請重新修改。', true);
     this.focusActiveMode();
     this.emitDirtyChange();
     this.options.onConflict?.(cloneAccessPolicy(policy));
@@ -831,27 +831,27 @@ export class AccessPolicyEditor {
   ): Promise<void> {
     const playerNo = Number(input.value);
     if (!Number.isSafeInteger(playerNo) || playerNo <= 0) {
-      result.textContent = '请输入有效的玩家序号。';
+      result.textContent = '請輸入有效的玩家序號。';
       result.className = 'access-policy-player-result error';
       return;
     }
     const condition = this.draft.conditions[conditionIndex];
     if (!condition || condition.type !== 'players') return;
     if (condition.players.some((entry) => entry.playerNo === playerNo)) {
-      result.textContent = '该玩家已经在列表中。';
+      result.textContent = '該玩家已經在列表中。';
       result.className = 'access-policy-player-result error';
       return;
     }
     const serial = ++this.requestSerial;
     button.disabled = true;
     input.disabled = true;
-    result.textContent = '正在查询玩家...';
+    result.textContent = '正在查詢玩家...';
     result.className = 'access-policy-player-result';
     try {
       const player = await this.options.resolvePlayerNo(playerNo);
       if (this.destroyed || serial !== this.requestSerial) return;
       if (!player) {
-        result.textContent = '未找到对应玩家。';
+        result.textContent = '未找到對應玩家。';
         result.className = 'access-policy-player-result error';
         return;
       }
@@ -861,7 +861,7 @@ export class AccessPolicyEditor {
       this.render();
     } catch (error) {
       if (this.destroyed || serial !== this.requestSerial) return;
-      result.textContent = error instanceof Error ? error.message : '玩家查询失败。';
+      result.textContent = error instanceof Error ? error.message : '玩家查詢失敗。';
       result.className = 'access-policy-player-result error';
     } finally {
       if (!this.destroyed && serial === this.requestSerial) {
@@ -875,12 +875,12 @@ export class AccessPolicyEditor {
     if (this.disabled || this.saving || !this.dirty) return;
     const validated = validateAccessPolicy(this.draft);
     if (!validated.ok || !validated.policy) {
-      this.setStatus('权限配置不完整，请检查未选择的条件或空输入。', true);
+      this.setStatus('權限配置不完整，請檢查未選擇的條件或空輸入。', true);
       return;
     }
     this.saving = true;
     this.patchSaveButton();
-    this.setStatus('正在保存权限...', false);
+    this.setStatus('正在保存權限...', false);
     try {
       const result = await this.options.save(cloneAccessPolicy(validated.policy), this.authoritativePolicy.revision);
       if (!result.ok || !result.policy) {
@@ -892,7 +892,7 @@ export class AccessPolicyEditor {
           }
           this.setDirty(false);
           this.render();
-          this.setStatus('权限已被其他操作修改，已加载最新配置，请重新修改。', true);
+          this.setStatus('權限已被其他操作修改，已加載最新配置，請重新修改。', true);
           this.options.onConflict?.(cloneAccessPolicy(result.currentPolicy));
           return;
         }
@@ -907,10 +907,10 @@ export class AccessPolicyEditor {
       if (result.policy.mode === 'conditional') this.lastConditionalPolicy = cloneAccessPolicy(result.policy);
       this.setDirty(false);
       this.render();
-      this.setStatus('权限已保存。', false);
+      this.setStatus('權限已保存。', false);
       this.options.onSaved?.(cloneAccessPolicy(result.policy));
     } catch (error) {
-      this.setStatus(error instanceof Error ? error.message : '权限保存失败。', true);
+      this.setStatus(error instanceof Error ? error.message : '權限保存失敗。', true);
     } finally {
       this.saving = false;
       this.patchSaveButton();
@@ -943,7 +943,7 @@ export class AccessPolicyEditor {
   private patchSaveButton(): void {
     if (!this.saveButton) return;
     this.saveButton.disabled = this.disabled || this.saving || !this.dirty;
-    this.saveButton.textContent = this.saving ? '保存中...' : '保存权限';
+    this.saveButton.textContent = this.saving ? '保存中...' : '保存權限';
   }
 
   private setStatus(message: string, error: boolean): void {
@@ -1053,21 +1053,21 @@ function normalizeRealmOptions(value: readonly AccessPolicyEditorRealmOption[] |
 function resolveSaveError(reason: string | undefined): string {
   switch (reason) {
     case 'access_policy_revision_conflict':
-      return '权限已被其他操作修改，请重新加载后再保存。';
+      return '權限已被其他操作修改，請重新加載後再保存。';
     case 'access_policy_player_not_found':
-      return '以下玩家序号无法解析';
+      return '以下玩家序號無法解析';
     case 'access_policy_manage_denied':
-      return '当前角色没有修改该权限的资格。';
+      return '當前角色沒有修改該權限的資格。';
     case 'access_policy_persistence_failed':
-      return '权限落盘失败，原配置未确认生效。';
+      return '權限落盤失敗，原配置未確認生效。';
     default:
-      return '权限保存失败。';
+      return '權限保存失敗。';
   }
 }
 
 function describeConditionalPolicy(policy: Readonly<AccessPolicy>): string {
   const count = Math.max(0, policy.conditions.length);
-  if (count === 0) return '尚未设置条件';
-  if (count === 1) return '1 类条件';
-  return policy.operator === 'all' ? '2 类条件，必须同时满足' : '2 类条件，满足任一即可';
+  if (count === 0) return '尚未設置條件';
+  if (count === 1) return '1 類條件';
+  return policy.operator === 'all' ? '2 類條件，必須同時滿足' : '2 類條件，滿足任一即可';
 }

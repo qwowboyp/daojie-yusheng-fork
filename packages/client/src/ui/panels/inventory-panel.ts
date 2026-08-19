@@ -1206,13 +1206,13 @@ export class InventoryPanel {
     pager.className = 'inventory-pagination';
     pager.dataset.inventoryPagination = 'true';
     pager.hidden = true;
-    const pagerPrev = createSmallBtn(t('inventory.pagination.prev', undefined, '上一页'), {
+    const pagerPrev = createSmallBtn(t('inventory.pagination.prev', undefined, '上一頁'), {
       className: 'ghost',
       dataset: { inventoryPageAction: 'prev' },
     });
     const pagerStatus = document.createElement('span');
     pagerStatus.className = 'inventory-pagination-status';
-    const pagerNext = createSmallBtn(t('inventory.pagination.next', undefined, '下一页'), {
+    const pagerNext = createSmallBtn(t('inventory.pagination.next', undefined, '下一頁'), {
       className: 'ghost',
       dataset: { inventoryPageAction: 'next' },
     });
@@ -1227,7 +1227,7 @@ export class InventoryPanel {
     controls.append(
       searchInput,
       createSmallBtn(t('inventory.action.sort', undefined), { dataset: { sortInventory: 'true' } }),
-      createSmallBtn('一键丢弃', { className: 'danger', dataset: { bulkDiscardInventory: 'true' } }),
+      createSmallBtn('一鍵丟棄', { className: 'danger', dataset: { bulkDiscardInventory: 'true' } }),
     );
     head.append(controls);
 
@@ -1518,8 +1518,8 @@ export class InventoryPanel {
     if (item.type === 'skill_book') {
       const isFragment = this.isTechniqueBookFragment(item);
       return {
-        label: isFragment ? '残卷' : '功法',
-        title: isFragment ? '功法残卷' : '完整功法书',
+        label: isFragment ? '殘卷' : '功法',
+        title: isFragment ? '功法殘卷' : '完整功法書',
       };
     }
     if (itemMeta.affinityBadge) {
@@ -1555,11 +1555,11 @@ export class InventoryPanel {
   private getInventoryMaterialRibbonLabel(item: ItemStack): string {
     switch (item.materialCategory) {
       case 'herb':
-        return '药材';
+        return '藥材';
       case 'exotic':
-        return '异材';
+        return '異材';
       case 'ore':
-        return '矿石';
+        return '礦石';
       default:
         return getItemTypeLabel(item.type);
     }
@@ -2242,7 +2242,7 @@ export class InventoryPanel {
     if (!this.isPrimaryActionable(action)) {
       return null;
     }
-    return `右键${action.label}`;
+    return `右鍵${action.label}`;
   }
 
   private canBatchUseFromDetail(item: ItemStack, primaryAction: InventoryPrimaryAction | null): boolean {
@@ -2290,7 +2290,7 @@ export class InventoryPanel {
       : cooldownState;
     const cooldownLeft = this.getItemCooldownRemainingTicks(activeCooldownState);
     if (cooldownLeft > 0) {
-      return `冷却 ${formatDisplayInteger(cooldownLeft)} 息`;
+      return `冷卻 ${formatDisplayInteger(cooldownLeft)} 息`;
     }
     if (item.type === 'skill_book') {
       const techniqueId = this.getTechniqueIdFromBookItem(item);
@@ -2479,7 +2479,7 @@ export class InventoryPanel {
   /** getItemCooldownTitle：读取物品冷却标题。 */
   private getItemCooldownTitle(cooldownState: InventoryItemCooldownState, remainingTicks?: number): string {
     const remaining = remainingTicks ?? this.getItemCooldownRemainingTicks(cooldownState);
-    return `使用冷却 ${formatDisplayInteger(remaining)} / ${formatDisplayInteger(cooldownState.cooldown)} 息`;
+    return `使用冷卻 ${formatDisplayInteger(remaining)} / ${formatDisplayInteger(cooldownState.cooldown)} 息`;
   }
 
   /** getItemIdentity：读取物品身份。 */
@@ -2539,7 +2539,7 @@ export class InventoryPanel {
         from: formatDisplayInteger(from),
         to: formatDisplayInteger(to),
         total: formatDisplayInteger(total),
-      }, `第 ${formatDisplayInteger(page)} / ${formatDisplayInteger(totalPages)} 页 · ${formatDisplayInteger(from)}-${formatDisplayInteger(to)} / ${formatDisplayInteger(total)}`),
+      }, `第 ${formatDisplayInteger(page)} / ${formatDisplayInteger(totalPages)} 頁 · ${formatDisplayInteger(from)}-${formatDisplayInteger(to)} / ${formatDisplayInteger(total)}`),
       canPrev: offset > 0,
       canNext: offset + limit < total,
       loading: this.inventoryPageRequestState.isPending(),

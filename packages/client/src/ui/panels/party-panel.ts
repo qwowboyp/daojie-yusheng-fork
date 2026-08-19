@@ -118,7 +118,7 @@ export class PartyPanel {
     const badge = this.host?.querySelector<HTMLElement>('[data-party-chat-unread="true"]');
     if (!badge) return;
     badge.hidden = unread <= 0;
-    badge.textContent = unread > 0 ? `（${unread} 条未读）` : '';
+    badge.textContent = unread > 0 ? `（${unread} 條未讀）` : '';
   }
 
   private captureEditorState(): PartyEditorSnapshot | null {
@@ -208,9 +208,9 @@ export class PartyPanel {
 
   private renderTabs(isLeader: boolean): string {
     return `
-      <div class="party-tabs" role="tablist" aria-label="队伍功能">
-        ${this.renderTabButton('members', '成员')}
-        ${this.renderTabButton('invites', '邀请', this.getInvitationReminderCount())}
+      <div class="party-tabs" role="tablist" aria-label="隊伍功能">
+        ${this.renderTabButton('members', '成員')}
+        ${this.renderTabButton('invites', '邀請', this.getInvitationReminderCount())}
         ${isLeader ? this.renderTabButton('management', '管理') : ''}
       </div>
     `;
@@ -230,7 +230,7 @@ export class PartyPanel {
         aria-selected="${active ? 'true' : 'false'}"
         aria-controls="party-panel-active-content"
         tabindex="${active ? '0' : '-1'}"
-      >${label}${reminder > 0 ? `<span class="party-tab-badge" aria-label="${reminder} 项待处理">${reminder > 99 ? '99+' : reminder}</span>` : ''}</button>
+      >${label}${reminder > 0 ? `<span class="party-tab-badge" aria-label="${reminder} 項待處理">${reminder > 99 ? '99+' : reminder}</span>` : ''}</button>
     `;
   }
 
@@ -246,7 +246,7 @@ export class PartyPanel {
     return `
       ${this.renderInvites(state.view)}
       ${!party || isLeader ? this.renderMatchSection(state) : ''}
-      ${isLeader ? this.renderInviteByPlayerNo() : party ? '<div class="party-hint">仅队长可以直接邀请玩家、发布招募、审批入队申请或为现有队伍发起匹配。</div>' : ''}
+      ${isLeader ? this.renderInviteByPlayerNo() : party ? '<div class="party-hint">僅隊長可以直接邀請玩家、發佈招募、審批入隊申請或為現有隊伍發起匹配。</div>' : ''}
       ${isLeader ? this.renderRecruitmentManagement(state) : ''}
       ${this.renderRecruitmentHall(state)}
     `;
@@ -269,17 +269,17 @@ export class PartyPanel {
     if (view.incomingInvites.length === 0) return '';
     return `
       <section class="party-section">
-        <div class="social-panel-section-head"><div class="social-panel-section-title">收到的组队邀请</div></div>
+        <div class="social-panel-section-head"><div class="social-panel-section-title">收到的組隊邀請</div></div>
         <div class="ui-list">
           ${view.incomingInvites.map((invite) => `
             <div class="ui-list-row">
               <div class="ui-list-main">
-                <div class="ui-list-title">${escapeHtml(invite.fromName)} 邀请你加入队伍</div>
+                <div class="ui-list-title">${escapeHtml(invite.fromName)} 邀請你加入隊伍</div>
                 <div class="ui-list-subtitle">${escapeHtml(invite.partyLabel)} · 已有 ${invite.memberCount} 人</div>
               </div>
               <div class="social-row-actions">
                 <button class="small-btn" type="button" data-party-action="invite-accept" data-invite-id="${escapeHtml(invite.inviteId)}">接受</button>
-                <button class="small-btn ghost" type="button" data-party-action="invite-reject" data-invite-id="${escapeHtml(invite.inviteId)}">拒绝</button>
+                <button class="small-btn ghost" type="button" data-party-action="invite-reject" data-invite-id="${escapeHtml(invite.inviteId)}">拒絕</button>
               </div>
             </div>
           `).join('')}
@@ -291,10 +291,10 @@ export class PartyPanel {
   private renderNoPartySection(): string {
     return `
       <section class="party-section">
-        <div class="social-panel-section-head"><div class="social-panel-section-title">我的队伍</div></div>
-        <div class="empty-hint compact">你还没有队伍。可以先创建队伍，或前往「邀请」页接受邀请、查看招募与自动匹配。</div>
+        <div class="social-panel-section-head"><div class="social-panel-section-title">我的隊伍</div></div>
+        <div class="empty-hint compact">你還沒有隊伍。可以先建立隊伍，或前往「邀請」頁接受邀請、查看招募與自動匹配。</div>
         <div class="party-actions-row">
-          <button class="small-btn" type="button" data-party-action="create">创建队伍</button>
+          <button class="small-btn" type="button" data-party-action="create">建立隊伍</button>
         </div>
       </section>
     `;
@@ -304,7 +304,7 @@ export class PartyPanel {
     const queued = state.view.matchQueue.queued === true;
     return `
       <section class="party-section">
-        <div class="social-panel-section-head"><div class="social-panel-section-title">自动匹配</div></div>
+        <div class="social-panel-section-head"><div class="social-panel-section-title">自動匹配</div></div>
         <div class="party-actions-row">
           ${queued
             ? `<span class="party-match-waiting">正在等待匹配（${escapeHtml(PARTY_PURPOSE_LABELS[state.view.matchQueue.purpose ?? 'general'])}）</span>
@@ -313,7 +313,7 @@ export class PartyPanel {
               <select class="party-select" data-party-field="match-purpose" aria-label="匹配目的">
                 ${PURPOSE_ORDER.map((purpose) => `<option value="${purpose}">${PARTY_PURPOSE_LABELS[purpose]}</option>`).join('')}
               </select>
-              <button class="small-btn ghost" type="button" data-party-action="match-join">自动匹配</button>
+              <button class="small-btn ghost" type="button" data-party-action="match-join">自動匹配</button>
             `}
         </div>
       </section>
@@ -323,10 +323,10 @@ export class PartyPanel {
   private renderInviteByPlayerNo(): string {
     return `
       <section class="party-section">
-        <div class="social-panel-section-head"><div class="social-panel-section-title">直接邀请</div></div>
+        <div class="social-panel-section-head"><div class="social-panel-section-title">直接邀請</div></div>
         <form class="party-inline-form" data-party-form="invite-no">
-          <input class="party-input" type="number" min="1" step="1" name="playerNo" inputmode="numeric" placeholder="输入玩家序号邀请" aria-label="按玩家序号邀请" />
-          <button class="small-btn ghost" type="submit">邀请</button>
+          <input class="party-input" type="number" min="1" step="1" name="playerNo" inputmode="numeric" placeholder="輸入玩家序號邀請" aria-label="按玩家序號邀請" />
+          <button class="small-btn ghost" type="submit">邀請</button>
         </form>
       </section>
     `;
@@ -338,7 +338,7 @@ export class PartyPanel {
     const isLeader = party.leaderPlayerId === playerId;
     const leader = party.members.find((member) => member.playerId === party.leaderPlayerId);
     const leaderOffline = leader ? !leader.online : false;
-    const sectionTitle = management ? '成员管理' : '我的队伍';
+    const sectionTitle = management ? '成員管理' : '我的隊伍';
     return `
       <section class="party-section">
         <div class="social-panel-section-head">
@@ -355,14 +355,14 @@ export class PartyPanel {
         ${management ? this.renderLeaderTools(party) : `
           <div class="party-actions-row">
             <button class="small-btn" type="button" data-party-action="open-chat">
-              打开队伍频道<span data-party-chat-unread="true" ${state.chatUnreadCount > 0 ? '' : 'hidden'}>${state.chatUnreadCount > 0 ? `（${state.chatUnreadCount} 条未读）` : ''}</span>
+              打開隊伍頻道<span data-party-chat-unread="true" ${state.chatUnreadCount > 0 ? '' : 'hidden'}>${state.chatUnreadCount > 0 ? `（${state.chatUnreadCount} 條未讀）` : ''}</span>
             </button>
           </div>
           ${!isLeader ? `
             <div class="party-actions-row">
-              <button class="small-btn ghost danger" type="button" data-party-action="leave">退出队伍</button>
+              <button class="small-btn ghost danger" type="button" data-party-action="leave">退出隊伍</button>
             </div>
-            ${leaderOffline ? '<div class="party-hint">队长离线期间无法执行移交、解散等管理操作，请等待队长归来。</div>' : ''}
+            ${leaderOffline ? '<div class="party-hint">隊長離線期間無法執行移交、解散等管理操作，請等待隊長歸來。</div>' : ''}
           ` : ''}
         `}
       </section>
@@ -375,7 +375,7 @@ export class PartyPanel {
       <div class="party-leader-tools">
         <div class="party-settings-grid">
           <label class="party-setting">
-            <span>经验分配</span>
+            <span>經驗分配</span>
             <select class="party-select" data-party-setting="expMode" data-revision="${revision}">
               ${(Object.keys(PARTY_EXP_MODE_LABELS) as Array<keyof typeof PARTY_EXP_MODE_LABELS>).map((key) =>
                 `<option value="${key}" ${party.settings.expMode === key ? 'selected' : ''}>${PARTY_EXP_MODE_LABELS[key]}</option>`).join('')}
@@ -390,13 +390,13 @@ export class PartyPanel {
           </label>
           <label class="party-setting party-setting-toggle">
             <input type="checkbox" data-party-setting="friendlyFireEnabled" data-revision="${revision}" ${party.settings.friendlyFireEnabled ? 'checked' : ''} />
-            <span>开启全队友伤</span>
+            <span>開啟全隊友傷</span>
           </label>
         </div>
-        <div class="party-hint">友伤是双重门槛：队长在此开启全队友伤后，成员还需在自己的战斗设置里把「队伍」加入敌对目标，主动攻击或自动战斗才会对队友生效；默认互为友方，不会误伤。</div>
+        <div class="party-hint">友傷是雙重門檻：隊長在此開啟全隊友傷後，成員還需在自己的戰鬥設置裡把「隊伍」加入敵對目標，主動攻擊或自動戰鬥才會對隊友生效；預設互為友方，不會誤傷。</div>
         <div class="party-actions-row">
-          <button class="small-btn ghost danger" type="button" data-party-action="leave">退出队伍</button>
-          <button class="small-btn ghost danger" type="button" data-party-action="disband">解散队伍</button>
+          <button class="small-btn ghost danger" type="button" data-party-action="leave">退出隊伍</button>
+          <button class="small-btn ghost danger" type="button" data-party-action="disband">解散隊伍</button>
         </div>
       </div>
     `;
@@ -409,28 +409,28 @@ export class PartyPanel {
     return `
       <section class="party-section">
         <div class="social-panel-section-head">
-          <div class="social-panel-section-title">招募与入队审批</div>
+          <div class="social-panel-section-title">招募與入隊審批</div>
         </div>
         ${this.renderRecruitmentPublisher(party, party.recruitment ?? null)}
         ${applications.length > 0 ? `
           <div class="party-applications">
-            <div class="party-subheading">入队申请</div>
+            <div class="party-subheading">入隊申請</div>
             <div class="ui-list">
               ${applications.map((entry) => `
                 <div class="ui-list-row">
                   <div class="ui-list-main">
                     <div class="ui-list-title">${escapeHtml(entry.playerName)}</div>
-                    <div class="ui-list-subtitle">${entry.realmLv > 0 ? `境界 ${entry.realmLv} 层` : '境界未知'}</div>
+                    <div class="ui-list-subtitle">${entry.realmLv > 0 ? `境界 ${entry.realmLv} 層` : '境界未知'}</div>
                   </div>
                   <div class="social-row-actions">
                     <button class="small-btn" type="button" data-party-action="application-accept" data-application-id="${escapeHtml(entry.applicationId)}">同意</button>
-                    <button class="small-btn ghost" type="button" data-party-action="application-reject" data-application-id="${escapeHtml(entry.applicationId)}">拒绝</button>
+                    <button class="small-btn ghost" type="button" data-party-action="application-reject" data-application-id="${escapeHtml(entry.applicationId)}">拒絕</button>
                   </div>
                 </div>
               `).join('')}
             </div>
           </div>
-        ` : '<div class="empty-hint compact">暂无待审批的入队申请</div>'}
+        ` : '<div class="empty-hint compact">暫無待審批的入隊申請</div>'}
       </section>
     `;
   }
@@ -439,13 +439,13 @@ export class PartyPanel {
     return `
       <section class="party-section">
         <div class="social-panel-section-head">
-          <div class="social-panel-section-title">招募大厅</div>
+          <div class="social-panel-section-title">招募大廳</div>
           <div class="social-panel-section-meta">
             <button class="small-btn ghost" type="button" data-party-action="recruit-refresh">刷新</button>
           </div>
         </div>
         <div class="party-recruit-filter">
-          <select class="party-select" data-party-field="recruit-purpose" aria-label="按目的筛选招募">
+          <select class="party-select" data-party-field="recruit-purpose" aria-label="按目的篩選招募">
             <option value="">全部目的</option>
             ${PURPOSE_ORDER.map((purpose) => `<option value="${purpose}" ${state.recruitingPurpose === purpose ? 'selected' : ''}>${PARTY_PURPOSE_LABELS[purpose]}</option>`).join('')}
           </select>
@@ -463,10 +463,10 @@ export class PartyPanel {
           <div class="ui-list-row">
             <div class="ui-list-main">
               <div class="ui-list-title">${escapeHtml(PARTY_PURPOSE_LABELS[recruitment.purpose])} · ${recruitment.memberCount}/${recruitment.maxMembers} 人</div>
-              <div class="ui-list-subtitle">境界 ${recruitment.minRealmLv} - ${recruitment.maxRealmLv} 层${recruitment.note ? ` · ${escapeHtml(recruitment.note)}` : ''}</div>
+              <div class="ui-list-subtitle">境界 ${recruitment.minRealmLv} - ${recruitment.maxRealmLv} 層${recruitment.note ? ` · ${escapeHtml(recruitment.note)}` : ''}</div>
             </div>
             <div class="social-row-actions">
-              <button class="small-btn ghost danger" type="button" data-party-action="recruit-close" data-revision="${party.revision}">关闭招募</button>
+              <button class="small-btn ghost danger" type="button" data-party-action="recruit-close" data-revision="${party.revision}">關閉招募</button>
             </div>
           </div>
         </div>
@@ -481,8 +481,8 @@ export class PartyPanel {
           <input class="party-input" type="number" name="minRealmLv" min="1" step="1" placeholder="最低境界" aria-label="最低境界" />
           <input class="party-input" type="number" name="maxRealmLv" min="1" step="1" placeholder="最高境界" aria-label="最高境界" />
         </div>
-        <input class="party-input" type="text" name="note" maxlength="200" placeholder="招募说明（可选，200 字以内）" aria-label="招募说明" />
-        <button class="small-btn" type="submit">发布招募</button>
+        <input class="party-input" type="text" name="note" maxlength="200" placeholder="招募說明（可選，200 字以內）" aria-label="招募說明" />
+        <button class="small-btn" type="submit">發佈招募</button>
       </form>
     `;
   }
@@ -491,21 +491,21 @@ export class PartyPanel {
     const view = state.view;
     const filtered = view.recruitments.filter((entry) => entry.partyId !== view.party?.partyId);
     if (!state.recruitmentLoaded) {
-      return `<div class="empty-hint compact">正在加载招募信息…</div>`;
+      return `<div class="empty-hint compact">正在加載招募訊息…</div>`;
     }
     if (filtered.length === 0) {
-      return `<div class="empty-hint compact">暂时没有符合条件的招募，可以发布自己的招募或稍后再看。</div>`;
+      return `<div class="empty-hint compact">暫時沒有符合條件的招募，可以發佈自己的招募或稍後再看。</div>`;
     }
     return `
       <div class="ui-list party-recruitment-list">
         ${filtered.map((entry) => `
           <div class="ui-list-row">
             <div class="ui-list-main">
-              <div class="ui-list-title">${escapeHtml(PARTY_PURPOSE_LABELS[entry.purpose])} · ${escapeHtml(entry.leaderName)} 的队伍（${entry.memberCount}/${entry.maxMembers}）</div>
-              <div class="ui-list-subtitle">境界 ${entry.minRealmLv} - ${entry.maxRealmLv} 层${entry.note ? ` · ${escapeHtml(entry.note)}` : ''}</div>
+              <div class="ui-list-title">${escapeHtml(PARTY_PURPOSE_LABELS[entry.purpose])} · ${escapeHtml(entry.leaderName)} 的隊伍（${entry.memberCount}/${entry.maxMembers}）</div>
+              <div class="ui-list-subtitle">境界 ${entry.minRealmLv} - ${entry.maxRealmLv} 層${entry.note ? ` · ${escapeHtml(entry.note)}` : ''}</div>
             </div>
             <div class="social-row-actions">
-              <button class="small-btn" type="button" data-party-action="recruit-apply" data-listing-id="${escapeHtml(entry.listingId)}">申请加入</button>
+              <button class="small-btn" type="button" data-party-action="recruit-apply" data-listing-id="${escapeHtml(entry.listingId)}">申請加入</button>
             </div>
           </div>
         `).join('')}

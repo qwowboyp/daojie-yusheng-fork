@@ -62,12 +62,12 @@ export class TimeChamberConsoleModal {
       variantClass: MODAL_VARIANT,
       title: '管理密室',
       size: 'md',
-      subtitle: '正在读取密室状态…',
+      subtitle: '正在讀取密室狀態…',
       onClose: () => this.callbacks?.onClose(),
       renderBody: (body) => {
         const loading = document.createElement('div');
         loading.className = 'time-chamber-loading';
-        loading.textContent = '正在读取管理信息…';
+        loading.textContent = '正在讀取管理訊息…';
         body.replaceChildren(loading);
       },
     });
@@ -163,12 +163,12 @@ export class TimeChamberConsoleModal {
       ) {
         const passwordValue = password.value.normalize('NFC');
         if (passwordEnabled.checked && passwordValue && passwordValue.trim().length === 0) {
-          password.setCustomValidity('进入密码不能全部为空白字符');
+          password.setCustomValidity('進入密碼不能全部為空白字符');
           password.reportValidity();
           return;
         }
         if (passwordEnabled.checked && !this.detail.passwordProtected && !passwordValue) {
-          password.setCustomValidity('请输入进入密码');
+          password.setCustomValidity('請輸入進入密碼');
           password.reportValidity();
           return;
         }
@@ -202,7 +202,7 @@ export class TimeChamberConsoleModal {
         || this.detail?.hasBuildings === true
       );
       button.disabled = mutationPending || blockedByActive || this.detail?.isOwner !== true;
-      button.textContent = pending ? '处理中…' : button.dataset.idleLabel ?? '确认';
+      button.textContent = pending ? '處理中…' : button.dataset.idleLabel ?? '確認';
     }
   }
 
@@ -298,9 +298,9 @@ function buildConsoleShell(
   const metrics = document.createElement('section');
   metrics.className = 'time-chamber-metrics time-chamber-metrics--management';
   metrics.append(
-    buildMetric('当前流速', 'speed'),
-    buildMetric('当前人数', 'users'),
-    buildMetric('运行成本', 'cost'),
+    buildMetric('當前流速', 'speed'),
+    buildMetric('當前人數', 'users'),
+    buildMetric('運行成本', 'cost'),
     buildMetric('激活截止', 'active-until'),
   );
 
@@ -320,9 +320,9 @@ function buildSettingsSection(detail: TimeChamberManagementDetailView, draft: Ti
   form.className = 'time-chamber-settings-form';
   form.dataset.timeChamberForm = 'settings';
   form.append(
-    buildLabeledInput('名称', 'name', 'text', draft.name, { max: 20 }),
+    buildLabeledInput('名稱', 'name', 'text', draft.name, { max: 20 }),
     buildSpeedField(detail, draft.speed),
-    buildLabeledInput('最大人数', 'capacity', 'number', draft.capacity, { min: 1, max: detail.maxCapacity }),
+    buildLabeledInput('最大人數', 'capacity', 'number', draft.capacity, { min: 1, max: detail.maxCapacity }),
     buildPasswordSetting(draft),
   );
   const lock = document.createElement('p');
@@ -342,8 +342,8 @@ function buildResizeSection(detail: TimeChamberManagementDetailView, sizeDraft: 
   select.name = 'sizeTier';
   select.dataset.sizeSignature = buildSizeSignature(detail);
   appendSizeOptions(select, detail, sizeDraft);
-  form.append(select, buildSubmitButton('resize', '调整空间'));
-  return buildControlSection('空间大小', form);
+  form.append(select, buildSubmitButton('resize', '調整空間'));
+  return buildControlSection('空間大小', form);
 }
 
 function buildSubmitButton(operation: TimeChamberOperationKind, label: string): HTMLButtonElement {
@@ -402,10 +402,10 @@ function buildPasswordSetting(draft: TimeChamberSettingsInputDraft): HTMLElement
   checkbox.name = 'passwordEnabled';
   checkbox.checked = draft.passwordEnabled;
   const caption = document.createElement('span');
-  caption.textContent = '启用进入密码';
+  caption.textContent = '啟用進入密碼';
   toggle.append(checkbox, caption);
   const passwordField = buildLabeledInput(
-    '进入密码',
+    '進入密碼',
     'password',
     'password',
     draft.password,
@@ -420,7 +420,7 @@ function buildSpeedField(detail: TimeChamberManagementDetailView, draftSpeed: st
   const label = document.createElement('label');
   label.className = 'time-chamber-setting-field';
   const caption = document.createElement('span');
-  caption.textContent = '时间倍率';
+  caption.textContent = '時間倍率';
   const select = document.createElement('select');
   select.className = 'ui-input';
   select.name = 'speed';
@@ -456,14 +456,14 @@ function patchDetailFields(
 ): void {
   setField(shell, 'speed', detail.configuredSpeed === detail.effectiveSpeed
     ? `${detail.effectiveSpeed} 倍`
-    : `设定 ${detail.configuredSpeed} 倍 / 当前 ${detail.effectiveSpeed} 倍`);
+    : `設定 ${detail.configuredSpeed} 倍 / 當前 ${detail.effectiveSpeed} 倍`);
   setField(shell, 'users', `${detail.occupancy}/${detail.capacity} 人`);
-  setField(shell, 'cost', `${formatDisplayNumber(detail.operatingCostSpiritStonesPerHour)} 灵石/小时`);
+  setField(shell, 'cost', `${formatDisplayNumber(detail.operatingCostSpiritStonesPerHour)} 靈石/小時`);
   setField(shell, 'active-until', detail.activeUntil ? formatDateTime(detail.activeUntil) : '未激活');
   setField(shell, 'settings-lock', detail.settingsLocked
-    ? '运行期间倍率、人数与空间保持不变'
+    ? '運行期間倍率、人數與空間保持不變'
     : detail.hasBuildings
-      ? '密室内已有建筑，空间大小已锁定'
+      ? '密室內已有建築，空間大小已鎖定'
       : '');
 
   const draft = settingsDraft ?? buildSettingsInputDraft(detail);
@@ -506,7 +506,7 @@ function syncPasswordFieldState(shell: HTMLElement, draft: TimeChamberSettingsIn
   if (checkbox && checkbox.checked !== draft.passwordEnabled) checkbox.checked = draft.passwordEnabled;
   if (!password) return;
   password.disabled = !draft.passwordEnabled;
-  password.placeholder = draft.passwordEnabled ? '留空则保持当前密码' : '未启用';
+  password.placeholder = draft.passwordEnabled ? '留空則保持當前密碼' : '未啟用';
 }
 
 function setField(shell: HTMLElement, name: string, value: string): void {

@@ -234,9 +234,9 @@ export class GuidedTour {
       ownerId: MODAL_OWNER,
       size: 'md',
       variantClass: 'detail-modal--guided-tour-list',
-      title: t('guided-tour.list.title', undefined, '引导'),
-      subtitle: t('guided-tour.list.subtitle', undefined, '选择一组引导重新播放。'),
-      hint: t('guided-tour.list.close-hint', undefined, '点击空白处关闭'),
+      title: t('guided-tour.list.title', undefined, '引導'),
+      subtitle: t('guided-tour.list.subtitle', undefined, '選擇一組引導重新播放。'),
+      hint: t('guided-tour.list.close-hint', undefined, '點擊空白處關閉'),
       renderBody: (body) => {
         body.replaceChildren(this.createFlowListBody());
       },
@@ -263,7 +263,7 @@ export class GuidedTour {
     if (this.flows.length <= 0) {
       const empty = this.documentRef.createElement('div');
       empty.className = 'empty-hint';
-      empty.textContent = t('guided-tour.list.empty', undefined, '暂无可用引导');
+      empty.textContent = t('guided-tour.list.empty', undefined, '暫無可用引導');
       shell.append(empty);
       fragment.append(shell);
       return fragment;
@@ -287,7 +287,7 @@ export class GuidedTour {
       button.className = 'small-btn guided-tour-list-start';
       button.type = 'button';
       button.dataset.guidedTourFlow = flow.id;
-      button.textContent = t('guided-tour.list.start', undefined, '重新引导');
+      button.textContent = t('guided-tour.list.start', undefined, '重新引導');
 
       item.append(title, meta, button);
       grid.append(item);
@@ -487,10 +487,10 @@ export class GuidedTour {
         </div>
       </div>
       <div class="guided-tour-actions">
-        <button class="small-btn ghost" type="button" data-guided-tour-skip>${this.escapeHtml(t('guided-tour.action.skip', undefined, '跳过'))}</button>
+        <button class="small-btn ghost" type="button" data-guided-tour-skip>${this.escapeHtml(t('guided-tour.action.skip', undefined, '跳過'))}</button>
         <button class="small-btn ghost" type="button" data-guided-tour-prev${this.activeStepIndex <= 0 ? ' disabled' : ''}>${this.escapeHtml(t('guided-tour.action.prev', undefined, '上一步'))}</button>
         <button class="small-btn" type="button" data-guided-tour-next>${this.escapeHtml(targetClick
-          ? t('guided-tour.action.wait-target', undefined, '点击高亮处')
+          ? t('guided-tour.action.wait-target', undefined, '點擊高亮處')
           : (stepCurrent >= stepTotal ? t('guided-tour.action.finish', undefined, '完成') : t('guided-tour.action.next', undefined, '下一步')))}</button>
       </div>
     `;

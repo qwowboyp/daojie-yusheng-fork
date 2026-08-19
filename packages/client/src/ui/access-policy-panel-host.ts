@@ -67,14 +67,14 @@ class AccessPolicyPanelHost {
       <section class="access-policy-panel ui-modal-card ui-modal-card--md" role="dialog" aria-modal="true" aria-labelledby="access-policy-panel-title">
         <header class="access-policy-panel-header">
           <div class="access-policy-panel-heading">
-            <span class="access-policy-panel-mark" aria-hidden="true">权</span>
+            <span class="access-policy-panel-mark" aria-hidden="true">權</span>
             <div class="access-policy-panel-heading-copy">
-              <span class="access-policy-panel-kicker">权限策略</span>
+              <span class="access-policy-panel-kicker">權限策略</span>
               <h2 id="access-policy-panel-title" class="access-policy-panel-title"></h2>
               <p class="access-policy-panel-subtitle"></p>
             </div>
           </div>
-          <button class="access-policy-panel-close" type="button" data-access-policy-panel-close="button" aria-label="关闭自定义权限策略" title="关闭">
+          <button class="access-policy-panel-close" type="button" data-access-policy-panel-close="button" aria-label="關閉自定義權限策略" title="關閉">
             <span aria-hidden="true">×</span>
           </button>
         </header>

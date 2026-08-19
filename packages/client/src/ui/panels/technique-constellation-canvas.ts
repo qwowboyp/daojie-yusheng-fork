@@ -6,7 +6,7 @@
 import { TECHNIQUE_CONSTELLATION_NODE_NAMES } from '../../constants/ui/technique-constellation';
 
 /** TechniqueConstellationMilestone：星图节点的阶段里程碑标记。 */
-type TechniqueConstellationMilestone = '小成' | '大成' | '圆满';
+type TechniqueConstellationMilestone = '小成' | '大成' | '圓滿';
 
 /** TechniqueConstellationNode：功法星图节点的展示数据。 */
 type TechniqueConstellationNode = {
@@ -328,11 +328,11 @@ export class TechniqueConstellationCanvas {
 
     const canvas = root.querySelector<HTMLCanvasElement>('[data-tech-starfield-canvas="true"]');
     if (!canvas) {
-      throw new Error('功法星图画布根节点不完整。');
+      throw new Error('功法星圖畫布根節點不完整。');
     }
     const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) {
-      throw new Error('无法获取功法星图画布的 2D 上下文。');
+      throw new Error('無法獲取功法星圖畫布的 2D 上下文。');
     }
     this.canvas = canvas;
     this.ctx = ctx;
@@ -485,7 +485,7 @@ export class TechniqueConstellationCanvas {
       rawNodes.push({
         index,
         level: node.level,
-        name: `第${node.level}层 · ${nodeRng.pick(TECHNIQUE_CONSTELLATION_NODE_NAMES)}`,
+        name: `第${node.level}層 · ${nodeRng.pick(TECHNIQUE_CONSTELLATION_NODE_NAMES)}`,
         x: cx,
         y: cy,
         baseRadius: node.milestone ? nodeRng.nextRange(8, 11) : nodeRng.nextRange(3.5, 5.5),

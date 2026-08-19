@@ -29,7 +29,7 @@ const CHANNEL_LABEL_KEYS: Record<ChatChannel, string> = {
 export const ChatPanel = memo(function ChatPanel() {
   return (
     <>
-      <div className="section-tabs chat-tabs" data-react-chat-tabs="true" aria-label="日志与聊天频道">
+      <div className="section-tabs chat-tabs" data-react-chat-tabs="true" aria-label="日誌與聊天頻道">
         {CHAT_FIXED_CHANNELS.map((channel) => (
           <button
             key={channel}
@@ -55,7 +55,7 @@ export const ChatPanel = memo(function ChatPanel() {
                 className="tab-btn chat-channel-main"
                 data-chat-slot-activate={slotId}
                 type="button"
-                aria-label={`打开${defaultLabel}频道`}
+                aria-label={`打開${defaultLabel}頻道`}
               >
                 {defaultLabel}
               </button>
@@ -64,7 +64,7 @@ export const ChatPanel = memo(function ChatPanel() {
                   className="chat-channel-select"
                   data-chat-slot-select={slotId}
                   defaultValue={defaultChannel}
-                  aria-label={`选择频道，当前${defaultLabel}`}
+                  aria-label={`選擇頻道，當前${defaultLabel}`}
                 >
                   {CHAT_SELECTABLE_CHANNELS.map((channel) => (
                     <option key={channel} value={channel}>

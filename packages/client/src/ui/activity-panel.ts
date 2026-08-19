@@ -21,16 +21,16 @@ type ActivityTab = 'month-card' | 'sign-in' | 'invitation';
 type DailySignInFortune = NonNullable<ActivityStatusView['dailySignIn']['lastFortune']>;
 
 const DAILY_SIGN_IN_FORTUNE_LABELS: Record<DailySignInFortune['tier'], string> = {
-  very_bad: '下下签 · 劫气缠身',
-  bad: '下签 · 时运不济',
-  neutral: '中签 · 气数平平',
-  good: '上签 · 福缘渐起',
-  great: '上上签 · 福星高照',
-  transcendent_1: '超签一阶 · 鸿福齐天',
-  transcendent_2: '超签二阶 · 气运如虹',
-  transcendent_3: '超签三阶 · 天眷独宠',
-  transcendent_4: '超签四阶 · 诸天共佑',
-  perfect: '满签 · 天命唯一',
+  very_bad: '下下籤 · 劫氣纏身',
+  bad: '下籤 · 時運不濟',
+  neutral: '中籤 · 氣數平平',
+  good: '上籤 · 福緣漸起',
+  great: '上上籤 · 福星高照',
+  transcendent_1: '超籤一階 · 鴻福齊天',
+  transcendent_2: '超籤二階 · 氣運如虹',
+  transcendent_3: '超籤三階 · 天眷獨寵',
+  transcendent_4: '超籤四階 · 諸天共佑',
+  perfect: '滿籤 · 天命唯一',
 };
 
 export class ActivityPanel {
@@ -57,10 +57,10 @@ export class ActivityPanel {
     }
     detailModalHost.open({
       ownerId: ActivityPanel.MODAL_OWNER,
-      title: t('activity.modal.title', undefined, '活动'),
+      title: t('activity.modal.title', undefined, '活動'),
       subtitle: this.buildSubtitle(),
       variantClass: 'detail-modal--activity',
-      hint: t('activity.modal.close-hint', undefined, '点击空白处关闭'),
+      hint: t('activity.modal.close-hint', undefined, '點擊空白處關閉'),
       renderBody: (body) => {
         this.render(body);
       },
@@ -114,8 +114,8 @@ export class ActivityPanel {
     tabs.className = 'activity-tabs';
     tabs.setAttribute('role', 'tablist');
     tabs.append(
-      this.createTabButton('sign-in', t('activity.tab.sign-in', undefined, '每日签到')),
-      this.createTabButton('invitation', '邀请'),
+      this.createTabButton('sign-in', t('activity.tab.sign-in', undefined, '每日簽到')),
+      this.createTabButton('invitation', '邀請'),
       this.createTabButton('month-card', t('activity.tab.month-card', undefined, '功德月卡')),
     );
     root.append(tabs);
@@ -123,7 +123,7 @@ export class ActivityPanel {
     if (!this.status) {
       const loading = document.createElement('div');
       loading.className = 'activity-empty';
-      loading.textContent = t('activity.loading', undefined, '正在读取活动状态...');
+      loading.textContent = t('activity.loading', undefined, '正在讀取活動狀態...');
       root.append(loading);
       body.append(root);
       return;
@@ -151,31 +151,31 @@ export class ActivityPanel {
       return card;
     }
     const subtitle = status.eternal
-      ? '永恒'
+      ? '永恆'
       : status.active
-        ? `剩余 ${status.remainingDays} 天`
+        ? `剩餘 ${status.remainingDays} 天`
         : status.poolRemainingMerit > 0 ? '待激活' : '未激活';
-    const offlineText = status.offlineMaxHours === null ? '永久' : `${status.offlineMaxHours} 小时`;
+    const offlineText = status.offlineMaxHours === null ? '永久' : `${status.offlineMaxHours} 小時`;
     const shopDiscountText = status.heavenlyDaoShopDiscountPercent > 0
       ? `${(100 - status.heavenlyDaoShopDiscountPercent) / 10}折`
-      : '无';
+      : '無';
     card.append(
       this.createHeader('功德月卡', subtitle),
       this.createMetricGrid([
-        ['每日领取', `${status.dailyRewardMerit} 功德`],
-        ['月卡总池', `${status.poolTotalMerit} 功德`],
-        ['当前剩余', `${status.poolRemainingMerit} 功德`],
-        ['离线时长', offlineText],
+        ['每日領取', `${status.dailyRewardMerit} 功德`],
+        ['月卡總池', `${status.poolTotalMerit} 功德`],
+        ['當前剩餘', `${status.poolRemainingMerit} 功德`],
+        ['離線時長', offlineText],
         ['商店折扣', shopDiscountText],
-        ['签到固定池', `${status.dailySignInFixedMeritBonus} 功德`],
-        ['月卡道具', `${status.itemCount} 个`],
-        ['领取期限', status.eternal ? '永久' : status.expireAt && status.active ? formatTime(status.expireAt) : '未激活'],
+        ['簽到固定池', `${status.dailySignInFixedMeritBonus} 功德`],
+        ['月卡道具', `${status.itemCount} 個`],
+        ['領取期限', status.eternal ? '永久' : status.expireAt && status.active ? formatTime(status.expireAt) : '未激活'],
       ]),
     );
     const actions = document.createElement('div');
     actions.className = 'activity-actions';
     const claimButton = this.createActionButton(
-      status.canClaimToday ? '领取今日功德' : status.active ? '今日已领取' : '未激活',
+      status.canClaimToday ? '領取今日功德' : status.active ? '今日已領取' : '未激活',
       () => this.options.socket.sendClaimMeritMonthCard(),
       !status.canClaimToday,
     );
@@ -194,26 +194,26 @@ export class ActivityPanel {
     const rewardPreview = status.rewardPreview;
     const expectedRandomMerit = Number.isInteger(rewardPreview.expectedRandomMerit)
       ? `${rewardPreview.expectedRandomMerit}`
-      : `约 ${rewardPreview.expectedRandomMerit.toFixed(1)}`;
+      : `約 ${rewardPreview.expectedRandomMerit.toFixed(1)}`;
     const rewardText = rewardPreview.fixedMerit > 0
       ? `${expectedRandomMerit} + ${rewardPreview.fixedMerit} 功德`
       : `${expectedRandomMerit} 功德`;
     const lastFortune = status.lastFortune;
     card.append(
-      this.createHeader('每日签到', status.canClaimToday ? '今日可领' : '今日已领'),
+      this.createHeader('每日簽到', status.canClaimToday ? '今日可領' : '今日已領'),
       this.createMetricGrid([
-        ['签到奖励', rewardText],
-        ['上次获得', status.lastRewardMerit === null ? '无' : `${status.lastRewardMerit} 功德`],
-        ['上次签运', lastFortune ? formatDailySignInFortune(lastFortune) : '无'],
-        ['连续签到', `${status.streakDays} 天`],
-        ['累计签到', `${status.totalDays} 天`],
+        ['簽到獎勵', rewardText],
+        ['上次獲得', status.lastRewardMerit === null ? '無' : `${status.lastRewardMerit} 功德`],
+        ['上次籤運', lastFortune ? formatDailySignInFortune(lastFortune) : '無'],
+        ['連續簽到', `${status.streakDays} 天`],
+        ['累計簽到', `${status.totalDays} 天`],
         ['今日日期', status.today],
       ]),
     );
     const actions = document.createElement('div');
     actions.className = 'activity-actions';
     actions.append(this.createActionButton(
-      status.canClaimToday ? '签到领取' : '今日已签到',
+      status.canClaimToday ? '簽到領取' : '今日已簽到',
       () => this.options.socket.sendClaimDailySignIn(),
       !status.canClaimToday,
     ));
@@ -229,14 +229,14 @@ export class ActivityPanel {
       return card;
     }
     card.append(
-      this.createHeader('邀请', `${status.totalInvitees} 人`),
+      this.createHeader('邀請', `${status.totalInvitees} 人`),
       this.createMetricGrid([
-        ['邀请码', status.inviteCode || '生成中'],
-        ['邀请人数', `${status.totalInvitees} 人`],
-        ['练气达成', `${status.qiReachedCount} 人`],
-        ['筑基达成', `${status.foundationReachedCount} 人`],
-        ['受邀奖励', `${status.inviteeReward.spiritStone} 灵石 / ${status.inviteeReward.merit} 功德`],
-        ['注册奖励', `${status.stages.find((stage) => stage.key === 'registered')?.rewardMerit ?? 0} 功德`],
+        ['邀請碼', status.inviteCode || '生成中'],
+        ['邀請人數', `${status.totalInvitees} 人`],
+        ['練氣達成', `${status.qiReachedCount} 人`],
+        ['築基達成', `${status.foundationReachedCount} 人`],
+        ['受邀獎勵', `${status.inviteeReward.spiritStone} 靈石 / ${status.inviteeReward.merit} 功德`],
+        ['註冊獎勵', `${status.stages.find((stage) => stage.key === 'registered')?.rewardMerit ?? 0} 功德`],
       ]),
       this.renderInvitationLink(status.invitePath),
       this.renderInvitationStages(status.stages),
@@ -251,11 +251,11 @@ export class ActivityPanel {
     value.type = 'text';
     value.readOnly = true;
     value.value = buildInvitationUrl(invitePath);
-    const copyButton = this.createActionButton('复制邀请链接', () => {
+    const copyButton = this.createActionButton('複製邀請鏈接', () => {
       void copyText(value.value).then((ok) => {
-        copyButton.textContent = ok ? '已复制' : '复制失败';
+        copyButton.textContent = ok ? '已複製' : '複製失敗';
         window.setTimeout(() => {
-          copyButton.textContent = '复制邀请链接';
+          copyButton.textContent = '複製邀請鏈接';
         }, 1400);
       });
     }, !invitePath);
@@ -336,13 +336,13 @@ export class ActivityPanel {
 
   private buildSubtitle(): string {
     if (!this.status) {
-      return t('activity.modal.subtitle.loading', undefined, '功德月卡与每日签到');
+      return t('activity.modal.subtitle.loading', undefined, '功德月卡與每日簽到');
     }
     const monthCard = this.status.monthCard.active
-      ? `月卡剩余 ${this.status.monthCard.remainingDays} 天，池 ${this.status.monthCard.poolRemainingMerit} 功德`
+      ? `月卡剩餘 ${this.status.monthCard.remainingDays} 天，池 ${this.status.monthCard.poolRemainingMerit} 功德`
       : '月卡未激活';
-    const signIn = this.status.dailySignIn.canClaimToday ? '今日可签到' : '今日已签到';
-    return `${signIn} · 邀请 ${this.status.invitation.totalInvitees} 人 · ${monthCard}`;
+    const signIn = this.status.dailySignIn.canClaimToday ? '今日可簽到' : '今日已簽到';
+    return `${signIn} · 邀請 ${this.status.invitation.totalInvitees} 人 · ${monthCard}`;
   }
 
   private syncBadge(): void {
@@ -357,9 +357,9 @@ export class ActivityPanel {
 }
 
 function formatDailySignInFortune(fortune: DailySignInFortune): string {
-  const label = DAILY_SIGN_IN_FORTUNE_LABELS[fortune.tier] ?? '中签 · 气数平平';
+  const label = DAILY_SIGN_IN_FORTUNE_LABELS[fortune.tier] ?? '中籤 · 氣數平平';
   const luck = fortune.luckDelta > 0 ? `+${fortune.luckDelta}` : String(fortune.luckDelta);
-  return `${label}（幸运 ${luck}）`;
+  return `${label}（幸運 ${luck}）`;
 }
 
 function formatTime(value: number): string {

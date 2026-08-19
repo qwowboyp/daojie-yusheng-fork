@@ -482,7 +482,7 @@ const openPermissionsExpression = String.raw`
     const tabRects = Array.from(permissions.querySelectorAll('.access-policy-resource-tabs button'))
       .map((entry) => entry.getBoundingClientRect());
     const customButton = Array.from(permissions.querySelectorAll('.access-policy-resource-panel:not([hidden]) .access-policy-mode-group button'))
-      .find((entry) => entry.textContent?.trim() === '自定义策略');
+      .find((entry) => entry.textContent?.trim() === '自定義策略');
     if (!(customButton instanceof HTMLButtonElement)) throw new Error('统法台自定义权限入口缺失');
     customButton.click();
     await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
@@ -671,16 +671,16 @@ function assertSourceLayout(measurement, label) {
 }
 
 await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'technique-unification-mobile-proof-' }, async (cdp) => {
-  assert.equal(await cdp.evaluate(initializeExpression), '统法台', '未打开正式统法台弹层');
+  assert.equal(await cdp.evaluate(initializeExpression), '統法臺', '未打開正式統法臺彈層');
 
   const initial = await cdp.evaluate(measureShellExpression);
   assertShell(initial, '标准手机视口');
-  assert.deepEqual(initial.mainTabLabels, ['总览', '录法', '权限'], '建造者主 Tab 不完整');
-  assert.equal(initial.activeMainTab, '总览', '默认未打开总览');
+  assert.deepEqual(initial.mainTabLabels, ['總覽', '錄法', '權限'], '建造者主 Tab 不完整');
+  assert.equal(initial.activeMainTab, '總覽', '默認未打開總覽');
   assert.equal(initial.hasDirectory, false, '总览页混入法卷目录');
   assert.equal(initial.hasPermissions, false, '总览页混入权限编辑器');
   assert.equal(initial.hasRecordTabs, false, '总览页混入录法方式');
-  assert.match(initial.overviewText, /此台尚未立脉/, '未绑定总览文案错误');
+  assert.match(initial.overviewText, /此臺尚未立脈/, '未綁定總覽文案錯誤');
 
   assert.deepEqual(
     await cdp.evaluate(openSourceRecordExpression),
@@ -690,51 +690,51 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'technique-uni
   const sourceInitial = await cdp.evaluate(measureSourceExpression);
   assertSourceLayout(sourceInitial, '标准手机视口');
   assert.equal(sourceInitial.sourceCount, 12, '首页未限制为 12 部法卷');
-  assert.equal(sourceInitial.firstStrength, '强度 80%', '未显示服务端权威功法强度');
+  assert.equal(sourceInitial.firstStrength, '強度 80%', '未顯示服務端權威功法強度');
   assert.equal(sourceInitial.gradeOptionCount, 2, '品阶过滤项不完整');
   assert.equal(sourceInitial.realmOptionCount, 3, '境界过滤项不完整');
-  assert.match(sourceInitial.pageText, /第 1 页，共 3 页 · 当前 1-12 部，共 28 部/, '首页分页摘要错误');
+  assert.match(sourceInitial.pageText, /第 1 頁，共 3 頁 · 當前 1-12 部，共 28 部/, '首頁分頁摘要錯誤');
   assert.equal(sourceInitial.activeRecordTab, '', '移除玉简录法后不应保留多余的二级录法 Tab');
 
   const interaction = await cdp.evaluate(sourceInteractionExpression);
   assert.equal(interaction.directoryIdentityPreserved, true, '筛选或分页时替换了法卷目录根节点');
   assert.equal(interaction.nameIdentityPreserved, true, '筛选或分页时替换了法脉名输入框');
-  assert.equal(interaction.nameValue, '太玄归一真经', '筛选或分页后丢失法脉名草稿');
+  assert.equal(interaction.nameValue, '太玄归一真经', '篩選或分頁後丟失法脈名草稿');
   assert.equal(interaction.borderChanged, true, '选中法卷未通过边框呈现');
   assert.equal(interaction.backgroundColorPreserved, true, '选中法卷不应改变底色');
   assert.equal(interaction.backgroundImagePreserved, true, '选中法卷不应改变品阶底纹');
-  assert.doesNotMatch(interaction.selectedCardText, /已选|可选/, '选中状态仍使用文字标记');
+  assert.doesNotMatch(interaction.selectedCardText, /已選|可選/, '選中狀態仍使用文字標記');
   assert.equal(interaction.realmFilteredCount, 12, '境界过滤结果数量错误');
-  assert.match(interaction.realmPageText, /第 1 页，共 1 页 · 当前 1-12 部，共 12 部/, '境界过滤后的分页摘要错误');
-  assert.equal(interaction.realmStrength, '强度 96%', '境界过滤后强度显示错误');
+  assert.match(interaction.realmPageText, /第 1 頁，共 1 頁 · 當前 1-12 部，共 12 部/, '境界過濾後的分頁摘要錯誤');
+  assert.equal(interaction.realmStrength, '強度 96%', '境界過濾後強度顯示錯誤');
   assert.equal(interaction.firstPageSelected, 12, '全选后当前页未全部呈现选中边框');
-  assert.match(interaction.selectedSummary, /已选 28 部/, '全选未覆盖当前筛选的全部分页');
+  assert.match(interaction.selectedSummary, /已選 28 部/, '全選未覆蓋當前篩選的全部分頁');
   assert.equal(interaction.secondPageSelected, 12, '翻页后跨页全选状态未保留');
-  assert.match(interaction.secondPageText, /第 2 页，共 3 页 · 当前 13-24 部，共 28 部/, '下一页分页摘要错误');
+  assert.match(interaction.secondPageText, /第 2 頁，共 3 頁 · 當前 13-24 部，共 28 部/, '下一頁分頁摘要錯誤');
   assert.equal(interaction.selectedAfterClear, 0, '全部取消后仍残留选中法卷');
   assert.equal(interaction.gradeValue, 'yellow', '品阶过滤未切换到黄阶');
   assert.equal(interaction.sparseCount, 2, '黄阶少量法卷筛选结果错误');
   assert(interaction.maxSparseWidth <= 180, '只有两部法卷时卡格被拉伸过宽');
 
   const publishConfirm = await cdp.evaluate(openPublishConfirmExpression);
-  assert.equal(publishConfirm.title, '确认凝成首卷', '首次凝篇未经过二次确认');
-  assert.equal(publishConfirm.subtitle, '法脉「太玄归一真经」', '二次确认未展示法脉名讳');
-  assert.match(publishConfirm.body, /法脉名讳一经凝篇，往后不可更改/, '二次确认未强调名讳不可更改');
-  assert.equal(publishConfirm.confirmLabel, '确认凝篇', '二次确认按钮文案错误');
+  assert.equal(publishConfirm.title, '確認凝成首卷', '首次凝篇未經過二次確認');
+  assert.equal(publishConfirm.subtitle, '法脈「太玄归一真经」', '二次確認未展示法脈名諱');
+  assert.match(publishConfirm.body, /法脈名諱一經凝篇，往後不可更改/, '二次確認未強調名諱不可更改');
+  assert.equal(publishConfirm.confirmLabel, '確認凝篇', '二次確認按鈕文案錯誤');
   assert.equal(publishConfirm.payloadBeforeConfirm, null, '二次确认前不应提交凝篇请求');
   assert.equal(publishConfirm.payloadAfterConfirm?.customName, '太玄归一真经', '确认后提交的法脉名讳错误');
   assert.equal(publishConfirm.payloadAfterConfirm?.sourceTechniqueIds?.length, 2, '确认后提交的源法数量错误');
 
   const rebindConfirm = await cdp.evaluate(openRebindConfirmExpression);
-  assert.equal(rebindConfirm.marker, '创建者可重录', '旧统法候选未标识创建者重录权限');
-  assert.equal(rebindConfirm.chip, '第 4 卷 · 18 部源法', '旧统法候选未显示卷次与叶子数量');
+  assert.equal(rebindConfirm.marker, '建立者可重錄', '舊統法候選未標識建立者重錄權限');
+  assert.equal(rebindConfirm.chip, '第 4 卷 · 18 部源法', '舊統法候選未顯示卷次與葉子數量');
   assert.equal(rebindConfirm.nameDisabled, true, '重新录入时仍允许改写原法脉名讳');
   assert.equal(rebindConfirm.nameValue, '太玄归一真经', '重新录入未沿用原法脉名讳');
-  assert.equal(rebindConfirm.publishLabel, '重新录入', '重新录入按钮文案错误');
-  assert.equal(rebindConfirm.publishingLabel, '凝篇中...', '重新录入提交后未进入防重复提交状态');
-  assert.equal(rebindConfirm.title, '确认重新录入', '旧统法重新录入未经过二次确认');
-  assert.match(rebindConfirm.body, /不会把统法作为嵌套源法重复计算/, '重新录入确认未说明叶子展开规则');
-  assert.equal(rebindConfirm.confirmLabel, '确认重录', '重新录入确认按钮文案错误');
+  assert.equal(rebindConfirm.publishLabel, '重新錄入', '重新錄入按鈕文案錯誤');
+  assert.equal(rebindConfirm.publishingLabel, '凝篇中...', '重新錄入提交後未進入防重複提交狀態');
+  assert.equal(rebindConfirm.title, '確認重新錄入', '舊統法重新錄入未經過二次確認');
+  assert.match(rebindConfirm.body, /不會把統法作為嵌套源法重複計算/, '重新錄入確認未說明葉子展開規則');
+  assert.equal(rebindConfirm.confirmLabel, '確認重錄', '重新錄入確認按鈕文案錯誤');
   assert.deepEqual(rebindConfirm.payload?.sourceTechniqueIds, ['agg_mobile_previous_v4'], '重新录入提交的旧统法错误');
   assert.equal('customName' in (rebindConfirm.payload ?? {}), false, '重新录入不应提交可改写的法脉名讳');
 
@@ -767,29 +767,29 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'technique-uni
   await delay(80);
 
   const permissions = await cdp.evaluate(openPermissionsExpression);
-  assert.equal(permissions.activeMainTab, '权限', '未切换到权限页');
+  assert.equal(permissions.activeMainTab, '權限', '未切換到權限頁');
   assert.equal(permissions.permissionIdentityPreserved, true, '切换权限组时替换了权限根节点');
-  assert.deepEqual(permissions.permissionTabLabels, ['参阅', '修订'], '通用权限槽位 Tab 不完整');
-  assert.equal(permissions.activePermissionTab, '修订', '修订权限槽位未切换');
-  assert.equal(permissions.activePermissionMode, '自定义策略', '修订权限策略模式错误');
-  assert.match(permissions.permissionEditorText, /默认策略：仅所有者/, '修订权限默认策略说明错误');
+  assert.deepEqual(permissions.permissionTabLabels, ['参阅', '修订'], '通用權限槽位 Tab 不完整');
+  assert.equal(permissions.activePermissionTab, '修订', '修訂權限槽位未切換');
+  assert.equal(permissions.activePermissionMode, '自定義策略', '修訂權限策略模式錯誤');
+  assert.match(permissions.permissionEditorText, /預設策略：僅所有者/, '修訂權限默認策略說明錯誤');
   assert.equal(permissions.hasInlineConditions, false, '统法台权限页不应内嵌自定义条件');
   assert.equal(permissions.customPanelIndependent, true, '统法台自定义策略未使用独立权限面板');
   assert.equal(permissions.customPanelOverflow, false, '统法台自定义权限面板出现横向溢出');
   assert(permissions.customPanelCloseSize >= 39.5, '自定义权限面板关闭按钮触控尺寸不足 40px');
-  assert.deepEqual(permissions.checkedRevisionRoles, ['内门弟子'], '修订权限草稿未独立保留');
+  assert.deepEqual(permissions.checkedRevisionRoles, ['内门弟子'], '修訂權限草稿未獨立保留');
   assert(permissions.minPolicyOptionHeight >= 39.5, '权限选项触控高度不足 40px');
   assert(permissions.minPermissionTabHeight >= 41.5, '权限 Tab 触控高度不足 42px');
   assert.equal(permissions.hasDirectory, false, '权限页混入法卷目录');
   assert.equal(permissions.hasJadeRecord, false, '权限页混入录法内容');
 
   const overview = await cdp.evaluate(openOverviewExpression);
-  assert.equal(overview.activeMainTab, '总览', '未切回总览页');
+  assert.equal(overview.activeMainTab, '總覽', '未切回總覽頁');
   assert.equal(overview.metricCount, 2, '已绑定总览指标不完整');
-  assert.match(overview.overviewText, /源法2 部/, '总览未显示源法数量');
-  assert.match(overview.overviewText, /法脉所录/, '总览未显示录入构成');
-  assert.match(overview.overviewText, /圆满六维总加成/, '总览六维标题不符合玩家语义');
-  assert.doesNotMatch(overview.overviewText, /预检|二次确认|服务端|客户端|revision|messageKey|Lv\./, '总览仍暴露开发者术语');
+  assert.match(overview.overviewText, /源法 2 部/, '總覽未顯示源法數量');
+  assert.match(overview.overviewText, /法脈所錄/, '總覽未顯示錄入構成');
+  assert.match(overview.overviewText, /圓滿六維總加成/, '總覽六維標題不符合玩家語義');
+  assert.doesNotMatch(overview.overviewText, /預檢|二次確認|服務端|客戶端|revision|messageKey|Lv\./, '總覽仍暴露開發者術語');
   assert.deepEqual(overview.sourceNames, ['凡阶归元功1', '凡阶归元功2'], '总览源法名录不完整');
   assert.equal(overview.attributeTexts.length, 6, '总览未显示完整六维加成');
   assert.deepEqual(overview.attributeTexts, ['体魄 +111', '神识 +122', '身法 +133', '根骨 +144', '力道 +155', '经脉 +166'], '总览六维加成显示错误');
@@ -799,30 +799,30 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'technique-uni
   assert.equal(overview.hasPermissions, false, '总览页混入权限编辑器');
 
   const revisionUpdate = await cdp.evaluate(inspectRevisionUpdateExpression);
-  assert.equal(revisionUpdate.learnLabel, '获取最新版 · 第 4 卷', '旧卷玩家未显示最新版获取入口');
+  assert.equal(revisionUpdate.learnLabel, '獲取最新版 · 第 4 卷', '舊卷玩家未顯示最新版獲取入口');
   assert.equal(revisionUpdate.learnDisabled, false, '旧卷玩家的最新版获取入口被错误禁用');
-  assert.match(revisionUpdate.summary, /已习得第 3 卷 · 最新第 4 卷/, '总览未明确展示旧卷与最新卷差异');
+  assert.match(revisionUpdate.summary, /已習得第 3 卷 · 最新第 4 卷/, '總覽未明確展示舊卷與最新卷差異');
 
   const catalogRefresh = await cdp.evaluate(inspectCatalogRefreshExpression);
   assert.equal(catalogRefresh.requestCountDelta, 1, '同一新卷通知触发了重复面板请求');
   assert.equal(catalogRefresh.latestRequest?.buildingId, 'building:mobile-proof', '目录更新未重拉当前统法台');
   assert.match(catalogRefresh.latestRequest?.requestId ?? '', /^technique-aggregation:/, '目录更新请求缺少独立 requestId');
-  assert.equal(catalogRefresh.learnLabel, '获取最新版 · 第 5 卷', '目录更新后未展示最新卷获取入口');
-  assert.match(catalogRefresh.summary, /已习得第 3 卷 · 最新第 5 卷/, '目录更新后卷次摘要仍然陈旧');
-  assert.equal(catalogRefresh.publishResult, '「太玄归一真经」第 5 卷已成。', '目录刷新抢先到达时误丢了合法修订结果');
+  assert.equal(catalogRefresh.learnLabel, '獲取最新版 · 第 5 卷', '目錄更新後未展示最新卷獲取入口');
+  assert.match(catalogRefresh.summary, /已習得第 3 卷 · 最新第 5 卷/, '目錄更新後卷次摘要仍然陳舊');
+  assert.equal(catalogRefresh.publishResult, '「太玄归一真经」第 5 卷已成。', '目錄刷新搶先到達時誤丟了合法修訂結果');
 
   const restricted = await cdp.evaluate(restrictTabsExpression);
-  assert.deepEqual(restricted.labels, ['总览'], '普通参阅者仍可看到录法或权限 Tab');
-  assert.equal(restricted.active, '总览', '权限收窄后未回退总览');
+  assert.deepEqual(restricted.labels, ['總覽'], '普通參閱者仍可看到錄法或權限 Tab');
+  assert.equal(restricted.active, '總覽', '權限收窄後未回退總覽');
   assert.equal(restricted.hasRecordTabs, false, '普通参阅者仍可进入录法页');
   assert.equal(restricted.hasPermissions, false, '非建造者仍可进入权限页');
 
   const sanitizedError = await cdp.evaluate(inspectSanitizedErrorExpression);
-  assert.match(sanitizedError.conflictText, /1 部已有法脉/, '冲突提示未保留玩家可理解的数量');
-  assert.match(sanitizedError.conflictText, /1 部已有功法/, '重叠提示未保留玩家可理解的数量');
-  assert.match(sanitizedError.conflictText, /1 部不可入卷/, '无效功法提示未保留玩家可理解的数量');
+  assert.match(sanitizedError.conflictText, /1 部已有法脈/, '衝突提示未保留玩家可理解的數量');
+  assert.match(sanitizedError.conflictText, /1 部已有功法/, '重疊提示未保留玩家可理解的數量');
+  assert.match(sanitizedError.conflictText, /1 部不可入卷/, '無效功法提示未保留玩家可理解的數量');
   assert.doesNotMatch(sanitizedError.conflictText, /agg_internal_debug|gen_internal_debug|gen_invalid_debug|internal_overlap/, '冲突提示泄露内部标识');
-  assert.equal(sanitizedError.fallbackText, '法脉凝篇未成，请稍后再试。', '未知错误未使用玩家可见兜底文案');
+  assert.equal(sanitizedError.fallbackText, '法脈凝篇未成，請稍後再試。', '未知錯誤未使用玩家可見兜底文案');
   assert.doesNotMatch(sanitizedError.fallbackText, /internal_unknown|messageKey/, '未知错误泄露内部消息键');
 });
 

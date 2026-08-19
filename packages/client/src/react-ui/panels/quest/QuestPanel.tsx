@@ -607,16 +607,16 @@ export function QuestDetailContent({ quest, inventory, onNavigate, onOpenGuideFl
       )}
       {quest.guideFlowId && (
         <div className="ui-detail-field ui-detail-field--section">
-          <strong>{t('quest.detail.guide', undefined, '相关引导')}</strong>
+          <strong>{t('quest.detail.guide', undefined, '相關引導')}</strong>
           <div className="quest-detail-guide-row">
-            <span>{t('quest.detail.guide-desc', undefined, '打开这个任务关联的操作引导，不会改变任务进度。')}</span>
+            <span>{t('quest.detail.guide-desc', undefined, '打開這個任務關聯的操作引導，不會改變任務進度。')}</span>
             <button
               className="small-btn quest-detail-guide-btn"
               type="button"
               data-quest-guide-flow={quest.guideFlowId}
               onClick={handleOpenGuide}
             >
-              {t('quest.action.open-guide', undefined, '打开引导')}
+              {t('quest.action.open-guide', undefined, '打開引導')}
             </button>
           </div>
         </div>

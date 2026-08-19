@@ -97,8 +97,8 @@ export class WorldPanel {
       return;
     }
     this.hideMapTypeTooltip();
-    replaceElementHtml(this.mapPane, '<div class="empty-hint">尚未进入世界</div>');
-    replaceElementHtml(this.tianjiPane, '<div class="empty-hint">尚未进入世界</div>');
+    replaceElementHtml(this.mapPane, '<div class="empty-hint">尚未進入世界</div>');
+    replaceElementHtml(this.tianjiPane, '<div class="empty-hint">尚未進入世界</div>');
   }
 
   private useReactPanel(): boolean {
@@ -142,16 +142,16 @@ export class WorldPanel {
           <div class="world-desc" data-world-map-desc="true">${escapeHtml(snapshot.mapDesc)}</div>
         </div>
         <div class="world-danger">
-          <div class="world-danger-label">推荐境界</div>
+          <div class="world-danger-label">推薦境界</div>
           <div class="world-danger-value danger-3" data-world-map-recommended-realm="true">${escapeHtml(snapshot.recommendedRealmLabel)}</div>
         </div>
       </div>
       <div class="info-list">
-        <div class="info-line"><span>当前阶段</span><strong data-world-map-realm="true">${escapeHtml(snapshot.realmLabel)}</strong></div>
-        <div class="info-line"><span>推进路线</span><strong data-world-map-route="true">${escapeHtml(snapshot.route)}</strong></div>
-        <div class="info-line"><span>主要资源</span><strong data-world-map-resources="true">${escapeHtml(snapshot.resourcesLabel)}</strong></div>
-        <div class="info-line"><span>主要威胁</span><strong data-world-map-threats="true">${escapeHtml(snapshot.threatsLabel)}</strong></div>
-        <div class="info-line"><span>当前主修</span><strong data-world-map-cultivating="true">${escapeHtml(snapshot.cultivatingName)}</strong></div>
+        <div class="info-line"><span>當前階段</span><strong data-world-map-realm="true">${escapeHtml(snapshot.realmLabel)}</strong></div>
+        <div class="info-line"><span>推進路線</span><strong data-world-map-route="true">${escapeHtml(snapshot.route)}</strong></div>
+        <div class="info-line"><span>主要資源</span><strong data-world-map-resources="true">${escapeHtml(snapshot.resourcesLabel)}</strong></div>
+        <div class="info-line"><span>主要威脅</span><strong data-world-map-threats="true">${escapeHtml(snapshot.threatsLabel)}</strong></div>
+        <div class="info-line"><span>當前主修</span><strong data-world-map-cultivating="true">${escapeHtml(snapshot.cultivatingName)}</strong></div>
       </div>
     `;
     this.hideMapTypeTooltip();
@@ -164,20 +164,20 @@ export class WorldPanel {
   private renderTianjiPane(): void {
     const html = `
       <div class="panel-section">
-        <div class="panel-section-title" data-world-tianji-title="true">天机阁</div>
+        <div class="panel-section-title" data-world-tianji-title="true">天機閣</div>
       </div>
       <div class="tianji-action-list">
         <button class="tianji-action-card" data-world-tianji-action="world" type="button">
           <div>
             <div class="tianji-action-title">世界</div>
-            <div class="tianji-action-desc">查看全服灵石总和、行动人数、境界人数，以及击杀与死亡总计。</div>
+            <div class="tianji-action-desc">查看全服靈石總和、行動人數、境界人數，以及擊殺與死亡總計。</div>
           </div>
           <div class="tianji-action-arrow">查看</div>
         </button>
         <button class="tianji-action-card" data-world-tianji-action="leaderboard" type="button">
           <div>
             <div class="tianji-action-title">排行榜</div>
-            <div class="tianji-action-desc">查看境界、击杀、灵石、死亡、炼体、六维最强与宗门榜单。</div>
+            <div class="tianji-action-desc">查看境界、擊殺、靈石、死亡、煉體、六維最強與宗門榜單。</div>
           </div>
           <div class="tianji-action-arrow">查看</div>
         </button>
@@ -238,7 +238,7 @@ export class WorldPanel {
         this.hideMapTypeTooltip();
         return;
       }
-      const label = badge.textContent?.trim() || '虚境';
+      const label = badge.textContent?.trim() || '虛境';
       const lines = this.buildMapTypeTooltipLines(label);
       if (this.mapTypeTooltipTarget !== badge) {
         this.mapTypeTooltip.show(label, lines, event.clientX, event.clientY);

@@ -131,7 +131,7 @@ function normalizeSectManagementPermission(input: unknown): SectManagementPermis
   const fallback = DEFAULT_SECT_MANAGEMENT_PERMISSIONS.find((permission) => permission.id === id);
   return {
     id,
-    label: typeof source.label === 'string' && source.label.trim() ? source.label.trim() : fallback?.label ?? '未知权限',
+    label: typeof source.label === 'string' && source.label.trim() ? source.label.trim() : fallback?.label ?? '未知權限',
   };
 }
 
@@ -420,7 +420,7 @@ export class SectManagementSubpanel {
         if (!actionId) return;
         if (actionId === 'sect:dissolve' && !window.confirm(t('action.sect.manage.confirm.dissolve', undefined))) return;
         if (actionId === 'sect:leave' && !window.confirm(t('action.sect.manage.confirm.leave', undefined))) return;
-        this.p.onAction?.(actionId, false, undefined, undefined, button.textContent?.trim() || '未知行动');
+        this.p.onAction?.(actionId, false, undefined, undefined, button.textContent?.trim() || '未知行動');
       }, options);
     });
   }

@@ -299,23 +299,23 @@ function escapeHtml(value: string): string {
 function getSourceLinkLabel(kind: ItemSourceKind): string {
   switch (kind) {
     case 'monster_drop':
-      return '击杀';
+      return '擊殺';
     case 'mining':
-      return '挖矿';
+      return '挖礦';
     case 'search':
       return '搜索';
     case 'shop':
-      return '购买';
+      return '購買';
     case 'heavenly_dao_shop':
-      return '兑换';
+      return '兌換';
     case 'quest':
-      return '任务';
+      return '任務';
     case 'alchemy':
-      return '炼丹';
+      return '煉丹';
     case 'forging':
-      return '炼器';
+      return '煉器';
     case 'runtime_pvp_reward':
-      return '战斗';
+      return '戰鬥';
   }
 }
 
@@ -407,10 +407,10 @@ function renderSpecialSourceSummaryHtml(itemId: string): string | null {
 
   if (itemId !== SPIRIT_STONE_ITEM_ID) {
     return itemId === MERIT_ITEM_ID
-      ? '<span class="inventory-source-note">全部怪物击杀都有概率获得</span>'
+      ? '<span class="inventory-source-note">全部怪物擊殺都有概率獲得</span>'
       : null;
   }
-  return '<span class="inventory-source-note">挖矿或者全部怪物击杀都有概率获得</span>';
+  return '<span class="inventory-source-note">挖礦或者全部怪物擊殺都有概率獲得</span>';
 }
 
 /** 把物品来源目录渲染成可直接插入的 HTML。 */
@@ -437,11 +437,11 @@ export function renderItemSourceListHtml(
   }
   if (!hasLoadedItemSourceCatalog()) {
     void loadItemSourceCatalog();
-    return '<span class="inventory-source-note">静态来源加载中</span>';
+    return '<span class="inventory-source-note">靜態來源加載中</span>';
   }
   const entries = getItemSourceEntries(itemId);
   if (entries.length === 0) {
-    return '<span class="inventory-source-empty">暂无静态来源</span>';
+    return '<span class="inventory-source-empty">暫無靜態來源</span>';
   }
   const maxEntries = options.maxEntries ? Math.max(1, options.maxEntries) : undefined;
   const visibleEntries = maxEntries ? entries.slice(0, maxEntries) : entries;
@@ -459,7 +459,7 @@ export function renderItemSourceListHtml(
     `).join('')
   }${
     remaining > 0
-      ? `<div class="inventory-source-row"><span class="inventory-source-detail">另有 ${escapeHtml(String(remaining))} 条来源</span></div>`
+      ? `<div class="inventory-source-row"><span class="inventory-source-detail">另有 ${escapeHtml(String(remaining))} 條來源</span></div>`
       : ''
   }</div>`;
 }

@@ -107,8 +107,8 @@ export class FloatingListPanel {
       <div class="floating-list-panel__bar" data-floating-list-drag-handle="true">
         <span class="floating-list-panel__title">${options.title}</span>
         <div class="floating-list-panel__tools">
-          <button class="floating-list-panel__tool" data-floating-list-collapse="true" type="button" aria-label="折叠"></button>
-          <button class="floating-list-panel__tool" data-floating-list-close="true" type="button" aria-label="关闭">×</button>
+          <button class="floating-list-panel__tool" data-floating-list-collapse="true" type="button" aria-label="摺疊"></button>
+          <button class="floating-list-panel__tool" data-floating-list-close="true" type="button" aria-label="關閉">×</button>
         </div>
       </div>
       <div class="floating-list-panel__body" data-floating-list-body="true"></div>
@@ -128,7 +128,7 @@ export class FloatingListPanel {
   }
 
   setTitle(title: string): void {
-    const normalized = title.trim() || '浮动列表';
+    const normalized = title.trim() || '浮動列表';
     const titleNode = this.root.querySelector<HTMLElement>('.floating-list-panel__title');
     if (titleNode && titleNode.textContent !== normalized) {
       titleNode.textContent = normalized;
@@ -266,7 +266,7 @@ export class FloatingListPanel {
     const collapseButton = this.root.querySelector<HTMLButtonElement>('[data-floating-list-collapse="true"]');
     if (collapseButton) {
       collapseButton.textContent = this.state.collapsed ? '+' : '−';
-      collapseButton.setAttribute('aria-label', this.state.collapsed ? '展开' : '折叠');
+      collapseButton.setAttribute('aria-label', this.state.collapsed ? '展開' : '摺疊');
     }
     const left = this.state.left ?? this.defaultLeft;
     const top = this.state.top ?? this.defaultTop;

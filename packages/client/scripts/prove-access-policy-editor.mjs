@@ -61,7 +61,7 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'mud-access-po
 
       const modeLabels = Array.from(root.querySelectorAll('.access-policy-mode-group button'))
         .map((entry) => entry.textContent?.trim() ?? '');
-      clickText('.access-policy-mode-group button', '自定义策略');
+      clickText('.access-policy-mode-group button', '自定義策略');
       const customPanel = await waitFor(() => document.querySelector('.access-policy-panel-layer:not(.hidden)'));
       const customRoot = customPanel.querySelector('.access-policy-panel-body');
       if (!(customRoot instanceof HTMLElement)) throw new Error('自定义权限策略面板未挂载');
@@ -113,10 +113,10 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'mud-access-po
       typeSelect.dispatchEvent(new Event('change', { bubbles: true }));
       const playerInput = customRoot.querySelector('.access-policy-player-controls input');
       playerInput.value = '10002';
-      clickCustomText('.access-policy-player-controls button', '查询并添加');
+      clickCustomText('.access-policy-player-controls button', '查詢並添加');
       await waitFor(() => customRoot.querySelector('.access-policy-player-chip'));
 
-      clickCustomText('.access-policy-add-condition', '添加第二组条件');
+      clickCustomText('.access-policy-add-condition', '添加第二組條件');
       const typeSelects = customRoot.querySelectorAll('.access-policy-condition select');
       const secondType = typeSelects[1];
       secondType.value = 'role_name';
@@ -128,7 +128,7 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'mud-access-po
       const roleNameInput = secondCard.querySelector('input[type="text"]');
       roleNameInput.value = '剑客';
       roleNameInput.dispatchEvent(new Event('input', { bubbles: true }));
-      clickCustomText('.access-policy-operator button', '必须同时满足');
+      clickCustomText('.access-policy-operator button', '必須同時滿足');
       const playerChipText = customRoot.querySelector('.access-policy-player-chip')?.textContent?.replace('×', '').trim() ?? '';
       const conditionCount = customRoot.querySelectorAll('.access-policy-condition').length;
       const hasThirdConditionButton = Boolean(customRoot.querySelector('.access-policy-add-condition'));
@@ -152,8 +152,8 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'mud-access-po
       const customPanelScrollWidth = customPanelShell?.scrollWidth ?? 0;
       const panelHeaderBackground = panelHeader ? getComputedStyle(panelHeader).backgroundColor : '';
       const panelBodyBackground = getComputedStyle(customRoot).backgroundColor;
-      clickCustomText('.access-policy-footer button', '保存权限');
-      await waitFor(() => root.querySelector('.access-policy-status')?.textContent?.includes('权限已保存'));
+      clickCustomText('.access-policy-footer button', '保存權限');
+      await waitFor(() => root.querySelector('.access-policy-status')?.textContent?.includes('權限已保存'));
       const parentConnectedAfterCustomSave = root.isConnected;
       const activeModeAfterCustomSave = root.querySelector('.access-policy-mode-group button.active')?.textContent?.trim() ?? '';
       await Promise.resolve();
@@ -265,16 +265,15 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'mud-access-po
         .map((entry) => entry.textContent?.trim() ?? '');
       const firstDefaultMode = resourceRoot.querySelector('.access-policy-resource-panel:not([hidden]) .access-policy-mode-group button.active')?.textContent?.trim() ?? '';
       Array.from(resourceRoot.querySelectorAll('.access-policy-resource-panel:not([hidden]) .access-policy-mode-group button'))
-        .find((entry) => entry.textContent?.trim() === '仅所有者')?.click();
+        .find((entry) => entry.textContent?.trim() === '僅所有者')?.click();
       const firstDraftBeforeSwitch = resourceEditor.getPolicy('view_deposit')?.mode ?? '';
       Array.from(resourceRoot.querySelectorAll('.access-policy-resource-tabs button'))
-        .find((entry) => entry.textContent?.trim() === '可拿')?.click();
-      const secondDefaultMode = resourceRoot.querySelector('.access-policy-resource-panel:not([hidden]) .access-policy-mode-group button.active')?.textContent?.trim() ?? '';
+        .find((entry) => entry.textContent?.trim() === '可拿')?.click();      const secondDefaultMode = resourceRoot.querySelector('.access-policy-resource-panel:not([hidden]) .access-policy-mode-group button.active')?.textContent?.trim() ?? '';
       Array.from(resourceRoot.querySelectorAll('.access-policy-resource-tabs button'))
         .find((entry) => entry.textContent?.trim() === '可看和可放')?.click();
       const firstDraftAfterSwitch = resourceEditor.getPolicy('view_deposit')?.mode ?? '';
       resourceRoot.querySelector('.access-policy-resource-panel:not([hidden]) .access-policy-footer button')?.click();
-      await waitFor(() => resourceRoot.querySelector('.access-policy-resource-panel:not([hidden]) .access-policy-status')?.textContent?.includes('权限已保存'));
+      await waitFor(() => resourceRoot.querySelector('.access-policy-resource-panel:not([hidden]) .access-policy-status')?.textContent?.includes('權限已保存'));
       const resourceSlotModesAfterSave = [
         resourceEditor.getPolicy('view_deposit')?.mode ?? '',
         resourceEditor.getPolicy('withdraw')?.mode ?? '',
@@ -299,7 +298,7 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'mud-access-po
         },
       });
       Array.from(compatibilityRoot.querySelectorAll('.access-policy-mode-group button'))
-        .find((entry) => entry.textContent?.trim() === '自定义策略')?.click();
+        .find((entry) => entry.textContent?.trim() === '自定義策略')?.click();
       const compatibilityPanel = await waitFor(() => document.querySelector('.access-policy-panel-layer:not(.hidden)'));
       const compatibilityTypeSelect = compatibilityPanel.querySelector('.access-policy-condition select');
       const compatibilityConditionType = compatibilityTypeSelect?.value ?? '';
@@ -323,15 +322,14 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'mud-access-po
         },
       });
       const conflictEveryone = Array.from(conflictRoot.querySelectorAll('.access-policy-mode-group button'))
-        .find((entry) => entry.textContent?.trim() === '所有人');
-      conflictEveryone.click();
+        .find((entry) => entry.textContent?.trim() === '所有人');      conflictEveryone.click();
       conflictRoot.querySelector('.access-policy-footer button').click();
-      await waitFor(() => conflictRoot.querySelector('.access-policy-status')?.textContent?.includes('已加载最新配置'));
+      await waitFor(() => conflictRoot.querySelector('.access-policy-status')?.textContent?.includes('已加載最新配置'));
       const conflictActiveMode = conflictRoot.querySelector('.access-policy-mode-group button.active')?.textContent?.trim() ?? '';
       const conflictStatus = conflictRoot.querySelector('.access-policy-status')?.textContent?.trim() ?? '';
       conflictEditor.destroy();
 
-      clickText('.access-policy-mode-group button', '自定义策略');
+      clickText('.access-policy-mode-group button', '自定義策略');
       await waitFor(() => document.querySelector('.access-policy-panel-layer:not(.hidden)'));
 
       const shell = root.querySelector('.access-policy-editor');
@@ -395,61 +393,61 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'mud-access-po
     })()
   `);
 
-  assert.deepEqual(result.modeLabels, ['所有人', '仅所有者', '自定义策略'], '权限入口必须固定为三种模式');
-  assert.equal(result.customPanelIndependent, true, '自定义策略必须挂载到独立权限面板');
-  assert.equal(result.customPanelTitle, '自定义权限策略');
-  assert.equal(result.customPanelKicker, '权限策略', '独立弹层缺少权限场景标识');
-  assert.equal(result.selectorHasInlineConditions, false, '资源权限页不得内嵌自定义条件表单');
-  assert(result.customPanelScrollWidth <= result.customPanelWidth + 1, '自定义权限面板在手机视口出现横向溢出');
-  assert.equal(result.parentConnectedAfterCustomSave, true, '自定义策略保存不得销毁父权限面板');
-  assert.equal(result.activeModeAfterCustomSave, '自定义策略', '保存自定义条件后未切换为自定义策略');
-  assert.equal(result.focusedModeAfterCustomSave, '自定义策略', '保存后键盘焦点未回到当前权限模式');
-  assert.deepEqual(result.conditionTypeLabels, ['好友关系', '同宗门', '指定玩家', '角色名字', '境界', '属性']);
-  assert.deepEqual(result.relationLabels, ['道友', '至交', '师父', '徒弟', '仇家']);
-  for (const role of ['同宗门全部成员', '宗主', '太上长老', '副宗主', '长老', '内门弟子', '外门弟子', '杂役弟子']) {
-    assert.match(result.sectText, new RegExp(role), `宗门权限缺少 ${role}`);
+  assert.deepEqual(result.modeLabels, ['所有人', '僅所有者', '自定義策略'], '權限入口必須固定為三種模式');
+  assert.equal(result.customPanelIndependent, true, '自定義策略必須掛載到獨立權限面板');
+  assert.equal(result.customPanelTitle, '自定義權限策略');
+  assert.equal(result.customPanelKicker, '權限策略', '獨立彈層缺少權限場景標識');
+  assert.equal(result.selectorHasInlineConditions, false, '資源權限頁不得內嵌自定義條件表單');
+  assert(result.customPanelScrollWidth <= result.customPanelWidth + 1, '自定義權限面板在手機視口出現橫向溢出');
+  assert.equal(result.parentConnectedAfterCustomSave, true, '自定義策略保存不得銷毀父權限面板');
+  assert.equal(result.activeModeAfterCustomSave, '自定義策略', '保存自定義條件後未切換為自定義策略');
+  assert.equal(result.focusedModeAfterCustomSave, '自定義策略', '保存後鍵盤焦點未回到當前權限模式');
+  assert.deepEqual(result.conditionTypeLabels, ['好友關係', '同宗門', '指定玩家', '角色名字', '境界', '屬性']);
+  assert.deepEqual(result.relationLabels, ['道友', '至交', '師父', '徒弟', '仇家']);
+  for (const role of ['同宗門全部成員', '宗主', '太上长老', '副宗主', '长老', '内门弟子', '外门弟子', '杂役弟子']) {
+    assert.match(result.sectText, new RegExp(role), `宗門權限缺少 ${role}`);
   }
-  assert.equal(result.sectLastRoleProtected, true, '精确职位最后一项不得被无意取消为全部成员');
-  assert.match(result.sectProtectionStatus, /至少保留一项/);
-  assert.deepEqual(result.roleNameMatchLabels, ['完全匹配', '包含', '前缀匹配', '后缀匹配']);
-  assert.deepEqual(result.realmComparisonLabels, ['大于', '小于', '等于']);
-  assert.match(result.attributeText, /大于/);
-  assert.match(result.attributeText, /小于/);
-  assert.equal(result.playerInputType, 'number', '指定玩家入口必须只能输入序号');
-  assert.equal(result.playerChipText, '#10002 青云剑客', '序号解析后必须展示对应玩家名称');
-  assert.equal(result.conditionCount, 2, '权限最多允许两组条件');
-  assert.equal(result.conditionCountMarker, '2', '规则组布局缺少稳定的条件数量标记');
-  assert.deepEqual(result.conditionIndices, ['01', '02'], '规则组缺少可辨识编号');
-  assert.notEqual(result.conditionCardShadow, 'none', '规则组没有建立独立视觉层级');
-  assert.equal(result.mobileConditionStacked, true, '手机模式的两组条件必须纵向排列');
-  assert.equal(result.hasThirdConditionButton, false, '两组条件后不得继续添加');
-  assert.deepEqual(result.operatorLabels, ['满足任一', '必须同时满足']);
-  assert.deepEqual(result.operatorPressedStates, ['false', 'true'], '条件关系控件没有暴露当前选中态');
-  assert.equal(result.operatorHeading, '条件关系', '两组条件缺少独立关系区');
-  assert.equal(result.operatorControlRole, 'group', '条件关系控件缺少分组语义');
-  assert.notEqual(result.panelHeaderBackground, result.panelBodyBackground, '独立弹层标题区与工作区没有视觉分层');
+  assert.equal(result.sectLastRoleProtected, true, '精確職位最後一項不得被無意取消為全部成員');
+  assert.match(result.sectProtectionStatus, /至少保留一項/);
+  assert.deepEqual(result.roleNameMatchLabels, ['完全匹配', '包含', '前綴匹配', '後綴匹配']);
+  assert.deepEqual(result.realmComparisonLabels, ['大於', '小於', '等於']);
+  assert.match(result.attributeText, /大於/);
+  assert.match(result.attributeText, /小於/);
+  assert.equal(result.playerInputType, 'number', '指定玩家入口必須只能輸入序號');
+  assert.equal(result.playerChipText, '#10002 青云剑客', '序號解析後必須展示對應玩家名稱');
+  assert.equal(result.conditionCount, 2, '權限最多允許兩組條件');
+  assert.equal(result.conditionCountMarker, '2', '規則組佈局缺少穩定的條件數量標記');
+  assert.deepEqual(result.conditionIndices, ['01', '02'], '規則組缺少可辨識編號');
+  assert.notEqual(result.conditionCardShadow, 'none', '規則組沒有建立獨立視覺層級');
+  assert.equal(result.mobileConditionStacked, true, '手機模式的兩組條件必須縱向排列');
+  assert.equal(result.hasThirdConditionButton, false, '兩組條件後不得繼續添加');
+  assert.deepEqual(result.operatorLabels, ['滿足任一', '必須同時滿足']);
+  assert.deepEqual(result.operatorPressedStates, ['false', 'true'], '條件關係控件沒有暴露當前選中態');
+  assert.equal(result.operatorHeading, '條件關係', '兩組條件缺少獨立關係區');
+  assert.equal(result.operatorControlRole, 'group', '條件關係控件缺少分組語義');
+  assert.notEqual(result.panelHeaderBackground, result.panelBodyBackground, '獨立彈層標題區與工作區沒有視覺分層');
   assert.equal(result.savedPolicy?.operator, 'all');
   assert.deepEqual(result.savedPolicy?.conditions?.map((entry) => entry.type), ['players', 'role_name']);
-  assert.equal(result.status, '权限已保存。');
-  assert(result.shellScrollWidth <= result.shellWidth + 1, '手机视口出现横向溢出');
-  assert.equal(result.requestResourceType, 'proof', '请求客户端未透传资源键');
-  assert.equal(result.requestSetResourceType, 'proof', '资源组请求未透传资源键');
-  assert.equal(result.loadedRevision, 2, '请求客户端未关联 load 回包');
-  assert.deepEqual(result.resourceTabLabels, ['可看和可放', '可拿'], '多权限资源必须按声明顺序展示槽位');
-  assert.deepEqual(result.resourceModeLabels, ['所有人', '仅所有者', '自定义策略'], '多权限资源槽位未使用固定三态');
-  assert.equal(result.firstDefaultMode, '所有人', '资源默认开放策略必须显示为所有人');
-  assert.equal(result.secondDefaultMode, '仅所有者', '不同槽位必须支持不同默认策略');
+  assert.equal(result.status, '權限已保存。');
+  assert(result.shellScrollWidth <= result.shellWidth + 1, '手機視口出現橫向溢出');
+  assert.equal(result.requestResourceType, 'proof', '請求客戶端未透傳資源鍵');
+  assert.equal(result.requestSetResourceType, 'proof', '資源組請求未透傳資源鍵');
+  assert.equal(result.loadedRevision, 2, '請求客戶端未關聯 load 回包');
+  assert.deepEqual(result.resourceTabLabels, ['可看和可放', '可拿'], '多權限資源必須按聲明順序展示槽位');
+  assert.deepEqual(result.resourceModeLabels, ['所有人', '僅所有者', '自定義策略'], '多權限資源槽位未使用固定三態');
+  assert.equal(result.firstDefaultMode, '所有人', '資源默認開放策略必須顯示為所有人');
+  assert.equal(result.secondDefaultMode, '僅所有者', '不同槽位必須支持不同默認策略');
   assert.equal(result.firstDraftBeforeSwitch, 'owner_only');
-  assert.equal(result.firstDraftAfterSwitch, 'owner_only', '切换权限页签不得丢失未保存草稿');
-  assert.deepEqual(result.resourceSlotModesAfterSave, ['owner_only', 'owner_only'], '保存一个槽位不得改变其他槽位');
-  assert.equal(result.compatibilityConditionType, 'party', '旧宝库同队条件必须在编辑器中保持真实类型');
-  assert.equal(result.compatibilityConditionLabel, '同队伍', '旧宝库同队条件必须提供可辨识回显');
-  assert(result.resourceShellScrollWidth <= result.resourceShellWidth + 1, '多权限资源编辑器在手机视口出现横向溢出');
+  assert.equal(result.firstDraftAfterSwitch, 'owner_only', '切換權限頁簽不得丟失未保存草稿');
+  assert.deepEqual(result.resourceSlotModesAfterSave, ['owner_only', 'owner_only'], '保存一個槽位不得改變其他槽位');
+  assert.equal(result.compatibilityConditionType, 'party', '舊寶庫同隊條件必須在編輯器中保持真實類型');
+  assert.equal(result.compatibilityConditionLabel, '同隊伍', '舊寶庫同隊條件必須提供可辨識回顯');
+  assert(result.resourceShellScrollWidth <= result.resourceShellWidth + 1, '多權限資源編輯器在手機視口出現橫向溢出');
   assert.deepEqual(result.resolvedPlayer, { playerNo: 10002, roleName: '青云剑客' });
-  assert.equal(result.transportSaveOk, true, '请求客户端未关联 save 回包');
-  assert.equal(result.transportConflictRevision, 4, '请求客户端未透传冲突时的当前权威策略');
-  assert.equal(result.conflictActiveMode, '仅所有者', '冲突后编辑器必须加载当前权威策略');
-  assert.match(result.conflictStatus, /已加载最新配置/);
+  assert.equal(result.transportSaveOk, true, '請求客戶端未關聯 save 回包');
+  assert.equal(result.transportConflictRevision, 4, '請求客戶端未透傳衝突時的當前權威策略');
+  assert.equal(result.conflictActiveMode, '僅所有者', '衝突後編輯器必須加載當前權威策略');
+  assert.match(result.conflictStatus, /已加載最新配置/);
 
   await cdp.send('Emulation.setDeviceMetricsOverride', {
     width: 1180,
@@ -510,7 +508,7 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'mud-access-po
   const closeGuard = await cdp.evaluate(`(() => {
     const layer = document.querySelector('.access-policy-panel-layer:not(.hidden)');
     const any = Array.from(layer?.querySelectorAll('.access-policy-operator button') ?? [])
-      .find((entry) => entry.textContent?.trim() === '满足任一');
+      .find((entry) => entry.textContent?.trim() === '滿足任一');
     const close = layer?.querySelector('.access-policy-panel-close');
     if (!(layer instanceof HTMLElement) || !(any instanceof HTMLButtonElement) || !(close instanceof HTMLButtonElement)) {
       throw new Error('自定义权限关闭保护结构不完整');

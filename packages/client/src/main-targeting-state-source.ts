@@ -274,7 +274,7 @@ function buildSenseQiTooltipLines(tile: Tile, x: number, y: number, formatAuraLe
   const resources = Array.isArray(tile.resources) ? tile.resources : [];
   // 中性灵气在 resources 里优先取 'aura.refined.neutral'；没有则用 tile.aura（server 投影后的等级值）兜底，
   // 保证感气视角下始终有一条「灵气等级 N」。
-  const neutralAuraResource = resources.find((resource) => resource.key === 'aura.refined.neutral' || resource.label === '灵气');
+  const neutralAuraResource = resources.find((resource) => resource.key === 'aura.refined.neutral' || resource.label === '靈氣');
   if (neutralAuraResource) {
     const hasLevel = typeof neutralAuraResource.level === 'number' && Number.isFinite(neutralAuraResource.level);
     lines.push(
@@ -626,7 +626,7 @@ export function createMainTargetingStateSource(options: MainTargetingStateSource
           ? t('targeting.badge.max-targets', { count: formatDisplayInteger(displayedMaxTargets) })
           : '';
         const shapeLabel = geometry.shape === 'line'
-          ? t('targeting.badge.shape.line', { maxTargets: displayedMaxTargets ? ` ${formatDisplayInteger(displayedMaxTargets)}目标` : '' })
+          ? t('targeting.badge.shape.line', { maxTargets: displayedMaxTargets ? ` ${formatDisplayInteger(displayedMaxTargets)}目標` : '' })
           : geometry.shape === 'ring'
             ? t('targeting.badge.shape.ring', { inner: formatDisplayNumber(Math.max(0, geometry.innerRadius ?? Math.max((geometry.radius ?? 1) - 1, 0))), outer: formatDisplayNumber(Math.max(0, geometry.radius ?? 1)), maxTargets: maxTargetsLabel })
             : geometry.shape === 'checkerboard'

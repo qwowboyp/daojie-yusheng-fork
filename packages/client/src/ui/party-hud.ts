@@ -39,7 +39,7 @@ export class PartyHud {
   constructor(host?: HTMLElement | null) {
     this.root = host ?? document.createElement('aside');
     this.root.classList.add('party-hud');
-    this.root.setAttribute('aria-label', '队伍状态');
+    this.root.setAttribute('aria-label', '隊伍狀態');
     this.root.hidden = true;
     if (!host) {
       document.body.appendChild(this.root);
@@ -80,10 +80,10 @@ export class PartyHud {
     this.root.innerHTML = `
       <div class="party-hud-frame" data-party-hud-frame="true">
         <div class="party-hud-head">
-          <button class="party-hud-title" type="button" data-party-hud-action="open-panel" aria-label="打开队伍面板">
-            队伍 <span data-party-hud-count="true">${this.party?.members.length ?? 0}</span>
+          <button class="party-hud-title" type="button" data-party-hud-action="open-panel" aria-label="打開隊伍面板">
+            隊伍 <span data-party-hud-count="true">${this.party?.members.length ?? 0}</span>
           </button>
-          <button class="party-hud-chat-toggle" type="button" data-party-hud-action="toggle-chat" aria-label="在日志与聊天中打开队伍频道">
+          <button class="party-hud-chat-toggle" type="button" data-party-hud-action="toggle-chat" aria-label="在日誌與聊天中打開隊伍頻道">
             <span aria-hidden="true">言</span>
             <span class="party-hud-unread" data-party-hud-unread="true" ${this.unreadCount > 0 ? '' : 'hidden'}>${this.unreadCount > 99 ? '99+' : this.unreadCount}</span>
           </button>
@@ -134,7 +134,7 @@ export class PartyHud {
       : null;
     return `
       <div class="party-hud-member ${member.online ? '' : 'offline'}" data-party-hud-member="${escapeHtml(member.playerId)}">
-        <span class="party-hud-member-name">${member.role === 'leader' ? '<i aria-label="队长">★</i>' : ''}${escapeHtml(member.name)}</span>
+        <span class="party-hud-member-name">${member.role === 'leader' ? '<i aria-label="隊長">★</i>' : ''}${escapeHtml(member.name)}</span>
         ${hpPercent !== null ? `<span class="party-hud-member-hp"><span style="width:${hpPercent.toFixed(1)}%"></span></span>` : ''}
       </div>
     `;

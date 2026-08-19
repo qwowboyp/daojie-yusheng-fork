@@ -187,11 +187,11 @@ try {
     learnTechniqueId: 'baihong_duanyue',
   });
   const artsTooltipText = stripHtml(artsTooltip.lines.join('\n'));
-  assert.match(artsTooltipText, /断影/u, '系统术法书必须显示技能名称');
-  assert.match(artsTooltipText, /物理伤害/u, '系统术法书必须显示具体伤害效果');
-  assert.match(artsTooltipText, /破甲/u, '系统术法书必须显示技能附带的 Buff 或 Debuff');
-  assert.match(artsTooltipText, /灵力消耗：[^\n]*\d/u, '系统术法书必须显示具体灵力消耗');
-  assert.match(artsTooltipText, /冷却：20 息/u, '系统术法书必须显示具体冷却时间');
+  assert.match(artsTooltipText, /斷影/u, '系統術法書必須顯示技能名稱');
+  assert.match(artsTooltipText, /物理傷害/u, '系統術法書必須顯示具體傷害效果');
+  assert.match(artsTooltipText, /破甲/u, '系統術法書必須顯示技能附帶的 Buff 或 Debuff');
+  assert.match(artsTooltipText, /靈力消耗：[^\n]*\d/u, '系統術法書必須顯示具體靈力消耗');
+  assert.match(artsTooltipText, /冷卻：20 息/u, '系統術法書必須顯示具體冷卻時間');
   assert.ok(artsTooltip.asideCards.length > 0, '系统术法书必须保留技能 Buff 详情侧栏');
 
   const levelScalingSkill = {
@@ -261,8 +261,8 @@ try {
   const levelScalingTooltipText = stripHtml(
     skillTooltip.buildSkillTooltipContent(levelScalingSkill, levelScalingContext).lines.join('\n'),
   );
-  assert.match(levelScalingTooltipText, /法术伤害：994/u, '术法 hover 必须显示包含等级增幅的总伤害');
-  assert.doesNotMatch(levelScalingTooltipText, /吟唱/u, '瞬发术法不得显示零息吟唱');
+  assert.match(levelScalingTooltipText, /法術傷害：994/u, '術法 hover 必須顯示包含等級增幅的總傷害');
+  assert.doesNotMatch(levelScalingTooltipText, /吟唱/u, '瞬發術法不得顯示零息吟唱');
   for (const label of [
     '自身境界等级',
     '自身炼丹等级',
@@ -391,11 +391,11 @@ try {
   const generatedTooltip = equipmentTooltip.buildItemTooltipPayload(generatedBook);
   const generatedTooltipText = stripHtml(generatedTooltip.lines.join('\n'));
   assert.match(generatedTooltipText, /神识\+9/u, '自创功法属性链必须能读取动态模板的逐层累计属性');
-  assert.match(generatedTooltipText, /星火印/u, '自创术法书必须显示动态模板里的技能名称');
-  assert.match(generatedTooltipText, /火行法术伤害：777/u, '自创术法书必须显示动态模板里的具体伤害');
-  assert.match(generatedTooltipText, /灵力消耗：321/u, '自创术法书必须显示动态模板里的具体消耗');
-  assert.match(generatedTooltipText, /吟唱：7 息/u, '自创术法书必须显示运行时实际吟唱时间');
-  assert.match(generatedTooltipText, /冷却：9 息/u, '自创术法书必须显示动态模板里的具体冷却');
+  assert.match(generatedTooltipText, /星火印/u, '自創術法書必須顯示動態模板裡的技能名稱');
+  assert.match(generatedTooltipText, /火行法術傷害：777/u, '自創術法書必須顯示動態模板裡的具體傷害');
+  assert.match(generatedTooltipText, /靈力消耗：321/u, '自創術法書必須顯示動態模板裡的具體消耗');
+  assert.match(generatedTooltipText, /吟唱：7 息/u, '自創術法書必須顯示運行時實際吟唱時間');
+  assert.match(generatedTooltipText, /冷卻：9 息/u, '自創術法書必須顯示動態模板裡的具體冷卻');
 
   const generatedInternalBook = {
     itemId: 'book.custom_technique',

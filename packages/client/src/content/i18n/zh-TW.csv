@@ -1867,13 +1867,6 @@ settings.font-level.subtitle.preview,設置,副標題示例,
 settings.font-level.title.desc,設置,彈層標題、面板標題、主要分區抬頭。,
 settings.font-level.title.label,設置,標題,
 settings.font-level.title.preview,設置,設置標題,
-settings.language.copy,設置,切換語言後需重新加載界面以套用。,設置面板語言區段說明
-settings.language.option.simplified,設置,簡體中文,簡體中文選項
-settings.language.option.traditional,設置,繁體中文,繁體中文選項
-settings.language.reload-confirm,設置,切換語言需要重新加載界面，是否繼續？,切換語言確認彈窗
-settings.language.reload-confirm-no,設置,取消,取消切換
-settings.language.reload-confirm-yes,設置,重新加載,確認重新加載
-settings.language.section,設置,語言,設置面板語言區段標題
 settings.logout.done,設置,已退出登入,
 settings.modal.close-hint,設置,點擊空白處關閉,
 settings.modal.not-logged-in,設置,未登入,

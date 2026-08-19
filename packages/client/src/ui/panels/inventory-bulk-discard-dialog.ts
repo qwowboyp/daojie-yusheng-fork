@@ -100,8 +100,8 @@ export class InventoryBulkDiscardDialogController {
     detailModalHost.open({
       ownerId: this.options.ownerId,
       variantClass: 'detail-modal--inventory-bulk-discard',
-      title: '一键丢弃',
-      subtitle: `已选 ${formatDisplayInteger(this.selectedIds.size)} 组物品`,
+      title: '一鍵丟棄',
+      subtitle: `已選 ${formatDisplayInteger(this.selectedIds.size)} 組物品`,
       hint: t('common.modal.click-blank-cancel', undefined),
       renderBody: (body) => this.renderSelectionBody(body, visibleEntries),
       onClose: () => this.handleHostClose(),
@@ -146,9 +146,9 @@ export class InventoryBulkDiscardDialogController {
           `).join('')}
         </div>
         <div class="inventory-bulk-discard-toolbar">
-          <span>当前 ${formatDisplayInteger(visibleEntries.length)} 组 · 已选 ${formatDisplayInteger(selectedCount)} 组</span>
+          <span>當前 ${formatDisplayInteger(visibleEntries.length)} 組 · 已選 ${formatDisplayInteger(selectedCount)} 組</span>
           <div class="inventory-bulk-discard-tools">
-            <button class="small-btn ghost" type="button" data-bulk-discard-select-visible>全选当前</button>
+            <button class="small-btn ghost" type="button" data-bulk-discard-select-visible>全選當前</button>
             <button class="small-btn ghost" type="button" data-bulk-discard-clear>清空</button>
           </div>
         </div>
@@ -161,11 +161,11 @@ export class InventoryBulkDiscardDialogController {
                 ${this.renderRowContent(entry)}
               </button>
             `;
-          }).join('') : '<div class="empty-hint">当前筛选下没有可丢弃物品</div>'}
+          }).join('') : '<div class="empty-hint">當前篩選下沒有可丟棄物品</div>'}
         </div>
         <div class="detail-modal-actions inventory-bulk-discard-actions">
           <button class="small-btn ghost" type="button" data-bulk-discard-cancel>取消</button>
-          <button class="small-btn danger" type="button" data-bulk-discard-next ${selectedCount > 0 ? '' : 'disabled'}>确认丢弃</button>
+          <button class="small-btn danger" type="button" data-bulk-discard-next ${selectedCount > 0 ? '' : 'disabled'}>確認丟棄</button>
         </div>
       </div>
     `);
@@ -239,13 +239,13 @@ export class InventoryBulkDiscardDialogController {
     detailModalHost.open({
       ownerId: this.options.ownerId,
       variantClass: 'detail-modal--inventory-bulk-discard',
-      title: '确认丢弃',
-      subtitle: `将丢弃 ${formatDisplayInteger(selectedEntries.length)} 组物品`,
+      title: '確認丟棄',
+      subtitle: `將丟棄 ${formatDisplayInteger(selectedEntries.length)} 組物品`,
       hint: t('common.modal.click-blank-cancel', undefined),
       renderBody: (body) => {
         replaceElementHtml(body, `
           <div class="inventory-bulk-discard-confirm">
-            <div class="inventory-bulk-discard-warning">确认后会把选中的所有堆叠全部丢弃，不能选择数量。</div>
+            <div class="inventory-bulk-discard-warning">確認後會把選中的所有堆疊全部丟棄，不能選擇數量。</div>
             <div class="inventory-bulk-discard-list inventory-bulk-discard-list--confirm">
               ${selectedEntries.map((entry) => `
                 <div class="inventory-bulk-discard-row selected">
@@ -255,8 +255,8 @@ export class InventoryBulkDiscardDialogController {
               `).join('')}
             </div>
             <div class="detail-modal-actions inventory-bulk-discard-actions">
-              <button class="small-btn ghost" type="button" data-bulk-discard-back>返回选择</button>
-              <button class="small-btn danger" type="button" data-bulk-discard-confirm>确认丢弃</button>
+              <button class="small-btn ghost" type="button" data-bulk-discard-back>返回選擇</button>
+              <button class="small-btn danger" type="button" data-bulk-discard-confirm>確認丟棄</button>
             </div>
           </div>
         `);
@@ -322,7 +322,7 @@ export class InventoryBulkDiscardDialogController {
       <span class="inventory-bulk-discard-info">
         <span class="inventory-bulk-discard-name">${escapeHtml(entry.name)}</span>
         <span class="inventory-bulk-discard-meta">
-          <span>数量 ${formatDisplayInteger(Math.max(0, Math.floor(Number(entry.item.count) || 0)))}</span>
+          <span>數量 ${formatDisplayInteger(Math.max(0, Math.floor(Number(entry.item.count) || 0)))}</span>
         </span>
       </span>
     `;

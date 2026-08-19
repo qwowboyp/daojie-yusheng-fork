@@ -114,21 +114,21 @@ const SPECIAL_DETAIL_ACTION_KEY = 'special-details';
 const SPECIAL_DETAIL_MODAL_OWNER = 'attr:special-details';
 
 const CRAFT_EFFECT_SKILL_LABELS: Record<CraftEffectSkillKind, string> = {
-  alchemy: '炼丹',
-  forging: '炼器',
-  enhancement: '强化',
-  transmission: '传法',
-  gather: '采集',
-  mining: '挖矿',
-  building: '营造',
-  formation: '阵法',
+  alchemy: '煉丹',
+  forging: '煉器',
+  enhancement: '強化',
+  transmission: '傳法',
+  gather: '採集',
+  mining: '挖礦',
+  building: '營造',
+  formation: '陣法',
 };
 
 const CRAFT_EFFECT_KIND_LABELS: Record<CraftEffectKind, string> = {
   speedRate: '速度',
   successRate: '成功率',
-  outputRate: '产出',
-  expRate: '经验',
+  outputRate: '產出',
+  expRate: '經驗',
 };
 const CRAFT_EFFECT_DETAIL_KINDS: CraftEffectKind[] = ['speedRate', 'successRate', 'outputRate', 'expRate'];
 
@@ -261,7 +261,7 @@ function formatNumericTooltipValue(key: NumericCardKey, value: number): string {
 
 function buildAttrConversionLines(key: AttrKey, totalValue: number): string[] {
   const parts = buildAttrConversionEntries(key, totalValue);
-  return parts.length > 0 ? parts : ['暂无具体转化'];
+  return parts.length > 0 ? parts : ['暫無具體轉化'];
 }
 
 /** buildAttrConversionEntries：构建属性Conversion Entries。 */
@@ -273,14 +273,14 @@ function buildAttrConversionEntries(key: AttrKey, totalValue: number): string[] 
     .map(([entryKey, entryValue]) => {
       const numericKey = entryKey as NumericCardKey;
       const total = entryValue * totalValue;
-      return `${NUMERIC_TOOLTIP_LABELS[numericKey] ?? '未知统计'} +${formatSimplePercent(total)}`;
+      return `${NUMERIC_TOOLTIP_LABELS[numericKey] ?? '未知統計'} +${formatSimplePercent(total)}`;
     });
   const flatParts = Object.entries(weights)
     .filter(([entryKey, entryValue]) => entryKey !== 'elementDamageBonus' && entryKey !== 'elementDamageReduce' && typeof entryValue === 'number' && entryValue !== 0)
     .map(([entryKey, entryValue]) => {
       const numericKey = entryKey as NumericCardKey;
       const total = entryValue * totalValue;
-      return `${NUMERIC_TOOLTIP_LABELS[numericKey] ?? '未知统计'} +${formatNumericTooltipValue(numericKey, total)}`;
+      return `${NUMERIC_TOOLTIP_LABELS[numericKey] ?? '未知統計'} +${formatNumericTooltipValue(numericKey, total)}`;
     });
   return [...percentParts, ...flatParts];
 }
@@ -363,7 +363,7 @@ function buildAttributeBreakdownLines(
   const pillMultiplier = percentModifierToMultiplier(sumAttrBonusPercent(bonuses, key, isPillPercentAttrBonus));
   const totalMultiplier = bodyTrainingMultiplier * techniqueMaxMultiplier * realmMultiplier * buffMultiplier * pillMultiplier;
   return [
-    renderTooltipPrimaryLine('实际：', formatDisplayInteger(finalValue)),
+    renderTooltipPrimaryLine('實際：', formatDisplayInteger(finalValue)),
     renderTooltipSectionLine(t('attr.tooltip.total-fixed', { value: formatDisplayInteger(displayFixedTotalValue) }), 'fixed'),
     renderTooltipChildLine(t('attr.tooltip.base-value'), formatDisplayInteger(displayFixedBaseValue), 'fixed'),
     renderTooltipChildLine(t('attr.tooltip.extra-value'), `${fixedExtraValue >= 0 ? '+' : ''}${formatDisplayInteger(fixedExtraValue)}`, 'fixed'),
@@ -508,7 +508,7 @@ function buildNumericBreakdownLines(
     ? getMovePointsPerTick(breakdown.finalValue)
     : breakdown.finalValue;
   const lines = [
-    renderTooltipPrimaryLine('实际：', formatBreakdownValue(key, displayFinalValue)),
+    renderTooltipPrimaryLine('實際：', formatBreakdownValue(key, displayFinalValue)),
     renderTooltipSectionLine(t('attr.tooltip.total-fixed', { value: formatBreakdownValue(key, displayFixedTotalValue) }), 'fixed'),
     renderTooltipChildLine(t('attr.tooltip.base-value'), formatBreakdownValue(key, displayFixedBaseValue), 'fixed'),
     renderTooltipChildLine(t('attr.tooltip.extra-value'), formatSignedBreakdownValue(key, displayExtraValue), 'fixed'),
@@ -531,23 +531,23 @@ function buildNumericBreakdownLines(
 function buildCombatFormulaLines(key: NumericCardKey): string[] {
   switch (key) {
     case 'physDef':
-      return ['物理对抗中，护体愈厚则伤势越轻，化解发动时防御更重。'];
+      return ['物理對抗中，護體愈厚則傷勢越輕，化解發動時防禦更重。'];
     case 'spellDef':
-      return ['法术对抗中，法防愈坚则法伤愈轻，化解发动时法防重算。'];
+      return ['法術對抗中，法防愈堅則法傷愈輕，化解發動時法防重算。'];
     case 'hit':
-      return ['命中代表取势之机，值越高越易洞穿对手的闪避。'];
+      return ['命中代表取勢之機，值越高越易洞穿對手的閃避。'];
     case 'dodge':
-      return ['闪避值反映步法稳健，数高则更易避开来势。'];
+      return ['閃避值反映步法穩健，數高則更易避開來勢。'];
     case 'crit':
-      return ['暴击是重击之机，暴击值越高，重创越易出现。'];
+      return ['暴擊是重擊之機，暴擊值越高，重創越易出現。'];
     case 'antiCrit':
-      return ['免爆是反噬护体，护体越高，敌手重击越难成。'];
+      return ['免爆是反噬護體，護體越高，敵手重擊越難成。'];
     case 'critDamage':
-      return ['暴击后的伤害倍率会随此值浮动，越高则一击更重。'];
+      return ['暴擊後的傷害倍率會隨此值浮動，越高則一擊更重。'];
     case 'breakPower':
-      return ['破招值主导先发之机，优于对方化解则可先破其护。'];
+      return ['破招值主導先發之機，優於對方化解則可先破其護。'];
     case 'resolvePower':
-      return ['化解可转敌破势为自身稳局，先于对方破招时更能护体。'];
+      return ['化解可轉敵破勢為自身穩局，先於對方破招時更能護體。'];
     default:
       return [];
   }
@@ -565,15 +565,15 @@ function buildNumericTooltip(
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
   const breakdownLines = attrs ? buildNumericBreakdownLines(breakdowns, key, attrs) : [];
-  const lines = [NUMERIC_TOOLTIP_DESCRIPTIONS[key] ?? '该属性影响角色的实际战斗表现。'];
+  const lines = [NUMERIC_TOOLTIP_DESCRIPTIONS[key] ?? '該屬性影響角色的實際戰鬥表現。'];
   if (breakdownLines.length > 0) {
     lines.push(...breakdownLines);
   } else {
-    lines.push(`当前数值：${key === 'critDamage' ? formatCritDamageDisplay(numericValue) : key === 'moveSpeed' ? formatMoveSpeedDisplay(numericValue) : RATE_BP_KEYS.has(key) ? formatRateBp(numericValue) : formatDisplayInteger(numericValue)}`);
+    lines.push(`當前數值：${key === 'critDamage' ? formatCritDamageDisplay(numericValue) : key === 'moveSpeed' ? formatMoveSpeedDisplay(numericValue) : RATE_BP_KEYS.has(key) ? formatRateBp(numericValue) : formatDisplayInteger(numericValue)}`);
   }
   lines.push(...buildCombatFormulaLines(key));
   if (key === 'moveSpeed') {
-    lines.push(`实际效果：${formatMoveSpeedEffect(numericValue)}`);
+    lines.push(`實際效果：${formatMoveSpeedEffect(numericValue)}`);
   } else if (ratioValueText && key !== 'critDamage') {
     lines.push(ratioValueText);
   }
@@ -1052,7 +1052,7 @@ export class AttrPanel {
     if (this.useReactPanel()) {
       unmountReactAttrPanel();
     }
-    replaceElementHtml(this.pane, '<div class="empty-hint">尚未观测到角色属性</div>');
+    replaceElementHtml(this.pane, '<div class="empty-hint">尚未觀測到角色屬性</div>');
   }
 
   /** 接收属性更新事件并重新渲染 */
@@ -1301,38 +1301,38 @@ export class AttrPanel {
         base: this.buildBaseRadarSnapshot(base, final, bonuses, specialStats),
         root: stats && ratioDivisors
           ? this.buildRootRadarSnapshot(stats, ratioDivisors, bonuses)
-        : { kind: 'placeholder', message: '灵根未明' },
+        : { kind: 'placeholder', message: '靈根未明' },
         vein: stats
           ? this.buildVeinPaneSnapshot(stats, bonuses)
-          : { kind: 'placeholder', message: '灵脉未察' },
-        combat: this.buildNumericPaneSnapshot('斗法数值', stats, ratioDivisors, {
+          : { kind: 'placeholder', message: '靈脈未察' },
+        combat: this.buildNumericPaneSnapshot('鬥法數值', stats, ratioDivisors, {
           keys: ['maxHp', 'physAtk', 'spellAtk', 'physDef', 'spellDef', 'hit', 'dodge', 'crit', 'antiCrit', 'critDamage', 'breakPower', 'resolvePower', 'actionsPerTurn'],
           ratioKeys: [],
           legends: {
             maxHp: '最大生命值',
-            physAtk: '物理攻击',
-            spellAtk: '法术攻击',
-            physDef: '物理防御',
-            spellDef: '法术防御',
+            physAtk: '物理攻擊',
+            spellAtk: '法術攻擊',
+            physDef: '物理防禦',
+            spellDef: '法術防禦',
             hit: '命中',
-            dodge: '闪避',
-            crit: '暴击',
+            dodge: '閃避',
+            crit: '暴擊',
             antiCrit: '免爆',
-            critDamage: '暴击伤害',
+            critDamage: '暴擊傷害',
             breakPower: '破招',
             resolvePower: '化解',
-            actionsPerTurn: '每回合行动次数',
+            actionsPerTurn: '每回合行動次數',
           },
         }, final, numericStatBreakdowns),
-        qi: this.buildNumericPaneSnapshot('灵力运转', stats, ratioDivisors, {
+        qi: this.buildNumericPaneSnapshot('靈力運轉', stats, ratioDivisors, {
           keys: ['maxQi', 'maxQiOutputPerTick', 'qiRegenRate', 'hpRegenRate', 'cooldownSpeed'],
           ratioKeys: ['cooldownSpeed'],
           legends: {
-            maxQi: '最大灵力值',
-            maxQiOutputPerTick: '灵力输出速率',
-            qiRegenRate: '灵力回复',
-            hpRegenRate: '生命回复',
-            cooldownSpeed: '冷却速度',
+            maxQi: '最大靈力值',
+            maxQiOutputPerTick: '靈力輸出速率',
+            qiRegenRate: '靈力回覆',
+            hpRegenRate: '生命回覆',
+            cooldownSpeed: '冷卻速度',
           },
         }, final, numericStatBreakdowns),
         special: this.buildSpecialPaneSnapshot(stats, ratioDivisors, specialStats, craftEffectStats, final, numericStatBreakdowns),
@@ -1365,7 +1365,7 @@ export class AttrPanel {
       };
     });
 
-    const snapshot = this.buildRadarPaneSnapshot('六维轮图', radarMax, entries, 'base');
+    const snapshot = this.buildRadarPaneSnapshot('六維輪圖', radarMax, entries, 'base');
     snapshot.summaryCards = this.buildRootFoundationSummaryCards(specialStats);
     snapshot.cards = this.buildBaseSpecialStatCards(specialStats);
     return snapshot;
@@ -1390,16 +1390,16 @@ export class AttrPanel {
       const reductionDivisor = ratioDivisors.elementDamageReduce[key] || 100;
       const roundedBonus = Math.round(damageBonus);
       return {
-        label: `${ELEMENT_KEY_LABELS[key]}灵根`,
+        label: `${ELEMENT_KEY_LABELS[key]}靈根`,
         key: `root-${key}`,
         value: damageBonus,
         valueLabel: formatDisplayInteger(roundedBonus),
-        tooltipTitle: `${ELEMENT_KEY_LABELS[key]}灵根`,
+        tooltipTitle: `${ELEMENT_KEY_LABELS[key]}靈根`,
         tooltipDetail: [
-          `当前：${formatDisplayInteger(roundedBonus)} 点`,
-          `${ELEMENT_KEY_LABELS[key]}属性伤害增幅：${formatDisplayPercent(roundedBonus)}`,
-          `${ELEMENT_KEY_LABELS[key]}属性实际减伤：${formatRatioPercent(stats.elementDamageReduce[key], reductionDivisor)}`,
-          `${ELEMENT_KEY_LABELS[key]}属性灵气吸收效率：${formatDisplayPercent(getSpiritualRootAbsorptionRate(roundedBonus), { maximumFractionDigits: 2 })}`,
+          `當前：${formatDisplayInteger(roundedBonus)} 點`,
+          `${ELEMENT_KEY_LABELS[key]}屬性傷害增幅：${formatDisplayPercent(roundedBonus)}`,
+          `${ELEMENT_KEY_LABELS[key]}屬性實際減傷：${formatRatioPercent(stats.elementDamageReduce[key], reductionDivisor)}`,
+          `${ELEMENT_KEY_LABELS[key]}屬性靈氣吸收效率：${formatDisplayPercent(getSpiritualRootAbsorptionRate(roundedBonus), { maximumFractionDigits: 2 })}`,
         ].join('\n'),
         color: ELEMENT_COLORS[index % ELEMENT_COLORS.length],
       };
@@ -1435,11 +1435,11 @@ export class AttrPanel {
     );
     const cards: AttrNumericCardSnapshot[] = [{
       key: 'neutral-aura',
-      label: '无属性灵气',
+      label: '無屬性靈氣',
       value: formatQiEfficiencyBp(neutralAuraProjection.efficiencyBp),
-      tooltipTitle: '无属性灵气',
+      tooltipTitle: '無屬性靈氣',
       tooltipDetail: [
-        `对无属性灵气吸收效率为 ${formatQiEfficiencyBp(neutralAuraProjection.efficiencyBp)}。`,
+        `對無屬性靈氣吸收效率為 ${formatQiEfficiencyBp(neutralAuraProjection.efficiencyBp)}。`,
         ...buildQiProjectionSourceLines(neutralAuraProjection),
       ].join('\n'),
     }];
@@ -1447,15 +1447,15 @@ export class AttrPanel {
     if (neutralShaProjection.visibility !== 'hidden') {
       cards.push({
         key: 'sha',
-        label: '煞气',
+        label: '煞氣',
         value: neutralShaProjection.visibility === 'absorbable'
           ? formatQiEfficiencyBp(neutralShaProjection.efficiencyBp)
           : '可感知',
-        tooltipTitle: '煞气',
+        tooltipTitle: '煞氣',
         tooltipDetail: [
           neutralShaProjection.visibility === 'absorbable'
-            ? `对煞气吸收效率为 ${formatQiEfficiencyBp(neutralShaProjection.efficiencyBp)}。`
-            : '可感知煞气。',
+            ? `對煞氣吸收效率為 ${formatQiEfficiencyBp(neutralShaProjection.efficiencyBp)}。`
+            : '可感知煞氣。',
           ...buildQiProjectionSourceLines(neutralShaProjection),
         ].join('\n'),
       });
@@ -1467,15 +1467,15 @@ export class AttrPanel {
         continue;
       }
       const rate = getSpiritualRootAbsorptionRate(rootValue);
-      const label = `${ELEMENT_KEY_LABELS[key]}灵气`;
+      const label = `${ELEMENT_KEY_LABELS[key]}靈氣`;
       cards.push({
         key: `${key}-aura`,
         label,
         value: formatAuraAbsorptionRate(rate),
         tooltipTitle: label,
         tooltipDetail: [
-          `对${ELEMENT_KEY_LABELS[key]}灵气吸收效率为 ${formatAuraAbsorptionRate(rate)}。`,
-          `当前${ELEMENT_KEY_LABELS[key]}灵根：${formatDisplayInteger(rootValue)}`,
+          `對${ELEMENT_KEY_LABELS[key]}靈氣吸收效率為 ${formatAuraAbsorptionRate(rate)}。`,
+          `當前${ELEMENT_KEY_LABELS[key]}靈根：${formatDisplayInteger(rootValue)}`,
         ].join('\n'),
       });
     }
@@ -1624,10 +1624,10 @@ export class AttrPanel {
         let sub: string | undefined;
         let actualLine: string | undefined;
         if (ratioKey && ratioKey !== 'elementDamageReduce') {
-          actualLine = `实际：${formatRatioPercent(numericValue, ratios[ratioKey])}`;
+          actualLine = `實際：${formatRatioPercent(numericValue, ratios[ratioKey])}`;
           sub = actualLine;
         } else if (RATE_BP_KEYS.has(key) && key !== 'critDamage') {
-          actualLine = `实际：${formatRateBp(numericValue)}`;
+          actualLine = `實際：${formatRateBp(numericValue)}`;
           sub = actualLine;
         } else if (key === 'moveSpeed') {
           actualLine = `效果：${formatMoveSpeedEffect(numericValue)}`;
@@ -1670,21 +1670,21 @@ export class AttrPanel {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     if (!stats || !ratios) {
-      return { kind: 'placeholder', message: '异禀未显' };
+      return { kind: 'placeholder', message: '異稟未顯' };
     }
 
     const specialCards = this.buildSpecialStatCards(['foundation', 'combatExp'], specialStats);
 
-    const numericPane = this.buildNumericPaneSnapshot('特殊属性', stats, ratios, {
+    const numericPane = this.buildNumericPaneSnapshot('特殊屬性', stats, ratios, {
       keys: ['viewRange', 'moveSpeed', 'playerExpRate', 'techniqueExpRate', 'realmExpPerTick', 'techniqueExpPerTick', 'lootRate', 'rareLootRate'],
       ratioKeys: [],
       legends: {
-        viewRange: '视野范围',
-        moveSpeed: '移动速度',
-        playerExpRate: '境界修为',
-        techniqueExpRate: '功法经验',
-        realmExpPerTick: '每息境界修为',
-        techniqueExpPerTick: '每息功法经验',
+        viewRange: '視野範圍',
+        moveSpeed: '移動速度',
+        playerExpRate: '境界修為',
+        techniqueExpRate: '功法經驗',
+        realmExpPerTick: '每息境界修為',
+        techniqueExpPerTick: '每息功法經驗',
         lootRate: '掉落增幅',
         rareLootRate: '稀有掉落',
       },
@@ -1699,7 +1699,7 @@ export class AttrPanel {
       cards: [...specialCards, ...numericPane.cards],
       actions: [{
         key: SPECIAL_DETAIL_ACTION_KEY,
-        label: '全部特殊属性',
+        label: '全部特殊屬性',
       }],
     };
   }  
@@ -1712,15 +1712,15 @@ export class AttrPanel {
     const normalizedCraftEffectStats = cloneCraftEffectStats(craftEffectStats);
     return {
       kind: 'special-detail',
-      title: '全部特殊属性',
+      title: '全部特殊屬性',
       backLabel: '返回特殊',
       sections: [{
         key: 'element',
-        title: '五行伤害与减伤',
+        title: '五行傷害與減傷',
         rows: this.buildElementSpecialDetailRows(stats, ratios),
       }, {
         key: 'craft',
-        title: '技艺加成',
+        title: '技藝加成',
         rows: CRAFT_EFFECT_SKILL_KINDS.flatMap((skillKind) => CRAFT_EFFECT_DETAIL_KINDS.map((effectKind) => {
           const value = normalizedCraftEffectStats[skillKind][effectKind];
           const label = `${CRAFT_EFFECT_SKILL_LABELS[skillKind]}${CRAFT_EFFECT_KIND_LABELS[effectKind]}`;
@@ -1728,7 +1728,7 @@ export class AttrPanel {
             key: `${skillKind}.${effectKind}`,
             label,
             value: formatSignedRatePercent(value),
-            detail: `${CRAFT_EFFECT_SKILL_LABELS[skillKind]}技艺的${CRAFT_EFFECT_KIND_LABELS[effectKind]}加成。`,
+            detail: `${CRAFT_EFFECT_SKILL_LABELS[skillKind]}技藝的${CRAFT_EFFECT_KIND_LABELS[effectKind]}加成。`,
           };
         })),
       }],
@@ -1756,14 +1756,14 @@ export class AttrPanel {
       const reduceDivisor = Number(ratios.elementDamageReduce?.[key] ?? 100) || 100;
       return [{
         key: `element.${key}.damageBonus`,
-        label: `${elementLabel}伤害增幅`,
+        label: `${elementLabel}傷害增幅`,
         value: formatDisplayPercent(damageBonus),
-        detail: `${elementLabel}属性总伤害增幅。`,
+        detail: `${elementLabel}屬性總傷害增幅。`,
       }, {
         key: `element.${key}.damageReduce`,
-        label: `${elementLabel}实际减伤`,
+        label: `${elementLabel}實際減傷`,
         value: formatRatioPercent(reduceValue, reduceDivisor),
-        detail: `${elementLabel}属性总减伤，已按当前减伤分母折算。`,
+        detail: `${elementLabel}屬性總減傷，已按當前減傷分母折算。`,
       }];
     });
   }
@@ -1775,7 +1775,7 @@ export class AttrPanel {
       const label = PLAYER_SPECIAL_TOOLTIP_LABELS[key];
       const detail = [
         PLAYER_SPECIAL_TOOLTIP_DESCRIPTIONS[key],
-        `当前数值：${formatDisplayInteger(numericValue)}`,
+        `當前數值：${formatDisplayInteger(numericValue)}`,
       ].join('\n');
       return {
         key,
@@ -1794,8 +1794,8 @@ export class AttrPanel {
       const label = PLAYER_SPECIAL_TOOLTIP_LABELS[key];
       const conversionLines = key === 'comprehension'
         ? [
-            `境界修为 +${formatSimplePercent(numericValue)}`,
-            `功法经验 +${formatSimplePercent(numericValue)}`,
+            `境界修為 +${formatSimplePercent(numericValue)}`,
+            `功法經驗 +${formatSimplePercent(numericValue)}`,
           ]
         : [
             `掉落增幅 +${formatSimplePercent(numericValue)}`,
@@ -1807,10 +1807,10 @@ export class AttrPanel {
         value: formatDisplayInteger(numericValue),
         tooltipTitle: label,
         tooltipDetail: [
-          `当前：${formatDisplayInteger(numericValue)}`,
-          `基础：${formatDisplayInteger(numericValue)}`,
+          `當前：${formatDisplayInteger(numericValue)}`,
+          `基礎：${formatDisplayInteger(numericValue)}`,
           '增益：+0',
-          '实际转化：',
+          '實際轉化：',
           ...conversionLines,
         ].join('\n'),
       };
@@ -1827,7 +1827,7 @@ export class AttrPanel {
       value: formatDisplayInteger(numericValue),
       tooltipTitle: label,
       tooltipDetail: [
-        `当前：${formatDisplayInteger(numericValue)}`,
+        `當前：${formatDisplayInteger(numericValue)}`,
         t('attr.tooltip.root-foundation-bonus', { percent: formatDisplayNumber(100 + numericValue) }),
       ].join('\n'),
     }];
@@ -1865,16 +1865,16 @@ export class AttrPanel {
       label,
       level: `LV ${formatDisplayInteger(skill.level)}`,
       progress,
-      remain: `距下一级还需 ${formatDisplayInteger(remain)} ${label}经验`,
+      remain: `距下一級還需 ${formatDisplayInteger(remain)} ${label}經驗`,
       progressPercent: `${(getCraftProgressRatio(skill.exp, skill.expToNext) * 100).toFixed(2)}%`,
       tooltipTitle: label,
       tooltipDetail: [
-        `等级：LV ${formatDisplayInteger(skill.level)}`,
-        `经验：${progress}`,
-        `距下一级还需 ${formatDisplayInteger(remain)}`,
+        `等級：LV ${formatDisplayInteger(skill.level)}`,
+        `經驗：${progress}`,
+        `距下一級還需 ${formatDisplayInteger(remain)}`,
       ].join('\n'),
       openable: OPENABLE_CRAFT_SKILL_KEYS.has(key),
-      bindLabel: this.callbacks?.getCraftSkillBindLabel?.(key) ?? '绑定键',
+      bindLabel: this.callbacks?.getCraftSkillBindLabel?.(key) ?? '綁定鍵',
     };
   }  
   /**
@@ -1899,17 +1899,17 @@ export class AttrPanel {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     const skills = [
-      this.buildCraftSkillSnapshot('alchemy', '炼丹', alchemySkill),
-      this.buildCraftSkillSnapshot('forging', '炼器', forgingSkill),
-      this.buildCraftSkillSnapshot('enhancement', '强化', enhancementSkill),
-      this.buildCraftSkillSnapshot('transmission', '传法', transmissionSkill),
-      this.buildCraftSkillSnapshot('formation', '阵法', formationSkill),
-      this.buildCraftSkillSnapshot('gather', '采集', gatherSkill),
-      this.buildCraftSkillSnapshot('mining', '挖矿', miningSkill),
-      this.buildCraftSkillSnapshot('building', '营造', buildingSkill),
+      this.buildCraftSkillSnapshot('alchemy', '煉丹', alchemySkill),
+      this.buildCraftSkillSnapshot('forging', '煉器', forgingSkill),
+      this.buildCraftSkillSnapshot('enhancement', '強化', enhancementSkill),
+      this.buildCraftSkillSnapshot('transmission', '傳法', transmissionSkill),
+      this.buildCraftSkillSnapshot('formation', '陣法', formationSkill),
+      this.buildCraftSkillSnapshot('gather', '採集', gatherSkill),
+      this.buildCraftSkillSnapshot('mining', '挖礦', miningSkill),
+      this.buildCraftSkillSnapshot('building', '營造', buildingSkill),
     ].filter((entry): entry is AttrCraftSkillSnapshot => Boolean(entry));
     if (skills.length === 0) {
-      return { kind: 'placeholder', message: '技艺未录' };
+      return { kind: 'placeholder', message: '技藝未錄' };
     }
     return {
       kind: 'craft',
@@ -2037,9 +2037,9 @@ export class AttrPanel {
         ownerId: SPECIAL_DETAIL_MODAL_OWNER,
         variantClass: 'detail-modal--attr-special',
         size: 'wide',
-        title: '全部特殊属性',
-        subtitle: '当前属性数据尚未同步完整',
-        renderBody: (body) => replaceElementHtml(body, '<div class="empty-hint">暂无特殊属性数据</div>'),
+        title: '全部特殊屬性',
+        subtitle: '當前屬性數據尚未同步完整',
+        renderBody: (body) => replaceElementHtml(body, '<div class="empty-hint">暫無特殊屬性數據</div>'),
       });
       return;
     }
@@ -2048,7 +2048,7 @@ export class AttrPanel {
       variantClass: 'detail-modal--attr-special',
       size: 'wide' as const,
       title: snapshot.title,
-      subtitle: '所有特殊属性最终值',
+      subtitle: '所有特殊屬性最終值',
       renderBody: (body: HTMLElement) => replaceElementHtml(body, this.renderSpecialDetailBody(snapshot)),
       onClose: () => {
         this.clearTooltipTarget();
@@ -2105,7 +2105,7 @@ export class AttrPanel {
             <span class="attr-craft-remain" data-craft-remain="true">${escapeHtml(skill.remain)}</span>
             ${skill.openable ? `
               <div class="attr-craft-actions" data-craft-actions="true">
-                <button class="small-btn" data-craft-open="${escapeHtml(skill.key)}" data-guided-tour-craft-open="${escapeHtml(skill.key)}" type="button">打开</button>
+                <button class="small-btn" data-craft-open="${escapeHtml(skill.key)}" data-guided-tour-craft-open="${escapeHtml(skill.key)}" type="button">打開</button>
                 <button class="small-btn ghost" data-craft-bind="${escapeHtml(skill.key)}" type="button">${escapeHtml(skill.bindLabel)}</button>
               </div>
             ` : ''}
@@ -2528,7 +2528,7 @@ export class AttrPanel {
       if (!key) {
         return;
       }
-      button.textContent = this.callbacks?.getCraftSkillBindLabel?.(key) ?? '绑定键';
+      button.textContent = this.callbacks?.getCraftSkillBindLabel?.(key) ?? '綁定鍵';
     });
   }
 

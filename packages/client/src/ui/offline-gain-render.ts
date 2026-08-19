@@ -24,24 +24,24 @@ export function renderOfflineGainReport(report: OfflineGainReportView): string {
   ].filter(Boolean).join('');
   const empty = sections
     ? ''
-    : '<div class="empty-hint compact">本次没有收支变化</div>';
+    : '<div class="empty-hint compact">本次沒有收支變化</div>';
   return `
     <section class="offline-gain-report">
       <div class="offline-gain-summary">
         <div>
-          <span class="offline-gain-label">范围</span>
+          <span class="offline-gain-label">範圍</span>
           <strong>${formatPlayerStatisticScope(report.scope)}</strong>
         </div>
         <div>
-          <span class="offline-gain-label">统计时长</span>
+          <span class="offline-gain-label">統計時長</span>
           <strong>${escapeHtml(formatOfflineGainDuration(report.durationMs))}</strong>
         </div>
         <div>
-          <span class="offline-gain-label">开始</span>
+          <span class="offline-gain-label">開始</span>
           <strong>${escapeHtml(formatOfflineGainTime(report.startedAt))}</strong>
         </div>
         <div>
-          <span class="offline-gain-label">结束</span>
+          <span class="offline-gain-label">結束</span>
           <strong>${escapeHtml(formatOfflineGainTime(report.endedAt))}</strong>
         </div>
       </div>
@@ -57,7 +57,7 @@ export function formatOfflineGainDuration(durationMs: number): string {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
   if (hours > 0) {
-    return `${hours}小时${minutes}分`;
+    return `${hours}小時${minutes}分`;
   }
   if (minutes > 0) {
     return `${minutes}分${seconds}秒`;
@@ -81,10 +81,10 @@ export function formatSignedAmount(gained: number, lost = 0, levelGain?: number,
     parts.push('0');
   }
   if ((levelGain ?? 0) > 0) {
-    parts.push(`升${formatDisplayInteger(levelGain ?? 0)}级`);
+    parts.push(`升${formatDisplayInteger(levelGain ?? 0)}級`);
   }
   if ((levelLoss ?? 0) > 0) {
-    parts.push(`降${formatDisplayInteger(levelLoss ?? 0)}级`);
+    parts.push(`降${formatDisplayInteger(levelLoss ?? 0)}級`);
   }
   return parts.join(' · ');
 }
@@ -102,7 +102,7 @@ export function formatOfflineGainTime(timestamp: number): string {
 }
 
 export function formatPlayerStatisticScope(scope: OfflineGainReportView['scope']): string {
-  return scope === 'offline' ? '离线挂机' : '在线';
+  return scope === 'offline' ? '離線掛機' : '線上';
 }
 
 function renderSpiritStoneSection(report: OfflineGainReportView): string {
@@ -111,10 +111,10 @@ function renderSpiritStoneSection(report: OfflineGainReportView): string {
     return '';
   }
   return renderListSection(
-    '灵石收支',
+    '靈石收支',
     [`
       <div class="offline-gain-row">
-        <span>灵石</span>
+        <span>靈石</span>
         <strong>${escapeHtml(formatSignedAmount(spiritStones.gained, spiritStones.lost))}</strong>
       </div>
     `],
@@ -157,7 +157,7 @@ function renderTechniqueSection(report: OfflineGainReportView): string {
     return '';
   }
   return renderListSection(
-    '功法经验收支',
+    '功法經驗收支',
     rows,
   );
 }
@@ -167,7 +167,7 @@ function renderProfessionSection(report: OfflineGainReportView): string {
     return '';
   }
   return renderListSection(
-    '技艺经验收支',
+    '技藝經驗收支',
     report.professions.map((entry) => `
       <div class="offline-gain-row">
         <span>${escapeHtml(entry.label)}</span>

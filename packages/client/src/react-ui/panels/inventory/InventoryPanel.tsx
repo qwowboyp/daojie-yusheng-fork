@@ -175,7 +175,7 @@ export const InventoryPanel = memo(function InventoryPanel() {
             disabled={!state.pagination.canPrev || state.pagination.loading}
             onClick={() => callbacks.onPageChange?.('prev')}
           >
-            {t('inventory.pagination.prev', undefined, '上一页')}
+            {t('inventory.pagination.prev', undefined, '上一頁')}
           </button>
           <span className="inventory-pagination-status">{state.pagination.label}</span>
           <button
@@ -184,7 +184,7 @@ export const InventoryPanel = memo(function InventoryPanel() {
             disabled={!state.pagination.canNext || state.pagination.loading}
             onClick={() => callbacks.onPageChange?.('next')}
           >
-            {t('inventory.pagination.next', undefined, '下一页')}
+            {t('inventory.pagination.next', undefined, '下一頁')}
           </button>
         </div>
       )}

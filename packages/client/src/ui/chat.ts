@@ -395,8 +395,8 @@ function parseCombatDamageSegment(text: string): ParsedCombatDamageSegment | nul
         .map((entry) => entry.trim())
         .filter((entry) => entry.length > 0),
       pillText: actualAmount,
-      suffixText: '伤害',
-      tooltipTitle: `${damageTypeLabel}伤害`,
+      suffixText: '傷害',
+      tooltipTitle: `${damageTypeLabel}傷害`,
       tooltipLines: [
         t('chat.combat.actual-damage', { amount: actualAmount }),
         t('chat.combat.raw-damage', { amount: rawAmount }),
@@ -420,8 +420,8 @@ function parseCombatDamageSegment(text: string): ParsedCombatDamageSegment | nul
       after: healMatch.groups.after ?? '',
       details,
       pillText: actualAmount,
-      suffixText: '治疗',
-      tooltipTitle: '治疗',
+      suffixText: '治療',
+      tooltipTitle: '治療',
       tooltipLines: [
         t('chat.combat.actual-heal', { amount: actualAmount }),
         t('chat.combat.raw-heal', { amount: rawAmount }),
@@ -438,17 +438,17 @@ function parseCombatDamageSegment(text: string): ParsedCombatDamageSegment | nul
     .split(/[\/、]/)
     .map((entry) => entry.trim())
     .filter((entry) => entry.length > 0);
-  const resultLabel = resultMatch.groups.result ?? '闪避';
+  const resultLabel = resultMatch.groups.result ?? '閃避';
   return {
     before: resultMatch.groups.before ?? '',
-    connector: isDodgeFormat ? '，' : '，结果 ',
+    connector: isDodgeFormat ? '，' : '，結果 ',
     rawAmount: '0',
     actualAmount: resultLabel,
     after: isDodgeFormat ? '' : (resultMatch.groups.after ?? ''),
     details,
     pillText: resultLabel,
     suffixText: isDodgeFormat ? '' : '',
-    tooltipTitle: '战斗结果',
+    tooltipTitle: '戰鬥結果',
     tooltipLines: [resultLabel],
     color: COMBAT_RESULT_PILL_COLOR,
   };
@@ -548,17 +548,17 @@ function appendStructuredCombatLine(
 
   if (subLine) {
     // 后续行只显示"对{target}，伤害"
-    container.append('对');
+    container.append('對');
     appendTargetPill(container, targetLabel);
   } else if (caster === '你') {
     container.append(prefix + '你施展');
     container.appendChild(buildSkillPill(skill));
-    container.append(' 对');
+    container.append(' 對');
     appendTargetPill(container, targetLabel);
   } else {
     container.append(prefix);
     appendTargetPill(container, caster);
-    container.append('对你施展');
+    container.append('對你施展');
     container.appendChild(buildSkillPill(skill));
   }
 
@@ -579,15 +579,15 @@ function appendStructuredCombatLine(
       pill.textContent = t('chat.combat.dodge');
       setPillColor(pill, 'var(--chat-pill-dodge)');
       container.appendChild(pill);
-      container.append(' 未造成伤害');
+      container.append(' 未造成傷害');
       for (const l of labels) container.appendChild(buildLabelBadge(l));
     } else {
       const color = getDamageTrailColor(damageKind, element);
       const rawAmount = formatCombatLogAmount(String(resolution.rawDamage));
       const actualAmount = formatCombatLogAmount(String(resolution.damage));
       const elementLabel = element ? `${uiLabels.ELEMENT_KEY_LABELS[element] ?? '未知'}行` : '';
-      const kindLabel = damageKind === 'physical' ? '物理' : '法术';
-      const tooltipTitle = `${elementLabel}${kindLabel}伤害`;
+      const kindLabel = damageKind === 'physical' ? '物理' : '法術';
+      const tooltipTitle = `${elementLabel}${kindLabel}傷害`;
       container.append('，造成 ');
       const pill = document.createElement('span');
       pill.className = 'chat-damage-pill';
@@ -597,9 +597,9 @@ function appendStructuredCombatLine(
       pill.dataset.chatDamageTooltipLines = [t('chat.combat.actual-damage', { amount: actualAmount }), t('chat.combat.raw-damage', { amount: rawAmount })].join('\n');
       setPillColor(pill, color);
       container.appendChild(pill);
-      container.append(' 伤害');
+      container.append(' 傷害');
       const labels = getCombatResolutionLabels(resolution);
-      if (killed) labels.push('击杀');
+      if (killed) labels.push('擊殺');
       for (const l of labels) container.appendChild(buildLabelBadge(l));
     }
   } else if (formationResolution) {
@@ -609,8 +609,8 @@ function appendStructuredCombatLine(
     const rawAmount = formatCombatLogAmount(String(formationResolution.rawDamage));
     const actualAmount = formatCombatLogAmount(String(formationResolution.damage));
     const elementLabel = element ? `${uiLabels.ELEMENT_KEY_LABELS[element] ?? '未知'}行` : '';
-    const kindLabel = damageKind === 'physical' ? '物理' : '法术';
-    const tooltipTitle = `${elementLabel}${kindLabel}伤害`;
+    const kindLabel = damageKind === 'physical' ? '物理' : '法術';
+    const tooltipTitle = `${elementLabel}${kindLabel}傷害`;
     container.append('，造成 ');
     const pill = document.createElement('span');
     pill.className = 'chat-damage-pill';
@@ -621,7 +621,7 @@ function appendStructuredCombatLine(
     setPillColor(pill, color);
     container.appendChild(pill);
     const auraDamage = formatCombatLogAmount(String(formationResolution.auraDamage));
-    container.append(` 伤害，削减灵力 ${auraDamage}`);
+    container.append(` 傷害，削減靈力 ${auraDamage}`);
   }
 
   // 伤害行后追加 buff/debuff 标签（如"凝"对目标施加 debuff）
@@ -638,28 +638,28 @@ function appendCombatSummaryLine(
   container.append(prefix + '你施展');
   container.appendChild(buildSkillPill(combat.skill));
   const groups = [
-    { label: '敌人', value: combat.summary?.enemy, resultLabel: '击败', resultCount: combat.summary?.enemy?.defeatedCount },
-    { label: '地块', value: combat.summary?.tile, resultLabel: '摧毁', resultCount: combat.summary?.tile?.destroyedCount },
+    { label: '敵人', value: combat.summary?.enemy, resultLabel: '擊敗', resultCount: combat.summary?.enemy?.defeatedCount },
+    { label: '地塊', value: combat.summary?.tile, resultLabel: '摧毀', resultCount: combat.summary?.tile?.destroyedCount },
   ];
   let written = false;
   for (const group of groups) {
     if (!group.value || group.value.targetCount <= 0) continue;
     container.append(written ? '；' : '，');
     const countText = group.value.hitCount === group.value.targetCount
-      ? `${formatCombatLogAmount(String(group.value.hitCount))} 个${group.label}`
-      : `${formatCombatLogAmount(String(group.value.hitCount))}/${formatCombatLogAmount(String(group.value.targetCount))} 个${group.label}`;
+      ? `${formatCombatLogAmount(String(group.value.hitCount))} 個${group.label}`
+      : `${formatCombatLogAmount(String(group.value.hitCount))}/${formatCombatLogAmount(String(group.value.targetCount))} 個${group.label}`;
     container.append('命中 ');
     appendTargetPill(container, countText);
     container.append('，共造成 ');
     container.appendChild(buildNoticePill(formatCombatLogAmount(String(group.value.totalDamage)), {
       key: 'damage',
       style: 'damage',
-      tooltipTitle: `${group.label}总伤害`,
-      tooltipLines: [`实际总伤害 ${formatCombatLogAmount(String(group.value.totalDamage))}`],
+      tooltipTitle: `${group.label}總傷害`,
+      tooltipLines: [`實際總傷害 ${formatCombatLogAmount(String(group.value.totalDamage))}`],
     }));
-    container.append(' 伤害');
+    container.append(' 傷害');
     if (group.resultCount && group.resultCount > 0) {
-      container.append(`，${group.resultLabel} ${formatCombatLogAmount(String(group.resultCount))} 个`);
+      container.append(`，${group.resultLabel} ${formatCombatLogAmount(String(group.resultCount))} 個`);
     }
     written = true;
   }
@@ -671,13 +671,13 @@ function appendCombatEffects(container: DocumentFragment | HTMLElement, effects:
     if (effect.type === 'heal') {
       const amount = Math.max(0, Math.round(Number(effect.amount) || 0));
       if (amount <= 0) continue;
-      container.append('，恢复 ');
+      container.append('，恢復 ');
       const pill = document.createElement('span');
       pill.className = 'chat-damage-pill';
       pill.textContent = formatCombatLogAmount(String(amount));
-      pill.setAttribute('aria-label', `治疗 ${formatCombatLogAmount(String(amount))}`);
-      pill.dataset.chatDamageTooltipTitle = '治疗';
-      pill.dataset.chatDamageTooltipLines = `治疗量 ${formatCombatLogAmount(String(amount))}`;
+      pill.setAttribute('aria-label', `治療 ${formatCombatLogAmount(String(amount))}`);
+      pill.dataset.chatDamageTooltipTitle = '治療';
+      pill.dataset.chatDamageTooltipLines = `治療量 ${formatCombatLogAmount(String(amount))}`;
       const color = COMBAT_HEAL_PILL_COLOR;
       setPillColor(pill, color);
       container.appendChild(pill);
@@ -706,7 +706,7 @@ function appendCombatEffects(container: DocumentFragment | HTMLElement, effects:
       }
       const duration = buffTemplate?.duration ?? effect.duration;
       const maxStacks = buffTemplate?.maxStacks;
-      if (duration) tooltipLines.push(`持续 ${duration} 回合${maxStacks && maxStacks > 1 ? `，最多 ${maxStacks} 层` : ''}`);
+      if (duration) tooltipLines.push(`持續 ${duration} 回合${maxStacks && maxStacks > 1 ? `，最多 ${maxStacks} 層` : ''}`);
       pill.setAttribute('aria-label', tooltipLines[0] ?? name);
       pill.dataset.chatDamageTooltipTitle = name;
       pill.dataset.chatDamageTooltipLines = tooltipLines.length > 0 ? tooltipLines.join('\n') : name;
@@ -721,7 +721,7 @@ function getCombatResolutionLabels(resolution: { dodged?: boolean; crit?: boolea
   const labels: string[] = [];
   if (resolution.broken) labels.push('破招');
   if (resolution.resolved) labels.push('拆招');
-  if (resolution.crit) labels.push('暴击');
+  if (resolution.crit) labels.push('暴擊');
   return labels;
 }
 
@@ -907,24 +907,24 @@ function appendKilledBatchNotice(
 ): void {
   const targetList = String(data.vars?.targetList ?? '').split('、').map((item) => item.trim()).filter(Boolean);
   if (targetList.length <= 0) {
-    container.append(prefix + (fallbackText || '你斩杀了目标'));
+    container.append(prefix + (fallbackText || '你斬殺了目標'));
     return;
   }
   const extraCount = Math.max(0, Math.floor(Number(data.vars?.extraCount) || 0));
-  const targets = extraCount > 0 ? [...targetList, `另 ${extraCount} 个目标`] : targetList;
+  const targets = extraCount > 0 ? [...targetList, `另 ${extraCount} 個目標`] : targetList;
   if (targets.length === 1) {
-    container.append(prefix + '你斩杀了 ');
+    container.append(prefix + '你斬殺了 ');
     container.appendChild(buildNoticePill(targets[0], { key: 'target', style: 'target' }));
   } else {
     for (let i = 0; i < targets.length; i += 1) {
       const lineEl = document.createElement('div');
       lineEl.className = 'chat-merged-combat-line';
       if (i === 0) {
-        lineEl.append(prefix + '你斩杀了 ');
+        lineEl.append(prefix + '你斬殺了 ');
       } else {
         const indent = document.createElement('span');
         indent.className = 'chat-merged-combat-indent';
-        indent.append(prefix + '你斩杀了');
+        indent.append(prefix + '你斬殺了');
         lineEl.appendChild(indent);
         lineEl.append(' ');
       }
@@ -997,7 +997,7 @@ function appendBeforeWithPills(container: DocumentFragment | HTMLElement, before
       container.append('施展');
       container.appendChild(buildSkillPill(monsterMatch[4]));
     } else {
-      container.appendChild(buildSkillPill('发起攻击'));
+      container.appendChild(buildSkillPill('發起攻擊'));
     }
     return;
   }
@@ -1090,8 +1090,8 @@ function buildSkillPill(name: string): HTMLSpanElement {
 function buildLabelBadge(label: string): HTMLSpanElement {
   const badge = document.createElement('span');
   badge.className = 'chat-combat-badge';
-  if (label === '击杀') badge.classList.add('chat-combat-badge--kill');
-  else if (label === '暴击') badge.classList.add('chat-combat-badge--crit');
+  if (label === '擊殺') badge.classList.add('chat-combat-badge--kill');
+  else if (label === '暴擊') badge.classList.add('chat-combat-badge--crit');
   else if (label === '破招') badge.classList.add('chat-combat-badge--broken');
   badge.textContent = label;
   return badge;
@@ -1799,7 +1799,7 @@ export class ChatUI {
     );
     /** 展示伤害提示。 */
     const showDamageTooltip = (pill: HTMLElement, clientX: number, clientY: number, pinned = false) => {
-      const title = pill.dataset.chatDamageTooltipTitle ?? '伤害';
+      const title = pill.dataset.chatDamageTooltipTitle ?? '傷害';
       const lines = (pill.dataset.chatDamageTooltipLines ?? '')
         .split('\n')
         .map((line) => line.trim())
@@ -1931,9 +1931,9 @@ export class ChatUI {
       const button = this.slotButtons.find((entry) => entry.dataset.chatSlotActivate === slotId);
       if (button) {
         button.textContent = channelLabel;
-        button.setAttribute('aria-label', `打开${channelLabel}频道`);
+        button.setAttribute('aria-label', `打開${channelLabel}頻道`);
       }
-      select.setAttribute('aria-label', `选择频道，当前${channelLabel}`);
+      select.setAttribute('aria-label', `選擇頻道，當前${channelLabel}`);
     }
   }
 
@@ -2019,8 +2019,8 @@ export class ChatUI {
     this.input.placeholder = sendable
       ? t('shell.chat-input.placeholder', undefined)
       : this.activeChannel === 'party'
-        ? '加入队伍后可使用队伍频道'
-        : '当前频道仅接收消息';
+        ? '加入隊伍後可使用隊伍頻道'
+        : '當前頻道僅接收消息';
     if (!sendable) {
       this.input.value = '';
     }
@@ -2208,11 +2208,11 @@ export class ChatUI {
         const select = host.querySelector<HTMLSelectElement>('[data-chat-slot-select]');
         const button = host.querySelector<HTMLButtonElement>('[data-chat-slot-activate]');
         const channelLabel = this.getChannelLabel(channel);
-        const suffix = count > 0 ? `，${count} 条未读消息` : '';
-        select?.setAttribute('aria-label', `选择频道，当前${channelLabel}${suffix}`);
-        button?.setAttribute('aria-label', `打开${channelLabel}频道${suffix}`);
+        const suffix = count > 0 ? `，${count} 條未讀消息` : '';
+        select?.setAttribute('aria-label', `選擇頻道，當前${channelLabel}${suffix}`);
+        button?.setAttribute('aria-label', `打開${channelLabel}頻道${suffix}`);
       } else if (count > 0) {
-        host.setAttribute('aria-label', `${this.getChannelLabel(channel)}，${count} 条未读消息`);
+        host.setAttribute('aria-label', `${this.getChannelLabel(channel)}，${count} 條未讀消息`);
       } else {
         host.removeAttribute('aria-label');
       }

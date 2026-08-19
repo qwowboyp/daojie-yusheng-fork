@@ -113,3 +113,28 @@ _Auto-scaffolded by /start-work. Append new entries below - never overwrite._
   `'DFKai-SB','BiauKai'` fallback（純系統字型，不違反 webfont 紅線），並記錄為已知限制待 F3 視覺 QA。
 - 驗證：`pnpm --filter @mud/client exec tsc --noEmit` exit 0；rg 7 個 TC/Kai 字型名全命中；git diff 僅 4 行 family 變更。
 - 證據：`.omo/evidence/zh-tw-only-conversion/task-7/evidence.md`。
+
+## 2026-08-19 Task-6: 拆除雙語轉換層（單語系 zh-TW 收斂）
+
+- **todo 5 轉繁後 proof 期望值大量過期**：build 鏈 5 檔 + verify 鏈 1 檔的簡中斷言全掛。
+  prove-technique-unification-mobile.mjs 一個檔就改了 30+ 處。教訓：todo 5 之後必須全局 rg 掃
+  client scripts/ 下的簡中 assert 字串對齊繁中，且要區分「UI 生成文本（繁）」vs「fixture 假資料（簡）」
+  vs「shared label（可能仍簡）」三種來源——不能一刀切全改繁。
+- **shared 層未轉繁**：SECT_MEMBER_ROLE_LABELS（宗主/长老/内门弟子）、ATTR_KEY_LABELS
+  （体魄/经脉）、	echnique-bonus-summary.ts（无属性灵气/煞气）仍是簡中——todo 5 只轉 client。
+  斷言必須對齊實際輸出（簡中）而非理想繁中。若後續 todo 要轉 shared，需另開 scope。
+- **TechniqueGenerationPanel.tsx 混雜狀態**：:379「单部领悟」簡中與 :419/:854「批量領悟/確認批量領悟」
+  繁中並存——todo 5 轉換遺漏，proof prove-technique-generation-batch 只查源碼字串，改斷言對齊現狀。
+- **CHROME_BIN 環境變數**：rowser-proof-runtime.mjs findChromeExecutable 只認 CHROME_BIN + Linux 路徑，
+  Windows 本機 Chrome 在 Program Files 不被偵測。所有 build/verify 前必須
+  \ = "C:\Program Files\Google\Chrome\Application\chrome.exe"，否則 proof:floating-hit 直接 fail。
+- **CSV 編輯陷阱**：PowerShell Set-Content -NoNewline 會把 CSV 全部行串接成單行（LF 全消失）。
+  修復法：cmd /c "git show HEAD:path > tmp" 取原始 bytes（LF 換行），再用 node 位元組層級過濾
+  split('\n')，s.writeFileSync 重寫。git diff 驗證只顯示預期的 7 行刪除。
+- **語言切換 UI 移除**：settings-panel.ts + SettingsPanel.tsx 的 handler/JSX 一併刪 import；
+  zh-TW.csv 7 個 settings.language.* keys 刪除後 generate:i18n 重生成 3960 條。
+- **language-preferences.ts 收斂**：17 行常數模組，getLanguagePreference 恆回 'zh-TW'，
+  initializeLanguagePreference 為 no-op——main.ts:53,60 免改；i18n.ts import 不破。
+- **bundle 證據**：移除 catalog 後 dist 10.79 → 10.45 MB（−0.34MB），catalog 本內聯 main-panels chunk。
+- **驗證鏈**：build:shared → client build（需 CHROME_BIN）→ verify:client 全綠；
+  rg zero-hits；CSV check-traditional ok:true。

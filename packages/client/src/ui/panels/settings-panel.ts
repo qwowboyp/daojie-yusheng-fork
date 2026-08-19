@@ -57,11 +57,6 @@ import {
 import { MAP_TARGET_FPS_RANGE } from '../../constants/ui/performance';
 import { t } from '../i18n';
 import {
-  getLanguagePreference,
-  updateLanguagePreference,
-  type ClientLocale,
-} from '../language-preferences';
-import {
   mountReactSettingsPanel,
   setReactSettingsPanelCallbacks,
   shouldUseReactSettingsPanel,
@@ -441,24 +436,6 @@ export class SettingsPanel {
       this.syncFloatingPanelControls(body, nextPreferences);
     }, { signal });
 
-    body.querySelectorAll<HTMLButtonElement>('[data-settings-language]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const locale = button.dataset.settingsLanguage as ClientLocale | undefined;
-        if (locale !== 'zh-CN' && locale !== 'zh-TW') {
-          return;
-        }
-        if (locale === getLanguagePreference()) {
-          return;
-        }
-        const confirmed = window.confirm(t('settings.language.reload-confirm', undefined));
-        if (!confirmed) {
-          return;
-        }
-        updateLanguagePreference(locale);
-        window.location.reload();
-      }, { signal });
-    });
-
     body.querySelectorAll<HTMLButtonElement>('[data-ui-color-mode]').forEach((button) => {
       button.addEventListener('click', () => {
         const colorMode = button.dataset.uiColorMode;
@@ -540,7 +517,7 @@ export class SettingsPanel {
         const enabled = button.dataset.floatingPanelValue === 'on';
         const nextPreferences = updateFloatingPanelPreference(key, enabled);
         this.syncFloatingPanelControls(body, nextPreferences);
-        setStatus(styleStatus, enabled ? '悬浮窗已开启' : '悬浮窗已关闭，可在这里重新开启', 'success');
+        setStatus(styleStatus, enabled ? '懸浮窗已開啟' : '懸浮窗已關閉，可在這裡重新開啟', 'success');
       }, { signal });
     });
   }
@@ -808,26 +785,7 @@ export class SettingsPanel {
   private renderUiTab(): string {
     const config = getUiStyleConfig();
     const floatingPreferences = getFloatingPanelPreferences();
-    const currentLocale = getLanguagePreference();
     return `
-      <div class="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
-        <div class="panel-section-title">${escapeHtml(t('settings.language.section', undefined))}</div>
-        <div class="settings-ui-copy ui-form-copy">${escapeHtml(t('settings.language.copy', undefined))}</div>
-        <div class="settings-ui-mode-row" data-settings-language-row>
-          <button
-            class="small-btn ghost${currentLocale === 'zh-CN' ? ' active' : ''}"
-            type="button"
-            data-settings-language="${'zh-CN'}"
-            aria-pressed="${currentLocale === 'zh-CN' ? 'true' : 'false'}"
-          >${escapeHtml(t('settings.language.option.simplified', undefined))}</button>
-          <button
-            class="small-btn ghost${currentLocale === 'zh-TW' ? ' active' : ''}"
-            type="button"
-            data-settings-language="${'zh-TW'}"
-            aria-pressed="${currentLocale === 'zh-TW' ? 'true' : 'false'}"
-          >${escapeHtml(t('settings.language.option.traditional', undefined))}</button>
-        </div>
-      </div>
       <div class="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
         <div class="panel-section-title">${escapeHtml(t('settings.ui.section.color-mode', undefined))}</div>
         <div class="settings-ui-copy ui-form-copy">${escapeHtml(t('settings.ui.copy.color-mode', undefined))}</div>
@@ -912,12 +870,12 @@ export class SettingsPanel {
       <div id="settings-ui-style-status" class="account-settings-status ui-status-text">${escapeHtml(t('settings.ui.status.saved-local', undefined))}</div>
       </div>
       <div class="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
-        <div class="panel-section-title">悬浮窗</div>
-        <div class="settings-ui-copy ui-form-copy">关闭后的悬浮窗不会自动显示，可在这里重新开启。</div>
+        <div class="panel-section-title">懸浮窗</div>
+        <div class="settings-ui-copy ui-form-copy">關閉後的懸浮窗不會自動顯示，可在這裡重新開啟。</div>
         <div class="settings-performance-card ui-card-list">
-          ${this.renderFloatingPanelPreferenceRow('actionQueue', '行动队列', '显示技艺通用 jobs 的任务名、数量和当前进度。', floatingPreferences.actionQueue)}
-          ${this.renderFloatingPanelPreferenceRow('interactionList', '交互列表', '显示附近技艺、任务、传送和交互的快捷按钮。', floatingPreferences.interactionList)}
-          ${this.renderFloatingPanelPreferenceRow('party', '队伍状态', '显示队伍成员状态与队伍迷你聊天。', floatingPreferences.party)}
+          ${this.renderFloatingPanelPreferenceRow('actionQueue', '行動隊列', '顯示技藝通用 jobs 的任務名、數量和當前進度。', floatingPreferences.actionQueue)}
+          ${this.renderFloatingPanelPreferenceRow('interactionList', '交互列表', '顯示附近技藝、任務、傳送和交互的快捷按鈕。', floatingPreferences.interactionList)}
+          ${this.renderFloatingPanelPreferenceRow('party', '隊伍狀態', '顯示隊伍成員狀態與隊伍迷你聊天。', floatingPreferences.party)}
         </div>
       </div>
     `;
@@ -942,14 +900,14 @@ export class SettingsPanel {
             data-floating-panel-toggle="${key}"
             data-floating-panel-value="off"
             aria-pressed="${enabled ? 'false' : 'true'}"
-          >关</button>
+          >關</button>
           <button
             class="small-btn ghost${enabled ? ' active' : ''}"
             type="button"
             data-floating-panel-toggle="${key}"
             data-floating-panel-value="on"
             aria-pressed="${enabled ? 'true' : 'false'}"
-          >开</button>
+          >開</button>
         </div>
       </div>
     `;
@@ -1193,7 +1151,7 @@ export class SettingsPanel {
 
   private renderOfflineGainHistoryDetail(report: OfflineGainReportView | null): string {
     if (!report) {
-      return '<div class="empty-hint compact settings-offline-gain-empty">点击左侧记录查看详情</div>';
+      return '<div class="empty-hint compact settings-offline-gain-empty">點擊左側記錄查看詳情</div>';
     }
     return renderOfflineGainReport(report);
   }

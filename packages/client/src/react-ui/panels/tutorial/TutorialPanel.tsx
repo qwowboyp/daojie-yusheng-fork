@@ -282,7 +282,7 @@ export function TutorialPanelContent() {
         <input
           className="tutorial-search-input"
           type="text"
-          placeholder="搜索百科内容..."
+          placeholder="搜索百科內容..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -377,7 +377,7 @@ function TopicShell({ topics, ariaLabel, activeId, onSelect, onNestedSelect, tab
                 <span className="tutorial-modal-tab-label ui-split-panel-tab-label">{topic.label}</span>
               </button>
               {active && topic.sections.length > 0 && (
-                <div className="tutorial-modal-subtabs" role="tablist" aria-label={`${topic.label}子类`}>
+                <div className="tutorial-modal-subtabs" role="tablist" aria-label={`${topic.label}子類`}>
                   {topic.sections.map((section) => {
                     const sectionActive = active && resolveActiveSectionTitle(topic) === section.title;
                     return (

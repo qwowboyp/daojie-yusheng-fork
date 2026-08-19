@@ -962,7 +962,7 @@ export class TechniquePanel {
     toolbar.className = 'tech-panel-toolbar';
     toolbar.innerHTML = `
       <label class="tech-search-box">
-        <input class="tech-search-input" data-tech-search="true" type="search" placeholder="搜索功法名称" value="${escapeHtml(this.searchQuery)}" autocomplete="off" aria-label="搜索功法" />
+        <input class="tech-search-input" data-tech-search="true" type="search" placeholder="搜索功法名稱" value="${escapeHtml(this.searchQuery)}" autocomplete="off" aria-label="搜索功法" />
       </label>
     `.trim();
 
@@ -1006,9 +1006,9 @@ export class TechniquePanel {
     pagination.className = 'tech-pagination';
     pagination.dataset.techPagination = 'true';
     pagination.innerHTML = `
-      <button class="small-btn ghost" data-tech-page-action="prev" type="button">上一页</button>
+      <button class="small-btn ghost" data-tech-page-action="prev" type="button">上一頁</button>
       <span class="tech-pagination-status" data-tech-page-status="true"></span>
-      <button class="small-btn ghost" data-tech-page-action="next" type="button">下一页</button>
+      <button class="small-btn ghost" data-tech-page-action="next" type="button">下一頁</button>
     `.trim();
     body.append(sideTabs, list);
     shell.append(toolbar, topTabs, body, pagination);
@@ -1089,12 +1089,12 @@ export class TechniquePanel {
     const canStartCultivating = selfComprehensionAllowed && !transferLocked;
     const startDisabled = !isCultivating && !canStartCultivating;
     const actionLabel = transferLocked
-      ? '传授中'
+      ? '傳授中'
       : !selfComprehensionAllowed
-        ? '需传法领悟'
+        ? '需傳法領悟'
         : isCultivating
           ? t('technique.action.cancel-cultivate', undefined)
-          : '设为主修领悟';
+          : '設為主修領悟';
     const realmLv = Math.max(1, Math.floor(Number(pending.realmLv) || 1));
     const realmLabel = getLocalRealmLevelEntry(realmLv)?.displayName ?? `Lv.${formatDisplayInteger(realmLv)}`;
     const template = document.createElement('template');
@@ -1102,13 +1102,13 @@ export class TechniquePanel {
       <button class="tech-card-main" data-cultivate="${canStartCultivating && !isCultivating ? escapeHtml(pending.techId) : ''}" data-cultivate-stop="${isCultivating ? escapeHtml(pending.techId) : ''}" ${startDisabled ? 'disabled' : ''} type="button">
         <span class="tech-summary-main">
           <span class="tech-name">${escapeHtml(pending.name)}</span>
-          <span class="tech-badge tech-category">未领悟</span>
-          ${pending.sourceKind === 'created' ? '<span class="tech-badge tech-category">自创</span>' : ''}
+          <span class="tech-badge tech-category">未領悟</span>
+          ${pending.sourceKind === 'created' ? '<span class="tech-badge tech-category">自創</span>' : ''}
           <span class="tech-badge tech-grade">${escapeHtml(getTechniqueGradeLabel(pending.grade))}</span>
           <span class="tech-badge tech-category">${escapeHtml(getTechniqueCategoryLabel(pending.category))}</span>
           <span class="tech-badge tech-realm-level">${escapeHtml(realmLabel)}</span>
-          ${transferLocked ? `<span class="tech-badge tech-grade">${pending.activeTransferJob?.status === 'blocked' ? '等待传授' : '传授中'}</span>` : ''}
-          ${!selfComprehensionAllowed ? '<span class="tech-badge tech-grade">需传法</span>' : ''}
+          ${transferLocked ? `<span class="tech-badge tech-grade">${pending.activeTransferJob?.status === 'blocked' ? '等待傳授' : '傳授中'}</span>` : ''}
+          ${!selfComprehensionAllowed ? '<span class="tech-badge tech-grade">需傳法</span>' : ''}
         </span>
         <span class="tech-progress-meta"><span class="tech-progress-text">${Math.floor(pending.progress)} / ${Math.floor(pending.requiredProgress)}</span></span>
         <span class="tech-progress-bar"><span class="tech-progress-fill" style="width:${(ratio * 100).toFixed(2)}%"></span></span>
@@ -1116,7 +1116,7 @@ export class TechniquePanel {
       <div class="tech-card-actions">
         <button class="small-btn ${isCultivating ? 'danger' : 'ghost'}" data-guided-tour-cultivate-button="true" data-cultivate="${canStartCultivating && !isCultivating ? escapeHtml(pending.techId) : ''}" data-cultivate-stop="${isCultivating ? escapeHtml(pending.techId) : ''}" ${startDisabled ? 'disabled' : ''} type="button">${actionLabel}</button>
         ${transferLocked
-          ? `<button class="small-btn danger" data-tech-transmission-cancel="${escapeHtml(pending.techId)}" type="button">取消传法</button>`
+          ? `<button class="small-btn danger" data-tech-transmission-cancel="${escapeHtml(pending.techId)}" type="button">取消傳法</button>`
           : `<button class="small-btn danger" data-tech-comprehension-discard="${escapeHtml(pending.techId)}" type="button">${escapeHtml(t('technique.comprehension.discard.action'))}</button>`}
       </div>
     </div>`.trim();
@@ -1217,10 +1217,10 @@ export class TechniquePanel {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     if (this.pendingRequestId) {
-      return '正在加载功法...';
+      return '正在加載功法...';
     }
     if (this.searchQuery) {
-      return `没有找到名称包含“${this.searchQuery}”的功法`;
+      return `沒有找到名稱包含“${this.searchQuery}”的功法`;
     }
     if (this.statusFilter === 'in_progress') {
       return t('technique.empty.no-in-progress', undefined);
@@ -1308,7 +1308,7 @@ export class TechniquePanel {
     const shouldShow = pageState.totalItems > TECHNIQUE_PANEL_PAGE_SIZE;
     pagination.hidden = !shouldShow;
     status.textContent = shouldShow
-      ? `第 ${formatDisplayInteger(pageState.currentPage)} / ${formatDisplayInteger(pageState.totalPages)} 页 · 共 ${formatDisplayInteger(pageState.totalItems)} 门`
+      ? `第 ${formatDisplayInteger(pageState.currentPage)} / ${formatDisplayInteger(pageState.totalPages)} 頁 · 共 ${formatDisplayInteger(pageState.totalItems)} 門`
       : '';
     prev.disabled = pageState.currentPage <= 1;
     next.disabled = pageState.currentPage >= pageState.totalPages;
@@ -1417,8 +1417,8 @@ export class TechniquePanel {
       : null;
     const strengthHtml = showsCreatedTechniqueStrength
       ? `<section class="tech-modal-strength" data-tech-modal-strength="true">
-          <span>功法强度</span>
-          <strong>${strengthPercent === null ? '读取中' : `${formatDisplayInteger(strengthPercent)}%`}</strong>
+          <span>功法強度</span>
+          <strong>${strengthPercent === null ? '讀取中' : `${formatDisplayInteger(strengthPercent)}%`}</strong>
         </section>`
       : '';
     detailModalHost.open({
@@ -2316,7 +2316,7 @@ export class TechniquePanel {
         const milestone = milestones.get(layer.level);
         return {
           level: layer.level,
-          milestone: milestone ? getTechniqueRealmLabel(milestone) as '小成' | '大成' | '圆满' : undefined,
+          milestone: milestone ? getTechniqueRealmLabel(milestone) as '小成' | '大成' | '圓滿' : undefined,
           hoverTitle: t('technique.focus.title', { level: formatDisplayInteger(layer.level) }),
           hoverLines: [
             progressText,

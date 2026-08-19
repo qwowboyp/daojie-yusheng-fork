@@ -496,9 +496,9 @@ export class CraftAlchemyView {
   private buildAlchemyRecipeMetaText(recipe: AlchemyRecipeCatalogEntry): string {
     const simpleCount = this.getAlchemyRecipePresets(recipe.recipeId).length;
     const unit = this.parent.activeMode === 'forging' ? '件' : '枚';
-    const presetLabel = this.parent.activeMode === 'forging' ? '自定义器方' : '自定义丹方';
+    const presetLabel = this.parent.activeMode === 'forging' ? '自定義器方' : '自定義丹方';
     const presetText = `${presetLabel} ${simpleCount}`;
-    return `一炉 ${this.getAlchemyBatchOutputCount(recipe)} ${unit} · 基时 ${recipe.baseBrewTicks} 息 · ${presetText}`;
+    return `一爐 ${this.getAlchemyBatchOutputCount(recipe)} ${unit} · 基時 ${recipe.baseBrewTicks} 息 · ${presetText}`;
   }
 
   private buildAlchemyMetricSnapshot(
@@ -761,13 +761,13 @@ export class CraftAlchemyView {
   renderAlchemyTabButtons(): string {
     if (this.parent.activeMode === 'forging') {
       return `
-        <button class="alchemy-tab-btn ${this.parent.activeAlchemyTab === 'full' ? 'active' : ''}" type="button" data-craft-action="alchemy-switch-tab" data-tab="full" data-guided-tour-alchemy-tab="full">基础器方</button>
-        <button class="alchemy-tab-btn ${this.parent.activeAlchemyTab === 'simple' ? 'active' : ''}" type="button" data-craft-action="alchemy-switch-tab" data-tab="simple" data-guided-tour-alchemy-tab="simple">自创器方</button>
+        <button class="alchemy-tab-btn ${this.parent.activeAlchemyTab === 'full' ? 'active' : ''}" type="button" data-craft-action="alchemy-switch-tab" data-tab="full" data-guided-tour-alchemy-tab="full">基礎器方</button>
+        <button class="alchemy-tab-btn ${this.parent.activeAlchemyTab === 'simple' ? 'active' : ''}" type="button" data-craft-action="alchemy-switch-tab" data-tab="simple" data-guided-tour-alchemy-tab="simple">自創器方</button>
       `;
     }
     return `
-      <button class="alchemy-tab-btn ${this.parent.activeAlchemyTab === 'full' ? 'active' : ''}" type="button" data-craft-action="alchemy-switch-tab" data-tab="full" data-guided-tour-alchemy-tab="full">基础丹方</button>
-      <button class="alchemy-tab-btn ${this.parent.activeAlchemyTab === 'simple' ? 'active' : ''}" type="button" data-craft-action="alchemy-switch-tab" data-tab="simple" data-guided-tour-alchemy-tab="simple">自创丹方</button>
+      <button class="alchemy-tab-btn ${this.parent.activeAlchemyTab === 'full' ? 'active' : ''}" type="button" data-craft-action="alchemy-switch-tab" data-tab="full" data-guided-tour-alchemy-tab="full">基礎丹方</button>
+      <button class="alchemy-tab-btn ${this.parent.activeAlchemyTab === 'simple' ? 'active' : ''}" type="button" data-craft-action="alchemy-switch-tab" data-tab="simple" data-guided-tour-alchemy-tab="simple">自創丹方</button>
     `;
   }
 
@@ -848,27 +848,27 @@ export class CraftAlchemyView {
             <div class="alchemy-detail-title">${this.renderAlchemyItemReference(selectedRecipe.outputItemId, selectedRecipe.outputName, 'reward')}</div>
           </div>
           <div class="alchemy-detail-meta">
-            <span>等级 ${formatDisplayInteger(selectedRecipe.outputLevel)}</span>
-            <span>品阶 ${escapeHtml(getTechniqueGradeLabel(recipeGrade))}</span>
+            <span>等級 ${formatDisplayInteger(selectedRecipe.outputLevel)}</span>
+            <span>品階 ${escapeHtml(getTechniqueGradeLabel(recipeGrade))}</span>
           </div>
         </section>
         <section class="alchemy-fivephase-panel">
           <div class="alchemy-fivephase-block">
-            <div class="alchemy-fivephase-title">五行 当前 / 需要</div>
+            <div class="alchemy-fivephase-title">五行 當前 / 需要</div>
             ${this.renderAlchemyElementRatioGrid(currentElements, requiredElements)}
           </div>
         </section>
         <section class="alchemy-summary-metrics alchemy-summary-metrics--detail">
           <div class="alchemy-summary-metric alchemy-summary-metric--time">
-            <span class="alchemy-summary-metric-label">当前耗时 / 基础耗时</span>
+            <span class="alchemy-summary-metric-label">當前耗時 / 基礎耗時</span>
             <strong class="alchemy-summary-metric-value">${escapeHtml(metrics.brewTimeText)} / ${formatDisplayInteger(selectedRecipe.baseBrewTicks)} 息</strong>
           </div>
           <div class="alchemy-summary-metric alchemy-summary-metric--success">
-            <span class="alchemy-summary-metric-label">当前成功率</span>
+            <span class="alchemy-summary-metric-label">當前成功率</span>
             <strong class="alchemy-summary-metric-value">${escapeHtml(metrics.successText)}</strong>
           </div>
           <div class="alchemy-summary-metric alchemy-summary-metric--power">
-            <span class="alchemy-summary-metric-label">${escapeHtml(isForging ? '当前成器数量' : '当前出丹数量')}</span>
+            <span class="alchemy-summary-metric-label">${escapeHtml(isForging ? '當前成器數量' : '當前出丹數量')}</span>
             <strong class="alchemy-summary-metric-value">${formatDisplayInteger(this.getAlchemyBatchOutputCount(selectedRecipe))}</strong>
           </div>
         </section>
@@ -984,13 +984,13 @@ export class CraftAlchemyView {
     const draft = this.getAlchemyDraftIngredients(recipe.recipeId);
     const auxIngredients = draft.filter((ingredient) => !mainIds.has(ingredient.itemId));
     const presets = this.getAlchemyRecipePresets(recipe.recipeId);
-    const presetLabel = this.parent.activeMode === 'forging' ? '加载自定义器方' : '加载自定义丹方';
+    const presetLabel = this.parent.activeMode === 'forging' ? '加載自定義器方' : '加載自定義丹方';
     const selectedPreset = this.parent.selectedAlchemyPresetId
       ? presets.find((preset) => preset.presetId === this.parent.selectedAlchemyPresetId) ?? null
       : null;
     const presetHint = selectedPreset
-      ? `当前：${selectedPreset.name}`
-      : `已保存 ${formatDisplayInteger(presets.length)} 个`;
+      ? `當前：${selectedPreset.name}`
+      : `已保存 ${formatDisplayInteger(presets.length)} 個`;
     return `
       <div class="alchemy-preset-strip" data-alchemy-preset-strip="true">
         <button class="small-btn ghost alchemy-preset-load-btn" type="button" data-craft-action="alchemy-open-preset-picker">${escapeHtml(presetLabel)}</button>
@@ -1017,7 +1017,7 @@ export class CraftAlchemyView {
         })).join('')}
       </div>
       <div class="alchemy-material-add-row">
-        <button class="small-btn ghost" type="button" data-craft-action="alchemy-open-material-picker">增加一个材料</button>
+        <button class="small-btn ghost" type="button" data-craft-action="alchemy-open-material-picker">增加一個材料</button>
       </div>
     `;
   }
@@ -1032,8 +1032,8 @@ export class CraftAlchemyView {
     controls: 'none' | 'adjust';
   }): string {
     const roleLabel = this.parent.activeMode === 'forging'
-      ? (options.role === 'main' ? '主材' : '辅材')
-      : (options.role === 'main' ? '主药' : '辅药');
+      ? (options.role === 'main' ? '主材' : '輔材')
+      : (options.role === 'main' ? '主藥' : '輔藥');
     const insufficient = options.requiredCount > options.currentCount;
     return `
       <div class="alchemy-material-row" data-alchemy-ingredient-item-id="${escapeHtml(options.itemId)}">
@@ -1093,7 +1093,7 @@ export class CraftAlchemyView {
         </div>
         <div class="alchemy-job-progress">
           <div class="alchemy-job-progress-head">
-            <span>当前批进度</span>
+            <span>當前批進度</span>
             <strong>${escapeHtml(`${formatTicks(batchRemainingTicks)} / ${formatTicks(batchTotalTicks)}`)}</strong>
           </div>
           <div class="alchemy-job-progress-bar">
@@ -1102,7 +1102,7 @@ export class CraftAlchemyView {
         </div>
         <div class="alchemy-job-progress alchemy-job-progress--interrupt ${interruptRemainingTicks > 0 ? '' : 'is-hidden'}" data-alchemy-interrupt-progress="true">
           <div class="alchemy-job-progress-head">
-            <span>打断等待</span>
+            <span>打斷等待</span>
             <strong data-alchemy-interrupt-label="true">${escapeHtml(formatTicks(interruptRemainingTicks))}</strong>
           </div>
           <div class="alchemy-job-progress-bar">
@@ -1136,8 +1136,8 @@ export class CraftAlchemyView {
   private renderAlchemyFullTab(recipe: AlchemyRecipeCatalogEntry): string {
     const metrics = this.buildAlchemyMetricSnapshot(recipe, 'full');
     const ingredients = this.getFullAlchemyIngredients(recipe.recipeId);
-    const mainRoleLabel = this.parent.activeMode === 'forging' ? '主材' : '主药';
-    const auxRoleLabel = this.parent.activeMode === 'forging' ? '辅材' : '辅药';
+    const mainRoleLabel = this.parent.activeMode === 'forging' ? '主材' : '主藥';
+    const auxRoleLabel = this.parent.activeMode === 'forging' ? '輔材' : '輔藥';
     const powerLabel = '五行';
     return `
       <div class="alchemy-tab-stack">
@@ -1172,18 +1172,18 @@ export class CraftAlchemyView {
     const selectedPreset = this.parent.selectedAlchemyPresetId
       ? presets.find((preset) => preset.presetId === this.parent.selectedAlchemyPresetId) ?? null
       : null;
-    const mainRoleLabel = this.parent.activeMode === 'forging' ? '主材' : '主药';
-    const auxRoleLabel = this.parent.activeMode === 'forging' ? '辅材' : '辅药';
+    const mainRoleLabel = this.parent.activeMode === 'forging' ? '主材' : '主藥';
+    const auxRoleLabel = this.parent.activeMode === 'forging' ? '輔材' : '輔藥';
     const emptyPresetText = this.parent.activeMode === 'forging'
-      ? '当前器物还没有保存的自定义器方。'
-      : '当前丹药还没有保存的自定义丹方。';
-    const loadPresetLabel = this.parent.activeMode === 'forging' ? '加载自定义器方' : '加载自定义丹方';
+      ? '當前器物還沒有保存的自定義器方。'
+      : '當前丹藥還沒有保存的自定義丹方。';
+    const loadPresetLabel = this.parent.activeMode === 'forging' ? '加載自定義器方' : '加載自定義丹方';
     return `
       <div class="alchemy-tab-stack">
         ${this.renderAlchemySummaryCard(recipe, 'simple', metrics)}
         <div class="alchemy-preset-strip" data-alchemy-preset-strip="true">
           <button class="small-btn ghost alchemy-preset-load-btn" type="button" data-craft-action="alchemy-open-preset-picker">${escapeHtml(loadPresetLabel)}</button>
-          <span class="alchemy-preset-empty">${selectedPreset ? `当前：${escapeHtml(selectedPreset.name)}` : escapeHtml(emptyPresetText)}</span>
+          <span class="alchemy-preset-empty">${selectedPreset ? `當前：${escapeHtml(selectedPreset.name)}` : escapeHtml(emptyPresetText)}</span>
         </div>
         <div class="alchemy-ingredient-section" data-alchemy-ingredients="true">
           ${recipe.ingredients.map((ingredient) => {
@@ -1225,8 +1225,8 @@ export class CraftAlchemyView {
   ): string {
     const isForging = this.parent.activeMode === 'forging';
     const recipeLabel = isForging
-      ? (mode === 'simple' ? '自创器方' : '完整器方')
-      : (mode === 'simple' ? '自创丹方' : '完整丹方');
+      ? (mode === 'simple' ? '自創器方' : '完整器方')
+      : (mode === 'simple' ? '自創丹方' : '完整丹方');
     return `
       <div class="alchemy-summary-card" data-alchemy-summary-card="true">
         <div class="alchemy-summary-head">
@@ -1239,11 +1239,11 @@ export class CraftAlchemyView {
             <strong class="alchemy-summary-metric-value" data-alchemy-metric="power">${escapeHtml(metrics.powerText)}</strong>
           </div>
           <div class="alchemy-summary-metric alchemy-summary-metric--success">
-            <span class="alchemy-summary-metric-label">${isForging ? '单件成器率' : '单枚成丹率'}</span>
+            <span class="alchemy-summary-metric-label">${isForging ? '單件成器率' : '單枚成丹率'}</span>
             <strong class="alchemy-summary-metric-value" data-alchemy-metric="success">${escapeHtml(metrics.successText)}</strong>
           </div>
           <div class="alchemy-summary-metric alchemy-summary-metric--time">
-            <span class="alchemy-summary-metric-label">单炉时间</span>
+            <span class="alchemy-summary-metric-label">單爐時間</span>
             <strong class="alchemy-summary-metric-value" data-alchemy-metric="time">${escapeHtml(metrics.brewTimeText)}</strong>
           </div>
         </div>
@@ -1299,7 +1299,7 @@ export class CraftAlchemyView {
         </div>
         <div class="alchemy-action-note">${escapeHtml(
           state?.job
-            ? '当前已有任务进行中，进度和取消请在上方任务队列操作。'
+            ? '當前已有任務進行中，進度和取消請在上方任務隊列操作。'
             : maxQuantity > 0
               ? t('craft.workbench.alchemy.action.note.batch', {
                 maxQuantity: formatDisplayInteger(maxQuantity),
@@ -1768,7 +1768,7 @@ export class CraftAlchemyView {
     this.parent.callbacks?.onSaveAlchemyPreset?.({
       presetId: selectedPreset?.presetId,
       recipeId: recipe.recipeId,
-      name: selectedPreset?.name ?? `${recipe.outputName}自定义丹方${matchingPresets.length + 1}`,
+      name: selectedPreset?.name ?? `${recipe.outputName}自定義丹方${matchingPresets.length + 1}`,
       ingredients: this.getAlchemySubmittedDraftIngredients(recipe.recipeId),
     });
   }

@@ -737,15 +737,15 @@ export class QuestPanel {
           <div class="ui-detail-field ui-detail-field--section"><strong>${escapeHtml(t('quest.detail.next-step', undefined))}</strong><div data-quest-modal-next-step="true">${this.renderQuestText(this.resolveNextStep(quest), quest)}</div></div>
         </div>
         <div class="ui-detail-field ui-detail-field--section ${quest.guideFlowId ? '' : 'hidden'}" data-quest-modal-guide-section="true">
-          <strong>${escapeHtml(t('quest.detail.guide', undefined, '相关引导'))}</strong>
+          <strong>${escapeHtml(t('quest.detail.guide', undefined, '相關引導'))}</strong>
           <div class="quest-detail-guide-row">
-            <span data-quest-modal-guide-desc="true">${escapeHtml(t('quest.detail.guide-desc', undefined, '打开这个任务关联的操作引导，不会改变任务进度。'))}</span>
+            <span data-quest-modal-guide-desc="true">${escapeHtml(t('quest.detail.guide-desc', undefined, '打開這個任務關聯的操作引導，不會改變任務進度。'))}</span>
             <button
               class="small-btn quest-detail-guide-btn"
               data-quest-guide-flow="${escapeHtml(quest.guideFlowId ?? '')}"
               type="button"
               ${quest.guideFlowId ? '' : 'disabled'}
-            >${escapeHtml(t('quest.action.open-guide', undefined, '打开引导'))}</button>
+            >${escapeHtml(t('quest.action.open-guide', undefined, '打開引導'))}</button>
           </div>
         </div>
         <div class="ui-detail-field ui-detail-field--section ${quest.objectiveText ? '' : 'hidden'}" data-quest-modal-objective-section="true"><strong>${escapeHtml(t('quest.detail.objective-note', undefined))}</strong><div data-quest-modal-objective="true">${this.renderQuestText(quest.objectiveText ?? '', quest)}</div></div>
@@ -855,10 +855,10 @@ export class QuestPanel {
     replaceRichContent(progressNode, this.renderQuestText(this.resolveProgressText(quest), quest));
     replaceRichContent(nextStepNode, this.renderQuestText(this.resolveNextStep(quest), quest));
     guideSection.classList.toggle('hidden', !quest.guideFlowId);
-    guideDescNode.textContent = t('quest.detail.guide-desc', undefined, '打开这个任务关联的操作引导，不会改变任务进度。');
+    guideDescNode.textContent = t('quest.detail.guide-desc', undefined, '打開這個任務關聯的操作引導，不會改變任務進度。');
     guideButton.disabled = !quest.guideFlowId;
     guideButton.dataset.questGuideFlow = quest.guideFlowId ?? '';
-    guideButton.textContent = t('quest.action.open-guide', undefined, '打开引导');
+    guideButton.textContent = t('quest.action.open-guide', undefined, '打開引導');
     objectiveSection.classList.toggle('hidden', !quest.objectiveText);
     replaceRichContent(objectiveNode, this.renderQuestText(quest.objectiveText ?? '', quest));
     targetLocationNode.textContent = targetLocation;

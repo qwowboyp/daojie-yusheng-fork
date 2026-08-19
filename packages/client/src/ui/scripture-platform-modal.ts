@@ -24,18 +24,18 @@ export function openScripturePlatformRecordingModal(options: ScripturePlatformRe
   const buildingId = options.buildingId.trim();
   const player = options.getPlayer();
   if (!buildingId) {
-    options.showToast('藏经台目标不存在。', 'warn');
+    options.showToast('藏經臺目標不存在。', 'warn');
     return;
   }
   if (!player) {
-    options.showToast('角色状态尚未就绪。', 'warn');
+    options.showToast('角色狀態尚未就緒。', 'warn');
     return;
   }
   const techniques = getRecordableTechniques(player);
   detailModalHost.open({
     ownerId: MODAL_OWNER,
-    title: '藏经台录入',
-    subtitle: '选择一门已圆满自创功法',
+    title: '藏經臺錄入',
+    subtitle: '選擇一門已圓滿自創功法',
     variantClass: 'detail-modal--craft detail-modal--craft-transmission',
     size: 'md',
     bodyHtml: renderRecordingBody(techniques),
@@ -81,10 +81,10 @@ function renderRecordingBody(techniques: ScriptureTechniqueOption[]): string {
       <div class="alchemy-tab-stack" data-scripture-record-panel="true">
         <section class="alchemy-summary-card">
           <div class="alchemy-summary-head">
-            <div class="alchemy-summary-title">可录入自创功法</div>
-            <span class="alchemy-summary-mode">0 门</span>
+            <div class="alchemy-summary-title">可錄入自創功法</div>
+            <span class="alchemy-summary-mode">0 門</span>
           </div>
-          <div class="empty-hint">当前没有已圆满的自创功法</div>
+          <div class="empty-hint">當前沒有已圓滿的自創功法</div>
         </section>
       </div>
     `;
@@ -98,15 +98,15 @@ function renderRecordingBody(techniques: ScriptureTechniqueOption[]): string {
     <div class="alchemy-tab-stack" data-scripture-record-panel="true">
       <section class="alchemy-summary-card">
         <div class="alchemy-summary-head">
-          <div class="alchemy-summary-title">可录入自创功法</div>
-          <span class="alchemy-summary-mode">${formatDisplayInteger(techniques.length)} 门</span>
+          <div class="alchemy-summary-title">可錄入自創功法</div>
+          <span class="alchemy-summary-mode">${formatDisplayInteger(techniques.length)} 門</span>
         </div>
         <div class="transmission-teach-picker scripture-record-picker">
-          <input class="ui-search-input" type="search" data-scripture-tech-search="true" placeholder="搜索已圆满自创功法">
+          <input class="ui-search-input" type="search" data-scripture-tech-search="true" placeholder="搜索已圓滿自創功法">
           <select class="ui-input" data-scripture-tech-select="true">
             ${optionsHtml}
           </select>
-          <button class="small-btn" type="button" data-scripture-record-start="true">开始录入</button>
+          <button class="small-btn" type="button" data-scripture-record-start="true">開始錄入</button>
         </div>
       </section>
     </div>
@@ -178,7 +178,7 @@ function getTechniqueMetaText(technique: PlayerState['techniques'][number]): str
   const maxLevel = getTechniqueMaxLevel(Array.isArray(technique.layers) ? technique.layers : undefined, level);
   const realmLv = Math.max(1, Math.floor(Number(technique.realmLv) || 1));
   const realmLabel = getLocalRealmLevelEntry(realmLv)?.displayName ?? `Lv.${formatDisplayInteger(realmLv)}`;
-  return `${gradeLabel} · ${categoryLabel} · ${realmLabel} · 第${formatDisplayInteger(level)}/${formatDisplayInteger(maxLevel)}层`;
+  return `${gradeLabel} · ${categoryLabel} · ${realmLabel} · 第${formatDisplayInteger(level)}/${formatDisplayInteger(maxLevel)}層`;
 }
 
 function normalizeText(value: unknown): string {

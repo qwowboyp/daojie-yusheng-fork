@@ -448,7 +448,7 @@ export class MailPanel {
   message?: string }): void {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
-    this.statusMessage = result.message ?? (result.ok ? '已呈报。' : '未果。');
+    this.statusMessage = result.message ?? (result.ok ? '已呈報。' : '未果。');
     if (!result.ok) {
       if (this.shouldRecoverExpiredSession(result)) {
         void this.recoverSessionAndReplayPendingOperation();
@@ -622,7 +622,7 @@ export class MailPanel {
     message?: string;
   }): boolean {
     const message = typeof result.message === 'string' ? result.message : '';
-    if (!message.includes('当前会话已失效')) {
+    if (!message.includes('當前會話已失效')) {
       return false;
     }
     return Boolean(
@@ -645,19 +645,19 @@ export class MailPanel {
     pendingOperation.retriedAfterSessionRecovery = true;
     pendingOperation.awaitingReplayAfterSessionRestore = true;
     this.playerId = '';
-    this.statusMessage = '气机已断，正在重续...';
+    this.statusMessage = '氣機已斷，正在重續...';
     this.render();
     const restored = await recoverSession();
     if (!restored) {
       this.pendingOperation = null;
-      this.statusMessage = '续气未果，请重入天地再试。';
+      this.statusMessage = '續氣未果，請重入天地再試。';
       this.render();
       return;
     }
     if (this.replayPendingOperationAfterSessionRestore()) {
       return;
     }
-    this.statusMessage = '气机已续，静待身显...';
+    this.statusMessage = '氣機已續，靜待身顯...';
     this.render();
   }
 
@@ -670,7 +670,7 @@ export class MailPanel {
       return false;
     }
     pendingOperation.awaitingReplayAfterSessionRestore = false;
-    this.statusMessage = '气机已续，重试呈报...';
+    this.statusMessage = '氣機已續，重試呈報...';
     this.render();
     this.emitMailOperation(pendingOperation.operation, pendingOperation.mailIds);
     return true;

@@ -106,7 +106,7 @@ export function createObserveModalController(options: {
 
     setSubtitle(targetX: number, targetY: number): void {
       if (observeModalSubtitleEl) {
-        observeModalSubtitleEl.textContent = `坐标 (${targetX}, ${targetY})`;
+        observeModalSubtitleEl.textContent = `座標 (${targetX}, ${targetY})`;
       }
     },    
     /**

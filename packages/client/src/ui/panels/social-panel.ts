@@ -104,24 +104,24 @@ const TREASURE_VAULT_DEPOSIT_PAGE_SIZE = 30;
 const MAX_TREASURE_VAULT_DEPOSIT_SELECTION = 100;
 
 const SOCIAL_PANEL_TABS: ReadonlyArray<{ id: SocialPanelTab; label: string; description: string; glyph: string }> = [
-  { id: 'relations', label: '道友名录', description: '查看关系、调整亲疏与发起私聊', glyph: '友' },
-  { id: 'requests', label: '道友申请', description: '处理收到与发出的结交申请', glyph: '帖' },
-  { id: 'nearby', label: '附近修士', description: '扫描身边修士并发起结交或组队', glyph: '近' },
-  { id: 'messages', label: '私聊', description: '打开与道友的往来消息', glyph: '信' },
+  { id: 'relations', label: '道友名錄', description: '查看關係、調整親疏與發起私聊', glyph: '友' },
+  { id: 'requests', label: '道友申請', description: '處理收到與發出的結交申請', glyph: '帖' },
+  { id: 'nearby', label: '附近修士', description: '掃描身邊修士併發起結交或組隊', glyph: '近' },
+  { id: 'messages', label: '私聊', description: '打開與道友的往來消息', glyph: '信' },
 ];
 
 const TREASURE_VAULT_DEPOSIT_SORT_OPTIONS: Array<{ id: TreasureVaultDepositSort; label: string }> = [
-  { id: 'inventory', label: '背包顺序' },
-  { id: 'quality', label: '品质优先' },
-  { id: 'name', label: '名称排序' },
-  { id: 'count', label: '数量优先' },
+  { id: 'inventory', label: '背包順序' },
+  { id: 'quality', label: '品質優先' },
+  { id: 'name', label: '名稱排序' },
+  { id: 'count', label: '數量優先' },
 ];
 
 const TREASURE_VAULT_ITEM_SORT_OPTIONS: Array<{ id: TreasureVaultItemSort; label: string }> = [
-  { id: 'slot', label: '库位顺序' },
-  { id: 'quality', label: '品质优先' },
-  { id: 'name', label: '名称排序' },
-  { id: 'count', label: '数量优先' },
+  { id: 'slot', label: '庫位順序' },
+  { id: 'quality', label: '品質優先' },
+  { id: 'name', label: '名稱排序' },
+  { id: 'count', label: '數量優先' },
 ];
 
 export class SocialPanel {
@@ -437,21 +437,21 @@ export class SocialPanel {
           data-social-action="party"
           data-social-menu="party"
           aria-controls="detail-modal"
-          aria-label="${partyUnread > 0 ? `队伍，${partyUnread} 条未读消息` : '队伍'}"
+          aria-label="${partyUnread > 0 ? `隊伍，${partyUnread} 條未讀消息` : '隊伍'}"
           aria-expanded="${this.partyPanelOpenStateReader?.() === true ? 'true' : 'false'}"
           aria-disabled="${this.partyAvailable ? 'false' : 'true'}"
           ${this.partyAvailable ? '' : 'disabled'}
         >
           <span class="social-menu-card-glyph" aria-hidden="true">伍</span>
-          <span class="social-menu-card-copy"><strong>队伍</strong><small>打开固定尺寸独立面板，查看成员、邀请与管理</small></span>
+          <span class="social-menu-card-copy"><strong>隊伍</strong><small>打開固定尺寸獨立面板，查看成員、邀請與管理</small></span>
           <span class="social-panel-tab-unread" data-social-party-unread="true" aria-hidden="true" ${partyUnread > 0 ? '' : 'hidden'}>${formatSocialUnreadCount(partyUnread)}</span>
         </button>
         ${SOCIAL_PANEL_TABS.map((tab) => {
           const count = this.getTabCount(tab.id);
           const unread = tab.id === 'messages' ? unreadCount : 0;
           const ariaLabel = tab.id === 'messages' && unread > 0
-            ? `${tab.label}，${unread} 条未读消息`
-            : `${tab.label}，${count ?? 0} 项`;
+            ? `${tab.label}，${unread} 條未讀消息`
+            : `${tab.label}，${count ?? 0} 項`;
           return `
             <button
               class="social-menu-card ${this.isMenuOpen(tab.id) ? 'active' : ''} ${unread > 0 ? 'has-unread' : ''}"
@@ -478,8 +478,8 @@ export class SocialPanel {
   private renderTabContent(tab: SocialPanelTab, selected: SocialRelationView | null): string {
     if (tab === 'requests') {
       return `
-        <section class="social-panel-section social-panel-tab-pane social-panel-section--requests" role="region" aria-label="道友申请" data-social-active-tab="requests">
-          ${this.renderSectionHeader('道友申请', this.view.incomingRequests.length + this.view.outgoingRequests.length)}
+        <section class="social-panel-section social-panel-tab-pane social-panel-section--requests" role="region" aria-label="道友申請" data-social-active-tab="requests">
+          ${this.renderSectionHeader('道友申請', this.view.incomingRequests.length + this.view.outgoingRequests.length)}
           ${this.renderRequests()}
         </section>
       `;
@@ -500,7 +500,7 @@ export class SocialPanel {
       return this.renderConversationPanel(selected);
     }
     return `
-      <section class="social-panel-section social-panel-tab-pane social-panel-section--relations" role="region" aria-label="道友名录" data-social-active-tab="relations">
+      <section class="social-panel-section social-panel-tab-pane social-panel-section--relations" role="region" aria-label="道友名錄" data-social-active-tab="relations">
         ${this.renderSectionHeader('我的道友', this.view.relations.length)}
         ${this.renderRelations()}
       </section>
@@ -523,7 +523,7 @@ export class SocialPanel {
     const incoming = this.view.incomingRequests;
     const outgoing = this.view.outgoingRequests;
     if (incoming.length === 0 && outgoing.length === 0) {
-      return `<div class="empty-hint compact">暂无道友申请</div>`;
+      return `<div class="empty-hint compact">暫無道友申請</div>`;
     }
     return `
       <div class="ui-list">
@@ -531,11 +531,11 @@ export class SocialPanel {
           <div class="ui-list-row">
             <div class="ui-list-main">
               <div class="ui-list-title">${escapeHtml(resolveSocialPlayerName(entry.fromPlayerId, entry.fromName))}</div>
-              <div class="ui-list-subtitle">申请结为道友</div>
+              <div class="ui-list-subtitle">申請結為道友</div>
             </div>
             <div class="social-row-actions">
               <button class="small-btn" type="button" data-social-action="accept" data-request-id="${escapeHtml(entry.requestId)}">同意</button>
-              <button class="small-btn ghost" type="button" data-social-action="reject" data-request-id="${escapeHtml(entry.requestId)}">拒绝</button>
+              <button class="small-btn ghost" type="button" data-social-action="reject" data-request-id="${escapeHtml(entry.requestId)}">拒絕</button>
             </div>
           </div>
         `).join('')}
@@ -543,7 +543,7 @@ export class SocialPanel {
           <div class="ui-list-row">
             <div class="ui-list-main">
               <div class="ui-list-title">${escapeHtml(resolveSocialPlayerName(entry.toPlayerId, entry.toName))}</div>
-              <div class="ui-list-subtitle">申请等待回应</div>
+              <div class="ui-list-subtitle">申請等待回應</div>
             </div>
           </div>
         `).join('')}
@@ -553,7 +553,7 @@ export class SocialPanel {
 
   private renderNearby(): string {
     if (this.view.nearbyCandidates.length === 0) {
-      return `<div class="empty-hint compact">附近暂无可申请玩家</div>`;
+      return `<div class="empty-hint compact">附近暫無可申請玩家</div>`;
     }
     return `
       <div class="ui-list">
@@ -561,13 +561,13 @@ export class SocialPanel {
           <div class="ui-list-row">
             <div class="ui-list-main">
               <div class="ui-list-title">${escapeHtml(resolveSocialPlayerName(entry.playerId, entry.name))}</div>
-              <div class="ui-list-subtitle">距离 ${entry.distance}${entry.relationLevel ? ` · ${RELATION_LABEL[entry.relationLevel]}` : entry.pendingRequest ? ' · 已有申请' : ''}</div>
+              <div class="ui-list-subtitle">距離 ${entry.distance}${entry.relationLevel ? ` · ${RELATION_LABEL[entry.relationLevel]}` : entry.pendingRequest ? ' · 已有申請' : ''}</div>
             </div>
             <div class="social-row-actions">
               ${entry.relationLevel || entry.pendingRequest ? '' : `
-                <button class="small-btn" type="button" data-social-action="request" data-player-id="${escapeHtml(entry.playerId)}">申请</button>
+                <button class="small-btn" type="button" data-social-action="request" data-player-id="${escapeHtml(entry.playerId)}">申請</button>
               `}
-              <button class="small-btn ghost" type="button" data-social-action="party_invite" data-player-id="${escapeHtml(entry.playerId)}">邀请组队</button>
+              <button class="small-btn ghost" type="button" data-social-action="party_invite" data-player-id="${escapeHtml(entry.playerId)}">邀請組隊</button>
             </div>
           </div>
         `).join('')}
@@ -577,7 +577,7 @@ export class SocialPanel {
 
   private renderRelations(): string {
     if (this.view.relations.length === 0) {
-      return `<div class="empty-hint compact">暂无道友</div>`;
+      return `<div class="empty-hint compact">暫無道友</div>`;
     }
     return `
       <div class="ui-list">
@@ -586,13 +586,13 @@ export class SocialPanel {
             <div class="ui-list-main">
               <div class="ui-list-title">${escapeHtml(resolveSocialPlayerName(entry.playerId, entry.name))} · ${RELATION_LABEL[entry.level]}</div>
               <div class="ui-list-subtitle">
-                <span class="social-presence ${entry.online ? 'is-online' : 'is-offline'}">${entry.online ? '在线' : '离线'}</span>${entry.instanceName ? ` · ${escapeHtml(resolveSocialInstanceName(entry.instanceId, entry.instanceName))}` : ''}
+                <span class="social-presence ${entry.online ? 'is-online' : 'is-offline'}">${entry.online ? '線上' : '離線'}</span>${entry.instanceName ? ` · ${escapeHtml(resolveSocialInstanceName(entry.instanceId, entry.instanceName))}` : ''}
               </div>
             </div>
             <div class="social-row-actions">
-              ${entry.online ? `<button class="small-btn ghost" type="button" data-social-action="party_invite" data-player-id="${escapeHtml(entry.playerId)}">邀请组队</button>` : ''}
+              ${entry.online ? `<button class="small-btn ghost" type="button" data-social-action="party_invite" data-player-id="${escapeHtml(entry.playerId)}">邀請組隊</button>` : ''}
               <button class="small-btn" type="button" data-social-action="chat" data-player-id="${escapeHtml(entry.playerId)}">私聊</button>
-              <button class="small-btn ghost" type="button" data-social-action="${entry.level === 'close_friend' ? 'dao_friend' : 'close_friend'}" data-player-id="${escapeHtml(entry.playerId)}">${entry.level === 'close_friend' ? '降为道友' : '设为至交'}</button>
+              <button class="small-btn ghost" type="button" data-social-action="${entry.level === 'close_friend' ? 'dao_friend' : 'close_friend'}" data-player-id="${escapeHtml(entry.playerId)}">${entry.level === 'close_friend' ? '降為道友' : '設為至交'}</button>
               <button class="small-btn ghost" type="button" data-social-action="remove" data-player-id="${escapeHtml(entry.playerId)}">解除</button>
             </div>
           </div>
@@ -607,7 +607,7 @@ export class SocialPanel {
         ${this.renderSectionHeader('私聊', this.view.relations.length)}
         <div class="social-conversation-workspace">
           <aside class="social-conversation-contacts" aria-label="私聊道友">
-            <div class="social-conversation-contacts-title">会话道友</div>
+            <div class="social-conversation-contacts-title">會話道友</div>
             ${this.renderConversationContacts(selected?.playerId ?? null)}
           </aside>
           ${this.renderConversationSection(selected)}
@@ -618,14 +618,14 @@ export class SocialPanel {
 
   private renderConversationContacts(selectedPlayerId: string | null): string {
     if (this.view.relations.length === 0) {
-      return '<div class="empty-hint compact">暂无可私聊的道友</div>';
+      return '<div class="empty-hint compact">暫無可私聊的道友</div>';
     }
     return `
       <div class="ui-list social-conversation-peer-list">
         ${this.view.relations.map((entry) => {
           const unreadCount = this.unreadMessagesByPlayerId.get(entry.playerId) ?? 0;
           const playerName = resolveSocialPlayerName(entry.playerId, entry.name);
-          const ariaLabel = unreadCount > 0 ? `${playerName}，${unreadCount} 条未读消息` : playerName;
+          const ariaLabel = unreadCount > 0 ? `${playerName}，${unreadCount} 條未讀消息` : playerName;
           return `
             <div class="ui-list-row ${entry.playerId === selectedPlayerId ? 'active' : ''}" data-social-relation-row="${escapeHtml(entry.playerId)}">
               <button class="ui-list-main text-left" type="button" data-social-action="select" data-player-id="${escapeHtml(entry.playerId)}" aria-label="${escapeHtml(ariaLabel)}" aria-pressed="${entry.playerId === selectedPlayerId ? 'true' : 'false'}">
@@ -634,7 +634,7 @@ export class SocialPanel {
                   <span class="social-conversation-peer-unread" data-social-peer-unread="${escapeHtml(entry.playerId)}" aria-hidden="true" ${unreadCount > 0 ? '' : 'hidden'}>${formatSocialUnreadCount(unreadCount)}</span>
                 </div>
                 <div class="ui-list-subtitle">
-                  <span class="social-presence ${entry.online ? 'is-online' : 'is-offline'}">${entry.online ? '在线' : '离线'}</span>
+                  <span class="social-presence ${entry.online ? 'is-online' : 'is-offline'}">${entry.online ? '線上' : '離線'}</span>
                 </div>
               </button>
             </div>
@@ -648,7 +648,7 @@ export class SocialPanel {
     return `
       <div class="social-conversation-detail" data-social-conversation-host="true">
         <div class="social-panel-section-head">
-          <div class="social-panel-section-title">对话</div>
+          <div class="social-panel-section-title">對話</div>
           ${selected ? `<span class="social-conversation-peer">${escapeHtml(resolveSocialPlayerName(selected.playerId, selected.name))}</span>` : ''}
         </div>
         ${this.renderMessages(selected)}
@@ -658,17 +658,17 @@ export class SocialPanel {
 
   private renderMessages(selected: SocialRelationView | null): string {
     if (!selected) {
-      return '<div class="empty-hint social-conversation-empty">选择一位道友开始私聊</div>';
+      return '<div class="empty-hint social-conversation-empty">選擇一位道友開始私聊</div>';
     }
     const messages = this.messagesByPlayerId.get(selected.playerId) ?? [];
     return `
       <div class="social-message-list" data-social-conversation-peer="${escapeHtml(selected.playerId)}">
         ${messages.length === 0
-          ? '<div class="empty-hint" data-social-message-empty="true">暂无消息</div>'
+          ? '<div class="empty-hint" data-social-message-empty="true">暫無消息</div>'
           : messages.map((entry) => this.renderMessageRow(entry)).join('')}
         <div class="ui-input-row" data-social-message-compose="true">
-          <input class="ui-input" data-social-message-input data-social-message-peer="${escapeHtml(selected.playerId)}" type="text" maxlength="200" placeholder="发送消息">
-          <button class="small-btn" type="button" data-social-action="send" data-player-id="${escapeHtml(selected.playerId)}">发送</button>
+          <input class="ui-input" data-social-message-input data-social-message-peer="${escapeHtml(selected.playerId)}" type="text" maxlength="200" placeholder="發送消息">
+          <button class="small-btn" type="button" data-social-action="send" data-player-id="${escapeHtml(selected.playerId)}">發送</button>
         </div>
       </div>
     `;
@@ -1019,7 +1019,7 @@ export class SocialPanel {
       partyButton.classList.toggle('active', partyOpen);
       partyButton.classList.toggle('has-unread', partyUnread > 0);
       partyButton.setAttribute('aria-expanded', partyOpen ? 'true' : 'false');
-      partyButton.setAttribute('aria-label', partyUnread > 0 ? `队伍，${partyUnread} 条未读消息` : '队伍');
+      partyButton.setAttribute('aria-label', partyUnread > 0 ? `隊伍，${partyUnread} 條未讀消息` : '隊伍');
       const badge = partyButton.querySelector<HTMLElement>('[data-social-party-unread="true"]');
       if (badge) {
         badge.hidden = partyUnread <= 0;
@@ -1035,11 +1035,11 @@ export class SocialPanel {
       button.setAttribute('aria-expanded', active ? 'true' : 'false');
       const count = this.getTabCount(tab);
       const label = SOCIAL_PANEL_TABS.find((entry) => entry.id === tab)?.label ?? tab;
-      this.floatingMenus[tab].setTitle(tab === 'messages' && unreadCount > 0 ? `${label} · ${unreadCount > 99 ? '99+' : unreadCount} 条未读` : label);
+      this.floatingMenus[tab].setTitle(tab === 'messages' && unreadCount > 0 ? `${label} · ${unreadCount > 99 ? '99+' : unreadCount} 條未讀` : label);
       const countNode = button.querySelector<HTMLElement>('[data-social-tab-count="true"]');
       if (countNode && count !== null) countNode.textContent = String(count);
       if (tab !== 'messages') {
-        button.setAttribute('aria-label', `${SOCIAL_PANEL_TABS.find((entry) => entry.id === tab)?.label ?? tab}，${count ?? 0} 项`);
+        button.setAttribute('aria-label', `${SOCIAL_PANEL_TABS.find((entry) => entry.id === tab)?.label ?? tab}，${count ?? 0} 項`);
         continue;
       }
       const unreadNode = button.querySelector<HTMLElement>('[data-social-tab-unread="true"]');
@@ -1049,7 +1049,7 @@ export class SocialPanel {
       }
       button.classList.toggle('has-unread', unreadCount > 0);
       button.dataset.hasUnread = unreadCount > 0 ? 'true' : 'false';
-      button.setAttribute('aria-label', unreadCount > 0 ? `私聊，${unreadCount} 条未读消息` : '私聊');
+      button.setAttribute('aria-label', unreadCount > 0 ? `私聊，${unreadCount} 條未讀消息` : '私聊');
     }
   }
 
@@ -1058,7 +1058,7 @@ export class SocialPanel {
     const unreadCount = this.unreadMessagesByPlayerId.get(playerId) ?? 0;
     const relation = this.view.relations.find((entry) => entry.playerId === playerId);
     const playerName = resolveSocialPlayerName(playerId, relation?.name);
-    const ariaLabel = unreadCount > 0 ? `${playerName}，${unreadCount} 条未读消息` : playerName;
+    const ariaLabel = unreadCount > 0 ? `${playerName}，${unreadCount} 條未讀消息` : playerName;
     for (const badge of this.floatingMenus.messages.body.querySelectorAll<HTMLElement>('[data-social-peer-unread]')) {
       if (badge.dataset.socialPeerUnread !== playerId) {
         continue;
@@ -1549,13 +1549,13 @@ export class TreasureVaultModal {
     this.depositPage = snapshot.page;
     const selectedCount = this.selectedDepositCounts.size;
     this.depositPickerRoot.innerHTML = `
-      <div class="ui-modal-card ui-modal-card--wide treasure-vault-deposit-picker-card" role="dialog" aria-modal="true" aria-label="批量放入宝库物品">
+      <div class="ui-modal-card ui-modal-card--wide treasure-vault-deposit-picker-card" role="dialog" aria-modal="true" aria-label="批量放入寶庫物品">
         <div class="ui-modal-head treasure-vault-modal-head">
           <div>
             <div class="ui-modal-title">批量放入</div>
-            <div class="ui-modal-subtitle">从背包选择物品 · 已选 <span data-vault-deposit-selected-count>${formatDisplayCountBadge(selectedCount)}</span> 组</div>
+            <div class="ui-modal-subtitle">從背包選擇物品 · 已選 <span data-vault-deposit-selected-count>${formatDisplayCountBadge(selectedCount)}</span> 組</div>
           </div>
-          <button class="small-btn ghost" type="button" data-vault-deposit-action="close" ${this.depositSubmitting ? 'disabled' : ''}>关闭</button>
+          <button class="small-btn ghost" type="button" data-vault-deposit-action="close" ${this.depositSubmitting ? 'disabled' : ''}>關閉</button>
         </div>
         <div class="treasure-vault-deposit-picker-body">
           <div class="ui-filter-tabs treasure-vault-deposit-filter-tabs">
@@ -1572,23 +1572,23 @@ export class TreasureVaultModal {
                 ${TREASURE_VAULT_DEPOSIT_SORT_OPTIONS.map((option) => `<option value="${option.id}" ${this.depositSort === option.id ? 'selected' : ''}>${escapeHtml(option.label)}</option>`).join('')}
               </select>
             </label>
-            <span class="treasure-vault-deposit-page-summary">当前页 ${formatDisplayCountBadge(snapshot.pageItems.length)} 组 · 共 ${formatDisplayCountBadge(snapshot.totalItems)} 组</span>
+            <span class="treasure-vault-deposit-page-summary">當前頁 ${formatDisplayCountBadge(snapshot.pageItems.length)} 組 · 共 ${formatDisplayCountBadge(snapshot.totalItems)} 組</span>
             <div class="treasure-vault-deposit-tools">
-              <button class="small-btn ghost" type="button" data-vault-deposit-action="select-page" ${snapshot.pageItems.length === 0 || this.depositSubmitting ? 'disabled' : ''}>${snapshot.allPageSelected ? '取消当前页' : '选中当前页'}</button>
+              <button class="small-btn ghost" type="button" data-vault-deposit-action="select-page" ${snapshot.pageItems.length === 0 || this.depositSubmitting ? 'disabled' : ''}>${snapshot.allPageSelected ? '取消當前頁' : '選中當前頁'}</button>
               <button class="small-btn ghost" type="button" data-vault-deposit-action="clear" ${selectedCount === 0 || this.depositSubmitting ? 'disabled' : ''}>清空</button>
             </div>
           </div>
           ${snapshot.pageItems.length > 0
             ? `<div class="inventory-grid treasure-vault-deposit-grid">${snapshot.pageItems.map((entry) => this.renderDepositInventoryCell(entry.item, entry.itemInstanceId)).join('')}</div>`
-            : '<div class="empty-hint">当前类型下没有可存入物品</div>'}
+            : '<div class="empty-hint">當前類型下沒有可存入物品</div>'}
           <div class="inventory-pagination treasure-vault-deposit-pagination">
-            <button class="small-btn ghost" type="button" data-vault-deposit-action="page" data-vault-deposit-page="prev" ${snapshot.page <= 0 || this.depositSubmitting ? 'disabled' : ''}>上一页</button>
-            <span class="inventory-pagination-status">第 ${snapshot.page + 1}/${snapshot.pageCount} 页</span>
-            <button class="small-btn ghost" type="button" data-vault-deposit-action="page" data-vault-deposit-page="next" ${snapshot.page >= snapshot.pageCount - 1 || this.depositSubmitting ? 'disabled' : ''}>下一页</button>
+            <button class="small-btn ghost" type="button" data-vault-deposit-action="page" data-vault-deposit-page="prev" ${snapshot.page <= 0 || this.depositSubmitting ? 'disabled' : ''}>上一頁</button>
+            <span class="inventory-pagination-status">第 ${snapshot.page + 1}/${snapshot.pageCount} 頁</span>
+            <button class="small-btn ghost" type="button" data-vault-deposit-action="page" data-vault-deposit-page="next" ${snapshot.page >= snapshot.pageCount - 1 || this.depositSubmitting ? 'disabled' : ''}>下一頁</button>
           </div>
           <div class="ui-modal-actions treasure-vault-deposit-actions">
             <button class="small-btn ghost" type="button" data-vault-deposit-action="close" ${this.depositSubmitting ? 'disabled' : ''}>取消</button>
-            <button class="small-btn" type="button" data-vault-deposit-action="confirm" ${selectedCount === 0 || this.depositSubmitting ? 'disabled' : ''}>${this.depositSubmitting ? '存入中…' : `存入已选（${formatDisplayCountBadge(selectedCount)}）`}</button>
+            <button class="small-btn" type="button" data-vault-deposit-action="confirm" ${selectedCount === 0 || this.depositSubmitting ? 'disabled' : ''}>${this.depositSubmitting ? '存入中…' : `存入已選（${formatDisplayCountBadge(selectedCount)}）`}</button>
           </div>
         </div>
       </div>
@@ -1676,7 +1676,7 @@ export class TreasureVaultModal {
     const displayName = itemMeta.displayItem.name;
     return `
       <div class="treasure-vault-deposit-item" data-vault-deposit-entry data-item-instance-id="${escapeHtml(itemInstanceId)}">
-        <button class="${getItemDecorClassName('inventory-cell', item as ItemStack)} treasure-vault-deposit-cell${selected ? ' selected' : ''}" type="button" data-vault-deposit-action="toggle" data-item-instance-id="${escapeHtml(itemInstanceId)}" aria-pressed="${selected ? 'true' : 'false'}" aria-label="${selected ? '取消选择' : '选择'}${escapeHtml(displayName)}" ${this.depositSubmitting ? 'disabled' : ''}>
+        <button class="${getItemDecorClassName('inventory-cell', item as ItemStack)} treasure-vault-deposit-cell${selected ? ' selected' : ''}" type="button" data-vault-deposit-action="toggle" data-item-instance-id="${escapeHtml(itemInstanceId)}" aria-pressed="${selected ? 'true' : 'false'}" aria-label="${selected ? '取消選擇' : '選擇'}${escapeHtml(displayName)}" ${this.depositSubmitting ? 'disabled' : ''}>
           <span class="treasure-vault-deposit-check" aria-hidden="true">${selected ? '✓' : ''}</span>
           ${this.renderInventoryCellContent(item as ItemStack)}
         </button>
@@ -1688,7 +1688,7 @@ export class TreasureVaultModal {
             inputAttrs: {
               'data-vault-deposit-count': true,
               'data-item-instance-id': itemInstanceId,
-              'aria-label': `存入${displayName}数量`,
+              'aria-label': `存入${displayName}數量`,
               disabled: !selected || this.depositSubmitting,
             },
             leftButtons: [{
@@ -1696,7 +1696,7 @@ export class TreasureVaultModal {
               attrs: {
                 'data-vault-deposit-action': 'decrease-count',
                 'data-item-instance-id': itemInstanceId,
-                'aria-label': `减少${displayName}存入数量`,
+                'aria-label': `減少${displayName}存入數量`,
               },
               disabled: !selected || this.depositSubmitting || selectedCount <= 1,
             }],
@@ -1705,7 +1705,7 @@ export class TreasureVaultModal {
               attrs: {
                 'data-vault-deposit-action': 'increase-count',
                 'data-item-instance-id': itemInstanceId,
-                'aria-label': `增加${displayName}存入数量`,
+                'aria-label': `增加${displayName}存入數量`,
               },
               disabled: !selected || this.depositSubmitting || selectedCount >= availableCount,
             }],
@@ -1757,7 +1757,7 @@ export class TreasureVaultModal {
       cell.classList.toggle('selected', selected);
       cell.setAttribute('aria-pressed', selected ? 'true' : 'false');
       const itemName = cell.querySelector<HTMLElement>('.inventory-cell-name')?.textContent?.trim() ?? '物品';
-      cell.setAttribute('aria-label', `${selected ? '取消选择' : '选择'}${itemName}`);
+      cell.setAttribute('aria-label', `${selected ? '取消選擇' : '選擇'}${itemName}`);
       cell.disabled = this.depositSubmitting;
       const check = cell.querySelector<HTMLElement>('.treasure-vault-deposit-check');
       if (check) check.textContent = selected ? '✓' : '';
@@ -1767,7 +1767,7 @@ export class TreasureVaultModal {
     }
     const selectPageButton = this.depositPickerRoot.querySelector<HTMLButtonElement>('[data-vault-deposit-action="select-page"]');
     if (selectPageButton) {
-      selectPageButton.textContent = snapshot.allPageSelected ? '取消当前页' : '选中当前页';
+      selectPageButton.textContent = snapshot.allPageSelected ? '取消當前頁' : '選中當前頁';
       selectPageButton.disabled = snapshot.pageItems.length === 0 || this.depositSubmitting;
     }
     const clearButton = this.depositPickerRoot.querySelector<HTMLButtonElement>('[data-vault-deposit-action="clear"]');
@@ -1775,7 +1775,7 @@ export class TreasureVaultModal {
     const confirmButton = this.depositPickerRoot.querySelector<HTMLButtonElement>('[data-vault-deposit-action="confirm"]');
     if (confirmButton) {
       confirmButton.disabled = selectedCount === 0 || this.depositSubmitting;
-      confirmButton.textContent = this.depositSubmitting ? '存入中…' : `存入已选（${formatDisplayCountBadge(selectedCount)}）`;
+      confirmButton.textContent = this.depositSubmitting ? '存入中…' : `存入已選（${formatDisplayCountBadge(selectedCount)}）`;
     }
     this.depositPickerRoot.querySelectorAll<HTMLButtonElement>('[data-vault-deposit-action="close"]').forEach((button) => {
       button.disabled = this.depositSubmitting;
@@ -1882,12 +1882,12 @@ export class TreasureVaultModal {
           <div class="treasure-vault-title-block">
             ${canEditPermissions && this.renaming
               ? `<div class="treasure-vault-rename-row">
-                  <input type="text" maxlength="20" value="${escapeHtml(detail.buildingName)}" data-vault-name-input aria-label="宝库名称" />
+                  <input type="text" maxlength="20" value="${escapeHtml(detail.buildingName)}" data-vault-name-input aria-label="寶庫名稱" />
                   <button class="small-btn" type="button" data-vault-action="rename">保存</button>
                   <button class="small-btn ghost" type="button" data-vault-action="cancel-rename">取消</button>
                 </div>`
               : `<div class="treasure-vault-title-row">
-                  <div class="ui-modal-title">${escapeHtml(detail.buildingName)}仓库</div>
+                  <div class="ui-modal-title">${escapeHtml(detail.buildingName)}倉庫</div>
                   ${canEditPermissions ? '<button class="small-btn ghost" type="button" data-vault-action="begin-rename">重命名</button>' : ''}
                 </div>`}
             <div class="ui-modal-subtitle">${this.renderVaultSubtitle(detail)}</div>
@@ -1895,8 +1895,8 @@ export class TreasureVaultModal {
         </div>
         <div class="ui-tabbed-modal-shell treasure-vault-shell">
           <div class="ui-tabbed-modal-tabs treasure-vault-tabs">
-            <button class="ui-tabbed-modal-tab ${activeTab === 'items' ? 'active' : ''}" type="button" data-vault-action="tab" data-vault-tab="items">仓库</button>
-            ${canEditPermissions ? `<button class="ui-tabbed-modal-tab ${activeTab === 'permissions' ? 'active' : ''}" type="button" data-vault-action="tab" data-vault-tab="permissions">使用权限</button>` : ''}
+            <button class="ui-tabbed-modal-tab ${activeTab === 'items' ? 'active' : ''}" type="button" data-vault-action="tab" data-vault-tab="items">倉庫</button>
+            ${canEditPermissions ? `<button class="ui-tabbed-modal-tab ${activeTab === 'permissions' ? 'active' : ''}" type="button" data-vault-action="tab" data-vault-tab="permissions">使用權限</button>` : ''}
           </div>
           <div class="ui-modal-body treasure-vault-body">
             ${activeTab === 'permissions'
@@ -1928,17 +1928,17 @@ export class TreasureVaultModal {
       <div class="treasure-vault-layout">
         <section class="treasure-vault-section treasure-vault-section--items">
           <div class="treasure-vault-items-toolbar">
-            <div class="panel-section-title">宝库物品</div>
+            <div class="panel-section-title">寶庫物品</div>
             ${detail.effectivePermissions.view ? `
               <div class="treasure-vault-items-tools">
                 <label class="treasure-vault-item-sort">
                   <span>排序</span>
-                  <select class="ui-input" data-vault-item-sort aria-label="宝库物品排序">
+                  <select class="ui-input" data-vault-item-sort aria-label="寶庫物品排序">
                     ${TREASURE_VAULT_ITEM_SORT_OPTIONS.map((option) => `<option value="${option.id}" ${this.itemSort === option.id ? 'selected' : ''}>${escapeHtml(option.label)}</option>`).join('')}
                   </select>
                 </label>
                 ${canEditPermissions
-                  ? `<button class="small-btn ghost" type="button" data-vault-action="organize" ${detail.items.length === 0 || this.organizeSubmitting ? 'disabled' : ''}>${this.organizeSubmitting ? '整理中…' : '一键整理'}</button>`
+                  ? `<button class="small-btn ghost" type="button" data-vault-action="organize" ${detail.items.length === 0 || this.organizeSubmitting ? 'disabled' : ''}>${this.organizeSubmitting ? '整理中…' : '一鍵整理'}</button>`
                   : ''}
               </div>
             ` : ''}
@@ -1956,10 +1956,10 @@ export class TreasureVaultModal {
 
   private renderItems(detail: TreasureVaultDetailView): string {
     if (!detail.effectivePermissions.view) {
-      return `<div class="empty-hint">无权查看宝库</div>`;
+      return `<div class="empty-hint">無權查看寶庫</div>`;
     }
     if (detail.items.length === 0) {
-      return `<div class="empty-hint">宝库为空</div>`;
+      return `<div class="empty-hint">寶庫為空</div>`;
     }
     return `
       <div class="inventory-grid treasure-vault-inventory-grid">
@@ -2018,7 +2018,7 @@ export class TreasureVaultModal {
     const button = this.root.querySelector<HTMLButtonElement>('[data-vault-action="organize"]');
     if (!button) return;
     button.disabled = this.organizeSubmitting || (this.detail?.items.length ?? 0) === 0;
-    button.textContent = this.organizeSubmitting ? '整理中…' : '一键整理';
+    button.textContent = this.organizeSubmitting ? '整理中…' : '一鍵整理';
   }
 
   private renderInventoryCell(item: TreasureVaultDetailView['items'][number]): string {
@@ -2026,7 +2026,7 @@ export class TreasureVaultModal {
     const displayName = itemMeta.displayItem.name;
     const gradeLineLabel = this.getInventoryGradeLineLabel(item as ItemStack);
     return `
-      <button class="${getItemDecorClassName('inventory-cell', item as ItemStack)}" type="button" data-vault-action="item-detail" data-storage-item-id="${escapeHtml(item.storageItemId)}" data-vault-row="true" data-item-type="${escapeHtml(item.type)}" ${itemMeta.grade ? `data-item-grade="${escapeHtml(itemMeta.grade)}"` : ''} ${gradeLineLabel ? 'data-item-grade-line-visible="true"' : ''} aria-label="查看${escapeHtml(displayName)}详情">
+      <button class="${getItemDecorClassName('inventory-cell', item as ItemStack)}" type="button" data-vault-action="item-detail" data-storage-item-id="${escapeHtml(item.storageItemId)}" data-vault-row="true" data-item-type="${escapeHtml(item.type)}" ${itemMeta.grade ? `data-item-grade="${escapeHtml(itemMeta.grade)}"` : ''} ${gradeLineLabel ? 'data-item-grade-line-visible="true"' : ''} aria-label="查看${escapeHtml(displayName)}詳情">
         ${this.renderInventoryCellContent(item as ItemStack)}
       </button>
     `;
@@ -2129,20 +2129,20 @@ export class TreasureVaultModal {
     const availableCount = Math.max(1, Math.trunc(Number(item.count) || 1));
     const actionHtml = canWithdraw
       ? `<div class="treasure-vault-withdraw-quantity">
-          <span>取出数量</span>
+          <span>取出數量</span>
           ${renderTradeQuantityControl({
             value: 1,
             min: 1,
             max: availableCount,
             inputAttrs: {
               'data-vault-detail-withdraw-count': true,
-              'aria-label': '取出数量',
+              'aria-label': '取出數量',
             },
             leftButtons: [{
               label: '-',
               attrs: {
                 'data-vault-detail-withdraw-step': 'decrease',
-                'aria-label': '减少取出数量',
+                'aria-label': '減少取出數量',
               },
               disabled: true,
             }],
@@ -2150,21 +2150,21 @@ export class TreasureVaultModal {
               label: '+',
               attrs: {
                 'data-vault-detail-withdraw-step': 'increase',
-                'aria-label': '增加取出数量',
+                'aria-label': '增加取出數量',
               },
               disabled: availableCount <= 1,
             }],
           })}
         </div>
-        <div class="inventory-detail-actions"><div class="inventory-detail-actions-group inventory-detail-actions-group--right inventory-detail-actions-group--stretch"><button class="small-btn ghost" type="button" data-vault-detail-withdraw="custom">取出指定数量</button><button class="small-btn" type="button" data-vault-detail-withdraw="all">取出全部</button></div></div>`
-      : '<div class="empty-hint compact">无权取出该宝库物品</div>';
+        <div class="inventory-detail-actions"><div class="inventory-detail-actions-group inventory-detail-actions-group--right inventory-detail-actions-group--stretch"><button class="small-btn ghost" type="button" data-vault-detail-withdraw="custom">取出指定數量</button><button class="small-btn" type="button" data-vault-detail-withdraw="all">取出全部</button></div></div>`
+      : '<div class="empty-hint compact">無權取出該寶庫物品</div>';
     return `
       <div class="quest-detail-grid inventory-detail-grid">
-        <div class="quest-detail-section"><strong>物品类型</strong><span>${escapeHtml(resolveItemTypeLabel(item as ItemStack))}</span></div>
-        <div class="quest-detail-section"><strong>当前数量</strong><span>${escapeHtml(formatDisplayCountBadge(item.count))}</span></div>
+        <div class="quest-detail-section"><strong>物品類型</strong><span>${escapeHtml(resolveItemTypeLabel(item as ItemStack))}</span></div>
+        <div class="quest-detail-section"><strong>當前數量</strong><span>${escapeHtml(formatDisplayCountBadge(item.count))}</span></div>
       </div>
       <div class="quest-detail-section"><strong>描述</strong><span>${escapeHtml(previewItem.desc)}</span></div>
-      ${bonusLines.length > 0 ? `<div class="quest-detail-section"><strong>属性</strong><span>${escapeHtml(bonusLines.join(' / '))}</span></div>` : ''}
+      ${bonusLines.length > 0 ? `<div class="quest-detail-section"><strong>屬性</strong><span>${escapeHtml(bonusLines.join(' / '))}</span></div>` : ''}
       ${materialValueLines.length > 0 ? `<div class="quest-detail-section"><strong>材料五行</strong><span>${escapeHtml(materialValueLines.join(' / '))}</span></div>` : ''}
       ${effectLines.length > 0 ? `<div class="quest-detail-section"><strong>效果</strong><span>${escapeHtml(effectLines.join(' / '))}</span></div>` : ''}
       ${actionHtml}
@@ -2180,8 +2180,8 @@ export class TreasureVaultModal {
     if (item.type === 'skill_book') {
       const isFragment = this.isTechniqueBookFragment(item);
       return {
-        label: isFragment ? '残卷' : '功法',
-        title: isFragment ? '功法残卷' : '完整功法书',
+        label: isFragment ? '殘卷' : '功法',
+        title: isFragment ? '功法殘卷' : '完整功法書',
       };
     }
     if (itemMeta.affinityBadge) {
@@ -2209,11 +2209,11 @@ export class TreasureVaultModal {
   private getInventoryMaterialRibbonLabel(item: ItemStack): string {
     switch (item.materialCategory) {
       case 'herb':
-        return '药材';
+        return '藥材';
       case 'exotic':
-        return '异材';
+        return '異材';
       case 'ore':
-        return '矿石';
+        return '礦石';
       default:
         return getItemTypeLabel(item.type);
     }
@@ -2251,14 +2251,14 @@ export class TreasureVaultModal {
 
   private renderDeposit(detail: TreasureVaultDetailView): string {
     if (!detail.effectivePermissions.deposit) {
-      return '<div class="empty-hint compact">无权向宝库存入物品</div>';
+      return '<div class="empty-hint compact">無權向寶庫存入物品</div>';
     }
     if (this.getDepositableInventoryEntries().length === 0) {
-      return '<div class="empty-hint compact">背包里暂无可存入物品</div>';
+      return '<div class="empty-hint compact">背包裡暫無可存入物品</div>';
     }
     return `
       <div class="treasure-vault-deposit-entry">
-        <div class="panel-subtext">从背包按类型筛选并多选物品，可一次存入多组完整堆叠。</div>
+        <div class="panel-subtext">從背包按類型篩選並多選物品，可一次存入多組完整堆疊。</div>
         <button class="small-btn" type="button" data-vault-action="open-deposit-picker">批量放入</button>
       </div>
     `;
@@ -2298,25 +2298,25 @@ export class TreasureVaultModal {
   private renderPermissionSummary(detail: TreasureVaultDetailView, canEditPermissions: boolean): string {
     return `
       <div class="treasure-vault-permission-summary">
-        <div class="panel-section-title">当前规则</div>
-        <div class="panel-row"><span class="panel-label">可看和可放</span><span class="panel-value">${detail.effectivePermissions.view ? '当前角色允许' : '当前角色不允许'}</span></div>
-        <div class="panel-row"><span class="panel-label">可拿</span><span class="panel-value">${detail.effectivePermissions.withdraw ? '当前角色允许' : '当前角色不允许'}</span></div>
+        <div class="panel-section-title">當前規則</div>
+        <div class="panel-row"><span class="panel-label">可看和可放</span><span class="panel-value">${detail.effectivePermissions.view ? '當前角色允許' : '當前角色不允許'}</span></div>
+        <div class="panel-row"><span class="panel-label">可拿</span><span class="panel-value">${detail.effectivePermissions.withdraw ? '當前角色允許' : '當前角色不允許'}</span></div>
         ${canEditPermissions
-          ? '<button class="small-btn" type="button" data-vault-action="tab" data-vault-tab="permissions">设置使用权限</button>'
-          : '<div class="panel-subtext">使用权限仅建造者可设置。</div>'}
+          ? '<button class="small-btn" type="button" data-vault-action="tab" data-vault-tab="permissions">設置使用權限</button>'
+          : '<div class="panel-subtext">使用權限僅建造者可設置。</div>'}
       </div>
     `;
   }
 
   private renderPermissions(detail: TreasureVaultDetailView, canEdit: boolean): string {
     if (!canEdit) {
-      return '<div class="empty-hint">使用权限仅建造者可设置。</div>';
+      return '<div class="empty-hint">使用權限僅建造者可設置。</div>';
     }
     return `
       <div class="treasure-vault-permission-editor">
-        <div class="panel-section-title">设置使用权限</div>
-        <div class="panel-subtext">建造者始终拥有管理权限；下方两项策略分别控制可看和可放、可拿。</div>
-        <div data-vault-access-policy-editor="true"><div class="empty-hint">正在读取权限策略...</div></div>
+        <div class="panel-section-title">設置使用權限</div>
+        <div class="panel-subtext">建造者始終擁有管理權限；下方兩項策略分別控制可看和可放、可拿。</div>
+        <div data-vault-access-policy-editor="true"><div class="empty-hint">正在讀取權限策略...</div></div>
       </div>
     `;
   }
@@ -2342,7 +2342,7 @@ export class TreasureVaultModal {
       });
     } catch (error) {
       if (token !== this.accessPolicyLoadToken || !host.isConnected) return;
-      host.innerHTML = `<div class="empty-hint">${escapeHtml(error instanceof Error ? error.message : '权限读取失败，请稍后重试。')}</div>`;
+      host.innerHTML = `<div class="empty-hint">${escapeHtml(error instanceof Error ? error.message : '權限讀取失敗，請稍後重試。')}</div>`;
     }
   }
 

@@ -99,14 +99,14 @@ export class AccessPolicyResourceEditor {
     const title = document.createElement('strong');
     title.textContent = this.snapshot.title;
     const hint = document.createElement('span');
-    hint.textContent = '每项权限固定为所有人、仅所有者或自定义策略，并分别保存。';
+    hint.textContent = '每項權限固定為所有人、僅所有者或自定義策略，並分別保存。';
     header.append(title, hint);
     shell.append(header);
 
     const tabs = document.createElement('div');
     tabs.className = 'access-policy-resource-tabs';
     tabs.setAttribute('role', 'tablist');
-    tabs.setAttribute('aria-label', `${this.snapshot.title}权限`);
+    tabs.setAttribute('aria-label', `${this.snapshot.title}權限`);
 
     const body = document.createElement('div');
     body.className = 'access-policy-resource-body';
@@ -134,15 +134,15 @@ export class AccessPolicyResourceEditor {
       const slotTitle = document.createElement('strong');
       slotTitle.textContent = slot.label;
       const description = document.createElement('span');
-      description.textContent = slot.description || '控制该操作是否允许其他玩家使用。';
+      description.textContent = slot.description || '控制該操作是否允許其他玩家使用。';
       const defaultSummary = document.createElement('small');
-      defaultSummary.textContent = `默认策略：${describePolicy(slot.defaultPolicy)}`;
+      defaultSummary.textContent = `預設策略：${describePolicy(slot.defaultPolicy)}`;
       copy.append(slotTitle, description, defaultSummary);
       const reset = document.createElement('button');
       reset.type = 'button';
       reset.className = 'small-btn ghost';
       reset.dataset.accessPolicyReset = slot.slot;
-      reset.textContent = '恢复默认策略';
+      reset.textContent = '恢復預設策略';
       reset.disabled = this.disabled;
       intro.append(copy, reset);
 
@@ -185,6 +185,6 @@ export class AccessPolicyResourceEditor {
 
 function describePolicy(policy: AccessPolicy): string {
   if (policy.mode === 'everyone') return '所有人';
-  if (policy.mode === 'owner_only') return '仅所有者';
-  return policy.operator === 'all' ? '自定义策略，全部满足' : '自定义策略，满足任一';
+  if (policy.mode === 'owner_only') return '僅所有者';
+  return policy.operator === 'all' ? '自定義策略，全部滿足' : '自定義策略，滿足任一';
 }

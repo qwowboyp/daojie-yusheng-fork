@@ -117,10 +117,10 @@ function resolveMedicineCategoryLabel(item: ItemStack): string | null {
   if (materialCategoryLabel) {
     labels.push(materialCategoryLabel);
   }
-  if (tags.includes('生命回复')) {
+  if (tags.includes('生命回覆')) {
     labels.push(t('equipment-tooltip.medicine-category.hp', undefined));
   }
-  if (tags.includes('灵力回复') && !labels.includes(t('equipment-tooltip.medicine-category.qi', undefined))) {
+  if (tags.includes('靈力回覆') && !labels.includes(t('equipment-tooltip.medicine-category.qi', undefined))) {
     labels.push(t('equipment-tooltip.medicine-category.qi', undefined));
   }
   if (tags.includes('增益') && !labels.includes(t('equipment-tooltip.medicine-category.buff', undefined))) {
@@ -129,10 +129,10 @@ function resolveMedicineCategoryLabel(item: ItemStack): string | null {
   if (tags.includes('特殊') && !labels.includes(t('equipment-tooltip.medicine-category.special', undefined))) {
     labels.push(t('equipment-tooltip.medicine-category.special', undefined));
   }
-  if (tags.includes('药材') && !labels.includes(t('equipment-tooltip.material.herb', undefined))) {
+  if (tags.includes('藥材') && !labels.includes(t('equipment-tooltip.material.herb', undefined))) {
     labels.push(t('equipment-tooltip.material.herb', undefined));
   }
-  if (tags.includes('异材') && !labels.includes(t('equipment-tooltip.material.exotic', undefined))) {
+  if (tags.includes('異材') && !labels.includes(t('equipment-tooltip.material.exotic', undefined))) {
     labels.push(t('equipment-tooltip.material.exotic', undefined));
   }
   return labels.length > 0 ? labels.join(' / ') : null;
@@ -240,7 +240,7 @@ function describeSpecialStats(specialStats?: ItemStack['equipSpecialStats']): st
 
 /** getTimePhaseLabel：读取时段标签。 */
 function getTimePhaseLabel(phaseId: string): string {
-  return GAME_TIME_PHASES.find((entry) => entry.id === phaseId)?.label ?? '未知时辰';
+  return GAME_TIME_PHASES.find((entry) => entry.id === phaseId)?.label ?? '未知時辰';
 }
 
 /** getMapLabel：读取地图标签。 */
@@ -296,7 +296,7 @@ function formatTriggerLabel(trigger: EquipmentEffectDef extends infer _T ? strin
     on_time_segment_changed: t('equipment-tooltip.trigger.on-time-segment-changed', undefined),
     on_enter_map: t('equipment-tooltip.trigger.on-enter-map', undefined),
   };
-  return labels[trigger] ?? '未知触发';
+  return labels[trigger] ?? '未知觸發';
 }
 
 /** buildTimedBuffAsideCard：构建Timed Buff Aside卡片。 */
@@ -726,7 +726,7 @@ function describeArtifactBonuses(item: ItemStack): string[] {
   const maxQi = resolveArtifactMaxQi(item);
   const sustainCost = resolveArtifactSustainCostPerTick(item);
   return [
-    `最大灵力 ${formatDisplayInteger(maxQi)}`,
+    `最大靈力 ${formatDisplayInteger(maxQi)}`,
     ...(sustainCost > 0 ? [`固定消耗 ${formatDisplayInteger(sustainCost)}/息`] : []),
   ];
 }

@@ -123,7 +123,7 @@ export class MarketAuctionView {
     const lots = this.getCurrentAuctionLots();
     return `
       <div class="auction-house-shell">
-        <div class="auction-house-tabs" role="tablist" aria-label="拍卖行分栏">
+        <div class="auction-house-tabs" role="tablist" aria-label="拍賣行分欄">
           <button class="auction-house-tab ${this.panel.auctionTab === 'participate' ? 'active' : ''}" data-auction-tab="participate" type="button">${escapeHtml(t('auction.tab.participate', undefined))}</button>
           <button class="auction-house-tab ${this.panel.auctionTab === 'mine' ? 'active' : ''}" data-auction-tab="mine" type="button">${escapeHtml(t('auction.tab.mine', undefined))}</button>
           <button class="auction-house-tab ${this.panel.auctionTab === 'history' ? 'active' : ''}" data-auction-tab="history" type="button">${escapeHtml(t('auction.tab.history', undefined))}</button>
@@ -148,14 +148,14 @@ export class MarketAuctionView {
           <small>${escapeHtml(t('auction.summary.buyout', { count: formatDisplayInteger(summary.buyoutLots) }))}</small>
         </div>
         <div class="auction-summary-card ui-surface-card ui-surface-card--compact">
-          <span>成交总额</span>
+          <span>成交總額</span>
           <strong>${this.panel.formatMarketUnitPrice(summary.totalCurrentPrice)}</strong>
           <small>${escapeHtml(update.currencyItemName)}</small>
         </div>
         <div class="auction-summary-card ui-surface-card ui-surface-card--compact">
-          <span>我的竞拍</span>
+          <span>我的競拍</span>
           <strong>${formatDisplayInteger(summary.myBidCount)}</strong>
-          <small>当前求购竞价</small>
+          <small>當前求購競價</small>
         </div>
         <div class="auction-summary-card ui-surface-card ui-surface-card--compact">
           <span>我的寄拍</span>
@@ -163,7 +163,7 @@ export class MarketAuctionView {
           <small>寄拍中 ${formatDisplayInteger(summary.consigningLots)}</small>
         </div>
         <button class="auction-summary-card auction-summary-action ui-surface-card ui-surface-card--compact" data-auction-consign-open type="button">
-          <strong>发起拍卖</strong>
+          <strong>發起拍賣</strong>
           <small>寄拍背包物品</small>
         </button>
       </div>
@@ -178,10 +178,10 @@ export class MarketAuctionView {
         ${this.renderAuctionFilterRail()}
         <div class="auction-list-panel ui-surface-pane ui-surface-pane--stack">
           <div class="auction-list-toolbar ui-action-row">
-            <div class="market-list-toolbar-meta">共 ${formatDisplayInteger(pagination.totalItems)} 件拍品，第 ${formatDisplayInteger(pagination.page)} / ${formatDisplayInteger(pagination.totalPages)} 页</div>
+            <div class="market-list-toolbar-meta">共 ${formatDisplayInteger(pagination.totalItems)} 件拍品，第 ${formatDisplayInteger(pagination.page)} / ${formatDisplayInteger(pagination.totalPages)} 頁</div>
             <div class="market-list-toolbar-actions">
-              <button class="small-btn ghost" data-auction-page="${pagination.page - 1}" type="button" ${pagination.page <= 1 ? 'disabled' : ''}>上一页</button>
-              <button class="small-btn ghost" data-auction-page="${pagination.page + 1}" type="button" ${pagination.page >= pagination.totalPages ? 'disabled' : ''}>下一页</button>
+              <button class="small-btn ghost" data-auction-page="${pagination.page - 1}" type="button" ${pagination.page <= 1 ? 'disabled' : ''}>上一頁</button>
+              <button class="small-btn ghost" data-auction-page="${pagination.page + 1}" type="button" ${pagination.page >= pagination.totalPages ? 'disabled' : ''}>下一頁</button>
               <button class="small-btn ghost" data-auction-refresh type="button">${escapeHtml(t('market.auction.refresh', undefined))}</button>
             </div>
           </div>
@@ -224,10 +224,10 @@ export class MarketAuctionView {
         </div>
         <div class="auction-list-panel ui-surface-pane ui-surface-pane--stack">
           <div class="auction-list-toolbar ui-action-row">
-            <div class="market-list-toolbar-meta">我的寄拍 ${formatDisplayInteger(pagination.totalItems)} 件，第 ${formatDisplayInteger(pagination.page)} / ${formatDisplayInteger(pagination.totalPages)} 页</div>
+            <div class="market-list-toolbar-meta">我的寄拍 ${formatDisplayInteger(pagination.totalItems)} 件，第 ${formatDisplayInteger(pagination.page)} / ${formatDisplayInteger(pagination.totalPages)} 頁</div>
             <div class="market-list-toolbar-actions">
-              <button class="small-btn ghost" data-auction-page="${pagination.page - 1}" type="button" ${pagination.page <= 1 ? 'disabled' : ''}>上一页</button>
-              <button class="small-btn ghost" data-auction-page="${pagination.page + 1}" type="button" ${pagination.page >= pagination.totalPages ? 'disabled' : ''}>下一页</button>
+              <button class="small-btn ghost" data-auction-page="${pagination.page - 1}" type="button" ${pagination.page <= 1 ? 'disabled' : ''}>上一頁</button>
+              <button class="small-btn ghost" data-auction-page="${pagination.page + 1}" type="button" ${pagination.page >= pagination.totalPages ? 'disabled' : ''}>下一頁</button>
               <button class="small-btn ghost" data-auction-refresh type="button">${escapeHtml(t('market.auction.refresh', undefined))}</button>
             </div>
           </div>
@@ -266,7 +266,7 @@ export class MarketAuctionView {
           <input class="ui-search-input" data-auction-search id="auction-search-input" type="search" value="${escapeHtmlAttr(this.panel.auctionSearchQuery)}" placeholder="${escapeHtmlAttr(t('auction.filter.placeholder', undefined))}" />
         </label>
         <div class="auction-filter-group">
-          <div class="market-list-toolbar-meta">分类</div>
+          <div class="market-list-toolbar-meta">分類</div>
           <div class="auction-filter-buttons">
             ${categories.map((category) => `
               <button class="auction-filter-button ${this.panel.auctionCategory === category.id ? 'active' : ''}" data-auction-category="${category.id}" type="button">
@@ -331,9 +331,9 @@ export class MarketAuctionView {
       </div>
       <div class="auction-price-grid">
         <div class="auction-price-card ui-surface-card ui-surface-card--compact">
-          <span>当前价</span>
+          <span>當前價</span>
           <strong data-auction-detail-current-price>${this.panel.formatMarketUnitPrice(lot.currentPrice)}</strong>
-          <small data-auction-detail-bid-count>${formatDisplayInteger(lot.bidCount)} 次出价</small>
+          <small data-auction-detail-bid-count>${formatDisplayInteger(lot.bidCount)} 次出價</small>
         </div>
         <div class="auction-price-card ui-surface-card ui-surface-card--compact">
           <span>${escapeHtml(t('market.trade.buyout-confirm.price', undefined))}</span>
@@ -341,7 +341,7 @@ export class MarketAuctionView {
           <small>${escapeHtml(update.currencyItemName)}</small>
         </div>
         <div class="auction-price-card ui-surface-card ui-surface-card--compact">
-          <span>我的灵石</span>
+          <span>我的靈石</span>
           <strong data-auction-detail-owned-currency>${formatDisplayInteger(ownedCurrency)}</strong>
           <small>${escapeHtml(update.currencyItemName)}</small>
         </div>
@@ -393,7 +393,7 @@ export class MarketAuctionView {
       <div class="auction-house-board auction-house-board--history">
         <div class="auction-list-panel ui-surface-pane ui-surface-pane--stack">
           <div class="auction-list-toolbar ui-action-row">
-            <div class="auction-house-tabs auction-house-tabs--sub" role="tablist" aria-label="拍卖成交记录分栏">
+            <div class="auction-house-tabs auction-house-tabs--sub" role="tablist" aria-label="拍賣成交記錄分欄">
               <button class="auction-house-tab ${this.panel.auctionHistoryScope === 'all' ? 'active' : ''}" data-auction-history-scope="all" type="button">${escapeHtml(t('market.auction.history.scope.all', undefined))}</button>
               <button class="auction-house-tab ${this.panel.auctionHistoryScope === 'mine' ? 'active' : ''}" data-auction-history-scope="mine" type="button">${escapeHtml(t('market.auction.history.scope.mine', undefined))}</button>
             </div>
@@ -428,8 +428,8 @@ export class MarketAuctionView {
         <div class="market-book-column-title">${escapeHtml(t(isMine ? 'market.auction.history.title.mine' : 'market.auction.history.title.all', undefined))}</div>
         ${isMine ? `
           <div class="market-list-toolbar-actions">
-            <button class="small-btn ghost" data-auction-history-page="${page - 1}" type="button" ${page <= 1 ? 'disabled' : ''}>上一页</button>
-            <button class="small-btn ghost" data-auction-history-page="${page + 1}" type="button" ${page >= totalPages ? 'disabled' : ''}>下一页</button>
+            <button class="small-btn ghost" data-auction-history-page="${page - 1}" type="button" ${page <= 1 ? 'disabled' : ''}>上一頁</button>
+            <button class="small-btn ghost" data-auction-history-page="${page + 1}" type="button" ${page >= totalPages ? 'disabled' : ''}>下一頁</button>
           </div>
         ` : ''}
       </div>
@@ -1438,7 +1438,7 @@ export class MarketAuctionView {
     const currentPriceNode = detail.querySelector<HTMLElement>('[data-auction-detail-current-price]');
     if (currentPriceNode) currentPriceNode.textContent = this.panel.formatMarketUnitPrice(lot.currentPrice);
     const bidCountNode = detail.querySelector<HTMLElement>('[data-auction-detail-bid-count]');
-    if (bidCountNode) bidCountNode.textContent = `${formatDisplayInteger(lot.bidCount)} 次出价`;
+    if (bidCountNode) bidCountNode.textContent = `${formatDisplayInteger(lot.bidCount)} 次出價`;
     const buyoutPriceNode = detail.querySelector<HTMLElement>('[data-auction-detail-buyout-price]');
     if (buyoutPriceNode) buyoutPriceNode.textContent = lot.buyoutPrice === null ? '--' : this.panel.formatMarketUnitPrice(lot.buyoutPrice);
     const ownedCurrencyNode = detail.querySelector<HTMLElement>('[data-auction-detail-owned-currency]');
@@ -1604,7 +1604,7 @@ export class MarketAuctionView {
   getAuctionQualityLabel(item: import('@mud/shared').ItemStack): string {
     const meta = getItemDisplayMeta(item);
     if (meta.gradeLabel) return meta.gradeLabel;
-    return '凡阶';
+    return '凡階';
   }
 
   getAuctionEnhanceLevelLabel(item: import('@mud/shared').ItemStack): string | null {
@@ -1620,7 +1620,7 @@ export class MarketAuctionView {
     const level = Number(item.level);
     if (!Number.isFinite(level) || level <= 0) return null;
     const realmLv = Math.floor(level);
-    return getLocalRealmLevelEntry(realmLv)?.displayName ?? `${formatDisplayInteger(realmLv)}阶`;
+    return getLocalRealmLevelEntry(realmLv)?.displayName ?? `${formatDisplayInteger(realmLv)}階`;
   }
 
   formatAuctionLotDisplayName(lot: AuctionLotView): string {
@@ -1658,9 +1658,9 @@ export class MarketAuctionView {
 
   formatAuctionBidTime(createdAtMs: number): string {
     const elapsedSeconds = Math.max(0, Math.floor((Date.now() - Math.max(0, Number(createdAtMs) || 0)) / 1000));
-    if (elapsedSeconds < 60) return '刚刚';
-    if (elapsedSeconds < 3600) return `${formatDisplayInteger(Math.floor(elapsedSeconds / 60))}分钟前`;
-    return `${formatDisplayInteger(Math.floor(elapsedSeconds / 3600))}小时前`;
+    if (elapsedSeconds < 60) return '剛剛';
+    if (elapsedSeconds < 3600) return `${formatDisplayInteger(Math.floor(elapsedSeconds / 60))}分鐘前`;
+    return `${formatDisplayInteger(Math.floor(elapsedSeconds / 3600))}小時前`;
   }
 
   getAuctionSummary(update: S2C_MarketUpdate): S2C_AuctionListings['summary'] {

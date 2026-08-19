@@ -152,7 +152,7 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'building-mate
   assert.equal(initial.actionTargets.length, 4, '手机端营造主操作数量异常');
   assert(initial.actionTargets.every((target) => target?.fullyVisible && target.centerHitsTarget), '手机端营造主操作存在裁切或触点遮挡');
   assert(initial.actionTargets.every((target) => target && target.height >= 30 && target.textFits), '手机端营造主操作尺寸或文字适配异常');
-  assert.deepEqual(initial.actionTargets.map((target) => target?.ariaLabel), ['选择位置', '拆除建筑', '连续选择：关', '退出营造'], '手机端紧凑文案丢失完整无障碍名称');
+  assert.deepEqual(initial.actionTargets.map((target) => target?.ariaLabel), ['選擇位置', '拆除建築', '連續選擇：關', '退出營造'], '手機端緊湊文案丟失完整無障礙名稱');
   assert.equal(initial.tabTargets.length, 3, '手机端营造分类按钮数量异常');
   assert(initial.tabTargets.every((target) => target?.centerHitsTarget && target.height >= 30 && target.textFits), '手机端营造分类按钮尺寸或触点异常');
   assert.deepEqual(

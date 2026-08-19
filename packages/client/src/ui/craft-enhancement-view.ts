@@ -344,8 +344,8 @@ export class CraftEnhancementView {
     const state = this.parent.enhancementPanel?.state ?? null;
     const job = state?.job ?? null;
     return job
-      ? `强化队列进行中，剩余 ${formatTicks(resolveEnhancementWorkRemainingTicks(job))} / ${formatTicks(resolveEnhancementWorkTotalTicks(job))}`
-      : `角色强化等级 Lv.${formatDisplayInteger(state?.enhancementSkillLevel ?? this.parent.enhancementSkillLevel)} · 当前可强化目标 ${formatDisplayInteger(state?.candidates.length ?? 0)} 件`;
+      ? `強化隊列進行中，剩餘 ${formatTicks(resolveEnhancementWorkRemainingTicks(job))} / ${formatTicks(resolveEnhancementWorkTotalTicks(job))}`
+      : `角色強化等級 Lv.${formatDisplayInteger(state?.enhancementSkillLevel ?? this.parent.enhancementSkillLevel)} · 當前可強化目標 ${formatDisplayInteger(state?.candidates.length ?? 0)} 件`;
   }
 
   private getEnhancementJobPatchKey(job: EnhancementJobView | null): string {
@@ -511,7 +511,7 @@ export class CraftEnhancementView {
     if (sideMetrics.length >= 3) {
       sideMetrics[0].textContent = `+${formatDisplayInteger(job.targetLevel)}`;
       sideMetrics[1].textContent = `+${formatDisplayInteger(finalTargetLevel)}`;
-      sideMetrics[2].textContent = job.protectionUsed ? `+${formatDisplayInteger(job.protectionStartLevel ?? job.targetLevel)} 起` : '未启用';
+      sideMetrics[2].textContent = job.protectionUsed ? `+${formatDisplayInteger(job.protectionStartLevel ?? job.targetLevel)} 起` : '未啟用';
     }
     if (materialOwned) {
       materialOwned.textContent = t('craft.enhancement.enhance-role-level', { level: formatDisplayInteger(job.roleEnhancementLevel), percent: formatEnhancementPercent(job.totalSpeedRate) });
@@ -612,38 +612,38 @@ export class CraftEnhancementView {
       : selected?.item ?? null;
     const sourceLabel = activeJob
       ? (activeJob.target.source === 'equipment'
-        ? `队列锁定 · ${getEquipSlotLabel(activeJob.target.slot ?? 'weapon')}`
-        : '队列锁定 · 背包物品')
+        ? `隊列鎖定 · ${getEquipSlotLabel(activeJob.target.slot ?? 'weapon')}`
+        : '隊列鎖定 · 背包物品')
       : selected
         ? (selected.ref.source === 'equipment'
-          ? `已装备 · ${getEquipSlotLabel(selected.ref.slot ?? 'weapon')}`
+          ? `已裝備 · ${getEquipSlotLabel(selected.ref.slot ?? 'weapon')}`
           : '背包物品')
-        : '尚未选择';
+        : '尚未選擇';
     const selectedLevel = selectedItem ? normalizeEnhanceLevel(selectedItem.enhanceLevel) : null;
     const targetHeadMeta = selectedItem
-      ? `等级 ${formatDisplayInteger(Number(selectedItem.level) || 1)} · 当前 +${formatDisplayInteger(selectedLevel ?? 0)} · ${sourceLabel}`
-      : '点击选择要强化的目标';
+      ? `等級 ${formatDisplayInteger(Number(selectedItem.level) || 1)} · 當前 +${formatDisplayInteger(selectedLevel ?? 0)} · ${sourceLabel}`
+      : '點擊選擇要強化的目標';
     if (!this.isCompactEnhancementLayout()) {
       return `
         <div class="enhancement-target-slot-card">
           <div class="enhancement-target-slot-head">
             <div>
-              <div class="enhancement-section-title">强化目标</div>
+              <div class="enhancement-section-title">強化目標</div>
               <div class="enhancement-protection-note">${escapeHtml(sourceLabel)}</div>
             </div>
             <button class="small-btn ghost" type="button" data-enhancement-open-picker="1">
-              ${selectedItem ? '更换目标' : '选择目标'}
+              ${selectedItem ? '更換目標' : '選擇目標'}
             </button>
           </div>
           <button class="enhancement-target-slot" type="button" data-enhancement-open-picker="1">
             ${selectedItem
               ? `
                 <span class="enhancement-target-slot-name">${escapeHtml(selectedItem.name ?? UNKNOWN_ITEM_NAME)}</span>
-                <span class="enhancement-target-slot-meta">等级 ${formatDisplayInteger(Number(selectedItem.level) || 1)} · 当前 +${formatDisplayInteger(normalizeEnhanceLevel(selectedItem.enhanceLevel))}</span>
+                <span class="enhancement-target-slot-meta">等級 ${formatDisplayInteger(Number(selectedItem.level) || 1)} · 當前 +${formatDisplayInteger(normalizeEnhanceLevel(selectedItem.enhanceLevel))}</span>
               `
               : `
-                <span class="enhancement-target-slot-name">点击选择要强化的目标</span>
-                <span class="enhancement-target-slot-meta">主面板只保留一个目标槽，候选目标会在独立弹窗中选择</span>
+                <span class="enhancement-target-slot-name">點擊選擇要強化的目標</span>
+                <span class="enhancement-target-slot-meta">主面板只保留一個目標槽，候選目標會在獨立彈窗中選擇</span>
               `}
           </button>
         </div>
@@ -656,24 +656,24 @@ export class CraftEnhancementView {
             <div class="enhancement-target-slot-head">
               <div class="enhancement-card-head">
                 <div class="enhancement-card-head-main">
-                  <div class="enhancement-section-title">强化目标</div>
-                  <div class="enhancement-card-head-value">${escapeHtml(selectedItem?.name ?? '未选择目标')}</div>
+                  <div class="enhancement-section-title">強化目標</div>
+                  <div class="enhancement-card-head-value">${escapeHtml(selectedItem?.name ?? '未選擇目標')}</div>
                 </div>
                 <div class="enhancement-protection-note">${escapeHtml(targetHeadMeta)}</div>
               </div>
               <button class="small-btn ghost" type="button" data-enhancement-open-picker="1">
-                ${selectedItem ? '更换目标' : '选择目标'}
+                ${selectedItem ? '更換目標' : '選擇目標'}
               </button>
             </div>
             <button class="enhancement-target-slot" type="button" data-enhancement-open-picker="1">
               ${selectedItem
                 ? `
-                  <span class="enhancement-target-slot-action">点击更换这个目标</span>
-                  <span class="enhancement-target-slot-meta">候选目标会在独立弹窗中选择；强化开始后本次目标会锁定。</span>
+                  <span class="enhancement-target-slot-action">點擊更換這個目標</span>
+                  <span class="enhancement-target-slot-meta">候選目標會在獨立彈窗中選擇；強化開始後本次目標會鎖定。</span>
                 `
                 : `
-                  <span class="enhancement-target-slot-action">点击选择要强化的目标</span>
-                  <span class="enhancement-target-slot-meta">主面板只保留一个目标槽，候选目标会在独立弹窗中选择</span>
+                  <span class="enhancement-target-slot-action">點擊選擇要強化的目標</span>
+                  <span class="enhancement-target-slot-meta">主面板只保留一個目標槽，候選目標會在獨立彈窗中選擇</span>
                 `}
             </button>
           </div>
@@ -689,8 +689,8 @@ export class CraftEnhancementView {
       <div class="enhancement-merged-section enhancement-merged-section--target-level">
         <div class="enhancement-merged-section-head">
           <div class="enhancement-card-head-main">
-            <div class="enhancement-section-title">目标强化等级</div>
-            <div class="enhancement-card-head-value">当前 +${formatDisplayInteger(selected.currentLevel)} → 目标 +${formatDisplayInteger(selectedTargetLevel)}</div>
+            <div class="enhancement-section-title">目標強化等級</div>
+            <div class="enhancement-card-head-value">當前 +${formatDisplayInteger(selected.currentLevel)} → 目標 +${formatDisplayInteger(selectedTargetLevel)}</div>
           </div>
         </div>
         <div class="enhancement-target-level-row">
@@ -707,7 +707,7 @@ export class CraftEnhancementView {
           >
           <button class="small-btn ghost" type="button" data-enhancement-target-adjust="1" ${selectedTargetLevel >= MAX_ENHANCE_LEVEL ? 'disabled' : ''}>+1</button>
         </div>
-        <div class="enhancement-target-level-note">强化队列会从当前等级逐阶结算，直到达到目标等级，或后续灵石、材料、保护物不足，或到达上限 +${MAX_ENHANCE_LEVEL}。</div>
+        <div class="enhancement-target-level-note">強化隊列會從當前等級逐階結算，直到達到目標等級，或後續靈石、材料、保護物不足，或到達上限 +${MAX_ENHANCE_LEVEL}。</div>
       </div>
     `;
   }
@@ -728,17 +728,17 @@ export class CraftEnhancementView {
     const currentLines = describeEquipmentBonuses(currentPreview, this.parent.playerRealmLv);
     const nextLines = describeEquipmentBonuses(nextPreview, this.parent.playerRealmLv);
     const protectionNote = selected.protectionItemId
-      ? `保护物固定为 ${selected.protectionItemName?.trim() || UNKNOWN_ITEM_NAME}`
-      : '未配置独立保护物，当前仅可消耗同名目标作为保护';
+      ? `保護物固定為 ${selected.protectionItemName?.trim() || UNKNOWN_ITEM_NAME}`
+      : '未配置獨立保護物，當前僅可消耗同名目標作為保護';
     const minProtectionStartLevel = 2;
     const protectionStartLevel = this.getSelectedEnhancementProtectionStartLevel(selected);
     const compactMobileLayout = this.isCompactEnhancementLayout();
     const inlineProtectionExpanded = !compactMobileLayout || this.parent.enhancementProtectionExpanded;
-    const protectionButtonLabel = selectedProtection ? '保护设置 · 已启用' : '保护设置 · 未启用';
+    const protectionButtonLabel = selectedProtection ? '保護設置 · 已啟用' : '保護設置 · 未啟用';
     const sideContent = `
       ${compactMobileLayout ? '' : `
         <div class="enhancement-target-level-card">
-          <div class="enhancement-section-title">目标强化等级</div>
+          <div class="enhancement-section-title">目標強化等級</div>
           <div class="enhancement-target-level-row">
             <button class="small-btn ghost" type="button" data-enhancement-target-adjust="-1" ${selectedTargetLevel <= (selected.currentLevel + 1) ? 'disabled' : ''}>-1</button>
             <input
@@ -753,23 +753,23 @@ export class CraftEnhancementView {
             >
             <button class="small-btn ghost" type="button" data-enhancement-target-adjust="1" ${selectedTargetLevel >= MAX_ENHANCE_LEVEL ? 'disabled' : ''}>+1</button>
           </div>
-          <div class="enhancement-target-level-note">强化队列会从当前等级逐阶结算，直到达到目标等级，或后续灵石、材料、保护物不足，或到达上限 +${MAX_ENHANCE_LEVEL}。</div>
+          <div class="enhancement-target-level-note">強化隊列會從當前等級逐階結算，直到達到目標等級，或後續靈石、材料、保護物不足，或到達上限 +${MAX_ENHANCE_LEVEL}。</div>
         </div>
       `}
       <div class="enhancement-requirement-card">
         ${compactMobileLayout
-          ? `<button class="small-btn ghost enhancement-inline-toggle" type="button" data-enhancement-toggle-protection-inline="1">${inlineProtectionExpanded ? '收起保护设置' : escapeHtml(protectionButtonLabel)}</button>`
-          : '<div class="enhancement-section-title">保护</div>'}
+          ? `<button class="small-btn ghost enhancement-inline-toggle" type="button" data-enhancement-toggle-protection-inline="1">${inlineProtectionExpanded ? '收起保護設置' : escapeHtml(protectionButtonLabel)}</button>`
+          : '<div class="enhancement-section-title">保護</div>'}
         ${inlineProtectionExpanded ? `
           <div class="enhancement-protection-note">${escapeHtml(protectionNote)}</div>
           <label class="enhancement-protection-option">
             <input type="radio" name="enhancement-protection" value="" ${this.parent.selectedEnhancementProtectionKey ? '' : 'checked'}>
-            <span>不使用保护</span>
+            <span>不使用保護</span>
           </label>
           ${selected.protectionCandidates.length > 0
             ? selected.protectionCandidates.map((entry) => {
               const key = buildEnhancementTargetKey(entry.ref);
-              const sourceLabel = `背包物品 · 数量 ${entry.item.count}`;
+              const sourceLabel = `背包物品 · 數量 ${entry.item.count}`;
               const displayName = getEnhancementDisplayName(entry.item);
               return `
                 <label class="enhancement-protection-option">
@@ -779,10 +779,10 @@ export class CraftEnhancementView {
                 </label>
               `;
             }).join('')
-            : '<div class="enhancement-material-empty">当前背包没有可用保护物。</div>'}
+            : '<div class="enhancement-material-empty">當前背包沒有可用保護物。</div>'}
           ${this.parent.selectedEnhancementProtectionKey && selectedTargetLevel >= minProtectionStartLevel ? `
             <div class="enhancement-protection-start">
-              <div class="enhancement-protection-note">开始保护等级</div>
+              <div class="enhancement-protection-note">開始保護等級</div>
               <div class="enhancement-target-level-row">
                 <button class="small-btn ghost" type="button" data-enhancement-protection-adjust="-1" ${!protectionStartLevel || protectionStartLevel <= minProtectionStartLevel ? 'disabled' : ''}>-1</button>
                 <input
@@ -797,17 +797,17 @@ export class CraftEnhancementView {
                 >
                 <button class="small-btn ghost" type="button" data-enhancement-protection-adjust="1" ${!protectionStartLevel || protectionStartLevel >= selectedTargetLevel ? 'disabled' : ''}>+1</button>
               </div>
-              <div class="enhancement-target-level-note">保护最低从 +2 开始生效。达到这个目标等级后，失败才会消耗保护并只降低一级。</div>
+              <div class="enhancement-target-level-note">保護最低從 +2 開始生效。達到這個目標等級後，失敗才會消耗保護並只降低一級。</div>
             </div>
           ` : this.parent.selectedEnhancementProtectionKey ? `
             <div class="enhancement-protection-start">
-              <div class="enhancement-target-level-note">保护最低从 +2 开始生效。当前目标还没到 +2，这次强化不会消耗保护物。</div>
+              <div class="enhancement-target-level-note">保護最低從 +2 開始生效。當前目標還沒到 +2，這次強化不會消耗保護物。</div>
             </div>
           ` : ''}
         ` : ''}
       </div>
       <div class="enhancement-action-row enhancement-action-row--stacked">
-        <button class="small-btn" type="button" data-enhancement-start="1">${this.getActiveEnhancementJob() ? '追加强化队列' : '开始强化'}</button>
+        <button class="small-btn" type="button" data-enhancement-start="1">${this.getActiveEnhancementJob() ? '追加強化隊列' : '開始強化'}</button>
         ${this.renderEnhancementFormulaPill()}
       </div>
     `;
@@ -826,20 +826,20 @@ export class CraftEnhancementView {
             <div class="enhancement-summary-head">
               <div>
                 <div class="enhancement-summary-title">${escapeHtml(getEnhancementDisplayName(selected.item))}</div>
-                <div class="enhancement-summary-subtitle">当前 +${formatDisplayInteger(selected.currentLevel)} · 最终目标 +${formatDisplayInteger(selectedTargetLevel)}</div>
+                <div class="enhancement-summary-subtitle">當前 +${formatDisplayInteger(selected.currentLevel)} · 最終目標 +${formatDisplayInteger(selectedTargetLevel)}</div>
               </div>
-              <div class="enhancement-summary-rate">首阶 ${formatEnhancementPercent(selected.successRate)}</div>
+              <div class="enhancement-summary-rate">首階 ${formatEnhancementPercent(selected.successRate)}</div>
             </div>
             <div class="enhancement-summary-metrics">
-              <div class="enhancement-summary-metric"><span>首阶灵石</span><strong>${formatDisplayInteger(selected.spiritStoneCost)}</strong></div>
-              <div class="enhancement-summary-metric"><span>首阶耗时</span><strong>${formatDisplayInteger(selected.durationTicks)} 息</strong></div>
-              <div class="enhancement-summary-metric"><span>保护模式</span><strong>${selectedProtection ? '已启用' : '未启用'}</strong></div>
+              <div class="enhancement-summary-metric"><span>首階靈石</span><strong>${formatDisplayInteger(selected.spiritStoneCost)}</strong></div>
+              <div class="enhancement-summary-metric"><span>首階耗時</span><strong>${formatDisplayInteger(selected.durationTicks)} 息</strong></div>
+              <div class="enhancement-summary-metric"><span>保護模式</span><strong>${selectedProtection ? '已啟用' : '未啟用'}</strong></div>
             </div>
           </div>
           <div class="enhancement-requirement-card">
-            <div class="enhancement-section-title">强化材料</div>
+            <div class="enhancement-section-title">強化材料</div>
             <div class="enhancement-material-row">
-              <span>灵石</span>
+              <span>靈石</span>
               <strong>${formatDisplayInteger(selected.spiritStoneCost)}</strong>
               <span class="enhancement-material-owned">持有 ${formatDisplayInteger(this.getAlchemyInventoryCount('spirit_stone'))}</span>
             </div>
@@ -851,20 +851,20 @@ export class CraftEnhancementView {
                   <span class="enhancement-material-owned">持有 ${formatDisplayInteger(entry.ownedCount)}</span>
                 </div>
               `).join('')
-              : '<div class="enhancement-material-empty">没有额外材料需求，默认只消耗灵石。</div>'}
+              : '<div class="enhancement-material-empty">沒有額外材料需求，預設只消耗靈石。</div>'}
           </div>
           <div class="enhancement-preview-grid">
             <div class="enhancement-preview-card">
-              <div class="enhancement-preview-title">当前属性</div>
+              <div class="enhancement-preview-title">當前屬性</div>
               ${currentLines.length > 0
                 ? `<div class="enhancement-preview-lines">${currentLines.map((line) => `<div>${escapeHtml(line)}</div>`).join('')}</div>`
-                : '<div class="enhancement-preview-empty">当前目标没有可显示的强化属性。</div>'}
+                : '<div class="enhancement-preview-empty">當前目標沒有可顯示的強化屬性。</div>'}
             </div>
             <div class="enhancement-preview-card">
-              <div class="enhancement-preview-title">目标等级预览</div>
+              <div class="enhancement-preview-title">目標等級預覽</div>
               ${nextLines.length > 0
                 ? `<div class="enhancement-preview-lines">${nextLines.map((line) => `<div>${escapeHtml(line)}</div>`).join('')}</div>`
-                : '<div class="enhancement-preview-empty">下一阶暂无可显示属性。</div>'}
+                : '<div class="enhancement-preview-empty">下一階暫無可顯示屬性。</div>'}
             </div>
           </div>
         </div>
@@ -878,19 +878,19 @@ export class CraftEnhancementView {
       <div class="enhancement-merged-section enhancement-merged-section--action">
         <div class="enhancement-merged-section-head">
           <div class="enhancement-card-head-main">
-            <div class="enhancement-section-title">当前行动</div>
+            <div class="enhancement-section-title">當前行動</div>
             <div class="enhancement-card-head-value">+${formatDisplayInteger(job.currentLevel)} → +${formatDisplayInteger(job.targetLevel)}</div>
           </div>
         </div>
-        <div class="enhancement-target-level-note">强化队列已启动，强化目标和强化锤在任务结束前会保持锁定。</div>
+        <div class="enhancement-target-level-note">強化隊列已啟動，強化目標和強化錘在任務結束前會保持鎖定。</div>
         <div class="enhancement-summary-metrics enhancement-summary-metrics--compact">
-          <div class="enhancement-summary-metric"><span>当前冲击</span><strong>+${formatDisplayInteger(job.targetLevel)}</strong></div>
-          <div class="enhancement-summary-metric"><span>最终目标</span><strong>+${formatDisplayInteger(finalTargetLevel)}</strong></div>
-          <div class="enhancement-summary-metric"><span>保护</span><strong>${job.protectionUsed ? `+${formatDisplayInteger(job.protectionStartLevel ?? job.targetLevel)} 起` : '未启用'}</strong></div>
+          <div class="enhancement-summary-metric"><span>當前衝擊</span><strong>+${formatDisplayInteger(job.targetLevel)}</strong></div>
+          <div class="enhancement-summary-metric"><span>最終目標</span><strong>+${formatDisplayInteger(finalTargetLevel)}</strong></div>
+          <div class="enhancement-summary-metric"><span>保護</span><strong>${job.protectionUsed ? `+${formatDisplayInteger(job.protectionStartLevel ?? job.targetLevel)} 起` : '未啟用'}</strong></div>
         </div>
         <div class="enhancement-action-row enhancement-action-row--stacked">
-          <button class="small-btn ghost" type="button" data-enhancement-cancel="1">取消强化</button>
-          <span class="enhancement-action-note">取消后会返还当前目标，已投入的材料不会退回；保护物仅在失败且保护生效时扣除，灵石仅在本阶成功时扣除。</span>
+          <button class="small-btn ghost" type="button" data-enhancement-cancel="1">取消強化</button>
+          <span class="enhancement-action-note">取消後會返還當前目標，已投入的材料不會退回；保護物僅在失敗且保護生效時扣除，靈石僅在本階成功時扣除。</span>
         </div>
       </div>
     `;
@@ -927,18 +927,18 @@ export class CraftEnhancementView {
             <div class="enhancement-summary-head">
               <div>
                 <div class="enhancement-summary-title">${escapeHtml(displayTargetName)}</div>
-                <div class="enhancement-summary-subtitle">进行中：+${formatDisplayInteger(job.currentLevel)} → +${formatDisplayInteger(job.targetLevel)}${finalTargetLevel > job.targetLevel ? ` · 最终目标 +${formatDisplayInteger(finalTargetLevel)}` : ''}</div>
+                <div class="enhancement-summary-subtitle">進行中：+${formatDisplayInteger(job.currentLevel)} → +${formatDisplayInteger(job.targetLevel)}${finalTargetLevel > job.targetLevel ? ` · 最終目標 +${formatDisplayInteger(finalTargetLevel)}` : ''}</div>
               </div>
               <div class="enhancement-summary-rate">${formatEnhancementPercent(job.successRate)}</div>
             </div>
             <div class="enhancement-summary-metrics">
-              <div class="enhancement-summary-metric"><span>剩余</span><strong>${formatDisplayInteger(workRemainingTicks)}</strong></div>
-              <div class="enhancement-summary-metric"><span>总时长</span><strong>${formatDisplayInteger(workTotalTicks)} 息</strong></div>
-              <div class="enhancement-summary-metric"><span>本阶成功率</span><strong>${formatEnhancementPercent(job.successRate)}</strong></div>
+              <div class="enhancement-summary-metric"><span>剩餘</span><strong>${formatDisplayInteger(workRemainingTicks)}</strong></div>
+              <div class="enhancement-summary-metric"><span>總時長</span><strong>${formatDisplayInteger(workTotalTicks)} 息</strong></div>
+              <div class="enhancement-summary-metric"><span>本階成功率</span><strong>${formatEnhancementPercent(job.successRate)}</strong></div>
             </div>
             <div class="alchemy-job-progress">
               <div class="alchemy-job-progress-head">
-                <span>实际进度</span>
+                <span>實際進度</span>
                 <strong>${escapeHtml(formatTicks(workRemainingTicks))}</strong>
               </div>
               <div class="alchemy-job-progress-bar">
@@ -947,7 +947,7 @@ export class CraftEnhancementView {
             </div>
             <div class="alchemy-job-progress alchemy-job-progress--interrupt ${interruptRemainingTicks > 0 ? '' : 'is-hidden'}" data-enhancement-interrupt-progress="true">
               <div class="alchemy-job-progress-head">
-                <span>打断等待</span>
+                <span>打斷等待</span>
                 <strong data-enhancement-interrupt-label="true">${escapeHtml(formatTicks(interruptRemainingTicks))}</strong>
               </div>
               <div class="alchemy-job-progress-bar">
@@ -958,9 +958,9 @@ export class CraftEnhancementView {
           <div class="enhancement-requirement-card">
             <div class="enhancement-section-title">本次已投入</div>
             <div class="enhancement-material-row">
-              <span>灵石</span>
+              <span>靈石</span>
               <strong>${formatDisplayInteger(job.spiritStoneCost)}</strong>
-              <span class="enhancement-material-owned">角色强化等级 Lv.${formatDisplayInteger(job.roleEnhancementLevel)} · 总加速 ${formatEnhancementPercent(job.totalSpeedRate)}</span>
+              <span class="enhancement-material-owned">角色強化等級 Lv.${formatDisplayInteger(job.roleEnhancementLevel)} · 總加速 ${formatEnhancementPercent(job.totalSpeedRate)}</span>
             </div>
             ${job.materials.length > 0
               ? job.materials.map((entry) => `
@@ -970,20 +970,20 @@ export class CraftEnhancementView {
                   <span class="enhancement-material-owned">已投入</span>
                 </div>
               `).join('')
-              : '<div class="enhancement-material-empty">本次没有额外材料，仅消耗灵石。</div>'}
+              : '<div class="enhancement-material-empty">本次沒有額外材料，僅消耗靈石。</div>'}
           </div>
           <div class="enhancement-preview-grid">
             <div class="enhancement-preview-card">
-              <div class="enhancement-preview-title">当前属性</div>
+              <div class="enhancement-preview-title">當前屬性</div>
               ${currentLines.length > 0
                 ? `<div class="enhancement-preview-lines">${currentLines.map((line) => `<div>${escapeHtml(line)}</div>`).join('')}</div>`
-                : '<div class="enhancement-preview-empty">当前目标没有可显示的强化属性。</div>'}
+                : '<div class="enhancement-preview-empty">當前目標沒有可顯示的強化屬性。</div>'}
             </div>
             <div class="enhancement-preview-card">
-              <div class="enhancement-preview-title">成功后预览</div>
+              <div class="enhancement-preview-title">成功後預覽</div>
               ${resultLines.length > 0
                 ? `<div class="enhancement-preview-lines">${resultLines.map((line) => `<div>${escapeHtml(line)}</div>`).join('')}</div>`
-                : '<div class="enhancement-preview-empty">强化后暂无可显示属性。</div>'}
+                : '<div class="enhancement-preview-empty">強化後暫無可顯示屬性。</div>'}
             </div>
           </div>
         </div>
@@ -1009,18 +1009,18 @@ export class CraftEnhancementView {
         <div class="enhancement-requirement-card enhancement-requirement-card--history">
           <div class="enhancement-history-head">
             ${compactMobileLayout
-              ? `<button class="small-btn ghost" type="button" data-enhancement-toggle-history-inline="1">${inlineHistoryExpanded ? '收起强化记录' : '展开强化记录'}</button>`
+              ? `<button class="small-btn ghost" type="button" data-enhancement-toggle-history-inline="1">${inlineHistoryExpanded ? '收起強化記錄' : '展開強化記錄'}</button>`
               : `<div>
-                  <div class="enhancement-section-title">强化记录</div>
-                  <div class="enhancement-protection-note">本地累计 ${formatDisplayInteger(records.length)} 件 · 历史最高 +${formatDisplayInteger(highestLevel)}</div>
+                  <div class="enhancement-section-title">強化記錄</div>
+                  <div class="enhancement-protection-note">本地累计 ${formatDisplayInteger(records.length)} 件 · 歷史最高 +${formatDisplayInteger(highestLevel)}</div>
                 </div>`}
-            <button class="small-btn ghost" type="button" data-enhancement-open-history="1">历史记录</button>
+            <button class="small-btn ghost" type="button" data-enhancement-open-history="1">歷史記錄</button>
           </div>
           ${inlineHistoryExpanded ? `
             <div class="enhancement-empty-state enhancement-empty-state--history">
               ${records.length > 0
-                ? `当前未选中强化目标。你仍然可以查看本地历史记录，累计强化 ${formatDisplayInteger(totalAttempts)} 次。`
-                : '当前还没有本地强化记录。'}
+                ? `當前未選中強化目標。你仍然可以查看本地歷史記錄，累計強化 ${formatDisplayInteger(totalAttempts)} 次。`
+                : '當前還沒有本地強化記錄。'}
             </div>
           ` : ''}
         </div>
@@ -1045,7 +1045,7 @@ export class CraftEnhancementView {
           <span>+${formatDisplayInteger(level)}</span>
           <span>${formatEnhancementPercent(computeEnhancementAdjustedSuccessRate(level, roleEnhancementLevel, Number(referenceItem.level) || 1, hammerSuccessRate, computeLuckSuccessRateBonus(this.parent.playerLuck)))}</span>
           <span>成 ${formatDisplayInteger(current?.successCount ?? 0)}</span>
-          <span>败 ${formatDisplayInteger(current?.failureCount ?? 0)}</span>
+          <span>敗 ${formatDisplayInteger(current?.failureCount ?? 0)}</span>
         </div>
       `);
     }
@@ -1053,19 +1053,19 @@ export class CraftEnhancementView {
       <div class="enhancement-requirement-card enhancement-requirement-card--history">
         <div class="enhancement-history-head">
           ${compactMobileLayout
-            ? `<button class="small-btn ghost" type="button" data-enhancement-toggle-history-inline="1">${inlineHistoryExpanded ? '收起强化记录' : '展开强化记录'}</button>`
+            ? `<button class="small-btn ghost" type="button" data-enhancement-toggle-history-inline="1">${inlineHistoryExpanded ? '收起強化記錄' : '展開強化記錄'}</button>`
             : `<div>
-                <div class="enhancement-section-title">强化记录</div>
+                <div class="enhancement-section-title">強化記錄</div>
                 <div class="enhancement-protection-note">${currentSessionRecord
-                  ? `本次行动最高：+${formatDisplayInteger(displayRecord?.highestLevel ?? 0)}`
-                  : `历史最高：+${formatDisplayInteger(displayRecord?.highestLevel ?? 0)}`}</div>
+                  ? `本次行動最高：+${formatDisplayInteger(displayRecord?.highestLevel ?? 0)}`
+                  : `歷史最高：+${formatDisplayInteger(displayRecord?.highestLevel ?? 0)}`}</div>
               </div>`}
-          <button class="small-btn ghost" type="button" data-enhancement-open-history="1">历史记录</button>
+          <button class="small-btn ghost" type="button" data-enhancement-open-history="1">歷史記錄</button>
         </div>
         ${inlineHistoryExpanded ? `
           <div class="enhancement-history-table">
             <div class="enhancement-history-row enhancement-history-row--head">
-              <span>目标</span><span>成功率</span><span>成功</span><span>失败</span>
+              <span>目標</span><span>成功率</span><span>成功</span><span>失敗</span>
             </div>
             ${rows.join('')}
           </div>
@@ -1248,8 +1248,8 @@ export class CraftEnhancementView {
       node.dataset.enhancementFormulaTooltipBound = '1';
       const showTooltip = (clientX: number, clientY: number, pin = false): void => {
         const lines = getEnhancementFormulaTooltipLines();
-        if (pin) { this.enhancementFormulaTooltip.showPinned(node, '强化规则', lines, clientX, clientY); return; }
-        this.enhancementFormulaTooltip.show('强化规则', lines, clientX, clientY);
+        if (pin) { this.enhancementFormulaTooltip.showPinned(node, '強化規則', lines, clientX, clientY); return; }
+        this.enhancementFormulaTooltip.show('強化規則', lines, clientX, clientY);
       };
       node.addEventListener('click', (event) => {
         if (!tapMode) return;
