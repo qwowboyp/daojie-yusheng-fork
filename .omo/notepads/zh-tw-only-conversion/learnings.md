@@ -77,3 +77,39 @@ _Auto-scaffolded by /start-work. Append new entries below - never overwrite._
   黄岩鼍兽→黃岩鼉獸、忧郁→憂鬱 均正确；厚脉岭.json dry-run → 無差異。
   证据：`.omo/evidence/zh-tw-only-conversion/task-2/guard-idempotency-fix/evidence.md`。
 
+## 2026-08-19 Task-3: i18n CSV 繁中化 + 單語系化
+
+- **opencc 第 4 個非冪等誤轉案例**：`已達殘卷上限` → `已達殘捲上限`（卷→捲），
+  但「殘卷」「殘卷層數」「已達殘卷數量上限」都不轉——行為取決於上下文後綴
+  （`已達殘卷上限值` 也誤轉）。與 濃郁/岩/馥郁 同類，解決方案相同：
+  `TW_PROTECTED_PHRASES` 加 `'殘卷'`（單字「卷」絕不掩——「画卷/書卷」等簡體仍須被抓）。
+  **教訓：guard 報 csv 違規時先懷疑 opencc 非冪等，不要直接改文案**；實測 `c(text)` 單獨跑一次即可判定。
+- **MUST NOT 例外**：`scripts/lib/tw-vocabulary.mjs` 是工具鏈的一部分，但 guard 誤報
+  逼出了最小一行修復（追加保護詞）。工具鏈「不可改」的約束在「guard 自身誤報」面前
+  必須讓位，且要寫進 evidence 的偏差報告。
+- **generate-i18n.mjs 單語系化**：移除 opencc/overrides/cn2tw，只留 parseCsv+validateKey+
+  占位符檢查；`SUPPORTED_CLIENT_LOCALES=['zh-TW']`、`ClientI18nKey` 語義不變。
+  驗證：兩次 generate 冪等（第二次「無變更」）。
+- **i18n-csv.mjs 也要全欄位改名**：不只 defaultCsvPath/usage，`COLUMNS`、`normalizeInputRecord`、
+  `matchRecord` haystack、`printRecords`、add/update console 消息、sortRecords locale 全部
+  是 `zh-CN` 硬編碼——漏一個 add/update 就會把繁體寫進不存在的列。
+- **zh-TW.csv 資料列 3967 / 占位符集合與 HEAD zh-CN.csv 完全一致**（驗證腳本
+  `verify-placeholders-task3.cjs`，git show HEAD 取舊檔比對）。
+- **AGENTS.md 無 i18n 路徑字串**：root 與 client 兩檔 `rg content/i18n` 零命中，
+  任務描述裏的「更新 AGENTS.md」落空——先 rg 再動手，避免做白工。
+- **package.json 無 zh-CN 引用**：`generate:i18n`/`i18n:csv`/prebuild 腳本名不含 zh-CN，零改動。
+- 剩餘 `localeCompare(...,'zh-CN')` 大量存在（排序參數，非 CSV 路徑）——不是本 todo 範圍，
+  rg 驗證只針對 `zh-CN.csv` / `zh-TW.overrides` 兩個精確字串。
+
+
+## 2026-08-19 Task-7: zh-TW 字型堆疊（UI_TEXT_FAMILIES）
+
+- `packages/client/src/constants/ui/text.ts` UI_TEXT_FAMILIES（:12-18）有 4 個會受轉繁影響的 key：
+  `body` / `serif` / `brushWild` / `brushRegular`（注意：沒有單一 `brush` key，是兩個 brush 開頭 key）。
+- `buildCanvasFont`（:155-160）以 `preset.family` 查 `UI_TEXT_FAMILIES[key]`，key 名查表即可，函式本身不需改。
+- 追加策略：TC 字型放 SC 之後當 fallback（`body` 尾加 `'Microsoft JhengHei','PingFang TC','Noto Sans TC'`；
+  `serif` 尾加 `'Noto Serif TC','PMingLiU'`）；SC 能力系統仍優先既有字型，TC 系統 fallback 到 JhengHei 等。
+- 書法字型（Zhi Mang Xing / Ma Shan Zheng）是簡體字型，轉繁後逐字 fallback 可能混排——已追加系統
+  `'DFKai-SB','BiauKai'` fallback（純系統字型，不違反 webfont 紅線），並記錄為已知限制待 F3 視覺 QA。
+- 驗證：`pnpm --filter @mud/client exec tsc --noEmit` exit 0；rg 7 個 TC/Kai 字型名全命中；git diff 僅 4 行 family 變更。
+- 證據：`.omo/evidence/zh-tw-only-conversion/task-7/evidence.md`。

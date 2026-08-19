@@ -87,7 +87,7 @@ export function applyVocabulary(text) {
  *
  * 追加条目即可扩展；新条目必须是「台湾标准写法」且 opencc 会误转的词/字。
  */
-export const TW_PROTECTED_PHRASES = ['濃郁', '馥郁', '岩'];
+export const TW_PROTECTED_PHRASES = ['濃郁', '馥郁', '岩', '殘卷'];
 
 /**
  * 掩码保护：把 TW_PROTECTED_PHRASES 中的词替换为控制字符哨兵，

@@ -19,7 +19,7 @@ const viewSource = fs.readFileSync(
   'utf8',
 );
 const i18nSource = fs.readFileSync(
-  path.join(clientRoot, 'src/content/i18n/zh-CN.csv'),
+  path.join(clientRoot, 'src/content/i18n/zh-TW.csv'),
   'utf8',
 );
 const panelsStyleSource = readPanelsCss(clientRoot);
@@ -246,7 +246,6 @@ for (const key of [
   'action.sect.permission.building-create',
   'action.sect.permission.building-remove',
 ]) {
-  assert.match(i18nSource, new RegExp(`^${key.replaceAll('.', '\\.')},`, 'm'), `缺少宗门权限文案：${key}`);
+  assert.match(i18nSource, new RegExp(`^${key.replaceAll('.', '\\.')},`, 'm'), `缺少宗門權限文案：${key}`);
 }
-
 console.log(JSON.stringify({ ok: true, case: 'sect-application-page-request-lifecycle' }, null, 2));

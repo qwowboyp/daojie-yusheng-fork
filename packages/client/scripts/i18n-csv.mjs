@@ -10,9 +10,9 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const clientDir = path.resolve(__dirname, '..');
-const defaultCsvPath = path.join(clientDir, 'src/content/i18n/zh-CN.csv');
+const defaultCsvPath = path.join(clientDir, 'src/content/i18n/zh-TW.csv');
 
-const COLUMNS = ['key', 'category', 'zh-CN', 'note'];
+const COLUMNS = ['key', 'category', 'zh-TW', 'note'];
 const WRITE_LOCK_TIMEOUT_MS = 30_000;
 const WRITE_LOCK_RETRY_MS = 80;
 
@@ -23,10 +23,10 @@ function printUsage() {
   pnpm --filter @mud/client i18n:csv update --key KEY [--category 分类] [--text 文案] [--note 说明]
 
 说明：
-  - CSV 默认路径：src/content/i18n/zh-CN.csv
+  - CSV 默认路径：src/content/i18n/zh-TW.csv
   - key 必须唯一，建议使用 login.submit.login 这类稳定语义命名。
   - category 用于按业务区域分组，例如 个人信息、属性总览、强化、坊市、GM。
-  - text 会写入 zh-CN 列，动态文本使用 {name} 命名占位符。
+  - text 会写入 zh-TW 列，动态文本使用 {name} 命名占位符。
   - 写操作会使用文件锁和原子替换，供多个 AI 并行调用。
 
 示例：
@@ -190,8 +190,8 @@ function readRecords(csvPath) {
 
 function sortRecords(records) {
   return [...records].sort((left, right) => (
-    left.category.localeCompare(right.category, 'zh-CN')
-    || left.key.localeCompare(right.key, 'zh-CN')
+    left.category.localeCompare(right.category, 'zh-TW')
+    || left.key.localeCompare(right.key, 'zh-TW')
   ));
 }
 
@@ -217,8 +217,8 @@ function validateRecord(record, source) {
   if (!record.category?.trim()) {
     throw new Error(`${source} 缺少 category。`);
   }
-  if (!record['zh-CN']?.trim()) {
-    throw new Error(`${source} 缺少 zh-CN 文案。`);
+  if (!record['zh-TW']?.trim()) {
+    throw new Error(`${source} 缺少 zh-TW 文案。`);
   }
 }
 
@@ -239,7 +239,7 @@ function normalizeInputRecord(args, existing = {}) {
   const record = {
     key: String(args.key ?? existing.key ?? '').trim(),
     category: String(args.category ?? existing.category ?? '').trim(),
-    'zh-CN': String(args.text ?? args['zh-CN'] ?? existing['zh-CN'] ?? '').trim(),
+    'zh-TW': String(args.text ?? args['zh-TW'] ?? existing['zh-TW'] ?? '').trim(),
     note: String(args.note ?? existing.note ?? '').trim(),
   };
   validateRecord(record, `key=${record.key || '<empty>'}`);
@@ -261,11 +261,11 @@ function matchRecord(record, args) {
   if (category && record.category !== category) {
     return false;
   }
-  if (text && record['zh-CN'] !== text) {
+  if (text && record['zh-TW'] !== text) {
     return false;
   }
   if (contains) {
-    const haystack = `${record.key}\n${record.category}\n${record['zh-CN']}\n${record.note}`;
+    const haystack = `${record.key}\n${record.category}\n${record['zh-TW']}\n${record.note}`;
     if (!haystack.includes(contains)) {
       return false;
     }
@@ -284,7 +284,7 @@ function printRecords(records, args) {
   }
   for (const record of records) {
     const note = record.note ? ` | ${record.note}` : '';
-    console.log(`${record.key} | ${record.category} | ${record['zh-CN']}${note}`);
+    console.log(`${record.key} | ${record.category} | ${record['zh-TW']}${note}`);
   }
 }
 
@@ -317,7 +317,7 @@ async function run() {
         throw new Error(`CSV 存在重复 key：${duplicates.join(', ')}`);
       }
       writeRecords(csvPath, nextRecords);
-      console.log(`已新增：${record.key} | ${record.category} | ${record['zh-CN']}`);
+      console.log(`已新增：${record.key} | ${record.category} | ${record['zh-TW']}`);
     });
     return;
   }
@@ -342,7 +342,7 @@ async function run() {
         throw new Error(`CSV 存在重复 key：${duplicates.join(', ')}`);
       }
       writeRecords(csvPath, nextRecords);
-      console.log(`已修改：${record.key} | ${record.category} | ${record['zh-CN']}`);
+      console.log(`已修改：${record.key} | ${record.category} | ${record['zh-TW']}`);
     });
     return;
   }
