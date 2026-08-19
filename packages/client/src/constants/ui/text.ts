@@ -10,10 +10,10 @@
 import { t } from '../../ui/i18n';
 
 const UI_TEXT_FAMILIES = {
-  brushWild: "'Zhi Mang Xing', cursive",
-  brushRegular: "'Ma Shan Zheng', cursive",
-  body: "'YouYuan', '幼圆', 'Microsoft YaHei UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif",
-  serif: "'Noto Serif SC', 'Songti SC', 'STSong', serif",
+  brushWild: "'Zhi Mang Xing', 'DFKai-SB', 'BiauKai', cursive",
+  brushRegular: "'Ma Shan Zheng', 'DFKai-SB', 'BiauKai', cursive",
+  body: "'YouYuan', '幼圆', 'Microsoft YaHei UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif",
+  serif: "'Noto Serif SC', 'Songti SC', 'STSong', 'Noto Serif TC', 'PMingLiU', serif",
   monospace: "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace",
 } as const;
 
