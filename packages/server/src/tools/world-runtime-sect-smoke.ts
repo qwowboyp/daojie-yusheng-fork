@@ -353,7 +353,7 @@ async function main() {
       if (!instance) throw new Error(`missing instance ${instanceId}`);
       return instance;
     },
-  }, { sectName: "虚境宗", sectMark: "虚" }), /只能在大地图现世线建立宗门/);
+  }, { sectName: "虚境宗", sectMark: "虚" }), /只能在大地圖現世線建立宗門/);
   assert.equal(player.inventory.items[0].count, 1);
   assert.equal(player.sectId, null);
 
@@ -367,7 +367,7 @@ async function main() {
     targetY: 0,
     name: "近邻界门",
   });
-  await assert.rejects(() => useItemService.dispatchUseItem(playerId, 0, deps, { sectName: "近门宗", sectMark: "近" }), /五格阵基内不能与传送点重叠/);
+  await assert.rejects(() => useItemService.dispatchUseItem(playerId, 0, deps, { sectName: "近门宗", sectMark: "近" }), /五格陣基內不能與傳送點重疊/);
   publicInstance.runtimePortals = [];
   assert.equal(player.inventory.items[0].count, 1);
   assert.equal(player.sectId, null);
@@ -378,7 +378,7 @@ async function main() {
     isInstanceLeaseWritable(instance) {
       return instance === publicInstance;
     },
-  }, { sectName: "拒租宗", sectMark: "拒" }), /宗门实例租约尚未就绪/);
+  }, { sectName: "拒租宗", sectMark: "拒" }), /宗門實例租約尚未就緒/);
   assert.deepEqual(Array.from(instances.keys()).sort(), instancesBeforeLeaseRejection);
   assert.equal(player.inventory.items[0].count, 1);
   assert.equal(player.sectId, null);
@@ -423,7 +423,7 @@ async function main() {
     type: "consumable",
     count: 1,
     useBehavior: "create_sect",
-  }, deps, { sectName: "玄同门", sectMark: "玄" }), /宗门印记已被占用/);
+  }, deps, { sectName: "玄同门", sectMark: "玄" }), /宗門印記已被佔用/);
   assert.equal(deputyPlayer.sectId, null);
 
   const sectInstance = instances.get(entrance.targetInstanceId);
@@ -484,7 +484,7 @@ async function main() {
   const entranceActions = sectService.buildSectEntranceActions(deputyEntranceView, deps);
   const joinAction = entranceActions.find((action) => action.id.startsWith("sect:apply:"));
   assert.ok(joinAction);
-  assert.match(joinAction.name, /申请加入青玄宗/);
+  assert.match(joinAction.name, /申請加入青玄宗/);
   assert.equal(entranceActions.some((action) => action.id.startsWith("sect:enter:")), false);
   deputyPlayer.x = 4;
   deputyPlayer.y = 4;
@@ -492,7 +492,7 @@ async function main() {
   assert.equal(deputyPlayer.sectId, previousSectId);
   assert.equal(sectService.findSectById(player.sectId).members.some((entry) => entry.playerId === deputyPlayerId), false);
   assert.equal(sectService.findSectById(player.sectId).applications.some((entry) => entry.playerId === deputyPlayerId && entry.status === "pending"), true);
-  assert.equal(mails.some((entry) => entry.playerId === playerId && /申请加入青玄宗/.test(entry.fallbackTitle)), true);
+  assert.equal(mails.some((entry) => entry.playerId === playerId && /申請加入青玄宗/.test(entry.fallbackTitle)), true);
   deputyPlayer.x = 3;
   deputyPlayer.y = 3;
   const nearEntranceActions = sectService.buildSectEntranceActions({
@@ -512,7 +512,7 @@ async function main() {
   assert.equal(sectService.findSectById(player.sectId).members.find((entry) => entry.playerId === deputyPlayerId).name, "副宗");
   assert.equal(sectService.findSectById(player.sectId).applications.some((entry) => entry.playerId === deputyPlayerId && entry.status === "pending"), false);
   assert.equal(previousSect.members.some((entry) => entry.playerId === deputyPlayerId), false);
-  assert.equal(mails.some((entry) => entry.playerId === deputyPlayerId && /已准你入山/.test(entry.fallbackTitle)), true);
+  assert.equal(mails.some((entry) => entry.playerId === deputyPlayerId && /已準你入山/.test(entry.fallbackTitle)), true);
   deputyPlayer.sectId = null;
   assert.equal(sectService.reconcilePlayerSectId(deputyPlayerId), player.sectId);
   assert.equal(deputyPlayer.sectId, player.sectId);
@@ -570,7 +570,7 @@ async function main() {
   };
   player.x = 4;
   player.y = 1;
-  await assert.rejects(() => useItemService.dispatchUseItem(playerId, 2, deps), /宗门迁移冷却尚未结束/);
+  await assert.rejects(() => useItemService.dispatchUseItem(playerId, 2, deps), /宗門遷移冷卻尚未結束/);
   assert.equal(player.inventory.items[2].count, 1);
   relocatedSect.entranceRelocationCooldownUntil = 0;
 
@@ -630,7 +630,7 @@ async function main() {
     instance: { instanceId: sectInstance.meta.instanceId },
     localPortals: [],
   }, deps);
-  assert.equal(missingPortalActions.find((action) => action.id === "sect:exit")?.name, "离开宗门领地");
+  assert.equal(missingPortalActions.find((action) => action.id === "sect:exit")?.name, "離開宗門領地");
   player.x = 0;
   player.y = 0;
   transfers.length = 0;
@@ -969,13 +969,13 @@ async function main() {
   const memberManageDesc = memberCoreActions.find((action) => action.id === "sect:manage").desc;
   assert.match(memberManageDesc, /@@sect:/);
   const memberManageData = decodeURIComponent(/@@sect:(.*)@@/.exec(memberManageDesc)?.[1] ?? "");
-  assert.match(memberManageData, /"statusLabel":"在线"/);
-  assert.match(memberManageData, /"statusLabel":"离线挂机"/);
-  assert.match(memberManageData, /"statusLabel":"离线"/);
+  assert.match(memberManageData, /"statusLabel":"線上"/);
+  assert.match(memberManageData, /"statusLabel":"離線掛機"/);
+  assert.match(memberManageData, /"statusLabel":"離線"/);
   assert.match(memberManageData, /"realmLv":7/);
   assert.match(memberManageData, /"realmLv":6/);
-  await assert.rejects(() => sectService.executeSectAction(deputyPlayerId, "sect:guardian:toggle", deps), /当前职位没有该宗门权限/);
-  await assert.rejects(() => sectService.executeSectAction(laborPlayerId, "sect:guardian:toggle", deps), /当前职位没有该宗门权限/);
+  await assert.rejects(() => sectService.executeSectAction(deputyPlayerId, "sect:guardian:toggle", deps), /當前職位沒有該宗門權限/);
+  await assert.rejects(() => sectService.executeSectAction(laborPlayerId, "sect:guardian:toggle", deps), /當前職位沒有該宗門權限/);
   await assert.rejects(() => sectService.dispatchRelocateSectEntrance(laborPlayerId, 0, {
     itemId: "sect_entrance_relocation_token",
     name: "迁宗令",
@@ -987,7 +987,7 @@ async function main() {
   }, deps);
   const laborMaintainAction = laborCoreActions.find((action) => action.id === "sect:guardian:maintain");
   assert.ok(laborMaintainAction);
-  assert.match(laborMaintainAction.desc, /当前大阵灵力\s+10万/);
+  assert.match(laborMaintainAction.desc, /當前大陣靈力\s+10万/);
   await sectService.executeSectAction(laborPlayerId, "sect:guardian:maintain", deps);
   assert.equal(pendingCommands.length, 0);
   assert.equal(laborPlayer.formationJob?.formationInstanceId, `formation:sect_guardian:${expandedSect.sectId}`);
@@ -1003,7 +1003,7 @@ async function main() {
   }, deps);
   const laborCancelAction = laborMaintainingCoreActions.find((action) => action.id === "sect:guardian:cancel_maintain");
   assert.ok(laborCancelAction);
-  assert.match(laborCancelAction.desc, /当前大阵灵力\s+10万/);
+  assert.match(laborCancelAction.desc, /當前大陣靈力\s+10万/);
   await sectService.executeSectAction(laborPlayerId, "sect:guardian:cancel_maintain", deps);
   assert.equal(pendingCommands.length, 0);
   assert.equal(laborPlayer.formationJob, null);
@@ -1015,22 +1015,22 @@ async function main() {
   assert.ok(SECT_PERMISSION_IDS.every((permissionId) => expandedSect.rolePermissions.supreme_elder[permissionId] === true));
   await assert.rejects(
     () => sectService.executeSectAction(deputyPlayerId, `sect:member:role:${encodeURIComponent(supremePlayerId)}:elder`, deps),
-    /只能修改比自己职位低的成员/,
+    /只能修改比自己職位低的成員/,
   );
   await assert.rejects(
     () => sectService.executeSectAction(supremePlayerId, `sect:member:role:${encodeURIComponent(elderPlayerId)}:supreme_elder`, deps),
-    /只能任命比自己职位低的职位/,
+    /只能任命比自己職位低的職位/,
   );
   await assert.rejects(
     () => sectService.executeSectAction(supremePlayerId, `sect:member:role:${encodeURIComponent(supremePlayerId)}:elder`, deps),
-    /不能修改自己的职位/,
+    /不能修改自己的職位/,
   );
   await sectService.executeSectAction(supremePlayerId, `sect:member:role:${encodeURIComponent(elderPlayerId)}:inner`, deps);
   assert.equal(expandedSect.members.find((entry) => entry.playerId === elderPlayerId).roleId, "inner");
   await sectService.executeSectAction(playerId, `sect:member:role:${encodeURIComponent(elderPlayerId)}:elder`, deps);
   await assert.rejects(
     () => sectService.executeSectAction(playerId, 'sect:permission:toggle:supreme_elder:guardian', deps),
-    /固定拥有全部职位权限/,
+    /固定擁有全部職位權限/,
   );
   await sectService.executeSectAction(deputyPlayerId, "sect:guardian:toggle", deps);
   assert.equal(guardians.find((entry) => entry.id === `formation:sect_guardian:${expandedSect.sectId}`).active, false);
@@ -1129,7 +1129,7 @@ async function main() {
   );
   assert.deepEqual(deniedContinue, {
     satisfied: false,
-    reason: '当前职位没有宗门建造权限。',
+    reason: '當前職位沒有宗門建造權限。',
     shouldCancel: true,
   });
   assert.equal(

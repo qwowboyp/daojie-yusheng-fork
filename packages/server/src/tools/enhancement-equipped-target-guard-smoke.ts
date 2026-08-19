@@ -142,7 +142,7 @@ function testStartEnhancementRejectsEquippedItems(): void {
   const { service, player } = createRuntime();
   const result = service.startEnhancement(player, { target: { source: 'equipment', slot: 'body' } });
   assert.equal(result.ok, false);
-  assert.match((result as unknown as { error?: string }).error ?? '', /身上装备不能直接强化/);
+  assert.match((result as unknown as { error?: string }).error ?? '', /身上裝備不能直接強化/);
   assert.equal(player.equipment.slots.find((entry: any) => entry.slot === 'body')?.item?.itemId, 'iron_armor');
   assert.equal(player.enhancementJob, null);
   assert.equal(player.inventory.lockedItems.length, 0);

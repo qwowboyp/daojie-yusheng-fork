@@ -404,7 +404,7 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'mud-access-po
   assert.equal(result.focusedModeAfterCustomSave, '自定義策略', '保存後鍵盤焦點未回到當前權限模式');
   assert.deepEqual(result.conditionTypeLabels, ['好友關係', '同宗門', '指定玩家', '角色名字', '境界', '屬性']);
   assert.deepEqual(result.relationLabels, ['道友', '至交', '師父', '徒弟', '仇家']);
-  for (const role of ['同宗門全部成員', '宗主', '太上长老', '副宗主', '长老', '内门弟子', '外门弟子', '杂役弟子']) {
+  for (const role of ['同宗門全部成員', '宗主', '太上長老', '副宗主', '長老', '內門弟子', '外門弟子', '雜役弟子']) {
     assert.match(result.sectText, new RegExp(role), `宗門權限缺少 ${role}`);
   }
   assert.equal(result.sectLastRoleProtected, true, '精確職位最後一項不得被無意取消為全部成員');

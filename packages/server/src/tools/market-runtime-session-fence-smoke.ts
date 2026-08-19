@@ -166,7 +166,7 @@ async function assertMarketRuntimeRejectsOwnerlessPrimaryBeforeMutation(): Promi
 
   assert.equal(actionCount, 0);
   assert.equal(runtimeApplyCount, 0);
-  assert.match(JSON.stringify(result), /事务围栏暂不可用/);
+  assert.match(JSON.stringify(result), /事務圍欄暫不可用/);
   assert.deepEqual(player.inventory?.items, [{ itemId: 'spirit_stone', count: 10 }]);
   assert.deepEqual(player.wallet?.balances, [{ walletType: 'spirit_stone', balance: 10 }]);
 

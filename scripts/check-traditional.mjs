@@ -250,14 +250,57 @@ function printHelp() {
   source  TypeScript AST，只检查字符串字面量（注释 / 标识符 / 正则不动；
           含 \${...} 插值的模板字符串不判违规）
 
-选项：
+ 选项：
   --mode <json|csv|source>  强制指定模式
   --exclude-fields <f1,f2>  额外排除字段（json 模式，追加到 convert-exclude-fields.json）
+  --scope                   按 check-traditional.scope.json 固定范围扫描（json 内容/地图目录、
+                             csv 语言包、源码白名单，各按条目指定模式）
   --help                    显示本帮助
   -v / --verbose            输出每个文件通过/失败明细
 
 输出：{ok, violations:[{file,line,sample}]} 到 stdout。
 退出码：0=全部通过（幂等），1=存在违规。`);
+}
+
+/** 按 check-traditional.scope.json 展开固定扫描目标（模式随条目类型而定）。 */
+function loadScopeTargets() {
+  const scopePath = path.join(__dirname, 'check-traditional.scope.json');
+  let scope;
+  try {
+    scope = JSON.parse(fs.readFileSync(scopePath, 'utf8'));
+  } catch (error) {
+    console.error(`读取 scope 文件失败：${scopePath}（${error.message}）`);
+    process.exit(2);
+  }
+  const targets = [];
+  const addFile = (relPath, mode) => {
+    const abs = path.resolve(repoRoot, relPath);
+    if (!fs.existsSync(abs)) {
+      console.error(`scope 条目不存在（已从仓库移除？）：${relPath}`);
+      process.exit(2);
+    }
+    targets.push({ file: abs, mode });
+  };
+  for (const dir of scope.contentMaps || []) {
+    // json 模式递归扫描目录下所有 .json
+    const abs = path.resolve(repoRoot, dir);
+    if (!fs.existsSync(abs)) {
+      console.error(`scope 目录不存在：${dir}`);
+      process.exit(2);
+    }
+    const walk = (d) => {
+      for (const name of fs.readdirSync(d)) {
+        const full = path.join(d, name);
+        const stat = fs.statSync(full);
+        if (stat.isDirectory()) walk(full);
+        else if (path.extname(full).toLowerCase() === '.json') addFile(path.relative(repoRoot, full), 'json');
+      }
+    };
+    walk(abs);
+  }
+  for (const csv of scope.csv || []) addFile(csv, 'csv');
+  for (const src of scope.sourceWhitelist || []) addFile(src, 'source');
+  return targets;
 }
 
 function main() {
@@ -266,12 +309,15 @@ function main() {
   let mode = null;
   let verbose = false;
   let extraExcludes = [];
+  let useScope = false;
 
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--help' || arg === '-h') {
       printHelp();
       process.exit(0);
+    } else if (arg === '--scope') {
+      useScope = true;
     } else if (arg === '--mode') {
       mode = argv[++i];
       if (!['json', 'csv', 'source'].includes(mode)) {
@@ -290,7 +336,7 @@ function main() {
     }
   }
 
-  if (targets.length === 0) {
+  if (targets.length === 0 && !useScope) {
     console.error('未指定文件或目录（--help 查看用法）');
     process.exit(2);
   }
@@ -300,8 +346,15 @@ function main() {
   let checked = 0;
   let hadReadError = false;
 
-  for (const target of targets) {
-    if (fs.statSync(target).isDirectory()) {
+  // --scope：按 scope 文件固定范围扫描（条目自带模式）；未指定 --scope 时保持原 CLI 行为
+  const scopeTargets = useScope ? loadScopeTargets() : [];
+  const allTargets = scopeTargets.length > 0
+    ? scopeTargets
+    : targets.map((t) => ({ file: t, mode: null }));
+
+  for (const target of allTargets) {
+    const targetAbs = target.file;
+    if (fs.statSync(targetAbs).isDirectory()) {
       const files = [];
       const walk = (dir) => {
         for (const name of fs.readdirSync(dir)) {
@@ -313,7 +366,7 @@ function main() {
           }
         }
       };
-      walk(target);
+      walk(targetAbs);
       for (const file of files) {
         checked += 1;
         const result = checkFile(file, { mode, excludedFields });
@@ -325,9 +378,9 @@ function main() {
       continue;
     }
     checked += 1;
-    const result = checkFile(target, { mode, excludedFields });
+    const result = checkFile(targetAbs, { mode: target.mode ?? mode, excludedFields });
     if (verbose) {
-      console.log(`  ${result.ok ? 'PASS' : 'FAIL'}  ${path.relative(repoRoot, target) || target}`);
+      console.log(`  ${result.ok ? 'PASS' : 'FAIL'}  ${path.relative(repoRoot, targetAbs) || targetAbs}`);
     }
     allViolations.push(...result.violations);
   }

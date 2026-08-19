@@ -946,7 +946,7 @@ async function verifyDestroyConcurrencyFences(input: {
         playerId: 'player:expired-after-destroy',
         sessionId: 'session:expired-after-destroy',
       }),
-      /租约已过期/,
+      /租約已過期/,
     );
     const awaitRaceRow = await requireInstanceRow(input.pool, input.awaitRaceInstanceId);
     assert.equal(awaitRaceRow.status, 'active');

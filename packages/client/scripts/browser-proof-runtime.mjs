@@ -189,9 +189,24 @@ export async function withClientBrowserProof({ viewport, profilePrefix }, run) {
     );
     return await run(cdp);
   } finally {
+    try {
+      // 先走 CDP 优雅关闭让 Chrome 释放 profile 文件锁；Windows 上直接杀进程会残留
+      // first_party_sets.db-journal 等句柄，导致暂存目录清理 EBUSY。
+      await cdp?.send('Browser.close');
+    } catch {
+      // CDP 已断开时退回进程信号方式。
+    }
     cdp?.close();
     await stopChild(chrome);
     await viteServer?.close();
-    if (profileDir) await rm(profileDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+    if (profileDir) {
+      try {
+        await rm(profileDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+      } catch (error) {
+        // Windows 上 Crashpad 句柄释放可能超过内置重试窗口导致 EBUSY；暂存 profile 清理
+        // 属卫生问题，不得让已通过的 proof 判为失败（残留目录交由系统 Temp 清理机制回收）。
+        console.warn(`[browser-proof] 暂存 profile 清理失败（不影响 proof 结果）：${error.code ?? error.message}`);
+      }
+    }
   }
 }

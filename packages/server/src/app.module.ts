@@ -270,7 +270,9 @@ const WORLD_GATEWAY_PROVIDERS = shouldStartHttpServer()
 /** 服务端主模块：统一注册 HTTP、Socket 入口和运行时/持久化服务。 */
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    // envFilePath: [] 表示不讀 .env 檔案（本環境 .env 是目錄，讀取會 EISDIR）；
+    // 環境變數一律由 process.env 注入（verify 鏈 / load-local-runtime-env 負責）。
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: [] }),
     WorkerPoolModule,
   ],
   controllers: [

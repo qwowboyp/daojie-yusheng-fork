@@ -306,7 +306,7 @@ async function testAlchemyQuantityStartsWithSingleBatchResources(): Promise<void
   }, missingSingleBatchCtx.deps);
 
   assert.equal(missingSingleBatchStart.ok, false);
-  assert.match(String(missingSingleBatchStart.error ?? ''), /数量不足|灵石不足/);
+  assert.match(String(missingSingleBatchStart.error ?? ''), /數量不足|靈石不足/);
   assert.equal(missingSingleBatchPlayer.alchemyJob, null);
 }
 

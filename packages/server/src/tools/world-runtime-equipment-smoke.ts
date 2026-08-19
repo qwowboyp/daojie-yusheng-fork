@@ -310,7 +310,7 @@ async function testAtomicSwapKeepsDifferentHelmetIdentities(): Promise<void> {
     ['asset-lock', 'save-presence', 'durable-update', 'replace-inventory'],
   );
   assert.ok(harness.calls.indexOf('replace-equipment') > harness.calls.indexOf('durable-update'));
-  assert.equal(harness.notices[0], '装备 +20 青萝束冠');
+  assert.equal(harness.notices[0], '裝備 +20 青萝束冠');
   assert.ok(harness.calls.includes('request-delta'));
 }
 

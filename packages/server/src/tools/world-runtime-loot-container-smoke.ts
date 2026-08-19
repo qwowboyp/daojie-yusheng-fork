@@ -97,7 +97,7 @@ async function testGroundTakeFailsClosedWithoutRuntimeOwner(): Promise<void> {
       refreshQuestStates() {},
       queuePlayerNotice() {},
     } as never),
-    /事务围栏暂不可用/,
+    /事務圍欄暫不可用/,
   );
 
   assert.equal(instanceReadCount, 0);
@@ -290,7 +290,7 @@ async function testGroundTakeDurableGrantSyncsPresenceFence() {
     ['ensureRuntimeSessionFenceAtLeast', 'player:ground:fenced', 446],
     ['savePlayerPresence', 'player:ground:fenced', 'runtime:player:ground:fenced:447', 447],
     ['refreshQuestStates', 'player:ground:fenced'],
-    ['queuePlayerNotice', 'player:ground:fenced', '获得 鼠尾', 'loot'],
+    ['queuePlayerNotice', 'player:ground:fenced', '獲得 鼠尾', 'loot'],
   ]);
 }
 
@@ -413,7 +413,7 @@ async function testGroundTakeDurableGrant() {
   assert.deepEqual(restoredItems, []);
   assert.deepEqual(log, [
     ['refreshQuestStates', 'player:ground:one'],
-    ['queuePlayerNotice', 'player:ground:one', '获得 鼠尾 x2', 'loot', {
+    ['queuePlayerNotice', 'player:ground:one', '獲得 鼠尾 x2', 'loot', {
       key: 'notice.loot.obtained',
       vars: { itemName: '鼠尾 x2' },
       pills: [{ key: 'itemName', style: 'target' }],
@@ -577,7 +577,7 @@ async function testGroundTakeAllDurableGrant() {
   await pendingTakeGroundAll;
   assert.deepEqual(log, [
     ['refreshQuestStates', 'player:ground:all'],
-    ['queuePlayerNotice', 'player:ground:all', '获得 鼠尾 x2、狼牙', 'loot'],
+    ['queuePlayerNotice', 'player:ground:all', '獲得 鼠尾 x2、狼牙', 'loot'],
   ]);
 }
 
@@ -971,7 +971,7 @@ async function testContainerTakeDurableGrant() {
   await pendingContainerTake;
   assert.deepEqual(log, [
     ['refreshQuestStates', 'player:container:one'],
-    ['queuePlayerNotice', 'player:container:one', '获得 鼠尾 x2', 'loot'],
+    ['queuePlayerNotice', 'player:container:one', '獲得 鼠尾 x2', 'loot'],
   ]);
 }
 
@@ -1129,7 +1129,7 @@ async function testContainerTakeAllDurableGrant() {
   await pendingContainerTakeAll;
   assert.deepEqual(log, [
     ['refreshQuestStates', 'player:container:all'],
-    ['queuePlayerNotice', 'player:container:all', '获得 鼠尾 x2、狼牙', 'loot'],
+    ['queuePlayerNotice', 'player:container:all', '獲得 鼠尾 x2、狼牙', 'loot'],
   ]);
 }
 
@@ -1475,7 +1475,7 @@ async function testGatherKeepsOwnerlessSearchWithMultipleMatchingJobs() {
 
 async function testGatherReconciliationIgnoresNonHerbContainer() {
   const fixture = buildGatherReconciliationFixture({ suffix: 'non-herb', variant: 'chest' });
-  assert.throws(() => fixture.start(), /当前目标不是草药采集点/);
+  assert.throws(() => fixture.start(), /當前目標不是草藥採集點/);
   assert.equal(fixture.persistedActiveSearch()?.playerId, undefined);
   assert.equal(fixture.service.getContainerPersistenceRevision(fixture.instanceId), 0);
   assert.equal(fixture.instance.worldRevision, 10);

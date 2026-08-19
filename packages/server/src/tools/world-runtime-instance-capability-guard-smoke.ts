@@ -359,7 +359,7 @@ async function testPeacefulLineRejectsPlayerBasicAttack() {
   }));
   await assert.rejects(
     () => service.dispatchBasicAttackToPlayer(attacker, target.playerId, 'spell', 14, 8, deps),
-    /当前实例不允许玩家互攻/,
+    /當前實例不允許玩家互攻/,
   );
 }
 
@@ -386,11 +386,11 @@ async function testRealLineAllowsPlayerBasicAttack() {
   assert.deepEqual(log[5], ['applyDamage', 'player:target', 9]);
   assert.deepEqual(log[6], ['recordActivity', 'player:target', 8, { interruptCultivation: true, reason: 'attack' }]);
   assert.deepEqual(log[7].slice(0, 2), ['queuePlayerNotice', 'player:attacker']);
-  assert.match(log[7][2], /发起攻击/);
-  assert.match(log[7][2], /原始 14 - 实际 9 - 法术/);
+  assert.match(log[7][2], /發起攻擊/);
+  assert.match(log[7][2], /原始 14 - 實際 9 - 法術/);
   assert.deepEqual(log[8].slice(0, 2), ['queuePlayerNotice', 'player:target']);
-  assert.match(log[8][2], /发起攻击/);
-  assert.match(log[8][2], /原始 14 - 实际 9 - 法术/);
+  assert.match(log[8][2], /發起攻擊/);
+  assert.match(log[8][2], /原始 14 - 實際 9 - 法術/);
   assert.equal(deps.combatOutcomes.length, 1);
   assert.equal(deps.combatOutcomes[0].target.kind, 'player');
   assert.equal(deps.combatOutcomes[0].target.id, target.playerId);
@@ -585,7 +585,7 @@ function testMonsterBasicAttackQueuesCombatNoticeAndDamageFloat() {
   const notice = log.find((entry) => entry[0] === 'queuePlayerNotice');
   assert.ok(notice, `expected monster basic attack to enqueue combat notice, log=${JSON.stringify(log)}`);
   assert.deepEqual(notice.slice(0, 2), ['queuePlayerNotice', 'player:victim']);
-  assert.match(notice[2], /唤灵真人对你发起攻击/);
+  assert.match(notice[2], /唤灵真人對你發起攻擊/);
   assert.match(notice[2], new RegExp(`实际 ${float[4]} - 物理`));
   assert.equal(notice[3], 'combat');
   assert.equal(deps.combatOutcomes.length, 1);
@@ -651,8 +651,8 @@ function testMonsterBasicAttackDodgeQueuesCombatNoticeAndOutcome() {
   assert.equal(log.some((entry) => entry[0] === 'pushDamageFloatEffect'), false, `dodged monster basic attack should not enqueue damage float, log=${JSON.stringify(log)}`);
   const notice = log.find((entry) => entry[0] === 'queuePlayerNotice');
   assert.ok(notice, `expected monster basic attack dodge notice, log=${JSON.stringify(log)}`);
-  assert.match(notice[2], /唤灵真人对你发起攻击/);
-  assert.match(notice[2], /被闪避/);
+  assert.match(notice[2], /唤灵真人對你發起攻擊/);
+  assert.match(notice[2], /被閃避/);
   assert.equal(deps.combatOutcomes.length, 1);
   assert.equal(deps.combatOutcomes[0].target.id, player.playerId);
   assert.equal(deps.combatOutcomes[0].result.damage, 0);
@@ -845,8 +845,8 @@ function testMonsterSkillQueuesCombatNoticeAndDamageFloat() {
   const notice = log.find((entry) => entry[0] === 'queuePlayerNotice');
   assert.ok(notice, `expected monster skill to enqueue combat notice, log=${JSON.stringify(log)}`);
   assert.deepEqual(notice.slice(0, 2), ['queuePlayerNotice', 'player:victim']);
-  assert.match(notice[2], /唤灵真人对你施展唤灵火/);
-  assert.match(notice[2], /原始 17 - 实际 17 - 法术/);
+  assert.match(notice[2], /唤灵真人對你施展唤灵火/);
+  assert.match(notice[2], /原始 17 - 實際 17 - 法術/);
   assert.equal(notice[3], 'combat');
   assert.equal(deps.combatOutcomes.length, 1);
   assert.equal(deps.combatOutcomes[0].target.id, player.playerId);
@@ -958,8 +958,8 @@ function testMonsterSkillUsesRuntimeLocationBeforeCombatStateSync() {
   assert.ok(log.some((entry) => entry[0] === 'castMonsterSkill'), `expected stale player.instanceId not to suppress monster skill, log=${JSON.stringify(log)}`);
   const notice = log.find((entry) => entry[0] === 'queuePlayerNotice');
   assert.ok(notice, `expected monster skill dodge notice before combat state sync, log=${JSON.stringify(log)}`);
-  assert.match(notice[2], /唤灵真人对你施展唤灵火/);
-  assert.match(notice[2], /被闪避/);
+  assert.match(notice[2], /唤灵真人對你施展唤灵火/);
+  assert.match(notice[2], /被閃避/);
   assert.equal(deps.combatOutcomes.length, 1);
   assert.equal(deps.combatOutcomes[0].result.dodged, true);
 }
@@ -1086,8 +1086,8 @@ function testAnchoredMonsterChantHitsWarningCellPlayerWithoutPrimaryTargetLocati
     && entry[2] === player.playerId), `expected warning-cell player to be resolved even when primary target location is missing, log=${JSON.stringify(log)}`);
   const notice = log.find((entry) => entry[0] === 'queuePlayerNotice');
   assert.ok(notice, `expected dodge notice for warning-cell target, log=${JSON.stringify(log)}`);
-  assert.match(notice[2], /唤灵真人对你施展唤灵火/);
-  assert.match(notice[2], /被闪避/);
+  assert.match(notice[2], /唤灵真人對你施展唤灵火/);
+  assert.match(notice[2], /被閃避/);
   assert.equal(deps.combatOutcomes.length, 1);
   assert.equal(deps.combatOutcomes[0].target.id, player.playerId);
   assert.equal(deps.combatOutcomes[0].result.targetSource, 'warning_cell');
@@ -1285,8 +1285,8 @@ function testPeacefulLineAllowsTileAttack() {
   assert.deepEqual(log[4].slice(0, 5), ['pushDamageFloatEffect', 'public:yunlai_town', 11, 10, 5]);
   assert.equal(typeof log[4][5], 'string');
   assert.deepEqual(log[5].slice(0, 2), ['queuePlayerNotice', 'player:attacker']);
-  assert.match(log[5][2], /攻击/);
-  assert.match(log[5][2], /原始 12 - 实际 5 - 物理/);
+  assert.match(log[5][2], /攻擊/);
+  assert.match(log[5][2], /原始 12 - 實際 5 - 物理/);
   assert.equal(deps.combatOutcomes.length, 1);
   assert.equal(deps.combatOutcomes[0].target.kind, 'tile');
   assert.equal(deps.combatOutcomes[0].result.damage, 5);
@@ -1322,7 +1322,7 @@ function testTileAttackHitsHerbContainerBeforeTerrainDamage() {
   assert.deepEqual(log[5].slice(0, 5), ['pushDamageFloatEffect', 'public:yunlai_town', 11, 10, 1]);
   assert.deepEqual(log[6].slice(0, 2), ['queuePlayerNotice', 'player:attacker']);
   assert.match(log[6][2], /打落 1 朵/);
-  assert.match(log[6][2], /还需 5 息/);
+  assert.match(log[6][2], /還需 5 息/);
   assert.equal(log.some((entry) => entry[0] === 'damageTile'), false);
   assert.equal(deps.combatOutcomes.length, 1);
   assert.equal(deps.combatOutcomes[0].target.kind, 'container');
@@ -1553,8 +1553,8 @@ function testRealLineAllowsTileAttack() {
   assert.deepEqual(log[4].slice(0, 5), ['pushDamageFloatEffect', 'real:yunlai_town', 11, 10, 7]);
   assert.equal(typeof log[4][5], 'string');
   assert.deepEqual(log[5].slice(0, 2), ['queuePlayerNotice', 'player:attacker']);
-  assert.match(log[5][2], /攻击/);
-  assert.match(log[5][2], /原始 12 - 实际 7 - 物理/);
+  assert.match(log[5][2], /攻擊/);
+  assert.match(log[5][2], /原始 12 - 實際 7 - 物理/);
 }
 
 async function testPeacefulLineRejectsPlayerLockOn() {
@@ -1570,7 +1570,7 @@ async function testPeacefulLineRejectsPlayerLockOn() {
   }), log);
   await assert.rejects(
     () => service.dispatchEngageBattle(attacker.playerId, target.playerId, null, null, null, true, deps),
-    /当前实例不允许玩家互攻/,
+    /當前實例不允許玩家互攻/,
   );
   assert.deepEqual(log, [
     ['getInstanceRuntimeOrThrow', 'public:yunlai_town'],

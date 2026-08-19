@@ -9,7 +9,7 @@
   },
   "m_bamboo_serpent": {
     "monsterId": "m_bamboo_serpent",
-    "monsterName": "青鳞竹蛇",
+    "monsterName": "青鱗竹蛇",
     "mapId": "bamboo_forest",
     "mapName": "青竹林",
     "mapLv": 4,
@@ -17,7 +17,7 @@
   },
   "m_bamboo_sprite": {
     "monsterId": "m_bamboo_sprite",
-    "monsterName": "竹心灵",
+    "monsterName": "竹心靈",
     "mapId": "bamboo_forest",
     "mapName": "青竹林",
     "mapLv": 4,
@@ -27,7 +27,7 @@
     "monsterId": "m_blaze_lizard",
     "monsterName": "烈焰蜥",
     "mapId": "blazewood_waste",
-    "mapName": "焚木荒台",
+    "mapName": "焚木荒臺",
     "mapLv": 35,
     "totalMaps": 1
   },
@@ -35,23 +35,23 @@
     "monsterId": "m_blazewood_king",
     "monsterName": "焚木妖王",
     "mapId": "blazewood_waste",
-    "mapName": "焚木荒台",
+    "mapName": "焚木荒臺",
     "mapLv": 35,
     "totalMaps": 1
   },
   "m_blood_crow": {
     "monsterId": "m_blood_crow",
-    "monsterName": "血羽鸦",
+    "monsterName": "血羽鴉",
     "mapId": "beast_valley",
-    "mapName": "噬魂兽谷",
+    "mapName": "噬魂獸谷",
     "mapLv": 10,
     "totalMaps": 1
   },
   "m_bone_owl": {
     "monsterId": "m_bone_owl",
-    "monsterName": "骨翎夜鸮",
+    "monsterName": "骨翎夜鴞",
     "mapId": "ancient_ruins",
-    "mapName": "断碑遗迹",
+    "mapName": "斷碑遺蹟",
     "mapLv": 8,
     "totalMaps": 1
   },
@@ -59,47 +59,47 @@
     "monsterId": "m_charwood_walker",
     "monsterName": "枯木行者",
     "mapId": "blazewood_waste",
-    "mapName": "焚木荒台",
+    "mapName": "焚木荒臺",
     "mapLv": 35,
     "totalMaps": 1
   },
   "m_cleft_banner_general": {
     "monsterId": "m_cleft_banner_general",
-    "monsterName": "残兵鸣将",
+    "monsterName": "殘兵鳴將",
     "mapId": "cleft_blade_plain",
-    "mapName": "裂锋原",
+    "mapName": "裂鋒原",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_cleft_blade_sprite": {
     "monsterId": "m_cleft_blade_sprite",
-    "monsterName": "金砂锋魈",
+    "monsterName": "金砂鋒魈",
     "mapId": "cleft_blade_plain",
-    "mapName": "裂锋原",
+    "mapName": "裂鋒原",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_cleft_blade_wraith": {
     "monsterId": "m_cleft_blade_wraith",
-    "monsterName": "断刃游魂",
+    "monsterName": "斷刃遊魂",
     "mapId": "cleft_blade_plain",
-    "mapName": "裂锋原",
+    "mapName": "裂鋒原",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_cleft_gate_lord": {
     "monsterId": "m_cleft_gate_lord",
-    "monsterName": "庚金镇门将",
+    "monsterName": "庚金鎮門將",
     "mapId": "cleft_blade_plain",
-    "mapName": "裂锋原",
+    "mapName": "裂鋒原",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_cleft_iron_guard": {
     "monsterId": "m_cleft_iron_guard",
-    "monsterName": "残旌铁卫",
+    "monsterName": "殘旌鐵衛",
     "mapId": "cleft_blade_plain",
-    "mapName": "裂锋原",
+    "mapName": "裂鋒原",
     "mapLv": 19,
     "totalMaps": 1
   },
@@ -107,15 +107,15 @@
     "monsterId": "m_cleft_sand_soldier",
     "monsterName": "裂甲砂兵",
     "mapId": "cleft_blade_plain",
-    "mapName": "裂锋原",
+    "mapName": "裂鋒原",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_cleft_stele_puppet": {
     "monsterId": "m_cleft_stele_puppet",
-    "monsterName": "断碑锋傀",
+    "monsterName": "斷碑鋒傀",
     "mapId": "cleft_blade_plain",
-    "mapName": "裂锋原",
+    "mapName": "裂鋒原",
     "mapLv": 19,
     "totalMaps": 1
   },
@@ -123,63 +123,63 @@
     "monsterId": "m_cold_abyss_drake",
     "monsterName": "玄溟螭影",
     "mapId": "cold_tide_marsh",
-    "mapName": "寒汐泽",
+    "mapName": "寒汐澤",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_cold_bridge_patrol": {
     "monsterId": "m_cold_bridge_patrol",
-    "monsterName": "雾桥巡灵",
+    "monsterName": "霧橋巡靈",
     "mapId": "cold_tide_marsh",
-    "mapName": "寒汐泽",
+    "mapName": "寒汐澤",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_cold_iron_scorpion": {
     "monsterId": "m_cold_iron_scorpion",
-    "monsterName": "寒铁蝎",
+    "monsterName": "寒鐵蠍",
     "mapId": "frostblade_abyss",
-    "mapName": "霜刃渊",
+    "mapName": "霜刃淵",
     "mapLv": 31,
     "totalMaps": 1
   },
   "m_cold_marsh_wraith": {
     "monsterId": "m_cold_marsh_wraith",
-    "monsterName": "浅泽雾鬼",
+    "monsterName": "淺澤霧鬼",
     "mapId": "cold_tide_marsh",
-    "mapName": "寒汐泽",
+    "mapName": "寒汐澤",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_cold_mirror_shade": {
     "monsterId": "m_cold_mirror_shade",
-    "monsterName": "寒宫镜妖",
+    "monsterName": "寒宮鏡妖",
     "mapId": "cold_tide_marsh",
-    "mapName": "寒汐泽",
+    "mapName": "寒汐澤",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_cold_moonscale": {
     "monsterId": "m_cold_moonscale",
-    "monsterName": "月沼鲛影",
+    "monsterName": "月沼鮫影",
     "mapId": "cold_tide_marsh",
-    "mapName": "寒汐泽",
+    "mapName": "寒汐澤",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_cold_pattern_guard": {
     "monsterId": "m_cold_pattern_guard",
-    "monsterName": "冰纹水卒",
+    "monsterName": "冰紋水卒",
     "mapId": "cold_tide_marsh",
-    "mapName": "寒汐泽",
+    "mapName": "寒汐澤",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_cold_tide_sprite": {
     "monsterId": "m_cold_tide_sprite",
-    "monsterName": "寒汐蜉灵",
+    "monsterName": "寒汐蜉靈",
     "mapId": "cold_tide_marsh",
-    "mapName": "寒汐泽",
+    "mapName": "寒汐澤",
     "mapLv": 19,
     "totalMaps": 1
   },
@@ -187,85 +187,85 @@
     "monsterId": "m_crystal_bat",
     "monsterName": "晶背蝠",
     "mapId": "black_iron_mine",
-    "mapName": "玄铁矿洞",
+    "mapName": "玄鐵礦洞",
     "mapLv": 6,
     "totalMaps": 1
   },
   "m_darksoil_beetle": {
     "monsterId": "m_darksoil_beetle",
-    "monsterName": "玄土甲虫",
+    "monsterName": "玄土甲蟲",
     "mapId": "darksoil_abyss",
-    "mapName": "玄壤深渊",
+    "mapName": "玄壤深淵",
     "mapLv": 39,
     "totalMaps": 1
   },
   "m_darksoil_dragon": {
     "monsterId": "m_darksoil_dragon",
-    "monsterName": "玄壤地龙",
+    "monsterName": "玄壤地龍",
     "mapId": "darksoil_abyss",
-    "mapName": "玄壤深渊",
+    "mapName": "玄壤深淵",
     "mapLv": 39,
     "totalMaps": 1
   },
   "m_deepvein_armor_spirit": {
     "monsterId": "m_deepvein_armor_spirit",
-    "monsterName": "坠岩甲灵",
+    "monsterName": "墜巖甲靈",
     "mapId": "deepvein_ridge",
-    "mapName": "厚脉岭",
+    "mapName": "厚脈嶺",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_deepvein_croc": {
     "monsterId": "m_deepvein_croc",
-    "monsterName": "黄岩鼍兽",
+    "monsterName": "黃岩鼉獸",
     "mapId": "deepvein_ridge",
-    "mapName": "厚脉岭",
+    "mapName": "厚脈嶺",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_deepvein_earth_effigy": {
     "monsterId": "m_deepvein_earth_effigy",
-    "monsterName": "玄岳地傀",
+    "monsterName": "玄嶽地傀",
     "mapId": "deepvein_ridge",
-    "mapName": "厚脉岭",
+    "mapName": "厚脈嶺",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_deepvein_heavy_guard": {
     "monsterId": "m_deepvein_heavy_guard",
-    "monsterName": "裂岭重卫",
+    "monsterName": "裂嶺重衛",
     "mapId": "deepvein_ridge",
-    "mapName": "厚脉岭",
+    "mapName": "厚脈嶺",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_deepvein_ridge_warden": {
     "monsterId": "m_deepvein_ridge_warden",
-    "monsterName": "岳纹镇灵",
+    "monsterName": "嶽紋鎮靈",
     "mapId": "deepvein_ridge",
-    "mapName": "厚脉岭",
+    "mapName": "厚脈嶺",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_deepvein_stele_bearer": {
     "monsterId": "m_deepvein_stele_bearer",
-    "monsterName": "厚土负碑者",
+    "monsterName": "厚土負碑者",
     "mapId": "deepvein_ridge",
-    "mapName": "厚脉岭",
+    "mapName": "厚脈嶺",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_deepvein_stonebound": {
     "monsterId": "m_deepvein_stonebound",
-    "monsterName": "沉脉石奴",
+    "monsterName": "沉脈石奴",
     "mapId": "deepvein_ridge",
-    "mapName": "厚脉岭",
+    "mapName": "厚脈嶺",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_dust_vulture": {
     "monsterId": "m_dust_vulture",
-    "monsterName": "裂喙秃鹫",
+    "monsterName": "裂喙禿鷲",
     "mapId": "wildlands",
     "mapName": "荒野",
     "mapLv": 1,
@@ -275,47 +275,47 @@
     "monsterId": "m_earthsplit_centipede",
     "monsterName": "裂地蜈蚣",
     "mapId": "darksoil_abyss",
-    "mapName": "玄壤深渊",
+    "mapName": "玄壤深淵",
     "mapLv": 39,
     "totalMaps": 1
   },
   "m_ember_attendant": {
     "monsterId": "m_ember_attendant",
-    "monsterName": "炉心灼侍",
+    "monsterName": "爐心灼侍",
     "mapId": "emberfall_court",
-    "mapName": "赤陨庭",
+    "mapName": "赤隕庭",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_ember_bone_patrol": {
     "monsterId": "m_ember_bone_patrol",
-    "monsterName": "炽骨巡卒",
+    "monsterName": "熾骨巡卒",
     "mapId": "emberfall_court",
-    "mapName": "赤陨庭",
+    "mapName": "赤隕庭",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_ember_flame_guard": {
     "monsterId": "m_ember_flame_guard",
-    "monsterName": "流火戍灵",
+    "monsterName": "流火戍靈",
     "mapId": "emberfall_court",
-    "mapName": "赤陨庭",
+    "mapName": "赤隕庭",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_ember_furnace_lord": {
     "monsterId": "m_ember_furnace_lord",
-    "monsterName": "离火炉君",
+    "monsterName": "離火爐君",
     "mapId": "emberfall_court",
-    "mapName": "赤陨庭",
+    "mapName": "赤隕庭",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_ember_lizard": {
     "monsterId": "m_ember_lizard",
-    "monsterName": "熔纹火蜥",
+    "monsterName": "熔紋火蜥",
     "mapId": "emberfall_court",
-    "mapName": "赤陨庭",
+    "mapName": "赤隕庭",
     "mapLv": 19,
     "totalMaps": 1
   },
@@ -323,31 +323,31 @@
     "monsterId": "m_ember_moth",
     "monsterName": "焦土火蛾",
     "mapId": "emberfall_court",
-    "mapName": "赤陨庭",
+    "mapName": "赤隕庭",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_ember_whelp": {
     "monsterId": "m_ember_whelp",
-    "monsterName": "赤烬蜥幼",
+    "monsterName": "赤燼蜥幼",
     "mapId": "emberfall_court",
-    "mapName": "赤陨庭",
+    "mapName": "赤隕庭",
     "mapLv": 19,
     "totalMaps": 1
   },
   "m_fallen_palace_lord": {
     "monsterId": "m_fallen_palace_lord",
-    "monsterName": "坠星宫主",
+    "monsterName": "墜星宮主",
     "mapId": "sky_ruins_core_well",
-    "mapName": "天穹残宫·封天核心井",
+    "mapName": "天穹殘宮·封天核心井",
     "mapLv": 18,
     "totalMaps": 1
   },
   "m_fivephase_devourer": {
     "monsterId": "m_fivephase_devourer",
-    "monsterName": "五行噬脉兽",
+    "monsterName": "五行噬脈獸",
     "mapId": "darksoil_abyss",
-    "mapName": "玄壤深渊",
+    "mapName": "玄壤深淵",
     "mapLv": 39,
     "totalMaps": 1
   },
@@ -355,47 +355,47 @@
     "monsterId": "m_flame_tail_fox",
     "monsterName": "焰尾狐",
     "mapId": "blazewood_waste",
-    "mapName": "焚木荒台",
+    "mapName": "焚木荒臺",
     "mapLv": 35,
     "totalMaps": 1
   },
   "m_frost_crane": {
     "monsterId": "m_frost_crane",
-    "monsterName": "寒翎鹤",
+    "monsterName": "寒翎鶴",
     "mapId": "spirit_ridge",
-    "mapName": "灵脊岭",
+    "mapName": "靈脊嶺",
     "mapLv": 12,
     "totalMaps": 1
   },
   "m_frost_scale_serpent": {
     "monsterId": "m_frost_scale_serpent",
-    "monsterName": "霜鳞蛇",
+    "monsterName": "霜鱗蛇",
     "mapId": "frostblade_abyss",
-    "mapName": "霜刃渊",
+    "mapName": "霜刃淵",
     "mapLv": 31,
     "totalMaps": 1
   },
   "m_gale_bone_king": {
     "monsterId": "m_gale_bone_king",
-    "monsterName": "裂风荒王",
+    "monsterName": "裂風荒王",
     "mapId": "wildlands_gale_den",
-    "mapName": "荒野·荒骨风穴",
+    "mapName": "荒野·荒骨風穴",
     "mapLv": 4,
     "totalMaps": 1
   },
   "m_gate_thug": {
     "monsterId": "m_gate_thug",
-    "monsterName": "断路暴徒",
+    "monsterName": "斷路暴徒",
     "mapId": "yunlai_town",
-    "mapName": "云来镇",
+    "mapName": "雲來鎮",
     "mapLv": 1,
     "totalMaps": 1
   },
   "m_ghost_scribe": {
     "monsterId": "m_ghost_scribe",
-    "monsterName": "执墨残魂",
+    "monsterName": "執墨殘魂",
     "mapId": "ancient_ruins",
-    "mapName": "断碑遗迹",
+    "mapName": "斷碑遺蹟",
     "mapLv": 8,
     "totalMaps": 1
   },
@@ -409,17 +409,17 @@
   },
   "m_guizang_chaos_sentry": {
     "monsterId": "m_guizang_chaos_sentry",
-    "monsterName": "乱炁守侍",
+    "monsterName": "亂炁守侍",
     "mapId": "guizang_vein_cavern",
-    "mapName": "归藏脉窟",
+    "mapName": "歸藏脈窟",
     "mapLv": 29,
     "totalMaps": 1
   },
   "m_guizang_dualphase_beast": {
     "monsterId": "m_guizang_dualphase_beast",
-    "monsterName": "双相脉兽",
+    "monsterName": "雙相脈獸",
     "mapId": "guizang_vein_cavern",
-    "mapName": "归藏脉窟",
+    "mapName": "歸藏脈窟",
     "mapLv": 29,
     "totalMaps": 1
   },
@@ -427,7 +427,7 @@
     "monsterId": "m_guizang_failed_foundation",
     "monsterName": "未成道基",
     "mapId": "guizang_vein_cavern",
-    "mapName": "归藏脉窟",
+    "mapName": "歸藏脈窟",
     "mapLv": 29,
     "totalMaps": 1
   },
@@ -435,39 +435,39 @@
     "monsterId": "m_guizang_fivephase_effigy",
     "monsterName": "五炁砂偶",
     "mapId": "guizang_vein_cavern",
-    "mapName": "归藏脉窟",
+    "mapName": "歸藏脈窟",
     "mapLv": 29,
     "totalMaps": 1
   },
   "m_guizang_reflux_attendant": {
     "monsterId": "m_guizang_reflux_attendant",
-    "monsterName": "逆流残侍",
+    "monsterName": "逆流殘侍",
     "mapId": "guizang_vein_cavern",
-    "mapName": "归藏脉窟",
+    "mapName": "歸藏脈窟",
     "mapLv": 29,
     "totalMaps": 1
   },
   "m_guizang_ruined_relic": {
     "monsterId": "m_guizang_ruined_relic",
-    "monsterName": "乱基守遗",
+    "monsterName": "亂基守遺",
     "mapId": "guizang_vein_cavern",
-    "mapName": "归藏脉窟",
+    "mapName": "歸藏脈窟",
     "mapLv": 29,
     "totalMaps": 1
   },
   "m_guizang_tangled_wisp": {
     "monsterId": "m_guizang_tangled_wisp",
-    "monsterName": "错脉游灵",
+    "monsterName": "錯脈遊靈",
     "mapId": "guizang_vein_cavern",
-    "mapName": "归藏脉窟",
+    "mapName": "歸藏脈窟",
     "mapLv": 29,
     "totalMaps": 1
   },
   "m_huanling_zhenren": {
     "monsterId": "m_huanling_zhenren",
-    "monsterName": "重伤的唤灵真人",
+    "monsterName": "重傷的喚靈真人",
     "mapId": "ruined_cavern_manor",
-    "mapName": "破败洞府",
+    "mapName": "破敗洞府",
     "mapLv": 43,
     "totalMaps": 1
   },
@@ -475,37 +475,37 @@
     "monsterId": "m_ice_crystal_spider",
     "monsterName": "冰晶蜘蛛",
     "mapId": "frostblade_abyss",
-    "mapName": "霜刃渊",
+    "mapName": "霜刃淵",
     "mapLv": 31,
     "totalMaps": 1
   },
   "m_iron_devour_lord": {
     "monsterId": "m_iron_devour_lord",
-    "monsterName": "噬铁矿君",
+    "monsterName": "噬鐵礦君",
     "mapId": "black_iron_mine_molten_heart",
-    "mapName": "玄铁矿洞·玄脉熔心",
+    "mapName": "玄鐵礦洞·玄脈熔心",
     "mapLv": 10,
     "totalMaps": 1
   },
   "m_ironshell_turtle": {
     "monsterId": "m_ironshell_turtle",
-    "monsterName": "铁甲玄龟",
+    "monsterName": "鐵甲玄龜",
     "mapId": "frostblade_abyss",
-    "mapName": "霜刃渊",
+    "mapName": "霜刃淵",
     "mapLv": 31,
     "totalMaps": 1
   },
   "m_mine_ghoul": {
     "monsterId": "m_mine_ghoul",
-    "monsterName": "矿魈",
+    "monsterName": "礦魈",
     "mapId": "black_iron_mine",
-    "mapName": "玄铁矿洞",
+    "mapName": "玄鐵礦洞",
     "mapLv": 6,
     "totalMaps": 1
   },
   "m_mire_spider": {
     "monsterId": "m_mire_spider",
-    "monsterName": "阴沼毒蛛精英",
+    "monsterName": "陰沼毒蛛精英",
     "mapId": "wildlands",
     "mapName": "荒野",
     "mapLv": 1,
@@ -515,7 +515,7 @@
     "monsterId": "m_mixed_stone_toad",
     "monsterName": "混元石蟾",
     "mapId": "darksoil_abyss",
-    "mapName": "玄壤深渊",
+    "mapName": "玄壤深淵",
     "mapLv": 39,
     "totalMaps": 1
   },
@@ -523,47 +523,47 @@
     "monsterId": "m_night_blade",
     "monsterName": "夜行刀客",
     "mapId": "yunlai_town",
-    "mapName": "云来镇",
+    "mapName": "雲來鎮",
     "mapLv": 1,
     "totalMaps": 1
   },
   "m_ore_colossus": {
     "monsterId": "m_ore_colossus",
-    "monsterName": "玄矿巨像精英",
+    "monsterName": "玄礦巨像精英",
     "mapId": "black_iron_mine",
-    "mapName": "玄铁矿洞",
+    "mapName": "玄鐵礦洞",
     "mapLv": 6,
     "totalMaps": 1
   },
   "m_ridge_ghost": {
     "monsterId": "m_ridge_ghost",
-    "monsterName": "守岭残魂精英",
+    "monsterName": "守嶺殘魂精英",
     "mapId": "spirit_ridge",
-    "mapName": "灵脊岭",
+    "mapName": "靈脊嶺",
     "mapLv": 12,
     "totalMaps": 1
   },
   "m_ruin_guardian": {
     "monsterId": "m_ruin_guardian",
-    "monsterName": "石卫傀",
+    "monsterName": "石衛傀",
     "mapId": "ancient_ruins",
-    "mapName": "断碑遗迹",
+    "mapName": "斷碑遺蹟",
     "mapLv": 8,
     "totalMaps": 1
   },
   "m_rune_watcher": {
     "monsterId": "m_rune_watcher",
-    "monsterName": "残纹看守精英",
+    "monsterName": "殘紋看守精英",
     "mapId": "ancient_ruins",
-    "mapName": "断碑遗迹",
+    "mapName": "斷碑遺蹟",
     "mapLv": 8,
     "totalMaps": 1
   },
   "m_sky_puppet": {
     "monsterId": "m_sky_puppet",
-    "monsterName": "残宫傀仪",
+    "monsterName": "殘宮傀儀",
     "mapId": "sky_ruins",
-    "mapName": "天穹残宫",
+    "mapName": "天穹殘宮",
     "mapLv": 15,
     "totalMaps": 1
   },
@@ -571,29 +571,29 @@
     "monsterId": "m_soul_wolf_ancestor",
     "monsterName": "噬魂狼祖",
     "mapId": "beast_valley_blood_altar",
-    "mapName": "噬魂兽谷·血祭坛",
+    "mapName": "噬魂獸谷·血祭壇",
     "mapLv": 14,
     "totalMaps": 1
   },
   "m_spine_gate_lord": {
     "monsterId": "m_spine_gate_lord",
-    "monsterName": "镇脊关主",
+    "monsterName": "鎮脊關主",
     "mapId": "spirit_ridge_old_gate",
-    "mapName": "灵脊岭·悬门旧关",
+    "mapName": "靈脊嶺·懸門舊關",
     "mapLv": 16,
     "totalMaps": 1
   },
   "m_spirit_tiger": {
     "monsterId": "m_spirit_tiger",
-    "monsterName": "灵脊虎",
+    "monsterName": "靈脊虎",
     "mapId": "spirit_ridge",
-    "mapName": "灵脊岭",
+    "mapName": "靈脊嶺",
     "mapLv": 12,
     "totalMaps": 1
   },
   "m_spirit_wolf": {
     "monsterId": "m_spirit_wolf",
-    "monsterName": "噬灵狼",
+    "monsterName": "噬靈狼",
     "mapId": "bamboo_forest",
     "mapName": "青竹林",
     "mapLv": 4,
@@ -601,9 +601,9 @@
   },
   "m_star_devourer": {
     "monsterId": "m_star_devourer",
-    "monsterName": "噬星残兽精英",
+    "monsterName": "噬星殘獸精英",
     "mapId": "sky_ruins",
-    "mapName": "天穹残宫",
+    "mapName": "天穹殘宮",
     "mapLv": 15,
     "totalMaps": 1
   },
@@ -611,13 +611,13 @@
     "monsterId": "m_stele_arbiter",
     "monsterName": "裂碑司命",
     "mapId": "ancient_ruins_monument_hall",
-    "mapName": "断碑遗迹·断碑主殿",
+    "mapName": "斷碑遺蹟·斷碑主殿",
     "mapLv": 11,
     "totalMaps": 1
   },
   "m_swamp_lizard": {
     "monsterId": "m_swamp_lizard",
-    "monsterName": "泽鳞蜥",
+    "monsterName": "澤鱗蜥",
     "mapId": "wildlands",
     "mapName": "荒野",
     "mapLv": 1,
@@ -625,41 +625,41 @@
   },
   "m_town_rat_refuse": {
     "monsterId": "m_town_rat_refuse",
-    "monsterName": "废棚灰尾鼠",
+    "monsterName": "廢棚灰尾鼠",
     "mapId": "yunlai_town",
-    "mapName": "云来镇",
+    "mapName": "雲來鎮",
     "mapLv": 1,
     "totalMaps": 1
   },
   "m_town_rat_south": {
     "monsterId": "m_town_rat_south",
-    "monsterName": "南沟灰尾鼠",
+    "monsterName": "南溝灰尾鼠",
     "mapId": "yunlai_town",
-    "mapName": "云来镇",
+    "mapName": "雲來鎮",
     "mapLv": 1,
     "totalMaps": 1
   },
   "m_tunnel_stalker": {
     "monsterId": "m_tunnel_stalker",
-    "monsterName": "隧影潜猎者",
+    "monsterName": "隧影潛獵者",
     "mapId": "black_iron_mine",
-    "mapName": "玄铁矿洞",
+    "mapName": "玄鐵礦洞",
     "mapLv": 6,
     "totalMaps": 1
   },
   "m_valley_alpha": {
     "monsterId": "m_valley_alpha",
-    "monsterName": "裂渊狼主",
+    "monsterName": "裂淵狼主",
     "mapId": "beast_valley",
-    "mapName": "噬魂兽谷",
+    "mapName": "噬魂獸谷",
     "mapLv": 10,
     "totalMaps": 1
   },
   "m_valley_emperor": {
     "monsterId": "m_valley_emperor",
-    "monsterName": "裂渊谷皇精英",
+    "monsterName": "裂淵谷皇精英",
     "mapId": "beast_valley",
-    "mapName": "噬魂兽谷",
+    "mapName": "噬魂獸谷",
     "mapLv": 10,
     "totalMaps": 1
   },
@@ -667,63 +667,63 @@
     "monsterId": "m_valley_serpent",
     "monsterName": "赤脊谷蛇",
     "mapId": "beast_valley",
-    "mapName": "噬魂兽谷",
+    "mapName": "噬魂獸谷",
     "mapLv": 10,
     "totalMaps": 1
   },
   "m_valley_wolf": {
     "monsterId": "m_valley_wolf",
-    "monsterName": "裂齿妖狼",
+    "monsterName": "裂齒妖狼",
     "mapId": "beast_valley",
-    "mapName": "噬魂兽谷",
+    "mapName": "噬魂獸谷",
     "mapLv": 10,
     "totalMaps": 1
   },
   "m_verdant_lesser_sprite": {
     "monsterId": "m_verdant_lesser_sprite",
-    "monsterName": "青萝小妖",
+    "monsterName": "青蘿小妖",
     "mapId": "verdant_vine_vale_01_entry",
-    "mapName": "青萝谷·01回渡药圃",
+    "mapName": "青蘿谷·01回渡藥圃",
     "mapLv": 19,
     "totalMaps": 2
   },
   "m_verdant_marrow_sprite": {
     "monsterId": "m_verdant_marrow_sprite",
-    "monsterName": "碧髓树魈",
+    "monsterName": "碧髓樹魈",
     "mapId": "verdant_vine_vale_05_inner_hollow",
-    "mapName": "青萝谷·05盘根内坳",
+    "mapName": "青蘿谷·05盤根內坳",
     "mapLv": 27,
     "totalMaps": 2
   },
   "m_verdant_parasitic_child": {
     "monsterId": "m_verdant_parasitic_child",
-    "monsterName": "寄脉藤童",
+    "monsterName": "寄脈藤童",
     "mapId": "verdant_vine_vale_02_slope",
-    "mapName": "青萝谷·02引藤坡",
+    "mapName": "青蘿谷·02引藤坡",
     "mapLv": 21,
     "totalMaps": 2
   },
   "m_verdant_siphon_flower": {
     "monsterId": "m_verdant_siphon_flower",
-    "monsterName": "吸灵花妖",
+    "monsterName": "吸靈花妖",
     "mapId": "verdant_vine_vale_03_bridge",
-    "mapName": "青萝谷·03双桥岔谷",
+    "mapName": "青蘿谷·03雙橋岔谷",
     "mapLv": 22,
     "totalMaps": 2
   },
   "m_verdant_vein_mother": {
     "monsterId": "m_verdant_vein_mother",
-    "monsterName": "噬脉藤母",
+    "monsterName": "噬脈藤母",
     "mapId": "verdant_vine_vale_06_heart_gate",
-    "mapName": "青萝谷·06心藤坳口",
+    "mapName": "青蘿谷·06心藤坳口",
     "mapLv": 29,
     "totalMaps": 1
   },
   "m_verdant_wither_guard": {
     "monsterId": "m_verdant_wither_guard",
-    "monsterName": "枯荣藤卫",
+    "monsterName": "枯榮藤衛",
     "mapId": "verdant_vine_vale_04_garden",
-    "mapName": "青萝谷·04噬灵妖圃",
+    "mapName": "青蘿谷·04噬靈妖圃",
     "mapLv": 25,
     "totalMaps": 2
   },
@@ -731,15 +731,15 @@
     "monsterId": "m_vine_flame_serpent",
     "monsterName": "藤焰蟒",
     "mapId": "blazewood_waste",
-    "mapName": "焚木荒台",
+    "mapName": "焚木荒臺",
     "mapLv": 35,
     "totalMaps": 1
   },
   "m_void_hunter": {
     "monsterId": "m_void_hunter",
-    "monsterName": "天宫猎者",
+    "monsterName": "天宮獵者",
     "mapId": "sky_ruins",
-    "mapName": "天穹残宫",
+    "mapName": "天穹殘宮",
     "mapLv": 15,
     "totalMaps": 1
   },

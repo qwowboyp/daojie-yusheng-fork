@@ -730,7 +730,7 @@ async function main(): Promise<void> {
     techniqueId: firstRuntime.techId,
   }, transmissionContext as never);
   assert.equal(directValidation.ok, false);
-  assert.match(directValidation.error ?? '', /统法只能从统法台参悟/);
+  assert.match(directValidation.error ?? '', /統法只能從統法臺參悟/);
 
   const scriptureValidation = transmission.validateStart(latestLearner, {
     mode: 'scripture_contemplation',
@@ -739,7 +739,7 @@ async function main(): Promise<void> {
     buildingId: scriptureBuilding.id,
   }, transmissionContext as never);
   assert.equal(scriptureValidation.ok, false);
-  assert.match(scriptureValidation.error ?? '', /统法只能从统法台参悟/);
+  assert.match(scriptureValidation.error ?? '', /統法只能從統法臺參悟/);
 
   const legacyPending = {
     techId: firstRuntime.techId,

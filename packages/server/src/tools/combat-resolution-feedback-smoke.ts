@@ -110,8 +110,8 @@ function testSkillResolutionKeepsDodgedFeedback(): void {
     assert.equal(result.dodged, true);
     assert.equal(result.damageRolls.length, 1);
     assert.equal(result.damageRolls[0].dodged, true);
-    assert.equal(formatCombatResolutionFloatText(result.damageRolls[0]), '闪避');
-    assert.match(formatCombatResolutionOutcome(result.damageRolls[0], 'spell', undefined), /闪避/);
+    assert.equal(formatCombatResolutionFloatText(result.damageRolls[0]), '閃避');
+    assert.match(formatCombatResolutionOutcome(result.damageRolls[0], 'spell', undefined), /閃避/);
   }
   finally {
     Math.random = originalRandom;
@@ -148,7 +148,7 @@ function testCombatPresentationEmitsDodgeFloatText(): void {
       type: 'float',
       x: 1,
       y: 2,
-      text: '闪避',
+      text: '閃避',
       color: '#7dd3fc',
       variant: 'action',
       durationMs: undefined,

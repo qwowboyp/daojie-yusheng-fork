@@ -288,20 +288,20 @@ function createService(overrides: ServiceOverrides) {
 
         has(mapId) { return ['wildlands', 'yunlai_town', 'yunlai_town_ore_basement'].includes(mapId); },
         resolveMapGroupMembers(mapRef) {
-            if (mapRef === '云来镇' || mapRef === 'yunlai_town') {
+            if (mapRef === '雲來鎮' || mapRef === 'yunlai_town') {
                 return ['yunlai_town', 'yunlai_town_ore_basement'];
             }
             return this.has(mapRef) ? [mapRef] : [];
         },
         resolveMapGroupLabel(mapRef) {
-            return mapRef === '云来镇' || mapRef === 'yunlai_town' ? '云来镇' : '';
+            return mapRef === '雲來鎮' || mapRef === 'yunlai_town' ? '雲來鎮' : '';
         },
         /**
  * getOrThrow：读取OrThrow。
  * @returns 无返回值，完成OrThrow的读取/组装。
  */
 
-        getOrThrow(mapId) { return { name: mapId === 'wildlands' ? '荒原' : '云来镇' }; },
+        getOrThrow(mapId) { return { name: mapId === 'wildlands' ? '荒原' : '雲來鎮' }; },
     };
     return new WorldRuntimeUseItemService(contentTemplateRepository, templateRepository, playerRuntimeService);
 }
@@ -320,20 +320,20 @@ async function testMapUnlockBranch() {
         ['unlockMap', 'player:1', 'wildlands'],
         ['consumeInventoryItem', 'player:1', 2, 1],
         ['refreshQuestStates', 'player:1'],
-        ['queuePlayerNotice', 'player:1', '已解锁地图：荒原', 'success'],
+        ['queuePlayerNotice', 'player:1', '已解鎖地圖：荒原', 'success'],
     ]);
 }
 async function testMapGroupUnlockBranch() {
     const log = [];
     const service = createService({ log });
-    service.playerRuntimeService.peekInventoryItem = () => ({ itemId: 'map_scroll', name: '云来图志', mapUnlockId: '云来镇' });
+    service.playerRuntimeService.peekInventoryItem = () => ({ itemId: 'map_scroll', name: '云来图志', mapUnlockId: '雲來鎮' });
     await service.dispatchUseItem('player:1', 2, createDeps(log));
     assert.deepEqual(log, [
         ['unlockMap', 'player:1', 'yunlai_town'],
         ['unlockMap', 'player:1', 'yunlai_town_ore_basement'],
         ['consumeInventoryItem', 'player:1', 2, 1],
         ['refreshQuestStates', 'player:1'],
-        ['queuePlayerNotice', 'player:1', '已解锁地图：云来镇', 'success'],
+        ['queuePlayerNotice', 'player:1', '已解鎖地圖：雲來鎮', 'success'],
     ]);
 }
 /**

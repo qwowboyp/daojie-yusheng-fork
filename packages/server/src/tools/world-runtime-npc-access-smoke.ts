@@ -135,7 +135,7 @@ function testResolveAdjacentNpcThrowsWhenTooFar() {
                 },
             };
         },
-    }), (error) => error?.name === 'NotFoundException' && error?.message === '你离这位商人太远了');
+    }), (error) => error?.name === 'NotFoundException' && error?.message === '你離這位商人太遠了');
 }
 /**
  * testGetNpcForPlayerMapSuccess：读取testGetNPCFor玩家地图Success并返回结果。

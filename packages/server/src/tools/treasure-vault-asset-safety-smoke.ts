@@ -73,8 +73,8 @@ async function main(): Promise<void> {
     await cleanup(pool, ownerId, [instanceId, stoppedInstanceId, missingInstanceId, blockedInstanceId, rollbackInstanceId]);
 
     await seedInstanceCatalog(pool, instanceId, 'active', 'running', ownerId);
-    await seedBuildingState(pool, instanceId, buildingId, ownerId, '宝库·主动');
-    const activeRuntime = createRuntime(instanceId, buildingId, ownerId, '宝库·主动');
+    await seedBuildingState(pool, instanceId, buildingId, ownerId, '寶庫·主動');
+    const activeRuntime = createRuntime(instanceId, buildingId, ownerId, '寶庫·主動');
     const depositResult = await service.deposit(ownerId, { instanceId, buildingId, items: [
       { itemInstanceId: 'gem.active', count: 3 },
       { itemInstanceId: 'gem.batch', count: 2 },
@@ -84,7 +84,7 @@ async function main(): Promise<void> {
     const activeRows = await fetchRows(pool, 'SELECT storage_item_id, owner_player_id, building_name, count, enhance_level, raw_payload FROM instance_building_storage_item WHERE instance_id = $1 AND building_id = $2', [instanceId, buildingId]);
     assert.equal(activeRows.length, 2);
     assert.ok(activeRows.every((row) => row?.owner_player_id === ownerId));
-    assert.ok(activeRows.every((row) => row?.building_name === '宝库·主动'));
+    assert.ok(activeRows.every((row) => row?.building_name === '寶庫·主動'));
     assert.ok(activeRows.every((row) => row?.raw_payload?.itemInstanceId === undefined), '宝库真源不得保存背包 itemInstanceId');
     assert.equal(activeRows.find((row) => Number(row?.enhance_level) === 7)?.raw_payload?.customMarker, 'marker:gem.active');
     assert.equal(activeRows.find((row) => Number(row?.enhance_level) === 5)?.raw_payload?.customMarker, 'marker:gem.batch');
@@ -93,7 +93,7 @@ async function main(): Promise<void> {
     await pool.query(
       `INSERT INTO instance_building_storage_item(storage_item_id, instance_id, building_id, slot_index, item_id, count, raw_payload, owner_player_id, building_name)
        VALUES
-         ('storage:summary:owned', $1, $2, 70, 'spirit_stone', 11, '{}'::jsonb, NULL, '宝库·主动'),
+         ('storage:summary:owned', $1, $2, 70, 'spirit_stone', 11, '{}'::jsonb, NULL, '寶庫·主動'),
          ('storage:summary:unowned', $3, $4, 0, 'spirit_stone', 7, '{}'::jsonb, NULL, '宝库·异常')`,
       [instanceId, buildingId, blockedInstanceId, blockedBuildingId],
     );
@@ -102,7 +102,7 @@ async function main(): Promise<void> {
     assert.equal(spiritStoneSummary.unownedCount, 7, '无法归属的历史异常库存必须单列供世界总量统计');
     await pool.query("DELETE FROM instance_building_storage_item WHERE storage_item_id IN ('storage:summary:owned', 'storage:summary:unowned')");
 
-    await insertVaultRow(pool, instanceId, buildingId, ownerId, '宝库·主动', 'gem.legacy', 3, 9, 2);
+    await insertVaultRow(pool, instanceId, buildingId, ownerId, '寶庫·主動', 'gem.legacy', 3, 9, 2);
     for (let index = 0; index < 3; index += 1) {
       const legacyWithdraw = await service.withdraw(ownerId, {
         instanceId,
@@ -121,14 +121,14 @@ async function main(): Promise<void> {
     const unauthorizedRename = await service.rename('vault_other_player', { instanceId, buildingId, name: '不可改名' }, activeRuntime.runtime);
     assert.equal(unauthorizedRename.ok, false);
     assert.equal(unauthorizedRename.reason, 'treasure_vault_owner_required');
-    const renameResult = await service.rename(ownerId, { instanceId, buildingId, name: '宝库·新名' }, activeRuntime.runtime);
+    const renameResult = await service.rename(ownerId, { instanceId, buildingId, name: '寶庫·新名' }, activeRuntime.runtime);
     assert.equal(renameResult.ok, true);
-    assert.equal(renameResult.detail?.buildingName, '宝库·新名');
-    assert.equal(activeRuntime.building.name, '宝库·新名');
+    assert.equal(renameResult.detail?.buildingName, '寶庫·新名');
+    assert.equal(activeRuntime.building.name, '寶庫·新名');
     const renamedRows = await fetchRows(pool, 'SELECT building_name FROM instance_building_storage_item WHERE instance_id = $1 AND building_id = $2', [instanceId, buildingId]);
-    assert.ok(renamedRows.every((row) => row?.building_name === '宝库·新名'));
+    assert.ok(renamedRows.every((row) => row?.building_name === '寶庫·新名'));
 
-    await insertVaultRow(pool, instanceId, buildingId, ownerId, '宝库·新名', 'gem.organize-duplicate', 4, 5, 2);
+    await insertVaultRow(pool, instanceId, buildingId, ownerId, '寶庫·新名', 'gem.organize-duplicate', 4, 5, 2);
     const unauthorizedOrganize = await service.organize('vault_other_player', { instanceId, buildingId }, activeRuntime.runtime);
     assert.equal(unauthorizedOrganize.ok, false);
     assert.equal(unauthorizedOrganize.reason, 'treasure_vault_owner_required');
@@ -145,15 +145,15 @@ async function main(): Promise<void> {
     assert.deepEqual(organizeResult.detail?.items.map((item) => item.slotIndex), [0, 1]);
     assert.equal(organizeResult.detail?.items[0]?.count, 6);
 
-    const directRecovery = await service.recoverVaultItemsToOwnerMail({ instanceId, buildingId, ownerPlayerId: ownerId, buildingName: '宝库·新名', reason: 'smoke_direct' });
+    const directRecovery = await service.recoverVaultItemsToOwnerMail({ instanceId, buildingId, ownerPlayerId: ownerId, buildingName: '寶庫·新名', reason: 'smoke_direct' });
     assert.equal(directRecovery.ok, true);
     assert.equal(directRecovery.itemCount, 2);
     await assertVaultEmpty(pool, instanceId, buildingId);
     await assertRecoveryMail(pool, ownerId, directRecovery.mailId, [
       { itemInstanceId: 'gem.active', count: 3 },
       { itemInstanceId: 'gem.batch', count: 6 },
-    ], '宝库·新名');
-    const repeatRecovery = await service.recoverVaultItemsToOwnerMail({ instanceId, buildingId, ownerPlayerId: ownerId, buildingName: '宝库·新名', reason: 'smoke_retry' });
+    ], '寶庫·新名');
+    const repeatRecovery = await service.recoverVaultItemsToOwnerMail({ instanceId, buildingId, ownerPlayerId: ownerId, buildingName: '寶庫·新名', reason: 'smoke_retry' });
     assert.equal(repeatRecovery.ok, true);
     assert.equal(repeatRecovery.itemCount, 0);
 
@@ -362,7 +362,7 @@ async function assertRecoveryMail(
   const mail = await fetchSingleRow(pool, 'SELECT mail_id, player_id, title, body, source_type, source_ref_id FROM player_mail WHERE mail_id = $1', [mailId]);
   assert.equal(mail?.player_id, ownerId);
   assert.equal(mail?.source_type, 'treasure_vault_recovery');
-  assert.match(String(mail?.title ?? ''), /宝库物品返还/);
+  assert.match(String(mail?.title ?? ''), /寶庫物品返還/);
   assert.match(String(mail?.body ?? ''), new RegExp(buildingName));
   const attachments = await fetchRows(pool, 'SELECT item_id, count, item_payload_jsonb FROM player_mail_attachment WHERE mail_id = $1 ORDER BY attachment_id ASC', [mailId]);
   assert.equal(attachments.length, expectedItems.length);

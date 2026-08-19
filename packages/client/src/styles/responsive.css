@@ -903,6 +903,9 @@
         font-size: var(--font-size-role-body-16);
       }
       .building-mode-toolbar {
+        /* 手机端锚定视口底部而非 #game-stage（offsetParent），避免工具栏跟随未展开的地图行高，
+           保证营造模式下游戏世界保留高度按 window.innerHeight 计算 */
+        position: fixed;
         left: 4px;
         right: 4px;
         bottom: max(4px, env(safe-area-inset-bottom, 0px));

@@ -236,7 +236,7 @@ async function main() {
  */
             const state = await fetchState();
                 return latest?.requestId === secondRequestId
-                && latest?.result?.results?.some((entry) => entry.code === code && entry.ok === false && entry.message === '兑换码无效或已过期')
+                && latest?.result?.results?.some((entry) => entry.code === code && entry.ok === false && entry.message === '兌換碼無效或已過期')
                 && rewardCount(state, REWARD_ITEM_ID) === afterFirstCount;
         }, 5000);
         console.log(JSON.stringify({

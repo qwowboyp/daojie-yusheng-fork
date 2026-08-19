@@ -340,5 +340,13 @@ try {
   console.log(CURRENT_ISSUE_MARKER);
 } finally {
   await server?.close();
-  if (profileDir) await rm(profileDir, { recursive: true, force: true });
+  if (profileDir) {
+    try {
+      await rm(profileDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+    } catch (error) {
+      // Windows 上 Crashpad 句柄释放慢于重试窗口时 EBUSY；暂存 profile 清理属卫生问题，
+      // 不得让已输出 PASS 的 proof 判为失败（残留目录交由系统 Temp 清理机制回收）。
+      console.warn(`[browser-proof] 暂存 profile 清理失败（不影响 proof 结果）：${error.code ?? error.message}`);
+    }
+  }
 }

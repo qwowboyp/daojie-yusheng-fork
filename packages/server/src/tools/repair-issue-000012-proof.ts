@@ -45,7 +45,7 @@ async function main(): Promise<void> {
   } = createRuntimeServices();
   const template = mapRepository.getOrThrow(MAP_ID);
   const container = template.containers.find((entry) => (
-    entry.name === '混元脉石' && entry.x === 28 && entry.y === 25
+    entry.name === '混元脈石' && entry.x === 28 && entry.y === 25
   ));
   assert.ok(container, '玄壤深渊中央混元脉石必须由生产地图加载链生成');
   assert.equal(container.variant, 'herb');
@@ -148,7 +148,7 @@ async function main(): Promise<void> {
 
   const gatherJob = player.gatherJob as Record<string, unknown> | null;
   assert.ok(gatherJob);
-  assert.equal(gatherJob.resourceNodeName, '混元脉石');
+  assert.equal(gatherJob.resourceNodeName, '混元脈石');
   assert.equal(typeof gatherJob.jobRunId, 'string');
   assert.equal(gatherJob.jobType, 'gather');
   assert.equal(gatherJob.sourceId, prepared.sourceId);
@@ -157,7 +157,7 @@ async function main(): Promise<void> {
 
   const task = buildTechniqueActivityTaskListView(player).tasks.find((entry) => entry.kind === 'gather');
   assert.equal(task?.state, 'running');
-  assert.equal(task?.targetLabel, '混元脉石');
+  assert.equal(task?.targetLabel, '混元脈石');
 
   const remainingBeforeTick = Number(gatherJob.remainingTicks);
   const tickResult = await pipeline.tickLifecycle(player, 'gather', context);

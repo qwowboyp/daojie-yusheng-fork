@@ -520,7 +520,7 @@ async function testDispatchSubmitNpcQuestRefreshesStateBeforeReadyCheck() {
         ['refreshQuestStates', 'player:1'],
         ['markQuestStateDirty', 'player:1'],
         ['refreshQuestStates', 'player:1'],
-        ['queuePlayerNotice', 'player:1', '阿青：做得不错，这是你的奖励 。', 'success'],
+        ['queuePlayerNotice', 'player:1', '阿青：做得不錯，這是你的獎勵 。', 'success'],
     ]);
 }
 
@@ -577,7 +577,7 @@ async function testDispatchSubmitNpcQuestFallsBackWhenDurableUnavailable() {
         ['markQuestStateDirty', 'player:1'],
         ['tryAcceptNextQuest', 'player:1', 'quest:next'],
         ['refreshQuestStates', 'player:1'],
-        ['queuePlayerNotice', 'player:1', '阿青：做得不错，这是你的奖励 奖励到手', 'success'],
+        ['queuePlayerNotice', 'player:1', '阿青：做得不錯，這是你的獎勵 奖励到手', 'success'],
         ['queuePlayerNotice', 'player:1', '新的任务《后续任务》已自动接取', 'info'],
     ]);
 }
@@ -703,7 +703,7 @@ async function testDispatchSubmitNpcQuestUsesDurableInventoryGrant() {
         ['replaceInventoryItems', 'player:1', [['rat_tail', 2], ['spirit_stone', 3]]],
         ['markQuestStateDirty', 'player:1'],
         ['refreshQuestStates', 'player:1'],
-        ['queuePlayerNotice', 'player:1', '阿青：做得不错，这是你的奖励 奖励到手', 'success'],
+        ['queuePlayerNotice', 'player:1', '阿青：做得不錯，這是你的獎勵 奖励到手', 'success'],
         ['queuePlayerNotice', 'player:1', '新的任务《后续任务》已自动接取', 'info'],
     ]);
     assert.equal(player.quests.quests[0].status, 'completed');
@@ -807,7 +807,7 @@ async function testDispatchSubmitNpcQuestFailsClosedWithoutRuntimeOwner() {
             tryAcceptNextQuest(...args) { log.push(['tryAcceptNextQuest', ...args]); return null; },
             queuePlayerNotice(...args) { log.push(['queuePlayerNotice', ...args]); },
         }),
-        /事务围栏暂不可用/,
+        /事務圍欄暫不可用/,
     );
     assert.deepEqual(log, []);
     assert.equal(player.quests.quests[0].status, 'ready');

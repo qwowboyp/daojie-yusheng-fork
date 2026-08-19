@@ -107,8 +107,8 @@ try {
     foundation.maxLevel,
     foundation.layers,
   );
-  assert.match(foundationSummary, /体魄\+/u, '凝气成基法预览缺少体魄加成');
-  assert.match(foundationSummary, /经脉\+/u, '凝气成基法预览缺少经脉加成');
+  assert.match(foundationSummary, /體魄\+/u, '凝气成基法预览缺少体魄加成');
+  assert.match(foundationSummary, /經脈\+/u, '凝气成基法预览缺少经脉加成');
   assert.match(
     foundationSummary,
     /无属性灵气吸收效率\+10%/u,
@@ -162,7 +162,7 @@ try {
     learnTechniqueId: 'ningqi_chengji',
   });
   const foundationTooltipText = foundationTooltip.lines.join('\n');
-  assert.match(foundationTooltipText, /体魄\+/u, '功法书提示未接入展开后的六维属性');
+  assert.match(foundationTooltipText, /體魄\+/u, '功法书提示未接入展开后的六维属性');
   assert.match(foundationTooltipText, /无属性灵气吸收效率\+10%/u, '功法书提示未接入气机投影');
 
   const fragmentTooltip = equipmentTooltip.buildItemTooltipPayload({
@@ -264,15 +264,15 @@ try {
   assert.match(levelScalingTooltipText, /法術傷害：994/u, '術法 hover 必須顯示包含等級增幅的總傷害');
   assert.doesNotMatch(levelScalingTooltipText, /吟唱/u, '瞬發術法不得顯示零息吟唱');
   for (const label of [
-    '自身境界等级',
-    '自身炼丹等级',
-    '自身炼器等级',
-    '自身强化等级',
-    '自身传法等级',
-    '自身采集等级',
-    '自身挖矿等级',
-    '自身营造等级',
-    '自身阵法等级',
+    '自身境界等級',
+    '自身煉丹等級',
+    '自身煉器等級',
+    '自身強化等級',
+    '自身傳法等級',
+    '自身採集等級',
+    '自身挖礦等級',
+    '自身營造等級',
+    '自身陣法等級',
   ]) {
     assert.match(levelScalingTooltipText, new RegExp(label, 'u'), `${label}必须进入 hover 伤害构成`);
   }
@@ -390,7 +390,7 @@ try {
   );
   const generatedTooltip = equipmentTooltip.buildItemTooltipPayload(generatedBook);
   const generatedTooltipText = stripHtml(generatedTooltip.lines.join('\n'));
-  assert.match(generatedTooltipText, /神识\+9/u, '自创功法属性链必须能读取动态模板的逐层累计属性');
+  assert.match(generatedTooltipText, /神識\+9/u, '自创功法属性链必须能读取动态模板的逐层累计属性');
   assert.match(generatedTooltipText, /星火印/u, '自創術法書必須顯示動態模板裡的技能名稱');
   assert.match(generatedTooltipText, /火行法術傷害：777/u, '自創術法書必須顯示動態模板裡的具體傷害');
   assert.match(generatedTooltipText, /靈力消耗：321/u, '自創術法書必須顯示動態模板裡的具體消耗');

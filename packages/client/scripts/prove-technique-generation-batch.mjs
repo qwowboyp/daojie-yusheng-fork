@@ -10,16 +10,16 @@ const [panelSource, styleSource, senderSource] = await Promise.all([
   readFile(path.join(packageRoot, 'src/network/socket-send-technique-generation.ts'), 'utf8'),
 ]);
 
-assert.match(panelSource, /单部领悟/);
+assert.match(panelSource, /單部領悟/);
 assert.match(panelSource, /批量領悟/);
 assert.match(panelSource, /確認批量領悟/);
-assert.match(panelSource, /全部采纳并学习/);
-assert.match(panelSource, /放弃本批功法/);
-assert.match(panelSource, /六维权重均衡/);
+assert.match(panelSource, /全部採納並學習/);
+assert.match(panelSource, /放棄本批功法/);
+assert.match(panelSource, /六維權重均衡/);
 assert.match(panelSource, /const pageSize = 6/);
 assert.match(
   panelSource,
-  /功法类型[\s\S]*selectedCategory === 'internal'[\s\S]*参悟方式/,
+  /功法類型[\s\S]*selectedCategory === 'internal'[\s\S]*參悟方式/,
   '参悟方式必须位于功法类型之后，并且仅在内功类型下显示',
 );
 assert.doesNotMatch(

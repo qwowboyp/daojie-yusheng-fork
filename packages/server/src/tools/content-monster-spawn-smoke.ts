@@ -295,7 +295,7 @@ function assertHuanlingZhenrenInitialWoundedBuff(
   assert.equal(monster.qi, monster.maxQi, 'monster runtime should start with full qi');
   const observation = buildMonsterObservation(Number.MAX_SAFE_INTEGER, monster);
   assert.ok(
-    observation.lines.some((line) => line.label === '灵力' && line.value === formatDisplayCurrentMax(monster.qi, monster.maxQi)),
+    observation.lines.some((line) => line.label === '靈力' && line.value === formatDisplayCurrentMax(monster.qi, monster.maxQi)),
     'monster observation should expose current/max qi',
   );
   assert.ok(

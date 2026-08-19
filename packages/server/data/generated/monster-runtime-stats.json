@@ -71,7 +71,7 @@
     },
     "m_ember_whelp": {
       "id": "m_ember_whelp",
-      "name": "赤烬蜥幼",
+      "name": "赤燼蜥幼",
       "sourceFile": "packages/server/data/content/monsters/赤陨庭.json",
       "level": 23,
       "grade": "yellow",
@@ -134,7 +134,7 @@
     },
     "m_ember_lizard": {
       "id": "m_ember_lizard",
-      "name": "熔纹火蜥",
+      "name": "熔紋火蜥",
       "sourceFile": "packages/server/data/content/monsters/赤陨庭.json",
       "level": 26,
       "grade": "mystic",
@@ -197,7 +197,7 @@
     },
     "m_ember_attendant": {
       "id": "m_ember_attendant",
-      "name": "炉心灼侍",
+      "name": "爐心灼侍",
       "sourceFile": "packages/server/data/content/monsters/赤陨庭.json",
       "level": 29,
       "grade": "mystic",
@@ -260,7 +260,7 @@
     },
     "m_ember_bone_patrol": {
       "id": "m_ember_bone_patrol",
-      "name": "炽骨巡卒",
+      "name": "熾骨巡卒",
       "sourceFile": "packages/server/data/content/monsters/赤陨庭.json",
       "level": 25,
       "grade": "mystic",
@@ -323,7 +323,7 @@
     },
     "m_ember_flame_guard": {
       "id": "m_ember_flame_guard",
-      "name": "流火戍灵",
+      "name": "流火戍靈",
       "sourceFile": "packages/server/data/content/monsters/赤陨庭.json",
       "level": 29,
       "grade": "earth",
@@ -386,7 +386,7 @@
     },
     "m_ember_furnace_lord": {
       "id": "m_ember_furnace_lord",
-      "name": "离火炉君",
+      "name": "離火爐君",
       "sourceFile": "packages/server/data/content/monsters/赤陨庭.json",
       "level": 29,
       "grade": "earth",
@@ -449,7 +449,7 @@
     },
     "m_ruin_guardian": {
       "id": "m_ruin_guardian",
-      "name": "石卫傀",
+      "name": "石衛傀",
       "sourceFile": "packages/server/data/content/monsters/断碑遗迹.json",
       "level": 8,
       "grade": "mortal",
@@ -512,7 +512,7 @@
     },
     "m_bone_owl": {
       "id": "m_bone_owl",
-      "name": "骨翎夜鸮",
+      "name": "骨翎夜鴞",
       "sourceFile": "packages/server/data/content/monsters/断碑遗迹.json",
       "level": 9,
       "grade": "mortal",
@@ -575,7 +575,7 @@
     },
     "m_rune_watcher": {
       "id": "m_rune_watcher",
-      "name": "残纹看守精英",
+      "name": "殘紋看守精英",
       "sourceFile": "packages/server/data/content/monsters/断碑遗迹.json",
       "level": 10,
       "grade": "mortal",
@@ -701,7 +701,7 @@
     },
     "m_ghost_scribe": {
       "id": "m_ghost_scribe",
-      "name": "执墨残魂",
+      "name": "執墨殘魂",
       "sourceFile": "packages/server/data/content/monsters/断碑遗迹.json",
       "level": 9,
       "grade": "mortal",
@@ -1079,7 +1079,7 @@
     },
     "m_guizang_tangled_wisp": {
       "id": "m_guizang_tangled_wisp",
-      "name": "错脉游灵",
+      "name": "錯脈遊靈",
       "sourceFile": "packages/server/data/content/monsters/归藏脉窟.json",
       "level": 29,
       "grade": "mystic",
@@ -1142,7 +1142,7 @@
     },
     "m_guizang_reflux_attendant": {
       "id": "m_guizang_reflux_attendant",
-      "name": "逆流残侍",
+      "name": "逆流殘侍",
       "sourceFile": "packages/server/data/content/monsters/归藏脉窟.json",
       "level": 29,
       "grade": "mystic",
@@ -1268,7 +1268,7 @@
     },
     "m_guizang_chaos_sentry": {
       "id": "m_guizang_chaos_sentry",
-      "name": "乱炁守侍",
+      "name": "亂炁守侍",
       "sourceFile": "packages/server/data/content/monsters/归藏脉窟.json",
       "level": 30,
       "grade": "earth",
@@ -1331,7 +1331,7 @@
     },
     "m_guizang_dualphase_beast": {
       "id": "m_guizang_dualphase_beast",
-      "name": "双相脉兽",
+      "name": "雙相脈獸",
       "sourceFile": "packages/server/data/content/monsters/归藏脉窟.json",
       "level": 30,
       "grade": "earth",
@@ -1394,7 +1394,7 @@
     },
     "m_guizang_ruined_relic": {
       "id": "m_guizang_ruined_relic",
-      "name": "乱基守遗",
+      "name": "亂基守遺",
       "sourceFile": "packages/server/data/content/monsters/归藏脉窟.json",
       "level": 30,
       "grade": "earth",
@@ -1520,7 +1520,7 @@
     },
     "m_cold_tide_sprite": {
       "id": "m_cold_tide_sprite",
-      "name": "寒汐蜉灵",
+      "name": "寒汐蜉靈",
       "sourceFile": "packages/server/data/content/monsters/寒汐泽.json",
       "level": 20,
       "grade": "yellow",
@@ -1583,7 +1583,7 @@
     },
     "m_cold_marsh_wraith": {
       "id": "m_cold_marsh_wraith",
-      "name": "浅泽雾鬼",
+      "name": "淺澤霧鬼",
       "sourceFile": "packages/server/data/content/monsters/寒汐泽.json",
       "level": 23,
       "grade": "yellow",
@@ -1646,7 +1646,7 @@
     },
     "m_cold_pattern_guard": {
       "id": "m_cold_pattern_guard",
-      "name": "冰纹水卒",
+      "name": "冰紋水卒",
       "sourceFile": "packages/server/data/content/monsters/寒汐泽.json",
       "level": 26,
       "grade": "mystic",
@@ -1709,7 +1709,7 @@
     },
     "m_cold_mirror_shade": {
       "id": "m_cold_mirror_shade",
-      "name": "寒宫镜妖",
+      "name": "寒宮鏡妖",
       "sourceFile": "packages/server/data/content/monsters/寒汐泽.json",
       "level": 29,
       "grade": "mystic",
@@ -1772,7 +1772,7 @@
     },
     "m_cold_moonscale": {
       "id": "m_cold_moonscale",
-      "name": "月沼鲛影",
+      "name": "月沼鮫影",
       "sourceFile": "packages/server/data/content/monsters/寒汐泽.json",
       "level": 25,
       "grade": "mystic",
@@ -1835,7 +1835,7 @@
     },
     "m_cold_bridge_patrol": {
       "id": "m_cold_bridge_patrol",
-      "name": "雾桥巡灵",
+      "name": "霧橋巡靈",
       "sourceFile": "packages/server/data/content/monsters/寒汐泽.json",
       "level": 29,
       "grade": "earth",
@@ -1961,7 +1961,7 @@
     },
     "m_deepvein_croc": {
       "id": "m_deepvein_croc",
-      "name": "黄岩鼍兽",
+      "name": "黃岩鼉獸",
       "sourceFile": "packages/server/data/content/monsters/厚脉岭.json",
       "level": 20,
       "grade": "yellow",
@@ -2024,7 +2024,7 @@
     },
     "m_deepvein_stonebound": {
       "id": "m_deepvein_stonebound",
-      "name": "沉脉石奴",
+      "name": "沉脈石奴",
       "sourceFile": "packages/server/data/content/monsters/厚脉岭.json",
       "level": 23,
       "grade": "yellow",
@@ -2087,7 +2087,7 @@
     },
     "m_deepvein_armor_spirit": {
       "id": "m_deepvein_armor_spirit",
-      "name": "坠岩甲灵",
+      "name": "墜巖甲靈",
       "sourceFile": "packages/server/data/content/monsters/厚脉岭.json",
       "level": 26,
       "grade": "mystic",
@@ -2150,7 +2150,7 @@
     },
     "m_deepvein_ridge_warden": {
       "id": "m_deepvein_ridge_warden",
-      "name": "岳纹镇灵",
+      "name": "嶽紋鎮靈",
       "sourceFile": "packages/server/data/content/monsters/厚脉岭.json",
       "level": 29,
       "grade": "mystic",
@@ -2213,7 +2213,7 @@
     },
     "m_deepvein_stele_bearer": {
       "id": "m_deepvein_stele_bearer",
-      "name": "厚土负碑者",
+      "name": "厚土負碑者",
       "sourceFile": "packages/server/data/content/monsters/厚脉岭.json",
       "level": 25,
       "grade": "mystic",
@@ -2276,7 +2276,7 @@
     },
     "m_deepvein_heavy_guard": {
       "id": "m_deepvein_heavy_guard",
-      "name": "裂岭重卫",
+      "name": "裂嶺重衛",
       "sourceFile": "packages/server/data/content/monsters/厚脉岭.json",
       "level": 29,
       "grade": "earth",
@@ -2339,7 +2339,7 @@
     },
     "m_deepvein_earth_effigy": {
       "id": "m_deepvein_earth_effigy",
-      "name": "玄岳地傀",
+      "name": "玄嶽地傀",
       "sourceFile": "packages/server/data/content/monsters/厚脉岭.json",
       "level": 29,
       "grade": "earth",
@@ -2465,7 +2465,7 @@
     },
     "m_swamp_lizard": {
       "id": "m_swamp_lizard",
-      "name": "泽鳞蜥",
+      "name": "澤鱗蜥",
       "sourceFile": "packages/server/data/content/monsters/荒野.json",
       "level": 2,
       "grade": "mortal",
@@ -2591,7 +2591,7 @@
     },
     "m_mire_spider": {
       "id": "m_mire_spider",
-      "name": "阴沼毒蛛精英",
+      "name": "陰沼毒蛛精英",
       "sourceFile": "packages/server/data/content/monsters/荒野.json",
       "level": 3,
       "grade": "mortal",
@@ -2654,7 +2654,7 @@
     },
     "m_gale_bone_king": {
       "id": "m_gale_bone_king",
-      "name": "裂风荒王",
+      "name": "裂風荒王",
       "sourceFile": "packages/server/data/content/monsters/荒野.json",
       "level": 4,
       "grade": "mortal",
@@ -2717,7 +2717,7 @@
     },
     "m_dust_vulture": {
       "id": "m_dust_vulture",
-      "name": "裂喙秃鹫",
+      "name": "裂喙禿鷲",
       "sourceFile": "packages/server/data/content/monsters/荒野.json",
       "level": 3,
       "grade": "mortal",
@@ -2780,7 +2780,7 @@
     },
     "m_cleft_blade_wraith": {
       "id": "m_cleft_blade_wraith",
-      "name": "断刃游魂",
+      "name": "斷刃遊魂",
       "sourceFile": "packages/server/data/content/monsters/裂锋原.json",
       "level": 20,
       "grade": "yellow",
@@ -2906,7 +2906,7 @@
     },
     "m_cleft_blade_sprite": {
       "id": "m_cleft_blade_sprite",
-      "name": "金砂锋魈",
+      "name": "金砂鋒魈",
       "sourceFile": "packages/server/data/content/monsters/裂锋原.json",
       "level": 26,
       "grade": "mystic",
@@ -2969,7 +2969,7 @@
     },
     "m_cleft_banner_general": {
       "id": "m_cleft_banner_general",
-      "name": "残兵鸣将",
+      "name": "殘兵鳴將",
       "sourceFile": "packages/server/data/content/monsters/裂锋原.json",
       "level": 29,
       "grade": "mystic",
@@ -3032,7 +3032,7 @@
     },
     "m_cleft_stele_puppet": {
       "id": "m_cleft_stele_puppet",
-      "name": "断碑锋傀",
+      "name": "斷碑鋒傀",
       "sourceFile": "packages/server/data/content/monsters/裂锋原.json",
       "level": 25,
       "grade": "mystic",
@@ -3095,7 +3095,7 @@
     },
     "m_cleft_iron_guard": {
       "id": "m_cleft_iron_guard",
-      "name": "残旌铁卫",
+      "name": "殘旌鐵衛",
       "sourceFile": "packages/server/data/content/monsters/裂锋原.json",
       "level": 29,
       "grade": "earth",
@@ -3158,7 +3158,7 @@
     },
     "m_cleft_gate_lord": {
       "id": "m_cleft_gate_lord",
-      "name": "庚金镇门将",
+      "name": "庚金鎮門將",
       "sourceFile": "packages/server/data/content/monsters/裂锋原.json",
       "level": 29,
       "grade": "earth",
@@ -3221,7 +3221,7 @@
     },
     "m_spirit_tiger": {
       "id": "m_spirit_tiger",
-      "name": "灵脊虎",
+      "name": "靈脊虎",
       "sourceFile": "packages/server/data/content/monsters/灵脊岭.json",
       "level": 12,
       "grade": "mortal",
@@ -3284,7 +3284,7 @@
     },
     "m_frost_crane": {
       "id": "m_frost_crane",
-      "name": "寒翎鹤",
+      "name": "寒翎鶴",
       "sourceFile": "packages/server/data/content/monsters/灵脊岭.json",
       "level": 13,
       "grade": "yellow",
@@ -3347,7 +3347,7 @@
     },
     "m_ridge_ghost": {
       "id": "m_ridge_ghost",
-      "name": "守岭残魂精英",
+      "name": "守嶺殘魂精英",
       "sourceFile": "packages/server/data/content/monsters/灵脊岭.json",
       "level": 14,
       "grade": "yellow",
@@ -3410,7 +3410,7 @@
     },
     "m_spine_gate_lord": {
       "id": "m_spine_gate_lord",
-      "name": "镇脊关主",
+      "name": "鎮脊關主",
       "sourceFile": "packages/server/data/content/monsters/灵脊岭.json",
       "level": 16,
       "grade": "yellow",
@@ -3473,7 +3473,7 @@
     },
     "m_huanling_zhenren": {
       "id": "m_huanling_zhenren",
-      "name": "重伤的唤灵真人",
+      "name": "重傷的喚靈真人",
       "sourceFile": "packages/server/data/content/monsters/破败洞府.json",
       "level": 43,
       "grade": "spirit",
@@ -3536,7 +3536,7 @@
     },
     "m_verdant_lesser_sprite": {
       "id": "m_verdant_lesser_sprite",
-      "name": "青萝小妖",
+      "name": "青蘿小妖",
       "sourceFile": "packages/server/data/content/monsters/青萝谷.json",
       "level": 20,
       "grade": "yellow",
@@ -3599,7 +3599,7 @@
     },
     "m_verdant_parasitic_child": {
       "id": "m_verdant_parasitic_child",
-      "name": "寄脉藤童",
+      "name": "寄脈藤童",
       "sourceFile": "packages/server/data/content/monsters/青萝谷.json",
       "level": 23,
       "grade": "yellow",
@@ -3662,7 +3662,7 @@
     },
     "m_verdant_siphon_flower": {
       "id": "m_verdant_siphon_flower",
-      "name": "吸灵花妖",
+      "name": "吸靈花妖",
       "sourceFile": "packages/server/data/content/monsters/青萝谷.json",
       "level": 26,
       "grade": "mystic",
@@ -3725,7 +3725,7 @@
     },
     "m_verdant_wither_guard": {
       "id": "m_verdant_wither_guard",
-      "name": "枯荣藤卫",
+      "name": "枯榮藤衛",
       "sourceFile": "packages/server/data/content/monsters/青萝谷.json",
       "level": 25,
       "grade": "mystic",
@@ -3788,7 +3788,7 @@
     },
     "m_verdant_marrow_sprite": {
       "id": "m_verdant_marrow_sprite",
-      "name": "碧髓树魈",
+      "name": "碧髓樹魈",
       "sourceFile": "packages/server/data/content/monsters/青萝谷.json",
       "level": 29,
       "grade": "earth",
@@ -3851,7 +3851,7 @@
     },
     "m_verdant_vein_mother": {
       "id": "m_verdant_vein_mother",
-      "name": "噬脉藤母",
+      "name": "噬脈藤母",
       "sourceFile": "packages/server/data/content/monsters/青萝谷.json",
       "level": 29,
       "grade": "earth",
@@ -3914,7 +3914,7 @@
     },
     "m_spirit_wolf": {
       "id": "m_spirit_wolf",
-      "name": "噬灵狼",
+      "name": "噬靈狼",
       "sourceFile": "packages/server/data/content/monsters/青竹林.json",
       "level": 4,
       "grade": "mortal",
@@ -3977,7 +3977,7 @@
     },
     "m_bamboo_serpent": {
       "id": "m_bamboo_serpent",
-      "name": "青鳞竹蛇",
+      "name": "青鱗竹蛇",
       "sourceFile": "packages/server/data/content/monsters/青竹林.json",
       "level": 4,
       "grade": "mortal",
@@ -4040,7 +4040,7 @@
     },
     "m_bamboo_sprite": {
       "id": "m_bamboo_sprite",
-      "name": "竹心灵",
+      "name": "竹心靈",
       "sourceFile": "packages/server/data/content/monsters/青竹林.json",
       "level": 5,
       "grade": "mortal",
@@ -4229,7 +4229,7 @@
     },
     "m_valley_wolf": {
       "id": "m_valley_wolf",
-      "name": "裂齿妖狼",
+      "name": "裂齒妖狼",
       "sourceFile": "packages/server/data/content/monsters/噬魂兽谷.json",
       "level": 10,
       "grade": "mortal",
@@ -4292,7 +4292,7 @@
     },
     "m_blood_crow": {
       "id": "m_blood_crow",
-      "name": "血羽鸦",
+      "name": "血羽鴉",
       "sourceFile": "packages/server/data/content/monsters/噬魂兽谷.json",
       "level": 10,
       "grade": "mortal",
@@ -4355,7 +4355,7 @@
     },
     "m_valley_alpha": {
       "id": "m_valley_alpha",
-      "name": "裂渊狼主",
+      "name": "裂淵狼主",
       "sourceFile": "packages/server/data/content/monsters/噬魂兽谷.json",
       "level": 12,
       "grade": "mortal",
@@ -4481,7 +4481,7 @@
     },
     "m_valley_emperor": {
       "id": "m_valley_emperor",
-      "name": "裂渊谷皇精英",
+      "name": "裂淵谷皇精英",
       "sourceFile": "packages/server/data/content/monsters/噬魂兽谷.json",
       "level": 13,
       "grade": "yellow",
@@ -4607,7 +4607,7 @@
     },
     "m_frost_scale_serpent": {
       "id": "m_frost_scale_serpent",
-      "name": "霜鳞蛇",
+      "name": "霜鱗蛇",
       "sourceFile": "packages/server/data/content/monsters/霜刃渊.json",
       "level": 31,
       "grade": "mystic",
@@ -4670,7 +4670,7 @@
     },
     "m_cold_iron_scorpion": {
       "id": "m_cold_iron_scorpion",
-      "name": "寒铁蝎",
+      "name": "寒鐵蠍",
       "sourceFile": "packages/server/data/content/monsters/霜刃渊.json",
       "level": 32,
       "grade": "mystic",
@@ -4796,7 +4796,7 @@
     },
     "m_ironshell_turtle": {
       "id": "m_ironshell_turtle",
-      "name": "铁甲玄龟",
+      "name": "鐵甲玄龜",
       "sourceFile": "packages/server/data/content/monsters/霜刃渊.json",
       "level": 34,
       "grade": "earth",
@@ -4859,7 +4859,7 @@
     },
     "m_void_hunter": {
       "id": "m_void_hunter",
-      "name": "天宫猎者",
+      "name": "天宮獵者",
       "sourceFile": "packages/server/data/content/monsters/天穹残宫.json",
       "level": 15,
       "grade": "yellow",
@@ -4922,7 +4922,7 @@
     },
     "m_sky_puppet": {
       "id": "m_sky_puppet",
-      "name": "残宫傀仪",
+      "name": "殘宮傀儀",
       "sourceFile": "packages/server/data/content/monsters/天穹残宫.json",
       "level": 16,
       "grade": "yellow",
@@ -4985,7 +4985,7 @@
     },
     "m_star_devourer": {
       "id": "m_star_devourer",
-      "name": "噬星残兽精英",
+      "name": "噬星殘獸精英",
       "sourceFile": "packages/server/data/content/monsters/天穹残宫.json",
       "level": 17,
       "grade": "yellow",
@@ -5048,7 +5048,7 @@
     },
     "m_fallen_palace_lord": {
       "id": "m_fallen_palace_lord",
-      "name": "坠星宫主",
+      "name": "墜星宮主",
       "sourceFile": "packages/server/data/content/monsters/天穹残宫.json",
       "level": 18,
       "grade": "mystic",
@@ -5111,7 +5111,7 @@
     },
     "m_tongtian_shadow": {
       "id": "m_tongtian_shadow",
-      "name": "虚影",
+      "name": "虛影",
       "sourceFile": "packages/server/data/content/monsters/通天塔.json",
       "level": 1,
       "grade": "mortal",
@@ -5174,7 +5174,7 @@
     },
     "m_tongtian_shadow_elite": {
       "id": "m_tongtian_shadow_elite",
-      "name": "虚影·精英",
+      "name": "虛影·精英",
       "sourceFile": "packages/server/data/content/monsters/通天塔.json",
       "level": 1,
       "grade": "mortal",
@@ -5237,7 +5237,7 @@
     },
     "m_darksoil_beetle": {
       "id": "m_darksoil_beetle",
-      "name": "玄土甲虫",
+      "name": "玄土甲蟲",
       "sourceFile": "packages/server/data/content/monsters/玄壤深渊.json",
       "level": 39,
       "grade": "earth",
@@ -5426,7 +5426,7 @@
     },
     "m_darksoil_dragon": {
       "id": "m_darksoil_dragon",
-      "name": "玄壤地龙",
+      "name": "玄壤地龍",
       "sourceFile": "packages/server/data/content/monsters/玄壤深渊.json",
       "level": 41,
       "grade": "heaven",
@@ -5489,7 +5489,7 @@
     },
     "m_fivephase_devourer": {
       "id": "m_fivephase_devourer",
-      "name": "五行噬脉兽",
+      "name": "五行噬脈獸",
       "sourceFile": "packages/server/data/content/monsters/玄壤深渊.json",
       "level": 42,
       "grade": "heaven",
@@ -5552,7 +5552,7 @@
     },
     "m_mine_ghoul": {
       "id": "m_mine_ghoul",
-      "name": "矿魈",
+      "name": "礦魈",
       "sourceFile": "packages/server/data/content/monsters/玄铁矿洞.json",
       "level": 7,
       "grade": "mortal",
@@ -5678,7 +5678,7 @@
     },
     "m_tunnel_stalker": {
       "id": "m_tunnel_stalker",
-      "name": "隧影潜猎者",
+      "name": "隧影潛獵者",
       "sourceFile": "packages/server/data/content/monsters/玄铁矿洞.json",
       "level": 8,
       "grade": "mortal",
@@ -5741,7 +5741,7 @@
     },
     "m_ore_colossus": {
       "id": "m_ore_colossus",
-      "name": "玄矿巨像精英",
+      "name": "玄礦巨像精英",
       "sourceFile": "packages/server/data/content/monsters/玄铁矿洞.json",
       "level": 9,
       "grade": "mortal",
@@ -5804,7 +5804,7 @@
     },
     "m_iron_devour_lord": {
       "id": "m_iron_devour_lord",
-      "name": "噬铁矿君",
+      "name": "噬鐵礦君",
       "sourceFile": "packages/server/data/content/monsters/玄铁矿洞.json",
       "level": 10,
       "grade": "mortal",
@@ -5867,7 +5867,7 @@
     },
     "m_town_rat_south": {
       "id": "m_town_rat_south",
-      "name": "南沟灰尾鼠",
+      "name": "南溝灰尾鼠",
       "sourceFile": "packages/server/data/content/monsters/云来镇.json",
       "level": 1,
       "grade": "mortal",
@@ -5930,7 +5930,7 @@
     },
     "m_town_rat_refuse": {
       "id": "m_town_rat_refuse",
-      "name": "废棚灰尾鼠",
+      "name": "廢棚灰尾鼠",
       "sourceFile": "packages/server/data/content/monsters/云来镇.json",
       "level": 1,
       "grade": "mortal",
@@ -5993,7 +5993,7 @@
     },
     "m_gate_thug": {
       "id": "m_gate_thug",
-      "name": "断路暴徒",
+      "name": "斷路暴徒",
       "sourceFile": "packages/server/data/content/monsters/云来镇.json",
       "level": 2,
       "grade": "mortal",

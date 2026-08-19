@@ -120,7 +120,7 @@ async function main(): Promise<void> {
   const offlineMember = firstData.members.find((entry) => entry.playerId === offlineMemberId);
   assert.equal(offlineMember?.name, '离线成员真名');
   assert.equal(offlineMember?.realmLv, 37);
-  assert.equal(offlineMember?.statusLabel, '离线');
+  assert.equal(offlineMember?.statusLabel, '離線');
   assert.equal(firstData.members.find((entry) => entry.playerId === leaderId)?.realmLv, 42, '运行时境界应优先于持久化缓存');
 
   players.set(offlineMemberId, {
@@ -134,13 +134,13 @@ async function main(): Promise<void> {
   const runtimeUpdated = buildManagementData().members.find((entry) => entry.playerId === offlineMemberId);
   assert.equal(runtimeUpdated?.name, '改名后的成员');
   assert.equal(runtimeUpdated?.realmLv, 38);
-  assert.equal(runtimeUpdated?.statusLabel, '离线挂机');
+  assert.equal(runtimeUpdated?.statusLabel, '離線掛機');
 
   players.delete(offlineMemberId);
   const cachedAfterUnload = buildManagementData().members.find((entry) => entry.playerId === offlineMemberId);
   assert.equal(cachedAfterUnload?.name, '改名后的成员', '玩家卸载后应沿用最后一次真实角色名');
   assert.equal(cachedAfterUnload?.realmLv, 38, '玩家卸载后应沿用最后一次真实境界');
-  assert.equal(cachedAfterUnload?.statusLabel, '离线');
+  assert.equal(cachedAfterUnload?.statusLabel, '離線');
 
   sect.members = sect.members.filter((member) => member.playerId !== offlineMemberId);
   service.releaseSectMemberProfileIfUnused(offlineMemberId);

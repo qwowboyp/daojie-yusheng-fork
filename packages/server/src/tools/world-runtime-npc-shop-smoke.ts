@@ -385,7 +385,7 @@ async function testDispatch() {
         ['purchaseNpcShopItem', 'player:1', 'qi_pill', 1, 5, 'node:npc-shop', 17, 'spirit_stone:15,qi_pill:1', 'spirit_stone:15'],
         ['replaceInventoryItems', 'player:1', 2],
         ['refreshQuestStates', 'player:1'],
-        ['queuePlayerNotice', 'player:1', '购买 聚气丹，消耗 灵石 x5', 'success'],
+        ['queuePlayerNotice', 'player:1', '購買 聚气丹，消耗 灵石 x5', 'success'],
     ]);
 
     const fallbackService = createNpcShopService({
@@ -411,7 +411,7 @@ async function testDispatch() {
     assert.deepEqual(fallbackLog, [
         ['replaceInventoryItems', 'player:2', 'qi_pill:1'],
         ['refreshQuestStates', 'player:2'],
-        ['queuePlayerNotice', 'player:2', '购买 聚气丹，消耗 灵石 x5', 'success'],
+        ['queuePlayerNotice', 'player:2', '購買 聚气丹，消耗 灵石 x5', 'success'],
     ]);
 
     const ownerlessMutationLog = [];
@@ -442,7 +442,7 @@ async function testDispatch() {
             getPlayerViewOrThrow() { return { tick: 3, playerId: 'player:ownerless' }; },
             getPlayerOrThrow() { return ownerlessPlayer; },
         }),
-        /事务围栏暂不可用/,
+        /事務圍欄暫不可用/,
     );
     assert.deepEqual(ownerlessMutationLog, []);
 
@@ -513,7 +513,7 @@ async function testDispatch() {
         ['purchaseNpcShopItem', 'runtime:fenced:447', 447],
         ['replaceInventoryItems', 'player:fenced', 2],
         ['refreshQuestStates', 'player:fenced'],
-        ['queuePlayerNotice', 'player:fenced', '购买 聚气丹，消耗 灵石 x5', 'success'],
+        ['queuePlayerNotice', 'player:fenced', '購買 聚气丹，消耗 灵石 x5', 'success'],
     ]);
 
     const overflowMutationLog = [];

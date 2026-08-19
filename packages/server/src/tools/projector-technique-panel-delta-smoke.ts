@@ -348,7 +348,7 @@ function proveAttrPanelUsesProjectedTechniqueBonuses(): {
   const qiProjectionBonus = bonuses.find((entry: any) => entry.source === 'technique:ningqi_projector');
   const qiProjectionEfficiencyBpMultiplier = qiProjectionBonus?.qiProjection?.[0]?.efficiencyBpMultiplier;
 
-  const hasTechniqueMaxBonus = techniqueMaxBonus?.label === '万法归元'
+  const hasTechniqueMaxBonus = techniqueMaxBonus?.label === '萬法歸元'
     && techniqueMaxBonus.attrMode === 'percent'
     && techniqueMaxBonus.attrs?.constitution === 1;
   const hasQiProjectionBonus = qiProjectionBonus?.label === '功法-ningqi_projector'

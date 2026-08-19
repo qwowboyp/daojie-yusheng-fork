@@ -285,9 +285,9 @@ function testObservationMissingNumericValuesRenderAsZero() {
   const serialized = JSON.stringify(observation);
   assert.equal(serialized.includes('NaN'), false);
   assert.equal(observation.lines.find((line) => line.label === '生命')?.value, '0 / 0');
-  assert.equal(observation.lines.find((line) => line.label === '灵力')?.value, '0 / 0');
-  assert.equal(observation.lines.find((line) => line.label === '暴击伤害')?.value, '200%');
-  assert.equal(observation.lines.find((line) => line.label === '灵力回复')?.value, '0 / 息');
+  assert.equal(observation.lines.find((line) => line.label === '靈力')?.value, '0 / 0');
+  assert.equal(observation.lines.find((line) => line.label === '暴擊傷害')?.value, '200%');
+  assert.equal(observation.lines.find((line) => line.label === '靈力回覆')?.value, '0 / 息');
 }
 
 function testObservationLargeValuesUseChineseUnits() {
@@ -309,11 +309,11 @@ function testObservationLargeValuesUseChineseUnits() {
   }, true);
 
   assert.equal(
-    observation.lines.find((line) => line.label === '灵力')?.value,
+    observation.lines.find((line) => line.label === '靈力')?.value,
     formatDisplayCurrentMax(hugeQi, hugeQi),
   );
   assert.equal(
-    observation.lines.find((line) => line.label === '物理攻击')?.value,
+    observation.lines.find((line) => line.label === '物理攻擊')?.value,
     formatDisplayInteger(hugePhysAtk),
   );
   assert.equal(JSON.stringify(observation).includes('e+'), false);

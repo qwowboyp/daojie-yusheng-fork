@@ -331,7 +331,7 @@ function testMissingBreakthroughConfigShowsPathSevered() {
     const preview = service.buildBreakthroughPreview(player, player.realm);
     assert.equal(preview.canBreakthrough, false);
     assert.equal(preview.blockedReason, '仙路断绝');
-    assert.equal(preview.requirements.find((entry) => entry.label === '仙路断绝')?.detail, '仙路断绝，你的前路已被无形天堑阻断，暂时无法继续突破。');
+    assert.equal(preview.requirements.find((entry) => entry.label === '仙路斷絕')?.detail, '仙路斷絕，你的前路已被無形天塹阻斷，暫時無法繼續突破。');
     const result = service.attemptBreakthrough(player);
     assert.equal(result.changed, false);
     assert.equal(player.realm.realmLv, 42);
@@ -373,7 +373,7 @@ function testEmptyBreakthroughRequirementsShowPathSevered() {
     assert.equal(preview.canBreakthrough, false);
     assert.equal(preview.blockedReason, '仙路断绝');
     assert.equal(preview.requirements.some((entry) => entry.type === 'item'), false);
-    assert.equal(preview.requirements.find((entry) => entry.label === '仙路断绝')?.detail, '仙路断绝，你的前路已被无形天堑阻断，暂时无法继续突破。');
+    assert.equal(preview.requirements.find((entry) => entry.label === '仙路斷絕')?.detail, '仙路斷絕，你的前路已被無形天塹阻斷，暫時無法繼續突破。');
     const result = service.attemptBreakthrough(player);
     assert.equal(result.changed, false);
     assert.equal(player.realm.realmLv, 30);

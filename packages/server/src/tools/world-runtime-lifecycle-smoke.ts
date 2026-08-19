@@ -98,7 +98,7 @@ function testBootstrapPublicInstances() {
             instanceOrigin: 'bootstrap',
             defaultEntry: true,
         }],
-        ['log', '已初始化 4 个默认地图实例'],
+        ['log', '已初始化 4 個預設地圖實例'],
     ]);
 }
 /**
@@ -397,7 +397,7 @@ async function testRestoreAndRebuild() {
     assert.ok(!domainRestoreLog.some((entry) => Array.isArray(entry) && entry[0] === 'hydrateGroundPiles' && Array.isArray(entry[1]) && entry[1][0]?.tileIndex === 11));
     assert.ok(domainRestoreLog.some((entry) => Array.isArray(entry)
         && entry[0] === 'log'
-        && entry[1] === '实例持久化恢复完成：分域回填 1 个实例，阵法恢复 0 个 / 0 个实例'));
+        && entry[1] === '實例持久化恢復完成：分域回填 1 個實例，陣法恢復 0 個 / 0 個實例'));
 
     const resetLog = [];
     await service.rebuildPersistentRuntimeAfterRestore({
@@ -484,7 +484,7 @@ async function testRestoreAndRebuild() {
     });
     assert.deepEqual(resetLog, [
         ['markInstanceTemplateMissing', 'public:removed_map', 'removed_map'],
-        ['warn', '实例目录引用的地图模板不存在，已标记为待内容恢复：public:removed_map -> removed_map'],
+        ['warn', '實例目錄引用的地圖模板不存在，已標記為待內容恢復：public:removed_map -> removed_map'],
         'instance',
         'playerLocation',
         'pending',
@@ -495,7 +495,7 @@ async function testRestoreAndRebuild() {
         'combatEffects',
         ['createInstance', 'public:yunlai_town'],
         ['createInstance', 'real:yunlai_town'],
-        ['log', '已初始化 2 个默认地图实例'],
+        ['log', '已初始化 2 個預設地圖實例'],
         'claimRecoverableCatalogInstances',
     ]);
 }

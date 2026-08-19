@@ -560,7 +560,7 @@ function testTransmittedPendingCannotBeSetAsMainTechnique() {
 
   assert.throws(
     () => runtimeService.cultivateTechnique(learner.playerId, createdTechnique.techId),
-    /只能通过传法领悟/,
+    /只能通過傳法領悟/,
   );
   assert.equal(learner.techniques.cultivatingTechId, null);
 }
@@ -876,7 +876,7 @@ function testMonsterKillProgressesComprehensionByOneCultivationTick() {
   assert.equal(learner.transmissionSkill.exp, getExpectedTransmissionExpGain(1, 1, 1));
   assert.deepEqual((result as any).statisticTechniqueChangedIds, []);
   assert.ok(
-    result.notices.some((notice: any) => String(notice.structured?.vars?.details ?? '').includes(`${createdTechnique.name} 领悟进度 +11`)),
+    result.notices.some((notice: any) => String(notice.structured?.vars?.details ?? '').includes(`${createdTechnique.name} 領悟進度 +11`)),
   );
 }
 
@@ -1369,7 +1369,7 @@ function testScriptureRecordingUsesTransmissionJobAndLocksBuilding() {
     buildingId: building.id,
   }, ctx as never);
   assert.equal(normalResult.ok, false);
-  assert.match(normalResult.error ?? '', /只能录入自创功法/);
+  assert.match(normalResult.error ?? '', /只能錄入自創功法/);
   const restartResult = pipeline.start(recorder, 'transmission', {
     mode: 'scripture_recording',
     learnerPlayerId: recorder.playerId,
@@ -1387,7 +1387,7 @@ function testScriptureRecordingUsesTransmissionJobAndLocksBuilding() {
     buildingId: building.id,
   }, ctx as never);
   assert.equal(lockedResult.ok, false);
-  assert.match(lockedResult.error ?? '', /已有进行中的技艺任务|已有藏书/);
+  assert.match(lockedResult.error ?? '', /已有進行中的技藝任務|已有藏書/);
 
   let recordingTick = 2;
   while (recorder.transmissionJob && recordingTick <= Math.ceil(scriptureRequired / 10) + 2) {
@@ -1680,7 +1680,7 @@ function testFragmentLearnLimitCannotBecomePropagationAuthority() {
     techniqueId: fragmentLimitedTechnique.techId,
   }, ctx as never);
   assert.equal(transmissionResult.ok, false);
-  assert.match(transmissionResult.error ?? '', /原功法满层/);
+  assert.match(transmissionResult.error ?? '', /原功法滿層/);
 
   const scriptureBuilding: any = {
     id: 'building:scripture:fragment-limit',
@@ -1706,7 +1706,7 @@ function testFragmentLearnLimitCannotBecomePropagationAuthority() {
     buildingId: scriptureBuilding.id,
   }, scripturePipeline.ctx as never);
   assert.equal(scriptureResult.ok, false);
-  assert.match(scriptureResult.error ?? '', /只有练满的功法/);
+  assert.match(scriptureResult.error ?? '', /只有練滿的功法/);
 
   const refiningBuilding = {
     id: 'building:refining:fragment-limit',
@@ -1733,7 +1733,7 @@ function testFragmentLearnLimitCannotBecomePropagationAuthority() {
         queuePlayerNotice() {},
       },
     ),
-    /原功法满层/,
+    /原功法滿層/,
   );
 }
 

@@ -86,7 +86,8 @@ async function runCase(mode: 'crash-once' | 'fatal-once' | 'heartbeat-timeout-on
       delay(2_000).then(() => ({ code: null, signal: 'TIMEOUT' })),
     ]);
     assert.notEqual(result.signal, 'TIMEOUT', `${mode} 监督进程未按时退出：${logs.join('')}`);
-    assert.equal(result.code, 0, `${mode} 监督进程退出码异常：${logs.join('')}`);
+    // Windows 上 SIGTERM 终止的子进程 exit code 为 null（Linux 为 0），两者都视为干净退出
+    assert.ok(result.code === 0 || result.code === null, `${mode} 监督进程退出码异常：${logs.join('')}`);
 
     const output = `${logs.join('')}\n${readFileSync(journalPath, 'utf8')}`;
     return { output };

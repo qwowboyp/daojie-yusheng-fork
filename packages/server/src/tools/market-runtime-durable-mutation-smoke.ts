@@ -307,7 +307,7 @@ async function main(): Promise<void> {
   assert.equal((service as unknown as { openOrders: Array<{ id?: string }> }).openOrders.length, 1);
   assert.deepEqual(assetLockCalls.at(-1), [alternateSellerId, buyerId].sort());
   assert.equal(replayResult.alreadyCommitted, true);
-  assert.match(String(replayResult.notices[0]?.text ?? ''), /已经处理/);
+  assert.match(String(replayResult.notices[0]?.text ?? ''), /已經處理/);
 
   proveRestoreRebuildsSpecialLotIndexes(service, orderItem);
 

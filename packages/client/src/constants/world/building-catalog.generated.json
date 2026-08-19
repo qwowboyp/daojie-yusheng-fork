@@ -1,7 +1,7 @@
 [
   {
     "id": "stone_wall",
-    "name": "石墙",
+    "name": "石牆",
     "layer": "structure",
     "visualTileType": "wall",
     "allowRotate": true,
@@ -35,7 +35,7 @@
   },
   {
     "id": "wooden_door",
-    "name": "木门",
+    "name": "木門",
     "layer": "structure",
     "visualTileType": "door",
     "allowRotate": true,
@@ -132,7 +132,7 @@
   },
   {
     "id": "scripture_platform",
-    "name": "藏经台",
+    "name": "藏經臺",
     "layer": "facility",
     "allowRotate": true,
     "footprint": [
@@ -166,9 +166,9 @@
   },
   {
     "id": "treasure_vault",
-    "name": "宝库",
+    "name": "寶庫",
     "layer": "furniture",
-    "visualGlyph": "宝",
+    "visualGlyph": "寶",
     "visualColor": "#d69e2e",
     "allowRotate": true,
     "footprint": [
@@ -206,7 +206,7 @@
   },
   {
     "id": "technique_refining_table",
-    "name": "炼法台",
+    "name": "煉法臺",
     "layer": "facility",
     "visualGlyph": "法",
     "visualColor": "#7c3aed",
@@ -247,9 +247,9 @@
   },
   {
     "id": "technique_unification_platform",
-    "name": "统法台",
+    "name": "統法臺",
     "layer": "facility",
-    "visualGlyph": "统",
+    "visualGlyph": "統",
     "visualColor": "#4f7664",
     "allowRotate": true,
     "footprint": [
@@ -325,7 +325,7 @@
   },
   {
     "id": "meditation_mat",
-    "name": "蒲团",
+    "name": "蒲團",
     "layer": "facility",
     "visualGlyph": "蒲",
     "visualColor": "#8b5e34",

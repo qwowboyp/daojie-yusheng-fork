@@ -69,7 +69,7 @@ assert.equal(player.inventory.serverTick, 10, '冷却同步应使用玩家 lifeE
 
 assert.throws(
   () => service.useItem(playerId, 1),
-  (error: unknown) => error instanceof BadRequestException && /冷却中/.test(error.message),
+  (error: unknown) => error instanceof BadRequestException && /冷卻中/.test(error.message),
   '同一生命回复组冷却中应拒绝再次用药',
 );
 assert.equal(player.inventory.items[1].count, 1, '冷却拒绝不能消耗第二种生命药');
@@ -183,7 +183,7 @@ assert.deepEqual(
 );
 assert.throws(
   () => service.useItem(legacyPlayerId, 0),
-  (error: unknown) => error instanceof BadRequestException && /冷却中/.test(error.message),
+  (error: unknown) => error instanceof BadRequestException && /冷卻中/.test(error.message),
   '缺少 type 的旧瞬回药实例也必须被冷却拦截',
 );
 

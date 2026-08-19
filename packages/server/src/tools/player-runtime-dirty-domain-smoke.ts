@@ -878,7 +878,7 @@ function testUseConsumableItemDirtyDomain(): void {
   const restoredPlayerId = `${playerId}:restored`;
   const restored = service.hydrateFromSnapshot(restoredPlayerId, 'session:restored', persistedSnapshot!);
   service.players.set(restoredPlayerId, restored);
-  assert.throws(() => service.useItem(restoredPlayerId, 0), /冷却中，还需 60 息/);
+  assert.throws(() => service.useItem(restoredPlayerId, 0), /冷卻中，還需 60 息/);
   assert.equal(restored.inventory.items[0]?.count, 1);
 
   service.respawnPlayer(restoredPlayerId, {
@@ -889,7 +889,7 @@ function testUseConsumableItemDirtyDomain(): void {
     facing: restored.facing,
     currentTick: restored.lifeElapsedTicks,
   });
-  assert.throws(() => service.useItem(restoredPlayerId, 0), /冷却中，还需 60 息/);
+  assert.throws(() => service.useItem(restoredPlayerId, 0), /冷卻中，還需 60 息/);
   service.respawnPlayer(restoredPlayerId, {
     instanceId: restored.instanceId,
     templateId: restored.templateId,
@@ -899,7 +899,7 @@ function testUseConsumableItemDirtyDomain(): void {
     currentTick: restored.lifeElapsedTicks,
     buffClearMode: 'return_to_spawn',
   });
-  assert.throws(() => service.useItem(restoredPlayerId, 0), /冷却中，还需 60 息/);
+  assert.throws(() => service.useItem(restoredPlayerId, 0), /冷卻中，還需 60 息/);
 
   restored.lifeElapsedTicks = 60;
   service.useItem(restoredPlayerId, 0);
@@ -1045,7 +1045,7 @@ function testUseDivineRootSeedConsumable(): void {
   assert.equal(player.heavenGate?.entered, false);
   assert.equal(player.heavenGate?.averageBonus, 200);
   assert.equal(player.foundation, 0);
-  assert.equal(player.notices.queue.some((notice) => notice.text.includes('神品灵根幼苗')), true);
+  assert.equal(player.notices.queue.some((notice) => notice.text.includes('神品靈根幼苗')), true);
   assertDirtyDomains(service, playerId, ['inventory', 'progression', 'attr'], ['snapshot']);
 }
 
@@ -1099,7 +1099,7 @@ function testUseShatterSpiritPillConsumable(): void {
   assert.equal(player.heavenGate?.entered, false);
   assert.equal(player.heavenGate?.averageBonus, 6);
   assert.equal(player.spiritualRoots, null);
-  assert.equal(player.notices.queue.some((notice) => notice.text.includes('碎灵丹')), true);
+  assert.equal(player.notices.queue.some((notice) => notice.text.includes('碎靈丹')), true);
   assert.equal(statisticOptions.length, 2);
   assert.equal(statisticOptions.at(-1)?.inventoryOnly, false);
   assert.equal(statisticOptions.at(-1)?.inventoryItemDeltaHint, undefined);
@@ -2091,9 +2091,9 @@ function testAdvanceSinglePlayerTickAutoRefinesRootFoundation(): void {
   assert.equal(player.combat.autoRootFoundation, false);
   assert.equal(player.realm.progress, 0);
   assert.equal(player.inventory.items.some((entry) => entry.itemId === 'spirit_stone'), false);
-  assert.ok(player.notices.queue.some((notice) => notice.text.includes('你凝练 1 点根基')));
+  assert.ok(player.notices.queue.some((notice) => notice.text.includes('你凝練 1 點根基')));
   assert.ok(player.notices.queue.some((notice) => (
-    notice.text.includes('已关闭自动凝练根基')
+    notice.text.includes('已關閉自動凝練根基')
     && notice.structured?.key === 'notice.action.auto-root-foundation-cap'
   )));
   assert.ok(recordedPerfKeys.includes('playerTick.offlineGainProgressionInventoryDeltaMs'));

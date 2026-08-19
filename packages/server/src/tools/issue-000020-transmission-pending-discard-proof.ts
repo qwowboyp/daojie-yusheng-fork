@@ -137,7 +137,7 @@ function main(): void {
   assert.equal(typeof discard, 'function', '生产运行时缺少未领悟功法放弃能力');
   assert.throws(
     () => discard.call(runtimeService, learner.playerId, TECHNIQUE_ID),
-    /先取消|进行中/,
+    /先取消|進行中/,
     '进行中的传法 job 不得被旁路删除',
   );
 

@@ -121,8 +121,8 @@ async function main(): Promise<void> {
     '密室管理入口只应向建造者开放',
   );
   const ownerUsageAction = contextActions.find((entry) => entry.id.startsWith('time_chamber:usage:'));
-  assert.match(ownerUsageAction?.name ?? '', /^开启：/);
-  assert.match(ownerUsageAction?.desc ?? '', /时间流速 .+当前人数/);
+  assert.match(ownerUsageAction?.name ?? '', /^開啟：/);
+  assert.match(ownerUsageAction?.desc ?? '', /時間流速 .+當前人數/);
   const visitorActions = buildContextActions({ ...player, playerId: 'player:visitor' }, instance, localBuildings);
   assert.equal(
     visitorActions.some((entry) => entry.id.startsWith('time_chamber:usage:')),

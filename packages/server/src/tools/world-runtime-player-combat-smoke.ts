@@ -639,7 +639,7 @@ async function testMonsterLootUsesSynchronousInventoryReceipt() {
   assert.equal(player.inventory.items[0], item);
   assert.equal(player.inventory.revision, 1);
   assert.deepEqual(log, [
-    ['queuePlayerNotice', 'player:combat:loot', '获得 鼠尾 x2', 'loot'],
+    ['queuePlayerNotice', 'player:combat:loot', '獲得 鼠尾 x2', 'loot'],
   ]);
 }
 
@@ -681,7 +681,7 @@ async function testMonsterLootDoesNotRequireDurableContext() {
   assert.deepEqual(player.inventory.items, [item]);
   assert.equal(player.inventory.revision, 1);
   assert.deepEqual(log, [
-    ['queuePlayerNotice', player.playerId, '获得 鼠尾', 'loot'],
+    ['queuePlayerNotice', player.playerId, '獲得 鼠尾', 'loot'],
   ]);
 }
 

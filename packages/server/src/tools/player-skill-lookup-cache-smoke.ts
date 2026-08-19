@@ -94,7 +94,7 @@ function testCombatLookupReadsCooldownAndTechniqueStateAfterCacheWarmup(): void 
   existing.unlockLevel = 3;
   assert.throws(
     () => service.resolvePlayerSkillForCast(player as never, 'skill:existing', 10),
-    /尚未解锁/,
+    /尚未解鎖/,
   );
 }
 

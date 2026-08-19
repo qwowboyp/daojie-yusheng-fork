@@ -777,7 +777,7 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'technique-uni
   assert.equal(permissions.customPanelIndependent, true, '统法台自定义策略未使用独立权限面板');
   assert.equal(permissions.customPanelOverflow, false, '统法台自定义权限面板出现横向溢出');
   assert(permissions.customPanelCloseSize >= 39.5, '自定义权限面板关闭按钮触控尺寸不足 40px');
-  assert.deepEqual(permissions.checkedRevisionRoles, ['内门弟子'], '修訂權限草稿未獨立保留');
+  assert.deepEqual(permissions.checkedRevisionRoles, ['內門弟子'], '修訂權限草稿未獨立保留');
   assert(permissions.minPolicyOptionHeight >= 39.5, '权限选项触控高度不足 40px');
   assert(permissions.minPermissionTabHeight >= 41.5, '权限 Tab 触控高度不足 42px');
   assert.equal(permissions.hasDirectory, false, '权限页混入法卷目录');
@@ -792,7 +792,7 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'technique-uni
   assert.doesNotMatch(overview.overviewText, /預檢|二次確認|服務端|客戶端|revision|messageKey|Lv\./, '總覽仍暴露開發者術語');
   assert.deepEqual(overview.sourceNames, ['凡阶归元功1', '凡阶归元功2'], '总览源法名录不完整');
   assert.equal(overview.attributeTexts.length, 6, '总览未显示完整六维加成');
-  assert.deepEqual(overview.attributeTexts, ['体魄 +111', '神识 +122', '身法 +133', '根骨 +144', '力道 +155', '经脉 +166'], '总览六维加成显示错误');
+  assert.deepEqual(overview.attributeTexts, ['體魄 +111', '神識 +122', '身法 +133', '根骨 +144', '力道 +155', '經脈 +166'], '总览六维加成显示错误');
   assert.equal(overview.sourceOverflowY, 'visible', '手机端录法构成未随正文纵向展开');
   assert.equal(overview.overflow, false, '总览源法与六维区域出现横向溢出');
   assert.equal(overview.hasRecordTabs, false, '总览页混入录法方式');

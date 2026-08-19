@@ -954,7 +954,7 @@ function verifyTowerTemplateCannotFallThroughToPublicInstance(): { rejectedCalls
   const assertUnavailable = (operation: () => unknown): void => {
     assert.throws(operation, (error: unknown) => {
       assert.ok(error instanceof ServiceUnavailableException, '必须用 503 ServiceUnavailable 拒绝塔层降级创建');
-      assert.match(error.message, /通天塔实例暂不可用/);
+      assert.match(error.message, /通天塔實例暫不可用/);
       return true;
     });
   };

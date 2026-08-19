@@ -195,7 +195,7 @@ async function main() {
     getInstanceRuntime(targetInstanceId) {
       return targetInstanceId === "public:formation_smoke" ? virtualInstance : null;
     },
-  }), /虚境不能布置阵法/);
+  }), /虛境不能佈置陣法/);
   assert.equal(player.qi, 1000000);
   assert.equal(player.wallet.spirit_stone, 100000);
   assert.equal(player.inventory.items[0].count, 2);
@@ -206,7 +206,7 @@ async function main() {
     spiritStoneCount: 99,
     qiCost: 1,
     allocation: { effectPercent: 80, rangePercent: 10, durationPercent: 10 },
-  }, deps), /至少需要投入 100 灵石/);
+  }, deps), /至少需要投入 100 靈石/);
   assert.equal(player.qi, 1000000);
   assert.equal(player.wallet.spirit_stone, 100000);
   assert.equal(player.inventory.items[0].count, 2);
@@ -877,7 +877,7 @@ async function main() {
   player.y = 0;
   const farGuardianMaintenanceCondition = service.checkFormationMaintenanceCondition(player, player.formationJob, guardianMaintenanceCtx);
   assert.equal(farGuardianMaintenanceCondition.satisfied, false);
-  assert.match(farGuardianMaintenanceCondition.reason, /离开阵法控制点位/);
+  assert.match(farGuardianMaintenanceCondition.reason, /離開陣法控制點位/);
   player.formationJob = null;
   assert.throws(() => maintenancePipeline.start(player, "formation", { formationInstanceId: guardian.id }, {
     ...guardianMaintenanceCtx,

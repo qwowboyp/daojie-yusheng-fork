@@ -116,7 +116,7 @@ async function main(): Promise<void> {
   }]);
   assert.throws(
     () => enqueueService.enqueueReorderTechniqueActivityQueue(player.playerId, 'queue:2', 'invalid', {}),
-    /行动队列调整参数无效/,
+    /行動隊列調整參數無效/,
   );
 
   const flushed: unknown[] = [];

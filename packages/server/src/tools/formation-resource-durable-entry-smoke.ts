@@ -243,7 +243,7 @@ async function main(): Promise<void> {
         itemInstanceId: productionGuardDiskItemInstanceId,
         spiritStoneCount: 100,
       }, deps),
-      /阵法资产事务暂不可用/,
+      /陣法資產事務暫不可用/,
     );
   }
   finally {

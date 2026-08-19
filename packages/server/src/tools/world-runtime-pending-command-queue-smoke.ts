@@ -60,7 +60,7 @@ function verifyDuplicateAndCapacityRejectsAreExplicit(): void {
   service.enqueuePendingCommand('player:1', duplicate);
   assert.throws(
     () => service.enqueuePendingCommand('player:1', { ...duplicate }),
-    (error: unknown) => error instanceof ConflictException && error.message === '相同指令已在等待执行',
+    (error: unknown) => error instanceof ConflictException && error.message === '相同指令已在等待執行',
   );
 
   service.clearPendingCommand('player:1');
@@ -86,7 +86,7 @@ function verifyRedeemRequestRetriesAreIdempotentInQueue(): void {
   assert.equal(service.getPendingCommandCount(), 1, '同一兑换请求的传输重试不得重复入队');
   assert.throws(
     () => service.enqueuePendingCommand('player:1', { ...command, codes: ['CODE-2'] }),
-    (error: unknown) => error instanceof ConflictException && error.message === '兑换请求 ID 已被占用',
+    (error: unknown) => error instanceof ConflictException && error.message === '兌換請求 ID 已被佔用',
   );
 }
 
