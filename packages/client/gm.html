@@ -2742,8 +2742,6 @@
             <button id="refresh-state" class="small-btn" type="button" data-i18n="gm.refresh-state">立即刷新</button>
             <button id="logout" class="small-btn" type="button" data-i18n="gm.logout">退出管理台</button>
           </div>
-          <div id="status-bar" class="status-bar" role="status" aria-live="polite" aria-atomic="true"></div>
-          <div id="status-toast" class="status-toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
           <div class="note-card">
             <span data-i18n="gm.overview.online-save-note">在线玩家的修改会由服务端在下一息统一执行。离线玩家会直接更新存档。</span><br />
             <span data-i18n="gm.overview.snapshot-save-note">默认编辑器展示的是完整运行态快照；高级区可切换查看真实存档态 JSON。像 `actions`、`finalAttrs`、`numericStats`、`realm` 这类派生字段，保存后仍以服务端重算结果为准。</span>
@@ -3487,6 +3485,9 @@
         <button id="gm-trades-page-next" class="small-btn" type="button">下一页</button>
       </div>
     </section>
+
+    <div id="status-bar" class="status-bar" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div id="status-toast" class="status-toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
 
   </main>
 
