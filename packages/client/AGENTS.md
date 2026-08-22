@@ -1,6 +1,6 @@
 # packages/client — 游戏客户端
 
-**本目录：708 文件（src/ 437）**。Vite + TypeScript + Canvas 2D + DOM UI + React 19 渐进式 UI；地图渲染用 PixiJS。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。
+**本目录：714 文件（src/ 440）**。Vite + TypeScript + Canvas 2D + DOM UI + React 19 渐进式 UI；地图渲染用 PixiJS。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。子目录深导航：`src/react-ui/AGENTS.md`（18 域 React 面板）、`src/game-map/AGENTS.md`（PixiJS 渲染域）。
 
 ## OVERVIEW
 
@@ -10,12 +10,12 @@
 
 | 目录 | 文件 | 职责 |
 |---|---|---|
-| ui/ | 115 | 旧版 DOM UI（根 80 扁平 + panels/ 33 + panel-system/ 6） |
-| react-ui/ | 96 | React 19 新 UI（panels/primitives/stores/hooks/overlays/bridge） |
+| ui/ | 117 | 旧版 DOM UI（根 80 扁平 + panels/ 33 + panel-system/ 6） |
+| react-ui/ | 96 | React 19 新 UI（panels 18 域 + bridge/primitives/stores/hooks/overlays/shell；详见 src/react-ui/AGENTS.md） |
 | main-*.ts | 68+ | 主链装配 / state source 拆分文件 |
 | constants/ | 40 | 客户端常量 + generated JSON（editor/item-sources/building-catalog） |
 | styles/ | 38 | CSS（tokens/base + panels/ 25） |
-| game-map/ | 21 | PixiJS 地图渲染域（renderer/camera/viewport/minimap/scene） |
+| game-map/ | 21 | PixiJS 地图渲染域（10 子目录：renderer/camera/viewport/scene/minimap/interaction/projection/runtime/store；详见 src/game-map/AGENTS.md） |
 | network/ | 16 | Socket.IO 收发（socket.ts 为主） |
 | renderer/ | 10 | 共享 Canvas/Pixi 图集 / 字体缓存 |
 | gm/ | 5 | GM 工具（gm*.ts 大文件在 src/ 根层） |
@@ -37,8 +37,10 @@
 
 ## CONVENTIONS
 
-- **双轨 UI 并存**：`ui/`（旧 DOM）与 `react-ui/`（React 19）渐进式替代；新面板优先 react-ui，挂载由 `react-ui/bridge/panel-flags.ts` 控制
+- **双轨 UI 并存**：`ui/`（旧 DOM 33 面板）与 `react-ui/`（React 19，18 域全覆盖）渐进式替代；新面板一律 react-ui，挂载由 `react-ui/bridge/panel-flags.ts` 控制
 - React 面板成对文件：`XxxPanel.tsx` + `mount-xxx-panel.tsx`
+- ui/ 根层 80 文件含 BGM 播放器（bgm-player.ts）、新手引导（guided-tour）、更新日志（changelog-*）、离线收益等 HUD/工作区模块
+- **gm.html 顶层 DOM**：`#status-bar` / `#status-toast` 必须放在 `</main>` 前、所有 workspace section 之外，不能嵌套在任何 `<section class="layout-section hidden">` 内（否则被 `.hidden` 切換時 `display:none` 會傳染到子孫，rect 變 0×0 看不見，CSS 屬性正確也救不回來）
 - **构建**：`build` = `tsc --noEmit` + `vite build` + 30+ `proof:*` 守门
 - prebuild 依序：shared → editor-catalog → item-sources → building-catalog → i18n
 - manualChunks 拆包：vendor / shared / main-panels / world-{editor-catalog,item-sources,monster-locations}

@@ -1,6 +1,6 @@
 # packages/server — 游戏服务端
 
-**本目录：1203 文件（src/ 1060）**。NestJS + Socket.IO 权威服务端，纯 tsc 编译（无 webpack/swc/esbuild）。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。
+**本目录：1208 文件（src/ 1064）**。NestJS + Socket.IO 权威服务端，纯 tsc 编译（无 webpack/swc/esbuild）。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。子目录深导航：`src/runtime/AGENTS.md`（22 子域）、`src/tools/AGENTS.md`（415 smoke 脚手架）。
 
 ## OVERVIEW
 
@@ -10,8 +10,8 @@
 
 | 目录 | 文件 | 职责 |
 |---|---|---|
-| runtime/ | 271 | 权威玩法运行时（22 个子系统） |
-| tools/ | 533 | smoke / proof / audit / bench / 修复 / 迁移脚本（验证入口） |
+| runtime/ | 271 | 权威玩法运行时（22 个子系统，详见 src/runtime/AGENTS.md） |
+| tools/ | 531 | smoke / proof / audit / bench / 修复 / 迁移脚本（验证入口，详见 src/tools/AGENTS.md） |
 | network/ | 73 | Socket.IO gateway + session/sync/projector + 领域 helper |
 | persistence/ | 54 | 刷盘任务、outbox、领域持久化、连接池、节点注册 |
 | http/ | 40 | 对外 HTTP controllers（native-http.registry 聚合） |
@@ -38,23 +38,28 @@
 | 读 facade | `runtime/world/query/`（11 个） |
 | 验证脚本 | `tools/`（`pnpm --filter @mud/server tool -- <name>`） |
 | 技能生成 | `runtime/technique-generation/` |
+| GM AI 触发 | `http/native/native-gm-technique-generation.service.ts` |
 
 ## KEY HUBS
 
 - `app.module.ts` — 唯一 @Module；任何服务新增都要进这里
-- `world-runtime.service.ts`（52 refs）— 世界运行时 facade
-- `player-domain-persistence.service.ts`（53 refs）— 玩家持久化真源
-- `content-template.repository.ts`（52 refs）— 模板装载中枢
-- `world.gateway.ts`（43 refs）— Socket.IO 主网关
+- `player-runtime.service.ts`（201 refs，12744 行）— 玩家状态真源，全服最高中心性
+- `content-template.repository.ts`（123 refs）— 模板装载中枢
+- `map-instance.runtime.ts`（106 refs）+ `map-template.repository.ts`（100 refs）— 地图/实例双核
+- `player-domain-persistence.service.ts`（71 refs，9024 行）— 玩家持久化真源
+- `durable-operation.service.ts`（64 refs，8071 行）— 通用持久化调度器
+- `world-runtime.service.ts`（61 refs）— 世界运行时 facade
+- `world.gateway.ts` — Socket.IO 主网关（经 DI 注入，class 直引仅 7 处，引用数不反映枢纽地位）
 
 ## CONVENTIONS
 
 - **编译**：`compile` = 清 dist → 建 shared → `compile-monster-tendency-stats.mjs` → `tsc -p tsconfig.json`。tsconfig 覆写 `strict:false`（NestJS 装饰器）、`experimentalDecorators`、`noEmitOnError`
-- **测试**：无 vitest/jest。每个 `tools/*-smoke.ts` 是独立 Node.js 入口，`node:assert/strict` 断言，经 dist 执行
-- **验证链**：`verify` = compile + `proof:production-boundaries` + `smoke:all`；持久化测试需 `--include-persistence`；shadow 测试需 `SERVER_SHADOW_URL`
+- **测试**：无 vitest/jest。每个 `src/tools/*-smoke.ts` 是独立 Node.js 入口，`node:assert/strict` 断言，经 dist 执行；smoke 脚手架约定见 src/tools/AGENTS.md
+- **验证链**：`verify` = compile + `proof:production-boundaries` + `smoke:all`；持久化测试需 `--include-persistence`；shadow 测试需 `SERVER_SHADOW_URL`；根 `verify:quick`/`verify:client` 前置简繁幂等检查（scripts/check-traditional.mjs）
 - **超时/快照**：`smoke-timeout.ts`（per-file 超时表）、`stable-dist.ts` + `run-stable-smoke-suite.ts`（--case/--group）
 - **测试玩家**：`smoke-player-auth.ts` / `smoke-player-cleanup.ts` 负责注册与自动清理
 - **worker pool**：`concurrency/worker-pool.module.ts`；确认 pool 真实启用后再依赖，防「已启用但 0 任务提交」
+- **GM AI 功法触发**：`POST /api/gm/technique-generation/run` 由 GM 鉴权调用，绕过玩家物品/境界门槛；服务侧 `TechniqueGenerationService.requestGeneration` / `requestBatchGeneration` 接受 `bypassInventoryCheck: boolean`（仅 GM 路径使用，常规玩家路径不许走），开启时跳过 inventory transaction + session fence，直接 INSERT pending job 行到 `technique_generation_job` 表。
 
 ## ANTI-PATTERNS
 

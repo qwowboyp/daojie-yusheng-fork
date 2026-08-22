@@ -1,6 +1,6 @@
 # packages/shared — 共享契约层
 
-**本目录：211 文件（src/ 199）**。client / server / config-editor 唯一契约源。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。
+**本目录：212 文件（src/ 199）**。client / server / config-editor 唯一契约源。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。
 
 ## OVERVIEW
 
@@ -11,7 +11,7 @@
 | 位置 | 文件 | 职责 |
 |---|---|---|
 | 根层 *.ts | ~119 | 协议、API 契约、领域类型、工具 |
-| constants/ | 48 | 跨端稳定数值（gameplay 31 / network 4 / ui 6 / visuals 6） |
+| constants/ | 47 | 跨端稳定数值（gameplay 30 / network 4 / ui 6 / visuals 6） |
 | procgen/ | 28 | 秘境随机地形生成 |
 | actor/ | 4 | Actor 契约（blueprint / ephemeral / bot） |
 
@@ -20,7 +20,7 @@
 | 任务 | 位置 |
 |---|---|
 | Socket 事件 | `protocol.ts` → `protocol-core/combat/craft/social/market` |
-| HTTP/GM DTO | `api-contracts.ts`（4492 行，最大文件） |
+| HTTP/GM DTO | `api-contracts.ts`（89KB，最大文件） |
 | Protobuf 编解码 | `network-protobuf*.ts`（tick/update/payload codec） |
 | 功法 / 成长 | `technique-*.ts`（15+ 文件，50 refs） |
 | 战斗公式 | `combat.ts`（29 refs） |
@@ -32,11 +32,13 @@
 
 ## CONVENTIONS
 
-- **修改后必跑**：`pnpm build:shared` + `pnpm audit:protocol`；build 会执行 8 条 `check-*.cjs`（protocol-event-maps / payload-shapes / protobuf-contract / entry-boundaries / display-number / numeric-stats / role-name-graphemes / access-policy）
+- **修改后必跑**：`pnpm build:shared` + `pnpm audit:protocol`；build 会执行 10 条 `check-*.cjs`（protocol-event-maps / payload-shapes / protobuf-contract / entry-boundaries / display-number / numeric-stats / role-name-graphemes / access-policy / combat-protocol-layers / content-display-name）
+- 2026-08 起语言已收敛单语系 zh-TW；字符串字面量简转繁已完成，勿引入简体文案
 - 消费方式：client / server / config-editor 均 `import ... from '@mud/shared'`
 - config-editor 走 vite alias 指向 `src`；其 local-api.cjs 直接 require `dist/index.js`
 - barrel 增删 `export *` = 全仓 API 变更，先搜索所有使用点
 - 领域前缀命名（protocol- / technique- / network-protobuf-）即文件组织规范，新增文件沿用
+- GM HTTP DTO 集中放 `api-contracts.ts`：当前含 `GmAiProviderConfig*`、`GmTechniqueGenerationJob*`、`GmTechniqueGenerationRunReq/Res`（GM 触发 AI 功法生成端点）、`GmGeneratedTechnique*` 等。新增 GM DTO 时复用现有 `Gm*` 前缀命名并放同文件，避免开新文件。
 
 ## ANTI-PATTERNS
 
