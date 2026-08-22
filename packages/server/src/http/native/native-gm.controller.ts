@@ -29,6 +29,7 @@ import { extractGmActor } from './native-gm-actor-context';
 import { assertGmHighRiskOperationAllowed, type GmHighRiskConfirmationBody } from './native-gm-high-risk';
 import { NativeGmAuthGuard } from './native-gm-auth.guard';
 import { NativeGmGeneratedTechniqueService } from './native-gm-generated-technique.service';
+import { NativeGmTechniqueGenerationService, type GmTechniqueGenerationRunReq } from './native-gm-technique-generation.service';
 import { NativeGmMailService } from './native-gm-mail.service';
 import { NativeGmMarketTradeService } from './native-gm-market-trade.service';
 import { NativeGmPlayerService } from './native-gm-player.service';
@@ -284,6 +285,7 @@ export class NativeGmController {
     @Inject(GmRuntimeFlagPersistenceService) private readonly runtimeFlagService: GmRuntimeFlagPersistenceService,
     @Inject(GmConfigPersistenceService) private readonly gmConfigService: GmConfigPersistenceService,
     @Inject(NativeGmGeneratedTechniqueService) private readonly nextGmGeneratedTechniqueService: NativeGmGeneratedTechniqueService,
+    @Inject(NativeGmTechniqueGenerationService) private readonly nextGmTechniqueGenerationService: NativeGmTechniqueGenerationService,
     @Inject(NativeGmMarketTradeService) private readonly nextGmMarketTradeService: NativeGmMarketTradeService,
     @Inject(AiArtsStrengthV1ToV2Conversion) private readonly aiArtsStrengthV1ToV2Conversion: AiArtsStrengthV1ToV2Conversion,
     @Inject(ZeroPublishedGeneratedTechniqueChantConversion) private readonly zeroPublishedGeneratedTechniqueChantConversion: ZeroPublishedGeneratedTechniqueChantConversion,
@@ -1672,6 +1674,22 @@ export class NativeGmController {
       targetId: instanceId,
       after: body ?? {},
     }, () => this.nextGmWorldService.updateInstanceTick(instanceId, body ?? {}));
+  }
+  /**
+ * runTechniqueGeneration：触发一次 AI 功法生成（绕过玩家物品与境界门槛）。
+ * @param body GmTechniqueGenerationRunReq 参数说明。
+ * @returns 无返回值，直接产出 AI 功法候选。
+ */
+
+  @Post('technique-generation/run')
+  async runTechniqueGeneration(@Body() body: GmTechniqueGenerationRunReq, @Req() request: unknown) {
+    return this.executeAuditedGmWrite({
+      op: 'gm.technique_generation.run',
+      request,
+      targetType: 'player',
+      targetId: typeof body?.playerId === 'string' ? body.playerId : undefined,
+      after: body ?? {},
+    }, () => this.nextGmTechniqueGenerationService.runTechniqueGeneration(body));
   }
   /**
  * updateMapTime：处理地图时间并更新相关状态。

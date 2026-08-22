@@ -32,6 +32,7 @@ import { sanitizePlayerContext } from '../../ai/ai-prompt-sanitizer';
 import type { AiTextModelConfig } from '../../ai/ai-model-config';
 
 import {
+  TECHNIQUE_GENERATION_JOB_TABLE,
   loadRecoverableGenerationJobs,
   updateGenerationJobStatus,
   expireStaleGenerationJobs,
@@ -280,6 +281,7 @@ export class TechniqueGenerationService {
     expectedSessionEpoch?: number | null;
     applyInventorySnapshot?: (items: TechniqueGenerationRuntimeInventoryItem[]) => Promise<void> | void;
     settleFailedRefund?: () => Promise<boolean>;
+    bypassInventoryCheck?: boolean;
   }): Promise<GenerationJobResult> {
     const pool = this.pool;
     if (!pool) {
@@ -298,7 +300,7 @@ export class TechniqueGenerationService {
     }
     const expectedRuntimeOwnerId = normalizeTechniqueGenerationOwnerId(params.expectedRuntimeOwnerId);
     const expectedSessionEpoch = normalizeTechniqueGenerationSessionEpoch(params.expectedSessionEpoch);
-    if (!expectedRuntimeOwnerId || expectedSessionEpoch === null || typeof params.applyInventorySnapshot !== 'function') {
+    if (!params.bypassInventoryCheck && (!expectedRuntimeOwnerId || expectedSessionEpoch === null || typeof params.applyInventorySnapshot !== 'function')) {
       return { success: false, error: '玩家資產持久化上下文不可用', errorCode: 'PERSISTENCE_CONTEXT_UNAVAILABLE' };
     }
 
@@ -318,36 +320,68 @@ export class TechniqueGenerationService {
         totalBudget: calculateGeneratedTechniqueTotalBudget('internal', roll.grade, roll.realmLv, budgetPercent),
       };
     });
-    const beginResult = await beginDurableTechniqueGenerationBatch(pool, {
-      batchId: identity.batchId,
-      playerId: params.playerId,
-      jobs: jobs.map((job) => ({
-        id: job.jobId,
-        playerId: params.playerId,
-        requestedCategory: 'internal',
-        rolledGrade: job.grade,
-        rolledRealmLv: job.realmLv,
-        playerContext: sanitizedContext,
-        itemSpend: 1,
-        budgetPercent: job.budgetPercent,
-        totalBudget: job.totalBudget,
-      })),
-      expectedRuntimeOwnerId,
-      expectedSessionEpoch,
-    });
-    if (!beginResult.ok) {
-      if (beginResult.errorCode === 'ACTIVE_JOB_EXISTS') {
-        return { success: false, error: '請先處理未完成的功法領悟', errorCode: 'ACTIVE_JOB_EXISTS' };
+    if (params.bypassInventoryCheck) {
+      // GM 路径：跳过 inventory 事务与玩家 session fence，直接 INSERT pending job 行
+      try {
+        await pool.query('BEGIN');
+        for (const job of jobs) {
+          await pool.query(
+            `INSERT INTO ${TECHNIQUE_GENERATION_JOB_TABLE} (
+              id, player_id, status, requested_category,
+              rolled_grade, rolled_realm_lv, player_context, item_spend,
+              rolled_budget_percent, rolled_total_budget,
+              item_consumed, consumed_at
+            ) VALUES ($1,$2,'pending','internal',$3,$4,$5,$6,$7,$8,true,NOW())
+            ON CONFLICT (id) DO NOTHING`,
+            [
+              job.jobId,
+              params.playerId,
+              job.grade,
+              job.realmLv,
+              sanitizedContext,
+              1,
+              job.budgetPercent,
+              job.totalBudget,
+            ],
+          );
+        }
+        await pool.query('COMMIT');
+      } catch (error) {
+        await pool.query('ROLLBACK');
+        throw error;
       }
-      return { success: false, error: '悟道玉簡不足', errorCode: 'ITEM_NOT_ENOUGH' };
-    }
-    try {
-      await params.applyInventorySnapshot(beginResult.inventoryItems);
-    } catch (error: unknown) {
-      this.logger.error(
-        `批量內功扣除玉簡已提交但運行態同步失敗 playerId=${params.playerId} batchId=${identity.batchId}`,
-        error instanceof Error ? error.stack : String(error),
-      );
+    } else {
+      const beginResult = await beginDurableTechniqueGenerationBatch(pool, {
+        batchId: identity.batchId,
+        playerId: params.playerId,
+        jobs: jobs.map((job) => ({
+          id: job.jobId,
+          playerId: params.playerId,
+          requestedCategory: 'internal',
+          rolledGrade: job.grade,
+          rolledRealmLv: job.realmLv,
+          playerContext: sanitizedContext,
+          itemSpend: 1,
+          budgetPercent: job.budgetPercent,
+          totalBudget: job.totalBudget,
+        })),
+        expectedRuntimeOwnerId,
+        expectedSessionEpoch,
+      });
+      if (!beginResult.ok) {
+        if (beginResult.errorCode === 'ACTIVE_JOB_EXISTS') {
+          return { success: false, error: '請先處理未完成的功法領悟', errorCode: 'ACTIVE_JOB_EXISTS' };
+        }
+        return { success: false, error: '悟道玉簡不足', errorCode: 'ITEM_NOT_ENOUGH' };
+      }
+      try {
+        await params.applyInventorySnapshot(beginResult.inventoryItems);
+      } catch (error: unknown) {
+        this.logger.error(
+          `批量內功扣除玉簡已提交但運行態同步失敗 playerId=${params.playerId} batchId=${identity.batchId}`,
+          error instanceof Error ? error.stack : String(error),
+        );
+      }
     }
     setImmediate(() => {
       this.executeBatchGeneration(identity.batchId, {

@@ -16,6 +16,7 @@ import { NativeGmMailService } from './native/native-gm-mail.service';
 import { NativeGmMapQueryService } from './native/native-gm-map-query.service';
 import { NativeGmMapRuntimeQueryService } from './native/native-gm-map-runtime-query.service';
 import { NativeGmGeneratedTechniqueService } from './native/native-gm-generated-technique.service';
+import { NativeGmTechniqueGenerationService } from './native/native-gm-technique-generation.service';
 import { NativeGmMarketTradeService } from './native/native-gm-market-trade.service';
 import { NativeGmStateQueryService } from './native/native-gm-state-query.service';
 import { NativeGmPlayerService } from './native/native-gm-player.service';
@@ -82,6 +83,7 @@ export const NATIVE_HTTP_PROVIDERS = [
   NativeGmMapQueryService,
   NativeGmMapRuntimeQueryService,
   NativeGmGeneratedTechniqueService,
+  NativeGmTechniqueGenerationService,
   NativeGmMarketTradeService,
   NativeGmStateQueryService,
   NativeGmPlayerService,
