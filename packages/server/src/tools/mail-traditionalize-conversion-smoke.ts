@@ -10,6 +10,13 @@
  *     已台湾标准的 system 行同样跳过且 hash 一致（active 与 archive 两表都覆盖）。
  *   - archive 表时间戳列不被触碰：player_mail_archive 只有 archived_at（无 updated_at），
  *     转换前后 archived_at 必须完全一致。
+ *   - CAS 漂移全有或全无：构造「分类命中但 UPDATE 谓词失配」的行（sender_label 置空串，
+ *     扫描期归一化为 null 与存储值 '' 在 IS NOT DISTINCT FROM 下失配 → 命中 0 行）→
+ *     apply 必须整体回滚：两张表数据保持简体原状、备份表与标记表不残留（事务内 CREATE
+ *     一并回滚）、结果 ok:false；解除投毒后干净重跑完整成功。
+ *   - 残余简体 > 0 抛出路径未在 smoke 构造：残余检测与分类/转换共用同一 JS 口径，
+ *     成功 UPDATE 写入的值即转换器输出，仅当出现保护词表之外的新 opencc 非幂等对才会
+ *     触发，无法廉价确定性构造；该路径与 CAS 漂移共用同一外层 throw→rollback 机制。
  *   - 不触碰 player_mail_attachment(_archive) / metadata_jsonb。
  *
  * 隔离与自清理：创建独占 schema（smoke_<pid>_<ts>），冒烟连接池与转换服务经
@@ -282,6 +289,52 @@ async function main(): Promise<void> {
       assert.ok(dryMailTable && dryArchiveTable, 'dry-run breakdown 应含两张表');
       assert.equal(dryArchiveTable.convertedRows, 1, 'dry-run 应报出 archive 表 1 行可转换');
 
+      // ---- CAS 漂移案例：分类命中但 UPDATE 谓词失配 → 整体抛出回滚（全有或全无）----
+      // 确定性构造（无并发时序依赖）：把 sys:1 的 sender_label 置为空串。
+      // 扫描期 normalizeNullableString('') 归一化为 null 参与 CAS 快照，
+      // UPDATE 谓词 sender_label IS NOT DISTINCT FROM NULL 对存储值 '' 判 false
+      // → 命中 0 行 → 抛出 player_mail_convert_row_drift，外层回滚整个事务。
+      await pool.query(
+        `UPDATE ${quoteIdentifier(schemaName)}.player_mail SET sender_label = '' WHERE mail_id = $1`,
+        ['smoke:mail:sys:1'],
+      );
+      const driftRun = await conversion.run({ mode: 'apply' });
+      assert.equal(driftRun.ok, false, 'CAS 漂移必须以 ok:false 返回');
+      assert.equal(driftRun.matchedRows, 7, '失败批次仍应报告扫描命中数');
+      assert.equal(driftRun.convertedRows, 0, 'CAS 漂移后不得报告任何已转换行');
+      assert.equal(driftRun.batchId, null, '失败批次不得生成 batchId');
+      assert.equal(driftRun.tables.length, 0, '失败批次不得产出逐表 breakdown（抛出点之前的表也不返回）');
+      assert.ok(
+        driftRun.errors.some((entry) => entry.includes('player_mail_convert_row_drift:smoke:mail:sys:1')),
+        `错误应含 CAS 漂移明细，实际：${JSON.stringify(driftRun.errors)}`,
+      );
+
+      // 回滚断言：两张表全部保持转换前简体原状（player_mail 已开始的更新也必须回退）
+      for (const row of testRows.filter((entry) => entry.expectsConvert)) {
+        const result = await pool.query(
+          `SELECT title, body FROM ${quoteIdentifier(schemaName)}.${row.table} WHERE mail_id = $1`,
+          [row.mailId],
+        );
+        assert.equal(result.rows[0].title, row.title, `${row.table}:${row.mailId} 回滚后 title 应保持简体原状`);
+        assert.equal(result.rows[0].body, row.body, `${row.table}:${row.mailId} 回滚后 body 应保持简体原状`);
+      }
+
+      // 回滚断言：备份表与标记表都不得残留（事务内 CREATE TABLE 随 ROLLBACK 一并消失）
+      for (const tableName of [
+        'player_mail_pre_tw_backup',
+        'player_mail_archive_pre_tw_backup',
+        'player_mail_conversion_meta',
+      ]) {
+        const reg = await pool.query('SELECT to_regclass($1::text) AS reg', [`${schemaName}.${tableName}`]);
+        assert.equal(reg.rows[0].reg, null, `${tableName} 不得在失败事务后残留`);
+      }
+
+      // 解除投毒后干净重跑：同一批数据完整转换成功（全有或全无的可恢复性）
+      await pool.query(
+        `UPDATE ${quoteIdentifier(schemaName)}.player_mail SET sender_label = $2 WHERE mail_id = $1`,
+        ['smoke:mail:sys:1', '服务器系统'],
+      );
+
       // 第一轮 apply
       const firstRun = await conversion.run({ mode: 'apply' });
       assert.equal(firstRun.ok, true);
@@ -424,6 +477,12 @@ async function main(): Promise<void> {
                 convertedRows: table.convertedRows,
               })),
             },
+            driftCase: {
+              ok: driftRun.ok,
+              convertedRows: driftRun.convertedRows,
+              errors: driftRun.errors,
+              rollbackVerified: true,
+            },
             firstRun: {
               matchedRows: firstRun.matchedRows,
               convertedRows: firstRun.convertedRows,
@@ -443,7 +502,7 @@ async function main(): Promise<void> {
               residualSimplifiedRows: secondRun.residualSimplifiedRows,
               backupTablesRecreated: secondRun.tables.filter((table) => table.backupTableCreated).length,
             },
-            answers: '双表（player_mail + player_mail_archive）系统邮件（sender_type=system）首轮两段式转换 3 行（词级+字级）、跳过行字节级不变、archive 时间戳列不被触碰、二次执行幂等 0 转换且备份表不重建；非 system 来源行绝不更新',
+            answers: '双表（player_mail + player_mail_archive）系统邮件（sender_type=system）首轮两段式转换 3 行（词级+字级）、跳过行字节级不变、archive 时间戳列不被触碰、二次执行幂等 0 转换且备份表不重建；CAS 漂移（分类命中但 UPDATE 谓词失配）整体回滚 ok:false 且备份/标记零残留、解除投毒后重跑成功；非 system 来源行绝不更新',
             excludes: '不证明真实生产数据迁移、gm_audit_log 持久化可见性或跨节点并发写',
           },
           null,

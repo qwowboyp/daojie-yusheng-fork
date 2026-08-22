@@ -11,12 +11,14 @@
  * 再字级（opencc-js Converter({from:'cn',to:'tw'}) 收尾），转换前对台湾标准保护词
  * （濃郁 / 馥郁 / 岩）做哨兵掩码，避免 opencc 非幂等误转。两张表共用同一套检测与转换口径。
  *
- * apply 流程（单事务覆盖两张表）：每表建独立备份表
+ * apply 流程（单事务覆盖两张表，全有或全无）：每表建独立备份表
  * （player_mail_pre_tw_backup / player_mail_archive_pre_tw_backup，已存在则跳过不重建）→
- * 对 JS 检测到简体内容的系统邮件逐行 UPDATE（CAS 防漂移，漂移行记失败并继续）→
- * 跳过行回读字节级 hash 验证 → 回读残余简体系统邮件数（与转换相同的 JS 检测口径）→
+ * 对 JS 检测到简体内容的系统邮件逐行 UPDATE（CAS 防漂移：任一行漂移即抛出）→
+ * 跳过行回读字节级 hash 验证（任一失败即抛出）→ 回读残余简体系统邮件数
+ * （与转换相同的 JS 检测口径，> 0 即抛出）。任何一处抛出都让外层 catch 回滚整个事务：
+ * 两张表的数据、备份表与转换标记全部不落库，结果以 ok:false 返回。
  * 每表写固定转换标记（gm_audit_log 审计 + player_mail_conversion_meta 标记表，
- * conversion_key = <conversion_id>:<table>）。
+ * conversion_key = <conversion_id>:<table>），仅在两表全部成功后随 COMMIT 一并落库。
  * 二次执行：JS 检测不到任何可转换行 → convertedRows=0、备份表不重建、不重复写标记，幂等。
  */
 import { Inject, Injectable, Logger, Optional, ServiceUnavailableException } from '@nestjs/common';
@@ -89,7 +91,9 @@ export interface MailSnapshotTraditionalizeTableResult {
   residualSimplifiedRows: number;
 }
 
-export interface MailSnapshotTraditionalizeRunResult extends GmCompatConversionRunResult {
+export interface MailSnapshotTraditionalizeRunResult extends Omit<GmCompatConversionRunResult, 'ok'> {
+  /** dry-run 与成功 apply 恒为 true；apply 失败（整体回滚两表）时为 false。 */
+  ok: boolean;
   batchId: string | null;
   /** 两张表的逐表明细（player_mail / player_mail_archive）。 */
   tables: MailSnapshotTraditionalizeTableResult[];
@@ -252,7 +256,10 @@ export class MailSnapshotTraditionalizeConversion {
 
       await client.query('COMMIT');
     } catch (error) {
+      // 全有或全无：任一表 CAS 漂移 / 跳过行验证失败 / 残余简体 > 0 抛出后，
+      // 整体回滚两张表（数据、备份表、转换标记全部不落库），结果以 ok:false 返回。
       await client.query('ROLLBACK').catch(() => undefined);
+      result.ok = false;
       result.convertedRows = 0;
       result.failedRows = Math.max(result.failedRows, 1);
       result.errors.push(error instanceof Error ? error.message : String(error));
@@ -277,7 +284,8 @@ export class MailSnapshotTraditionalizeConversion {
 
   /**
    * 单表转换管线：建备份表 → 分类（待转/跳过）→ 逐行 CAS 更新 → 跳过行字节级回读验证 →
-   * 残余简体回读计数。失败不抛出（记入 result.errors 并继续），由调用方事务统一提交或回滚。
+   * 残余简体回读计数。全有或全无：CAS 漂移、跳过行验证失败、残余简体 > 0 任一发生即抛出，
+   * 由外层 run() 统一回滚整个事务（两张表一起回退），绝不部分提交。
    */
   private async convertSingleTable(
     client: PoolClient,
@@ -331,31 +339,31 @@ export class MailSnapshotTraditionalizeConversion {
       });
     }
 
-    // 逐行 CAS 更新（WHERE 携带原文快照；漂移行记为失败并继续处理后续行，其余成功行随事务一并提交）
+    // 逐行 CAS 更新（WHERE 携带原文快照）。任一行漂移（更新命中 0 行）即抛出：
+    // 行内容在扫描后被并发改动，继续转换会造成部分提交，必须整体回滚。
     let convertedCount = 0;
     for (const entry of pending) {
       const updated = await this.updateSystemMailRow(client, descriptor, entry);
       if ((updated.rowCount ?? 0) !== 1) {
-        result.failedRows += 1;
-        result.errors.push(`${descriptor.tableName}_convert_row_drift:${entry.mailId}`);
-        continue;
+        throw new Error(
+          `${descriptor.tableName}_convert_row_drift:${entry.mailId}`
+          + '（CAS 防漂移：行内容与扫描快照不一致，UPDATE 命中 0 行，本次转换整体回滚）',
+        );
       }
       convertedCount += 1;
     }
     tableResult.convertedRows = convertedCount;
 
     // 跳过行回读字节级验证（byte-identical：非 system 行 + 已台湾标准行）
-    const skipVerifyFailed = await this.verifySkippedRows(client, descriptor, skipped, result);
-    result.failedRows += skipVerifyFailed;
-    if (skipVerifyFailed > 0) {
-      result.errors.push(`${descriptor.tableName}_skip_rows_not_byte_identical:${skipVerifyFailed}`);
-    }
+    await this.verifySkippedRows(client, descriptor, skipped);
 
     // 回读验证：该表残余简体系统邮件必须为 0（与转换相同的 JS 检测口径）
     tableResult.residualSimplifiedRows = await this.countResidualSimplifiedRows(client, descriptor);
     if (tableResult.residualSimplifiedRows > 0) {
-      result.failedRows += tableResult.residualSimplifiedRows;
-      result.errors.push(`${descriptor.tableName}_residual_simplified_rows:${tableResult.residualSimplifiedRows}`);
+      throw new Error(
+        `${descriptor.tableName}_residual_simplified_rows:${tableResult.residualSimplifiedRows}`
+        + '（转换后仍检测到简体系统邮件，违反转换后不变量，本次转换整体回滚）',
+      );
     }
 
     return tableResult;
@@ -489,14 +497,14 @@ export class MailSnapshotTraditionalizeConversion {
     );
   }
 
+  /** 跳过行字节级回读验证：任一行缺失或 hash 不一致即抛出（整体回滚）。 */
   private async verifySkippedRows(
     client: PoolClient,
     descriptor: MailTableDescriptor,
     skipped: SkipRow[],
-    result: MailSnapshotTraditionalizeRunResult,
-  ): Promise<number> {
+  ): Promise<void> {
     if (skipped.length === 0) {
-      return 0;
+      return;
     }
     const rows = await client.query(
       `SELECT mail_id,
@@ -512,7 +520,6 @@ export class MailSnapshotTraditionalizeConversion {
     const rowByMailId = new Map(
       rows.rows.map((row) => [normalizeRequiredString(row.mail_id), row]),
     );
-    let failed = 0;
     for (const entry of skipped) {
       const row = rowByMailId.get(entry.mailId);
       const afterHash = row
@@ -523,11 +530,12 @@ export class MailSnapshotTraditionalizeConversion {
         )
         : '';
       if (!row || afterHash !== entry.contentHashAfter) {
-        failed += 1;
-        result.errors.push(`${descriptor.tableName}_skip_verify_failed:${entry.mailId}`);
+        throw new Error(
+          `${descriptor.tableName}_skip_verify_failed:${entry.mailId}`
+          + '（跳过行字节级验证失败：内容在扫描后被并发改动或行已消失，本次转换整体回滚）',
+        );
       }
     }
-    return failed;
   }
 
   private async countResidualSimplifiedRows(
