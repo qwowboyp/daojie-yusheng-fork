@@ -324,6 +324,12 @@
       overflow: hidden;
     }
 
+    /* 功法彈窗副標題（凡胎 · 凡階 · 入門 · 第 X/Y 層）放大，避免 zoom 0.8 後過小。 */
+    .detail-modal-card.detail-modal--technique .detail-modal-subtitle {
+      font-size: var(--font-size-role-body-14);
+      line-height: 1.5;
+    }
+
     .detail-modal-card.detail-modal--technique-generation {
       width: min(1180px, calc(100vw - 24px));
       height: min(84dvh, calc(100dvh - var(--detail-modal-padding-top) - var(--detail-modal-padding-bottom) - (var(--detail-modal-safe-gap) * 2) - 12px));
