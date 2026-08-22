@@ -333,7 +333,7 @@ export class TechniqueGenerationService {
               rolled_grade, rolled_realm_lv, player_context, item_spend,
               rolled_budget_percent, rolled_total_budget,
               item_consumed, consumed_at
-            ) VALUES ($1,$2,'pending','internal',$3,$4,$5,0,$6,$7,$8,false,NULL)
+            ) VALUES ($1,$2,'pending','internal',$3,$4,$5,$6,$7,$8,false,NULL)
             ON CONFLICT (id) DO NOTHING`,
             [
               job.jobId,
@@ -341,6 +341,9 @@ export class TechniqueGenerationService {
               job.grade,
               job.realmLv,
               sanitizedContext,
+              // GM bypass path: 玉簡未扣，audit 應記為 0/false/NULL。
+              // 用參數而非常量字面值 0，避免 VALUES 數量與欄位不一致（曾誤把 0 直接寫進 SQL 觸發 500）。
+              0,
               job.budgetPercent,
               job.totalBudget,
             ],
