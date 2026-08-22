@@ -33,6 +33,7 @@ import {
 } from '../../../ui/floating-panel-preferences';
 import { validateDisplayName, validatePassword, validateRoleName } from '../../../ui/account-rules';
 import { checkDisplayNameAvailability, getAccessToken, updateDisplayName, updatePassword, updateRoleName } from '../../../ui/auth-api';
+import { BGM_VOLUME_CHANGED_EVENT, BGM_VOLUME_STEP, getBgmVolume, isBgmEnabled, setBgmVolume, toggleBgm } from '../../../ui/bgm-player';
 import { readOfflineGainReportsFromBrowser, readPlayerStatisticTotalsFromBrowser } from '../../../offline-gain-storage';
 import {
   createPlayerRuntimeImageResource,
@@ -523,6 +524,8 @@ const UiTab = memo(function UiTab() {
   const [fontOffset, setFontOffset] = useState(() => getUiStyleConfig().globalFontOffset);
   const [uiScale, setUiScale] = useState(() => getUiStyleConfig().uiScale);
   const [floatingPanels, setFloatingPanels] = useState(() => getFloatingPanelPreferences());
+  const [bgmEnabled, setBgmEnabled] = useState(() => isBgmEnabled());
+  const [bgmVolume, setBgmVolumeState] = useState(() => getBgmVolume());
   const [status, setStatus] = useState(t('settings.ui.status.saved-local', undefined));
 
   const handleColorMode = useCallback((mode: UiColorMode) => {
@@ -580,6 +583,29 @@ const UiTab = memo(function UiTab() {
     setStatus(enabled ? '懸浮窗已開啟' : '懸浮窗已關閉，可在這裡重新開啟');
   }, []);
 
+  const handleBgmToggle = useCallback((on: boolean) => {
+    if (isBgmEnabled() !== on) {
+      toggleBgm();
+    }
+    setBgmEnabled(on);
+    setStatus(on ? '背景音樂已開啟' : '背景音樂已關閉');
+  }, []);
+
+  // 以 BGM_VOLUME_STEP（10%）為刻度步進音量；越界由 setBgmVolume 收斂
+  const handleBgmVolumeStep = useCallback((direction: 1 | -1) => {
+    const next = setBgmVolume(getBgmVolume() + direction * BGM_VOLUME_STEP);
+    setBgmVolumeState(next);
+    setStatus(`背景音樂音量已調整為 ${Math.round(next * 100)}%`);
+  }, []);
+
+  useEffect(() => {
+    const handleBgmVolumeChange = (event: Event) => {
+      setBgmVolumeState((event as CustomEvent<{ volume: number }>).detail.volume);
+    };
+    window.addEventListener(BGM_VOLUME_CHANGED_EVENT, handleBgmVolumeChange);
+    return () => window.removeEventListener(BGM_VOLUME_CHANGED_EVENT, handleBgmVolumeChange);
+  }, []);
+
   return (
     <>
       <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
@@ -634,6 +660,50 @@ const UiTab = memo(function UiTab() {
               <span>{Math.round(uiScale * 100)}%</span>
             </div>
             <div className="settings-ui-level-preview settings-ui-level-preview--title ui-data-table-preview ui-data-table-preview--title">{t('settings.ui.preview.scale', undefined)}</div>
+          </div>
+        </div>
+        <div className="account-settings-status ui-status-text">{status}</div>
+      </div>
+      <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
+        <div className="panel-section-title">背景音樂</div>
+        <div className="settings-ui-copy ui-form-copy">調整遊戲背景音樂的開關與音量，設定會自動保存在當前設備。</div>
+        <div className="settings-performance-card ui-card-list">
+          <div className="settings-performance-row ui-data-table-row">
+            <div className="settings-performance-meta ui-data-table-meta">
+              <div className="settings-performance-name ui-data-table-name">音樂開關</div>
+              <div className="settings-performance-desc ui-data-table-desc">關閉後停止播放背景音樂。</div>
+            </div>
+            <div className="settings-performance-actions ui-inline-actions-end-wrap">
+              <button className={`small-btn ghost${!bgmEnabled ? ' active' : ''}`} type="button" aria-pressed={!bgmEnabled ? 'true' : 'false'} onClick={() => handleBgmToggle(false)}>關</button>
+              <button className={`small-btn ghost${bgmEnabled ? ' active' : ''}`} type="button" aria-pressed={bgmEnabled ? 'true' : 'false'} onClick={() => handleBgmToggle(true)}>開</button>
+            </div>
+          </div>
+          <div className="settings-performance-row ui-data-table-row">
+            <div className="settings-performance-meta ui-data-table-meta">
+              <div className="settings-performance-name ui-data-table-name">音量</div>
+              <div className="settings-performance-desc ui-data-table-desc">以 10% 為刻度調整背景音樂音量。</div>
+            </div>
+            <div className="settings-performance-actions ui-inline-actions-end-wrap settings-performance-actions--numeric settings-bgm-volume-control">
+              <button
+                className="small-btn ghost"
+                type="button"
+                disabled={bgmVolume <= 0}
+                aria-label="背景音樂音量減少10%"
+                onClick={() => handleBgmVolumeStep(-1)}
+              >
+                -
+              </button>
+              <span className="settings-bgm-volume-value">{Math.round(bgmVolume * 100)}%</span>
+              <button
+                className="small-btn ghost"
+                type="button"
+                disabled={bgmVolume >= 1}
+                aria-label="背景音樂音量增加10%"
+                onClick={() => handleBgmVolumeStep(1)}
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
         <div className="account-settings-status ui-status-text">{status}</div>

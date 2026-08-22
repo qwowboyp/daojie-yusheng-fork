@@ -6,28 +6,41 @@
  * 等到第一次 pointerdown/keydown/touchstart 再真正开始播放。
  */
 
-import { BGM_STORAGE_KEY } from '@mud/shared';
+import { BGM_STORAGE_KEY, BGM_VOLUME_STORAGE_KEY } from '@mud/shared';
 import { t } from './i18n';
 
 /** BGM 资源地址（Vite public 目录，部署后由 nginx 静态伺服）。 */
 const BGM_SRC = '/bgm/gameBGM-01.mp3';
 
-/** BGM 音量（0~1），固定值；如需音量调节再扩展。 */
-const BGM_VOLUME = 0.5;
+/** BGM 預設音量（0~1），未設定過音量偏好時使用。 */
+export const DEFAULT_BGM_VOLUME = 0.5;
+
+/** BGM 音量調整刻度（0~1），對應 UI 上的 10%。 */
+export const BGM_VOLUME_STEP = 0.1;
 
 /** BGM 开关状态变更事件名，供 UI 组件订阅同步按钮状态。 */
 export const BGM_STATE_CHANGED_EVENT = 'bgm-player-state-changed';
+
+/** BGM 音量变更事件名，供 UI 组件订阅同步音量显示。detail 携带 { volume }（0~1）。 */
+export const BGM_VOLUME_CHANGED_EVENT = 'bgm-player-volume-changed';
 
 /** 音频元素单例。 */
 let audio: HTMLAudioElement | null = null;
 /** 当前是否开启 BGM（偏好值，不代表一定在播放）。 */
 let enabled = true;
+/** 当前 BGM 音量（0~1）。 */
+let volume = DEFAULT_BGM_VOLUME;
 /** 是否已完成初始化。 */
 let initialized = false;
 
 /** 读取当前 BGM 开启偏好。 */
 export function isBgmEnabled(): boolean {
   return enabled;
+}
+
+/** 读取当前 BGM 音量（0~1）。 */
+export function getBgmVolume(): number {
+  return volume;
 }
 
 /**
@@ -45,6 +58,7 @@ export function initializeBgmPlayer(): void {
     // 通知已掛載的按鈕（登入畫面 / HUD React 按鈕）同步實際偏好，避免初始顯示與持久化不一致
     window.dispatchEvent(new CustomEvent<{ enabled: boolean }>(BGM_STATE_CHANGED_EVENT, { detail: { enabled } }));
   }
+  volume = readStoredVolume();
 
   const tryStart = () => {
     window.removeEventListener('pointerdown', tryStart);
@@ -57,6 +71,21 @@ export function initializeBgmPlayer(): void {
   window.addEventListener('pointerdown', tryStart);
   window.addEventListener('keydown', tryStart);
   window.addEventListener('touchstart', tryStart);
+}
+
+/** 设置 BGM 音量（0~1），越界值会被收敛并取整到整数百分比；立即套用到播放中的音频并持久化偏好。 */
+export function setBgmVolume(value: number): number {
+  const normalized = Number.isFinite(value)
+    ? Math.max(0, Math.min(1, value))
+    : DEFAULT_BGM_VOLUME;
+  // 取整到整数百分比，避免 -/+ 步进累积浮点误差（如 0.6000000000000001）
+  volume = Math.round(normalized * 100) / 100;
+  if (audio) {
+    audio.volume = normalized;
+  }
+  persistVolume(volume);
+  window.dispatchEvent(new CustomEvent<{ volume: number }>(BGM_VOLUME_CHANGED_EVENT, { detail: { volume } }));
+  return volume;
 }
 
 /** 切换 BGM 开关，返回切换后的状态，并派发 BGM_STATE_CHANGED_EVENT 供 UI 同步。 */
@@ -104,7 +133,7 @@ function ensureAudio(): HTMLAudioElement {
   if (!audio) {
     audio = new Audio(BGM_SRC);
     audio.loop = true;
-    audio.volume = BGM_VOLUME;
+    audio.volume = volume;
     audio.preload = 'auto';
   }
   return audio;
@@ -123,6 +152,28 @@ function readStoredEnabled(): boolean {
 function persistEnabled(value: boolean): void {
   try {
     localStorage.setItem(BGM_STORAGE_KEY, value ? '1' : '0');
+  } catch {
+    // 忽略：localStorage 被禁用时不影响播放功能本身
+  }
+}
+
+/** 读取持久化音量；未设置过、越界或本地存储不可用时回退默认音量。 */
+function readStoredVolume(): number {
+  try {
+    const raw = Number.parseInt(localStorage.getItem(BGM_VOLUME_STORAGE_KEY) ?? '', 10);
+    if (!Number.isFinite(raw) || raw < 0 || raw > 100) {
+      return DEFAULT_BGM_VOLUME;
+    }
+    return raw / 100;
+  } catch {
+    return DEFAULT_BGM_VOLUME;
+  }
+}
+
+/** 持久化音量偏好（存 0~100 整数百分比）；本地存储不可用时静默忽略。 */
+function persistVolume(value: number): void {
+  try {
+    localStorage.setItem(BGM_VOLUME_STORAGE_KEY, `${Math.round(value * 100)}`);
   } catch {
     // 忽略：localStorage 被禁用时不影响播放功能本身
   }

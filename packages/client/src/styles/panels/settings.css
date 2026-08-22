@@ -185,6 +185,14 @@
       white-space: nowrap;
     }
 
+    .settings-bgm-volume-value {
+      min-width: 44px;
+      text-align: center;
+      font-size: var(--font-size-role-body-12);
+      color: var(--ink-grey);
+      white-space: nowrap;
+    }
+
     .settings-resource-reload-shell {
       gap: 12px;
     }
