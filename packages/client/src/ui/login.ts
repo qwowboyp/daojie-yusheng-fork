@@ -22,6 +22,7 @@ import {
 import { AUTH_API_BASE_PATH } from '../constants/api';
 import { QQ_GROUP_NUMBER } from '../main-dom-elements';
 import { validateAccountName, validateDisplayName, validatePassword, validateRoleName } from './account-rules';
+import { bindBgmToggleButton } from './bgm-player';
 import { t } from './i18n';
 
 /** AuthMode：模式枚举。 */
@@ -99,6 +100,7 @@ export class LoginUI {
 
 
   constructor(private socket: SocketManager) {
+    bindBgmToggleButton(document.getElementById('login-toggle-bgm') as HTMLButtonElement | null);
     this.loginTab.addEventListener('click', () => this.setMode('login'));
     this.registerTab.addEventListener('click', () => this.setMode('register'));
     this.form.addEventListener('submit', (event) => {

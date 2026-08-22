@@ -7,6 +7,7 @@
  */
 
 import { BGM_STORAGE_KEY } from '@mud/shared';
+import { t } from './i18n';
 
 /** BGM 资源地址（Vite public 目录，部署后由 nginx 静态伺服）。 */
 const BGM_SRC = '/bgm/gameBGM-01.mp3';
@@ -38,7 +39,12 @@ export function initializeBgmPlayer(): void {
     return;
   }
   initialized = true;
-  enabled = readStoredEnabled();
+  const stored = readStoredEnabled();
+  if (stored !== enabled) {
+    enabled = stored;
+    // 通知已掛載的按鈕（登入畫面 / HUD React 按鈕）同步實際偏好，避免初始顯示與持久化不一致
+    window.dispatchEvent(new CustomEvent<{ enabled: boolean }>(BGM_STATE_CHANGED_EVENT, { detail: { enabled } }));
+  }
 
   const tryStart = () => {
     window.removeEventListener('pointerdown', tryStart);
@@ -64,6 +70,27 @@ export function toggleBgm(): boolean {
   }
   window.dispatchEvent(new CustomEvent<{ enabled: boolean }>(BGM_STATE_CHANGED_EVENT, { detail: { enabled } }));
   return enabled;
+}
+
+/**
+ * 将一个音乐开关按钮绑定到 BGM 播放器：点击切换、样式/无障碍状态/提示文字随状态同步。
+ * 供登入画面等非 React 静态按钮使用；React 按钮由组件自身管理状态。
+ */
+export function bindBgmToggleButton(button: HTMLButtonElement | null): void {
+  if (!button) {
+    return;
+  }
+  const sync = () => {
+    button.classList.toggle('active', enabled);
+    button.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+    button.title = t(enabled ? 'shell.bgm.title.on' : 'shell.bgm.title.off', undefined);
+  };
+  sync();
+  button.addEventListener('click', () => {
+    toggleBgm();
+    sync();
+  });
+  window.addEventListener(BGM_STATE_CHANGED_EVENT, sync);
 }
 
 /** 启动播放；资源不可用或被自动播放政策拦截时静默失败，等待下次交互/切换重试。 */
