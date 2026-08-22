@@ -25,6 +25,9 @@ export const UI_STYLE_STORAGE_KEY = 'mud-ui-style-config:v1';
 /** GM 管理台最近一次可用密码的本地存储键。 */
 export const GM_PASSWORD_STORAGE_KEY = 'mud:gm-password:v1';
 
+/** BGM 開關偏好的本地存儲鍵（1=開啟、0=關閉）。 */
+export const BGM_STORAGE_KEY = 'mud:bgm-enabled:v1';
+
 /** 支持的语言 locale 白名单（已收敛为单一繁体中文）。 */
 export const SUPPORTED_LOCALES = ['zh-TW'] as const;
 

@@ -3,10 +3,11 @@
  *
  * 维护时应把它视为前端表现层：只组织视图和用户意图，不保存会与主运行态冲突的真源。
  */
-import { StrictMode, memo } from 'react';
+import { StrictMode, memo, useCallback, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { createRoot, type Root } from 'react-dom/client';
 import { t } from '../../ui/i18n';
+import { BGM_STATE_CHANGED_EVENT, isBgmEnabled, toggleBgm } from '../../ui/bgm-player';
 import { createExternalStore } from '../stores/create-external-store';
 import { useExternalStoreSnapshot } from '../hooks/use-external-store-snapshot';
 
@@ -222,6 +223,20 @@ const HudStatusView = memo(function HudStatusView() {
 });
 
 const HudCornerActions = memo(function HudCornerActions() {
+  const [bgmEnabled, setBgmEnabled] = useState(isBgmEnabled());
+
+  useEffect(() => {
+    const handleBgmChange = (event: Event) => {
+      setBgmEnabled((event as CustomEvent<{ enabled: boolean }>).detail.enabled);
+    };
+    window.addEventListener(BGM_STATE_CHANGED_EVENT, handleBgmChange);
+    return () => window.removeEventListener(BGM_STATE_CHANGED_EVENT, handleBgmChange);
+  }, []);
+
+  const handleToggleBgm = useCallback(() => {
+    setBgmEnabled(toggleBgm());
+  }, []);
+
   return (
     <>
       <button id="hud-open-settings" className="hud-corner-btn" type="button" data-i18n="shell.open-settings">
@@ -235,6 +250,17 @@ const HudCornerActions = memo(function HudCornerActions() {
       </button>
       <button id="hud-open-chronicle" className="hud-corner-btn" type="button" data-i18n="shell.open-chronicle">
         {t('shell.open-chronicle', undefined)}
+      </button>
+      <button
+        id="hud-toggle-bgm"
+        className={`hud-corner-btn${bgmEnabled ? ' active' : ''}`}
+        type="button"
+        aria-pressed={bgmEnabled ? 'true' : 'false'}
+        data-i18n="shell.bgm"
+        title={bgmEnabled ? t('shell.bgm.title.on', undefined) : t('shell.bgm.title.off', undefined)}
+        onClick={handleToggleBgm}
+      >
+        {t('shell.bgm', undefined)}
       </button>
       <button id="hud-logout" className="hud-corner-btn danger" type="button" data-i18n="shell.logout">
         {t('shell.logout', undefined)}

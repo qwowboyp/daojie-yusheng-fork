@@ -709,6 +709,12 @@
       background: var(--surface-hover);
       border-color: rgba(17, 17, 17, 0.38);
     }
+    .hud-corner-btn.active {
+      background:
+        linear-gradient(180deg, rgba(214, 188, 142, 0.3), rgba(197, 60, 60, 0.1)),
+        var(--surface-muted-strong);
+      border-color: rgba(133, 68, 45, 0.45);
+    }
     .hud-corner-btn.danger {
       color: var(--stamp-red);
       background: rgba(197, 60, 60, 0.08);

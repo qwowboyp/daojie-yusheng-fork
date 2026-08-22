@@ -977,6 +977,9 @@ shell.action-subtitle,靜態HTML-主界面,常駐操作與技能切換,靜態 HT
 shell.attr-overview,靜態HTML-主界面,屬性總覽,靜態 HTML：packages/client/index.html
 shell.bag-scroll,靜態HTML-主界面,行囊錄,靜態 HTML：packages/client/index.html
 shell.bag-subtitle,靜態HTML-主界面,背包、裝備、功法、煉體與任務,靜態 HTML：packages/client/index.html
+shell.bgm,靜態HTML-主界面,音樂,靜態 HTML：packages/client/index.html
+shell.bgm.title.on,靜態HTML-主界面,點擊關閉音樂,靜態 HTML：packages/client/index.html
+shell.bgm.title.off,靜態HTML-主界面,點擊開啟音樂,靜態 HTML：packages/client/index.html
 shell.body-training,靜態HTML-主界面,煉體,靜態 HTML：packages/client/index.html
 shell.breakthrough,靜態HTML-主界面,突破,靜態 HTML：packages/client/index.html
 shell.chat-combat,靜態HTML-主界面,戰鬥,靜態 HTML：packages/client/index.html

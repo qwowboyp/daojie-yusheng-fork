@@ -45,6 +45,7 @@ import { GuidedTour } from './ui/guided-tour';
 import { startClientVersionReload } from './version-reload';
 import { mountReactUi } from './react-ui/app/mount';
 import { initializeUiStyleConfig } from './ui/ui-style-config';
+import { initializeBgmPlayer } from './ui/bgm-player';
 import { bindMainHighFrequencySocketEvents } from './main-high-frequency-socket-bindings';
 import { bindMainLowFrequencySocketEvents } from './main-low-frequency-socket-bindings';
 import { contentResolver } from './content/content-resolver';
@@ -604,6 +605,7 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
 
   options.mapRuntimeBridgeSource.resizeCanvas();
   options.uiStateSource.refreshZoomChrome();
+  initializeBgmPlayer();
   bindResponsiveViewportCss(options.windowRef);
   options.runtimeMonitorSource.initialize(options.initialMapPerformanceConfig.showFpsMonitor);
   options.mapRuntime.setRenderFrameObserver((frameAtMs) => {
