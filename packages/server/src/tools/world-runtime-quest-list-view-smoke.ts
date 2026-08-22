@@ -298,7 +298,7 @@ function testContentQuestFilesBindToNpcTemplates() {
     assert.ok(questSource, 'content quest should be indexed by quest id');
     assert.equal(questSource.giverNpcId, 'npc_old_gate_guard');
     assert.equal(questSource.giverMapId, 'yunlai_town');
-    assert.equal(questSource.quest.title, '初入云来镇');
+    assert.equal(questSource.quest.title, '初入雲來鎮');
     const totalQuestBindings = repository.list()
         .flatMap((template) => template.npcs)
         .reduce((sum, npc) => sum + npc.quests.length, 0);

@@ -145,7 +145,7 @@ async function verifyLocalLeaseDegradeAndRecover() {
   assert.equal(deleted, false);
   assert.equal(instance.meta.runtimeStatus, 'lease_degraded');
   assert.equal(instance.meta.status, 'active');
-  assert.ok(warnings.some((message) => message.includes('续租降级')));
+  assert.ok(warnings.some((message) => message.includes('續租降級')));
 
   await syncInstanceLease(runtime, 'public:expired_local_lease');
   assert.equal(instance.meta.runtimeStatus, 'leased');
@@ -315,7 +315,7 @@ async function verifyLocalLeaseSyncFailureDegrades() {
   assert.deepEqual(errors, []);
   assert.equal(instance.meta.runtimeStatus, 'lease_degraded');
   assert.equal(instance.meta.status, 'active');
-  assert.ok(warnings.some((message) => message.includes('续租降级')));
+  assert.ok(warnings.some((message) => message.includes('續租降級')));
 
   return {
     localLeaseSyncFailureDegraded: true,
@@ -546,7 +546,7 @@ async function verifyMissingTemplateCatalogIsQuarantined() {
   assert.equal(catalogEntry.assigned_node_id, null);
   assert.equal(catalogEntry.lease_token, null);
   assert.equal(catalogEntry.lease_expire_at, null);
-  assert.ok(warnings.some((message) => message.includes('已标记为待内容恢复')));
+  assert.ok(warnings.some((message) => message.includes('已標記為待內容恢復')));
 
   const warningCount = warnings.length;
   await syncAllInstanceLeases(runtime);

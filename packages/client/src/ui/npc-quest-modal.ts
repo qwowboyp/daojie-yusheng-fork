@@ -483,15 +483,15 @@ export class NpcQuestModal {
       <div class="ui-detail-field ui-detail-field--section ${selected.story ? '' : 'hidden'}"><strong>${escapeHtml(t('quest.detail.story', undefined))}</strong><div>${escapeHtml(selected.story ?? '')}</div></div>
       <div class="ui-detail-field ui-detail-field--section ${selected.objectiveText ? '' : 'hidden'}"><strong>${escapeHtml(t('quest.detail.objective-note', undefined))}</strong><div>${this.renderQuestText(selected.objectiveText ?? '', selected)}</div></div>
       <div class="ui-detail-field ui-detail-field--section ${selected.guideFlowId ? '' : 'hidden'}">
-        <strong>${escapeHtml(t('quest.detail.guide', undefined, '相关引导'))}</strong>
+        <strong>${escapeHtml(t('quest.detail.guide', undefined, '相關引導'))}</strong>
         <div class="quest-detail-guide-row">
-          <span>${escapeHtml(t('quest.detail.guide-desc', undefined, '打开这个任务关联的操作引导，不会改变任务进度。'))}</span>
+          <span>${escapeHtml(t('quest.detail.guide-desc', undefined, '打開這個任務關聯的操作引導，不會改變任務進度。'))}</span>
           <button
             class="small-btn quest-detail-guide-btn"
             data-npc-quest-guide-flow="${escapeHtml(selected.guideFlowId ?? '')}"
             type="button"
             ${selected.guideFlowId ? '' : 'disabled'}
-          >${escapeHtml(t('quest.action.open-guide', undefined, '打开引导'))}</button>
+          >${escapeHtml(t('quest.action.open-guide', undefined, '打開引導'))}</button>
         </div>
       </div>
       <div class="ui-detail-field ui-detail-field--section ${selected.relayMessage ? '' : 'hidden'}"><strong>${escapeHtml(t('quest.detail.relay', undefined))}</strong><div>${this.renderQuestText(selected.relayMessage ?? '', selected)}</div></div>

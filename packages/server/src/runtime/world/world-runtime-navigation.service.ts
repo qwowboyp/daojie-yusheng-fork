@@ -76,8 +76,8 @@ function buildNavigationFailureNotice(error) {
     }
     if (message === '無法到達該位置'
         || message === '前往界門的路徑不可達'
-        || /^无法规划前往 .+ 的跨图路线$/.test(message)
-        || /^当前地图没有通往 .+ 的界门$/.test(message)) {
+        || /^無法規劃前往 .+ 的跨圖路線$/.test(message)
+        || /^當前地圖沒有通往 .+ 的界門$/.test(message)) {
         return buildStructuredNotice(
             'warn',
             'notice.navigation.unreachable',

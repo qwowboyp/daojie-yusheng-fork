@@ -16,7 +16,7 @@ const mountItemCardFixtureExpression = String.raw`
     host.innerHTML = '<div class="inventory-grid">'
       + '<div class="inventory-cell inventory-cell--grade inventory-cell--grade-mystic" data-item-type="material">'
       + '<div class="inventory-cell-head"><span class="inventory-cell-type">药材</span>'
-      + '<span class="inventory-cell-count" data-item-count="true">x136万</span></div>'
+      + '<span class="inventory-cell-count" data-item-count="true">x136萬</span></div>'
       + '<div class="inventory-cell-name" data-item-name="true">千年玄霜五蕴灵芝凝露精华材料</div>'
       + '<span class="item-card-chip item-card-chip--level" data-item-level="true">Lv.127</span>'
       + '</div></div>';
@@ -197,7 +197,7 @@ function assertItemCardLayout(layout, label) {
   assert.equal(layout.nameInside, true, `${label}长名称超出卡片：${JSON.stringify(layout)}`);
   assert.equal(layout.nameClippedByCard, true, `${label}长名称未按卡片宽度稳定截断：${JSON.stringify(layout)}`);
   assert.equal(layout.levelText, 'Lv.127', `${label}等级文本缺失`);
-  assert.equal(layout.countText, 'x136万', `${label}数量文本缺失`);
+  assert.equal(layout.countText, 'x136萬', `${label}数量文本缺失`);
 }
 
 await withClientBrowserProof({ viewport: MOBILE_VIEWPORT, profilePrefix: 'item-card-constellation-proof-' }, async (cdp) => {

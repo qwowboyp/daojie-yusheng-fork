@@ -14,7 +14,7 @@ const { WorldRuntimeContextActionQueryService } = require("../runtime/world/quer
 function createService(player, log) {
     const mapNames = new Map([
         ['wildlands', '荒原'],
-        ['yunlai_town', '云来镇'],
+        ['yunlai_town', '雲來鎮'],
         ['sect_domain_alpha', '青玄宗'],
     ]);
     return new WorldRuntimeContextActionQueryService({    
@@ -124,7 +124,7 @@ function testBuildContextActions() {
             { trigger: 'touch', x: 10, y: 20, targetMapId: 'ignored' },
         ],
         localNpcs: [
-            { npcId: 'npc_a', name: '阿青', x: 11, y: 20, dialogue: '  问道于心。  ', hasShop: true },
+            { npcId: 'npc_a', name: '阿青', x: 11, y: 20, dialogue: '  問道於心。  ', hasShop: true },
             { npcId: 'npc_b', name: '远客', x: 14, y: 20, dialogue: '远处', hasShop: true },
         ],
     });
@@ -150,18 +150,18 @@ function testBuildContextActions() {
     ]);
     assert.deepEqual(actions.find((entry) => entry.id === 'battle:force_attack'), {
         id: 'battle:force_attack',
-        name: '强制攻击',
+        name: '強制攻擊',
         type: 'battle',
-        desc: '无视自动索敌限制，直接锁定你选中的目标发起攻击。',
+        desc: '無視自動索敵限制，直接鎖定你選中的目標發起攻擊。',
         cooldownLeft: 0,
         range: 7,
         requiresTarget: true,
         targetMode: 'any',
     });
-    assert.equal(actions.find((entry) => entry.id === 'portal:travel')?.name, '传送至：荒原');
+    assert.equal(actions.find((entry) => entry.id === 'portal:travel')?.name, '傳送至：荒原');
     assert.equal(actions.find((entry) => entry.id === 'travel:return_spawn')?.name, '遁返');
-    assert.equal(actions.find((entry) => entry.id === 'travel:return_spawn')?.desc, '催动归引灵符，遁返回 云来镇，之后需调息 1800 息。');
-    assert.equal(actions.find((entry) => entry.id === 'npc:npc_a')?.desc, '问道于心。');
+    assert.equal(actions.find((entry) => entry.id === 'travel:return_spawn')?.desc, '催動歸引靈符，遁返回 雲來鎮，之後需調息 1800 息。');
+    assert.equal(actions.find((entry) => entry.id === 'npc:npc_a')?.desc, '問道於心。');
     assert.deepEqual(log, [
         ['getPlayer', 'player:1'],
         ['buildNpcQuestContextAction', 'player:1', 'npc_a'],
@@ -192,7 +192,7 @@ function testSectEntrancePortalTravelIsNotMemberGated() {
         ],
         localNpcs: [],
     });
-    assert.equal(actions.find((entry) => entry.id === 'portal:travel')?.name, '传送至：青玄宗');
+    assert.equal(actions.find((entry) => entry.id === 'portal:travel')?.name, '傳送至：青玄宗');
 }
 
 function testTimeChamberOmitsUnavailableForceAttack() {
@@ -217,7 +217,7 @@ function testTimeChamberOmitsUnavailableForceAttack() {
         },
     });
     assert.equal(actions.some((entry) => entry.id === 'battle:force_attack'), false);
-    assert.equal(actions.find((entry) => entry.id === 'time_chamber:leave')?.name, '离开密室');
+    assert.equal(actions.find((entry) => entry.id === 'time_chamber:leave')?.name, '離開密室');
 }
 /**
  * testJobFallbackWithoutWeapon：执行testJobFallbackWithoutWeapon相关逻辑。
@@ -279,7 +279,7 @@ function testReturnActionShowsBoundRespawnTarget() {
         localNpcs: [],
     });
     assert.equal(actions.find((entry) => entry.id === 'travel:return_spawn')?.name, '遁返');
-    assert.equal(actions.find((entry) => entry.id === 'travel:return_spawn')?.desc, '催动归引灵符，遁返回 青玄宗，之后需调息 1800 息。');
+    assert.equal(actions.find((entry) => entry.id === 'travel:return_spawn')?.desc, '催動歸引靈符，遁返回 青玄宗，之後需調息 1800 息。');
     assert.ok(!actions.some((entry) => entry.id === 'travel:return_sect'));
 }
 /**

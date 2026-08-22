@@ -24,10 +24,10 @@ interface MapGroupSource {
 }
 
 const STATIC_MAP_GROUPS = [
-  { id: 'yunlai_town', name: '云来镇', order: 10, prefixes: ['yunlai_town_'] },
-  { id: 'qizhen_crossing', name: '栖真渡', order: 20, prefixes: ['qizhen_crossing_house_'] },
-  { id: 'cleft_blade_plain', name: '裂锋原', order: 30, prefixes: ['cleft_blade_plain_'] },
-  { id: 'verdant_vine_vale', name: '青萝谷', order: 40, prefixes: ['verdant_vine_vale_'] },
+  { id: 'yunlai_town', name: '雲來鎮', order: 10, prefixes: ['yunlai_town_'] },
+  { id: 'qizhen_crossing', name: '棲真渡', order: 20, prefixes: ['qizhen_crossing_house_'] },
+  { id: 'cleft_blade_plain', name: '裂鋒原', order: 30, prefixes: ['cleft_blade_plain_'] },
+  { id: 'verdant_vine_vale', name: '青蘿谷', order: 40, prefixes: ['verdant_vine_vale_'] },
 ] as const;
 
 function normalizeText(value: unknown): string {
@@ -57,7 +57,7 @@ function inferNamePrefix(name: string): string {
 
 export function resolveMapGroupInfo(source: MapGroupSource): MapGroupInfo {
   const mapId = normalizeText(source.id);
-  const mapName = resolvePlayerFacingContentName(mapId, '未知地图', source.name);
+  const mapName = resolvePlayerFacingContentName(mapId, '未知地圖', source.name);
   const explicitGroupId = normalizeText(source.mapGroupId);
   const explicitGroupName = normalizeText(source.mapGroupName);
   if (explicitGroupId || explicitGroupName) {

@@ -366,7 +366,7 @@ function assertHuanlingZhenrenSkillOrderAndCastConfig() {
   const referenceCanpo = referenceSkills.get('skill.huanling_canpo_zhang');
   assert.ok(currentCanpo, 'current content should include 残魄掌');
   assert.ok(referenceCanpo, 'reference main should include 残魄掌');
-  assert.equal(currentCanpo.name, '残魄掌', '残魄掌 display name should stay stable');
+  assert.equal(currentCanpo.name, '殘魄掌', '残魄掌 display name should stay stable');
   assert.equal(resolveRawCooldown(currentCanpo), 0, '残魄掌 should remain a zero-cooldown fallback');
   assert.equal(resolveRawRange(currentCanpo), 5, '残魄掌 should keep reference range 5');
   assert.deepEqual(resolveRawTargeting(currentCanpo), resolveRawTargeting(referenceCanpo), '残魄掌 targeting should stay aligned with reference main');

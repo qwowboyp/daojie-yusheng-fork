@@ -668,14 +668,14 @@ async function proveConfiguredPersistenceFailureIsFailClosedAndRetryable(): Prom
 
     await assert.rejects(
       service.ensurePersistencePool(),
-      /宗门持久化连接池不可用/,
+      /宗門持久化連接池不可用/,
     );
     assert.equal(service.persistenceInitPromise, null, '失败初始化不得留下永久 rejected promise');
     assert.equal(service.persistenceReady, false);
 
     await assert.rejects(
       service.ensurePersistencePool(),
-      /宗门持久化连接池不可用/,
+      /宗門持久化連接池不可用/,
     );
     assert.equal(poolRequestCount, 2, '后续请求应重试取得已恢复的共享连接池');
   } finally {

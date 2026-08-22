@@ -70,7 +70,7 @@ function testLootWindowUsesInstanceTickForContainerProjection() {
 
   const window = service.buildLootWindowSyncState(runtime, 'player:1', 10, 10);
   assert.equal(window?.sources.length, 1);
-  assert.equal(window?.title, '采集 · (10, 10)');
+  assert.equal(window?.title, '採集 · (10, 10)');
   assert.deepEqual(log, [['getPreparedContainerLootSource', 'public:yunlai_town', 'herb:1', 7]]);
 }
 

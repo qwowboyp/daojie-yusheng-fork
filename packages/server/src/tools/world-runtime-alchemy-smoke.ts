@@ -231,7 +231,7 @@ async function testDirectAlchemyJobNoPreparationAndSeparateInterruptWait(): Prom
   assert.equal(player.alchemyJob?.preparationTicks, 0);
   assert.equal(player.alchemyJob?.totalTicks, player.alchemyJob?.workTotalTicks);
   assert.equal(player.alchemyJob?.remainingTicks, player.alchemyJob?.workRemainingTicks);
-  assert.equal(String(start.messages?.[0]?.text ?? '').includes('炉'), false);
+  assert.equal(String(start.messages?.[0]?.text ?? '').includes('爐'), false);
 
   const workRemainingBeforeInterrupt = player.alchemyJob?.workRemainingTicks;
   const totalBeforeInterrupt = player.alchemyJob?.workTotalTicks;
@@ -251,7 +251,7 @@ async function testDirectAlchemyJobNoPreparationAndSeparateInterruptWait(): Prom
   const cancel = craftService.cancelTechniqueActivity(player, 'alchemy', ctx.deps);
   assert.equal(cancel.ok, true);
   assert.equal(player.alchemyJob, null);
-  assert.equal((cancel.messages ?? []).some((message) => String(message.text ?? '').includes('炉')), false);
+  assert.equal((cancel.messages ?? []).some((message) => String(message.text ?? '').includes('爐')), false);
 }
 
 async function testAlchemyQuantityStartsWithSingleBatchResources(): Promise<void> {
@@ -837,7 +837,7 @@ async function testWorldAlchemyWritePathFlushesCurrentPipelineResult(): Promise<
   await waitForAsyncPersistence();
 
   assert.equal(player.alchemyJob?.phase, 'brewing');
-  assert.equal(log.some((entry) => entry[0] === 'queuePlayerNotice' && entry[2].includes('炉')), false);
+  assert.equal(log.some((entry) => entry[0] === 'queuePlayerNotice' && entry[2].includes('爐')), false);
   assert.equal(log.some((entry) => entry[0] === 'queuePlayerNotice' && entry[4] === 'notice.craft.alchemy.start'), true);
   assert.equal(log.some((entry) => entry[0] === 'queuePlayerNotice' && entry[3] === 'alchemy' && entry[4] === 'notice.craft.alchemy.start'), true);
   assert.equal(log.some((entry) => entry[0] === 'emit' && entry[1] === 'n:s:alchemyPanel' && entry[2] === true), true);

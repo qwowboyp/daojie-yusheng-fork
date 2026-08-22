@@ -18,7 +18,7 @@ function main(): void {
 
   assert.ok(greenSpiritStem, '云来镇青灵茎容器未生成');
   assert.equal(greenSpiritStem?.variant, 'herb');
-  assert.equal(greenSpiritStem?.name, '青灵茎');
+  assert.equal(greenSpiritStem?.name, '青靈莖');
   assert.equal(greenSpiritStem?.x, 26);
   assert.equal(greenSpiritStem?.y, 1);
 

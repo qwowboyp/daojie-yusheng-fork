@@ -802,10 +802,10 @@ export function inferMonsterTierFromName(name: string | undefined): MonsterTier 
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
   const normalizedName = typeof name === 'string' ? name.trim() : '';
-  if (/妖王|荒王|兽王|王$/.test(normalizedName)) {
-    return 'demon_king';
-  }
-  if (/精英|异种/.test(normalizedName)) {
+    if (/妖王|荒王|獸王|王$/.test(normalizedName)) {
+        return 'demon_king';
+    }
+    if (/精英|異種/.test(normalizedName)) {
     return 'variant';
   }
   return 'mortal_blood';

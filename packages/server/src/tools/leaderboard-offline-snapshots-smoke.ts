@@ -324,7 +324,7 @@ async function main(): Promise<void> {
   const mapTemplateRepository = {
     listSummaries() {
       return [
-        { id: 'yunlai_town', name: '云来镇' },
+        { id: 'yunlai_town', name: '雲來鎮' },
         { id: 'black_mountain', name: '黑山' },
       ];
     },
@@ -595,12 +595,12 @@ async function main(): Promise<void> {
   assert.deepEqual(locations.entries[1], {
     playerId: 'player:offline-idle',
     mapId: 'yunlai_town',
-    mapName: '云来镇',
+    mapName: '雲來鎮',
     x: 13,
     y: 14,
     online: false,
   });
-  assert.equal(locations.entries[2].mapName, '离线');
+  assert.equal(locations.entries[2].mapName, '離線');
 
   marketRuntimeService.openOrders = [
     {

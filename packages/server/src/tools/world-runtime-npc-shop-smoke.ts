@@ -546,7 +546,7 @@ async function testDispatch() {
             queuePlayerNotice() {},
             getPlayerViewOrThrow() { return {}; },
         }),
-        /数量超过上限/,
+        /數量超過上限/,
     );
     assert.equal(overflowMutationLog.length, 0);
 }

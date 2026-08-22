@@ -216,7 +216,7 @@ async function main() {
     spiritStoneCount: 1,
     qiCost: 1,
     allocation: { effectPercent: 33, rangePercent: 33, durationPercent: 33 },
-  }, deps), /不能通过阵盘布置/);
+  }, deps), /不能通過陣盤佈置/);
   assert.throws(() => service.dispatchCreateFormation(playerId, {
     itemInstanceId: "formation-disk:mystic:1",
     formationId: "spirit_gathering",
@@ -233,7 +233,7 @@ async function main() {
         }
         : null;
     },
-  }), /聚灵阵范围内不能与传送点重叠/);
+  }), /聚靈陣範圍內不能與傳送點重疊/);
   assert.equal(player.qi, 1000000);
   assert.equal(player.wallet.spirit_stone, 100000);
   assert.equal(player.inventory.items[0].count, 2);
@@ -253,7 +253,7 @@ async function main() {
   assert.deepEqual(notices[notices.length - 1]?.structured?.vars, {
     formationName: "聚灵阵",
     radius: 2,
-    effectValue: "42万",
+    effectValue: "42萬",
     qiBudget: "2024",
     spiritStoneBudget: "169",
   });
@@ -889,7 +889,7 @@ async function main() {
         },
       },
     },
-  }), /不能操作他人的阵法/);
+  }), /不能操作他人的陣法/);
   player.playerId = playerId;
   player.instanceId = instanceId;
   player.x = 4;
@@ -948,11 +948,11 @@ async function main() {
   assert.equal(guardianProjection.ownerSectId, "sect:smoke");
   assert.equal(guardianProjection.eyeInstanceId, "sect:smoke:inner");
   assert.equal(guardianProjection.showText, false);
-  assert.equal(guardianProjection.boundaryChar, "护");
+  assert.equal(guardianProjection.boundaryChar, "護");
   assert.equal(guardianProjection.boundaryColor, "#e0f7ff");
   assert.equal(guardianProjection.boundaryRangeHighlightColor, "#67e8f9");
   const guardianEyeProjection = service.listRuntimeFormations("sect:smoke:inner").find((entry) => entry.id === guardian.id);
-  assert.equal(guardianEyeProjection.name, "护宗大阵阵眼");
+  assert.equal(guardianEyeProjection.name, "護宗大陣陣眼");
   assert.equal(guardianEyeProjection.x, 0);
   assert.equal(guardianEyeProjection.y, 0);
   assert.equal(guardianEyeProjection.blocksBoundary, false);

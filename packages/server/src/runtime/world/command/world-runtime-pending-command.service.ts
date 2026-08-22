@@ -12,13 +12,13 @@ import { buildStructuredNotice } from '../structured-notice.helpers';
 function isOutOfRangeFailure(message) {
     return message === '目標超出攻擊距離'
         || message === '目標超出技能範圍'
-        || (typeof message === 'string' && /^技能 .+ 超出范围$/.test(message))
+        || (typeof message === 'string' && /^技能 .+ 超出範圍$/.test(message))
         || (typeof message === 'string' && /^Skill .+ out of range$/.test(message));
 }
 
 /** 妖兽已死亡或已被移除：自动战斗锁定目标失效的常态。 */
 function isMissingMonsterFailure(message) {
-    return typeof message === 'string' && /^妖兽不存在：/.test(message);
+    return typeof message === 'string' && /^妖獸不存在：/.test(message);
 }
 
 /** 背包条目已消失：客户端面板尚未收到移除 patch 时的亚秒级陈旧引用。 */
@@ -28,7 +28,7 @@ function isMissingInventoryItemFailure(message) {
 
 /** 目标实例无可占用落点：通常由建筑铺满可通行格导致，属运营事故。 */
 function isNoSpawnPointFailure(message) {
-    return typeof message === 'string' && /^实例 .+ 中没有可用出生点$/.test(message);
+    return typeof message === 'string' && /^實例 .+ 中沒有可用出生點$/.test(message);
 }
 
 /** 消息里内嵌了 uuid / runtimeId / instanceId 等内部标识，禁止推送给玩家。 */
@@ -152,7 +152,7 @@ function buildPendingCombatNotice(message) {
     if (isCooldownFailure(message)) {
         return buildStructuredNotice('warn', 'notice.command.skill-cooldown', '技能尚在冷卻。');
     }
-    if (typeof message === 'string' && /^(技能|玩家) .+ 元气不足$/.test(message)) {
+    if (typeof message === 'string' && /^(技能|玩家) .+ 元氣不足$/.test(message)) {
         return buildStructuredNotice('warn', 'notice.command.qi-insufficient', '元氣不足。');
     }
     return buildStructuredNotice('warn', 'notice.command.failed', '行動未能完成，請稍後重試。');
@@ -171,7 +171,7 @@ function buildPendingTechniqueNotice(message) {
     if (message === '學習者已經掌握該功法。') {
         return buildStructuredNotice('warn', 'notice.command.technique-already-known', message);
     }
-    if (typeof message === 'string' && /^当前没有可取消的.+任务。$/.test(message)) {
+    if (typeof message === 'string' && /^當前沒有可取消的.+任務。$/.test(message)) {
         return buildStructuredNotice('warn', 'notice.command.technique-cancel-none', '當前沒有可取消的技藝任務。');
     }
     return buildStructuredNotice('warn', 'notice.command.failed', '行動未能完成，請稍後重試。');
@@ -186,7 +186,7 @@ function isTerminalAutoCombatTargetFailure(message) {
 }
 
 function isCooldownFailure(message) {
-    return typeof message === 'string' && /^技能 .+ 尚在冷却$/.test(message);
+    return typeof message === 'string' && /^技能 .+ 尚在冷卻$/.test(message);
 }
 
 function shouldDowngradePendingCommandFailure(command, message) {
@@ -202,8 +202,8 @@ function isExpectedNavigationReject(message) {
         || message === '任務目標當前不可達'
         || message === '目標超出地圖範圍'
         || message === '前往界門的路徑不可達'
-        || (typeof message === 'string' && /^无法规划前往 .+ 的跨图路线$/.test(message))
-        || (typeof message === 'string' && /^当前地图没有通往 .+ 的界门$/.test(message));
+        || (typeof message === 'string' && /^無法規劃前往 .+ 的跨圖路線$/.test(message))
+        || (typeof message === 'string' && /^當前地圖沒有通往 .+ 的界門$/.test(message));
 }
 
 function isExpectedCombatReject(message) {
@@ -221,8 +221,8 @@ function isExpectedCombatReject(message) {
         || isMissingMonsterFailure(message)
         || isCooldownFailure(message)
         || isOutOfRangeFailure(message)
-        || (typeof message === 'string' && /^技能 .+ 元气不足$/.test(message))
-        || (typeof message === 'string' && /^玩家 .+ 元气不足$/.test(message));
+        || (typeof message === 'string' && /^技能 .+ 元氣不足$/.test(message))
+        || (typeof message === 'string' && /^玩家 .+ 元氣不足$/.test(message));
 }
 
 function isExpectedTechniqueActivityReject(message) {
@@ -232,7 +232,7 @@ function isExpectedTechniqueActivityReject(message) {
         || message === '沒有進行中的傳授'
         || message === '學習者已經掌握該功法。'
         || resolveTechniqueAggregationOverlapMessage(message) !== null
-        || (typeof message === 'string' && /^当前没有可取消的.+任务。$/.test(message));
+        || (typeof message === 'string' && /^當前沒有可取消的.+任務。$/.test(message));
 }
 
 /** 背包条目在指令入队与派发之间消失：客户端面板未及刷新，权威态已正确拒绝。 */

@@ -420,10 +420,10 @@ async function run() {
   assert.equal(logs.length, 1);
   assert.equal(logs[0][0], 'debug');
   assert.equal(logs[0][1].includes('施放者=monster:monster:1'), true);
-  assert.equal(logs[0][1].includes('动作=monster:test_skill'), true);
-  assert.equal(logs[0][1].includes('实例=instance:test'), true);
-  assert.equal(logs[0][1].includes('阶段=chant_resolve'), true);
-  assert.equal(logs[0][1].includes('目标数=1'), true);
+  assert.equal(logs[0][1].includes('動作=monster:test_skill'), true);
+  assert.equal(logs[0][1].includes('實例=instance:test'), true);
+  assert.equal(logs[0][1].includes('階段=chant_resolve'), true);
+  assert.equal(logs[0][1].includes('目標數=1'), true);
 
   const recordedByRuntime = [];
   const runtimeDeps = {
@@ -2474,7 +2474,7 @@ async function run() {
         getPlayersAtTile: () => [],
       }),
     }),
-    /没有可命中的目标/,
+    /沒有可命中的目標/,
   );
   assert.equal(emptyTileManualChantPlayer.combat.pendingSkillCast, undefined);
 
@@ -2883,7 +2883,7 @@ async function run() {
         getBoundaryBarrierCombatState: () => null,
       },
     }, { showActionLabel: false }),
-    /没有可命中的目标/,
+    /沒有可命中的目標/,
   );
   assert.equal(staleSkillOutcomes.length, 0);
   assert.equal(staleSkillDiagnostics.length, 5);

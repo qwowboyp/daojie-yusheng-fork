@@ -85,59 +85,59 @@ import {
 export const MAIL_TEMPLATE_DEFS: Record<string, MailTemplateDef> = {
   'mail.welcome.v1': {
     id: 'mail.welcome.v1',
-    title: [{ kind: 'text', value: '初入尘世' }],
+    title: [{ kind: 'text', value: '初入塵世' }],
     body: [
-      { kind: 'text', value: '欢迎来到道劫余生。此地险路多，先收好这份起步资粮。' },
+      { kind: 'text', value: '歡迎來到道劫餘生。此地險路多，先收好這份起步資糧。' },
       { kind: 'text', value: '\n\n' },
-      { kind: 'text', value: '邮件附件可直接收入背包；若背包已满，请先整理后再领取。' },
+      { kind: 'text', value: '郵件附件可直接收入背包；若背包已滿，請先整理後再領取。' },
     ],
   },
   'mail.system.notice.v1': {
     id: 'mail.system.notice.v1',
-    title: [{ kind: 'text', value: '系统通知' }],
+    title: [{ kind: 'text', value: '系統通知' }],
     body: [{ kind: 'arg', index: 0 }],
   },
   'mail.reward.compensation.v1': {
     id: 'mail.reward.compensation.v1',
-    title: [{ kind: 'text', value: '补偿发放' }],
+    title: [{ kind: 'text', value: '補償發放' }],
     body: [
       { kind: 'text', value: '因 ' },
       { kind: 'arg', index: 0 },
-      { kind: 'text', value: '，你收到了一份补偿，请查收附件。' },
+      { kind: 'text', value: '，你收到了一份補償，請查收附件。' },
     ],
   },
   'mail.reward.generic.v1': {
     id: 'mail.reward.generic.v1',
-    title: [{ kind: 'text', value: '奖励到账' }],
+    title: [{ kind: 'text', value: '獎勵到賬' }],
     body: [{ kind: 'arg', index: 0 }],
   },
   [MAIL_TEMPLATE_BEGINNER_JOURNEY_ID]: {
     id: MAIL_TEMPLATE_BEGINNER_JOURNEY_ID,
     title: [{ kind: 'text', value: '初入道途' }],
     body: [
-      { kind: 'text', value: '道途初启，先收好这份行装。' },
+      { kind: 'text', value: '道途初啟，先收好這份行裝。' },
       { kind: 'text', value: '\n\n' },
-      { kind: 'text', value: '附件包含当前开放阶段可获取的常用装备一套、非神通功法书各一本到，以及五枚苦修丹。' },
+      { kind: 'text', value: '附件包含當前開放階段可獲取的常用裝備一套、非神通功法書各一本到，以及五枚苦修丹。' },
       { kind: 'text', value: '\n\n' },
-      { kind: 'text', value: '若背包已满，请先整理后再领取。' },
+      { kind: 'text', value: '若背包已滿，請先整理後再領取。' },
     ],
   },
   [MAIL_TEMPLATE_HEAVEN_ROOT_SEED_ID]: {
     id: MAIL_TEMPLATE_HEAVEN_ROOT_SEED_ID,
-    title: [{ kind: 'text', value: '天品灵根幼苗' }],
+    title: [{ kind: 'text', value: '天品靈根幼苗' }],
     body: [
-      { kind: 'text', value: '司命台封存了一株天品灵根幼苗，请查收附件。' },
+      { kind: 'text', value: '司命臺封存了一株天品靈根幼苗，請查收附件。' },
       { kind: 'text', value: '\n\n' },
-      { kind: 'text', value: '此物会将五行灵根先定为 99，再逐系以五成概率催至 100，且至少保底一系圆满；同时逆天改命累计额外增加 10 次。使用时会按你当前逆天改命积累折减所需底蕴。' },
+      { kind: 'text', value: '此物會將五行靈根先定為 99，再逐系以五成概率催至 100，且至少保底一系圓滿；同時逆天改命累計額外增加 10 次。使用時會按你當前逆天改命積累折減所需底蘊。' },
     ],
   },
   [MAIL_TEMPLATE_DIVINE_ROOT_SEED_ID]: {
     id: MAIL_TEMPLATE_DIVINE_ROOT_SEED_ID,
-    title: [{ kind: 'text', value: '神品灵根幼苗' }],
+    title: [{ kind: 'text', value: '神品靈根幼苗' }],
     body: [
-      { kind: 'text', value: '司命台封存了一株神品灵根幼苗，请查收附件。' },
+      { kind: 'text', value: '司命臺封存了一株神品靈根幼苗，請查收附件。' },
       { kind: 'text', value: '\n\n' },
-      { kind: 'text', value: '此物会将五行灵根全部定为 100，同时逆天改命累计额外增加 100 次。使用时同样会按你当前逆天改命积累折减所需底蕴。' },
+      { kind: 'text', value: '此物會將五行靈根全部定為 100，同時逆天改命累計額外增加 100 次。使用時同樣會按你當前逆天改命積累折減所需底蘊。' },
     ],
   },
 } as const;
@@ -145,23 +145,23 @@ export const MAIL_TEMPLATE_DEFS: Record<string, MailTemplateDef> = {
 export const GM_MAIL_TEMPLATE_OPTIONS: GmMailTemplateOption[] = [
   {
     templateId: '',
-    label: '自定义邮件',
-    description: '自填标题、正文和附件。',
+    label: '自定義郵件',
+    description: '自填標題、正文和附件。',
   },
   {
     templateId: MAIL_TEMPLATE_BEGINNER_JOURNEY_ID,
     label: '初入道途',
-    description: '发送常用装备一套、当前开放阶段非神通功法书各一本到，并附带五枚苦修丹。',
+    description: '發送常用裝備一套、當前開放階段非神通功法書各一本到，並附帶五枚苦修丹。',
   },
   {
     templateId: MAIL_TEMPLATE_HEAVEN_ROOT_SEED_ID,
-    label: '天品灵根幼苗',
-    description: '固定附带一株天品灵根幼苗。',
+    label: '天品靈根幼苗',
+    description: '固定附帶一株天品靈根幼苗。',
   },
   {
     templateId: MAIL_TEMPLATE_DIVINE_ROOT_SEED_ID,
-    label: '神品灵根幼苗',
-    description: '固定附带一株神品灵根幼苗。',
+    label: '神品靈根幼苗',
+    description: '固定附帶一株神品靈根幼苗。',
   },
 ];
 
@@ -218,10 +218,10 @@ export function renderMailTitlePlain(
 
   const template = getMailTemplateDef(templateId);
   if (!template) {
-    return fallbackTitle?.trim() || '未命名邮件';
+    return fallbackTitle?.trim() || '未命名郵件';
   }
   const rendered = renderTokensPlain(template.title, args ?? []);
-  return rendered.trim() || fallbackTitle?.trim() || '未命名邮件';
+  return rendered.trim() || fallbackTitle?.trim() || '未命名郵件';
 }
 
 /** 渲染邮件正文文本，带默认兜底。 */

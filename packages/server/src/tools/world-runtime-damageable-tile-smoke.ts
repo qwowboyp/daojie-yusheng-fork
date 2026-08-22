@@ -236,7 +236,7 @@ function testDamagedFacilityBuildingShowsHpBarPayload() {
   const combat = instance.getTileCombatState(1, 1);
   assert.equal(combat?.building, true);
   assert.equal(combat?.buildingId, 'building:scripture:hp-bar');
-  assert.equal(combat?.targetName, '藏经台');
+  assert.equal(combat?.targetName, '藏經臺');
   assert.equal(combat?.maxHp, 120);
 
   const damaged = instance.damageTile(1, 1, 1);
@@ -619,13 +619,13 @@ function testProjectedTotalQiLevelUsesNeutralElementalAndShaResources() {
   }));
   const tile = snapshotService.buildTileSyncState(template, 'instance:tile-smoke', 1, 1, createAllQiAbsorptionPlayer());
 
-  assert.equal(tile?.resources?.[0]?.label, '灵气');
+  assert.equal(tile?.resources?.[0]?.label, '靈氣');
   assert.equal(tile?.resources?.[0]?.effectiveValue, 1000);
   assert.equal(tile?.resources?.[0]?.level, 1);
-  assert.equal(tile?.resources?.[1]?.label, '木灵气');
+  assert.equal(tile?.resources?.[1]?.label, '木靈氣');
   assert.equal(tile?.resources?.[1]?.effectiveValue, 1000);
   assert.equal(tile?.resources?.[1]?.level, 1);
-  assert.equal(tile?.resources?.[2]?.label, '煞气');
+  assert.equal(tile?.resources?.[2]?.label, '煞氣');
   assert.equal(tile?.resources?.[2]?.effectiveValue, 1800);
   assert.equal(tile?.resources?.[2]?.level, 2);
   assert.equal(tile?.aura, 4);

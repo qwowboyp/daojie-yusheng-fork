@@ -287,7 +287,7 @@ function testMissingPlayerCapabilityDoesNotPlanIntoStaticObstacleTile(): void {
       { kind: 'point', mapId: instance.template.id, x: 1, y: 0, allowNearestReachable: false, clientPathHint: null },
       createNavigationDeps(instance),
     ),
-    /无法到达该位置/u,
+    /無法到達該位置/u,
   );
 }
 
@@ -309,7 +309,7 @@ function testDisabledFlyingSwordProviderDoesNotGrantPlayerCapability(): void {
       { kind: 'point', mapId: instance.template.id, x: 1, y: 0, allowNearestReachable: false, clientPathHint: null },
       createNavigationDeps(instance),
     ),
-    /无法到达该位置/u,
+    /無法到達該位置/u,
   );
 }
 
@@ -381,7 +381,7 @@ function testFlyingSwordProviderDoesNotGrantCapabilityWhenArtifactQiIsEmpty(): v
       { kind: 'point', mapId: instance.template.id, x: 1, y: 0, allowNearestReachable: false, clientPathHint: null },
       createNavigationDeps(instance),
     ),
-    /无法到达该位置/u,
+    /無法到達該位置/u,
   );
 }
 
@@ -753,7 +753,7 @@ function testDynamicBlockerStillBlocksPlayerCapability(): void {
       { kind: 'point', mapId: instance.template.id, x: 1, y: 0, allowNearestReachable: false, clientPathHint: null },
       createNavigationDeps(instance),
     ),
-    /无法到达该位置/u,
+    /無法到達該位置/u,
   );
 }
 

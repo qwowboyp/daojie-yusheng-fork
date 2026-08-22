@@ -47,52 +47,52 @@ export const TECHNIQUE_ARTS_STRENGTH_REALM_LEVEL_MOVE_SPEED_EQUIVALENT = 120;
 /** 除功法层数外，可按预算加入总伤害乘区的标量来源。 */
 export const TECHNIQUE_ARTS_STRENGTH_SCALAR_PERCENT_BONUS_SOURCE_BY_KEY = {
   moveSpeed: {
-    label: '移动速度',
+    label: '移動速度',
     formulaVar: 'caster.stat.moveSpeed',
     moveSpeedEquivalent: 1,
   },
   realmLevel: {
-    label: '境界等级',
+    label: '境界等級',
     formulaVar: 'caster.realmLv',
     moveSpeedEquivalent: TECHNIQUE_ARTS_STRENGTH_REALM_LEVEL_MOVE_SPEED_EQUIVALENT,
   },
   alchemyLevel: {
-    label: '炼丹等级',
+    label: '煉丹等級',
     formulaVar: 'caster.craft.alchemy.level',
     moveSpeedEquivalent: TECHNIQUE_ARTS_STRENGTH_CRAFT_LEVEL_MOVE_SPEED_EQUIVALENT,
   },
   forgingLevel: {
-    label: '炼器等级',
+    label: '煉器等級',
     formulaVar: 'caster.craft.forging.level',
     moveSpeedEquivalent: TECHNIQUE_ARTS_STRENGTH_CRAFT_LEVEL_MOVE_SPEED_EQUIVALENT,
   },
   enhancementLevel: {
-    label: '强化等级',
+    label: '強化等級',
     formulaVar: 'caster.craft.enhancement.level',
     moveSpeedEquivalent: TECHNIQUE_ARTS_STRENGTH_CRAFT_LEVEL_MOVE_SPEED_EQUIVALENT,
   },
   transmissionLevel: {
-    label: '传法等级',
+    label: '傳法等級',
     formulaVar: 'caster.craft.transmission.level',
     moveSpeedEquivalent: TECHNIQUE_ARTS_STRENGTH_CRAFT_LEVEL_MOVE_SPEED_EQUIVALENT,
   },
   gatherLevel: {
-    label: '采集等级',
+    label: '採集等級',
     formulaVar: 'caster.craft.gather.level',
     moveSpeedEquivalent: TECHNIQUE_ARTS_STRENGTH_CRAFT_LEVEL_MOVE_SPEED_EQUIVALENT,
   },
   miningLevel: {
-    label: '挖矿等级',
+    label: '挖礦等級',
     formulaVar: 'caster.craft.mining.level',
     moveSpeedEquivalent: TECHNIQUE_ARTS_STRENGTH_CRAFT_LEVEL_MOVE_SPEED_EQUIVALENT,
   },
   buildingLevel: {
-    label: '营造等级',
+    label: '營造等級',
     formulaVar: 'caster.craft.building.level',
     moveSpeedEquivalent: TECHNIQUE_ARTS_STRENGTH_CRAFT_LEVEL_MOVE_SPEED_EQUIVALENT,
   },
   formationLevel: {
-    label: '阵法等级',
+    label: '陣法等級',
     formulaVar: 'caster.craft.formation.level',
     moveSpeedEquivalent: TECHNIQUE_ARTS_STRENGTH_CRAFT_LEVEL_MOVE_SPEED_EQUIVALENT,
   },

@@ -121,7 +121,7 @@ export const InventoryPanel = memo(function InventoryPanel() {
             className="inventory-search-input"
             type="search"
             value={searchDraft}
-            placeholder={t('inventory.search.placeholder', undefined, '搜索物品')}
+            placeholder={t('inventory.search.placeholder', undefined, '搜尋物品')}
             autoComplete="off"
             onChange={(event) => {
               const value = event.currentTarget.value;

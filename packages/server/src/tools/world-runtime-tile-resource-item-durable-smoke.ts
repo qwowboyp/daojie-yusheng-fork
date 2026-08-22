@@ -275,7 +275,7 @@ async function testProductionDatabaseModeRejectsVolatileFallback(): Promise<void
         createDeps(instance, { isEnabled: () => false }, []),
         { count: 1 },
       ),
-      /地块资源资产事务暂不可用/,
+      /地塊資源資產事務暫不可用/,
     );
     assert.equal(player.inventory.items[0]?.count, 1);
     assert.equal(instance.getTileResource('sha.refined.neutral', 3, 3), 0);

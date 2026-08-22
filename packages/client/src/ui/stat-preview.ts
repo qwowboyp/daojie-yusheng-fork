@@ -93,7 +93,7 @@ export function describePreviewBonuses(
       if (typeof value !== 'number' || value === 0) {
         continue;
       }
-      lines.push(`${getElementKeyLabel(key)}行增伤 ${statMode === 'percent' ? formatSignedPercentValue(value) : formatSignedNumber(value)}`);
+      lines.push(`${getElementKeyLabel(key)}行增傷 ${statMode === 'percent' ? formatSignedPercentValue(value) : formatSignedNumber(value)}`);
     }
   }
 
@@ -102,7 +102,7 @@ export function describePreviewBonuses(
       if (typeof value !== 'number' || value === 0) {
         continue;
       }
-      lines.push(`${getElementKeyLabel(key)}行减伤 ${statMode === 'percent' ? formatSignedPercentValue(value) : formatSignedNumber(value)}`);
+      lines.push(`${getElementKeyLabel(key)}行減傷 ${statMode === 'percent' ? formatSignedPercentValue(value) : formatSignedNumber(value)}`);
     }
   }
 

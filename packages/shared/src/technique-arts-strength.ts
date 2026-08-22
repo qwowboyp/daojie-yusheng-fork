@@ -503,7 +503,7 @@ export function normalizeTechniqueArtsStrengthTemplate(raw: unknown): TechniqueA
   const source = isRecord(raw) ? raw : {};
   const skills = Array.isArray(source.skills) ? source.skills : [];
   if (skills.length !== TECHNIQUE_ARTS_STRENGTH_CONSTANTS.skillCount.max) {
-    return { ok: false, errors: [`AI 术法首版必须且只能包含 ${TECHNIQUE_ARTS_STRENGTH_CONSTANTS.skillCount.max} 个技能`] };
+    return { ok: false, errors: [`AI 術法首版必須且只能包含 ${TECHNIQUE_ARTS_STRENGTH_CONSTANTS.skillCount.max} 個技能`] };
   }
   const normalized = normalizeTechniqueArtsStrengthSkill(skills[0]);
   const errors = validateNormalizedSkill(normalized);
@@ -527,7 +527,7 @@ export function normalizeTechniqueArtsStrengthSkill(raw: unknown): NormalizedTec
   const inputBudget = roundTo(structure.budgetWeight, 4);
   return {
     id: typeof source.id === 'string' && source.id.trim() ? source.id.trim() : undefined,
-    name: normalizeText(source.name, '未命名术法'),
+    name: normalizeText(source.name, '未命名術法'),
     desc: normalizeText(source.desc, ''),
     unlockLevel: Math.max(1, Math.floor(toFiniteNumber(source.unlockLevel, 1))),
     unlockRealm: Number.isFinite(Number(source.unlockRealm)) ? Math.max(0, Math.floor(Number(source.unlockRealm))) : undefined,
@@ -562,13 +562,13 @@ function validateNormalizedSkill(skill: NormalizedTechniqueArtsStrengthSkill): s
   const baseCount = Object.keys(skill.formula.attributeBases).length;
   const baseConstants = TECHNIQUE_ARTS_STRENGTH_CONSTANTS.attributeBases;
   if (baseCount < baseConstants.minCount || baseCount > baseConstants.maxCount) {
-    errors.push(`属性基底数量必须在 ${baseConstants.minCount} 到 ${baseConstants.maxCount} 个之间`);
+    errors.push(`屬性基底數量必須在 ${baseConstants.minCount} 到 ${baseConstants.maxCount} 個之間`);
   }
   if (skill.formula.effectStrength <= 0) {
-    errors.push('效果强度必须大于 0');
+    errors.push('效果強度必須大於 0');
   }
   if (skill.inputBudget <= 0) {
-    errors.push('输入预算必须大于 0');
+    errors.push('輸入預算必須大於 0');
   }
   return errors;
 }

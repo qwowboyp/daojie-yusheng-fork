@@ -111,26 +111,26 @@ try {
   assert.match(foundationSummary, /經脈\+/u, '凝气成基法预览缺少经脉加成');
   assert.match(
     foundationSummary,
-    /无属性灵气吸收效率\+10%/u,
-    '凝气成基法满层预览缺少 10% 无属性灵气吸收效率加成',
+    /無屬性靈氣吸收效率\+10%/u,
+    '凝气成基法满层预览缺少 10% 無屬性靈氣吸收效率加成',
   );
   assert.match(
     bonusSummary.formatTechniqueCumulativeBonusSummary(7, foundation.layers),
-    /无属性灵气吸收效率\+1%/u,
-    '凝气成基法分层预览必须只累计已覆盖层数的气机加成',
+    /無屬性靈氣吸收效率\+1%/u,
+    '凝气成基法分层预览必须只累计已覆盖层数的氣機加成',
   );
 
   const bloodSha = resolveTemplatePreview('xuesha_huanling_jue');
   assert.equal(bloodSha.maxLevel, 9, '血煞唤灵决必须识别为 9 层');
   assert.equal(
     bonusSummary.formatTechniqueCumulativeBonusSummary(bloodSha.maxLevel, bloodSha.layers),
-    '无属性灵气吸收效率-90% / 煞气吸收效率+180%',
-    '血煞唤灵决满层预览必须同时显示正负气机投影',
+    '無屬性靈氣吸收效率-90% / 煞氣吸收效率+180%',
+    '血煞唤灵决满层预览必须同时显示正负氣機投影',
   );
   assert.equal(
     bonusSummary.formatTechniqueLayerBonusSummary(bloodSha.layers[0]),
-    '无属性灵气吸收效率-10% / 煞气吸收效率+20%',
-    '血煞唤灵决单层预览必须显示该层的两项气机变化',
+    '無屬性靈氣吸收效率-10% / 煞氣吸收效率+20%',
+    '血煞唤灵决单层预览必须显示该层的两项氣機变化',
   );
 
   const insight = resolveTemplatePreview('mountain_insight_chart');
@@ -149,8 +149,8 @@ try {
         visibility: 'observable',
       }],
     }),
-    '逸散火属性灵气可感知',
-    '气机资源键与可见性也必须被预览格式化',
+    '逸散火属性靈氣可感知',
+    '氣機资源键与可见性也必须被预览格式化',
   );
 
   const foundationTooltip = equipmentTooltip.buildItemTooltipPayload({
@@ -163,7 +163,7 @@ try {
   });
   const foundationTooltipText = foundationTooltip.lines.join('\n');
   assert.match(foundationTooltipText, /體魄\+/u, '功法书提示未接入展开后的六维属性');
-  assert.match(foundationTooltipText, /无属性灵气吸收效率\+10%/u, '功法书提示未接入气机投影');
+  assert.match(foundationTooltipText, /無屬性靈氣吸收效率\+10%/u, '功法书提示未接入氣機投影');
 
   const fragmentTooltip = equipmentTooltip.buildItemTooltipPayload({
     itemId: 'book.ningqi_chengji',
@@ -175,8 +175,8 @@ try {
     learnTechniqueMaxLevel: 7,
   });
   const fragmentTooltipText = fragmentTooltip.lines.join('\n');
-  assert.match(fragmentTooltipText, /无属性灵气吸收效率\+1%/u, '残卷提示必须按可修层数累计气机投影');
-  assert.doesNotMatch(fragmentTooltipText, /无属性灵气吸收效率\+10%/u, '残卷提示不得套用完整功法满层加成');
+  assert.match(fragmentTooltipText, /無屬性靈氣吸收效率\+1%/u, '残卷提示必须按可修层数累计氣機投影');
+  assert.doesNotMatch(fragmentTooltipText, /無屬性靈氣吸收效率\+10%/u, '残卷提示不得套用完整功法满层加成');
 
   const artsTooltip = equipmentTooltip.buildItemTooltipPayload({
     itemId: 'book.baihong_duanyue',
@@ -447,7 +447,7 @@ try {
       localTemplates.getPreviewTechniqueMaxLevel(technique),
       layers,
     );
-    assert.notEqual(summary, '无增益', `${technique.name} 的已配置属性不得在预览中全部丢失`);
+    assert.notEqual(summary, '無增益', `${technique.name} 的已配置属性不得在预览中全部丢失`);
     coveredTechniqueCount += 1;
   }
   assert.ok(coveredTechniqueCount > 0, '功法目录专项验证未覆盖到任何带属性的模板');

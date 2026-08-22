@@ -413,7 +413,7 @@ async function testLeaseFenceRejection() {
         },
     };
 
-    await assert.rejects(service.dispatchUseItem('player:1', 1, deps), /租约不可写/);
+    await assert.rejects(service.dispatchUseItem('player:1', 1, deps), /租約不可寫/);
     assert.deepEqual(deps.fenceInstanceRuntimeCalls, [['instance:lease-fenced', 'player_write_lease_check_failed']]);
 }
 

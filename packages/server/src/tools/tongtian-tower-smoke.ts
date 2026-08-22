@@ -96,7 +96,7 @@ async function main(): Promise<void> {
     deps.notices.at(-1),
     {
       playerId: 'player:1',
-      text: '你进入通天塔第 1 层。',
+      text: '你進入通天塔第 1 層。',
       kind: 'success',
       key: 'notice.tower.entered',
       vars: { layer: 1 },
@@ -125,11 +125,11 @@ async function main(): Promise<void> {
 
   await assert.rejects(
     tower.executeAction('player:1', 'tower:tongtian:previous', deps),
-    /第一层不能退到上一层/,
+    /第一層不能退到上一層/,
   );
   await assert.rejects(
     tower.executeAction('player:1', 'tower:tongtian:next', deps),
-    /尚未通关当前层/,
+    /尚未通關當前層/,
   );
 
   const layer1 = deps.getInstanceRuntimeOrThrow('tower:tongtian:layer:1');
@@ -146,7 +146,7 @@ async function main(): Promise<void> {
   assert.equal(layer1TimeLater.visionMultiplier, 1, '通天塔长期运行后仍不受夜晚视野衰减');
   assert.equal(layer1.listMonsters().length, 5);
   assertTowerMonsterMix(layer1, 4, 1);
-  assert.equal(layer1.listMonsters().every((monster: any) => monster.name.startsWith('虚影')), true);
+  assert.equal(layer1.listMonsters().every((monster: any) => monster.name.startsWith('虛影')), true);
 
   connectToPublicMap(deps, 'player:2', 31, 15);
   await tower.executeAction('player:2', 'tower:tongtian:enter', deps);
@@ -268,7 +268,7 @@ async function main(): Promise<void> {
   );
   await assert.rejects(
     tower.executeAction('player:2', 'tower:tongtian:next', deps),
-    /还需 30 秒/,
+    /還需 30 秒/,
     '服务端必须拒绝处于换层冷却中的动作，不能只依赖客户端禁用按钮',
   );
   const firstParticipantLayer2View = await tower.executeAction(
@@ -280,7 +280,7 @@ async function main(): Promise<void> {
   deps.advanceTimeSeconds(29);
   await assert.rejects(
     tower.executeAction('player:2', 'tower:tongtian:next', deps),
-    /还需 1 秒/,
+    /還需 1 秒/,
   );
   deps.advanceTimeSeconds(1);
   const repeatedLayer2View = await tower.executeAction('player:2', 'tower:tongtian:next', deps);
@@ -297,7 +297,7 @@ async function main(): Promise<void> {
   deps.worldRuntimeGmQueueService.markPendingRespawn('player:dead');
   await assert.rejects(
     tower.executeAction('player:dead', 'tower:tongtian:exit', deps),
-    /重伤倒地时不能操作通天塔/,
+    /重傷倒地時不能操作通天塔/,
     '死亡时不能通过通天塔动作换层或退出',
   );
   assert.equal(

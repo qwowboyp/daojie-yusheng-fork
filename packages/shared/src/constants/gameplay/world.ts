@@ -76,13 +76,13 @@ export interface TimePhaseDefinition {
 export const GAME_TIME_PHASES: TimePhaseDefinition[] = [
   { id: 'deep_night', label: '子夜', startTick: 0, endTick: 900, skyLightPercent: 50, tint: '#06101c', overlayAlpha: 0.48 },
   { id: 'late_night', label: '深宵', startTick: 900, endTick: 1500, skyLightPercent: 60, tint: '#0a1726', overlayAlpha: 0.42 },
-  { id: 'before_dawn', label: '残夜', startTick: 1500, endTick: 2100, skyLightPercent: 70, tint: '#102132', overlayAlpha: 0.34 },
-  { id: 'dawn', label: '破晓', startTick: 2100, endTick: 2700, skyLightPercent: 90, tint: '#6f88a8', overlayAlpha: 0.16 },
-  { id: 'day', label: '白昼', startTick: 2700, endTick: 5400, skyLightPercent: 100, tint: '#f6e7bf', overlayAlpha: 0.02 },
-  { id: 'dusk', label: '黄昏', startTick: 5400, endTick: 6000, skyLightPercent: 90, tint: '#9d6e46', overlayAlpha: 0.14 },
+  { id: 'before_dawn', label: '殘夜', startTick: 1500, endTick: 2100, skyLightPercent: 70, tint: '#102132', overlayAlpha: 0.34 },
+  { id: 'dawn', label: '破曉', startTick: 2100, endTick: 2700, skyLightPercent: 90, tint: '#6f88a8', overlayAlpha: 0.16 },
+  { id: 'day', label: '白晝', startTick: 2700, endTick: 5400, skyLightPercent: 100, tint: '#f6e7bf', overlayAlpha: 0.02 },
+  { id: 'dusk', label: '黃昏', startTick: 5400, endTick: 6000, skyLightPercent: 90, tint: '#9d6e46', overlayAlpha: 0.14 },
   { id: 'first_night', label: '初夜', startTick: 6000, endTick: 6600, skyLightPercent: 80, tint: '#3a4768', overlayAlpha: 0.24 },
   { id: 'night', label: '夜色', startTick: 6600, endTick: 6900, skyLightPercent: 70, tint: '#1f2941', overlayAlpha: 0.32 },
-  { id: 'midnight', label: '夜阑', startTick: 6900, endTick: GAME_DAY_TICKS, skyLightPercent: 60, tint: '#111b2d', overlayAlpha: 0.4 },
+  { id: 'midnight', label: '夜闌', startTick: 6900, endTick: GAME_DAY_TICKS, skyLightPercent: 60, tint: '#111b2d', overlayAlpha: 0.4 },
 ];
 
 /** 夜色层数对视野的衰减系数表 */
@@ -181,7 +181,7 @@ export function buildWorldDarknessBuffState(
   return {
     buffId: WORLD_DARKNESS_BUFF_ID,
     name: '夜色遮目',
-    desc: `${timeState?.phaseLabel ?? '夜色'}影响神识，视野由 ${normalizedBaseViewRange} 降至 ${effectiveViewRange}。`,
+    desc: `${timeState?.phaseLabel ?? '夜色'}影響神識，視野由 ${normalizedBaseViewRange} 降至 ${effectiveViewRange}。`,
     shortMark: '夜',
     category: 'debuff',
     visibility: 'observe_only',
@@ -191,7 +191,7 @@ export function buildWorldDarknessBuffState(
     stacks,
     maxStacks: Math.max(1, DARKNESS_STACK_TO_VISION_MULTIPLIER.length - 1),
     sourceSkillId: WORLD_TIME_SOURCE_ID,
-    sourceSkillName: '昼夜',
+    sourceSkillName: '晝夜',
     stats: {
       viewRange: totalViewRangeDelta / stacks,
     },

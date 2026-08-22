@@ -398,7 +398,7 @@ function showOfflineGainConfirmationToast(
 function renderOfflineGainReportsWithConfirm(reports: readonly OfflineGainReportView[], blocking = false): string {
   return `
     ${renderOfflineGainReports(reports)}
-    ${blocking ? '<div class="offline-gain-blocking-note">确认前角色仍保持离线挂机，收益会自动刷新。</div>' : ''}
+    ${blocking ? '<div class="offline-gain-blocking-note">確認前角色仍保持離線掛機，收益會自動刷新。</div>' : ''}
     <div class="offline-gain-confirm-area">
       <button class="offline-gain-confirm-btn small-btn">${t('offline-gain.modal.confirm-btn')}</button>
     </div>

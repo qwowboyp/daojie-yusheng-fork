@@ -284,7 +284,7 @@ async function testForbiddenTileDamageExplainsInstanceCapability(): Promise<void
         log.push(['interruptManualCombat', playerId]);
       },
     } as never),
-    /当前实例不允许攻击地形/,
+    /當前實例不允許攻擊地形/,
   );
   assert.deepEqual(log, [['interruptManualCombat', 'player:attacker']]);
 }

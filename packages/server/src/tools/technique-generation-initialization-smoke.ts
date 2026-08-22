@@ -199,9 +199,9 @@ function testBatchGenerationUsesNamingOnlyPromptAndBalancedAttributes(): void {
   const payload = JSON.parse(prompt.userMessage) as Record<string, unknown>;
   assert.equal(payload.count, 2);
   assert.equal(Array.isArray(payload.entries), true);
-  assert.ok(prompt.systemMessage.includes('只为一批内功拟定名称和描述'));
-  assert.ok(prompt.systemMessage.includes('不得输出 category'));
-  assert.ok(!prompt.systemMessage.includes('设计属性权重'));
+  assert.ok(prompt.systemMessage.includes('只為一批內功擬定名稱和描述'));
+  assert.ok(prompt.systemMessage.includes('不得輸出 category'));
+  assert.ok(!prompt.systemMessage.includes('設計屬性權重'));
 }
 
 async function testBatchGenerationConsumesOneJadePerTechnique(): Promise<void> {
@@ -1859,12 +1859,12 @@ async function testTechniquePromptIncludesRolledBudgetContext(): Promise<void> {
   assert.equal(artsPayload.generationContext?.budgetPercent, 1.1);
   assertApprox(Number(artsPayload.budgetContext?.actualTotalBudget), calcArtsBudgetMax('earth', 43) * 1.1, 0.0001);
   assert.ok(artsPayload.strengthRules?.calculationFormulas?.some((entry) => entry.includes('itemBudget')));
-  assert.ok(artsPrompt.systemMessage.includes('否则通常保持 structureStrength.chant 为 0'));
-  assert.ok(artsPrompt.userMessage.includes('真实吟唱息数'));
-  assert.ok(artsPrompt.userMessage.includes('禁止负数'));
+  assert.ok(artsPrompt.systemMessage.includes('否則通常保持 structureStrength.chant 為 0'));
+  assert.ok(artsPrompt.userMessage.includes('真實吟唱息數'));
+  assert.ok(artsPrompt.userMessage.includes('禁止負數'));
   assert.ok(artsPrompt.userMessage.includes('CV = sqrt'));
-  assert.ok(artsPrompt.userMessage.includes('严重失衡时回到1.0'));
-  assert.ok(artsPayload.outputChecklist?.some((entry) => entry.includes('不要输出 targetMode')));
+  assert.ok(artsPrompt.userMessage.includes('嚴重失衡時回到1.0'));
+  assert.ok(artsPayload.outputChecklist?.some((entry) => entry.includes('不要輸出 targetMode')));
   assert.deepEqual(artsPayload.allowedPercentBonusKeys, [
     'techLevel',
     'moveSpeed',
@@ -1894,7 +1894,7 @@ async function testTechniquePromptIncludesRolledBudgetContext(): Promise<void> {
   };
   assert.equal(internalPayload.budgetContext?.budgetType, 'internal_attr_ratio');
   assert.equal(internalPayload.budgetContext?.budgetPercent, 0.9);
-  assert.ok((internalPayload.generationContext?.toneGuidance ?? []).some((entry) => entry.includes('不使用灭世')));
+  assert.ok((internalPayload.generationContext?.toneGuidance ?? []).some((entry) => entry.includes('不使用滅世')));
 }
 
 async function testZeroRangeArtsStrengthExpandsAsMinimumCastRangeSkill(): Promise<void> {

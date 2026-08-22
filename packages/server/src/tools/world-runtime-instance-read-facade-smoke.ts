@@ -259,7 +259,7 @@ function testInstanceReadFacade() {
         persistent: true,
     }, deps);
     assert.equal(createdReal.meta.instanceId, 'real:yunlai_town');
-    assert.equal(createdReal.meta.displayName, '云来镇·真实');
+    assert.equal(createdReal.meta.displayName, '雲來鎮·真實');
     assert.equal(createdReal.meta.linePreset, 'real');
     assert.equal(createdReal.meta.lineIndex, 1);
     assert.equal(createdReal.meta.instanceOrigin, 'bootstrap');

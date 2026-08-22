@@ -9,8 +9,9 @@
  * 模式（按扩展名自动选择）：
  *   - json   ：只检查字符串值（排除字段见 convert-exclude-fields.json，至少含 char）
  *   - csv    ：只检查文本列（表头与 key 列跳过）
- *   - source ：TypeScript AST，只检查 StringLiteral 与无插值模板字符串
- *              （含 ${...} 插值的模板字符串不判违规，避免误报）
+ *   - source ：TypeScript AST，只检查 StringLiteral 与无插值模板字符串；
+ *              含 ${...} 插值的模板字符串只检查其插值表达式内嵌的字符串字面量
+ *              （模板结构文字不判违规，避免误报）
  *
  * 幂等性：对已转换完成的文件运行 → {ok:true, violations:[]}，退出码 0。
  *
@@ -173,7 +174,7 @@ export function checkCsvText(text, { file = '' } = {}) {
 /* Source 模式                                                         */
 /* ------------------------------------------------------------------ */
 
-/** 检查源码：只检查 StringLiteral 与无插值模板字符串；含插值模板不判违规。 */
+/** 检查源码：只检查 StringLiteral 与无插值模板字符串；含插值模板只查其内嵌字符串字面量。 */
 export function checkSourceText(text, { file = '' } = {}) {
   const violations = [];
   const sourceFile = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
@@ -198,7 +199,13 @@ export function checkSourceText(text, { file = '' } = {}) {
       return;
     }
     if (ts.isTemplateExpression(node)) {
-      return; // 含插值模板：不判违规（需人工改写，见转换器待改寫清單）
+      // 含插值模板：模板结构文字（head/middle/tail 原文）不判违规（需人工改写，
+      // 见转换器待改寫清單），但插值表达式内嵌的字符串字面量仍要递归检查——
+      // 例如 `${blocking ? '<div>确认前…</div>' : ''}` 中的简体字符串。
+      // TemplateHead/TemplateMiddle/TemplateTail 的 kind 不匹配任何检查分支，
+      // 结构文字自然跳过；forEachChild 会继续访问插值内的 StringLiteral 等节点。
+      ts.forEachChild(node, visit);
+      return;
     }
     ts.forEachChild(node, visit);
   };
@@ -257,7 +264,8 @@ function printHelp() {
   json    只检查字符串值（排除字段见 convert-exclude-fields.json，至少含 char）
   csv     只检查文本列（表头与 key 列跳过）
   source  TypeScript AST，只检查字符串字面量（注释 / 标识符 / 正则不动；
-          含 \${...} 插值的模板字符串不判违规）
+          含 \${...} 插值的模板字符串只查插值内嵌的字符串字面量，
+          模板结构文字不判违规）
 
  选项：
   --mode <json|csv|source>  强制指定模式
@@ -308,7 +316,13 @@ function loadScopeTargets() {
     walk(abs);
   }
   for (const csv of scope.csv || []) addFile(csv, 'csv');
-  for (const src of scope.sourceWhitelist || []) addFile(src, 'source');
+  for (const src of scope.sourceWhitelist || []) {
+    // 白名单条目默认 source 模式；.json / .csv 条目按扩展名选择模式，
+    // 让数据文件（如 shared 常量 JSON）也能纳入固定扫描范围。
+    const ext = path.extname(src).toLowerCase();
+    const mode = ext === '.json' ? 'json' : ext === '.csv' ? 'csv' : 'source';
+    addFile(src, mode);
+  }
   return targets;
 }
 

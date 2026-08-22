@@ -39,5 +39,5 @@ export function resolvePlayerFacingContentName(
       return normalizeContentDisplayNameText(candidate);
     }
   }
-  return normalizeContentDisplayNameText(fallback) || '未知内容';
+  return normalizeContentDisplayNameText(fallback) || '未知內容';
 }

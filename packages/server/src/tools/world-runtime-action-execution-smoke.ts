@@ -460,7 +460,7 @@ function testAutoRootFoundationAtCapUsesStructuredNotice() {
     const result = service.executeAction('player:1', 'realm:auto_refine_root_foundation:on', undefined, deps);
     assertQueuedViewTick(result, 2);
     assert.equal(deps.notices.at(-1)?.key, 'notice.action.auto-root-foundation-cap');
-    assert.equal(deps.notices.at(-1)?.message, '根基已达当前境界上限，已关闭自动凝练根基。');
+    assert.equal(deps.notices.at(-1)?.message, '根基已達當前境界上限，已關閉自動凝練根基。');
 }
 
 function testWorldMigrationSwitchesToRealLine() {
@@ -591,7 +591,7 @@ function testWorldMigrationRejectsPeacefulWhenShaBuffActive() {
     const deps = createDeps(log);
     assert.throws(() => {
         service.executeAction('player:1', 'world:migrate', 'peaceful', deps);
-    }, /无法迁回虚境/);
+    }, /無法遷回虛境/);
     assert.deepEqual(log, [
         ['getPlayerLocationOrThrow', 'player:1'],
         ['resolveCurrentTickForPlayerId', 'player:1'],
@@ -618,7 +618,7 @@ function testWorldMigrationRejectsBacklashWhenReturningPeaceful() {
     const deps = createDeps(log);
     assert.throws(() => {
         service.executeAction('player:1', 'world:migrate', 'peaceful', deps);
-    }, /无法迁回虚境/);
+    }, /無法遷回虛境/);
     assert.deepEqual(log, [
         ['getPlayerLocationOrThrow', 'player:1'],
         ['resolveCurrentTickForPlayerId', 'player:1'],

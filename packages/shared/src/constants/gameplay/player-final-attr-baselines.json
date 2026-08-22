@@ -63,7 +63,7 @@
     },
     {
       "realmLv": 2,
-      "realmName": "炼皮",
+      "realmName": "煉皮",
       "realmStage": "凡俗",
       "singleAttr": 24.05,
       "standardEquipmentSinglePool": 8.74,
@@ -117,7 +117,7 @@
     },
     {
       "realmLv": 3,
-      "realmName": "锻骨",
+      "realmName": "鍛骨",
       "realmStage": "凡俗",
       "singleAttr": 29.32,
       "standardEquipmentSinglePool": 9.52,
@@ -279,8 +279,8 @@
     },
     {
       "realmLv": 6,
-      "realmName": "养气",
-      "realmStage": "淬体",
+      "realmName": "養氣",
+      "realmStage": "淬體",
       "singleAttr": 54.62,
       "standardEquipmentSinglePool": 12.08,
       "stats": {
@@ -333,8 +333,8 @@
     },
     {
       "realmLv": 7,
-      "realmName": "通脉",
-      "realmStage": "淬体",
+      "realmName": "通脈",
+      "realmStage": "淬體",
       "singleAttr": 62.79,
       "standardEquipmentSinglePool": 13.01,
       "stats": {
@@ -387,8 +387,8 @@
     },
     {
       "realmLv": 8,
-      "realmName": "瑶光",
-      "realmStage": "淬体",
+      "realmName": "瑤光",
+      "realmStage": "淬體",
       "singleAttr": 71.89,
       "standardEquipmentSinglePool": 13.99,
       "stats": {
@@ -441,8 +441,8 @@
     },
     {
       "realmLv": 9,
-      "realmName": "开阳",
-      "realmStage": "锻骨",
+      "realmName": "開陽",
+      "realmStage": "鍛骨",
       "singleAttr": 107.72,
       "standardEquipmentSinglePool": 15.02,
       "stats": {
@@ -496,7 +496,7 @@
     {
       "realmLv": 10,
       "realmName": "玉衡",
-      "realmStage": "锻骨",
+      "realmStage": "鍛骨",
       "singleAttr": 128,
       "standardEquipmentSinglePool": 16.09,
       "stats": {
@@ -549,8 +549,8 @@
     },
     {
       "realmLv": 11,
-      "realmName": "天权",
-      "realmStage": "锻骨",
+      "realmName": "天權",
+      "realmStage": "鍛骨",
       "singleAttr": 150.07,
       "standardEquipmentSinglePool": 17.21,
       "stats": {
@@ -603,8 +603,8 @@
     },
     {
       "realmLv": 12,
-      "realmName": "天玑",
-      "realmStage": "通脉",
+      "realmName": "天璣",
+      "realmStage": "通脈",
       "singleAttr": 189.11,
       "standardEquipmentSinglePool": 18.38,
       "stats": {
@@ -658,7 +658,7 @@
     {
       "realmLv": 13,
       "realmName": "天璇",
-      "realmStage": "通脉",
+      "realmStage": "通脈",
       "singleAttr": 216.36,
       "standardEquipmentSinglePool": 19.6,
       "stats": {
@@ -711,8 +711,8 @@
     },
     {
       "realmLv": 14,
-      "realmName": "天枢",
-      "realmStage": "通脉",
+      "realmName": "天樞",
+      "realmStage": "通脈",
       "singleAttr": 246.15,
       "standardEquipmentSinglePool": 20.88,
       "stats": {
@@ -765,8 +765,8 @@
     },
     {
       "realmLv": 15,
-      "realmName": "宗师",
-      "realmStage": "通脉",
+      "realmName": "宗師",
+      "realmStage": "通脈",
       "singleAttr": 278.73,
       "standardEquipmentSinglePool": 22.21,
       "stats": {
@@ -819,7 +819,7 @@
     },
     {
       "realmLv": 16,
-      "realmName": "大宗师",
+      "realmName": "大宗師",
       "realmStage": "先天",
       "singleAttr": 339.86,
       "standardEquipmentSinglePool": 23.6,
@@ -873,7 +873,7 @@
     },
     {
       "realmLv": 17,
-      "realmName": "临渊",
+      "realmName": "臨淵",
       "realmStage": "先天",
       "singleAttr": 380.5,
       "standardEquipmentSinglePool": 25.06,
@@ -927,7 +927,7 @@
     },
     {
       "realmLv": 18,
-      "realmName": "叩仙门",
+      "realmName": "叩仙門",
       "realmStage": "先天",
       "singleAttr": 424.77,
       "standardEquipmentSinglePool": 26.57,
@@ -981,8 +981,8 @@
     },
     {
       "realmLv": 19,
-      "realmName": "练气一层",
-      "realmStage": "练气前",
+      "realmName": "練氣一層",
+      "realmStage": "練氣前",
       "singleAttr": 590.52,
       "standardEquipmentSinglePool": 27.82,
       "stats": {
@@ -1035,8 +1035,8 @@
     },
     {
       "realmLv": 20,
-      "realmName": "练气二层",
-      "realmStage": "练气前",
+      "realmName": "練氣二層",
+      "realmStage": "練氣前",
       "singleAttr": 677.31,
       "standardEquipmentSinglePool": 29.09,
       "stats": {
@@ -1089,8 +1089,8 @@
     },
     {
       "realmLv": 21,
-      "realmName": "练气三层",
-      "realmStage": "练气前",
+      "realmName": "練氣三層",
+      "realmStage": "練氣前",
       "singleAttr": 771.6,
       "standardEquipmentSinglePool": 30.4,
       "stats": {
@@ -1143,8 +1143,8 @@
     },
     {
       "realmLv": 22,
-      "realmName": "练气四层",
-      "realmStage": "练气前",
+      "realmName": "練氣四層",
+      "realmStage": "練氣前",
       "singleAttr": 873.79,
       "standardEquipmentSinglePool": 31.75,
       "stats": {
@@ -1197,8 +1197,8 @@
     },
     {
       "realmLv": 23,
-      "realmName": "练气五层",
-      "realmStage": "练气中",
+      "realmName": "練氣五層",
+      "realmStage": "練氣中",
       "singleAttr": 1070.74,
       "standardEquipmentSinglePool": 33.13,
       "stats": {
@@ -1251,8 +1251,8 @@
     },
     {
       "realmLv": 24,
-      "realmName": "练气六层",
-      "realmStage": "练气中",
+      "realmName": "練氣六層",
+      "realmStage": "練氣中",
       "singleAttr": 1196.04,
       "standardEquipmentSinglePool": 34.55,
       "stats": {
@@ -1305,8 +1305,8 @@
     },
     {
       "realmLv": 25,
-      "realmName": "练气七层",
-      "realmStage": "练气中",
+      "realmName": "練氣七層",
+      "realmStage": "練氣中",
       "singleAttr": 1509.66,
       "standardEquipmentSinglePool": 36,
       "stats": {
@@ -1359,8 +1359,8 @@
     },
     {
       "realmLv": 26,
-      "realmName": "练气八层",
-      "realmStage": "练气中",
+      "realmName": "練氣八層",
+      "realmStage": "練氣中",
       "singleAttr": 1719.09,
       "standardEquipmentSinglePool": 37.49,
       "stats": {
@@ -1413,8 +1413,8 @@
     },
     {
       "realmLv": 27,
-      "realmName": "练气九层",
-      "realmStage": "练气后",
+      "realmName": "練氣九層",
+      "realmStage": "練氣後",
       "singleAttr": 2085.99,
       "standardEquipmentSinglePool": 39.02,
       "stats": {
@@ -1467,8 +1467,8 @@
     },
     {
       "realmLv": 28,
-      "realmName": "练气巅峰",
-      "realmStage": "练气后",
+      "realmName": "練氣巔峰",
+      "realmStage": "練氣後",
       "singleAttr": 2341.59,
       "standardEquipmentSinglePool": 40.59,
       "stats": {
@@ -1521,8 +1521,8 @@
     },
     {
       "realmLv": 29,
-      "realmName": "练气大圆满",
-      "realmStage": "练气后",
+      "realmName": "練氣大圓滿",
+      "realmStage": "練氣後",
       "singleAttr": 2617.95,
       "standardEquipmentSinglePool": 42.2,
       "stats": {
@@ -1575,8 +1575,8 @@
     },
     {
       "realmLv": 30,
-      "realmName": "半步筑基",
-      "realmStage": "练气后",
+      "realmName": "半步築基",
+      "realmStage": "練氣後",
       "singleAttr": 2916.2,
       "standardEquipmentSinglePool": 43.85,
       "stats": {
@@ -1629,8 +1629,8 @@
     },
     {
       "realmLv": 31,
-      "realmName": "筑基一层",
-      "realmStage": "筑基前",
+      "realmName": "築基一層",
+      "realmStage": "築基前",
       "singleAttr": 3877.47,
       "standardEquipmentSinglePool": 45.9,
       "stats": {
@@ -1683,8 +1683,8 @@
     },
     {
       "realmLv": 32,
-      "realmName": "筑基二层",
-      "realmStage": "筑基前",
+      "realmName": "築基二層",
+      "realmStage": "築基前",
       "singleAttr": 4329.99,
       "standardEquipmentSinglePool": 48.03,
       "stats": {
@@ -1737,8 +1737,8 @@
     },
     {
       "realmLv": 33,
-      "realmName": "筑基三层",
-      "realmStage": "筑基前",
+      "realmName": "築基三層",
+      "realmStage": "築基前",
       "singleAttr": 4813.55,
       "standardEquipmentSinglePool": 50.23,
       "stats": {
@@ -1791,8 +1791,8 @@
     },
     {
       "realmLv": 34,
-      "realmName": "筑基四层",
-      "realmStage": "筑基前",
+      "realmName": "築基四層",
+      "realmStage": "築基前",
       "singleAttr": 5329.82,
       "standardEquipmentSinglePool": 52.52,
       "stats": {
@@ -1845,8 +1845,8 @@
     },
     {
       "realmLv": 35,
-      "realmName": "筑基五层",
-      "realmStage": "筑基中",
+      "realmName": "築基五層",
+      "realmStage": "築基中",
       "singleAttr": 6114.92,
       "standardEquipmentSinglePool": 54.88,
       "stats": {
@@ -1899,8 +1899,8 @@
     },
     {
       "realmLv": 36,
-      "realmName": "筑基六层",
-      "realmStage": "筑基中",
+      "realmName": "築基六層",
+      "realmStage": "築基中",
       "singleAttr": 6714.54,
       "standardEquipmentSinglePool": 57.33,
       "stats": {
@@ -1953,8 +1953,8 @@
     },
     {
       "realmLv": 37,
-      "realmName": "筑基七层",
-      "realmStage": "筑基中",
+      "realmName": "築基七層",
+      "realmStage": "築基中",
       "singleAttr": 7376.11,
       "standardEquipmentSinglePool": 59.86,
       "stats": {
@@ -2007,8 +2007,8 @@
     },
     {
       "realmLv": 38,
-      "realmName": "筑基八层",
-      "realmStage": "筑基中",
+      "realmName": "築基八層",
+      "realmStage": "築基中",
       "singleAttr": 8077.17,
       "standardEquipmentSinglePool": 62.49,
       "stats": {
@@ -2061,8 +2061,8 @@
     },
     {
       "realmLv": 39,
-      "realmName": "筑基九层",
-      "realmStage": "筑基后",
+      "realmName": "築基九層",
+      "realmStage": "築基後",
       "singleAttr": 9224.75,
       "standardEquipmentSinglePool": 65.2,
       "stats": {
@@ -2115,8 +2115,8 @@
     },
     {
       "realmLv": 40,
-      "realmName": "筑基巅峰",
-      "realmStage": "筑基后",
+      "realmName": "築基巔峰",
+      "realmStage": "築基後",
       "singleAttr": 10030.62,
       "standardEquipmentSinglePool": 68.01,
       "stats": {
@@ -2169,8 +2169,8 @@
     },
     {
       "realmLv": 41,
-      "realmName": "筑基大圆满",
-      "realmStage": "筑基后",
+      "realmName": "築基大圓滿",
+      "realmStage": "築基後",
       "singleAttr": 10875.53,
       "standardEquipmentSinglePool": 70.91,
       "stats": {
@@ -2224,7 +2224,7 @@
     {
       "realmLv": 42,
       "realmName": "半步金丹",
-      "realmStage": "筑基后",
+      "realmStage": "築基後",
       "singleAttr": 11760.2,
       "standardEquipmentSinglePool": 73.92,
       "stats": {
@@ -2277,7 +2277,7 @@
     },
     {
       "realmLv": 43,
-      "realmName": "金丹一层",
+      "realmName": "金丹一層",
       "realmStage": "金丹前",
       "singleAttr": 12667.58,
       "standardEquipmentSinglePool": 76.67,
@@ -2331,7 +2331,7 @@
     },
     {
       "realmLv": 44,
-      "realmName": "金丹二层",
+      "realmName": "金丹二層",
       "realmStage": "金丹前",
       "singleAttr": 13617.36,
       "standardEquipmentSinglePool": 79.49,
@@ -2385,7 +2385,7 @@
     },
     {
       "realmLv": 45,
-      "realmName": "金丹三层",
+      "realmName": "金丹三層",
       "realmStage": "金丹前",
       "singleAttr": 14611.03,
       "standardEquipmentSinglePool": 82.39,
@@ -2439,7 +2439,7 @@
     },
     {
       "realmLv": 46,
-      "realmName": "金丹四层",
+      "realmName": "金丹四層",
       "realmStage": "金丹前",
       "singleAttr": 15650.08,
       "standardEquipmentSinglePool": 85.38,
@@ -2493,7 +2493,7 @@
     },
     {
       "realmLv": 47,
-      "realmName": "金丹五层",
+      "realmName": "金丹五層",
       "realmStage": "金丹中",
       "singleAttr": 16735.97,
       "standardEquipmentSinglePool": 88.45,
@@ -2547,7 +2547,7 @@
     },
     {
       "realmLv": 48,
-      "realmName": "金丹六层",
+      "realmName": "金丹六層",
       "realmStage": "金丹中",
       "singleAttr": 17870.17,
       "standardEquipmentSinglePool": 91.6,
@@ -2601,7 +2601,7 @@
     },
     {
       "realmLv": 49,
-      "realmName": "金丹七层",
+      "realmName": "金丹七層",
       "realmStage": "金丹中",
       "singleAttr": 19054.12,
       "standardEquipmentSinglePool": 94.85,
@@ -2655,7 +2655,7 @@
     },
     {
       "realmLv": 50,
-      "realmName": "金丹八层",
+      "realmName": "金丹八層",
       "realmStage": "金丹中",
       "singleAttr": 20289.3,
       "standardEquipmentSinglePool": 98.18,
@@ -2709,8 +2709,8 @@
     },
     {
       "realmLv": 51,
-      "realmName": "金丹九层",
-      "realmStage": "金丹后",
+      "realmName": "金丹九層",
+      "realmStage": "金丹後",
       "singleAttr": 21577.15,
       "standardEquipmentSinglePool": 101.61,
       "stats": {
@@ -2763,8 +2763,8 @@
     },
     {
       "realmLv": 52,
-      "realmName": "金丹巅峰",
-      "realmStage": "金丹后",
+      "realmName": "金丹巔峰",
+      "realmStage": "金丹後",
       "singleAttr": 22919.15,
       "standardEquipmentSinglePool": 105.14,
       "stats": {
@@ -2817,8 +2817,8 @@
     },
     {
       "realmLv": 53,
-      "realmName": "金丹大圆满",
-      "realmStage": "金丹后",
+      "realmName": "金丹大圓滿",
+      "realmStage": "金丹後",
       "singleAttr": 24377.55,
       "standardEquipmentSinglePool": 108.76,
       "stats": {
@@ -2871,8 +2871,8 @@
     },
     {
       "realmLv": 54,
-      "realmName": "半步元婴",
-      "realmStage": "金丹后",
+      "realmName": "半步元嬰",
+      "realmStage": "金丹後",
       "singleAttr": 25892.1,
       "standardEquipmentSinglePool": 112.48,
       "stats": {
@@ -2925,8 +2925,8 @@
     },
     {
       "realmLv": 55,
-      "realmName": "元婴一层",
-      "realmStage": "元婴前",
+      "realmName": "元嬰一層",
+      "realmStage": "元嬰前",
       "singleAttr": 27401.59,
       "standardEquipmentSinglePool": 116.31,
       "stats": {
@@ -2979,8 +2979,8 @@
     },
     {
       "realmLv": 56,
-      "realmName": "元婴二层",
-      "realmStage": "元婴前",
+      "realmName": "元嬰二層",
+      "realmStage": "元嬰前",
       "singleAttr": 28968.82,
       "standardEquipmentSinglePool": 120.24,
       "stats": {
@@ -3033,8 +3033,8 @@
     },
     {
       "realmLv": 57,
-      "realmName": "元婴三层",
-      "realmStage": "元婴前",
+      "realmName": "元嬰三層",
+      "realmStage": "元嬰前",
       "singleAttr": 30595.52,
       "standardEquipmentSinglePool": 124.28,
       "stats": {
@@ -3087,8 +3087,8 @@
     },
     {
       "realmLv": 58,
-      "realmName": "元婴四层",
-      "realmStage": "元婴前",
+      "realmName": "元嬰四層",
+      "realmStage": "元嬰前",
       "singleAttr": 32283.34,
       "standardEquipmentSinglePool": 128.43,
       "stats": {
@@ -3141,8 +3141,8 @@
     },
     {
       "realmLv": 59,
-      "realmName": "元婴五层",
-      "realmStage": "元婴中",
+      "realmName": "元嬰五層",
+      "realmStage": "元嬰中",
       "singleAttr": 34032.66,
       "standardEquipmentSinglePool": 132.7,
       "stats": {
@@ -3195,8 +3195,8 @@
     },
     {
       "realmLv": 60,
-      "realmName": "元婴六层",
-      "realmStage": "元婴中",
+      "realmName": "元嬰六層",
+      "realmStage": "元嬰中",
       "singleAttr": 35837.39,
       "standardEquipmentSinglePool": 137.08,
       "stats": {
@@ -3249,8 +3249,8 @@
     },
     {
       "realmLv": 61,
-      "realmName": "元婴七层",
-      "realmStage": "元婴中",
+      "realmName": "元嬰七層",
+      "realmStage": "元嬰中",
       "singleAttr": 37697.44,
       "standardEquipmentSinglePool": 141.58,
       "stats": {
@@ -3303,8 +3303,8 @@
     },
     {
       "realmLv": 62,
-      "realmName": "元婴八层",
-      "realmStage": "元婴中",
+      "realmName": "元嬰八層",
+      "realmStage": "元嬰中",
       "singleAttr": 39613.93,
       "standardEquipmentSinglePool": 146.2,
       "stats": {
@@ -3357,8 +3357,8 @@
     },
     {
       "realmLv": 63,
-      "realmName": "元婴九层",
-      "realmStage": "元婴后",
+      "realmName": "元嬰九層",
+      "realmStage": "元嬰後",
       "singleAttr": 41587.98,
       "standardEquipmentSinglePool": 150.95,
       "stats": {
@@ -3411,8 +3411,8 @@
     },
     {
       "realmLv": 64,
-      "realmName": "元婴巅峰",
-      "realmStage": "元婴后",
+      "realmName": "元嬰巔峰",
+      "realmStage": "元嬰後",
       "singleAttr": 48270.71,
       "standardEquipmentSinglePool": 155.83,
       "stats": {
@@ -3465,8 +3465,8 @@
     },
     {
       "realmLv": 65,
-      "realmName": "元婴大圆满",
-      "realmStage": "元婴后",
+      "realmName": "元嬰大圓滿",
+      "realmStage": "元嬰後",
       "singleAttr": 51372.71,
       "standardEquipmentSinglePool": 160.84,
       "stats": {
@@ -3520,7 +3520,7 @@
     {
       "realmLv": 66,
       "realmName": "半步化神",
-      "realmStage": "元婴后",
+      "realmStage": "元嬰後",
       "singleAttr": 54600.6,
       "standardEquipmentSinglePool": 165.98,
       "stats": {
@@ -3573,7 +3573,7 @@
     },
     {
       "realmLv": 67,
-      "realmName": "化神一层",
+      "realmName": "化神一層",
       "realmStage": "化神前",
       "singleAttr": 58166.88,
       "standardEquipmentSinglePool": 171.27,
@@ -3627,7 +3627,7 @@
     },
     {
       "realmLv": 68,
-      "realmName": "化神二层",
+      "realmName": "化神二層",
       "realmStage": "化神前",
       "singleAttr": 61861.18,
       "standardEquipmentSinglePool": 173.36,
@@ -3681,7 +3681,7 @@
     },
     {
       "realmLv": 69,
-      "realmName": "化神三层",
+      "realmName": "化神三層",
       "realmStage": "化神前",
       "singleAttr": 65688.2,
       "standardEquipmentSinglePool": 175.44,
@@ -3735,7 +3735,7 @@
     },
     {
       "realmLv": 70,
-      "realmName": "化神四层",
+      "realmName": "化神四層",
       "realmStage": "化神前",
       "singleAttr": 69652.38,
       "standardEquipmentSinglePool": 177.53,
@@ -3789,7 +3789,7 @@
     },
     {
       "realmLv": 71,
-      "realmName": "化神五层",
+      "realmName": "化神五層",
       "realmStage": "化神中",
       "singleAttr": 73757.99,
       "standardEquipmentSinglePool": 179.62,
@@ -3843,7 +3843,7 @@
     },
     {
       "realmLv": 72,
-      "realmName": "化神六层",
+      "realmName": "化神六層",
       "realmStage": "化神中",
       "singleAttr": 78009.18,
       "standardEquipmentSinglePool": 181.71,
@@ -3897,7 +3897,7 @@
     },
     {
       "realmLv": 73,
-      "realmName": "化神七层",
+      "realmName": "化神七層",
       "realmStage": "化神中",
       "singleAttr": 82410.02,
       "standardEquipmentSinglePool": 183.8,
@@ -3951,7 +3951,7 @@
     },
     {
       "realmLv": 74,
-      "realmName": "化神八层",
+      "realmName": "化神八層",
       "realmStage": "化神中",
       "singleAttr": 86964.49,
       "standardEquipmentSinglePool": 185.89,
@@ -4005,8 +4005,8 @@
     },
     {
       "realmLv": 75,
-      "realmName": "化神九层",
-      "realmStage": "化神后",
+      "realmName": "化神九層",
+      "realmStage": "化神後",
       "singleAttr": 91617.78,
       "standardEquipmentSinglePool": 187.98,
       "stats": {
@@ -4059,8 +4059,8 @@
     },
     {
       "realmLv": 76,
-      "realmName": "化神巅峰",
-      "realmStage": "化神后",
+      "realmName": "化神巔峰",
+      "realmStage": "化神後",
       "singleAttr": 96430.53,
       "standardEquipmentSinglePool": 190.06,
       "stats": {
@@ -4113,8 +4113,8 @@
     },
     {
       "realmLv": 77,
-      "realmName": "化神大圆满",
-      "realmStage": "化神后",
+      "realmName": "化神大圓滿",
+      "realmStage": "化神後",
       "singleAttr": 101406.61,
       "standardEquipmentSinglePool": 192.15,
       "stats": {
@@ -4167,8 +4167,8 @@
     },
     {
       "realmLv": 78,
-      "realmName": "半步炼虚",
-      "realmStage": "化神后",
+      "realmName": "半步煉虛",
+      "realmStage": "化神後",
       "singleAttr": 106549.85,
       "standardEquipmentSinglePool": 194.24,
       "stats": {

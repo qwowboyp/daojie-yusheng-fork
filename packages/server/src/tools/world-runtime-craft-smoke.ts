@@ -1607,7 +1607,7 @@ async function testGatherActiveSearchRejectsCompetingPlayers(): Promise<void> {
 
   const startB = service.dispatchStartGather(playerB.playerId, { sourceId }, deps) as any;
   assert.equal(startB.ok, false);
-  assert.equal(startB.error, '当前已有玩家正在采集该目标。');
+  assert.equal(startB.error, '當前已有玩家正在採集該目標。');
   assert.equal(state.activeSearch?.playerId, playerA.playerId);
 
   playerB.gatherJob = {

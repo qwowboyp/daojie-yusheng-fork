@@ -185,7 +185,7 @@ function main(): void {
   const view = buildTechniqueActivityTaskListView(visiblePlayer);
   const miningTask = view.tasks.find((task) => task.kind === 'mining');
   assert.equal(miningTask?.state, 'running');
-  assert.equal(miningTask?.targetLabel, '玄铁矿');
+  assert.equal(miningTask?.targetLabel, '玄鐵礦');
   assert.equal(miningTask?.canCancel, true);
   assert.equal(miningTask?.workTotalTicks, 5);
   assert.equal(miningTask?.workRemainingTicks, 5);
@@ -225,7 +225,7 @@ function main(): void {
   const interruptResult = pipeline.interrupt(visiblePlayer, 'mining', 'attack', visibleContext);
   assert.equal(interruptResult.ok, true);
   assert.equal(interruptResult.messages?.[0]?.key, 'notice.craft.activity-interrupted-wait-generic');
-  assert.equal(interruptResult.messages?.[0]?.vars?.activityLabel, '挖矿');
+  assert.equal(interruptResult.messages?.[0]?.vars?.activityLabel, '挖礦');
   assert.equal(interruptResult.messages?.[0]?.vars?.reasonLabel, '出手');
   assert.equal(interruptResult.messages?.[0]?.vars?.ticks, 10);
   assert.equal(interruptResult.messages?.[0]?.text, undefined);

@@ -249,7 +249,7 @@ async function main(): Promise<void> {
   assert.equal(service.buildMarketUpdate(sellerId).myOrders.length, 0);
 
   const auctionBuyNow = await service.buyNow(buyerId, { itemKey, quantity: 1 });
-  assert.equal(auctionBuyNow.notices.some((entry) => String(entry.text ?? '').includes('当前没有可买入的挂售')), true);
+  assert.equal(auctionBuyNow.notices.some((entry) => String(entry.text ?? '').includes('當前沒有可買入的掛售')), true);
   assert.equal(buyerPlayer.wallet.balances[0].balance, 30);
   assert.equal(buyerPlayer.inventory.items.length, 0);
   assert.equal((service as unknown as { openOrders: Array<Record<string, unknown>> }).openOrders[0]?.remainingQuantity, 1);
@@ -269,7 +269,7 @@ async function main(): Promise<void> {
     unitPrice: 5,
     listingMode: 'market',
   });
-  assert.equal(ordinarySellAlongsideBuyOrder.notices.some((entry) => String(entry.text ?? '').includes('已在求购中')), true);
+  assert.equal(ordinarySellAlongsideBuyOrder.notices.some((entry) => String(entry.text ?? '').includes('已在求購中')), true);
   const auctionAlongsideBuyOrder = await service.createSellOrder(sellerId, {
     itemRef: { itemInstanceId: 'seller-rat-tail-instance' },
     quantity: 1,
@@ -302,12 +302,12 @@ async function main(): Promise<void> {
     itemKey: bidLot.itemKey,
     unitPrice: (service as unknown as { getAuctionMinimumBidPrice(value: number): number }).getAuctionMinimumBidPrice(bidLot.currentPrice),
   });
-  assert.equal(bidAlongsideOrdinarySell.notices.some((entry) => String(entry.text ?? '').includes('拍卖行出价')), true);
+  assert.equal(bidAlongsideOrdinarySell.notices.some((entry) => String(entry.text ?? '').includes('拍賣行出價')), true);
   assert.equal(openOrders.some((order) => order.id === 'order:buyer:ordinary-sell' && order.status === 'open'), true);
 
   buyerPlayer.wallet.balances[0].balance = 100;
   const enhancedBuyOrderResult = await service.createBuyOrder(buyerId, { itemKey: 'iron_sword#5', quantity: 1, unitPrice: 8 });
-  assert.equal(enhancedBuyOrderResult.notices.some((entry) => String(entry.text ?? '').includes('求购的物品不存在')), false);
+  assert.equal(enhancedBuyOrderResult.notices.some((entry) => String(entry.text ?? '').includes('求購的物品不存在')), false);
   const enhancedBuyOrder = (service as unknown as { openOrders: Array<Record<string, unknown>> }).openOrders.find((order) =>
     order.side === 'buy'
     && order.ownerId === buyerId
@@ -316,7 +316,7 @@ async function main(): Promise<void> {
   );
   assert.ok(enhancedBuyOrder);
   const duplicateEnhancedBuyOrderResult = await service.createBuyOrder(buyerId, { itemKey: 'iron_sword#5', quantity: 1, unitPrice: 8 });
-  assert.equal(duplicateEnhancedBuyOrderResult.notices.some((entry) => String(entry.text ?? '').includes('不能重复求购')), true);
+  assert.equal(duplicateEnhancedBuyOrderResult.notices.some((entry) => String(entry.text ?? '').includes('不能重複求購')), true);
   const enhancedBuyOrders = (service as unknown as { openOrders: Array<Record<string, unknown>> }).openOrders.filter((order) =>
     order.side === 'buy'
     && order.ownerId === buyerId

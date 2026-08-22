@@ -717,7 +717,7 @@ async function testCombatCommandUsesActionsPerTurn() {
             targetX: null,
             targetY: null,
         }, deps),
-        /本回合行动次数已用尽/,
+        /本回合行動次數已用盡/,
     );
     assert.deepEqual(log, [
         ['getPlayer', 'player:1'],
@@ -746,7 +746,7 @@ async function testCombatCommandUsesActionsPerTurn() {
             targetX: null,
             targetY: null,
         }, deps),
-        /本回合行动次数已用尽/,
+        /本回合行動次數已用盡/,
     );
     assert.deepEqual(log, [
         ['getPlayer', 'player:1'],

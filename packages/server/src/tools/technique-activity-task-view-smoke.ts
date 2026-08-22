@@ -112,7 +112,7 @@ function main(): void {
   const transmission = view.tasks.find((task) => task.kind === 'transmission');
   assert.equal(transmission?.kind, 'transmission');
   assert.equal(transmission?.state, 'interrupt_wait');
-  assert.equal(transmission?.label, '传法');
+  assert.equal(transmission?.label, '傳法');
   assert.equal(transmission?.targetLabel, '试炼传法诀');
   assert.equal(transmission?.workTotalTicks, 100);
   assert.equal(transmission?.workRemainingTicks, 80);

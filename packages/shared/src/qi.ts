@@ -295,7 +295,7 @@ export function getQiResourceDisplayLabel(resourceKey: string): string {
     return resourceKey;
   }
   if (parsed.family === 'aura' && parsed.form === 'refined' && parsed.element === 'neutral') {
-    return '灵气';
+    return '靈氣';
   }
   const elementLabel = parsed.element === 'neutral'
     ? ''
@@ -308,9 +308,9 @@ export function getQiResourceDisplayLabel(resourceKey: string): string {
     }[parsed.element] ?? parsed.element);
   const formLabel = parsed.form === 'dispersed' ? '逸散' : '';
   const familyLabel = ({
-    aura: '灵气',
-    sha: '煞气',
-    demonic: '魔气',
+    aura: '靈氣',
+    sha: '煞氣',
+    demonic: '魔氣',
   }[parsed.family] ?? parsed.family);
   return `${elementLabel}${formLabel}${familyLabel}` || resourceKey;
 }

@@ -65,23 +65,23 @@ function formatCompactNumber(absValue: number, unitValue: number, maximumFractio
 
 /** 中文四位进制大数单位。 */
 const COMPACT_NUMBER_UNITS = [
-  { value: 1e68, suffix: '无量大数' },
-  { value: 1e64, suffix: '不可思议' },
+  { value: 1e68, suffix: '無量大數' },
+  { value: 1e64, suffix: '不可思議' },
   { value: 1e60, suffix: '那由他' },
   { value: 1e56, suffix: '阿僧祇' },
-  { value: 1e52, suffix: '恒河沙' },
-  { value: 1e48, suffix: '极' },
-  { value: 1e44, suffix: '载' },
+  { value: 1e52, suffix: '恆河沙' },
+  { value: 1e48, suffix: '極' },
+  { value: 1e44, suffix: '載' },
   { value: 1e40, suffix: '正' },
-  { value: 1e36, suffix: '涧' },
-  { value: 1e32, suffix: '沟' },
+  { value: 1e36, suffix: '澗' },
+  { value: 1e32, suffix: '溝' },
   { value: 1e28, suffix: '穰' },
   { value: 1e24, suffix: '秭' },
   { value: 1e20, suffix: '垓' },
   { value: 1e16, suffix: '京' },
   { value: 1e12, suffix: '兆' },
-  { value: 1e8, suffix: '亿' },
-  { value: 1e4, suffix: '万' },
+  { value: 1e8, suffix: '億' },
+  { value: 1e4, suffix: '萬' },
 ] as const;
 
 /** 按当前数值选择最合适的中文大数单位。 */

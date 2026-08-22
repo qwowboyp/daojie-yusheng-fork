@@ -1,19 +1,22 @@
 /**
  * 系统邮件简体 → 台湾繁体 一键兼容转换。
  *
- * 范围：只处理 player_mail 中 sender_type = 'system' 的行，转换列仅 title / body / sender_label；
- * 其它 sender_type（unknown / 玩家来源等）逐行跳过并做字节级 hash 前后比对验证（byte-identical）。
- * 不触碰 player_mail_attachment（仅 itemId/count）、metadata_jsonb、skill-snapshot 表。
+ * 范围：同时处理 player_mail 与 player_mail_archive 中 sender_type = 'system' 的行，
+ * 转换列仅 title / body / sender_label；其它 sender_type（unknown / 玩家来源等）
+ * 逐行跳过并做字节级 hash 前后比对验证（byte-identical）。
+ * 不触碰 player_mail_attachment(_archive)（仅 itemId/count）、metadata_jsonb、skill-snapshot 表。
  * 这是 GM 手动一次性运维入口，不在 tick 热路径。
  *
  * 转换算法：两段式 —— 先词级（VOCABULARY_CN_TO_TW 最长匹配：服务器→伺服器 等 17 词），
  * 再字级（opencc-js Converter({from:'cn',to:'tw'}) 收尾），转换前对台湾标准保护词
- * （濃郁 / 馥郁 / 岩）做哨兵掩码，避免 opencc 非幂等误转。
+ * （濃郁 / 馥郁 / 岩）做哨兵掩码，避免 opencc 非幂等误转。两张表共用同一套检测与转换口径。
  *
- * apply 流程：建备份表（player_mail_pre_tw_backup，已存在则跳过不重建）→ 对 JS 检测到
- * 简体内容的系统邮件逐行 UPDATE（CAS 防漂移）→ 跳过行回读字节级 hash 验证 →
- * 回读残余简体系统邮件数（与转换相同的 JS 检测口径）→ 写固定转换标记
- * （gm_audit_log 审计 + player_mail_conversion_meta 标记表）。
+ * apply 流程（单事务覆盖两张表）：每表建独立备份表
+ * （player_mail_pre_tw_backup / player_mail_archive_pre_tw_backup，已存在则跳过不重建）→
+ * 对 JS 检测到简体内容的系统邮件逐行 UPDATE（CAS 防漂移，漂移行记失败并继续）→
+ * 跳过行回读字节级 hash 验证 → 回读残余简体系统邮件数（与转换相同的 JS 检测口径）→
+ * 每表写固定转换标记（gm_audit_log 审计 + player_mail_conversion_meta 标记表，
+ * conversion_key = <conversion_id>:<table>）。
  * 二次执行：JS 检测不到任何可转换行 → convertedRows=0、备份表不重建、不重复写标记，幂等。
  */
 import { Inject, Injectable, Logger, Optional, ServiceUnavailableException } from '@nestjs/common';
@@ -36,11 +39,31 @@ import {
 
 export const MAIL_SNAPSHOT_TRADITIONALIZE_CONVERSION_ID = 'mail_snapshot_traditionalize';
 
-const PLAYER_MAIL_TABLE = 'player_mail';
-const PLAYER_MAIL_PRE_TW_BACKUP_TABLE = 'player_mail_pre_tw_backup';
 const PLAYER_MAIL_CONVERSION_META_TABLE = 'player_mail_conversion_meta';
 const SYSTEM_SENDER_TYPE = 'system';
 const SAMPLE_LIMIT = 10;
+
+/**
+ * 参与转换的邮件表描述符：player_mail 与 player_mail_archive 走同一套管线，
+ * 仅表名 / 备份表名 / 时间戳列不同（archive 表只有 archived_at，没有 updated_at）。
+ */
+interface MailTableDescriptor {
+  tableName: string;
+  backupTable: string;
+  /** 该表是否有 updated_at 列（UPDATE 时是否同步刷新；archive 表不得触碰时间戳列）。 */
+  hasUpdatedAtColumn: boolean;
+}
+
+const MAIL_TABLE_DESCRIPTORS: readonly MailTableDescriptor[] = [
+  // 在线信箱表（player_mail.updated_at 由 UPDATE 刷新）
+  { tableName: 'player_mail', backupTable: 'player_mail_pre_tw_backup', hasUpdatedAtColumn: true },
+  // 归档信箱表（player_mail_archive 只有 archived_at，UPDATE 不触碰任何时间戳列）
+  {
+    tableName: 'player_mail_archive',
+    backupTable: 'player_mail_archive_pre_tw_backup',
+    hasUpdatedAtColumn: false,
+  },
+];
 
 /** 固定转换标记表（防止二次执行误重建备份表 / 重复转换）。 */
 const PLAYER_MAIL_CONVERSION_META_TABLE_SCHEMA = `
@@ -55,14 +78,27 @@ const PLAYER_MAIL_CONVERSION_META_TABLE_SCHEMA = `
   )
 `;
 
-export interface MailSnapshotTraditionalizeRunResult extends GmCompatConversionRunResult {
-  batchId: string | null;
+/** 单张表的转换明细（结果负载里的逐表 breakdown）。 */
+export interface MailSnapshotTraditionalizeTableResult {
+  tableName: string;
   backupTable: string;
   backupTableCreated: boolean;
+  matchedRows: number;
+  convertedRows: number;
+  skippedRows: number;
+  residualSimplifiedRows: number;
+}
+
+export interface MailSnapshotTraditionalizeRunResult extends GmCompatConversionRunResult {
+  batchId: string | null;
+  /** 两张表的逐表明细（player_mail / player_mail_archive）。 */
+  tables: MailSnapshotTraditionalizeTableResult[];
+  /** 全部表残余简体系统邮件总数（逐表之和）。 */
   residualSimplifiedRows: number;
 }
 
 interface MailCandidateRow {
+  tableName: string;
   mail_id: string;
   sender_type: string;
   sender_label: string | null;
@@ -78,6 +114,7 @@ interface MailCandidateRow {
 }
 
 interface PendingConvertRow {
+  tableName: string;
   mailId: string;
   title: string | null;
   body: string | null;
@@ -88,6 +125,7 @@ interface PendingConvertRow {
 }
 
 interface SkipRow {
+  tableName: string;
   mailId: string;
   contentHashBefore: string;
   contentHashAfter: string;
@@ -107,8 +145,7 @@ const createEmptyResult = (
   samples: [],
   errors: [],
   batchId: null,
-  backupTable: PLAYER_MAIL_PRE_TW_BACKUP_TABLE,
-  backupTableCreated: false,
+  tables: [],
   residualSimplifiedRows: 0,
 });
 
@@ -161,10 +198,28 @@ export class MailSnapshotTraditionalizeConversion {
       throw new ServiceUnavailableException('database_unavailable');
     }
     const result = createEmptyResult(options.mode);
-    const rows = await this.loadMailRows(pool);
-    this.populateScanResult(result, rows);
+
+    // 预扫描两张表（dry-run 与 apply 共用同一 JS 检测口径）
+    const rowsByTable = new Map<string, MailCandidateRow[]>();
+    for (const descriptor of MAIL_TABLE_DESCRIPTORS) {
+      rowsByTable.set(descriptor.tableName, await this.loadMailRows(pool, descriptor));
+    }
+    this.populateScanResult(result, rowsByTable);
 
     if (options.mode === 'dry-run') {
+      // dry-run 同样给出逐表 breakdown（backupTableCreated / residual 仅在 apply 阶段有意义）
+      for (const descriptor of MAIL_TABLE_DESCRIPTORS) {
+        const rows = rowsByTable.get(descriptor.tableName) ?? [];
+        result.tables.push({
+          tableName: descriptor.tableName,
+          backupTable: descriptor.backupTable,
+          backupTableCreated: false,
+          matchedRows: rows.length,
+          convertedRows: rows.filter((row) => row.can_convert).length,
+          skippedRows: rows.filter((row) => !row.can_convert).length,
+          residualSimplifiedRows: 0,
+        });
+      }
       await this.recordAudit(result, options);
       return result;
     }
@@ -172,73 +227,28 @@ export class MailSnapshotTraditionalizeConversion {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
-      result.backupTableCreated = await this.ensureBackupTable(client);
 
-      const pending: PendingConvertRow[] = [];
-      const skipped: SkipRow[] = [];
-      for (const row of rows) {
-        if (!row.is_system) {
-          // 非系统来源行：绝不更新，记录前后字节 hash 用于回读验证
-          skipped.push({
-            mailId: row.mail_id,
-            contentHashBefore: row.content_hash,
-            contentHashAfter: row.content_hash,
-          });
-          continue;
-        }
-        if (!row.can_convert) {
-          // 系统行但已是台湾标准（无简体）：跳过，前后 hash 必须一致
-          skipped.push({
-            mailId: row.mail_id,
-            contentHashBefore: row.content_hash,
-            contentHashAfter: row.content_hash,
-          });
-          continue;
-        }
-        pending.push({
-          mailId: row.mail_id,
-          title: row.title,
-          body: row.body,
-          senderLabel: row.sender_label,
-          convertedTitle: row.converted_title,
-          convertedBody: row.converted_body,
-          convertedSenderLabel: row.converted_sender_label,
-        });
+      // 逐表执行同一套转换管线（备份 → CAS 更新 → 跳过行验证 → 残余回读）
+      for (const descriptor of MAIL_TABLE_DESCRIPTORS) {
+        result.tables.push(
+          await this.convertSingleTable(client, descriptor, rowsByTable.get(descriptor.tableName) ?? [], result),
+        );
       }
-
-      // 逐行 CAS 更新（WHERE 携带原文快照，漂移即失败回滚全部）
-      let convertedCount = 0;
-      for (const entry of pending) {
-        const updated = await this.updateSystemMailRow(client, entry);
-        if ((updated.rowCount ?? 0) !== 1) {
-          result.failedRows += 1;
-          result.errors.push(`mail_convert_row_drift:${entry.mailId}`);
-          continue;
-        }
-        convertedCount += 1;
-      }
-
-      // 跳过行回读字节级验证（byte-identical：非 system 行 + 已台湾标准行）
-      const skipVerifyFailed = await this.verifySkippedRows(client, skipped, result);
-      result.failedRows += skipVerifyFailed;
-      if (skipVerifyFailed > 0) {
-        result.errors.push(`mail_skip_rows_not_byte_identical:${skipVerifyFailed}`);
-      }
-
-      result.convertedRows = convertedCount;
-      result.verifiedRows = convertedCount;
+      result.residualSimplifiedRows = result.tables.reduce(
+        (sum, table) => sum + table.residualSimplifiedRows,
+        0,
+      );
+      // 聚合实际转换数（扫描期是预估，CAS 漂移会让实际数低于预估）
+      result.convertedRows = result.tables.reduce((sum, table) => sum + table.convertedRows, 0);
+      result.verifiedRows = result.convertedRows;
       result.appliedAt = new Date().toISOString();
       result.batchId = createBatchId(result.appliedAt);
 
-      // 回读验证：残余简体系统邮件必须为 0（与转换相同的 JS 检测口径）
-      result.residualSimplifiedRows = await this.countResidualSimplifiedRows(client);
-      if (result.residualSimplifiedRows > 0) {
-        result.failedRows += result.residualSimplifiedRows;
-        result.errors.push(`mail_residual_simplified_rows:${result.residualSimplifiedRows}`);
+      // 固定转换标记：每表一条（conversion_key = <conversion_id>:<table>），防二次执行重复建备份表
+      await client.query(PLAYER_MAIL_CONVERSION_META_TABLE_SCHEMA);
+      for (const table of result.tables) {
+        await this.writeConversionMarker(client, table, result);
       }
-
-      // 固定转换标记：防二次执行重复建备份表 / 重复转换
-      await this.writeConversionMarker(client, result);
 
       await client.query('COMMIT');
     } catch (error) {
@@ -253,24 +263,113 @@ export class MailSnapshotTraditionalizeConversion {
       client.release();
     }
 
+    const tablesSummary = result.tables
+      .map((table) => `${table.tableName}(转换 ${table.convertedRows}/跳过 ${table.skippedRows})`)
+      .join('，');
     this.logger.log(
       `系统邮件繁体化完成：命中 ${result.matchedRows}，转换 ${result.convertedRows}，`
       + `跳过 ${result.skippedRows}，验证 ${result.verifiedRows}，残余简体 ${result.residualSimplifiedRows}，`
-      + `备份表 ${result.backupTableCreated ? '新建' : '已存在（跳过重建）'}`,
+      + `明细 ${tablesSummary}`,
     );
     await this.recordAudit(result, options);
     return result;
   }
 
-  /** 装载全部邮件行：system 行做简体检测；非 system 行标记跳过（字节级验证）。 */
-  private async loadMailRows(pool: Pool): Promise<MailCandidateRow[]> {
+  /**
+   * 单表转换管线：建备份表 → 分类（待转/跳过）→ 逐行 CAS 更新 → 跳过行字节级回读验证 →
+   * 残余简体回读计数。失败不抛出（记入 result.errors 并继续），由调用方事务统一提交或回滚。
+   */
+  private async convertSingleTable(
+    client: PoolClient,
+    descriptor: MailTableDescriptor,
+    rows: MailCandidateRow[],
+    result: MailSnapshotTraditionalizeRunResult,
+  ): Promise<MailSnapshotTraditionalizeTableResult> {
+    const tableResult: MailSnapshotTraditionalizeTableResult = {
+      tableName: descriptor.tableName,
+      backupTable: descriptor.backupTable,
+      backupTableCreated: false,
+      matchedRows: rows.length,
+      convertedRows: 0,
+      skippedRows: rows.filter((row) => !row.can_convert).length,
+      residualSimplifiedRows: 0,
+    };
+    tableResult.backupTableCreated = await this.ensureBackupTable(client, descriptor);
+
+    const pending: PendingConvertRow[] = [];
+    const skipped: SkipRow[] = [];
+    for (const row of rows) {
+      if (!row.is_system) {
+        // 非系统来源行：绝不更新，记录前后字节 hash 用于回读验证
+        skipped.push({
+          tableName: descriptor.tableName,
+          mailId: row.mail_id,
+          contentHashBefore: row.content_hash,
+          contentHashAfter: row.content_hash,
+        });
+        continue;
+      }
+      if (!row.can_convert) {
+        // 系统行但已是台湾标准（无简体）：跳过，前后 hash 必须一致
+        skipped.push({
+          tableName: descriptor.tableName,
+          mailId: row.mail_id,
+          contentHashBefore: row.content_hash,
+          contentHashAfter: row.content_hash,
+        });
+        continue;
+      }
+      pending.push({
+        tableName: descriptor.tableName,
+        mailId: row.mail_id,
+        title: row.title,
+        body: row.body,
+        senderLabel: row.sender_label,
+        convertedTitle: row.converted_title,
+        convertedBody: row.converted_body,
+        convertedSenderLabel: row.converted_sender_label,
+      });
+    }
+
+    // 逐行 CAS 更新（WHERE 携带原文快照；漂移行记为失败并继续处理后续行，其余成功行随事务一并提交）
+    let convertedCount = 0;
+    for (const entry of pending) {
+      const updated = await this.updateSystemMailRow(client, descriptor, entry);
+      if ((updated.rowCount ?? 0) !== 1) {
+        result.failedRows += 1;
+        result.errors.push(`${descriptor.tableName}_convert_row_drift:${entry.mailId}`);
+        continue;
+      }
+      convertedCount += 1;
+    }
+    tableResult.convertedRows = convertedCount;
+
+    // 跳过行回读字节级验证（byte-identical：非 system 行 + 已台湾标准行）
+    const skipVerifyFailed = await this.verifySkippedRows(client, descriptor, skipped, result);
+    result.failedRows += skipVerifyFailed;
+    if (skipVerifyFailed > 0) {
+      result.errors.push(`${descriptor.tableName}_skip_rows_not_byte_identical:${skipVerifyFailed}`);
+    }
+
+    // 回读验证：该表残余简体系统邮件必须为 0（与转换相同的 JS 检测口径）
+    tableResult.residualSimplifiedRows = await this.countResidualSimplifiedRows(client, descriptor);
+    if (tableResult.residualSimplifiedRows > 0) {
+      result.failedRows += tableResult.residualSimplifiedRows;
+      result.errors.push(`${descriptor.tableName}_residual_simplified_rows:${tableResult.residualSimplifiedRows}`);
+    }
+
+    return tableResult;
+  }
+
+  /** 装载单表全部邮件行：system 行做简体检测；非 system 行标记跳过（字节级验证）。 */
+  private async loadMailRows(pool: Pool, descriptor: MailTableDescriptor): Promise<MailCandidateRow[]> {
     const result = await pool.query(
       `SELECT mail_id,
               sender_type,
               sender_label,
               title,
               body
-         FROM ${PLAYER_MAIL_TABLE}
+         FROM ${descriptor.tableName}
         ORDER BY mail_id ASC`,
     );
     return result.rows.map((row) => {
@@ -291,6 +390,7 @@ export class MailSnapshotTraditionalizeConversion {
         ? convertTextToTraditional(senderLabel)
         : null;
       return {
+        tableName: descriptor.tableName,
         mail_id: mailId,
         sender_type: senderType,
         sender_label: senderLabel,
@@ -313,57 +413,64 @@ export class MailSnapshotTraditionalizeConversion {
 
   private populateScanResult(
     result: MailSnapshotTraditionalizeRunResult,
-    rows: MailCandidateRow[],
+    rowsByTable: Map<string, MailCandidateRow[]>,
   ): void {
-    result.matchedRows = rows.length;
-    result.skippedRows = rows.filter((row) => !row.can_convert).length;
-    result.convertedRows = rows.filter((row) => row.can_convert).length;
-    for (const row of rows) {
-      if (!row.can_convert || result.samples.length >= SAMPLE_LIMIT) {
-        continue;
+    for (const rows of rowsByTable.values()) {
+      result.matchedRows += rows.length;
+      result.skippedRows += rows.filter((row) => !row.can_convert).length;
+      result.convertedRows += rows.filter((row) => row.can_convert).length;
+      for (const row of rows) {
+        if (!row.can_convert || result.samples.length >= SAMPLE_LIMIT) {
+          continue;
+        }
+        result.samples.push({
+          id: `${row.tableName}:${row.mail_id}`,
+          name: row.sender_label ?? '',
+          status: row.convert_reason,
+          before: {
+            title: row.title ?? '',
+            body: row.body ?? '',
+            senderLabel: row.sender_label ?? '',
+          },
+          after: {
+            title: row.converted_title ?? '',
+            body: row.converted_body ?? '',
+            senderLabel: row.converted_sender_label ?? '',
+          },
+        } satisfies GmCompatConversionSample);
       }
-      result.samples.push({
-        id: row.mail_id,
-        name: row.sender_label ?? '',
-        status: row.convert_reason,
-        before: {
-          title: row.title ?? '',
-          body: row.body ?? '',
-          senderLabel: row.sender_label ?? '',
-        },
-        after: {
-          title: row.converted_title ?? '',
-          body: row.converted_body ?? '',
-          senderLabel: row.converted_sender_label ?? '',
-        },
-      } satisfies GmCompatConversionSample);
     }
   }
 
-  private async ensureBackupTable(client: PoolClient): Promise<boolean> {
+  private async ensureBackupTable(
+    client: PoolClient,
+    descriptor: MailTableDescriptor,
+  ): Promise<boolean> {
     const existing = await client.query(
       'SELECT to_regclass($1::text) AS reg',
-      [PLAYER_MAIL_PRE_TW_BACKUP_TABLE],
+      [descriptor.backupTable],
     );
     if (existing.rows[0]?.reg != null) {
       return false;
     }
     await client.query(
-      `CREATE TABLE ${PLAYER_MAIL_PRE_TW_BACKUP_TABLE} AS SELECT * FROM ${PLAYER_MAIL_TABLE}`,
+      `CREATE TABLE ${descriptor.backupTable} AS SELECT * FROM ${descriptor.tableName}`,
     );
     return true;
   }
 
   private async updateSystemMailRow(
     client: PoolClient,
+    descriptor: MailTableDescriptor,
     entry: PendingConvertRow,
   ): Promise<{ rowCount: number | null }> {
+    // archive 表没有 updated_at 列（只有 archived_at），UPDATE 不得触碰时间戳列
+    const updatedAtClause = descriptor.hasUpdatedAtColumn ? ',\n              updated_at = NOW()' : '';
     return client.query(
-      `UPDATE ${PLAYER_MAIL_TABLE}
+      `UPDATE ${descriptor.tableName}
           SET title = $2,
               body = $3,
-              sender_label = $4,
-              updated_at = NOW()
+              sender_label = $4${updatedAtClause}
         WHERE mail_id = $1
           AND sender_type = $5
           AND title IS NOT DISTINCT FROM $6
@@ -384,6 +491,7 @@ export class MailSnapshotTraditionalizeConversion {
 
   private async verifySkippedRows(
     client: PoolClient,
+    descriptor: MailTableDescriptor,
     skipped: SkipRow[],
     result: MailSnapshotTraditionalizeRunResult,
   ): Promise<number> {
@@ -396,7 +504,7 @@ export class MailSnapshotTraditionalizeConversion {
               sender_label,
               title,
               body
-         FROM ${PLAYER_MAIL_TABLE}
+         FROM ${descriptor.tableName}
         WHERE mail_id = ANY($1::varchar[])
         ORDER BY mail_id ASC`,
       [skipped.map((entry) => entry.mailId)],
@@ -416,19 +524,22 @@ export class MailSnapshotTraditionalizeConversion {
         : '';
       if (!row || afterHash !== entry.contentHashAfter) {
         failed += 1;
-        result.errors.push(`mail_skip_verify_failed:${entry.mailId}`);
+        result.errors.push(`${descriptor.tableName}_skip_verify_failed:${entry.mailId}`);
       }
     }
     return failed;
   }
 
-  private async countResidualSimplifiedRows(client: PoolClient): Promise<number> {
+  private async countResidualSimplifiedRows(
+    client: PoolClient,
+    descriptor: MailTableDescriptor,
+  ): Promise<number> {
     const result = await client.query(
       `SELECT mail_id,
               sender_label,
               title,
               body
-         FROM ${PLAYER_MAIL_TABLE}
+         FROM ${descriptor.tableName}
         WHERE sender_type = $1
         ORDER BY mail_id ASC`,
       [SYSTEM_SENDER_TYPE],
@@ -448,9 +559,11 @@ export class MailSnapshotTraditionalizeConversion {
 
   private async writeConversionMarker(
     client: PoolClient,
+    table: MailSnapshotTraditionalizeTableResult,
     result: MailSnapshotTraditionalizeRunResult,
   ): Promise<void> {
-    await client.query(PLAYER_MAIL_CONVERSION_META_TABLE_SCHEMA);
+    // conversion_key 按表区分：<conversion_id>:<table>
+    const conversionKey = `${MAIL_SNAPSHOT_TRADITIONALIZE_CONVERSION_ID}:${table.tableName}`;
     await client.query(
       `INSERT INTO ${PLAYER_MAIL_CONVERSION_META_TABLE}(
         conversion_key,
@@ -463,21 +576,24 @@ export class MailSnapshotTraditionalizeConversion {
       )
       VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb)
       ON CONFLICT (conversion_key) DO UPDATE
-        SET converted_rows = EXCLUDED.converted_rows,
+        SET batch_id = EXCLUDED.batch_id,
+            converted_at = EXCLUDED.converted_at,
+            converted_rows = EXCLUDED.converted_rows,
             skipped_rows = EXCLUDED.skipped_rows,
             residual_simplified_rows = EXCLUDED.residual_simplified_rows,
             payload = EXCLUDED.payload`,
       [
-        MAIL_SNAPSHOT_TRADITIONALIZE_CONVERSION_ID,
+        conversionKey,
         result.batchId,
         result.appliedAt,
-        result.convertedRows,
-        result.skippedRows,
-        result.residualSimplifiedRows,
+        table.convertedRows,
+        table.skippedRows,
+        table.residualSimplifiedRows,
         JSON.stringify({
           mode: result.mode,
-          backupTable: result.backupTable,
-          backupTableCreated: result.backupTableCreated,
+          tableName: table.tableName,
+          backupTable: table.backupTable,
+          backupTableCreated: table.backupTableCreated,
           errors: result.errors.slice(0, 20),
         }),
       ],
@@ -497,7 +613,11 @@ export class MailSnapshotTraditionalizeConversion {
         targetType: 'compat_conversion',
         targetId: MAIL_SNAPSHOT_TRADITIONALIZE_CONVERSION_ID,
         actor: options.actor ?? { tokenRev: null, ip: null, userAgent: null, receivedAt: Date.now() },
-        before: { mode: options.mode, scope: 'sender_type=system', columns: ['title', 'body', 'sender_label'] },
+        before: {
+          mode: options.mode,
+          scope: "sender_type='system' tables=player_mail+player_mail_archive",
+          columns: ['title', 'body', 'sender_label'],
+        },
         after: {
           matchedRows: result.matchedRows,
           convertedRows: result.convertedRows,
@@ -505,7 +625,15 @@ export class MailSnapshotTraditionalizeConversion {
           failedRows: result.failedRows,
           verifiedRows: result.verifiedRows,
           residualSimplifiedRows: result.residualSimplifiedRows,
-          backupTableCreated: result.backupTableCreated,
+          tables: result.tables.map((table) => ({
+            tableName: table.tableName,
+            backupTable: table.backupTable,
+            backupTableCreated: table.backupTableCreated,
+            matchedRows: table.matchedRows,
+            convertedRows: table.convertedRows,
+            skippedRows: table.skippedRows,
+            residualSimplifiedRows: table.residualSimplifiedRows,
+          })),
           batchId: result.batchId,
         },
         delta: {
@@ -535,9 +663,4 @@ function normalizeNullableString(value: unknown): string | null {
     return value;
   }
   return null;
-}
-
-function normalizeSafeInteger(value: unknown): number | null {
-  const normalized = Number(value);
-  return Number.isSafeInteger(normalized) && normalized >= 0 ? normalized : null;
 }

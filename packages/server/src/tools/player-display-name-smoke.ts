@@ -17,6 +17,6 @@ assert.equal(resolvePlayerDisplayName({ playerId, name: '  云来散修  ', disp
 assert.equal(resolvePlayerDisplayName({ playerId, playerName: '道友甲', displayName: playerId }), '道友甲');
 assert.equal(resolvePlayerDisplayName({ playerId, username: 'account-a' }, { fallback: '未知角色' }), 'account-a');
 assert.equal(resolvePlayerDisplayName({ playerId }, { fallback: playerId }), '未知玩家');
-assert.equal(resolveSectMemberDisplayName({ playerId, name: playerId }, playerId), '未知成员');
+assert.equal(resolveSectMemberDisplayName({ playerId, name: playerId }, playerId), '未知成員');
 
 console.log('player-display-name smoke ok');

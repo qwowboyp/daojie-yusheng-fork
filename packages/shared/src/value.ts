@@ -309,7 +309,7 @@ export function formatBuffMaxStacks(maxStacks?: number): string | null {
     return null;
   }
   return maxStacks! >= UNLIMITED_STACK_DISPLAY_THRESHOLD
-    ? '无限'
+    ? '無限'
     : formatNumber(maxStacks!);
 }
 
@@ -441,7 +441,7 @@ export function calculateConfiguredValueStatsValue(valueStats?: PartialNumericSt
         key,
         amount,
         quantifiedValue: amount,
-        note: '配置值 1 = 1 价值',
+        note: '配置值 1 = 1 價值',
       });
     }
     for (const element of ELEMENT_KEYS) {
@@ -452,7 +452,7 @@ export function calculateConfiguredValueStatsValue(valueStats?: PartialNumericSt
           key: `elementDamageBonus.${element}`,
           amount: bonus,
           quantifiedValue: bonus,
-          note: '配置值 1 = 1 价值',
+          note: '配置值 1 = 1 價值',
         });
       }
       const reduce = valueStats.elementDamageReduce?.[element] ?? 0;
@@ -462,7 +462,7 @@ export function calculateConfiguredValueStatsValue(valueStats?: PartialNumericSt
           key: `elementDamageReduce.${element}`,
           amount: reduce,
           quantifiedValue: reduce,
-          note: '配置值 1 = 1 价值',
+          note: '配置值 1 = 1 價值',
         });
       }
     }
@@ -472,12 +472,12 @@ export function calculateConfiguredValueStatsValue(valueStats?: PartialNumericSt
 
 /** 六维属性中文标签（模块级常量，避免每次调用重建）。 */
 const ATTR_LABELS: Record<string, string> = {
-  constitution: '体魄',
-  spirit: '神识',
+  constitution: '體魄',
+  spirit: '神識',
   perception: '身法',
   talent: '根骨',
   strength: '力道',
-  meridians: '经脉',
+  meridians: '經脈',
 };
 
 /** 返回六维属性的中文标签。 */
@@ -488,35 +488,35 @@ function getAttrLabel(key: string): string {
 /** 数值属性中文标签（模块级常量，避免每次调用重建）。 */
 const NUMERIC_STAT_LABELS: Record<string, string> = {
   maxHp: '最大生命',
-  maxQi: '最大灵力',
+  maxQi: '最大靈力',
   physAtk: '物攻',
   spellAtk: '法攻',
   physDef: '物防',
   spellDef: '法防',
   hit: '命中',
-  dodge: '闪避',
-  crit: '暴击',
+  dodge: '閃避',
+  crit: '暴擊',
   antiCrit: '免爆',
-  critDamage: '暴伤',
+  critDamage: '暴傷',
   breakPower: '破招',
   resolvePower: '化解',
-  maxQiOutputPerTick: '每息灵力输出上限',
+  maxQiOutputPerTick: '每息靈力輸出上限',
   moveSpeed: '移速',
-  qiRegenRate: '灵力回复',
-  hpRegenRate: '生命回复',
-  cooldownSpeed: '冷却速度',
-  auraCostReduce: '灵气消耗减免',
-  auraPowerRate: '灵气强度',
-  playerExpRate: '境界修为倍率',
-  techniqueExpRate: '功法经验倍率',
-  realmExpPerTick: '境界修炼效率',
-  techniqueExpPerTick: '功法修炼效率',
+  qiRegenRate: '靈力回覆',
+  hpRegenRate: '生命回覆',
+  cooldownSpeed: '冷卻速度',
+  auraCostReduce: '靈氣消耗減免',
+  auraPowerRate: '靈氣強度',
+  playerExpRate: '境界修為倍率',
+  techniqueExpRate: '功法經驗倍率',
+  realmExpPerTick: '境界修煉效率',
+  techniqueExpPerTick: '功法修煉效率',
   lootRate: '掉落倍率',
   rareLootRate: '稀有掉落倍率',
-  viewRange: '视野范围',
-  extraRange: '额外射程',
-  extraArea: '额外范围',
-  actionsPerTurn: '每回合行动次数',
+  viewRange: '視野範圍',
+  extraRange: '額外射程',
+  extraArea: '額外範圍',
+  actionsPerTurn: '每回合行動次數',
 };
 
 /** 返回数值属性的中文标签。 */
@@ -692,11 +692,11 @@ function describeStatBonus(stats?: PartialNumericStats, mode: BuffModifierMode =
   for (const element of ELEMENT_KEYS) {
     const bonus = stats.elementDamageBonus?.[element];
     if (bonus) {
-      parts.push(`${element}行增伤+${formatNumber(bonus)}`);
+      parts.push(`${element}行增傷+${formatNumber(bonus)}`);
     }
     const reduce = stats.elementDamageReduce?.[element];
     if (reduce) {
-      parts.push(`${element}行减伤+${formatNumber(reduce)}`);
+      parts.push(`${element}行減傷+${formatNumber(reduce)}`);
     }
   }
   return parts;
@@ -713,19 +713,19 @@ function describeEquipmentConditions(effect: EquipmentEffectDef): string {
   const parts = conditions.map((condition) => {
     switch (condition.type) {
       case 'time_segment':
-        return `时段:${condition.in.join('/')}`;
+        return `時段:${condition.in.join('/')}`;
       case 'map':
-        return `地图:${condition.mapIds.join('/')}`;
+        return `地圖:${condition.mapIds.join('/')}`;
       case 'hp_ratio':
         return `生命${condition.op}${Math.round(condition.value * 100)}%`;
       case 'qi_ratio':
-        return `灵力${condition.op}${Math.round(condition.value * 100)}%`;
+        return `靈力${condition.op}${Math.round(condition.value * 100)}%`;
       case 'is_cultivating':
-        return condition.value ? '修炼中' : '未修炼';
+        return condition.value ? '修煉中' : '未修煉';
       case 'has_buff':
-        return `需带有${condition.buffId}${condition.minStacks ? `${condition.minStacks}层` : ''}`;
+        return `需帶有${condition.buffId}${condition.minStacks ? `${condition.minStacks}層` : ''}`;
       case 'target_kind':
-        return `目标:${condition.in.join('/')}`;
+        return `目標:${condition.in.join('/')}`;
       default:
         return '';
     }
@@ -736,17 +736,17 @@ function describeEquipmentConditions(effect: EquipmentEffectDef): string {
 /** 返回装备触发时机的中文标签。 */
 function getEquipmentTriggerLabel(trigger: string): string {
   const labels: Record<string, string> = {
-    on_equip: '装备时',
-    on_unequip: '卸下时',
+    on_equip: '裝備時',
+    on_unequip: '卸下時',
     on_tick: '每息',
-    on_move: '移动后',
-    on_attack: '攻击后',
-    on_hit: '受击后',
-    on_kill: '击杀后',
-    on_skill_cast: '施法后',
-    on_cultivation_tick: '修炼时',
-    on_time_segment_changed: '时段切换时',
-    on_enter_map: '入图时',
+    on_move: '移動後',
+    on_attack: '攻擊後',
+    on_hit: '受擊後',
+    on_kill: '擊殺後',
+    on_skill_cast: '施法後',
+    on_cultivation_tick: '修煉時',
+    on_time_segment_changed: '時段切換時',
+    on_enter_map: '入圖時',
   };
   return labels[trigger] ?? trigger;
 }
@@ -758,35 +758,35 @@ function describeEquipmentEffect(effect: EquipmentEffectDef): string {
   const conditionText = describeEquipmentConditions(effect);
   switch (effect.type) {
     case 'stat_aura':
-      return `常驻特效:${[...describeAttrBonus(effect.attrs, effect.attrMode), ...describeStatBonus(effect.stats, effect.statMode)].join(' / ') || '无数值变化'}${conditionText}`;
+      return `常駐特效:${[...describeAttrBonus(effect.attrs, effect.attrMode), ...describeStatBonus(effect.stats, effect.statMode)].join(' / ') || '無數值變化'}${conditionText}`;
     case 'progress_boost':
-      return `推进特效:${[...describeAttrBonus(effect.attrs, effect.attrMode), ...describeStatBonus(effect.stats, effect.statMode)].join(' / ') || '无数值变化'}${conditionText}`;
+      return `推進特效:${[...describeAttrBonus(effect.attrs, effect.attrMode), ...describeStatBonus(effect.stats, effect.statMode)].join(' / ') || '無數值變化'}${conditionText}`;
     case 'periodic_cost': {
       const amount = effect.mode === 'flat'
         ? formatNumber(effect.value)
-        : `${formatNumber(effect.value / 100)}% ${effect.mode === 'max_ratio_bp' ? '最大' : '当前'}${effect.resource === 'hp' ? '生命' : '灵力'}`;
-      const triggerLabel = effect.trigger === 'on_cultivation_tick' ? '修炼时每息' : '每息';
-      return `持续代价:${triggerLabel}损失 ${amount}${conditionText}`;
+        : `${formatNumber(effect.value / 100)}% ${effect.mode === 'max_ratio_bp' ? '最大' : '當前'}${effect.resource === 'hp' ? '生命' : '靈力'}`;
+      const triggerLabel = effect.trigger === 'on_cultivation_tick' ? '修煉時每息' : '每息';
+      return `持續代價:${triggerLabel}損失 ${amount}${conditionText}`;
     }
     case 'timed_buff': {
       const stackLimit = formatBuffMaxStacks(effect.buff.maxStacks);
       const metaParts = [
         getEquipmentTriggerLabel(effect.trigger),
-        effect.target === 'target' ? '目标' : '自身',
+        effect.target === 'target' ? '目標' : '自身',
         `${effect.buff.duration}息`,
       ];
       if (stackLimit) {
-        metaParts.push(`最多${stackLimit}层`);
+        metaParts.push(`最多${stackLimit}層`);
       }
       if (effect.cooldown !== undefined) {
-        metaParts.push(`冷却${formatNumber(effect.cooldown)}息`);
+        metaParts.push(`冷卻${formatNumber(effect.cooldown)}息`);
       }
       if (effect.chance !== undefined) {
         metaParts.push(`概率${formatNumber(effect.chance * 100)}%`);
       }
       const effectParts = [...describeAttrBonus(effect.buff.attrs, effect.buff.attrMode ?? 'percent'), ...describeStatBonus(effect.buff.stats, effect.buff.statMode ?? 'percent')];
       const descPart = effect.buff.desc ? `；${effect.buff.desc}` : '';
-      return `触发特效:${metaParts.join(' · ')}，获得${effect.buff.name}${conditionText}${effectParts.length > 0 ? `，效果:${effectParts.join(' / ')}` : ''}${descPart}`;
+      return `觸發特效:${metaParts.join(' · ')}，獲得${effect.buff.name}${conditionText}${effectParts.length > 0 ? `，效果:${effectParts.join(' / ')}` : ''}${descPart}`;
     }
   }
 }
@@ -796,36 +796,36 @@ function getFormulaVarLabel(variable: SkillFormulaVar): string {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
   const labels: Partial<Record<SkillFormulaVar, string>> = {
-    techLevel: '功法层数',
-    'caster.realmLv': '自身境界等级',
-    'caster.craft.alchemy.level': '自身炼丹等级',
-    'caster.craft.forging.level': '自身炼器等级',
-    'caster.craft.enhancement.level': '自身强化等级',
-    'caster.craft.transmission.level': '自身传法等级',
-    'caster.craft.gather.level': '自身采集等级',
-    'caster.craft.mining.level': '自身挖矿等级',
-    'caster.craft.building.level': '自身营造等级',
-    'caster.craft.formation.level': '自身阵法等级',
-    targetCount: '目标数量',
-    'caster.hp': '自身当前生命',
+    techLevel: '功法層數',
+    'caster.realmLv': '自身境界等級',
+    'caster.craft.alchemy.level': '自身煉丹等級',
+    'caster.craft.forging.level': '自身煉器等級',
+    'caster.craft.enhancement.level': '自身強化等級',
+    'caster.craft.transmission.level': '自身傳法等級',
+    'caster.craft.gather.level': '自身採集等級',
+    'caster.craft.mining.level': '自身挖礦等級',
+    'caster.craft.building.level': '自身營造等級',
+    'caster.craft.formation.level': '自身陣法等級',
+    targetCount: '目標數量',
+    'caster.hp': '自身當前生命',
     'caster.maxHp': '自身最大生命',
-    'caster.qi': '自身当前灵力',
-    'caster.maxQi': '自身最大灵力',
-    'target.debuffCount': '目标减益数量',
-    'target.distance': '目标距离',
-    'target.hp': '目标当前生命',
-    'target.maxHp': '目标最大生命',
-    'target.qi': '目标当前灵力',
-    'target.maxQi': '目标最大灵力',
+    'caster.qi': '自身當前靈力',
+    'caster.maxQi': '自身最大靈力',
+    'target.debuffCount': '目標減益數量',
+    'target.distance': '目標距離',
+    'target.hp': '目標當前生命',
+    'target.maxHp': '目標最大生命',
+    'target.qi': '目標當前靈力',
+    'target.maxQi': '目標最大靈力',
   };
   if (labels[variable]) {
     return labels[variable]!;
   }
   if (variable.startsWith('caster.buff.') && variable.endsWith('.stacks')) {
-    return '自身对应状态层数';
+    return '自身對應狀態層數';
   }
   if (variable.startsWith('target.buff.') && variable.endsWith('.stacks')) {
-    return '目标对应状态层数';
+    return '目標對應狀態層數';
   }
   if (variable.startsWith('caster.stat.')) {
     return `自身${getNumericStatLabel(variable.slice('caster.stat.'.length))}`;
@@ -834,10 +834,10 @@ function getFormulaVarLabel(variable: SkillFormulaVar): string {
     return `自身${getAttrLabel(variable.slice('caster.attr.'.length))}`;
   }
   if (variable.startsWith('target.stat.')) {
-    return `目标${getNumericStatLabel(variable.slice('target.stat.'.length))}`;
+    return `目標${getNumericStatLabel(variable.slice('target.stat.'.length))}`;
   }
   if (variable.startsWith('target.attr.')) {
-    return `目标${getAttrLabel(variable.slice('target.attr.'.length))}`;
+    return `目標${getAttrLabel(variable.slice('target.attr.'.length))}`;
   }
   return variable;
 }
@@ -977,7 +977,7 @@ function quantifySkillFormula(formula: SkillFormula): SkillValueSummary {
     return {
       quantifiedValue: 0,
       breakdown: [],
-      unquantified: [`基础值 ${formatNumber(formula)}`],
+      unquantified: [`基礎值 ${formatNumber(formula)}`],
       baseQuantifiedValue: 0,
       multiplier: 1,
     };
@@ -1031,7 +1031,7 @@ function quantifySkillFormula(formula: SkillFormula): SkillValueSummary {
         breakdown: body.breakdown.map((entry) => ({
           ...entry,
           quantifiedValue: entry.quantifiedValue * multiplier,
-          note: multiplier !== 1 ? `乘区 x${formatNumber(multiplier)}` : entry.note,
+          note: multiplier !== 1 ? `乘區 x${formatNumber(multiplier)}` : entry.note,
         })),
         unquantified: body.unquantified,
         baseQuantifiedValue: body.baseQuantifiedValue,
@@ -1059,7 +1059,7 @@ function quantifySkillFormula(formula: SkillFormula): SkillValueSummary {
         breakdown: body.breakdown.map((entry) => ({
           ...entry,
           quantifiedValue: entry.quantifiedValue * multiplier,
-          note: multiplier !== 1 ? `乘区 x${formatNumber(multiplier)}` : entry.note,
+          note: multiplier !== 1 ? `乘區 x${formatNumber(multiplier)}` : entry.note,
         })),
         unquantified: uniqueStrings([...body.unquantified, ...multiplierUnquantified]),
         baseQuantifiedValue: body.baseQuantifiedValue,
@@ -1070,7 +1070,7 @@ function quantifySkillFormula(formula: SkillFormula): SkillValueSummary {
     return {
       quantifiedValue: 0,
       breakdown: [],
-      unquantified: ['复合乘法结构'],
+      unquantified: ['複合乘法結構'],
       baseQuantifiedValue: 0,
       multiplier: 1,
     };
@@ -1092,7 +1092,7 @@ function quantifySkillFormula(formula: SkillFormula): SkillValueSummary {
   return {
     quantifiedValue: 0,
     breakdown: [],
-    unquantified: ['复杂公式结构'],
+    unquantified: ['複雜公式結構'],
     baseQuantifiedValue: 0,
     multiplier: 1,
   };
@@ -1112,7 +1112,7 @@ export function calculateAttributesValue(attrs?: Partial<Attributes>): ValueSumm
         key,
         amount,
         quantifiedValue: amount * ATTRIBUTE_VALUE_PER_POINT[key],
-        note: `每点 ${ATTRIBUTE_VALUE_PER_POINT[key]} 价值`,
+        note: `每點 ${ATTRIBUTE_VALUE_PER_POINT[key]} 價值`,
       });
     }
   }
@@ -1134,7 +1134,7 @@ export function calculateNumericStatsValue(stats?: PartialNumericStats): ValueSu
         key,
         amount,
         quantifiedValue: amount / pointsPerValue,
-        note: `${pointsPerValue} 点 = 1 价值`,
+        note: `${pointsPerValue} 點 = 1 價值`,
       });
     }
     for (const element of ELEMENT_KEYS) {
@@ -1145,7 +1145,7 @@ export function calculateNumericStatsValue(stats?: PartialNumericStats): ValueSu
           key: `elementDamageBonus.${element}`,
           amount: bonus,
           quantifiedValue: bonus,
-          note: '按 1 点 = 1 价值',
+          note: '按 1 點 = 1 價值',
         });
       }
       const reduce = stats.elementDamageReduce?.[element] ?? 0;
@@ -1155,7 +1155,7 @@ export function calculateNumericStatsValue(stats?: PartialNumericStats): ValueSu
           key: `elementDamageReduce.${element}`,
           amount: reduce,
           quantifiedValue: reduce,
-          note: '按 1 点 = 1 价值',
+          note: '按 1 點 = 1 價值',
         });
       }
     }
@@ -1216,7 +1216,7 @@ export function calculateEquipmentValue(
     .map((entry) => ({
       ...entry,
       quantifiedValue: entry.quantifiedValue * attrValueMultiplier,
-      note: `${entry.note ?? '装备价值'}；六维乘区 x${formatNumber(attrValueMultiplier)}`,
+      note: `${entry.note ?? '裝備價值'}；六維乘區 x${formatNumber(attrValueMultiplier)}`,
     }));
   const effectDescriptions = (item.effects ?? []).map((effect) => describeEquipmentEffect(effect));
   const summary = finalizeSummary(actualBreakdown, effectDescriptions);
@@ -1250,7 +1250,7 @@ export function calculateBuffValue(
     kind: 'buff' as const,
     key: `${effect.buffId}.${entry.key}`,
     quantifiedValue: entry.quantifiedValue * durationMultiplier,
-    note: `持续 ${duration} 息，折算 x${formatNumber(durationMultiplier)}`,
+    note: `持續 ${duration} 息，折算 x${formatNumber(durationMultiplier)}`,
   }));
   const unquantified = [...summary.unquantified];
   if (effect.desc) {

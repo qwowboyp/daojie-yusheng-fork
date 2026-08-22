@@ -185,7 +185,7 @@ async function main(): Promise<void> {
   const playerAfterReject = runtimePlayers.get(playerId)!;
   assert.equal(playerAfterReject.inventory.items.find((entry) => entry.itemId === HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID)?.count, 49);
   assert.equal(playerAfterReject.inventory.items.find((entry) => entry.itemId === 'sect_founding_token'), undefined);
-  assert.equal(rejected.notices[0]?.text, '功德不足，无法购买。');
+  assert.equal(rejected.notices[0]?.text, '功德不足，無法購買。');
 
   const meritStack = playerAfterReject.inventory.items.find((entry) => entry.itemId === HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID);
   assert.ok(meritStack);

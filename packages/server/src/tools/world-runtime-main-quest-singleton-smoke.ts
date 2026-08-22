@@ -176,7 +176,7 @@ function testNpcQuestAcceptRejectsSecondMainQuest() {
         queuePlayerNotice() {
             throw new Error('blocked main quest should not queue notice');
         },
-    }), /当前已有进行中的主线任务/);
+    }), /當前已有進行中的主線任務/);
     assert.deepEqual(player.quests.quests.map((quest: AnyRecord) => quest.id), ['quest:current-main']);
 }
 
@@ -215,7 +215,7 @@ function testNpcQuestAcceptRejectsLockedNextChapter() {
         queuePlayerNotice() {
             throw new Error('locked next chapter should not queue notice');
         },
-    }), /前置任务尚未完成/);
+    }), /前置任務尚未完成/);
     assert.deepEqual(player.quests.quests.map((quest: AnyRecord) => quest.id), ['quest:chapter-one']);
 }
 

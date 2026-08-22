@@ -91,14 +91,14 @@ export async function runTransmissionAssertions(
 
   // 4. 传法台只收残卷，且拒绝已丢失功法身份的空书。
   const wrongItem = await service.createSellOrder(sellerId, { itemRef: { itemInstanceId: 'seller-rat-tail' }, quantity: 1, unitPrice: 5, listingMode: 'transmission' });
-  assert.ok(noticeText(wrongItem).includes('只流通自创功法残卷'), noticeText(wrongItem));
+  assert.ok(noticeText(wrongItem).includes('只流通自創功法殘卷'), noticeText(wrongItem));
   const emptyBook = await service.createSellOrder(sellerId, { itemRef: { itemInstanceId: 'seller-empty-book' }, quantity: 1, unitPrice: 5, listingMode: 'transmission' });
-  assert.ok(noticeText(emptyBook).includes('残缺不全'), noticeText(emptyBook));
+  assert.ok(noticeText(emptyBook).includes('殘缺不全'), noticeText(emptyBook));
   assert.equal(internals.openOrders.length, 0);
 
   // 5. 两卷不同功法的残卷各自寄售，必须是两条独立的单。
   const consignA = await service.createSellOrder(sellerId, { itemRef: { itemInstanceId: 'seller-scroll-a' }, quantity: 1, unitPrice: 12, listingMode: 'transmission' });
-  assert.ok(noticeText(consignA).includes('传法台寄售'), noticeText(consignA));
+  assert.ok(noticeText(consignA).includes('傳法臺寄售'), noticeText(consignA));
   assert.equal(consignA.transmissionListingsChanged, true, '传法台上架没有标记分页刷新');
   await service.createSellOrder(sellerId, { itemRef: { itemInstanceId: 'seller-scroll-b' }, quantity: 1, unitPrice: 20, listingMode: 'transmission' });
   assert.equal(internals.openOrders.length, 2, '同 itemId 的两卷残卷被合并成了一条挂单');
@@ -158,7 +158,7 @@ export async function runTransmissionAssertions(
   // 10. 核心：一口价买入后，买家拿到的残卷仍带 learnTechniqueId（可正常学习）。
   const buyerBalanceBefore = buyerPlayer.wallet.balances[0].balance;
   const bought = await internals.buyTransmissionLot(buyerId, { itemKey: lotA.itemKey });
-  assert.ok(noticeText(bought).includes('传法台求得'), noticeText(bought));
+  assert.ok(noticeText(bought).includes('傳法臺求得'), noticeText(bought));
   assert.equal(bought.transmissionListingsChanged, true, '传法台成交没有标记分页刷新');
   const received = buyerPlayer.inventory.items.find((item) => item.itemId === CUSTOM_TECHNIQUE_BOOK_ITEM_ID);
   assert.ok(received, '买家没有收到功法残卷');

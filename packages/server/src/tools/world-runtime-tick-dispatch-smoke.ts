@@ -314,7 +314,7 @@ async function testTickDispatchFacade() {
             { effects: [{ type: 'damage' }] },
             deps,
         ),
-        /安全区内无法发起攻击/,
+        /安全區內無法發起攻擊/,
     );
 }
 

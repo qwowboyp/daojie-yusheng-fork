@@ -411,7 +411,7 @@ async function testPlayerBasicAttackRejectsDeadPlayerTarget() {
   }), log);
   await assert.rejects(
     () => service.dispatchBasicAttackToPlayer(attacker, target.playerId, 'spell', 14, 8, deps),
-    /目标已死亡/,
+    /目標已死亡/,
   );
   assert.deepEqual(log, [
     ['getInstanceRuntimeOrThrow', 'real:yunlai_town'],
@@ -1428,7 +1428,7 @@ function testPlannedContainerAttackDoesNotFallbackToTerrainWhenContainerGone() {
         y: 10,
       },
     }),
-    /该目标无法被攻击/,
+    /該目標無法被攻擊/,
   );
   assert.deepEqual(log, [
     ['getInstanceRuntimeOrThrow', 'public:yunlai_town'],
@@ -1466,7 +1466,7 @@ function testPlannedFormationBoundaryAttackDoesNotFallbackWhenBoundaryGone() {
         y: 10,
       },
     }),
-    /该目标无法被攻击/,
+    /該目標無法被攻擊/,
   );
   assert.deepEqual(log, [
     ['getInstanceRuntimeOrThrow', 'public:yunlai_town'],

@@ -411,7 +411,7 @@ async function testTileResourceProtectedTileRejectsUse() {
     });
     await assert.rejects(
         () => service.dispatchUseItem('player:1', 1, deps, { count: 2 }),
-        /无法使用地块资源道具/,
+        /無法使用地塊資源道具/,
     );
     assert.deepEqual(log, []);
 }
@@ -458,7 +458,7 @@ async function testCurrentRespawnBindRejectsDisallowedMapWithoutConsume() {
     service.playerRuntimeService.peekInventoryItem = () => ({ itemId: 'fate_stone', name: '命石', useBehavior: 'bind_current_respawn' });
     await assert.rejects(
         () => service.dispatchUseItem('player:1', 5, createDeps(log)),
-        /命石只能在云来镇、栖真渡、云墟台或自己所属宗门使用/,
+        /命石只能在雲來鎮、棲真渡、雲墟臺或自己所屬宗門使用/,
     );
     assert.deepEqual(log, []);
 }
@@ -547,7 +547,7 @@ async function testCustomTechniqueBookRejectsLearnedTechniqueWithoutConsume() {
     });
     await assert.rejects(
         () => service.dispatchUseItem('player:1', 'item:book:learned', createDeps(log)),
-        /已经掌握该功法/,
+        /已經掌握該功法/,
     );
     assert.deepEqual(log, []);
 }
@@ -563,7 +563,7 @@ async function testCustomTechniqueBookRejectsMissingTemplateWithoutConsume() {
     });
     await assert.rejects(
         () => service.dispatchUseItem('player:1', 'item:book:missing', createDeps(log)),
-        /功法书对应的功法不存在/,
+        /功法書對應的功法不存在/,
     );
     assert.deepEqual(log, []);
 }
@@ -579,7 +579,7 @@ async function testCustomTechniqueBookRejectsAggregateWithoutConsume() {
     });
     await assert.rejects(
         () => service.dispatchUseItem('player:1', 'item:book:aggregate', createDeps(log)),
-        /统法只能从统法台参悟/,
+        /統法只能從統法臺參悟/,
     );
     assert.deepEqual(log, []);
 }
@@ -661,7 +661,7 @@ function testTechniqueRefiningCraftRejectsUnmasteredTechnique() {
     });
     assert.throws(
         () => service.dispatchCraftTechniqueBook('player:1', 'gen_refining_smoke', 2, createTechniqueRefiningDeps(log)),
-        /只有修至原功法满层后才能抄录/,
+        /只有修至原功法滿層後才能抄錄/,
     );
     assert.deepEqual(log, []);
 }
@@ -678,7 +678,7 @@ function testTechniqueRefiningCraftRejectsOutOfRange() {
     });
     assert.throws(
         () => service.dispatchCraftTechniqueBook('player:1', 'gen_refining_smoke', 2, createTechniqueRefiningDeps(log)),
-        /需要在炼法台 1 格范围内操作/,
+        /需要在煉法臺 1 格範圍內操作/,
     );
     assert.deepEqual(log, []);
 }
@@ -695,7 +695,7 @@ function testTechniqueRefiningCraftRejectsUnknownOrUnlearnedTechnique() {
     });
     assert.throws(
         () => service.dispatchCraftTechniqueBook('player:1', 'technique.unknown', 1, createTechniqueRefiningDeps(log)),
-        /只能抄录自创功法/,
+        /只能抄錄自創功法/,
     );
     assert.deepEqual(log, []);
 }
@@ -712,7 +712,7 @@ function testTechniqueRefiningCraftRejectsSystemTechnique() {
     });
     assert.throws(
         () => service.dispatchCraftTechniqueBook('player:1', 'technique.refining.smoke', 2, createTechniqueRefiningDeps(log)),
-        /只能抄录自创功法/,
+        /只能抄錄自創功法/,
     );
     assert.deepEqual(log, []);
 }
@@ -729,7 +729,7 @@ function testTechniqueRefiningCraftRejectsAggregateTechnique() {
     });
     assert.throws(
         () => service.dispatchCraftTechniqueBook('player:1', 'agg_refining_smoke', 4, createTechniqueRefiningDeps(log)),
-        /统法不能抄录为功法书/,
+        /統法不能抄錄為功法書/,
     );
     assert.deepEqual(log, []);
 }
@@ -769,7 +769,7 @@ function testTechniqueRefiningDecomposeRejectsMissingTemplate() {
     });
     assert.throws(
         () => service.dispatchDecomposeTechniqueBook('player:1', 'item:book:missing-template', createTechniqueRefiningDeps(log), 1),
-        /功法书缺少有效功法模板/,
+        /功法書缺少有效功法模板/,
     );
     assert.deepEqual(log, []);
 }

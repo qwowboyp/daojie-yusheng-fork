@@ -91,7 +91,7 @@ async function main(): Promise<void> {
 
   const result = await runtime.claimAttachments(playerId, [mailId]);
   assert.equal(result.ok, false);
-  assert.equal(result.message, '邮件附件领取事务暂不可用，请稍后再试。');
+  assert.equal(result.message, '郵件附件領取事務暫不可用，請稍後再試。');
   assert.equal(receivedItems.length, 0);
   assert.equal(walletCredits.length, 0);
   assert.equal(savedMailboxes.length, 0);

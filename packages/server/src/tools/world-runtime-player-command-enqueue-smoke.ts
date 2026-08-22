@@ -287,7 +287,7 @@ function testCastSkillRejectsDisabledSkillAction() {
     const deps = createDeps(log);
     assert.throws(
         () => service.enqueueCastSkill('player:1', 'skill.disabled', '', '', null, deps),
-        /技能未启用，无法释放/,
+        /技能未啟用，無法釋放/,
     );
     assert.deepEqual(log, [
         ['getPlayerLocationOrThrow', 'player:1'],

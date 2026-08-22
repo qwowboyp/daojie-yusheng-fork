@@ -468,7 +468,7 @@ async function testGroundTakeUsesStackSignatureForCapacity() {
         throw new Error('notice should not be queued on thrown command error');
       },
     } as never),
-    /背包空间不足/,
+    /背包空間不足/,
   );
   assert.equal(pileItems.length, 1);
 }
@@ -635,7 +635,7 @@ async function testGroundTakeAllUsesStackSignatureForCapacity() {
         log.push(['queuePlayerNotice', playerId, message, tone]);
       },
     } as never),
-    /背包空间不足/,
+    /背包空間不足/,
   );
   assert.deepEqual(log, []);
   assert.equal(pileItems.length, 1);

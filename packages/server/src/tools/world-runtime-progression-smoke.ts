@@ -235,14 +235,14 @@ function testBreakthroughOptionalRequirementsSurfaceAndRaiseTotalAttributes() {
     assert.equal(preview.requirements.find((entry) => entry.type === 'technique')?.optional, true, 'technique requirement should be visible as optional');
     assert.equal(
         preview.requirements.find((entry) => entry.type === 'attribute_total')?.detail,
-        '当前六维总属性 60 / 88，基础要求 55',
+        '當前六維總屬性 60 / 88，基礎要求 55',
     );
     player.techniques.techniques.push({ techId: 'stance', level: 2, realm: 0, grade: 'mortal' });
     const readyPreview = service.buildBreakthroughPreview(player, player.realm);
     assert.equal(readyPreview.canBreakthrough, true);
     assert.equal(
         readyPreview.requirements.find((entry) => entry.type === 'attribute_total')?.detail,
-        '当前六维总属性 60 / 55',
+        '當前六維總屬性 60 / 55',
     );
     const result = service.attemptBreakthrough(player);
     assert.equal(result.changed, true);
@@ -290,13 +290,13 @@ function testSpiritualRootRequirementBlocksQiRefiningBreakthrough() {
     };
     const preview = service.buildBreakthroughPreview(player, player.realm);
     assert.equal(preview.canBreakthrough, false, 'qi refining breakthrough should require at least one spiritual root');
-    assert.equal(preview.requirements.find((entry) => entry.type === 'root')?.detail, '当前最高灵根 0 / 1');
+    assert.equal(preview.requirements.find((entry) => entry.type === 'root')?.detail, '當前最高靈根 0 / 1');
     assert.equal(service.attemptBreakthrough(player).changed, false);
 
     player.spiritualRoots = { metal: 1, wood: 0, water: 0, fire: 0, earth: 0 };
     const readyPreview = service.buildBreakthroughPreview(player, player.realm);
     assert.equal(readyPreview.canBreakthrough, true);
-    assert.equal(readyPreview.requirements.find((entry) => entry.type === 'root')?.detail, '当前最高灵根 1 / 1');
+    assert.equal(readyPreview.requirements.find((entry) => entry.type === 'root')?.detail, '當前最高靈根 1 / 1');
     const result = service.attemptBreakthrough(player);
     assert.equal(result.changed, true);
     assert.equal(player.realm.realmLv, 19);
@@ -330,7 +330,7 @@ function testMissingBreakthroughConfigShowsPathSevered() {
     };
     const preview = service.buildBreakthroughPreview(player, player.realm);
     assert.equal(preview.canBreakthrough, false);
-    assert.equal(preview.blockedReason, '仙路断绝');
+    assert.equal(preview.blockedReason, '仙路斷絕');
     assert.equal(preview.requirements.find((entry) => entry.label === '仙路斷絕')?.detail, '仙路斷絕，你的前路已被無形天塹阻斷，暫時無法繼續突破。');
     const result = service.attemptBreakthrough(player);
     assert.equal(result.changed, false);
@@ -371,7 +371,7 @@ function testEmptyBreakthroughRequirementsShowPathSevered() {
     };
     const preview = service.buildBreakthroughPreview(player, player.realm);
     assert.equal(preview.canBreakthrough, false);
-    assert.equal(preview.blockedReason, '仙路断绝');
+    assert.equal(preview.blockedReason, '仙路斷絕');
     assert.equal(preview.requirements.some((entry) => entry.type === 'item'), false);
     assert.equal(preview.requirements.find((entry) => entry.label === '仙路斷絕')?.detail, '仙路斷絕，你的前路已被無形天塹阻斷，暫時無法繼續突破。');
     const result = service.attemptBreakthrough(player);
@@ -414,7 +414,7 @@ function testItemOnlyBreakthroughRequirementCanBreakthrough() {
     };
     const missingPreview = service.buildBreakthroughPreview(player, player.realm);
     assert.equal(missingPreview.canBreakthrough, false);
-    assert.equal(missingPreview.requirements.find((entry) => entry.type === 'item')?.detail, '当前尚未满足。当前 1 / 2');
+    assert.equal(missingPreview.requirements.find((entry) => entry.type === 'item')?.detail, '當前尚未滿足。當前 1 / 2');
     assert.equal(service.attemptBreakthrough(player).changed, false);
     assert.equal(player.realm.realmLv, 30);
 

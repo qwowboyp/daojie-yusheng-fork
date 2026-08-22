@@ -159,7 +159,7 @@ async function main(): Promise<void> {
       amount: 0,
       requestId: 'wallet-zero',
     }),
-    /钱包变更参数无效/,
+    /錢包變更參數無效/,
   );
   await assert.rejects(
     () => controller.grantItem(playerId, {
@@ -167,7 +167,7 @@ async function main(): Promise<void> {
       count: 2_147_483_648,
       requestId: 'inventory-overflow',
     }),
-    /背包发放参数无效/,
+    /背包發放參數無效/,
   );
   await assert.rejects(
     () => controller.grantItem(playerId, {
@@ -175,7 +175,7 @@ async function main(): Promise<void> {
       count: 1,
       requestId: 'invalid request id',
     }),
-    /requestId 无效/,
+    /requestId 無效/,
   );
 
   const creditResult = await controller.creditWallet(playerId, {
@@ -211,7 +211,7 @@ async function main(): Promise<void> {
       amount: 5,
       requestId: 'wallet-credit-1',
     }),
-    /requestId 已被不同参数使用/,
+    /requestId 已被不同參數使用/,
   );
   assert.equal(replayedCredit.player.wallet.balances[0].balance, 14);
 
@@ -255,7 +255,7 @@ async function main(): Promise<void> {
       count: 3,
       requestId: 'inventory-grant-1',
     }),
-    /requestId 已被不同参数使用/,
+    /requestId 已被不同參數使用/,
   );
   runtimePlayer.inventory.capacity = 2;
   await assert.rejects(
@@ -264,7 +264,7 @@ async function main(): Promise<void> {
       count: 1,
       requestId: 'inventory-capacity-full',
     }),
-    /背包空间不足/,
+    /背包空間不足/,
   );
 
   const previousRuntimeEnv = process.env.SERVER_RUNTIME_ENV;
@@ -275,7 +275,7 @@ async function main(): Promise<void> {
         walletType: 'spirit_stone',
         amount: 1,
       }),
-      /生产资产请求必须提供 requestId/,
+      /生產資產請求必須提供 requestId/,
     );
     durableEnabled = false;
     await assert.rejects(
@@ -284,7 +284,7 @@ async function main(): Promise<void> {
         amount: 1,
         requestId: 'wallet-production-disabled',
       }),
-      /已拒绝运行态钱包变更/,
+      /已拒絕運行態錢包變更/,
     );
     await assert.rejects(
       () => controller.grantItem(playerId, {
@@ -292,7 +292,7 @@ async function main(): Promise<void> {
         count: 1,
         requestId: 'inventory-production-disabled',
       }),
-      /已拒绝运行态背包发放/,
+      /已拒絕運行態背包發放/,
     );
   } finally {
     durableEnabled = true;

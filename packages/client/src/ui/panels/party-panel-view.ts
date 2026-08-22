@@ -120,11 +120,11 @@ export function renderPartyMemberCard(member: PartyMemberView, playerId: string 
       <div class="party-member-main">
         <div class="party-member-name">
           <span class="party-member-name-text">${escapeHtml(member.name)}</span>
-          ${isLeader ? '<span class="party-member-badge leader">队长</span>' : ''}
+          ${isLeader ? '<span class="party-member-badge leader">隊長</span>' : ''}
           ${isSelf ? '<span class="party-member-badge self">我</span>' : ''}
           ${member.online
-            ? '<span class="party-member-status online">在线</span>'
-            : '<span class="party-member-status offline">离线</span>'}
+            ? '<span class="party-member-status online">在線</span>'
+            : '<span class="party-member-status offline">離線</span>'}
         </div>
         <div class="party-member-meta">${escapeHtml(formatRealm(member.realmLv))}${member.mapName ? ` · ${escapeHtml(member.mapName)}` : ''}</div>
         ${hp ? `<div class="party-member-bar hp" data-party-member-hp="true"><span style="width:${hp.percent.toFixed(1)}%"></span><em>${hp.text}</em></div>` : ''}

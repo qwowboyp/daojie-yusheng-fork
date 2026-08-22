@@ -987,7 +987,7 @@ async function main() {
   }, deps);
   const laborMaintainAction = laborCoreActions.find((action) => action.id === "sect:guardian:maintain");
   assert.ok(laborMaintainAction);
-  assert.match(laborMaintainAction.desc, /當前大陣靈力\s+10万/);
+  assert.match(laborMaintainAction.desc, /當前大陣靈力\s+10萬/);
   await sectService.executeSectAction(laborPlayerId, "sect:guardian:maintain", deps);
   assert.equal(pendingCommands.length, 0);
   assert.equal(laborPlayer.formationJob?.formationInstanceId, `formation:sect_guardian:${expandedSect.sectId}`);
@@ -1003,7 +1003,7 @@ async function main() {
   }, deps);
   const laborCancelAction = laborMaintainingCoreActions.find((action) => action.id === "sect:guardian:cancel_maintain");
   assert.ok(laborCancelAction);
-  assert.match(laborCancelAction.desc, /當前大陣靈力\s+10万/);
+  assert.match(laborCancelAction.desc, /當前大陣靈力\s+10萬/);
   await sectService.executeSectAction(laborPlayerId, "sect:guardian:cancel_maintain", deps);
   assert.equal(pendingCommands.length, 0);
   assert.equal(laborPlayer.formationJob, null);

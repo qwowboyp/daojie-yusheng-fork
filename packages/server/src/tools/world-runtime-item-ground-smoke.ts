@@ -182,7 +182,7 @@ function testSpawnGroundItemFailure() {
                 return null;
             },
         }, 8, 9, { itemId: 'rat_tail', count: 1 });
-    }, /无法在 8,9 生成掉落/);
+    }, /無法在 8,9 生成掉落/);
 }
 
 function createGroundItemTestInstance() {

@@ -191,7 +191,7 @@ async function testBasicAttackRejectsNeutralPlayer() {
         };
       },
     }),
-    /敌方判定规则/,
+    /敵方判定規則/,
   );
 }
 
@@ -265,7 +265,7 @@ async function testSkillDispatchRejectsNeutralPlayer() {
         };
       },
     }),
-    /敌方判定规则/,
+    /敵方判定規則/,
   );
 }
 
@@ -318,7 +318,7 @@ async function testSkillDispatchRejectsDisabledSkillAction() {
         log.push('ensureAttackAllowed');
       },
     }),
-    /技能未启用，无法释放/,
+    /技能未啟用，無法釋放/,
   );
   assert.deepEqual(log, []);
 }
@@ -687,7 +687,7 @@ async function testSkillDispatchLogsFormationDamage() {
   assert.ok(log.some((entry) => entry[0] === 'notice'
     && entry[1] === attacker.playerId
     && entry[2].includes('造成')
-    && entry[2].includes('削减阵法灵力 12')
+    && entry[2].includes('削減陣法靈力 12')
     && entry[3] === 'combat'));
   assert.equal(combatOutcomes.length, 1);
   assert.equal(combatOutcomes[0].target.kind, 'formation');
@@ -699,13 +699,13 @@ async function testSkillDispatchLogsFormationDamage() {
 async function testSkillDispatchLogsMonsterAndPlayerDamage() {
   const skill = {
     id: 'skill.damage_log',
-    name: '青木剑诀',
+    name: '青木劍訣',
     effects: [{ type: 'damage', damageKind: 'physical' }],
     targeting: { range: 3 },
     range: 3,
   };
   const attacker = createPlayer({
-    name: '攻击者',
+    name: '攻擊者',
     combat: {
       ...createPlayer().combat,
       allowAoePlayerHit: true,
@@ -717,14 +717,14 @@ async function testSkillDispatchLogsMonsterAndPlayerDamage() {
     },
   });
   const targetPlayer = createTarget('player:target', {
-    name: '目标修士',
+    name: '目標修士',
     x: 12,
     y: 10,
   });
   const monster = {
     runtimeId: 'monster:runtime:1',
     monsterId: 'monster.test',
-    name: '测试妖兽',
+    name: '測試妖獸',
     alive: true,
     hp: 100,
     maxHp: 100,
@@ -821,18 +821,18 @@ async function testSkillDispatchLogsMonsterAndPlayerDamage() {
 
   assert.ok(log.some((entry) => entry[0] === 'notice'
     && entry[1] === attacker.playerId
-    && entry[2].includes('你对测试妖兽施展青木剑诀')
-    && entry[2].includes('原始 23 - 实际 23 - 物理')
+    && entry[2].includes('你對測試妖獸施展青木劍訣')
+    && entry[2].includes('原始 23 - 實際 23 - 物理')
     && entry[3] === 'combat'));
   assert.ok(log.some((entry) => entry[0] === 'notice'
     && entry[1] === attacker.playerId
-    && entry[2].includes('你对目标修士施展青木剑诀')
-    && entry[2].includes('原始 17 - 实际 17 - 物理')
+    && entry[2].includes('你對目標修士施展青木劍訣')
+    && entry[2].includes('原始 17 - 實際 17 - 物理')
     && entry[3] === 'combat'));
   assert.ok(log.some((entry) => entry[0] === 'notice'
     && entry[1] === targetPlayer.playerId
-    && entry[2].includes('攻击者对你施展青木剑诀')
-    && entry[2].includes('原始 17 - 实际 17 - 物理')
+    && entry[2].includes('攻擊者對你施展青木劍訣')
+    && entry[2].includes('原始 17 - 實際 17 - 物理')
     && entry[3] === 'combat'));
   assert.ok(log.some((entry) => entry[0] === 'damageFloat'
     && entry[1] === attacker.instanceId
@@ -874,7 +874,7 @@ async function testMissedPlayerSkillStillAggrosMonster() {
   const monster = {
     runtimeId: 'monster:runtime:miss',
     monsterId: 'monster.test',
-    name: '测试妖兽',
+    name: '測試妖獸',
     alive: true,
     hp: 100,
     maxHp: 100,
@@ -981,7 +981,7 @@ async function testSkillDispatchKeepsTileAnchorForAreaTerrainDamage() {
       techniques: [{
         skills: [{
           id: 'skill.terrain_box',
-          name: '裂地术',
+          name: '裂地術',
           effects: [{ type: 'damage', damageKind: 'spell' }],
           range: 3,
           targeting: {
@@ -1074,8 +1074,8 @@ async function testSkillDispatchKeepsTileAnchorForAreaTerrainDamage() {
   assert.deepEqual(damagedTiles.sort(), ['11,10', '13,10']);
   assert.equal(notices.length, 2);
   assert.ok(notices.every((entry) => entry[0] === attacker.playerId
-    && entry[1].includes('你对地块施展裂地术')
-    && entry[1].includes('原始 10 - 实际 10 - 法术')
+    && entry[1].includes('你對地塊施展裂地術')
+    && entry[1].includes('原始 10 - 實際 10 - 法術')
     && entry[2] === 'combat'));
   assert.equal(combatOutcomes.length, 2);
   assert.deepEqual(combatOutcomes.map((entry) => `${entry.target.x},${entry.target.y}`).sort(), ['11,10', '13,10']);
@@ -1304,7 +1304,7 @@ async function testEngageBattleRejectsNeutralPlayerBeforeLocking() {
         log.push(['dispatchBasicAttack']);
       },
     }),
-    /无法被攻击/,
+    /無法被攻擊/,
   );
   assert.deepEqual(log, [
     ['interruptManualCombat', attacker.playerId],

@@ -133,7 +133,7 @@ async function testDifferentTransmissionStartStillReachesPipeline(): Promise<voi
         },
       },
     }),
-    /学习者已有进行中的技艺任务/,
+    /學習者已有進行中的技藝任務/,
   );
   assert.deepEqual(log, [
     ['getPlayer', 'teacher:1'],

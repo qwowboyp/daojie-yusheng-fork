@@ -56,7 +56,7 @@ const ITEM_TEMPLATES: Record<string, Omit<SmokeItem, 'itemInstanceId' | 'count' 
   },
   'equip.verdant_crown': {
     itemId: 'equip.verdant_crown',
-    name: '青萝束冠',
+    name: '青蘿束冠',
     type: 'equipment',
     equipSlot: 'head',
     desc: '',
@@ -310,7 +310,7 @@ async function testAtomicSwapKeepsDifferentHelmetIdentities(): Promise<void> {
     ['asset-lock', 'save-presence', 'durable-update', 'replace-inventory'],
   );
   assert.ok(harness.calls.indexOf('replace-equipment') > harness.calls.indexOf('durable-update'));
-  assert.equal(harness.notices[0], '裝備 +20 青萝束冠');
+  assert.equal(harness.notices[0], '裝備 +20 青蘿束冠');
   assert.ok(harness.calls.includes('request-delta'));
 }
 
@@ -363,7 +363,7 @@ async function testUnequipMergesOnlySameTemplate(): Promise<void> {
   assert.equal(verdant?.itemInstanceId, 'inventory-verdant');
   assert.equal(darksoil?.count, 1);
   assert.equal(darksoil?.itemInstanceId, 'inventory-darksoil');
-  assert.equal(harness.notices[0], '卸下 +20 青萝束冠');
+  assert.equal(harness.notices[0], '卸下 +20 青蘿束冠');
 }
 
 async function testPersistentRuntimeFailsClosedWithoutDurableService(): Promise<void> {

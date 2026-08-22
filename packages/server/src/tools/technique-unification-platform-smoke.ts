@@ -253,12 +253,12 @@ async function main(): Promise<void> {
     requestId: 'publish-1',
     operationId: 'operation-1',
     buildingId: building.id,
-    customName: '归元正法',
+    customName: '歸元正法',
     sourceTechniqueIds: ['gen:a', 'gen:b'],
   });
   const boundFamilyId = String(building.techniqueAggregationFamilyId ?? '');
   assert.equal(boundFamilyId, 'family:operation-1');
-  assert.equal(building.name, '统法台：归元正法');
+  assert.equal(building.name, '統法臺：歸元正法');
   assert.deepEqual(building.accessPolicies, {
     read: closeFriendReadPolicy,
     revision: OWNER_ONLY_ACCESS_POLICY,
@@ -269,14 +269,14 @@ async function main(): Promise<void> {
 
   building.name = '统法台';
   await helper.handleRequestPanel(ownerSocket as never, { requestId: 'repair-bound-name', buildingId: building.id });
-  assert.equal(building.name, '统法台：归元正法');
+  assert.equal(building.name, '統法臺：歸元正法');
 
   delete building.techniqueAggregationFamilyId;
   delete building.accessPolicies;
   building.name = '统法台';
   await helper.handleRequestPanel(ownerSocket as never, { requestId: 'recover-panel', buildingId: building.id });
   assert.equal(building.techniqueAggregationFamilyId, boundFamilyId);
-  assert.equal(building.name, '统法台：归元正法');
+  assert.equal(building.name, '統法臺：歸元正法');
   assert.deepEqual(building.accessPolicies, {
     read: closeFriendReadPolicy,
     revision: OWNER_ONLY_ACCESS_POLICY,

@@ -1211,7 +1211,7 @@ function testTransmissionBlocksCancelsAndContinues() {
 
   assert.throws(
     () => runtimeService.startTechniqueTransmission(teacherA.playerId, learner.playerId, technique.techId),
-    /只能传授自创功法/,
+    /只能傳授自創功法/,
   );
   startTransmissionWithPipeline(runtimeService, teacherA.playerId, learner, createdTechnique.techId);
   const pending = learner.pendingTechniqueComprehensions[0]!;
@@ -1478,7 +1478,7 @@ function testScriptureContemplationStartsJobAndCompletesTechnique() {
   }, ctx as never);
   assert.equal(startResult.ok, true, startResult.error);
   assert.equal(learner.transmissionJob?.jobType, 'scripture_contemplation');
-  assert.equal(learner.transmissionJob?.label, '藏经参悟');
+  assert.equal(learner.transmissionJob?.label, '藏經參悟');
   assert.equal(learner.pendingTechniqueComprehensions[0]?.techId, createdTechnique.techId);
   assert.equal(learner.pendingTechniqueComprehensions[0]?.selfComprehensionAllowed, false);
   assert.equal(learner.pendingTechniqueComprehensions[0]?.requiredProgress, contemplationRequired);

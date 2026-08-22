@@ -394,7 +394,7 @@ function solveLinearSystem(matrix: number[][], vector: number[]): number[] {
     }
 
     if (Math.abs(a[pivot][col]) < 1e-12) {
-      throw new Error('强化推演失败');
+      throw new Error('強化推演失敗');
     }
 
     if (pivot !== col) {

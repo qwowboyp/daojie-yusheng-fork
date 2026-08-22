@@ -318,9 +318,9 @@ function testRefreshSendsMergedCompensationMailForDanglingPreviousQuests() {
     assert.deepEqual(log, [['markQuestStateDirty', 'player:1']]);
     assert.equal(mailLog.length, 1);
     assert.equal(mailLog[0].playerId, 'player:1');
-    assert.equal(mailLog[0].input.senderLabel, '司命台');
-    assert.equal(mailLog[0].input.fallbackTitle, '任务奖励补发');
-    assert.equal(mailLog[0].input.fallbackBody, '检测到历史任务进度已推进，现补发未领取的任务奖励。');
+    assert.equal(mailLog[0].input.senderLabel, '司命臺');
+    assert.equal(mailLog[0].input.fallbackTitle, '任務獎勵補發');
+    assert.equal(mailLog[0].input.fallbackBody, '檢測到歷史任務進度已推進，現補發未領取的任務獎勵。');
     assert.deepEqual(mailLog[0].input.attachments, [
         { itemId: 'rat_tail', count: 5 },
         { itemId: 'spirit_stone', count: 10 },
