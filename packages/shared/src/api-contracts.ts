@@ -268,6 +268,27 @@ export interface GmTechniqueGenerationJobDetailRes {
   };
 }
 
+/** GM 触发 AI 功法生成的请求体（绕过玩家物品与境界门槛）。 */
+export interface GmTechniqueGenerationRunReq {
+  playerId?: unknown;
+  mode?: unknown;
+  category?: unknown;
+  playerContext?: unknown;
+  bypassRealmCheck?: unknown;
+  bypassInventoryCheck?: unknown;
+}
+
+/** GM 触发 AI 功法生成的响应。 */
+export interface GmTechniqueGenerationRunRes {
+  success: boolean;
+  jobId?: string;
+  batchId?: string;
+  mode: 'single' | 'batch';
+  category?: 'internal' | 'arts' | 'divine' | 'secret';
+  error?: string;
+  errorCode?: string;
+}
+
 /** 显示名可用性检查响应 */
 export interface DisplayNameAvailabilityRes {
 /**

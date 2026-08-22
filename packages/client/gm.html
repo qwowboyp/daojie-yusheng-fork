@@ -3297,6 +3297,48 @@
             <button id="generated-technique-subtab-manual" class="workspace-tab" type="button">手工创建</button>
           </div>
           <div id="generated-technique-browse">
+            <div id="generated-technique-ai-trigger" class="custom-technique-form hidden" style="margin-bottom: 16px;">
+              <div class="custom-technique-group">
+                <div class="custom-technique-group-title">AI 批次觸發</div>
+                <div class="editor-grid compact">
+                  <label class="editor-field">
+                    <span>玩家 ID（p_xxx）</span>
+                    <input id="gm-ai-trigger-playerId" type="text" placeholder="p_a9e6d398-6a09-4005-9f16-3d4a0fb8f589" />
+                  </label>
+                  <label class="editor-field">
+                    <span>模式</span>
+                    <select id="gm-ai-trigger-mode">
+                      <option value="batch" selected>batch（多候選）</option>
+                      <option value="single">single（單一類型）</option>
+                    </select>
+                  </label>
+                  <label class="editor-field">
+                    <span>類別（single 才用）</span>
+                    <select id="gm-ai-trigger-category">
+                      <option value="internal" selected>internal（內功）</option>
+                      <option value="arts">arts（術法）</option>
+                      <option value="divine">divine（神通）</option>
+                      <option value="secret">secret（秘法）</option>
+                    </select>
+                  </label>
+                  <label class="editor-field wide">
+                    <span>主題描述</span>
+                    <textarea id="gm-ai-trigger-context" rows="2" placeholder="例如：劍修；火屬；築基初期"></textarea>
+                  </label>
+                  <label class="editor-field" style="flex-direction: row; align-items: center; gap: 8px;">
+                    <input id="gm-ai-trigger-bypass-realm" type="checkbox" checked />
+                    <span>繞過境界門檻（測試用）</span>
+                  </label>
+                  <label class="editor-field" style="flex-direction: row; align-items: center; gap: 8px;">
+                    <input id="gm-ai-trigger-bypass-inv" type="checkbox" checked />
+                    <span>繞過悟道玉簡檢查（測試用）</span>
+                  </label>
+                </div>
+                <div class="button-row" style="margin-top: 10px;">
+                  <button id="gm-ai-trigger-submit" class="small-btn" type="button">觸發 AI 生成</button>
+                </div>
+              </div>
+            </div>
             <div id="generated-technique-list" class="player-list"></div>
             <div id="generated-technique-pagination" class="button-row" style="justify-content: space-between; margin-top: 12px;">
               <button id="generated-technique-page-prev" class="small-btn" type="button">上一页</button>

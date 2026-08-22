@@ -148,6 +148,8 @@ import {
   type GmTechniqueGenerationJobDetailRes,
   type GmTechniqueGenerationJobListRes,
   type GmTechniqueGenerationJobSummary,
+  type GmTechniqueGenerationRunReq,
+  type GmTechniqueGenerationRunRes,
   type GmMarketTradeItem,
   type GmMarketTradeListQuery,
   type GmMarketTradeListRes,
@@ -553,6 +555,22 @@ const generatedTechniqueSubtabManualBtn = document.getElementById('generated-tec
 const generatedTechniqueBrowseEl = document.getElementById('generated-technique-browse') as HTMLElement;
 /** generatedTechniquePaginationEl：已发布功法分页区域。 */
 const generatedTechniquePaginationEl = document.getElementById('generated-technique-pagination') as HTMLElement;
+/** gmAiTriggerEl：AI 批次触发表单容器。 */
+const gmAiTriggerEl = document.getElementById('generated-technique-ai-trigger') as HTMLElement;
+/** gmAiTriggerPlayerIdEl：AI 触发玩家 ID 输入。 */
+const gmAiTriggerPlayerIdEl = document.getElementById('gm-ai-trigger-playerId') as HTMLInputElement;
+/** gmAiTriggerModeEl：AI 触发模式选择。 */
+const gmAiTriggerModeEl = document.getElementById('gm-ai-trigger-mode') as HTMLSelectElement;
+/** gmAiTriggerCategoryEl：AI 触发類別选择。 */
+const gmAiTriggerCategoryEl = document.getElementById('gm-ai-trigger-category') as HTMLSelectElement;
+/** gmAiTriggerContextEl：AI 触发主题描述输入。 */
+const gmAiTriggerContextEl = document.getElementById('gm-ai-trigger-context') as HTMLTextAreaElement;
+/** gmAiTriggerBypassRealmEl：是否绕过境界门槛。 */
+const gmAiTriggerBypassRealmEl = document.getElementById('gm-ai-trigger-bypass-realm') as HTMLInputElement;
+/** gmAiTriggerBypassInvEl：是否绕过悟道玉简检查。 */
+const gmAiTriggerBypassInvEl = document.getElementById('gm-ai-trigger-bypass-inv') as HTMLInputElement;
+/** gmAiTriggerSubmitBtn：AI 触发提交按钮。 */
+const gmAiTriggerSubmitBtn = document.getElementById('gm-ai-trigger-submit') as HTMLButtonElement;
 /** customTechniqueFormEl：手工功法表单。 */
 const customTechniqueFormEl = document.getElementById('custom-technique-form') as HTMLFormElement;
 /** customTechniqueInternalFieldsEl：内功字段区域。 */
@@ -10373,8 +10391,10 @@ function applyGeneratedTechniqueSubtabVisibility(tab: 'techniques' | 'jobs' | 'm
   generatedTechniqueSubtabJobsBtn.classList.toggle('active', tab === 'jobs');
   generatedTechniqueSubtabManualBtn.classList.toggle('active', tab === 'manual');
   const manual = tab === 'manual';
+  const jobs = tab === 'jobs';
   generatedTechniqueBrowseEl.classList.toggle('hidden', manual);
   generatedTechniquePaginationEl.classList.toggle('hidden', manual);
+  gmAiTriggerEl.classList.toggle('hidden', !jobs);
   customTechniqueFormEl.classList.toggle('hidden', !manual);
   if (manual) {
     generatedTechniqueEditor.activate();
@@ -13450,6 +13470,52 @@ generatedTechniqueTabBtn.addEventListener('click', () => switchTab('generatedTec
 generatedTechniqueSubtabTechniquesBtn.addEventListener('click', () => switchGeneratedTechniqueSubtab('techniques'));
 generatedTechniqueSubtabJobsBtn.addEventListener('click', () => switchGeneratedTechniqueSubtab('jobs'));
 generatedTechniqueSubtabManualBtn.addEventListener('click', () => switchGeneratedTechniqueSubtab('manual'));
+
+async function handleGmAiTechniqueTrigger(): Promise<void> {
+  const playerId = gmAiTriggerPlayerIdEl.value.trim();
+  if (!playerId) {
+    setStatus('請輸入玩家 ID', true);
+    return;
+  }
+  const mode = gmAiTriggerModeEl.value === 'single' ? 'single' : 'batch';
+  const category = gmAiTriggerCategoryEl.value;
+  const playerContext = gmAiTriggerContextEl.value.trim();
+  const bypassRealmCheck = gmAiTriggerBypassRealmEl.checked;
+  const bypassInventoryCheck = gmAiTriggerBypassInvEl.checked;
+  gmAiTriggerSubmitBtn.disabled = true;
+  setStatus(`AI 生成已送出（${mode}）…`);
+  try {
+    const body: Record<string, unknown> = {
+      playerId,
+      mode,
+      bypassRealmCheck,
+      bypassInventoryCheck,
+    };
+    if (playerContext) body.playerContext = playerContext;
+    if (mode === 'single') body.category = category;
+    const result = await request<GmTechniqueGenerationRunRes>(
+      `${GM_API_BASE_PATH}/technique-generation/run`,
+      { method: 'POST', body: JSON.stringify(body) },
+      60_000,
+    );
+    if (!result.success) {
+      setStatus(`AI 生成失敗：${result.error ?? '未知錯誤'}（${result.errorCode ?? ''}）`, true);
+      return;
+    }
+    setStatus(`AI 生成已建立 ${result.batchId ? `批次 ${result.batchId}` : `任務 ${result.jobId}`}，約 6-30 秒完成`);
+    await loadTechniqueGenerationJobs(false);
+  } catch (error: unknown) {
+    setStatus(error instanceof Error ? error.message : 'AI 生成請求失敗', true);
+  } finally {
+    gmAiTriggerSubmitBtn.disabled = false;
+  }
+}
+
+gmAiTriggerSubmitBtn.addEventListener('click', () => {
+  handleGmAiTechniqueTrigger().catch((error: unknown) => {
+    setStatus(error instanceof Error ? error.message : 'AI 生成觸發失敗', true);
+  });
+});
 tradesTabBtn.addEventListener('click', () => switchTab('trades'));
 serverSubtabOverviewBtn.addEventListener('click', () => switchServerTab('overview'));
 serverSubtabTrafficBtn.addEventListener('click', () => switchServerTab('traffic'));
