@@ -29,7 +29,7 @@ import { extractGmActor } from './native-gm-actor-context';
 import { assertGmHighRiskOperationAllowed, type GmHighRiskConfirmationBody } from './native-gm-high-risk';
 import { NativeGmAuthGuard } from './native-gm-auth.guard';
 import { NativeGmGeneratedTechniqueService } from './native-gm-generated-technique.service';
-import { NativeGmTechniqueGenerationService, type GmTechniqueGenerationRunReq } from './native-gm-technique-generation.service';
+import { NativeGmTechniqueGenerationService, type GmTechniqueGenerationForceDiscardReq, type GmTechniqueGenerationRunReq } from './native-gm-technique-generation.service';
 import { NativeGmMailService } from './native-gm-mail.service';
 import { NativeGmMarketTradeService } from './native-gm-market-trade.service';
 import { NativeGmPlayerService } from './native-gm-player.service';
@@ -1690,6 +1690,28 @@ export class NativeGmController {
       targetId: typeof body?.playerId === 'string' ? body.playerId : undefined,
       after: body ?? {},
     }, () => this.nextGmTechniqueGenerationService.runTechniqueGeneration(body));
+  }
+
+  /**
+   * forceDiscardTechniqueGenerationJob：GM 强制丢弃一个功法生成任务。
+   * 镜像 force-run：清理 GM 自己触发的脏数据，或救活卡死在 pending/running/generated_draft 的 job。
+   * @param body GmTechniqueGenerationForceDiscardReq 参数说明。
+   * @returns 无返回值，直接推进 job 到 discarded。
+   */
+  @Post('technique-generation/jobs/:id/force-discard')
+  async forceDiscardTechniqueGenerationJob(
+    @Param('id') id: string,
+    @Body() body: GmTechniqueGenerationForceDiscardReq | undefined,
+    @Req() request: unknown,
+  ) {
+    const reqBody: GmTechniqueGenerationForceDiscardReq = { ...(body ?? {}), jobId: id };
+    return this.executeAuditedGmWrite({
+      op: 'gm.technique_generation.force_discard',
+      request,
+      targetType: 'technique_generation_job',
+      targetId: id,
+      after: reqBody,
+    }, () => this.nextGmTechniqueGenerationService.forceDiscardJob(reqBody));
   }
   /**
  * updateMapTime：处理地图时间并更新相关状态。

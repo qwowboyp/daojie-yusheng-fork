@@ -37,6 +37,20 @@ export interface GmTechniqueGenerationRunRes {
   errorCode?: string;
 }
 
+export interface GmTechniqueGenerationForceDiscardReq {
+  jobId?: unknown;
+  reason?: unknown;
+}
+
+export interface GmTechniqueGenerationForceDiscardRes {
+  success: boolean;
+  jobId: string;
+  previousStatus?: string;
+  newStatus?: string;
+  error?: string;
+  errorCode?: 'JOB_NOT_FOUND' | 'JOB_STATE_INVALID' | string;
+}
+
 interface SessionFenceLike {
   runtimeOwnerId?: string | null;
   sessionEpoch?: number | null;
@@ -110,6 +124,37 @@ export class NativeGmTechniqueGenerationService {
       mode,
       category: mode === 'single' ? category : undefined,
       error: result.error,
+      errorCode: result.errorCode,
+    };
+  }
+
+  /**
+   * GM 强制丢弃一个功法生成任务（含 batch 內任一 job）。
+   * 對應 GM 觸發 AI 生成的 force-run，給 GM 一條對稱的清理路徑。
+   * 限制：僅允許把 pending/running/generated_draft 推進到 discarded；终态拒绝。
+   */
+  async forceDiscardJob(body: GmTechniqueGenerationForceDiscardReq): Promise<GmTechniqueGenerationForceDiscardRes> {
+    if (!body || typeof body !== 'object') {
+      throw new BadRequestException('请求体不能为空');
+    }
+    const jobId = typeof body.jobId === 'string' ? body.jobId.trim() : '';
+    if (!jobId) {
+      throw new BadRequestException('jobId 必填');
+    }
+    const reason = typeof body.reason === 'string' && body.reason.trim().length > 0
+      ? body.reason.trim().slice(0, 200)
+      : 'GM 强制丢弃';
+    const result = await this.techniqueGenerationService.gmForceDiscardJob(jobId, reason);
+    return {
+      success: result.success,
+      jobId: result.jobId,
+      previousStatus: result.previousStatus,
+      newStatus: result.newStatus,
+      error: result.errorCode === 'JOB_NOT_FOUND'
+        ? 'job_not_found'
+        : result.errorCode === 'JOB_STATE_INVALID'
+          ? 'job_state_invalid'
+          : undefined,
       errorCode: result.errorCode,
     };
   }

@@ -352,6 +352,11 @@ interface TechniqueGenerationJobGmRow {
   error_message?: string | null;
   created_at: Date | string;
   updated_at: Date | string;
+  /**
+   * active 状态下 draft_technique_id 指向的 generated_technique 已不存在。
+   * 由查询 SQL 计算，本地仅消费。
+   */
+  is_orphan?: boolean | null;
 }
 
 export async function listGeneratedTechniquesForGm(
@@ -544,10 +549,14 @@ export async function listTechniqueGenerationJobsForGm(
             job.error_code,
             job.error_message,
             job.created_at,
-            job.updated_at
+            job.updated_at,
+            (job.draft_technique_id IS NOT NULL
+              AND gt.id IS NULL
+              AND job.status IN ('pending', 'running', 'generated_draft')) AS is_orphan
        FROM ${TECHNIQUE_GENERATION_JOB_TABLE} job
        LEFT JOIN server_player_identity ident ON ident.player_id = job.player_id
        LEFT JOIN server_player_auth auth ON auth.player_id = job.player_id
+       LEFT JOIN ${GENERATED_TECHNIQUE_TABLE} gt ON gt.id = job.draft_technique_id
       ORDER BY job.created_at DESC, job.id DESC
       LIMIT $1 OFFSET $2`,
     [pageSize, offset],
@@ -591,10 +600,14 @@ export async function getTechniqueGenerationJobForGm(
             job.error_code,
             job.error_message,
             job.created_at,
-            job.updated_at
+            job.updated_at,
+            (job.draft_technique_id IS NOT NULL
+              AND gt.id IS NULL
+              AND job.status IN ('pending', 'running', 'generated_draft')) AS is_orphan
        FROM ${TECHNIQUE_GENERATION_JOB_TABLE} job
        LEFT JOIN server_player_identity ident ON ident.player_id = job.player_id
        LEFT JOIN server_player_auth auth ON auth.player_id = job.player_id
+       LEFT JOIN ${GENERATED_TECHNIQUE_TABLE} gt ON gt.id = job.draft_technique_id
       WHERE job.id = $1
       LIMIT 1`,
     [id],
@@ -1152,6 +1165,7 @@ function toTechniqueGenerationJobSummary(row: TechniqueGenerationJobGmRow): GmTe
     errorMessage: row.error_message ?? null,
     createdAt: formatDbTimestamp(row.created_at),
     updatedAt: formatDbTimestamp(row.updated_at),
+    isOrphan: Boolean(row.is_orphan),
   };
 }
 

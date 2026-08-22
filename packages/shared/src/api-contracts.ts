@@ -252,6 +252,13 @@ export interface GmTechniqueGenerationJobSummary {
   errorMessage?: string | null;
   createdAt: string;
   updatedAt: string;
+  /**
+   * 是否为孤儿 job：active 状态下 draft_technique_id 指向的 generated_technique 已不存在。
+   * 仅在 status ∈ {pending, running, generated_draft} 且 draft_technique_id 非空时计算；
+   * 终态（learned/discarded/expired/failed）的草稿缺失属正常清理，不算 orphan。
+   * 提供此旗標給 GM 視角提示資料不一致（缺 FK 約束的後遺症）。
+   */
+  isOrphan: boolean;
 }
 
 /** GM AI 生成功法任务列表响应。 */
@@ -287,6 +294,25 @@ export interface GmTechniqueGenerationRunRes {
   category?: 'internal' | 'arts' | 'divine' | 'secret';
   error?: string;
   errorCode?: string;
+}
+
+/** GM 强制丢弃功法生成任务的请求体。jobId 也可走 URL path。 */
+export interface GmTechniqueGenerationForceDiscardReq {
+  jobId?: unknown;
+  /** 可选审计说明，写入 job.error_message。 */
+  reason?: unknown;
+}
+
+/** GM 强制丢弃功法生成任务的响应。 */
+export interface GmTechniqueGenerationForceDiscardRes {
+  success: boolean;
+  jobId: string;
+  /** 改写前的状态（如 generated_draft）。 */
+  previousStatus?: string;
+  /** 改写后的状态（恒为 discarded）。 */
+  newStatus?: string;
+  error?: string;
+  errorCode?: 'JOB_NOT_FOUND' | 'JOB_STATE_INVALID' | string;
 }
 
 /** 显示名可用性检查响应 */

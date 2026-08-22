@@ -321,7 +321,9 @@ export class TechniqueGenerationService {
       };
     });
     if (params.bypassInventoryCheck) {
-      // GM 路径：跳过 inventory 事务与玩家 session fence，直接 INSERT pending job 行
+      // GM 路径：跳过 inventory 事务与玩家 session fence，直接 INSERT pending job 行。
+      // bypass 语义本意是「不扣玉簡」，故 item_spend=0、item_consumed=false、consumed_at=NULL，
+      // 不要把 audit 欄位誤填成 true/NOW()，否則 GM 清理時難以分辨哪些是 bypass 產生的 job。
       try {
         await pool.query('BEGIN');
         for (const job of jobs) {
@@ -331,7 +333,7 @@ export class TechniqueGenerationService {
               rolled_grade, rolled_realm_lv, player_context, item_spend,
               rolled_budget_percent, rolled_total_budget,
               item_consumed, consumed_at
-            ) VALUES ($1,$2,'pending','internal',$3,$4,$5,$6,$7,$8,true,NOW())
+            ) VALUES ($1,$2,'pending','internal',$3,$4,$5,0,$6,$7,$8,false,NULL)
             ON CONFLICT (id) DO NOTHING`,
             [
               job.jobId,
@@ -339,7 +341,6 @@ export class TechniqueGenerationService {
               job.grade,
               job.realmLv,
               sanitizedContext,
-              1,
               job.budgetPercent,
               job.totalBudget,
             ],
@@ -1014,6 +1015,64 @@ export class TechniqueGenerationService {
         refundCurrencyItemId: discarded.refundCurrencyItemId ?? refundCurrencyItemId,
       },
     };
+  }
+
+  /**
+   * GM 強制丟棄功法生成任務。
+   * 與玩家側 discardDraft 不同：本方法不校驗玩家身份、不結算物品消費與返還（GM bypass 路徑本就未扣玉簡），
+   * 僅改寫 job 狀態、寫入 audit 元資料，供 GM 清理自己生成的髒資料 / 救活卡死的 draft。
+   * 僅允許把 pending/running/generated_draft 三種狀態推進到 discarded；終態（learned/discarded/expired/failed）拒絕。
+   */
+  async gmForceDiscardJob(jobId: string, reason = 'GM 強制丟棄'): Promise<{
+    success: boolean;
+    jobId: string;
+    previousStatus?: string;
+    newStatus?: string;
+    errorCode?: 'JOB_NOT_FOUND' | 'JOB_STATE_INVALID';
+  }> {
+    const pool = this.pool;
+    if (!pool) {
+      return { success: false, jobId, errorCode: 'JOB_STATE_INVALID' };
+    }
+    const normalizedId = typeof jobId === 'string' ? jobId.trim() : '';
+    if (!normalizedId) {
+      return { success: false, jobId, errorCode: 'JOB_NOT_FOUND' };
+    }
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+      const check = await client.query(
+        `SELECT status FROM ${TECHNIQUE_GENERATION_JOB_TABLE} WHERE id = $1 FOR UPDATE`,
+        [normalizedId],
+      );
+      if ((check.rowCount ?? 0) === 0) {
+        await client.query('ROLLBACK');
+        return { success: false, jobId: normalizedId, errorCode: 'JOB_NOT_FOUND' };
+      }
+      const previousStatus = String((check.rows[0] as { status?: unknown }).status ?? '');
+      const terminalStates = new Set(['learned', 'discarded', 'expired', 'failed']);
+      if (terminalStates.has(previousStatus)) {
+        await client.query('ROLLBACK');
+        return { success: false, jobId: normalizedId, previousStatus, errorCode: 'JOB_STATE_INVALID' };
+      }
+      await client.query(
+        `UPDATE ${TECHNIQUE_GENERATION_JOB_TABLE}
+            SET status = 'discarded',
+                finished_at = NOW(),
+                error_code = 'GM_FORCE_DISCARD',
+                error_message = $2,
+                updated_at = NOW()
+          WHERE id = $1`,
+        [normalizedId, reason],
+      );
+      await client.query('COMMIT');
+      return { success: true, jobId: normalizedId, previousStatus, newStatus: 'discarded' };
+    } catch (error: unknown) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
   }
 
   /** 过期清理 */
