@@ -3,8 +3,7 @@
  *
  * 维护时要保持鉴权、恢复、幂等和数据真源边界清晰，避免把冷路径工具或查询逻辑卷入 tick 热路径。
  */
-import { BadRequestException, HttpException, HttpStatus, Inject, Injectable, Logger, Optional, UnauthorizedException } from '@nestjs/common';
-import { AUTH_REGISTER_ACTIVATION_REQUIRED_CODE } from '@mud/shared';
+import { BadRequestException, Inject, Injectable, InternalServerErrorException, Logger, Optional, UnauthorizedException } from '@nestjs/common';
 import { randomBytes, randomUUID } from 'node:crypto';
 
 import { buildDefaultRoleName, normalizeDisplayName, normalizeRoleName, normalizeUsername, resolveDisplayName, validateDisplayName, validatePassword, validateRoleName, validateUsername } from '../../auth/account-validation';
@@ -150,19 +149,7 @@ interface AuthRequestContext {
 
 interface RegisterOptions {
   invitationCode?: string;
-  activationCode?: string;
 }
-
-export interface RegistrationActivationCodeIssueView {
-  sourceText: string;
-  activationCode: string;
-  used: boolean;
-  usedByUserId: string | null;
-  usedByPlayerId: string | null;
-  usedAt: string | null;
-}
-
-const REGISTRATION_ACTIVATION_REQUIRED_MESSAGE = '目前網路已有帳號註冊，請輸入啟用碼繼續註冊。';
 
 /** 主线玩家鉴权编排服务：负责注册、登录、刷新和身份同步。 */
 @Injectable()
@@ -267,7 +254,6 @@ export class NativePlayerAuthService {
     }
 
     const registerIp = normalizeContextString(context.ip, 64);
-    const registrationActivationCode = await this.resolveRegistrationActivationCodeForRegister(registerIp, options.activationCode);
 
     const requestedInvitationCode = normalizeInviteCode(options.invitationCode);
     const inviterUser = requestedInvitationCode
@@ -309,11 +295,9 @@ export class NativePlayerAuthService {
       createdAt,
       updatedAt: Date.now(),
     };
-    const user = registrationActivationCode
-      ? await this.authStore.saveUserWithRegistrationActivationCode(userCandidate, registrationActivationCode)
-      : await this.authStore.saveUser(userCandidate);
+    const user = await this.authStore.saveUser(userCandidate);
     if (!user) {
-      throwRegistrationActivationRequired();
+      throw new InternalServerErrorException('註冊儲存失敗');
     }
 
     await this.persistIdentity(user);
@@ -328,19 +312,6 @@ export class NativePlayerAuthService {
       });
     }
     return this.issueTokens(user);
-  }
-
-  async getRegistrationActivationCode(sourceText: string): Promise<RegistrationActivationCodeIssueView> {
-    this.authStore.assertOperational();
-    const record = await this.authStore.getOrCreateRegistrationActivationCodeForSourceText(sourceText);
-    return {
-      sourceText: record.sourceText ?? '',
-      activationCode: record.activationCode,
-      used: Boolean(record.usedByUserId),
-      usedByUserId: record.usedByUserId,
-      usedByPlayerId: record.usedByPlayerId,
-      usedAt: record.usedAt,
-    };
   }
 
   private async generateUniqueInviteCode(): Promise<string> {
@@ -689,31 +660,6 @@ export class NativePlayerAuthService {
     throw new UnauthorizedException(reason ? `帳號已封鎖：${reason}` : '帳號已封鎖，請聯繫 GM 處理');
   }
 
-  private async resolveRegistrationActivationCodeForRegister(registerIp: string | null, activationCode: unknown): Promise<string | null> {
-    if (!registerIp) {
-      return null;
-    }
-    const hasObservedAuthIp = await this.authStore.hasObservedAuthIp(registerIp);
-    if (!hasObservedAuthIp) {
-      return null;
-    }
-
-    const normalizedCode = normalizeRegistrationCode(activationCode);
-    if (!normalizedCode) {
-      throwRegistrationActivationRequired();
-    }
-    const generatedRecord = await this.authStore.findRegistrationActivationCode(normalizedCode);
-    if (generatedRecord) {
-      if (generatedRecord.usedByUserId) {
-        throwRegistrationActivationRequired();
-      }
-      return normalizedCode;
-    }
-    if (getRegistrationActivationCodes().has(normalizedCode)) {
-      return normalizedCode;
-    }
-    throwRegistrationActivationRequired();
-  }
   /**
  * syncRuntimeDisplayName：判断运行态显示名称是否满足条件。
  * @param user NativePlayerAuthUser 参数说明。
@@ -770,31 +716,6 @@ function normalizeContextString(value: unknown, maxLength: number): string | nul
   }
   const normalized = value.trim();
   return normalized ? normalized.slice(0, maxLength) : null;
-}
-
-function throwRegistrationActivationRequired(): never {
-  throw new HttpException({
-    code: AUTH_REGISTER_ACTIVATION_REQUIRED_CODE,
-    message: REGISTRATION_ACTIVATION_REQUIRED_MESSAGE,
-  }, HttpStatus.CONFLICT);
-}
-
-function getRegistrationActivationCodes(): Set<string> {
-  const raw = process.env.SERVER_REGISTRATION_ACTIVATION_CODES
-    ?? process.env.REGISTRATION_ACTIVATION_CODES
-    ?? '';
-  return new Set(
-    raw
-      .split(/[,\n\r\t ]+/)
-      .map((entry) => normalizeRegistrationCode(entry))
-      .filter(Boolean),
-  );
-}
-
-function normalizeRegistrationCode(value: unknown): string {
-  return typeof value === 'string'
-    ? value.normalize('NFC').trim().toUpperCase().slice(0, 80)
-    : '';
 }
 
 function normalizeInviteCode(value: unknown): string {

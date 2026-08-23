@@ -155,12 +155,6 @@ map-render.ground.overflow-mark,地圖渲染,餘,範圍D固定前端可見文本
 map-render.local-player-char,地圖渲染,我,範圍D固定前端可見文本
 map-render.respawn-countdown,地圖渲染,回生 {countdown},範圍D固定前端可見文本
 map-render.seconds,地圖渲染,{seconds}息,範圍D固定前端可見文本
-login.activation.code.label,登入,激活碼,同 IP 二次註冊激活碼輸入標籤
-login.activation.empty,登入,請輸入激活碼,激活碼彈窗空輸入提示
-login.activation.required,登入,當前網路已有賬號註冊，請輸入激活碼繼續註冊。,同 IP 二次註冊預設提示
-login.activation.submit,登入,提交激活碼,激活碼彈窗確認按鈕
-login.activation.subtitle,登入,當前 Wi-Fi 或出口 IP 已註冊過賬號。請加入 QQ 群 {qqGroupNumber} 獲取激活碼。,激活碼彈窗副標題
-login.activation.title,登入,需要激活碼,激活碼彈窗標題
 login.bootstrap.in-progress,登入,正在接引角色進入世界...,等待 Socket Bootstrap 首包
 login.display-name.available,登入,此道號可用,顯示名可用狀態
 login.display-name.check-failed,登入,驗查未果,顯示名檢查異常兜底

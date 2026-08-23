@@ -673,28 +673,6 @@ async function requestJsonWithRetry(baseUrl, pathname, init, retryCount = 3) {
 }
 
 /**
- * 为每个审计账号领取独立注册激活码，避免生产同 IP 注册门禁把协议审计误判为滥注册。
- */
-async function issueAuditRegistrationActivationCode(baseUrl, suffix, attempt) {
-  var password = process.env.SERVER_GM_PASSWORD || process.env.GM_PASSWORD || 'admin123';
-  try {
-    var issued = await requestJsonWithRetry(baseUrl, '/api/auth/gm/registration-activation-code', {
-      method: 'POST',
-      body: {
-        password: password,
-        text: 'protocol-audit:' + suffix + ':' + attempt,
-      },
-    });
-    if (issued && typeof issued.activationCode === 'string' && issued.activationCode.trim()) {
-      return issued.activationCode;
-    }
-  } catch (error) {
-    process.stdout.write("[protocol audit] activation issue fallback " + suffix + " attempt=" + attempt + " reason=" + (error && error.message ? error.message : String(error)) + "\n");
-  }
-  return 'PROTOCOL-AUDIT';
-}
-
-/**
  * 注册并登录审计账号，返回访问令牌与玩家标识。
  */
 async function registerAndLoginPlayer(baseUrl, suffix) {
@@ -717,7 +695,6 @@ async function registerAndLoginPlayer(baseUrl, suffix) {
     accountName = buildUniqueAuditAccountName(suffix, attempt);
     password = "Pass_" + buildAuditToken(suffix, 10, attempt);
     try {
-      var activationCode = await issueAuditRegistrationActivationCode(baseUrl, suffix, attempt);
       process.stdout.write("[protocol audit] register begin " + suffix + " attempt=" + attempt + "\n");
       await requestJsonWithRetry(baseUrl, '/api/auth/register', {
         method: 'POST',
@@ -726,7 +703,6 @@ async function registerAndLoginPlayer(baseUrl, suffix) {
           password: password,
           displayName: buildUniqueDisplayName('protocol-audit:' + suffix + ":" + attempt),
           roleName: buildUniqueAuditRoleName(suffix, attempt),
-          activationCode: activationCode,
         },
       });
       process.stdout.write("[protocol audit] login begin " + suffix + " attempt=" + attempt + "\n");

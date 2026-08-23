@@ -53,7 +53,6 @@ interface AuthBody {
  */
   deviceId?: unknown;
   invitationCode?: unknown;
-  activationCode?: unknown;
 }
 /**
  * RequestLike：定义接口结构约束，明确可交付字段含义。
@@ -96,7 +95,6 @@ export class NativeAuthController {
         pickAuthRequestContext(request, body),
         {
           invitationCode: pickString(body?.invitationCode),
-          activationCode: pickString(body?.activationCode),
         },
       );
       this.rateLimitService.recordSuccess('register', request, accountName);

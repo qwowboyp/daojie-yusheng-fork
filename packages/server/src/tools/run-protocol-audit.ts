@@ -223,7 +223,6 @@ function startAuditServer(requestedPort, gmPassword) {
         SERVER_ALLOW_UNREADY_TRAFFIC: "1",
         SERVER_SMOKE_ALLOW_UNREADY: "1",
         SERVER_ALLOW_INSECURE_LOCAL_GM_PASSWORD: process.env.SERVER_ALLOW_INSECURE_LOCAL_GM_PASSWORD || "1",
-        SERVER_REGISTRATION_ACTIVATION_CODES: process.env.SERVER_REGISTRATION_ACTIVATION_CODES || "PROTOCOL-AUDIT",
         SERVER_GM_PASSWORD: gmPassword,
       }),
       stdio: ["ignore", "pipe", "pipe"],
@@ -304,7 +303,6 @@ async function runAudit(baseUrl, gmPassword) {
       SERVER_GM_PASSWORD: gmPassword,
       GM_PASSWORD: gmPassword,
       SERVER_ALLOW_INSECURE_LOCAL_GM_PASSWORD: process.env.SERVER_ALLOW_INSECURE_LOCAL_GM_PASSWORD || "1",
-      SERVER_REGISTRATION_ACTIVATION_CODES: process.env.SERVER_REGISTRATION_ACTIVATION_CODES || "PROTOCOL-AUDIT",
     }),
     stdio: "inherit",
   });

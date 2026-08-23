@@ -26,8 +26,6 @@ import type { GameTimeState, MapRouteDomain, MapTimeConfig, MonsterAggroMode, Mo
 import type { GmPerformanceSnapshot } from './gm-runtime-types';
 import type { InteractableKind, StructureType, SurfaceType, TerrainType } from './map-layer-types';
 
-export const AUTH_REGISTER_ACTIVATION_REQUIRED_CODE = 'REGISTRATION_ACTIVATION_REQUIRED';
-
 /** 注册请求 */
 export interface AuthRegisterReq {
 /**
