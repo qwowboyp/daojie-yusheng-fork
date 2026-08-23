@@ -13,6 +13,10 @@ export const EMPTY_GROUND_PILES = new Map<string, GroundItemPileView>();
 export const MIN_MODAL_ZOOM = 1;
 /** MAX_MODAL_ZOOM：弹窗缩放上限。 */
 export const MAX_MODAL_ZOOM = 8;
+/** MODAL_MARKER_LABEL_MAX_FONT_CSS：弹窗 NPC/怪物等标记名称字号上限（CSS 像素，绘制时按 devicePixelRatio 换算成画布像素）。 */
+export const MODAL_MARKER_LABEL_MAX_FONT_CSS = 28;
+/** MODAL_LANDMARK_LABEL_MAX_FONT_CSS：弹窗地标名称字号上限（CSS 像素，绘制时按 devicePixelRatio 换算成画布像素）。 */
+export const MODAL_LANDMARK_LABEL_MAX_FONT_CSS = 32;
 
 
 

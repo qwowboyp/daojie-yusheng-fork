@@ -18,6 +18,8 @@ import {
   EMPTY_VISIBLE_TILES,
   MAX_MODAL_ZOOM,
   MIN_MODAL_ZOOM,
+  MODAL_LANDMARK_LABEL_MAX_FONT_CSS,
+  MODAL_MARKER_LABEL_MAX_FONT_CSS,
 } from '../constants/visuals/minimap';
 import { buildCanvasFont } from '../constants/ui/text';
 import { formatDisplayCountBadge, formatDisplayInteger } from '../utils/number';
@@ -2592,7 +2594,18 @@ export class Minimap {
     ctx.restore();
   }  
   /**
- * drawMarkerLabel：处理drawMarkerLabel并更新相关状态。
+   * resolveModalLabelFontSize：弹窗标签字号随滚轮缩放等比放大。
+   * 基准字号保持 zoom=1 时的原始外观，放大后受 CSS 像素上限（按 devicePixelRatio 换算）约束，
+   * 保证 NPC 名等标记文字与地图格子同步缩放。
+   */
+  private resolveModalLabelFontSize(baseFontSize: number, cssMaxFontSize: number): number {
+    const zoom = Math.max(1, this.modalZoom);
+    const maxFont = Math.max(baseFontSize, Math.round(cssMaxFontSize * (window.devicePixelRatio || 1)));
+    return clamp(baseFontSize * zoom, baseFontSize, maxFont);
+  }
+
+  /**
+   * drawMarkerLabel：处理drawMarkerLabel并更新相关状态。
  * @param ctx CanvasRenderingContext2D 上下文信息。
  * @param marker MapMinimapMarker 参数说明。
  * @param metrics ViewportMetrics 参数说明。
@@ -2619,7 +2632,11 @@ export class Minimap {
     ctx.strokeStyle = 'rgba(15, 12, 10, 0.92)';
 
     if (marker.kind === 'landmark') {
-      const fontSize = clamp(metrics.scale * 0.7, 12, 18);
+      const zoom = Math.max(1, this.modalZoom);
+      const dpr = window.devicePixelRatio || 1;
+      // 12/18 为 CSS 像素下限/上限，画布是物理像素，需按 devicePixelRatio 换算
+      const baseFontSize = clamp((metrics.scale / zoom) * 0.7, 12 * dpr, 18 * dpr);
+      const fontSize = this.resolveModalLabelFontSize(baseFontSize, MODAL_LANDMARK_LABEL_MAX_FONT_CSS);
       ctx.font = buildCanvasFont('labelStrong', fontSize);
       ctx.textBaseline = 'middle';
       const textWidth = ctx.measureText(label).width;
@@ -2647,7 +2664,11 @@ export class Minimap {
       return;
     }
 
-    const fontSize = clamp(metrics.scale * 0.6, 11, 16);
+    const zoom = Math.max(1, this.modalZoom);
+    const dpr = window.devicePixelRatio || 1;
+    // 11/16 为 CSS 像素下限/上限，画布是物理像素，需按 devicePixelRatio 换算
+    const baseFontSize = clamp((metrics.scale / zoom) * 0.6, 11 * dpr, 16 * dpr);
+    const fontSize = this.resolveModalLabelFontSize(baseFontSize, MODAL_MARKER_LABEL_MAX_FONT_CSS);
     const textY = clamp(
       centerY - Math.max(10, metrics.scale * 0.55),
       metrics.padding + fontSize + 2,
@@ -2721,18 +2742,22 @@ export class Minimap {
     const guide = this.moveHandler
       ? t('minimap.hud.guide.current', undefined)
       : t('minimap.hud.guide.readonly', undefined);
+    // 画布为物理像素尺寸，HUD 文本与留白按 devicePixelRatio 换算，保证 CSS 视觉大小稳定可读
+    const uiScale = window.devicePixelRatio || 1;
     ctx.save();
-    ctx.font = buildCanvasFont('label', 12);
+    ctx.font = buildCanvasFont('label', 12 * uiScale);
     ctx.textBaseline = 'middle';
-    const guideWidth = ctx.measureText(guide).width + 18;
+    const guidePadX = 9 * uiScale;
+    const guideHeight = 26 * uiScale;
+    const guideWidth = ctx.measureText(guide).width + guidePadX * 2;
     const guideX = metrics.width - metrics.padding - guideWidth;
-    const guideY = metrics.padding + 8;
+    const guideY = metrics.padding + 8 * uiScale;
     ctx.fillStyle = 'rgba(8, 9, 12, 0.68)';
-    ctx.fillRect(guideX, guideY, guideWidth, 26);
+    ctx.fillRect(guideX, guideY, guideWidth, guideHeight);
     ctx.strokeStyle = 'rgba(255, 240, 213, 0.12)';
-    ctx.strokeRect(guideX + 0.5, guideY + 0.5, guideWidth - 1, 25);
+    ctx.strokeRect(guideX + 0.5, guideY + 0.5, guideWidth - 1, guideHeight - 1);
     ctx.fillStyle = 'rgba(255, 245, 222, 0.9)';
-    ctx.fillText(guide, guideX + 9, guideY + 13);
+    ctx.fillText(guide, guideX + guidePadX, guideY + guideHeight / 2);
 
     if (!this.hoveredModalPoint) {
       ctx.restore();
@@ -2745,11 +2770,14 @@ export class Minimap {
       return;
     }
 
-    ctx.font = buildCanvasFont('label', 13);
-    const lineHeight = 20;
+    ctx.font = buildCanvasFont('label', 13 * uiScale);
+    const lineHeight = 20 * uiScale;
+    const panelPadX = 10 * uiScale;
+    const panelPadTop = 12 * uiScale;
+    const panelPadBottom = 4 * uiScale;
     const contentWidth = lines.reduce((max, line) => Math.max(max, ctx.measureText(line).width), 0);
-    const panelWidth = Math.min(metrics.width - metrics.padding * 2, contentWidth + 20);
-    const panelHeight = lines.length * lineHeight + 16;
+    const panelWidth = Math.min(metrics.width - metrics.padding * 2, contentWidth + panelPadX * 2);
+    const panelHeight = lines.length * lineHeight + panelPadTop + panelPadBottom;
     const panelX = metrics.padding;
     const panelY = metrics.height - metrics.padding - panelHeight;
     ctx.fillStyle = 'rgba(8, 9, 12, 0.72)';
@@ -2758,7 +2786,7 @@ export class Minimap {
     ctx.strokeRect(panelX + 0.5, panelY + 0.5, panelWidth - 1, panelHeight - 1);
     ctx.fillStyle = 'rgba(255, 246, 225, 0.94)';
     lines.forEach((line, index) => {
-      ctx.fillText(line, panelX + 10, panelY + 12 + lineHeight * index + lineHeight / 2);
+      ctx.fillText(line, panelX + panelPadX, panelY + panelPadTop + lineHeight * index + lineHeight / 2);
     });
     ctx.restore();
   }
