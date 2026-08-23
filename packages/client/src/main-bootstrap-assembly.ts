@@ -45,7 +45,7 @@ import { GuidedTour } from './ui/guided-tour';
 import { startClientVersionReload } from './version-reload';
 import { mountReactUi } from './react-ui/app/mount';
 import { initializeUiStyleConfig } from './ui/ui-style-config';
-import { initializeBgmPlayer } from './ui/bgm-player';
+import { initializeBgmPlayer, setMapBgm } from './ui/bgm-player';
 import { bindMainHighFrequencySocketEvents } from './main-high-frequency-socket-bindings';
 import { bindMainLowFrequencySocketEvents } from './main-low-frequency-socket-bindings';
 import { contentResolver } from './content/content-resolver';
@@ -760,14 +760,24 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
       options.connectionStateSource.handleBootstrapReady();
       options.loginUI.hide();
       completeOfflineGainBlockingConfirmation();
+      // 初次登入：按落點地圖切換 BGM（mapGroupId 資訊待 MapStatic 精確化）
+      setMapBgm(data.self?.mapId);
     },
     onInitSession: (data) => options.runtimeStateSource.handleInitSession(data),
-    onMapEnter: (data) => options.runtimeStateSource.handleMapEnter(data),
+    onMapEnter: (data) => {
+      options.runtimeStateSource.handleMapEnter(data);
+      // 換圖：立即按新地圖切換 BGM（mapGroupId 資訊待 MapStatic 精確化）
+      setMapBgm(data.mid);
+    },
     onRealm: (data) => options.runtimeStateSource.handleRealm(data),
     onWorldDelta: (data) => options.runtimeStateSource.handleWorldDelta(data),
     onSelfDelta: (data) => options.runtimeStateSource.handleSelfDelta(data),
     onPanelDelta: (data) => options.runtimeStateSource.handlePanelDelta(data),
-    onMapStatic: (data) => options.runtimeStateSource.handleMapStatic(data),
+    onMapStatic: (data) => {
+      options.runtimeStateSource.handleMapStatic(data);
+      // 地圖靜態資料到達：帶有 mapGroupId，精確化整組（樓層子圖）的 BGM 歸組
+      setMapBgm(data.mapId, data.mapMeta?.mapGroupId);
+    },
   });
 
   // minimapLibrary 版本协商：收到清单后回报本地版本，收到增量后更新缓存

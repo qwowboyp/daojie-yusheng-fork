@@ -4,13 +4,17 @@
  * 纯客户端表现层：不依赖登录状态、不参与协议，只维护本地音效偏好。
  * 浏览器自动播放政策要求首次播放必须发生在用户交互之后，因此启动时只注册一次性交互监听，
  * 等到第一次 pointerdown/keydown/touchstart 再真正开始播放。
+ *
+ * 每地圖曲目：換圖時由主鏈路調用 {@link setMapBgm}，按 mapId/mapGroupId 解析
+ * `constants/bgm/map-bgm-config.ts` 中的對映表切換曲目；未配置的地圖回退預設曲目。
+ *
+ * 失焦暫停：視窗失焦（blur）或頁面隱藏（visibilitychange）時暫停播放，
+ * 回焦／重新可見時自動恢復（僅當 BGM 開關仍為開啟且失焦前正在播放）。
  */
 
 import { BGM_STORAGE_KEY, BGM_VOLUME_STORAGE_KEY } from '@mud/shared';
 import { t } from './i18n';
-
-/** BGM 资源地址（Vite public 目录，部署后由 nginx 静态伺服）。 */
-const BGM_SRC = '/bgm/gameBGM-01.mp3';
+import { DEFAULT_MAP_BGM_TRACK, resolveMapBgmSrc, resolveMapBgmSrcForMap } from '../constants/bgm/map-bgm-config';
 
 /** BGM 預設音量（0~1），未設定過音量偏好時使用。 */
 export const DEFAULT_BGM_VOLUME = 0.5;
@@ -32,6 +36,10 @@ let enabled = true;
 let volume = DEFAULT_BGM_VOLUME;
 /** 是否已完成初始化。 */
 let initialized = false;
+/** 當前曲目資源地址（依當前地圖解析；登入畫面等無地圖場景為預設曲目）。 */
+let currentSrc = resolveMapBgmSrc(DEFAULT_MAP_BGM_TRACK);
+/** 失焦／頁面隱藏前是否處於播放中，用於回焦後自動恢復播放。 */
+let resumeOnFocus = false;
 
 /** 读取当前 BGM 开启偏好。 */
 export function isBgmEnabled(): boolean {
@@ -71,6 +79,66 @@ export function initializeBgmPlayer(): void {
   window.addEventListener('pointerdown', tryStart);
   window.addEventListener('keydown', tryStart);
   window.addEventListener('touchstart', tryStart);
+  bindFocusVisibilityListeners();
+}
+
+/** 註冊失焦暫停／回焦恢復監聽（冪等，僅初始化時調用一次）。 */
+function bindFocusVisibilityListeners(): void {
+  window.addEventListener('blur', pauseForLostFocus);
+  window.addEventListener('focus', resumeAfterLostFocus);
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+}
+
+/** 視窗失焦或頁面隱藏時暫停播放，並記錄是否需要回焦後恢復。 */
+function pauseForLostFocus(): void {
+  if (!audio || audio.paused) {
+    return;
+  }
+  resumeOnFocus = true;
+  audio.pause();
+}
+
+/** 視窗回焦或頁面重新可見時恢復播放（僅當開關開啟且失焦前在播放）。 */
+function resumeAfterLostFocus(): void {
+  if (!resumeOnFocus) {
+    return;
+  }
+  resumeOnFocus = false;
+  if (enabled) {
+    void startPlayback();
+  }
+}
+
+/** 頁面可見性變化：隱藏等同失焦（暫停），重新可見等同回焦（恢復）。 */
+function handleVisibilityChange(): void {
+  if (document.hidden) {
+    pauseForLostFocus();
+  } else {
+    resumeAfterLostFocus();
+  }
+}
+
+/**
+ * 依當前地圖切換 BGM 曲目（換圖／初次進入地圖時由主鏈路調用）。
+ *
+ * 曲目解析順序：mapId 精確對映 → mapGroupId 整組對映 → 預設曲目。
+ * 同一曲目的重複通知會被忽略；換軌時若正在播放則無縫改播新曲目。
+ */
+export function setMapBgm(mapId: string | undefined | null, mapGroupId?: string | null): void {
+  const nextSrc = resolveMapBgmSrcForMap(mapId, mapGroupId);
+  if (nextSrc === currentSrc) {
+    return;
+  }
+  currentSrc = nextSrc;
+  if (!audio) {
+    // 音訊元素尚未建立（尚未首次播放）：之後 ensureAudio 會直接使用 currentSrc
+    return;
+  }
+  const wasPlaying = !audio.paused && !audio.ended;
+  audio.src = currentSrc;
+  if (enabled && wasPlaying) {
+    void startPlayback();
+  }
 }
 
 /** 设置 BGM 音量（0~1），越界值会被收敛并取整到整数百分比；立即套用到播放中的音频并持久化偏好。 */
@@ -95,6 +163,7 @@ export function toggleBgm(): boolean {
   if (enabled) {
     void startPlayback();
   } else {
+    resumeOnFocus = false;
     audio?.pause();
   }
   window.dispatchEvent(new CustomEvent<{ enabled: boolean }>(BGM_STATE_CHANGED_EVENT, { detail: { enabled } }));
@@ -128,10 +197,10 @@ function startPlayback(): Promise<void> {
   return player.play().catch(() => undefined);
 }
 
-/** 懒创建音频元素单例（loop 循环播放）。 */
+/** 懒创建音频元素单例（loop 循环播放，曲目為當前地圖解析結果）。 */
 function ensureAudio(): HTMLAudioElement {
   if (!audio) {
-    audio = new Audio(BGM_SRC);
+    audio = new Audio(currentSrc);
     audio.loop = true;
     audio.volume = volume;
     audio.preload = 'auto';
