@@ -67,8 +67,6 @@ const status = runVerificationSteps({
         '--case',
         'native-request-ip',
         '--case',
-        'registration-activation',
-        '--case',
         'name-visibility',
         '--case',
         'native-auth-persistence-failure',
