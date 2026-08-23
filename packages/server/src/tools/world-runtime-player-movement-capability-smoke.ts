@@ -333,7 +333,8 @@ function testPlayerCapabilityIgnoresStaticObstacleOnMove(): void {
   }), true);
   instance.tickOnce();
 
-  assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 1, y: 0 });
+  // 基础移动点数 200：穿越障碍 (1,0) 扣 100 后仍够再走一格地板，连续移动抵达 (2,0)
+  assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 2, y: 0 });
   assert.equal(player.movePoints, 0);
 }
 
@@ -358,7 +359,8 @@ function testFlyingSwordProviderDoesNotConsumeQiOnMove(): void {
   }), true);
   instance.tickOnce();
 
-  assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 1, y: 0 });
+  // 同上：预算 200 连续移动两格，法宝灵力只在持续 tick 扣除、不因移动消耗
+  assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 2, y: 0 });
   assert.equal(player.artifacts.slots[0].qi, ARTIFACT_BASE_MAX_QI);
   assert.equal(player.movePoints, 0);
 }

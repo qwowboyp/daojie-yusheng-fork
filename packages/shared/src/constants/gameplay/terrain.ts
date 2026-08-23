@@ -22,8 +22,8 @@ export const TERRAIN_REGEN_RATE_PER_TICK = 0.01;
 /** 移动点数基本单位 */
 export const MOVE_POINT_UNIT = 100;
 
-/** 每 tick 基础移动点数 */
-export const BASE_MOVE_POINTS_PER_TICK = MOVE_POINT_UNIT;
+/** 每 tick 基础移动点数（2 倍单位 = 玩家基础移速加倍；妖兽不走移动点数系统，追击节奏不受影响） */
+export const BASE_MOVE_POINTS_PER_TICK = MOVE_POINT_UNIT * 2;
 
 /** 最大可累积移动点数（不允许跨 tick 累积，最多存储 1 tick 基础产出） */
 export const MAX_STORED_MOVE_POINTS = MOVE_POINT_UNIT * 1;

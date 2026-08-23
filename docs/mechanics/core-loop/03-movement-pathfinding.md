@@ -5,7 +5,7 @@
 | 常量 | 值 | 源文件 |
 |------|-----|--------|
 | MOVE_POINT_UNIT | 100 | `packages/shared/src/constants/gameplay/terrain.ts` |
-| BASE_MOVE_POINTS_PER_TICK | 100 | 同上 |
+| BASE_MOVE_POINTS_PER_TICK | 200 | 同上（2 倍单位，玩家基础移速加倍；妖兽追击节奏不变） |
 | MAX_STORED_MOVE_POINTS | 100 | 同上 |
 | MOVE_SPEED_SOFT_CAP | 500 | 同上，妖兽等通用曲线 |
 | MOVE_SPEED_SOFT_CAP_LOG_GAIN | 300 | 同上，妖兽等通用曲线 |
@@ -32,10 +32,10 @@ getEffectivePlayerMoveSpeed(moveSpeed):
 
 ```ts
 getMovePointsPerTick(moveSpeed):
-  return max(1, round(100 + max(0, moveSpeed)))
+  return max(1, round(200 + max(0, moveSpeed)))
 ```
 
-> 注：调用方通常先调用 `getEffectiveMoveSpeed(rawMoveSpeed)` 做软上限衰减，再将结果传入此函数。
+> 注：调用方通常先调用 `getEffectiveMoveSpeed(rawMoveSpeed)` 做软上限衰减，再将结果传入此函数。基础值 200（2 倍 `MOVE_POINT_UNIT`）意味着平地（代价 100）每 tick 可走 2 格；妖兽不使用移动点数系统，其移动节奏不随此常量变化。
 
 ### 最大可存储移动点数
 

@@ -384,12 +384,14 @@ function testMoveToQueuesInitialInstanceMoveImmediately() {
         }],
     ]);
     instance.tickOnce();
-    assert.deepEqual(instance.getPlayerPosition(runtimePlayer.playerId), { x: 1, y: 1 });
+    // 基础移动点数 200（平地代价 100），单 tick 可走完 2 步路径直达终点
+    assert.deepEqual(instance.getPlayerPosition(runtimePlayer.playerId), { x: 2, y: 1 });
 }
 
 function testHighCostTileAccumulatesMoveBudget() {
-    assert.equal(getMaxStoredMovePoints(0), 100);
-    assert.equal(getMaxStoredMovePoints(0, 930), 930);
+    // 基础移动点数为 200（2 倍单位），高耗费地块代价按同倍数放大为 1860，保持原测试节奏
+    assert.equal(getMaxStoredMovePoints(0), 200);
+    assert.equal(getMaxStoredMovePoints(0, 1860), 1860);
 
     const templateRepository = new MapTemplateRepository();
     templateRepository.registerRuntimeMapTemplate({
@@ -412,7 +414,7 @@ function testHighCostTileAccumulatesMoveBudget() {
         containers: [],
         auras: [],
         tileEffects: [
-            { x: 1, y: 1, width: 1, height: 1, movementCost: 930 },
+            { x: 1, y: 1, width: 1, height: 1, movementCost: 1860 },
         ],
     });
     const instance = new MapInstanceRuntime({
@@ -447,7 +449,7 @@ function testHighCostTileAccumulatesMoveBudget() {
         instance.tickOnce();
         assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 0, y: 1 });
     }
-    assert.equal(player.movePoints, 900);
+    assert.equal(player.movePoints, 1800);
 
     instance.enqueueMove({
         playerId: player.playerId,
@@ -558,7 +560,7 @@ function testCrossMapPointNavigationSurvivesTransfer() {
         },
     });
     assert.equal(service.navigationIntents.get('player:cross-map')?.mapId, 'target_map');
-    assert.deepEqual(notices, [['player:cross-map', '穿过灵脉抵达 target_map', 'travel', 'notice.travel.arrived']]);
+    assert.deepEqual(notices, [['player:cross-map', '穿過靈脈抵達 target_map', 'travel', 'notice.travel.arrived']]);
 
     service.navigationIntents.set('player:cross-map', {
         kind: 'point',
