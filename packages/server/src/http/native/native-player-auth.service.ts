@@ -15,6 +15,7 @@ import { ActivityPersistenceService } from '../../persistence/activity-persisten
 import { PlayerRuntimeService } from '../../runtime/player/player-runtime.service';
 import { NativePlayerAuthStoreService } from './native-player-auth-store.service';
 import type { NativePlayerAuthUser } from './native-player-auth-store.service';
+import { normalizeAvatarImage } from './avatar-image-normalizer';
 import { MAX_PLAYER_AVATAR_BYTES, PLAYER_AVATAR_MIME_WHITELIST, PlayerAvatarStoreService } from './player-avatar-store.service';
 
 /** 登录/注册成功后返回的令牌对。 */
@@ -521,7 +522,8 @@ export class NativePlayerAuthService {
     return { roleName: normalizedRoleName };
   }
 
-  /** 上传（覆盖）当前玩家头像；仅接受白名单内、不超过上限的 base64 data URL。 */
+  /** 上传（覆盖）当前玩家头像；白名单内、不超过上限的 base64 data URL。
+   * 收取后统一正规化：真实解码验证 → 等比缩到最长边 ≤128（保持长宽比，16:9/9:16 不裁不补边）→ 重编码 WebP 压缩存储。 */
   async uploadAvatar(accessToken: string, dataUrl: string): Promise<{ version: number }> {
     this.authStore.assertOperational();
     const user = await this.requireUser(accessToken);
@@ -544,7 +546,8 @@ export class NativePlayerAuthService {
       throw new BadRequestException('頭像檔案過大，請上傳 1MB 內的圖片');
     }
 
-    const version = await this.avatarStore.saveAvatar(user.playerId, mime, data);
+    const normalized = await normalizeAvatarImage(data);
+    const version = await this.avatarStore.saveAvatar(user.playerId, normalized.mime, normalized.data);
     return { version };
   }
 
