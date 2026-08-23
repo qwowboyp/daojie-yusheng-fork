@@ -16,11 +16,17 @@ import { BGM_STORAGE_KEY, BGM_VOLUME_STORAGE_KEY } from '@mud/shared';
 import { t } from './i18n';
 import { DEFAULT_MAP_BGM_TRACK, resolveDefaultMapBgmSrc, resolveMapBgmSrc, resolveMapBgmSrcForMap } from '../constants/bgm/map-bgm-config';
 
-/** BGM 預設音量（0~1），未設定過音量偏好時使用。 */
-export const DEFAULT_BGM_VOLUME = 0.5;
+/** BGM 預設音量（0~1），未設定過音量偏好時使用（初始 20%）。 */
+export const DEFAULT_BGM_VOLUME = 0.2;
 
 /** BGM 音量調整刻度（0~1），對應 UI 上的 10%。 */
 export const BGM_VOLUME_STEP = 0.1;
+
+/**
+ * BGM 實際輸出增益係數：UI 音量 100% 對應音訊元素實際輸出 50%（減半防過響）。
+ * 僅作用於套用到 HTMLAudioElement 的瞬間，偏好值、UI 顯示與持久化皆不受影響。
+ */
+const BGM_OUTPUT_GAIN = 0.5;
 
 /** BGM 开关状态变更事件名，供 UI 组件订阅同步按钮状态。 */
 export const BGM_STATE_CHANGED_EVENT = 'bgm-player-state-changed';
@@ -149,7 +155,7 @@ export function setBgmVolume(value: number): number {
   // 取整到整数百分比，避免 -/+ 步进累积浮点误差（如 0.6000000000000001）
   volume = Math.round(normalized * 100) / 100;
   if (audio) {
-    audio.volume = normalized;
+    audio.volume = volume * BGM_OUTPUT_GAIN;
   }
   persistVolume(volume);
   window.dispatchEvent(new CustomEvent<{ volume: number }>(BGM_VOLUME_CHANGED_EVENT, { detail: { volume } }));
@@ -202,7 +208,7 @@ function ensureAudio(): HTMLAudioElement {
   if (!audio) {
     audio = new Audio(currentSrc);
     audio.loop = true;
-    audio.volume = volume;
+    audio.volume = volume * BGM_OUTPUT_GAIN;
     audio.preload = 'auto';
     // 檔案載入失敗（如曲目尚未放入 public/bgm/）時回退預設曲目，避免整圖無聲；
     // 預設曲目也失敗則不再重試，防止 error 事件無限循環。
