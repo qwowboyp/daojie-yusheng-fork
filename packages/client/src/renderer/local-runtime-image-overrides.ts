@@ -1,14 +1,13 @@
 /**
- * 本文件负责客户端运行时图包的本地资源覆盖。
+ * 本文件负责客户端运行时图包的本地地形资源覆盖。
  *
  * 覆盖只写入当前浏览器 localStorage，不改变服务端真源、manifest 或资源文件。
+ * 实体形象（玩家/怪物/NPC）已由服务器头像（server-avatar-registry）统一供给，
+ * 本地覆盖仅对地形类 key（terrain:/surface:/structure:/interactable:）生效。
  */
-
-export type RuntimeImageOverrideKind = 'tile' | 'entity';
 
 export interface RuntimeImageResourceEntry {
   key: string;
-  kind: RuntimeImageOverrideKind;
   label: string;
   src: string;
   aliasKeys?: string[];
@@ -25,7 +24,6 @@ type RuntimeImageOverridesSnapshot = Record<string, RuntimeImageOverrideEntry>;
 
 type RuntimeImagePackManifest = {
   tiles?: Record<string, unknown>;
-  entities?: Record<string, unknown>;
 };
 
 const MANIFEST_URL = '/assets/runtime-image-packs/default/manifest.json';
@@ -65,19 +63,7 @@ const TILE_LABELS: Record<string, string> = {
   'structure:broken_sword_heap': '結構 · 斷劍堆',
 };
 
-type MonsterLocationCatalog = Record<string, { monsterName?: unknown }>;
-
-type LocalEditorCatalog = {
-  quests?: Array<Record<string, unknown>>;
-};
-
-type ResourceLabelMaps = {
-  monsterNames: ReadonlyMap<string, string>;
-  npcNames: ReadonlyMap<string, string>;
-};
-
-let resources: RuntimeImageResourceEntry[] = [];
-let resourceLoadPromise: Promise<RuntimeImageResourceEntry[]> | null = null;
+let resources: RuntimeImageResourceEntry[] = [];let resourceLoadPromise: Promise<RuntimeImageResourceEntry[]> | null = null;
 let overrides: RuntimeImageOverridesSnapshot | null = null;
 let overrideMutationSequence = 0;
 const pendingOverrideMutationByKey = new Map<string, number>();
@@ -90,57 +76,22 @@ function normalizeKey(value: string): string {
   return value.trim();
 }
 
-function getFallbackKindLabel(kind: RuntimeImageOverrideKind, prefix: string): string {
-  if (kind === 'tile') {
-    switch (prefix) {
-      case 'terrain':
-        return '地形';
-      case 'surface':
-        return '地表';
-      case 'structure':
-        return '結構';
-      case 'interactable':
-        return '交互物';
-      default:
-        return '地塊';
-    }
-  }
-  switch (prefix) {
-    case 'monster':
-      return '怪物';
-    case 'npc':
-      return 'NPC';
-    case 'container':
-      return '草藥/容器';
-    case 'player':
-      return '玩家';
-    default:
-      return '實體';
-  }
-}
-
-function resolveResourceLabel(kind: RuntimeImageOverrideKind, key: string, labelMaps?: ResourceLabelMaps): string {
+function resolveResourceLabel(key: string): string {
   if (TILE_LABELS[key]) return TILE_LABELS[key]!;
   const [prefix, rawId = key] = key.split(':', 2);
-  const kindLabel = getFallbackKindLabel(kind, prefix);
-  if (prefix === 'monster') {
-    const name = labelMaps?.monsterNames.get(rawId);
-    if (name) return `${kindLabel} · ${name}`;
-  }
-  if (prefix === 'npc') {
-    const name = labelMaps?.npcNames.get(rawId);
-    if (name) return `${kindLabel} · ${name}`;
-  }
-  if (prefix === 'container' && /[\u3400-\u9fff]/u.test(rawId)) {
-    return `${kindLabel} · ${rawId}`;
-  }
-  if (prefix === 'player') {
-    return rawId === 'default' ? '玩家 · 預設形象' : `${kindLabel} · ${rawId}`;
-  }
+  const kindLabel = prefix === 'terrain'
+    ? '地形'
+    : prefix === 'surface'
+      ? '地表'
+      : prefix === 'structure'
+        ? '結構'
+        : prefix === 'interactable'
+          ? '交互物'
+          : '地塊';
   return `${kindLabel} · ${rawId.replace(/[_-]+/g, ' ')}`;
 }
 
-function readManifestResourceEntries(value: unknown, kind: RuntimeImageOverrideKind, labelMaps: ResourceLabelMaps): RuntimeImageResourceEntry[] {
+function readManifestTileResourceEntries(value: unknown): RuntimeImageResourceEntry[] {
   if (!isRecord(value)) return [];
   const entries: RuntimeImageResourceEntry[] = [];
   for (const [rawKey, rawRef] of Object.entries(value)) {
@@ -150,8 +101,7 @@ function readManifestResourceEntries(value: unknown, kind: RuntimeImageOverrideK
     }
     entries.push({
       key,
-      kind,
-      label: resolveResourceLabel(kind, key, labelMaps),
+      label: resolveResourceLabel(key),
       src: rawRef.src.trim(),
     });
   }
@@ -159,7 +109,6 @@ function readManifestResourceEntries(value: unknown, kind: RuntimeImageOverrideK
 }
 
 function sortResourceEntries(left: RuntimeImageResourceEntry, right: RuntimeImageResourceEntry): number {
-  if (left.kind !== right.kind) return left.kind === 'tile' ? -1 : 1;
   return left.key.localeCompare(right.key, 'zh-Hans-CN');
 }
 
@@ -245,70 +194,6 @@ function finishOverrideMutation(key: string, mutation: number): void {
   }
 }
 
-function findResource(key: string): RuntimeImageResourceEntry | null {
-  return resources.find((entry) => entry.key === key) ?? null;
-}
-
-function normalizeDisplayName(value: unknown): string {
-  return typeof value === 'string' ? value.trim() : '';
-}
-
-function readNpcNamesFromLocalEditorCatalog(catalog: LocalEditorCatalog): ReadonlyMap<string, string> {
-  const names = new Map<string, string>();
-  for (const quest of catalog.quests ?? []) {
-    for (const [idKey, nameKey] of [['giverId', 'giverName'], ['submitNpcId', 'submitNpcName'], ['npcId', 'npcName']] as const) {
-      const id = normalizeDisplayName(quest[idKey]);
-      const name = normalizeDisplayName(quest[nameKey]);
-      if (id && name && !names.has(id)) names.set(id, name);
-    }
-  }
-  return names;
-}
-
-async function loadResourceLabelMaps(): Promise<ResourceLabelMaps> {
-  const [monsterModule, editorCatalogModule] = await Promise.all([
-    import('../constants/world/monster-locations.generated.json'),
-    import('../constants/world/editor-catalog.generated.json'),
-  ]);
-  const monsterCatalog = monsterModule.default as MonsterLocationCatalog;
-  const monsterNames = new Map<string, string>();
-  for (const [id, entry] of Object.entries(monsterCatalog)) {
-    const name = normalizeDisplayName(entry.monsterName);
-    if (id && name) monsterNames.set(id, name);
-  }
-  return {
-    monsterNames,
-    npcNames: readNpcNamesFromLocalEditorCatalog(editorCatalogModule.default as LocalEditorCatalog),
-  };
-}
-
-export function createPlayerRuntimeImageResource(input: {
-  playerId: string;
-  displayName?: string;
-  roleName?: string;
-}): RuntimeImageResourceEntry | null {
-  const playerId = normalizeKey(input.playerId);
-  if (!playerId) return null;
-  const displayName = normalizeDisplayName(input.roleName) || normalizeDisplayName(input.displayName) || '我的角色';
-  return {
-    key: `player:${playerId}`,
-    kind: 'entity',
-    label: `我的形象 · ${displayName}`,
-    src: '本地玩家形象',
-  };
-}
-
-export function getRuntimeImageOverrideSpriteEntries(): RuntimeImageResourceEntry[] {
-  return getRuntimeImageOverrides()
-    .filter((entry) => entry.key.startsWith('player:') && !entry.key.endsWith(':left') && !entry.key.endsWith(':right'))
-    .map((entry) => ({
-      key: entry.key,
-      kind: 'entity',
-      label: resolveResourceLabel('entity', entry.key),
-      src: entry.dataUrl,
-    }));
-}
-
 export function getRuntimeImageOverrides(): RuntimeImageOverrideEntry[] {
   return Object.values(getMutableOverrides()).sort((left, right) => right.updatedAt - left.updatedAt || left.key.localeCompare(right.key));
 }
@@ -317,7 +202,11 @@ export function getRuntimeImageOverride(key: string): RuntimeImageOverrideEntry 
   return getMutableOverrides()[key] ?? null;
 }
 
+/** 本地覆盖仅对地形类 key 生效；实体形象统一走服务器头像，旧实体覆盖数据不再生效。 */
+const TILE_OVERRIDE_KEY_PREFIXES = ['terrain:', 'surface:', 'structure:', 'interactable:'] as const;
+
 export function resolveRuntimeImageOverrideSrc(key: string, fallbackSrc: string): string {
+  if (!TILE_OVERRIDE_KEY_PREFIXES.some((prefix) => key.startsWith(prefix))) return fallbackSrc;
   return getRuntimeImageOverride(key)?.dataUrl ?? fallbackSrc;
 }
 
@@ -377,17 +266,12 @@ export function removeRuntimeImageOverride(key: string): void {
 export async function loadRuntimeImageResourceCatalog(): Promise<RuntimeImageResourceEntry[]> {
   if (resources.length > 0) return resources;
   if (resourceLoadPromise) return resourceLoadPromise;
-  resourceLoadPromise = Promise.all([
-    fetch(MANIFEST_URL, { cache: 'no-cache' }),
-    loadResourceLabelMaps(),
-  ])
-    .then(async ([response, labelMaps]) => {
+  resourceLoadPromise = fetch(MANIFEST_URL, { cache: 'no-cache' })
+    .then(async (response) => {
       if (!response.ok) throw new Error(`runtime_image_resource_manifest_http_${response.status}`);
       const manifest = await response.json() as RuntimeImagePackManifest;
-      resources = [
-        ...readManifestResourceEntries(manifest.tiles, 'tile', labelMaps),
-        ...readManifestResourceEntries(manifest.entities, 'entity', labelMaps),
-      ].sort(sortResourceEntries);
+      // 只提供地形类资源目录；实体形象已由服务器头像统一供给。
+      resources = readManifestTileResourceEntries(manifest.tiles).sort(sortResourceEntries);
       return resources;
     })
     .catch((error) => {
@@ -397,10 +281,14 @@ export async function loadRuntimeImageResourceCatalog(): Promise<RuntimeImageRes
   return resourceLoadPromise;
 }
 
-export async function saveRuntimeImageOverrideEntryFromFile(entry: RuntimeImageResourceEntry, file: File): Promise<RuntimeImageOverrideEntry> {
-  const normalizedKey = normalizeKey(entry.key);
+export async function saveRuntimeImageOverrideFromFile(key: string, file: File): Promise<RuntimeImageOverrideEntry> {
+  const normalizedKey = normalizeKey(key);
   if (!normalizedKey) throw new Error('local_runtime_image_override_empty_key');
   if (!file.type.startsWith('image/')) throw new Error('local_runtime_image_override_not_image');
+  // 目录清单是懒加载的 UI 数据，save 不能依赖它；用 tile 前缀判定即可拒绝实体类 key。
+  if (!TILE_OVERRIDE_KEY_PREFIXES.some((prefix) => normalizedKey.startsWith(prefix))) {
+    throw new Error('local_runtime_image_override_unknown_key');
+  }
   const mutation = beginOverrideMutation(normalizedKey);
   try {
     const dataUrl = await new Promise<string>((resolve, reject) => {
@@ -431,12 +319,4 @@ export async function saveRuntimeImageOverrideEntryFromFile(entry: RuntimeImageR
   } finally {
     finishOverrideMutation(normalizedKey, mutation);
   }
-}
-
-export async function saveRuntimeImageOverrideFromFile(key: string, file: File): Promise<RuntimeImageOverrideEntry> {
-  const normalizedKey = normalizeKey(key);
-  if (!normalizedKey) throw new Error('local_runtime_image_override_empty_key');
-  const entry = findResource(normalizedKey);
-  if (!entry) throw new Error('local_runtime_image_override_unknown_key');
-  return saveRuntimeImageOverrideEntryFromFile(entry, file);
 }

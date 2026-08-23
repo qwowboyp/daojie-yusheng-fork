@@ -78,7 +78,6 @@ import {
   PIXI_TERRAIN_CHUNK_SIZE,
 } from './pixi-terrain-cache-signatures';
 import {
-  addLocalPixiEntityOverrideSpriteRefs,
   addServerAvatarSpriteRefs,
   normalizeLegacyTileMap,
   normalizePixiTileSpriteMap,
@@ -653,9 +652,8 @@ export class PixiMapRendererAdapter {
         DEFAULT_RUNTIME_IMAGE_PACK_MANIFEST_URL,
         version,
       );
-      // 服务器头像先注入，本地覆盖后注入：同 key 后写者胜，本机预览优先于全服头像。
+      // 实体形象统一由服务器头像供给（player:<id>）；本地覆盖仅对地形 key 生效。
       addServerAvatarSpriteRefs(this.runtimeEntitySpriteRefs);
-      addLocalPixiEntityOverrideSpriteRefs(this.runtimeEntitySpriteRefs);
       const nextAtlasSources = new Set<string>([
         ...Array.from(this.runtimeTileSpriteRefs.values(), (ref) => ref.src),
         ...Array.from(this.runtimeEntitySpriteRefs.values(), (ref) => ref.src),

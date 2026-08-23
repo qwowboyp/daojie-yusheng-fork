@@ -7,7 +7,6 @@ import type { InteractableKind, RenderEntity, StructureType, SurfaceType, Terrai
 import { DEFAULT_MAP_PERFORMANCE_CONFIG, type MapPerformanceConfig } from '../constants/ui/performance';
 import { buildEntitySpriteLookupPlan, type EntitySpriteTransform } from '../entity-facing';
 import {
-  getRuntimeImageOverrideSpriteEntries,
   RUNTIME_IMAGE_OVERRIDES_CHANGED_EVENT,
   resolveRuntimeImageOverrideSrc,
 } from './local-runtime-image-overrides';
@@ -297,29 +296,9 @@ function normalizeSpriteMap(
   return result;
 }
 
-function addLocalEntityOverrideSpriteRefs(sprites: Map<string, AtlasSpriteRef>): void {
-  let order = sprites.size;
-  for (const entry of getRuntimeImageOverrideSpriteEntries()) {
-    if (!entry.src.startsWith('data:image/')) continue;
-    sprites.set(entry.key, {
-      src: entry.src,
-      cols: 1,
-      rows: 1,
-      col: 0,
-      row: 0,
-      colSpan: 1,
-      rowSpan: 1,
-      fit: 'contain',
-      zIndex: 500,
-      order,
-    });
-    order += 1;
-  }
-}
-
 /**
  * 注入服务器头像 sprite 条目（player:<id> → /api/avatar/<id>?v=N）。
- * 必须在本地覆盖注入之前调用：同 key 时后写入者胜，本机预览覆盖仍优先于全服头像。
+ * 实体形象统一由服务器头像供给；本机实体覆盖已随自定义实体图功能移除。
  */
 function addServerAvatarSpriteRefs(sprites: Map<string, AtlasSpriteRef>): void {
   let order = sprites.size;
@@ -737,9 +716,8 @@ export class RuntimeImagePack {
         this.tileSprites = normalizeSpriteMap(manifest.tiles, this.manifestUrl, version, manifest.defaults?.tile);
         this.legacyTileKeys = normalizeLegacyTileMap(manifest.legacyTiles);
         this.entitySprites = normalizeSpriteMap(manifest.entities, this.manifestUrl, version);
-        // 服务器头像先注入，本地覆盖后注入：同 key 后写者胜，本机预览优先于全服头像。
+        // 实体形象统一由服务器头像供给（player:<id>）；本地覆盖仅对地形 key 生效。
         addServerAvatarSpriteRefs(this.entitySprites);
-        addLocalEntityOverrideSpriteRefs(this.entitySprites);
         this.dualGridTileKeys = [...this.tileSprites.entries()]
           .filter(([, ref]) => ref.dualGrid?.enabled === true)
           .sort(([, left], [, right]) => left.zIndex - right.zIndex || left.order - right.order)

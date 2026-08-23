@@ -324,11 +324,11 @@ globalThis.CustomEvent = class CustomEvent {
 };
 globalThis.FileReader = ControlledFileReader;
 const imageOverrides = loadTypeScriptModule('src/renderer/local-runtime-image-overrides.ts');
-const resource = { key: 'terrain:floor', kind: 'tile', label: '平地', src: '/floor.png' };
+const resourceKey = 'terrain:floor';
 
 storage.failWrites = true;
-const failedSave = imageOverrides.saveRuntimeImageOverrideEntryFromFile(
-  resource,
+const failedSave = imageOverrides.saveRuntimeImageOverrideFromFile(
+  resourceKey,
   { type: 'image/png', name: 'quota.png' },
 );
 completeReader(ControlledFileReader.pending.shift(), 'data:image/png;base64,quota');
@@ -337,12 +337,12 @@ assert.deepEqual(imageOverrides.getRuntimeImageOverrides(), [], '持久化失败
 assert.equal(dispatchedEvents.length, 0, '持久化失败不得通知渲染器刷新');
 
 storage.failWrites = false;
-const slowSave = imageOverrides.saveRuntimeImageOverrideEntryFromFile(
-  resource,
+const slowSave = imageOverrides.saveRuntimeImageOverrideFromFile(
+  resourceKey,
   { type: 'image/png', name: 'slow-old.png' },
 );
-const fastSave = imageOverrides.saveRuntimeImageOverrideEntryFromFile(
-  resource,
+const fastSave = imageOverrides.saveRuntimeImageOverrideFromFile(
+  resourceKey,
   { type: 'image/png', name: 'fast-new.png' },
 );
 const [slowReader, fastReader] = ControlledFileReader.pending.splice(0);
@@ -350,18 +350,18 @@ completeReader(fastReader, 'data:image/png;base64,new');
 await fastSave;
 completeReader(slowReader, 'data:image/png;base64,old');
 await assert.rejects(slowSave, /local_runtime_image_override_superseded/);
-assert.equal(imageOverrides.getRuntimeImageOverride(resource.key)?.fileName, 'fast-new.png', '较慢的旧选图不得覆盖最后一次选择');
+assert.equal(imageOverrides.getRuntimeImageOverride(resourceKey)?.fileName, 'fast-new.png', '较慢的旧选图不得覆盖最后一次选择');
 assert.equal(dispatchedEvents.length, 1, '只有最新选图可发布刷新事件');
 
-const saveBeforeReset = imageOverrides.saveRuntimeImageOverrideEntryFromFile(
-  resource,
+const saveBeforeReset = imageOverrides.saveRuntimeImageOverrideFromFile(
+  resourceKey,
   { type: 'image/png', name: 'late-after-reset.png' },
 );
 const readerBeforeReset = ControlledFileReader.pending.shift();
-imageOverrides.removeRuntimeImageOverride(resource.key);
+imageOverrides.removeRuntimeImageOverride(resourceKey);
 completeReader(readerBeforeReset, 'data:image/png;base64,late');
 await assert.rejects(saveBeforeReset, /local_runtime_image_override_superseded/);
-assert.equal(imageOverrides.getRuntimeImageOverride(resource.key), null, '恢复默认后旧读图不得重新写回覆盖');
+assert.equal(imageOverrides.getRuntimeImageOverride(resourceKey), null, '恢复默认后旧读图不得重新写回覆盖');
 assert.equal(dispatchedEvents.length, 2, '恢复默认应只发布一次新快照');
 await settlePromise();
 

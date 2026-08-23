@@ -37,13 +37,11 @@ import { getServerAvatarUrl, refreshServerAvatars, SERVER_AVATARS_CHANGED_EVENT 
 import { BGM_VOLUME_CHANGED_EVENT, BGM_VOLUME_STEP, getBgmVolume, isBgmEnabled, setBgmVolume, toggleBgm } from '../../../ui/bgm-player';
 import { readOfflineGainReportsFromBrowser, readPlayerStatisticTotalsFromBrowser } from '../../../offline-gain-storage';
 import {
-  createPlayerRuntimeImageResource,
   getRuntimeImageOverride,
   getRuntimeImageOverrides,
   getRuntimeImageReloadListKeys,
   loadRuntimeImageResourceCatalog,
   removeRuntimeImageOverride,
-  saveRuntimeImageOverrideEntryFromFile,
   saveRuntimeImageOverrideFromFile,
   setRuntimeImageReloadListKeys,
   type RuntimeImageOverrideEntry,
@@ -259,7 +257,7 @@ export const SettingsPanel = memo(function SettingsPanel() {
         {activeTab === 'performance' && <PerformanceTab />}
       </div>
       <div className={`settings-modal-pane ui-tabbed-modal-pane${activeTab === 'resourceReload' ? ' active' : ''}`}>
-        {activeTab === 'resourceReload' && <ResourceReloadTab state={state} />}
+        {activeTab === 'resourceReload' && <ResourceReloadTab />}
       </div>
       <div className={`settings-modal-pane ui-tabbed-modal-pane${activeTab === 'offlineGain' ? ' active' : ''}`}>
         {activeTab === 'offlineGain' && <OfflineGainTab playerId={state.playerId || state.accountName || 'anonymous'} />}
@@ -942,12 +940,12 @@ const PerformanceTab = memo(function PerformanceTab() {
 
 // ─── Resource Reload Tab ─────────────────────────────────────────────────────
 
-const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: SettingsPanelState }) {
+const ResourceReloadTab = memo(function ResourceReloadTab() {
   const [resources, setResources] = useState<RuntimeImageResourceEntry[]>([]);
   const [addedKeys, setAddedKeys] = useState<string[]>(() => getRuntimeImageReloadListKeys());
   const [overrides, setOverrides] = useState<RuntimeImageOverrideEntry[]>(() => getRuntimeImageOverrides());
   const [query, setQuery] = useState('');
-  const [status, setStatus] = useState('預設列表為空，請先搜索資源名稱並添加到本地重載列表。');
+  const [status, setStatus] = useState('預設列表為空，請先搜索地形資源名稱並添加到本地重載列表。');
 
   useEffect(() => {
     let active = true;
@@ -970,11 +968,6 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
   const addedResources = addedKeys
     .map((key) => resources.find((entry) => entry.key === key))
     .filter((entry): entry is RuntimeImageResourceEntry => entry !== undefined);
-  const playerResource = createPlayerRuntimeImageResource({
-    playerId: state.playerId,
-    displayName: state.displayName,
-    roleName: state.roleName,
-  });
 
   const refreshOverrides = useCallback(() => {
     setOverrides(getRuntimeImageOverrides());
@@ -1014,23 +1007,6 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
     }
   }, [refreshOverrides]);
 
-  const handleEntryFileChange = useCallback(async (entry: RuntimeImageResourceEntry, file: File | undefined) => {
-    if (!file) return;
-    try {
-      await saveRuntimeImageOverrideEntryFromFile(entry, file);
-      refreshOverrides();
-      setStatus(entry.key.startsWith('player:')
-        ? '我的形象已保存到本機，並已通知地圖渲染刷新。'
-        : '圖片已保存到本機，並已通知地圖渲染刷新。');
-    } catch (error) {
-      if (error instanceof Error && error.message === 'local_runtime_image_override_superseded') return;
-      const message = error instanceof Error && error.message === 'local_runtime_image_override_storage_failed'
-        ? '保存失敗：瀏覽器本地存儲空間不足。'
-        : '保存失敗：請選擇有效圖片文件。';
-      setStatus(message);
-    }
-  }, [refreshOverrides]);
-
   const handleResetOverride = useCallback((key: string) => {
     try {
       removeRuntimeImageOverride(key);
@@ -1046,42 +1022,16 @@ const ResourceReloadTab = memo(function ResourceReloadTab({ state }: { state: Se
   return (
     <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack settings-resource-reload-shell">
       <div className="settings-ui-table-head">
-        <div className="panel-section-title">本地資源重載</div>
+        <div className="panel-section-title">自訂地形</div>
       </div>
-      <div className="settings-ui-copy ui-form-copy">僅在當前裝置生效。先按名稱、資源 key 或圖片路徑搜尋並新增資源，再為清單中的單項選擇本機圖片。</div>
-      {playerResource && (
-        <div className="settings-resource-reload-list ui-card-list">
-          {(() => {
-            const override = overrideByKey.get(playerResource.key) ?? getRuntimeImageOverride(playerResource.key);
-            return (
-              <div className="settings-resource-reload-row ui-data-table-row">
-                <div className="settings-resource-reload-preview" aria-hidden="true">
-                  {override ? <img src={override.dataUrl} alt="" /> : <span>預設</span>}
-                </div>
-                <div className="settings-performance-meta ui-data-table-meta">
-                  <div className="settings-performance-name ui-data-table-name">{playerResource.label}</div>
-                  <div className="settings-performance-desc ui-data-table-desc">{playerResource.key}</div>
-                  <div className="settings-resource-reload-meta">{override ? `${override.fileName || '本地圖片'} · ${formatRuntimeImageOverrideTime(override.updatedAt)}` : '當前玩家專屬覆蓋，不影響其他玩家顯示。'}</div>
-                </div>
-                <div className="settings-resource-reload-actions ui-inline-actions-end-wrap">
-                  <label className="small-btn ghost settings-resource-reload-file">
-                    選擇圖片
-                    <input type="file" accept="image/*" onChange={(event) => void handleEntryFileChange(playerResource, event.target.files?.[0])} />
-                  </label>
-                  <button className="small-btn ghost" type="button" disabled={!override} onClick={() => handleResetOverride(playerResource.key)}>恢復預設</button>
-                </div>
-              </div>
-            );
-          })()}
-        </div>
-      )}
+      <div className="settings-ui-copy ui-form-copy">僅在本機覆蓋地形、地表與結構貼圖，不影響其他玩家。玩家形象請改用帳號分頁的全服頭像。先按名稱、資源 key 或圖片路徑搜尋並新增資源，再為清單中的單項選擇本機圖片。</div>
       <div className="settings-resource-reload-search ui-form-field">
         <label className="ui-form-label">搜尋資源</label>
         <input
           className="ui-input"
           type="search"
           value={query}
-          placeholder="例如 草地、刃竹螳、竹隱客、npc_bamboo"
+          placeholder="例如 草地、水域、牆、石階"
           onChange={(event) => setQuery(event.target.value)}
         />
       </div>
