@@ -5,6 +5,7 @@
  */
 import { FloatingTooltip } from './ui/floating-tooltip';
 import { t } from './ui/i18n';
+import { ZOOM_STEP } from './constants/visuals/display';
 /**
  * ObserveAsideCard：统一结构类型，保证协议与运行时一致性。
  */
@@ -197,36 +198,48 @@ export function bindZoomControls(options: {
 
   zoomSlider: HTMLInputElement | null;  
   /**
- * zoomResetBtn：zoomResetBtn相关字段。
- */
+   * zoomResetBtn：zoomResetBtn相关字段。
+   */
 
   zoomResetBtn: HTMLButtonElement | null;  
   /**
- * minZoom：minZoom相关字段。
- */
+   * zoomWheelTarget：滚轮缩放监听容器（游戏视窗宿主）。
+   */
+
+  zoomWheelTarget: HTMLElement | null;  
+  /**
+   * minZoom：minZoom相关字段。
+   */
 
   minZoom: number;  
   /**
- * maxZoom：maxZoom相关字段。
- */
+   * maxZoom：maxZoom相关字段。
+   */
 
   maxZoom: number;  
   /**
- * applyZoomChange：ZoomChange相关字段。
- */
+   * getZoom：读取当前生效缩放倍率。
+   */
+
+  getZoom: () => number;  
+  /**
+   * applyZoomChange：ZoomChange相关字段。
+   */
 
   applyZoomChange: (nextZoom: number) => number;  
   /**
- * showToast：showToast相关字段。
- */
+   * showToast：showToast相关字段。
+   */
 
   showToast: (message: string) => void;
 }): void {
   const {
     zoomSlider,
     zoomResetBtn,
+    zoomWheelTarget,
     minZoom,
     maxZoom,
+    getZoom,
     applyZoomChange,
     showToast,
   } = options;
@@ -275,4 +288,25 @@ export function bindZoomControls(options: {
     const zoom = applyZoomChange(2);
     showToast(t('ui.zoom.reset', { zoom: formatZoom(zoom) }));
   });
+
+  zoomWheelTarget?.addEventListener('wheel', (event) => {
+    // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
+    // 仅当地图游标落在主地图画布（#game-canvas）上才生效：
+    // 小地图缩略图、大地图弹窗（自带滚轮缩放）、建筑工具列等覆盖层上的滚轮不触发主地图缩放。
+    const target = event.target;
+    if (!(target instanceof Element) || !target.closest('#game-canvas')) {
+      return;
+    }
+    event.preventDefault();
+    if (event.deltaY === 0) {
+      return;
+    }
+    const direction = event.deltaY < 0 ? 1 : -1;
+    const current = getZoom();
+    // 已在当前方向边界时直接跳过；轻微越界由 applyZoomChange 内部钳位兜底。
+    if ((direction > 0 && current >= maxZoom) || (direction < 0 && current <= minZoom)) {
+      return;
+    }
+    applyZoomChange(current + direction * ZOOM_STEP);
+  }, { passive: false });
 }

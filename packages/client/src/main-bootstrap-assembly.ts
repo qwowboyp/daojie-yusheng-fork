@@ -3,7 +3,7 @@
  *
  * 维护时要把用户意图、显示派生和服务端权威数据分清，避免为了展示便利复制业务规则。
  */
-import { MAX_ZOOM, MIN_ZOOM } from './display';
+import { getZoom, MAX_ZOOM, MIN_ZOOM } from './display';
 import { C2S, S2C, TECHNIQUE_GRADE_ORDER } from '@mud/shared';
 import type { ActionDef, PlayerState, TechniqueCategory, TechniqueGrade } from '@mud/shared';
 import type { SocketManager } from './network/socket';
@@ -648,8 +648,10 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
     zoom: {
       zoomSlider: options.documentRef.getElementById('zoom-slider') as HTMLInputElement | null,
       zoomResetBtn: options.documentRef.getElementById('zoom-reset') as HTMLButtonElement | null,
+      zoomWheelTarget: options.canvasHost,
       minZoom: MIN_ZOOM,
       maxZoom: MAX_ZOOM,
+      getZoom: () => getZoom(),
       applyZoomChange: (nextZoom) => options.uiStateSource.applyZoomChange(nextZoom),
     },
     showToast: (message) => options.showToast(message),

@@ -241,29 +241,39 @@ type MainStartupBindingsOptions = {
  */
 
   zoom: {
-  /**
+/**
  * zoomSlider：zoomSlider相关字段。
  */
 
     zoomSlider: HTMLInputElement | null;
     /**
- * zoomResetBtn：zoomResetBtn相关字段。
- */
+     * zoomResetBtn：zoomResetBtn相关字段。
+     */
 
     zoomResetBtn: HTMLButtonElement | null;
     /**
- * minZoom：minZoom相关字段。
- */
+     * zoomWheelTarget：滚轮缩放监听容器（游戏视窗宿主）。
+     */
+
+    zoomWheelTarget: HTMLElement | null;
+    /**
+     * minZoom：minZoom相关字段。
+     */
 
     minZoom: number;
     /**
- * maxZoom：maxZoom相关字段。
- */
+     * maxZoom：maxZoom相关字段。
+     */
 
     maxZoom: number;
     /**
- * applyZoomChange：ZoomChange相关字段。
- */
+     * getZoom：读取当前生效缩放倍率。
+     */
+
+    getZoom: () => number;
+    /**
+     * applyZoomChange：ZoomChange相关字段。
+     */
 
     applyZoomChange: (nextZoom: number) => number;
   };
@@ -429,8 +439,10 @@ export function bindMainStartup(options: MainStartupBindingsOptions): void {
   bindZoomControls({
     zoomSlider: options.zoom.zoomSlider,
     zoomResetBtn: options.zoom.zoomResetBtn,
+    zoomWheelTarget: options.zoom.zoomWheelTarget,
     minZoom: options.zoom.minZoom,
     maxZoom: options.zoom.maxZoom,
+    getZoom: options.zoom.getZoom,
     applyZoomChange: options.zoom.applyZoomChange,
     showToast: options.showToast,
   });
