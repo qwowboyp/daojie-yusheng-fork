@@ -4537,3 +4537,19 @@ export interface GmAiProviderTestModelRes {
   latencyMs: number;
   message: string;
 }
+
+/** GM AI 图片生成请求；prompt 为 GM 调试输入，不进入玩家可见链路。 */
+export interface GmAiProviderGenerateImageReq {
+  prompt: string;
+}
+
+/** GM AI 图片生成响应；b64 为无 data: 前缀的纯 base64，url 为供应商临时链接，二者至少一个非空。 */
+export interface GmAiProviderGenerateImageRes {
+  ok: boolean;
+  scope: string;
+  modelName: string;
+  latencyMs: number;
+  b64: string;
+  url: string;
+  message: string;
+}

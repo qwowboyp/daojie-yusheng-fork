@@ -2575,9 +2575,48 @@
     }
     .ai-model-actions {
       display: flex;
-      justify-content: flex-end;
+      gap: 8px;
       align-items: center;
+    }
+
+    .ai-gen-head {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--ink-black);
+    }
+
+    .ai-gen-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: stretch;
+      margin-bottom: 10px;
+    }
+
+    .ai-gen-form select {
+      min-width: 200px;
+    }
+
+    .ai-gen-form textarea {
+      flex: 1;
+      min-width: 260px;
+      resize: vertical;
+    }
+
+    .ai-gen-result {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
       gap: 6px;
+      align-items: flex-start;
+    }
+
+    .ai-gen-result img {
+      max-width: 384px;
+      max-height: 384px;
+      border: 1.5px solid var(--ink-black);
+      background: var(--paper-bg);
     }
     .ai-model-actions .small-btn {
       flex: 0 0 auto;
@@ -3274,6 +3313,19 @@
           <button id="gm-ai-add-text" class="small-btn" type="button">新增文本配置</button>
           <button id="gm-ai-add-image" class="small-btn" type="button">新增图片配置</button>
           <div id="gm-ai-meta" class="server-log-meta">AI 配置尚未加载。</div>
+        </div>
+      </div>
+      <div style="padding: 16px 24px; border-bottom: 1.5px solid var(--ink-black); background: var(--paper-light);">
+        <div class="ai-gen-head">图片生成预览</div>
+        <div class="ai-gen-form">
+          <select id="gm-ai-gen-scope" title="选择图片模型配置"></select>
+          <textarea id="gm-ai-gen-prompt" rows="2" placeholder="输入提示词（prompt），例如：水墨风格的山间道观，云雾缭绕"></textarea>
+          <button id="gm-ai-gen-submit" class="small-btn primary" type="button" disabled>生成图片</button>
+        </div>
+        <div id="gm-ai-gen-status" class="ai-model-test-state" data-kind="idle">尚未生成。</div>
+        <div id="gm-ai-gen-result" class="ai-gen-result hidden">
+          <img id="gm-ai-gen-image" alt="AI 生成结果" />
+          <div id="gm-ai-gen-meta" class="ai-model-meta"></div>
         </div>
       </div>
       <div id="gm-ai-list" style="flex:1; overflow-y:auto; padding:24px; background:var(--paper-light);">

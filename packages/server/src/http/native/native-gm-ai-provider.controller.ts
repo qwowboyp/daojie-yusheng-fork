@@ -16,6 +16,8 @@ import type {
   GmAiProviderConfigSetRes,
   GmAiProviderDeleteModelRes,
   GmAiProviderFetchModelsRes,
+  GmAiProviderGenerateImageReq,
+  GmAiProviderGenerateImageRes,
   GmAiProviderKind,
   GmAiProviderModelItem,
   GmAiProviderTestModelRes,
@@ -26,7 +28,7 @@ import { AiProviderConfigService, type AiProviderConfigView } from '../../ai/ai-
 import { AiProviderConfigPersistenceService, normalizeAiProviderModels } from '../../ai/ai-provider-config-persistence.service';
 import { callTextModelWithConfig } from '../../ai/ai-text-client';
 import { generateImageAssetWithConfig } from '../../ai/ai-image-client';
-import { normalizeAnthropicBaseUrl, normalizeOpenAIBaseUrl, resolveDashScopeImageEndpoint } from '../../ai/ai-model-config';
+import { normalizeAnthropicBaseUrl, normalizeOpenAIBaseUrl, resolveDashScopeImageEndpoint, resolveImageProvider } from '../../ai/ai-model-config';
 import type { AiProviderConfigRecord, AiProviderModelRecord } from '../../ai/ai-provider-config.types';
 import { NativeGmSecretStoreService } from './native-gm-secret-store.service';
 import { GM_HTTP_CONTRACT } from './native-gm-contract';
@@ -41,6 +43,10 @@ const DEFAULT_TIMEOUT_MS_BY_KIND: Record<GmAiProviderKind, number> = {
   image: 60_000,
 };
 const MODEL_FETCH_LIMIT = 300;
+// GM 图片生成调试端点的提示词长度上限。
+const GM_IMAGE_PROMPT_MAX_LENGTH = 2000;
+// GM 图片生成单次调用超时上限；下限沿用配置值但不低于 10s。
+const GM_IMAGE_GENERATE_MAX_TIMEOUT_MS = 60_000;
 
 @Controller(GM_HTTP_CONTRACT.gmBasePath)
 @UseGuards(NativeGmAuthGuard)
@@ -251,6 +257,64 @@ export class NativeGmAiProviderController {
       const message = error instanceof Error ? error.message : String(error);
       await this.recordAudit('gm.ai-provider.models.test', actor, `${kind}:${scope}:${modelName}`, undefined, { latencyMs }, false, message);
       return { ok: false, scope, kind, modelName, latencyMs, message };
+    }
+  }
+
+  @Post('ai/providers/image/:scope/generate')
+  async generateImage(
+    @Param('scope') scopeRaw: string,
+    @Body() body: GmAiProviderGenerateImageReq,
+    @Req() request: unknown,
+  ): Promise<GmAiProviderGenerateImageRes> {
+    const scope = normalizeScope(scopeRaw);
+    const prompt = typeof body?.prompt === 'string' ? body.prompt.trim() : '';
+    if (!prompt) throw new BadRequestException('prompt 不能为空');
+    if (prompt.length > GM_IMAGE_PROMPT_MAX_LENGTH) {
+      throw new BadRequestException(`prompt 过长，上限 ${GM_IMAGE_PROMPT_MAX_LENGTH} 字符`);
+    }
+    const record = await this.getRecordOrThrow(scope, 'image');
+    const modelName = record.modelName;
+    const apiKey = await this.readApiKeyOrThrow(record);
+    const actor = extractGmActor(request);
+    const startedAt = Date.now();
+    try {
+      const baseURL = normalizeOpenAIBaseUrl(record.baseURL);
+      // 用既有 resolver 把 record.provider 窄化为图像 provider，避免类型断言。
+      const imageProvider = resolveImageProvider(record.provider, record.baseURL, modelName);
+      const result = await generateImageAssetWithConfig({
+        provider: imageProvider,
+        apiKey,
+        baseURL,
+        endpoint: imageProvider === 'dashscope' ? resolveDashScopeImageEndpoint(record.baseURL) : baseURL,
+        modelName,
+        size: record.imageSize || '1024x1024',
+        quality: record.imageQuality || 'medium',
+        timeoutMs: Math.min(Math.max(record.timeoutMs || DEFAULT_TIMEOUT_MS_BY_KIND.image, 10_000), GM_IMAGE_GENERATE_MAX_TIMEOUT_MS),
+      }, prompt);
+      const latencyMs = Date.now() - startedAt;
+      await this.recordAudit('gm.ai-provider.image-generate', actor, `${scope}:${modelName}`, undefined, {
+        latencyMs,
+        promptPreview: prompt.slice(0, 100),
+        hasB64: Boolean(result.asset.b64),
+        hasUrl: Boolean(result.asset.url),
+      }, true, null);
+      return {
+        ok: true,
+        scope,
+        modelName,
+        latencyMs,
+        b64: result.asset.b64,
+        url: result.asset.url,
+        message: '生成成功',
+      };
+    } catch (error) {
+      const latencyMs = Date.now() - startedAt;
+      const message = error instanceof Error ? error.message : String(error);
+      await this.recordAudit('gm.ai-provider.image-generate', actor, `${scope}:${modelName}`, undefined, {
+        latencyMs,
+        promptPreview: prompt.slice(0, 100),
+      }, false, message);
+      return { ok: false, scope, modelName, latencyMs, b64: '', url: '', message };
     }
   }
 

@@ -129,6 +129,8 @@ import {
   type GmAiProviderConfigDeleteRes,
   type GmAiProviderDeleteModelRes,
   type GmAiProviderFetchModelsRes,
+  type GmAiProviderGenerateImageReq,
+  type GmAiProviderGenerateImageRes,
   type GmAiProviderConfigItem,
   type GmAiProviderConfigListRes,
   type GmAiProviderConfigSetReq,
@@ -9844,6 +9846,93 @@ const AI_TEXT_PROVIDER_OPTIONS: readonly GmAiTextProvider[] = ['openai', 'openai
 const AI_IMAGE_PROVIDER_OPTIONS: readonly GmAiImageProvider[] = ['openai', 'dashscope'];
 const aiModelTestStateByKey = new Map<string, { kind: 'pending' | 'success' | 'error'; text: string }>();
 
+// ─── 图片生成预览面板 ───
+
+const aiGenScopeSelect = document.getElementById('gm-ai-gen-scope') as HTMLSelectElement;
+const aiGenPromptInput = document.getElementById('gm-ai-gen-prompt') as HTMLTextAreaElement;
+const aiGenSubmitBtn = document.getElementById('gm-ai-gen-submit') as HTMLButtonElement;
+const aiGenStatusEl = document.getElementById('gm-ai-gen-status') as HTMLElement;
+const aiGenResultEl = document.getElementById('gm-ai-gen-result') as HTMLElement;
+const aiGenImageEl = document.getElementById('gm-ai-gen-image') as HTMLImageElement;
+const aiGenMetaEl = document.getElementById('gm-ai-gen-meta') as HTMLElement;
+let aiGenBusy = false;
+
+function renderAiGenScopeOptions(): void {
+  const savedImageConfigs = aiProviderConfigs.filter((item) => item.kind === 'image' && item.revision > 0);
+  const previousSelection = aiGenScopeSelect.value;
+  const options = savedImageConfigs
+    .map((item) => `<option value="${escapeHtml(item.scope)}">${escapeHtml(item.scope)}（${escapeHtml(item.provider)} · ${escapeHtml(item.modelName)}）</option>`)
+    .join('');
+  aiGenScopeSelect.innerHTML = savedImageConfigs.length > 0
+    ? options
+    : '<option value="">请先保存图片模型配置</option>';
+  if (previousSelection && savedImageConfigs.some((item) => item.scope === previousSelection)) {
+    aiGenScopeSelect.value = previousSelection;
+  }
+  refreshAiGenButtonState();
+}
+
+function refreshAiGenButtonState(): void {
+  aiGenSubmitBtn.disabled = aiGenBusy || !aiGenScopeSelect.value || !aiGenPromptInput.value.trim();
+}
+
+async function generateAiProviderImage(): Promise<void> {
+  if (aiGenBusy) return;
+  const scope = aiGenScopeSelect.value;
+  const promptText = aiGenPromptInput.value.trim();
+  if (!scope || !promptText) return;
+  aiGenBusy = true;
+  refreshAiGenButtonState();
+  aiGenStatusEl.dataset.kind = 'pending';
+  aiGenStatusEl.textContent = '生成中，最长可能需要 60 秒...';
+  try {
+    const body: GmAiProviderGenerateImageReq = { prompt: promptText };
+    const res = await request<GmAiProviderGenerateImageRes>(
+      `${GM_API_BASE_PATH}/ai/providers/image/${encodeURIComponent(scope)}/generate`,
+      { method: 'POST', body: JSON.stringify(body) },
+      70_000,
+    );
+    if (!res.ok) {
+      throw new Error(res.message || '生成失败');
+    }
+    const dataUrl = res.b64 ? guessImageDataUrl(res.b64) : res.url;
+    if (!dataUrl) {
+      throw new Error('供应商未返回图片数据');
+    }
+    aiGenImageEl.src = dataUrl;
+    aiGenMetaEl.textContent = `${res.modelName} · ${res.latencyMs}ms · ${new Date().toLocaleTimeString()}`;
+    aiGenResultEl.classList.remove('hidden');
+    aiGenStatusEl.dataset.kind = 'success';
+    aiGenStatusEl.textContent = `生成成功（${res.latencyMs}ms）`;
+    setStatus(`图片生成成功：${res.modelName}（${res.latencyMs}ms）`);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : '生成失败';
+    aiGenStatusEl.dataset.kind = 'error';
+    aiGenStatusEl.textContent = message;
+    aiGenResultEl.classList.add('hidden');
+    setStatus(message, true);
+  } finally {
+    aiGenBusy = false;
+    refreshAiGenButtonState();
+  }
+}
+
+// 按 base64 魔术前缀判断图片格式：/9j/=JPEG、UklGR=WEBP(RIFF)、R0lGOD=GIF，默认 PNG。
+function guessImageDataUrl(b64: string): string {
+  if (b64.startsWith('/9j/')) return `data:image/jpeg;base64,${b64}`;
+  if (b64.startsWith('UklGR')) return `data:image/webp;base64,${b64}`;
+  if (b64.startsWith('R0lGOD')) return `data:image/gif;base64,${b64}`;
+  return `data:image/png;base64,${b64}`;
+}
+
+aiGenScopeSelect.addEventListener('change', refreshAiGenButtonState);
+aiGenPromptInput.addEventListener('input', refreshAiGenButtonState);
+aiGenSubmitBtn.addEventListener('click', () => {
+  generateAiProviderImage().catch((error: unknown) => {
+    setStatus(error instanceof Error ? error.message : '图片生成失败', true);
+  });
+});
+
 async function loadAiProviderConfigs(): Promise<void> {
   if (!token || aiProviderConfigsLoading) return;
   aiProviderConfigsLoading = true;
@@ -9854,6 +9943,7 @@ async function loadAiProviderConfigs(): Promise<void> {
     aiSecretStoreAvailable = res.secretStoreAvailable;
     aiProviderConfigsLoading = false;
     renderAiProviderConfigs();
+    renderAiGenScopeOptions();
   } catch (error) {
     aiProviderConfigsLoading = false;
     aiProviderRefreshBtn.disabled = false;
