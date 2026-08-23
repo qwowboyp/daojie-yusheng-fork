@@ -157,6 +157,15 @@ const DUAL_GRID_QUADS = [
   { mask: 8, x: 0.5, y: 0.5 },
 ] as const;
 const DUAL_GRID_QUARTER_SOURCE_OVERLAP_PX = 1;
+
+/**
+ * Pixi Assets.load 以 URL 副檔名推斷 parser；無副檔名 URL（如 /api/avatar/<id>?v=N）
+ * 會推斷失敗直接 reject，必須顯式指定 texture parser。
+ */
+function resolveRuntimeTextureLoadSource(src: string): string | { src: string; parser: string } {
+  return src.startsWith('/api/avatar/') ? { src, parser: 'texture' } : src;
+}
+
 const SELF_THREAT_ARROW_PIXI_COLOR = parseColor(SELF_THREAT_ARROW_COLOR);
 const SELF_THREAT_ARROW_PIXI_GLOW = parseColor(SELF_THREAT_ARROW_GLOW);
 const SELF_THREAT_ARROW_PIXI_GLOW_ALPHA = parseAlpha(SELF_THREAT_ARROW_GLOW, 1);
@@ -863,7 +872,7 @@ export class PixiMapRendererAdapter {
     if (this.runtimeEntityTextureRequests.has(ref.src)) return;
     this.runtimeEntityTextureRequests.add(ref.src);
     const generation = this.runtimeImageGeneration;
-    void Assets.load<Texture>(ref.src).then((texture) => {
+    void Assets.load<Texture>(resolveRuntimeTextureLoadSource(ref.src)).then((texture) => {
       if (this.destroyed || generation !== this.runtimeImageGeneration) {
         if (this.destroyed || !this.runtimeActiveAtlasSources.has(ref.src)) {
           if (ref.src.startsWith('data:')) void Assets.unload(ref.src).catch(() => undefined);
