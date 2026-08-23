@@ -57,7 +57,7 @@ import { getMonsterPresentation } from '../../monster-presentation';
 import {
   RUNTIME_IMAGE_OVERRIDES_CHANGED_EVENT,
 } from '../../renderer/local-runtime-image-overrides';
-import { SERVER_AVATARS_CHANGED_EVENT } from '../../renderer/server-avatar-registry';
+import { SERVER_AVATARS_CHANGED_EVENT, startServerAvatarAutoRefresh } from '../../renderer/server-avatar-registry';
 import { formatDisplayInteger } from '../../utils/number';
 import { t as translateUi } from '../../ui/i18n';
 import type { CameraState } from '../camera/camera-controller';
@@ -607,6 +607,8 @@ export class PixiMapRendererAdapter {
 
   private ensureRuntimeTileSpritesRequested(): void {
     this.ensureRuntimeImageOverrideListener();
+    // 渲染器初始化即開始輪詢全服頭像 manifest；冪等，不依賴重新登入。
+    startServerAvatarAutoRefresh();
     if (!this.performanceConfig.renderRuntimeTileSprites || this.runtimeTileManifestState !== 'idle') return;
     if (typeof fetch !== 'function') {
       this.runtimeTileManifestState = 'error';

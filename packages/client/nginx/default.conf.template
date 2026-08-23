@@ -63,6 +63,16 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
+    # 玩家頭像公開下發（manifest + 版本化圖片）；上傳走 /api/account/avatar。
+    location /api/avatar {
+        set $server_upstream http://server:13001;
+        proxy_pass $server_upstream;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
     location /api/gm {
         set $server_upstream http://server:13001;
         proxy_pass $server_upstream;

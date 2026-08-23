@@ -80,10 +80,10 @@ export function getServerAvatarUrl(playerId: string): string | null {
   return entry ? `/api/avatar/${encodeURIComponent(trimmed)}?v=${entry.version}` : null;
 }
 
-/** 启动定时轮询；重复调用幂等（先清旧定时器）。 */
+/** 启动定时轮询；幂等——已在轮询时直接返回，不重置周期。 */
 export function startServerAvatarAutoRefresh(): void {
   if (typeof window === 'undefined') return;
-  stopServerAvatarAutoRefresh();
+  if (refreshTimer !== null) return;
   void refreshServerAvatars();
   refreshTimer = setInterval(() => {
     void refreshServerAvatars();

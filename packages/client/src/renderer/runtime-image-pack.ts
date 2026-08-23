@@ -11,7 +11,7 @@ import {
   RUNTIME_IMAGE_OVERRIDES_CHANGED_EVENT,
   resolveRuntimeImageOverrideSrc,
 } from './local-runtime-image-overrides';
-import { getServerAvatarSpriteEntries, SERVER_AVATARS_CHANGED_EVENT } from './server-avatar-registry';
+import { getServerAvatarSpriteEntries, SERVER_AVATARS_CHANGED_EVENT, startServerAvatarAutoRefresh } from './server-avatar-registry';
 import { normalizeRuntimeImagePackVersion, resolveRuntimeImagePackAssetUrl } from './runtime-image-pack-url';
 
 type SpriteFit = 'cover' | 'contain';
@@ -722,6 +722,8 @@ export class RuntimeImagePack {
       return;
     }
     this.ensureOverrideListener();
+    // 渲染器初始化即開始輪詢全服頭像 manifest；冪等，不依賴重新登入。
+    startServerAvatarAutoRefresh();
     this.manifestState = 'loading';
     void fetch(this.manifestUrl, { cache: 'no-cache' })
       .then(async (response) => {
