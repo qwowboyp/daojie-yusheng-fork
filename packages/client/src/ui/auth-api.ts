@@ -10,6 +10,8 @@
 
 import {
   ACCESS_TOKEN_STORAGE_KEY,
+  AccountUpdateAvatarReq,
+  AccountUpdateAvatarRes,
   AccountUpdateDisplayNameReq,
   AccountUpdateDisplayNameRes,
   AccountUpdatePasswordReq,
@@ -17,6 +19,7 @@ import {
   AccountUpdateRoleNameRes,
   AuthRefreshReq,
   AuthTokenRes,
+  BasicOkRes,
   DisplayNameAvailabilityRes,
   REFRESH_TOKEN_STORAGE_KEY,
 } from '@mud/shared';
@@ -52,20 +55,20 @@ type RequestOptions = {
  * method：method相关字段。
  */
 
-  method?: 'GET' | 'POST';  
+  method?: 'GET' | 'POST' | 'DELETE';
   /**
- * body：body相关字段。
- */
+   * body：body相关字段。
+   */
 
-  body?: unknown;  
+  body?: unknown;
   /**
- * accessToken：accessToken标识。
- */
+   * accessToken：accessToken标识。
+   */
 
-  accessToken?: string | null;  
+  accessToken?: string | null;
   /**
- * signal：signal相关字段。
- */
+   * signal：signal相关字段。
+   */
 
   signal?: AbortSignal;
 };
@@ -250,6 +253,26 @@ export function updateRoleName(
   return requestJson<AccountUpdateRoleNameRes>(`${ACCOUNT_API_BASE_PATH}/role-name`, {
     method: 'POST',
     body,
+    accessToken,
+  });
+}
+
+/** 上传（覆盖）当前玩家头像，全服可见 */
+export function uploadPlayerAvatar(
+  accessToken: string,
+  body: AccountUpdateAvatarReq,
+): Promise<AccountUpdateAvatarRes> {
+  return requestJson<AccountUpdateAvatarRes>(`${ACCOUNT_API_BASE_PATH}/avatar`, {
+    method: 'POST',
+    body,
+    accessToken,
+  });
+}
+
+/** 移除当前玩家头像，回退默认形象 */
+export function removePlayerAvatar(accessToken: string): Promise<BasicOkRes> {
+  return requestJson<BasicOkRes>(`${ACCOUNT_API_BASE_PATH}/avatar`, {
+    method: 'DELETE',
     accessToken,
   });
 }

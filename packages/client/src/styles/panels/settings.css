@@ -80,6 +80,36 @@
       color: var(--stamp-red);
     }
 
+    .settings-avatar-preview-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .settings-avatar-preview {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      border: 1px solid var(--ink-grey);
+      border-radius: 6px;
+      background: var(--paper, rgba(0, 0, 0, 0.08));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-12);
+      color: var(--ink-grey);
+    }
+
+    .settings-avatar-preview--empty {
+      border-style: dashed;
+    }
+
+    .settings-avatar-preview-meta {
+      font-size: var(--font-size-12);
+      color: var(--ink-grey);
+      line-height: 1.6;
+    }
+
     .settings-ui-copy {
       margin-bottom: 12px;
       font-size: var(--font-size-13);

@@ -57,6 +57,7 @@ import { getMonsterPresentation } from '../../monster-presentation';
 import {
   RUNTIME_IMAGE_OVERRIDES_CHANGED_EVENT,
 } from '../../renderer/local-runtime-image-overrides';
+import { SERVER_AVATARS_CHANGED_EVENT } from '../../renderer/server-avatar-registry';
 import { formatDisplayInteger } from '../../utils/number';
 import { t as translateUi } from '../../ui/i18n';
 import type { CameraState } from '../camera/camera-controller';
@@ -78,6 +79,7 @@ import {
 } from './pixi-terrain-cache-signatures';
 import {
   addLocalPixiEntityOverrideSpriteRefs,
+  addServerAvatarSpriteRefs,
   normalizeLegacyTileMap,
   normalizePixiTileSpriteMap,
   pickRuntimeEntitySpriteSelection,
@@ -231,6 +233,7 @@ export class PixiMapRendererAdapter {
   private runtimeTileManifestState: 'idle' | 'loading' | 'loaded' | 'error' = 'idle';
   private runtimeTileSpriteRevision = 0;
   private runtimeImageOverrideListener: (() => void) | null = null;
+  private serverAvatarListener: (() => void) | null = null;
   private runtimeImageGeneration = 0;
   private runtimeActiveAtlasSources = new Set<string>();
   private destroyed = false;
@@ -639,6 +642,8 @@ export class PixiMapRendererAdapter {
         DEFAULT_RUNTIME_IMAGE_PACK_MANIFEST_URL,
         version,
       );
+      // 服务器头像先注入，本地覆盖后注入：同 key 后写者胜，本机预览优先于全服头像。
+      addServerAvatarSpriteRefs(this.runtimeEntitySpriteRefs);
       addLocalPixiEntityOverrideSpriteRefs(this.runtimeEntitySpriteRefs);
       const nextAtlasSources = new Set<string>([
         ...Array.from(this.runtimeTileSpriteRefs.values(), (ref) => ref.src),
@@ -665,12 +670,23 @@ export class PixiMapRendererAdapter {
       this.reloadRuntimeTileSpriteManifestForLocalOverrides();
     };
     window.addEventListener(RUNTIME_IMAGE_OVERRIDES_CHANGED_EVENT, this.runtimeImageOverrideListener);
+    // 服务器头像 manifest 变化走同一套重载路径（版本化 URL 变化即新 atlas 源）。
+    if (!this.serverAvatarListener) {
+      this.serverAvatarListener = () => {
+        this.reloadRuntimeTileSpriteManifestForLocalOverrides();
+      };
+      window.addEventListener(SERVER_AVATARS_CHANGED_EVENT, this.serverAvatarListener);
+    }
   }
 
   private removeRuntimeImageOverrideListener(): void {
     if (!this.runtimeImageOverrideListener || typeof window === 'undefined') return;
     window.removeEventListener(RUNTIME_IMAGE_OVERRIDES_CHANGED_EVENT, this.runtimeImageOverrideListener);
     this.runtimeImageOverrideListener = null;
+    if (this.serverAvatarListener) {
+      window.removeEventListener(SERVER_AVATARS_CHANGED_EVENT, this.serverAvatarListener);
+      this.serverAvatarListener = null;
+    }
   }
 
   private reloadRuntimeTileSpriteManifestForLocalOverrides(): void {

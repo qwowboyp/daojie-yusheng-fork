@@ -22,6 +22,7 @@ import {
 import { AUTH_API_BASE_PATH } from '../constants/api';
 import { validateAccountName, validateDisplayName, validatePassword, validateRoleName } from './account-rules';
 import { bindBgmToggleButton } from './bgm-player';
+import { startServerAvatarAutoRefresh, stopServerAvatarAutoRefresh } from '../renderer/server-avatar-registry';
 import { t } from './i18n';
 
 /** AuthMode：模式枚举。 */
@@ -195,6 +196,8 @@ export class LoginUI {
   clearSession(): void {
     this.invalidateAuthAttempts();
     clearStoredTokens();
+    // 登出後停止頭像 manifest 輪詢。
+    stopServerAvatarAutoRefresh();
   }
 
   /** hasRefreshToken：判断是否Refresh令牌。 */
@@ -315,6 +318,8 @@ export class LoginUI {
     this.syncAuthPendingState();
     this.socket.connect(data.accessToken);
     this.setError(t('login.bootstrap.in-progress', undefined));
+    // 登入成功後開始輪詢全服頭像 manifest，渲染其他玩家的自訂形象。
+    startServerAvatarAutoRefresh();
   }
 
   private beginManualAuthAttempt(): number {

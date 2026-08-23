@@ -15,6 +15,7 @@ import { ActivityPersistenceService } from '../../persistence/activity-persisten
 import { PlayerRuntimeService } from '../../runtime/player/player-runtime.service';
 import { NativePlayerAuthStoreService } from './native-player-auth-store.service';
 import type { NativePlayerAuthUser } from './native-player-auth-store.service';
+import { MAX_PLAYER_AVATAR_BYTES, PLAYER_AVATAR_MIME_WHITELIST, PlayerAvatarStoreService } from './player-avatar-store.service';
 
 /** 登录/注册成功后返回的令牌对。 */
 
@@ -184,6 +185,7 @@ export class NativePlayerAuthService {
   /** 账号索引与唯一性检查入口。 */
   constructor(
     private readonly authStore: NativePlayerAuthStoreService,
+    private readonly avatarStore: PlayerAvatarStoreService,
     @Inject(WorldPlayerTokenCodecService)
     worldPlayerTokenCodecService: unknown,
     @Inject(PlayerIdentityPersistenceService)
@@ -517,7 +519,42 @@ export class NativePlayerAuthService {
     await this.persistIdentity(nextUser);
     this.syncRuntimeRoleName(nextUser);
     return { roleName: normalizedRoleName };
-  }  
+  }
+
+  /** 上传（覆盖）当前玩家头像；仅接受白名单内、不超过上限的 base64 data URL。 */
+  async uploadAvatar(accessToken: string, dataUrl: string): Promise<{ version: number }> {
+    this.authStore.assertOperational();
+    const user = await this.requireUser(accessToken);
+
+    const match = /^data:([a-z0-9/+.-]+);base64,([A-Za-z0-9+/=]+)$/.exec(
+      typeof dataUrl === 'string' ? dataUrl.trim() : '',
+    );
+    if (!match) {
+      throw new BadRequestException('頭像格式無效，請上傳 base64 圖片');
+    }
+    const mime = match[1] ?? '';
+    if (!PLAYER_AVATAR_MIME_WHITELIST.includes(mime)) {
+      throw new BadRequestException('頭像僅支援 PNG / JPEG / GIF / WebP 格式');
+    }
+    const data = Buffer.from(match[2] ?? '', 'base64');
+    if (data.byteLength <= 0) {
+      throw new BadRequestException('頭像內容為空');
+    }
+    if (data.byteLength > MAX_PLAYER_AVATAR_BYTES) {
+      throw new BadRequestException('頭像檔案過大，請上傳 1MB 內的圖片');
+    }
+
+    const version = await this.avatarStore.saveAvatar(user.playerId, mime, data);
+    return { version };
+  }
+
+  /** 移除当前玩家头像，回退默认形象；未设置过也算成功（幂等）。 */
+  async removeAvatar(accessToken: string): Promise<{ ok: true }> {
+    this.authStore.assertOperational();
+    const user = await this.requireUser(accessToken);
+    await this.avatarStore.deleteAvatar(user.playerId);
+    return { ok: true };
+  }
   /**
  * requireUser：执行requireUser相关逻辑。
  * @param accessToken string 参数说明。

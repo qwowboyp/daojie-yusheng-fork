@@ -31,6 +31,8 @@ import { NativeAuthRateLimitService } from './native/native-auth-rate-limit.serv
 import { NativeManagedAccountService } from './native/native-managed-account.service';
 import { NativeAuthController } from './native/native-auth.controller';
 import { NativeAccountController } from './native/native-account.controller';
+import { PlayerAvatarController } from './native/player-avatar.controller';
+import { PlayerAvatarStoreService } from './native/player-avatar-store.service';
 import { NativeGmAuthController } from './native/native-gm-auth.controller';
 import { NativeGmController } from './native/native-gm.controller';
 import { NativeGmAdminController } from './native/native-gm-admin.controller';
@@ -59,6 +61,7 @@ export const NATIVE_HTTP_CONTRACT = Object.freeze({
 export const NATIVE_HTTP_CONTROLLERS = [
   NativeAuthController,
   NativeAccountController,
+  PlayerAvatarController,
   NativeGmAuthController,
   NativeGmController,
   NativeGmAdminController,
@@ -71,6 +74,7 @@ export const NATIVE_HTTP_CONTROLLERS = [
 /** 原生 HTTP 入口依赖：鉴权/GM/管理/数据库恢复服务的统一导出。 */
 export const NATIVE_HTTP_PROVIDERS = [
   NativePlayerAuthStoreService,
+  PlayerAvatarStoreService,
   NativePlayerAuthService,
   NativeAuthRateLimitService,
   NativeManagedAccountService,

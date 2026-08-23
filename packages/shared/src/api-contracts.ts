@@ -377,6 +377,47 @@ export interface AccountUpdateRoleNameRes {
   roleName: string;
 }
 
+/** 上传（覆盖）玩家头像请求：base64 data URL，全服可见。 */
+export interface AccountUpdateAvatarReq {
+/**
+ * dataUrl：图片的 base64 data URL（data:image/...;base64,...）。
+ */
+
+  dataUrl: string;
+}
+
+/** 上传玩家头像后的回包。 */
+export interface AccountUpdateAvatarRes {
+/**
+ * version：头像版本号，自增；用于拼版本化缓存 URL。
+ */
+
+  version: number;
+}
+
+/** 头像 manifest 单条：客户端据此拼版本化 URL 注入 sprite 表。 */
+export interface PlayerAvatarManifestEntry {
+/**
+ * playerId：玩家 ID。
+ */
+
+  playerId: string;
+  /**
+   * version：头像版本号。
+   */
+
+  version: number;
+}
+
+/** 头像 manifest 回包。 */
+export interface PlayerAvatarManifestRes {
+/**
+ * avatars：全服头像版本清单。
+ */
+
+  avatars: PlayerAvatarManifestEntry[];
+}
+
 /** 通用成功回包。 */
 export interface BasicOkRes {
 /**

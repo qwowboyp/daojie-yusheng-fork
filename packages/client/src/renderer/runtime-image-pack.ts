@@ -11,6 +11,7 @@ import {
   RUNTIME_IMAGE_OVERRIDES_CHANGED_EVENT,
   resolveRuntimeImageOverrideSrc,
 } from './local-runtime-image-overrides';
+import { getServerAvatarSpriteEntries, SERVER_AVATARS_CHANGED_EVENT } from './server-avatar-registry';
 import { normalizeRuntimeImagePackVersion, resolveRuntimeImagePackAssetUrl } from './runtime-image-pack-url';
 
 type SpriteFit = 'cover' | 'contain';
@@ -308,7 +309,30 @@ function addLocalEntityOverrideSpriteRefs(sprites: Map<string, AtlasSpriteRef>):
       row: 0,
       colSpan: 1,
       rowSpan: 1,
-      insetRatio: 0,
+      fit: 'contain',
+      zIndex: 500,
+      order,
+    });
+    order += 1;
+  }
+}
+
+/**
+ * 注入服务器头像 sprite 条目（player:<id> → /api/avatar/<id>?v=N）。
+ * 必须在本地覆盖注入之前调用：同 key 时后写入者胜，本机预览覆盖仍优先于全服头像。
+ */
+function addServerAvatarSpriteRefs(sprites: Map<string, AtlasSpriteRef>): void {
+  let order = sprites.size;
+  for (const entry of getServerAvatarSpriteEntries()) {
+    if (!entry.src.startsWith('/api/avatar/')) continue;
+    sprites.set(entry.key, {
+      src: entry.src,
+      cols: 1,
+      rows: 1,
+      col: 0,
+      row: 0,
+      colSpan: 1,
+      rowSpan: 1,
       fit: 'contain',
       zIndex: 500,
       order,
@@ -711,6 +735,8 @@ export class RuntimeImagePack {
         this.tileSprites = normalizeSpriteMap(manifest.tiles, this.manifestUrl, version, manifest.defaults?.tile);
         this.legacyTileKeys = normalizeLegacyTileMap(manifest.legacyTiles);
         this.entitySprites = normalizeSpriteMap(manifest.entities, this.manifestUrl, version);
+        // 服务器头像先注入，本地覆盖后注入：同 key 后写者胜，本机预览优先于全服头像。
+        addServerAvatarSpriteRefs(this.entitySprites);
         addLocalEntityOverrideSpriteRefs(this.entitySprites);
         this.dualGridTileKeys = [...this.tileSprites.entries()]
           .filter(([, ref]) => ref.dualGrid?.enabled === true)
@@ -741,6 +767,10 @@ export class RuntimeImagePack {
     }
     this.overrideListenerRegistered = true;
     window.addEventListener(RUNTIME_IMAGE_OVERRIDES_CHANGED_EVENT, () => {
+      this.reloadManifestForLocalOverrides();
+    });
+    // 服务器头像 manifest 变化走同一套重载路径（版本化 URL 变化即新图源）。
+    window.addEventListener(SERVER_AVATARS_CHANGED_EVENT, () => {
       this.reloadManifestForLocalOverrides();
     });
   }

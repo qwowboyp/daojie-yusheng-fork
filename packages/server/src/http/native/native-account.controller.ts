@@ -8,7 +8,7 @@
  * 提供已登录玩家修改密码、显示名和角色名的端点，
  * 所有操作需要有效的 Bearer access token。
  */
-import { Body, Controller, Headers, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Headers, Post } from '@nestjs/common';
 
 import { NativePlayerAuthService } from './native-player-auth.service';
 
@@ -26,6 +26,11 @@ interface DisplayNameBody {
 /** 修改角色名请求体。 */
 interface RoleNameBody {
   roleName?: unknown;
+}
+
+/** 上传头像请求体（base64 data URL）。 */
+interface AvatarBody {
+  dataUrl?: unknown;
 }
 
 /** 已登录玩家账号自助管理控制器：密码、显示名、角色名修改。 */
@@ -53,6 +58,18 @@ export class NativeAccountController {
   @Post('role-name')
   async updateRoleName(@Headers('authorization') authorization: string, @Body() body: RoleNameBody) {
     return this.authService.updateRoleName(extractBearerToken(authorization), pickString(body?.roleName));
+  }
+
+  /** 上传（覆盖）当前玩家头像，全服可见。 */
+  @Post('avatar')
+  async uploadAvatar(@Headers('authorization') authorization: string, @Body() body: AvatarBody) {
+    return this.authService.uploadAvatar(extractBearerToken(authorization), pickString(body?.dataUrl));
+  }
+
+  /** 移除当前玩家头像，回退默认形象。 */
+  @Delete('avatar')
+  async removeAvatar(@Headers('authorization') authorization: string) {
+    return this.authService.removeAvatar(extractBearerToken(authorization));
   }
 }
 

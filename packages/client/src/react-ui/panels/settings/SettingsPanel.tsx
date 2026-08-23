@@ -32,7 +32,8 @@ import {
   type FloatingPanelPreferences,
 } from '../../../ui/floating-panel-preferences';
 import { validateDisplayName, validatePassword, validateRoleName } from '../../../ui/account-rules';
-import { checkDisplayNameAvailability, getAccessToken, updateDisplayName, updatePassword, updateRoleName } from '../../../ui/auth-api';
+import { checkDisplayNameAvailability, getAccessToken, removePlayerAvatar, updateDisplayName, updatePassword, updateRoleName, uploadPlayerAvatar } from '../../../ui/auth-api';
+import { getServerAvatarUrl, refreshServerAvatars, SERVER_AVATARS_CHANGED_EVENT } from '../../../renderer/server-avatar-registry';
 import { BGM_VOLUME_CHANGED_EVENT, BGM_VOLUME_STEP, getBgmVolume, isBgmEnabled, setBgmVolume, toggleBgm } from '../../../ui/bgm-player';
 import { readOfflineGainReportsFromBrowser, readPlayerStatisticTotalsFromBrowser } from '../../../offline-gain-storage';
 import {
@@ -384,6 +385,85 @@ const AccountTab = memo(function AccountTab({ state }: { state: SettingsPanelSta
     } finally { setSubmitting(false); }
   }, [currentPassword, newPassword]);
 
+  const [avatarStatus, setAvatarStatus] = useState('');
+  const [avatarStatusType, setAvatarStatusType] = useState<'' | 'success' | 'error'>('');
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState('');
+  const avatarFileInputRef = useRef<HTMLInputElement | null>(null);
+  const [avatarVersion, setAvatarVersion] = useState(0);
+  // manifest 輪詢更新後重渲染，讓「使用伺服器頭像」預覽即時反映。
+  const [, setAvatarManifestTick] = useState(0);
+
+  useEffect(() => {
+    const handler = () => { setAvatarManifestTick((tick) => tick + 1); };
+    window.addEventListener(SERVER_AVATARS_CHANGED_EVENT, handler);
+    return () => { window.removeEventListener(SERVER_AVATARS_CHANGED_EVENT, handler); };
+  }, []);
+
+  const handleAvatarFileChange = useCallback(async (file: File | null | undefined) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setAvatarStatus('請選擇圖片檔（PNG / JPEG / GIF / WebP）');
+      setAvatarStatusType('error');
+      return;
+    }
+    if (file.size > 1024 * 1024) {
+      setAvatarStatus('圖片過大，請上傳 1MB 內的檔案');
+      setAvatarStatusType('error');
+      return;
+    }
+    setAvatarUploading(true);
+    try {
+      const token = getAccessToken();
+      if (!token) { setAvatarStatus('請先登入再上傳頭像'); setAvatarStatusType('error'); return; }
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error('圖片讀取失敗'));
+        reader.onload = () => {
+          const result = typeof reader.result === 'string' ? reader.result : '';
+          if (!result.startsWith('data:image/')) {
+            reject(new Error('圖片讀取失敗'));
+            return;
+          }
+          resolve(result);
+        };
+        reader.readAsDataURL(file);
+      });
+      const res = await uploadPlayerAvatar(token, { dataUrl });
+      setAvatarStatus('頭像已上傳，全伺服器可見');
+      setAvatarStatusType('success');
+      setAvatarPreview(dataUrl);
+      setAvatarVersion(res.version);
+      // 立即刷新本機 manifest，不必等下一次輪詢。
+      void refreshServerAvatars();
+    } catch (err) {
+      setAvatarStatus(err instanceof Error ? err.message : '頭像上傳失敗');
+      setAvatarStatusType('error');
+    } finally {
+      setAvatarUploading(false);
+      if (avatarFileInputRef.current) {
+        avatarFileInputRef.current.value = '';
+      }
+    }
+  }, []);
+
+  const handleAvatarRemove = useCallback(async () => {
+    setAvatarUploading(true);
+    try {
+      const token = getAccessToken();
+      if (!token) { setAvatarStatus('請先登入再移除頭像'); setAvatarStatusType('error'); return; }
+      await removePlayerAvatar(token);
+      setAvatarStatus('已移除頭像，回復預設形象');
+      setAvatarStatusType('success');
+      setAvatarPreview('');
+      setAvatarVersion(0);
+      void refreshServerAvatars();
+    } catch (err) {
+      setAvatarStatus(err instanceof Error ? err.message : '頭像移除失敗');
+      setAvatarStatusType('error');
+    } finally { setAvatarUploading(false); }
+  }, []);
+
   return (
     <>
       <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
@@ -418,6 +498,40 @@ const AccountTab = memo(function AccountTab({ state }: { state: SettingsPanelSta
               <button className="small-btn" type="button" disabled={submitting} onClick={handleRoleNameSubmit}>{t('settings.account.action.save-role-name', undefined)}</button>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
+        <div className="panel-section-title">我的頭像（全服可見）</div>
+        <div className="account-settings-copy ui-form-copy">上傳後所有玩家都會看到這個形象，取代預設圖示。僅支援 PNG / JPEG / GIF / WebP，1MB 內。</div>
+        <div className="account-settings-field ui-form-field">
+          <div className="settings-avatar-preview-row">
+            {(() => {
+              const serverUrl = getServerAvatarUrl(state.playerId);
+              const previewSrc = avatarPreview || serverUrl || '';
+              return previewSrc
+                ? <img className="settings-avatar-preview" src={previewSrc} alt="頭像預覽" />
+                : <div className="settings-avatar-preview settings-avatar-preview--empty">未設置</div>;
+            })()}
+            <div className="settings-avatar-preview-meta">
+              {avatarVersion > 0 ? <div>目前版本 v{avatarVersion}</div> : null}
+              {getServerAvatarUrl(state.playerId) && !avatarPreview ? <div>使用伺服器頭像</div> : null}
+            </div>
+          </div>
+        </div>
+        <div className="account-settings-field ui-form-field">
+          <label className="ui-form-label">選擇圖片</label>
+          <input
+            ref={avatarFileInputRef}
+            className="ui-input"
+            type="file"
+            accept="image/png,image/jpeg,image/gif,image/webp"
+            disabled={avatarUploading}
+            onChange={(e) => { void handleAvatarFileChange(e.target.files?.[0]); }}
+          />
+        </div>
+        <div className={`account-settings-status ui-status-text${avatarStatusType ? ` ${avatarStatusType}` : ''}`}>{avatarStatus}</div>
+        <div className="account-settings-actions ui-inline-actions-end ui-action-row">
+          <button className="small-btn" type="button" disabled={avatarUploading} onClick={handleAvatarRemove}>移除頭像</button>
         </div>
       </div>
       <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">

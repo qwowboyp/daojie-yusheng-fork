@@ -5,6 +5,7 @@ import {
   getRuntimeImageOverrideSpriteEntries,
   resolveRuntimeImageOverrideSrc,
 } from '../../renderer/local-runtime-image-overrides';
+import { getServerAvatarSpriteEntries } from '../../renderer/server-avatar-registry';
 import { resolveRuntimeImagePackAssetUrl } from '../../renderer/runtime-image-pack-url';
 import type { ObservedMapEntity } from '../types';
 
@@ -160,6 +161,34 @@ export function addLocalPixiEntityOverrideSpriteRefs(sprites: Map<string, PixiTi
   let order = sprites.size;
   for (const entry of getRuntimeImageOverrideSpriteEntries()) {
     if (!entry.src.startsWith('data:image/')) continue;
+    sprites.set(entry.key, {
+      key: entry.key,
+      src: entry.src,
+      cols: 1,
+      rows: 1,
+      col: 0,
+      row: 0,
+      colSpan: 1,
+      rowSpan: 1,
+      insetRatio: 0,
+      fit: 'contain',
+      zIndex: 500,
+      order,
+      renderOrder: order,
+      dualGrid: false,
+    });
+    order += 1;
+  }
+}
+
+/**
+ * 注入服务器头像 sprite 条目（player:<id> → /api/avatar/<id>?v=N）。
+ * 必须在本地覆盖注入之前调用：同 key 时后写入者胜，本机预览覆盖仍优先于全服头像。
+ */
+export function addServerAvatarSpriteRefs(sprites: Map<string, PixiTileSpriteRef>): void {
+  let order = sprites.size;
+  for (const entry of getServerAvatarSpriteEntries()) {
+    if (!entry.src.startsWith('/api/avatar/')) continue;
     sprites.set(entry.key, {
       key: entry.key,
       src: entry.src,
