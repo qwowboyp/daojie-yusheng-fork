@@ -237,6 +237,7 @@
     "@nestjs/platform-socket.io": "^10.0.0",
     "@nestjs/websockets": "^10.0.0",
     "bcryptjs": "^3.0.3",
+    "express": "^4.22.1",
     "openai": "^6.38.0",
     "opencc-js": "^1.4.1",
     "pg": "^8.20.0",
@@ -247,6 +248,7 @@
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
+    "@types/express": "^4.17.25",
     "@types/node": "^24.5.2",
     "@types/pg": "^8.15.5",
     "typescript": "^5.3.0"
