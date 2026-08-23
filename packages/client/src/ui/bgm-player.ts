@@ -14,7 +14,7 @@
 
 import { BGM_STORAGE_KEY, BGM_VOLUME_STORAGE_KEY } from '@mud/shared';
 import { t } from './i18n';
-import { DEFAULT_MAP_BGM_TRACK, resolveMapBgmSrc, resolveMapBgmSrcForMap } from '../constants/bgm/map-bgm-config';
+import { DEFAULT_MAP_BGM_TRACK, resolveDefaultMapBgmSrc, resolveMapBgmSrc, resolveMapBgmSrcForMap } from '../constants/bgm/map-bgm-config';
 
 /** BGM 預設音量（0~1），未設定過音量偏好時使用。 */
 export const DEFAULT_BGM_VOLUME = 0.5;
@@ -204,6 +204,19 @@ function ensureAudio(): HTMLAudioElement {
     audio.loop = true;
     audio.volume = volume;
     audio.preload = 'auto';
+    // 檔案載入失敗（如曲目尚未放入 public/bgm/）時回退預設曲目，避免整圖無聲；
+    // 預設曲目也失敗則不再重試，防止 error 事件無限循環。
+    audio.addEventListener('error', () => {
+      const fallbackSrc = resolveDefaultMapBgmSrc();
+      if (!audio || currentSrc === fallbackSrc) {
+        return;
+      }
+      currentSrc = fallbackSrc;
+      audio.src = currentSrc;
+      if (enabled && !resumeOnFocus) {
+        void startPlayback();
+      }
+    });
   }
   return audio;
 }
