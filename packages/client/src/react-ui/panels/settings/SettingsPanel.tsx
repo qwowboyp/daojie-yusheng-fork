@@ -35,6 +35,7 @@ import { validateDisplayName, validatePassword, validateRoleName } from '../../.
 import { checkDisplayNameAvailability, getAccessToken, removePlayerAvatar, updateDisplayName, updatePassword, updateRoleName, uploadPlayerAvatar } from '../../../ui/auth-api';
 import { getServerAvatarUrl, refreshServerAvatars, SERVER_AVATARS_CHANGED_EVENT } from '../../../renderer/server-avatar-registry';
 import { BGM_VOLUME_CHANGED_EVENT, BGM_VOLUME_STEP, getBgmVolume, isBgmEnabled, setBgmVolume, toggleBgm } from '../../../ui/bgm-player';
+import { isSfxEnabled, toggleSfx } from '../../../ui/sfx-player';
 import { readOfflineGainReportsFromBrowser, readPlayerStatisticTotalsFromBrowser } from '../../../offline-gain-storage';
 import {
   getRuntimeImageOverride,
@@ -638,6 +639,7 @@ const UiTab = memo(function UiTab() {
   const [floatingPanels, setFloatingPanels] = useState(() => getFloatingPanelPreferences());
   const [bgmEnabled, setBgmEnabled] = useState(() => isBgmEnabled());
   const [bgmVolume, setBgmVolumeState] = useState(() => getBgmVolume());
+  const [sfxEnabled, setSfxEnabled] = useState(() => isSfxEnabled());
   const [status, setStatus] = useState(t('settings.ui.status.saved-local', undefined));
 
   const handleColorMode = useCallback((mode: UiColorMode) => {
@@ -701,6 +703,14 @@ const UiTab = memo(function UiTab() {
     }
     setBgmEnabled(on);
     setStatus(on ? '背景音樂已開啟' : '背景音樂已關閉');
+  }, []);
+
+  const handleSfxToggle = useCallback((on: boolean) => {
+    if (isSfxEnabled() !== on) {
+      toggleSfx();
+    }
+    setSfxEnabled(on);
+    setStatus(on ? '戰鬥音效已開啟' : '戰鬥音效已關閉');
   }, []);
 
   // 以 BGM_VOLUME_STEP（10%）為刻度步進音量；越界由 setBgmVolume 收斂
@@ -815,6 +825,16 @@ const UiTab = memo(function UiTab() {
               >
                 +
               </button>
+            </div>
+          </div>
+          <div className="settings-performance-row ui-data-table-row">
+            <div className="settings-performance-meta ui-data-table-meta">
+              <div className="settings-performance-name ui-data-table-name">音效開關</div>
+              <div className="settings-performance-desc ui-data-table-desc">戰鬥施法與普攻的音效，獨立於背景音樂。</div>
+            </div>
+            <div className="settings-performance-actions ui-inline-actions-end-wrap">
+              <button className={`small-btn ghost${!sfxEnabled ? ' active' : ''}`} type="button" aria-pressed={!sfxEnabled ? 'true' : 'false'} onClick={() => handleSfxToggle(false)}>關</button>
+              <button className={`small-btn ghost${sfxEnabled ? ' active' : ''}`} type="button" aria-pressed={sfxEnabled ? 'true' : 'false'} onClick={() => handleSfxToggle(true)}>開</button>
             </div>
           </div>
         </div>

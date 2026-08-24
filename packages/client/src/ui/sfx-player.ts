@@ -20,6 +20,10 @@ export const DEFAULT_SFX_VOLUME = 0.5;
 const SFX_OUTPUT_GAIN = 0.6;
 /** 同一 variant 的最小重复间隔（毫秒），多人混战时防止音墙。 */
 const SFX_VARIANT_THROTTLE_MS = 60;
+/** 普攻音效的最小重复间隔（毫秒）；普攻频率高于技能，节流更紧。 */
+const SFX_BASIC_ATTACK_THROTTLE_MS = 90;
+/** 普攻音效峰值音量（刻意压低，只做轻反馈）。 */
+const SFX_BASIC_ATTACK_PEAK_GAIN = 0.12;
 
 let ctx: AudioContext | null = null;
 let masterGain: GainNode | null = null;
@@ -28,6 +32,7 @@ let enabled = true;
 let volume = DEFAULT_SFX_VOLUME;
 let initialized = false;
 const lastPlayedAtByVariant = new Map<CastBurstVariant, number>();
+let lastBasicAttackPlayedAt = 0;
 
 /** 读取当前 SFX 开启偏好。 */
 export function isSfxEnabled(): boolean {
@@ -104,6 +109,30 @@ export function playCastBurstSfx(
     }
   } catch {
     // 音频不可用（无 AudioContext/被策略拦截）时静默跳过
+  }
+}
+
+/** 播放普攻轻音效（刻意小声：短噪声嗖声 + 低频轻响）。 */
+export function playBasicAttackSfx(): void {
+  if (!enabled) {
+    return;
+  }
+  const now = performance.now();
+  if (now - lastBasicAttackPlayedAt < SFX_BASIC_ATTACK_THROTTLE_MS) {
+    return;
+  }
+  lastBasicAttackPlayedAt = now;
+  try {
+    const audio = ensureAudioContext();
+    if (!audio || audio.state !== 'running') {
+      return;
+    }
+    // 高频噪声快速扫落（挥击嗖声）
+    playNoiseBurst(audio, 1600, 300, 0.09, SFX_BASIC_ATTACK_PEAK_GAIN);
+    // 低频轻响（命中的钝感）
+    playTone(audio, 140, 90, 0.08, SFX_BASIC_ATTACK_PEAK_GAIN * 0.8, 'sine');
+  } catch {
+    // 音频不可用时静默跳过
   }
 }
 

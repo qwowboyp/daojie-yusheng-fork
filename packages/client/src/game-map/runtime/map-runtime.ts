@@ -23,7 +23,7 @@ import type {
 import { ViewportController } from '../viewport/viewport-controller';
 import { DEFAULT_SAFE_AREA } from '../../constants/world/map-runtime';
 import { MAP_TARGET_FPS_RANGE, type MapPerformanceConfig } from '../../constants/ui/performance';
-import { initializeSfxPlayer, playCastBurstSfx } from '../../ui/sfx-player';
+import { initializeSfxPlayer, playBasicAttackSfx, playCastBurstSfx } from '../../ui/sfx-player';
 import { advanceFrameDeadlineAfterRender } from './frame-schedule';
 
 const MAP_FRAME_SCHEDULE_MAX_EARLY_TOLERANCE_MS = 2;
@@ -216,6 +216,8 @@ export class MapRuntime implements MapRuntimeApi {
       this.renderer.enqueueEffect(effect);
       if (effect.type === 'cast_burst') {
         playCastBurstSfx(effect.variant, effect.element, effect.tier);
+      } else if (effect.type === 'attack') {
+        playBasicAttackSfx();
       }
     }
     this.store.applyWorldDelta(data);
