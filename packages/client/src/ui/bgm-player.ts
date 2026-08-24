@@ -3,7 +3,8 @@
  *
  * 纯客户端表现层：不依赖登录状态、不参与协议，只维护本地音效偏好。
  * 浏览器自动播放政策要求首次播放必须发生在用户交互之后，因此启动时只注册一次性交互监听，
- * 等到第一次 pointerdown/keydown/touchstart 再真正开始播放。
+ * 等到第一次 pointerdown/keydown/touchstart/click/touchend 再真正开始播放。
+ * iOS 忽略 HTMLAudioElement.volume，音量經 WebAudio GainNode 輸出。
  *
  * 每地圖曲目：換圖時由主鏈路調用 {@link setMapBgm}，按 mapId/mapGroupId 解析
  * `constants/bgm/map-bgm-config.ts` 中的對映表切換曲目；未配置的地圖回退預設曲目。
@@ -13,6 +14,7 @@
  */
 
 import { BGM_STORAGE_KEY, BGM_VOLUME_STORAGE_KEY } from '@mud/shared';
+import { AUDIO_UNLOCK_EVENTS, resolveAudioContextCtor } from './audio-context-ctor';
 import { t } from './i18n';
 import { DEFAULT_MAP_BGM_TRACK, resolveDefaultMapBgmSrc, resolveMapBgmSrc, resolveMapBgmSrcForMap } from '../constants/bgm/map-bgm-config';
 
@@ -23,8 +25,9 @@ export const DEFAULT_BGM_VOLUME = 0.2;
 export const BGM_VOLUME_STEP = 0.1;
 
 /**
- * BGM 實際輸出增益係數：UI 音量 100% 對應音訊元素實際輸出 50%（減半防過響）。
- * 僅作用於套用到 HTMLAudioElement 的瞬間，偏好值、UI 顯示與持久化皆不受影響。
+ * BGM 實際輸出增益係數：UI 音量 100% 對應實際輸出 50%（減半防過響）。
+ * 優先套用到 WebAudio GainNode；無 AudioContext 時才回退 HTMLAudioElement.volume。
+ * 偏好值、UI 顯示與持久化皆不受此係數影響。
  */
 const BGM_OUTPUT_GAIN = 0.5;
 
@@ -36,6 +39,10 @@ export const BGM_VOLUME_CHANGED_EVENT = 'bgm-player-volume-changed';
 
 /** 音频元素单例。 */
 let audio: HTMLAudioElement | null = null;
+/** BGM 輸出用 AudioContext（iOS 必須用 GainNode 才能調音量）。 */
+let audioCtx: AudioContext | null = null;
+/** 接在 MediaElementSource 後的輸出增益。 */
+let outputGain: GainNode | null = null;
 /** 当前是否开启 BGM（偏好值，不代表一定在播放）。 */
 let enabled = true;
 /** 当前 BGM 音量（0~1）。 */
@@ -75,16 +82,16 @@ export function initializeBgmPlayer(): void {
   volume = readStoredVolume();
 
   const tryStart = () => {
-    window.removeEventListener('pointerdown', tryStart);
-    window.removeEventListener('keydown', tryStart);
-    window.removeEventListener('touchstart', tryStart);
+    for (const eventName of AUDIO_UNLOCK_EVENTS) {
+      window.removeEventListener(eventName, tryStart);
+    }
     if (enabled) {
       void startPlayback();
     }
   };
-  window.addEventListener('pointerdown', tryStart);
-  window.addEventListener('keydown', tryStart);
-  window.addEventListener('touchstart', tryStart);
+  for (const eventName of AUDIO_UNLOCK_EVENTS) {
+    window.addEventListener(eventName, tryStart);
+  }
   bindFocusVisibilityListeners();
 }
 
@@ -154,9 +161,7 @@ export function setBgmVolume(value: number): number {
     : DEFAULT_BGM_VOLUME;
   // 取整到整数百分比，避免 -/+ 步进累积浮点误差（如 0.6000000000000001）
   volume = Math.round(normalized * 100) / 100;
-  if (audio) {
-    audio.volume = volume * BGM_OUTPUT_GAIN;
-  }
+  applyBgmOutputLevel();
   persistVolume(volume);
   window.dispatchEvent(new CustomEvent<{ volume: number }>(BGM_VOLUME_CHANGED_EVENT, { detail: { volume } }));
   return volume;
@@ -200,16 +205,19 @@ export function bindBgmToggleButton(button: HTMLButtonElement | null): void {
 /** 启动播放；资源不可用或被自动播放政策拦截时静默失败，等待下次交互/切换重试。 */
 function startPlayback(): Promise<void> {
   const player = ensureAudio();
-  return player.play().catch(() => undefined);
+  const resumeAndPlay = audioCtx && audioCtx.state === 'suspended'
+    ? audioCtx.resume().catch(() => undefined)
+    : Promise.resolve();
+  return resumeAndPlay.then(() => player.play().catch(() => undefined));
 }
 
-/** 懒创建音频元素单例（loop 循环播放，曲目為當前地圖解析結果）。 */
+/** 懶建立音訊元素，並盡量掛上 GainNode（失敗則回退 element.volume）。 */
 function ensureAudio(): HTMLAudioElement {
   if (!audio) {
     audio = new Audio(currentSrc);
     audio.loop = true;
-    audio.volume = volume * BGM_OUTPUT_GAIN;
     audio.preload = 'auto';
+    audio.volume = volume * BGM_OUTPUT_GAIN;
     // 檔案載入失敗（如曲目尚未放入 public/bgm/）時回退預設曲目，避免整圖無聲；
     // 預設曲目也失敗則不再重試，防止 error 事件無限循環。
     audio.addEventListener('error', () => {
@@ -224,7 +232,45 @@ function ensureAudio(): HTMLAudioElement {
       }
     });
   }
+  attachBgmOutputGraph(audio);
   return audio;
+}
+
+/** 把 HTMLAudio 接到 GainNode。createMediaElementSource 只能呼叫一次，失敗則維持 element.volume。 */
+function attachBgmOutputGraph(player: HTMLAudioElement): void {
+  if (outputGain) {
+    return;
+  }
+  const AudioCtor = resolveAudioContextCtor();
+  if (!AudioCtor) {
+    return;
+  }
+  try {
+    audioCtx = new AudioCtor();
+    const source = audioCtx.createMediaElementSource(player);
+    outputGain = audioCtx.createGain();
+    outputGain.gain.value = volume * BGM_OUTPUT_GAIN;
+    source.connect(outputGain);
+    outputGain.connect(audioCtx.destination);
+    // 走 GainNode 後 element.volume 必須固定 1，避免桌機雙重衰減、iOS 又忽略此屬性
+    player.volume = 1;
+  } catch {
+    audioCtx = null;
+    outputGain = null;
+    player.volume = volume * BGM_OUTPUT_GAIN;
+  }
+}
+
+/** 套用當前偏好音量：有 GainNode 改增益，否則改 element.volume。 */
+function applyBgmOutputLevel(): void {
+  const output = volume * BGM_OUTPUT_GAIN;
+  if (outputGain && audioCtx) {
+    outputGain.gain.setTargetAtTime(output, audioCtx.currentTime, 0.01);
+    return;
+  }
+  if (audio) {
+    audio.volume = output;
+  }
 }
 
 /** 读取持久化偏好；未设置过或本地存储不可用时默认开启。 */
