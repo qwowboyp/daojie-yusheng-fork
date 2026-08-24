@@ -99,7 +99,11 @@ export function initializeBgmPlayer(): void {
 function bindFocusVisibilityListeners(): void {
   window.addEventListener('blur', pauseForLostFocus);
   window.addEventListener('focus', resumeAfterLostFocus);
-  document.addEventListener('visibilitychange', handleVisibilityChange);
+  // Node 證明腳本（prove-login-auth-epoch）的 FakeDocument 未實作 addEventListener，
+  // 特徵檢測跳過綁定；瀏覽器環境不受影響。
+  if (typeof document.addEventListener === 'function') {
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+  }
 }
 
 /** 視窗失焦或頁面隱藏時暫停播放，並記錄是否需要回焦後恢復。 */
