@@ -5,7 +5,7 @@
  */
 import { BadRequestException, Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { createHash, randomUUID } from 'crypto';
-import { AUCTION_DEFAULT_DURATION_HOURS, AUCTION_LISTING_FEE_BASE, AUCTION_LISTING_FEE_RATE, AUCTION_MAX_DURATION_HOURS, AUCTION_MIN_DURATION_HOURS, CUSTOM_TECHNIQUE_BOOK_ITEM_ID, EQUIP_SLOTS, HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID, HEAVENLY_DAO_SHOP_ITEMS, ITEM_TYPES, MARKET_MAX_ENHANCE_LEVEL, MARKET_MAX_UNIT_PRICE, TECHNIQUE_EQUIP_SLOTS, TECHNIQUE_GRADE_ORDER, calculateHeavenlyDaoShopDiscountedPrice, calculateMarketOrderReservedCost, calculateMarketOrderTradeTotalCost, calculateMarketRoundedTotalCost, calculateMarketTradeTotalCost, canMergeItemStack, createItemStackSignature, getItemDisplayName, getMarketMinimumTradeQuantity, getMarketPriceStep, isLegacyMarketPrice, isValidMarketListingPrice, isValidMarketPrice, isValidMarketTradeQuantity, normalizeMarketAuctionPageSize, normalizeMarketAuctionQuery, normalizeMarketListingsPageSize, normalizeMarketPriceUp, normalizeMarketRequestPage, normalizeMarketTradeSource, normalizeTransmissionCategory, normalizeTransmissionListingSort, resolveClampedMarketResponsePage, resolvePlayerFacingContentName } from '@mud/shared';
+import { AUCTION_DEFAULT_DURATION_HOURS, AUCTION_LISTING_FEE_BASE, AUCTION_LISTING_FEE_RATE, AUCTION_MAX_DURATION_HOURS, AUCTION_MIN_DURATION_HOURS, CUSTOM_TECHNIQUE_BOOK_ITEM_ID, EQUIP_SLOTS, HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID, HEAVENLY_DAO_SHOP_ITEMS, ITEM_TYPES, MARKET_MAX_ENHANCE_LEVEL, MARKET_MAX_UNIT_PRICE, TECHNIQUE_EQUIP_SLOTS, TECHNIQUE_GRADE_ORDER, VENDOR_RECYCLE_EXCLUDED_ITEM_IDS, VENDOR_RECYCLE_EXCLUDED_ITEM_TYPES, calculateHeavenlyDaoShopDiscountedPrice, calculateMarketOrderReservedCost, calculateMarketOrderTradeTotalCost, calculateMarketRoundedTotalCost, calculateMarketTradeTotalCost, calculateVendorRecycleUnitPrice, canMergeItemStack, createItemStackSignature, getItemDisplayName, getMarketMinimumTradeQuantity, getMarketPriceStep, isLegacyMarketPrice, isValidMarketListingPrice, isValidMarketPrice, isValidMarketTradeQuantity, normalizeMarketAuctionPageSize, normalizeMarketAuctionQuery, normalizeMarketListingsPageSize, normalizeMarketPriceUp, normalizeMarketRequestPage, normalizeMarketTradeSource, normalizeTransmissionCategory, normalizeTransmissionListingSort, resolveClampedMarketResponsePage, resolvePlayerFacingContentName } from '@mud/shared';
 import { assignItemInstanceIdIfNeeded } from '../world/item-instance-id.helpers';
 import { ContentTemplateRepository } from '../../content/content-template.repository';
 import { AUCTION_GLOBAL_TRADE_HISTORY_LIMIT, AUCTION_MY_TRADE_HISTORY_VISIBLE_LIMIT, AUCTION_TRADE_HISTORY_PAGE_SIZE, MARKET_CURRENCY_ITEM_ID, MARKET_MAX_ORDER_QUANTITY, MARKET_STORAGE_RUNTIME_CACHE_LIMIT, MARKET_TRADE_HISTORY_PAGE_SIZE, MARKET_TRADE_HISTORY_RUNTIME_CACHE_LIMIT, MARKET_TRADE_HISTORY_VISIBLE_LIMIT } from '../../constants/gameplay/market';
@@ -21,6 +21,7 @@ import { PlayerRuntimeService } from '../player/player-runtime.service';
 import { InstanceCatalogService } from '../../persistence/instance-catalog.service';
 import { buildStructuredNotice } from '../world/structured-notice.helpers';
 import { ActivityRuntimeService } from '../activity/activity-runtime.service';
+import { NpcTemplateRegistry } from '../map/registries/npc-template.registry';
 import { parseMarketStackSignatureItemKey } from './market-item-key.helpers';
 
 const AUCTION_EXTENSION_WINDOW_MS = 30 * 1000;
@@ -73,6 +74,10 @@ export class MarketRuntimeService {
     playerDomainPersistenceService: any = null;
     /** 活动权益服务，用于天道商店折扣结算。 */
     activityRuntimeService: any = null;
+    /** NPC 模板註冊表，用於從地圖 NPC 商店貨架彙總回收商單價；smoke 可省略。 */
+    npcTemplateRegistry: NpcTemplateRegistry | null = null;
+    /** 回收商單價表快取：模板啟動期凍結，運行期不變。 */
+    vendorRecycleUnitPriceByItemId: Map<string, number> | null = null;
     /** 运行时日志器，记录加载、撮合与持久化异常。 */
     logger = new Logger(MarketRuntimeService.name);
     /** 当前仍然有效的求购/出售挂单。 */
@@ -112,6 +117,7 @@ export class MarketRuntimeService {
         @Optional() @Inject(PlayerIdentityPersistenceService) playerIdentityPersistenceService: any = null,
         @Optional() @Inject(PlayerDomainPersistenceService) playerDomainPersistenceService: any = null,
         @Optional() @Inject(ActivityRuntimeService) activityRuntimeService: any = null,
+        @Optional() @Inject(NpcTemplateRegistry) npcTemplateRegistry: NpcTemplateRegistry | undefined = undefined,
     ) {
         this.contentTemplateRepository = contentTemplateRepository;
         this.playerRuntimeService = playerRuntimeService;
@@ -122,6 +128,7 @@ export class MarketRuntimeService {
         this.playerIdentityPersistenceService = playerIdentityPersistenceService ?? null;
         this.playerDomainPersistenceService = playerDomainPersistenceService ?? null;
         this.activityRuntimeService = activityRuntimeService ?? null;
+        this.npcTemplateRegistry = npcTemplateRegistry ?? null;
     }
     /** 应用完成启动后再回填坊市快照，避免早于持久化服务初始化导致空装载。 */
     async onApplicationBootstrap() {
@@ -469,7 +476,59 @@ export class MarketRuntimeService {
             myOrders: this.buildOwnOrders(playerId),
             storage: this.getStorage(playerId),
             heavenlyDaoShopDiscountPercent: this.resolveCachedHeavenlyDaoShopDiscountPercent(playerId),
+            vendorRecycleItems: Array.from(this.getVendorRecycleUnitPriceByItemId().entries())
+                .map(([itemId, unitRecyclePrice]) => ({ itemId, unitRecyclePrice }))
+                .sort((left, right) => left.itemId.localeCompare(right.itemId)),
         };
+    }
+    /** 從 NPC 商店貨架彙總回收商單價；同一物品取最低售價再折算，結果快取至進程結束。 */
+    getVendorRecycleUnitPriceByItemId(): Map<string, number> {
+        if (this.vendorRecycleUnitPriceByItemId) {
+            return this.vendorRecycleUnitPriceByItemId;
+        }
+        const prices = new Map<string, number>();
+        const registry = this.npcTemplateRegistry;
+        if (!registry) {
+            this.vendorRecycleUnitPriceByItemId = prices;
+            return prices;
+        }
+        const excludedItemIds: readonly string[] = VENDOR_RECYCLE_EXCLUDED_ITEM_IDS;
+        const excludedItemTypes: readonly string[] = VENDOR_RECYCLE_EXCLUDED_ITEM_TYPES;
+        const lowestShopPriceByItemId = new Map<string, number>();
+        for (const npcId of registry.listIds()) {
+            const shopItems = registry.tryGetRef(npcId)?.shopItems;
+            if (!Array.isArray(shopItems)) {
+                continue;
+            }
+            for (const entry of shopItems) {
+                const itemId = typeof entry?.itemId === 'string' ? entry.itemId.trim() : '';
+                if (!itemId || excludedItemIds.includes(itemId)) {
+                    continue;
+                }
+                const shopPrice = Math.trunc(Number(entry?.price ?? 0));
+                if (!Number.isFinite(shopPrice) || shopPrice <= 0) {
+                    continue;
+                }
+                const existing = lowestShopPriceByItemId.get(itemId);
+                if (existing == null || shopPrice < existing) {
+                    lowestShopPriceByItemId.set(itemId, shopPrice);
+                }
+            }
+        }
+        for (const [itemId, shopPrice] of lowestShopPriceByItemId) {
+            // 只取模板類型，數量 1 無業務意義
+            const itemType = this.contentTemplateRepository.createItem(itemId, 1)?.type;
+            if (typeof itemType === 'string' && excludedItemTypes.includes(itemType)) {
+                continue;
+            }
+            const unitRecyclePrice = calculateVendorRecycleUnitPrice(shopPrice);
+            if (unitRecyclePrice <= 0) {
+                continue;
+            }
+            prices.set(itemId, unitRecyclePrice);
+        }
+        this.vendorRecycleUnitPriceByItemId = prices;
+        return prices;
     }
     /** 构造分页坊市列表，支持品类、部位和功法书分类过滤。 */
     buildMarketListingsPage(payload) {
@@ -1248,6 +1307,65 @@ export class MarketRuntimeService {
             if (this.durableOperationService?.isEnabled?.() && !durableCommitted) {
                 throw new Error('market_sell_now_durable_commit_failed');
             }
+                    return result;
+                },
+            );
+        });
+    }
+    /** 按 NPC 商店售價折扣回收背包物品為靈石。 */
+    async vendorRecycleItem(playerId, payload) {
+        await this.ensureStorageHydrated(playerId);
+        return this.runExclusiveMarketMutation(playerId, async (context) => {
+            const itemInstanceId = this.resolveMarketInventoryItemInstanceId(playerId, payload, 'vendorRecycleItem');
+            const item = this.playerRuntimeService.peekInventoryItemByInstanceId(playerId, itemInstanceId);
+            if (!item) {
+                return this.singleMessage(playerId, '要回收的物品不存在。');
+            }
+
+            const quantity = this.normalizeQuantity(payload.quantity);
+            if (!quantity) {
+                return this.singleMessage(playerId, '回收數量無效。');
+            }
+            if (item.count < quantity) {
+                return this.singleMessage(playerId, '回收數量超過了當前持有數量。');
+            }
+
+            const itemId = typeof item.itemId === 'string' ? item.itemId.trim() : '';
+            const unitRecyclePrice = this.getVendorRecycleUnitPriceByItemId().get(itemId);
+            if (!unitRecyclePrice) {
+                return this.singleMessage(playerId, '回收商不收這件物品。');
+            }
+
+            const totalIncome = unitRecyclePrice * quantity;
+            if (!Number.isSafeInteger(totalIncome) || totalIncome <= 0) {
+                return this.singleMessage(playerId, '回收總價無效，請重新操作。');
+            }
+
+            return this.runExclusivePlayerAssetMutation(
+                [playerId],
+                async () => {
+                    const currentItem = this.playerRuntimeService.peekInventoryItemByInstanceId(playerId, itemInstanceId);
+                    if (!currentItem || Number(currentItem.count ?? 0) < quantity) {
+                        return this.singleMessage(playerId, '回收物品已發生變化，請重新操作。');
+                    }
+
+                    this.captureOnlinePlayerState(playerId, context);
+                    this.playerRuntimeService.splitInventoryItemByInstanceId(playerId, itemInstanceId, quantity);
+
+                    const result = this.createEmptyResult(playerId);
+                    this.deliverMarketCurrencyToPlayer(playerId, totalIncome, context);
+                    this.pushNotice(result, playerId, `你回收了 ${getItemDisplayName(item)} x${quantity}，共入賬 ${this.getCurrencyItemName()} x${totalIncome}。`, 'loot');
+                    const durableCommitted = await this.commitDurableMarketMutationIfAvailable(context, playerId, 'market_vendor_recycle', {
+                        operationId: payload?.operationId ?? payload?.requestId,
+                        itemId: item.itemId,
+                        itemInstanceId,
+                        quantity,
+                        unitRecyclePrice,
+                        totalIncome,
+                    });
+                    if (this.durableOperationService?.isEnabled?.() && !durableCommitted) {
+                        throw new Error('market_vendor_recycle_durable_commit_failed');
+                    }
                     return result;
                 },
             );
