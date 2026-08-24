@@ -25,11 +25,17 @@ export const UI_STYLE_STORAGE_KEY = 'mud-ui-style-config:v1';
 /** GM 管理台最近一次可用密码的本地存储键。 */
 export const GM_PASSWORD_STORAGE_KEY = 'mud:gm-password:v1';
 
-/** BGM 開關偏好的本地存儲鍵（1=開啟、0=關閉）。 */
-export const BGM_STORAGE_KEY = 'mud:bgm-enabled:v1';
+/**
+ * BGM 開關偏好的本地存儲鍵（1=開啟、0=關閉）。
+ * v2：2026-08 升版棄置 v1 舊值，所有玩家（含曾關閉者）重置為預設開啟，之後可自行關閉。
+ */
+export const BGM_STORAGE_KEY = 'mud:bgm-enabled:v2';
 
-/** BGM 音量偏好的本地存儲鍵（0~100 的整數百分比字串）。 */
-export const BGM_VOLUME_STORAGE_KEY = 'mud:bgm-volume:v1';
+/**
+ * BGM 音量偏好的本地存儲鍵（0~100 的整數百分比字串）。
+ * v2：2026-08 與開關鍵同步升版棄置 v1 舊值，所有玩家音量重置為預設 20%，之後可自行調整。
+ */
+export const BGM_VOLUME_STORAGE_KEY = 'mud:bgm-volume:v2';
 
 /** 戰鬥音效（SFX）開關偏好的本地存儲鍵（1=開啟、0=關閉）。 */
 export const SFX_STORAGE_KEY = 'mud:sfx-enabled:v1';
