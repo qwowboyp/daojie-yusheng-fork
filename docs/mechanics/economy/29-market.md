@@ -120,7 +120,7 @@ fee = 10 + ceil(startPrice × 0.01)
 
 源文件: `packages/shared/src/constants/gameplay/market.ts`、`packages/server/src/runtime/market/market-runtime.service.ts`
 
-- 入口位于坊市 tab 的「回收商」独立按钮；打开后进入 DOM modal，按背包堆列出可回收物品
+- 入口位于坊市 tab 的「回收商」独立按钮；打开后进入 DOM modal，采用与天道商店一致的左右双栏版面（左侧 `market-item-cell` 网格按背包堆列出可回收物品，右侧 `market-book-panel` 详情面板显示所选物品的类型、描述、物品效果、单价与数量输入）
 - 回收基准：**NPC 商店（地图 `npcs[].shopItems`）有售的物品**，同一 itemId 多店有售时取最低售价；天道商店（merit 货币）不参与回收基准
 - 回收价公式: `unitRecyclePrice = max(1, floor(NPC 商店最低售价 × 25 / 100))`，无条件舍去小数，最低 1 灵石
 - 禁止回收：`spirit_stone`/`merit`/`merit_eternal`/`merit_month_card`（货币与权益物品）与 `type = quest_item`（任务物品）
