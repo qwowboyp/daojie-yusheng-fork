@@ -205,6 +205,34 @@ cost = round(标准灵力输出 × 0.2 × 品阶指数倍率 × costMultiplier)
 - effects[]（效果列表: damage / heal / buff）
 - unlockLevel, unlockRealm
 
+## 技能施放特效与音效（cast_burst）
+
+源文件: `packages/shared/src/cast-visuals.ts`（分类推导单一真源）
+
+技能施放时服务端在 `dispatchSkillTargets` 结算点推送一条 `cast_burst` 战斗特效，随 tick envelope 实例级广播，同实例所有在线玩家的客户端都会渲染粒子与播放音效。服务端只发结构化枚举（variant/element/damageKind/tier），不发表表现细节；配色与音色由客户端查表决定。
+
+### 表现形态推导（variant）
+
+`resolveSkillCastVisualProfile(skill)` 从 `SkillDef.effects + targeting` 确定性推导，推导优先级：
+
+1. `temporary_tile` 主导 → `tile`（地面阵纹）
+2. `damage` 主导 → 按目标形状分：`line`（线形扫射）/ `aoe`（blast/box/ring/checkerboard 或多目标）/ `single`（默认命中爆散）
+3. `heal` 主导 → `heal`（上升光尘）
+4. `buff` 主导 → self/allies 为 `buff_self`（环绕光环），target 为 `buff_debuff`（内坠印记）
+5. 无可表现效果（如内功无技能）→ 不推送
+
+系统功法与 AI 自创功法共用同一套 `SkillDef` 推导，因此 AI 自创功法自动获得特效，无需任何额外配置。
+
+### 高规格档位（tier）
+
+施放者功法 `category` 为 `divine`（神通）或 `secret`（秘法）时附带 tier 字段，客户端渲染金白色光柱、粒子数 1.5 倍、时长 1.6 倍，并叠加钟声音效。内功无施放动作，不进入此链路。
+
+### 客户端渲染
+
+- 粒子为纯几何绘制（圆点/短线/圆环/方框），无纹理资源依赖；数据层在 `client/src/renderer/cast-burst-particles.ts`，Pixi 与 Canvas 双渲染器共用
+- 五行配色复用 `ELEMENT_DAMAGE_TRAIL_COLORS`（金金黄/木翠绿/水蔚蓝/火绛红/土棕褐），无元素时按 damageKind 回退（物理橙棕/法术蓝）
+- 音效为 WebAudio 合成短音（`client/src/ui/sfx-player.ts`），无音频文件依赖；按 variant 选 patch、按元素调基频，开关与音量独立于 BGM 持久化，同 variant 60ms 节流防音墙
+
 ## 技能公式结构（SkillFormula）
 
 递归 AST:
