@@ -16,7 +16,7 @@
 - `technique/`：炼丹、锻造、强化、建筑制作、制作技能经验
 - `building-env/`：建筑系统、风水、灵气场
 - `equipment-items/`：装备、背包物品、阵法
-- `economy/`：市场、邮件、宗门、排行榜
+- `economy/`：市场、邮件、宗门、排行榜、道友社交、组队
 - `other/`：通天塔、NPC 商店、任务、兑换码、自动化、GM 系统、Actor 系统
 
 涉及具体游戏系统时，必须先阅读对应的 mechanics 文档再动手。本文件包含行为规范、红线与项目结构速查（§0）。
@@ -31,7 +31,7 @@
 
 ## 0. 项目结构速查
 
-**生成于 2026-08-19 / commit 0b0dd0d8 / main**。仓库存量：2523 文件、61.9 万行 TS。pnpm workspace `packages/*` + `benchmarks/pathfinding` + `tools/procgen-demo`。无 CI（无 .github），质量靠 verify*/proof*/audit* 脚本与 LSP 把关。
+**生成于 2026-08-22 / commit 1967471c / main**。仓库存量：2827 文件、61.9 万行 TS。pnpm workspace `packages/*` + `benchmarks/pathfinding` + `tools/procgen-demo`。无 CI（无 .github），质量靠 verify*/proof*/audit* 脚本与 LSP 把关。语言已收敛为单语系 zh-TW（2026-08 简转繁完成，`scripts/check-traditional.mjs` 守门）。
 
 ### 目录结构
 
@@ -42,7 +42,7 @@
 | packages/shared/ | 前后端契约单一真源（单 barrel index.ts；详见其 AGENTS.md） |
 | packages/config-editor/ | 内容配置编辑器（详见其 AGENTS.md） |
 | docs/ | 文档中心（docs/README.md 为总入口；mechanics/ 为机制文档，见上方清单） |
-| scripts/ | 70 个 verify / release / proof 编排脚本 |
+| scripts/ | 76 个 verify / release / proof 编排脚本（详见其 AGENTS.md） |
 | benchmarks/ tools/ | pathfinding 性能对比 / procgen demo（独立 workspace） |
 
 ### WHERE TO LOOK
@@ -58,21 +58,27 @@
 | 旧版 DOM 面板 | client: `ui/panels/*.ts` |
 | React 面板 | client: `react-ui/panels/<name>/` |
 | 地图渲染 | client: `game-map/renderer/pixi-*.ts` |
-| 验证脚本 | server: `tools/*-smoke.ts`；client: `scripts/prove-*.mjs`；shared: `scripts/check-*.cjs` |
+| 验证脚本 | server: `src/tools/*-smoke.ts`；client: `scripts/prove-*.mjs`；shared: `scripts/check-*.cjs` |
 
 ### CODE MAP（核心中枢，按被引用数）
 
 | 符号 | 类型 | 位置 | 被引用 |
 |---|---|---|---|
-| PlayerDomainPersistenceService | service | server `persistence/` | 53 |
-| WorldRuntimeService | service | server `runtime/world/` | 52 |
-| ContentTemplateRepository | service | server `content/` | 52 |
-| WorldGateway | gateway | server `network/` | 43 |
-| AppModule | module | server `app.module.ts` | 42 |
-| SocketManager | class | client `network/socket.ts` | 26 |
+| PlayerRuntimeService | service | server `runtime/player/` | 201 |
+| ContentTemplateRepository | service | server `content/` | 123 |
+| MapInstanceRuntime | class | server `runtime/instance/` | 106 |
+| MapTemplateRepository | service | server `runtime/map/` | 100 |
+| PlayerDomainPersistenceService | service | server `persistence/` | 71 |
+| DurableOperationService | service | server `persistence/` | 64 |
+| WorldRuntimeService | service | server `runtime/world/` | 61 |
+| CraftPanelRuntimeService | service | server `runtime/craft/` | 39 |
+| AppModule | module | server `app.module.ts` | 36 |
+| SocketManager | class | client `network/socket.ts` | 16 |
 | technique.ts | barrel | shared `src/` | 50 |
 | terrain.ts | barrel | shared `src/` | 44 |
 | api-contracts.ts | types | shared `src/` | 89KB HTTP DTO |
+
+> WorldGateway（server `network/world.gateway.ts`）为 Socket.IO 主网关，经 NestJS DI 注入，class 直引仅 7 处，引用数不反映其枢纽地位。
 
 ---
 
@@ -88,11 +94,13 @@
 | LXC 105 `daojie` | **192.168.0.191**，4C / 4GB / 30GB，Debian 12 + nesting+keyctl，開機自啟 |
 | daojie-postgres | postgres:16-alpine，資料 `/opt/daojie/pgdata` |
 | daojie-redis | redis:7-alpine，資料 `/opt/daojie/redis-data` |
-| daojie-server | 本地映像 `daojie-server:lxc`（Dockerfile 建置），`-p 13001:13001`，`SERVER_RUNTIME_ROLE=all` + `SERVER_FLUSH_TASK_RUNTIME_MODE=inline`（單容器自用模式，無獨立 worker 容器） |
+| daojie-server | 本地映像 `daojie-server:lxc`（packages/server/Dockerfile 建置），`-p 13001:13001`，`SERVER_RUNTIME_ROLE=all` + `SERVER_FLUSH_TASK_RUNTIME_MODE=inline`（單容器自用模式，無獨立 worker 容器） |
+| daojie-client | 本地映像 `daojie-client:lxc`（packages/client/Dockerfile 建置，nginx），`-p 11921:80`，靜態頁 + 反代 `/api`、`/socket.io` → `http://server:13001`（同源零 CORS） |
 
 ### 入口與訪問
 
-- 服務入口：`http://192.168.0.191:13001`（`/health`、`/live`、Socket.IO）
+- 遊戲網頁入口：`http://192.168.0.191:11921`（nginx 靜態頁 + 反代，玩家實際訪問的地址）
+- 服務入口：`http://192.168.0.191:13001`（`/health`、`/live`、Socket.IO 直連）
 - 進 LXC：`ssh root@192.168.0.191`（密碼見 `.env/pve.env`）或 PVE `pct exec 105`
 - 查日誌：`docker logs daojie-server`；查庫：`docker exec daojie-postgres psql -U mud -d daojie_yusheng`
 - 凭证一律看 `.env/pve.env`（PVE/LXC/DB/GM 密碼）、`.env/istoreos.env`（主路由）；這些檔案被 gitignore，嚴禁寫入任何會進 git 的檔案
@@ -103,13 +111,15 @@
 - **192.168.0.190 被區網 TP-Link 設備佔用，禁止使用**
 - CORS 白名單：localhost:5173 / 127.0.0.1:5173 / 192.168.0.191:5173 / 192.168.0.100:5173
 
-### 更新流程（部署新版後端）
+### 更新流程（部署新版）
 
 1. 本機 `git archive --format=tar.gz -o daojie-src.tar.gz HEAD`（乾淨樹，不含未追蹤檔案）
 2. 傳輸至 LXC（直連 scp 或經 PVE `pct push 105`），解包到 `/opt/daojie/src`
-3. LXC 內 `docker build -f packages/server/Dockerfile -t daojie-server:lxc .`
-4. 重跑 `/opt/daojie/lxc-deploy.sh`（冪等：重建三容器，pgdata/redis-data 在 host volume 不動）
-5. 驗證 `/health` + `/live` + `docker logs` 無新 WARN
+3. LXC 內 build 本地映像（依改動範圍選擇）：
+   - 後端/共享改動：`docker build -f packages/server/Dockerfile -t daojie-server:lxc .`
+   - 前端改動：`docker build -f packages/client/Dockerfile -t daojie-client:lxc .`（builder 階段需 chromium，build:client 含 proof 守門）
+4. 重跑 `/opt/daojie/lxc-deploy.sh`（冪等：重建四容器，pgdata/redis-data/server-data 在 host volume 不動）
+5. 驗證 `/health` + `/live` + `http://192.168.0.191:11921/` + `docker logs` 無新 WARN
 
 ### 紅線
 
@@ -255,8 +265,9 @@
 
 **常用入口**：
 ```bash
-pnpm verify:quick             # 日常最小 server 门禁
-pnpm verify:client            # 客户端专项门禁
+pnpm verify:quick             # 日常最小 server 门禁（前置简繁幂等检查）
+pnpm verify:client            # 客户端专项门禁（前置简繁幂等检查）
+pnpm verify:building          # 建筑/风水门禁
 pnpm build:shared             # 共享层构建
 pnpm audit:protocol           # 协议审计
 pnpm audit:boundaries         # 边界审计
@@ -267,9 +278,14 @@ pnpm verify:release:full      # 完整验证
 **门禁选择**：
 - 小型服务端改动：`pnpm verify:quick`
 - 客户端改动：`pnpm verify:client`
+- 建筑/风水改动：`pnpm verify:quick` + `pnpm verify:building`
 - shared/protocol 改动：`pnpm build:shared` + `pnpm audit:protocol`
 - 持久化/DB 改动：`pnpm verify:release:with-db`
 - 发布前：`pnpm verify:release:full`
+
+**简繁守门**：`verify:quick` / `verify:client` 前置 `scripts/check-traditional.mjs --scope`（简→台繁体幂等检查），新增玩家可见文案必须直接写台湾繁体。
+
+- **瀏覽器清理（強制，禁盲殺全殺）**：凡測試 / E2E / Playwright 曾呼叫 Chrome（含背景 headless），結束後優先以框架 API 正常關閉（`browser.close()` / `await browser.close()`）。若仍有孤兒 headless 殘留需強制清理，先 `tasklist /V /FI "IMAGENAME eq chrome.exe"` 盤點——確認無其他 agent / wmux pane / 使用者正在用瀏覽器；有共享時**禁止** `taskkill /F /IM chrome.exe` 全殺，應僅結束自身測試的 PID（`taskkill /PID <pid>`）或請使用者確認後再清。確認無共享、且為測試殘留孤兒時，才可用 `taskkill /F /IM chrome.exe` 並以 `tasklist /FI "IMAGENAME eq chrome.exe"` 驗證歸零，避免數十個背景進程常駐佔記憶體。
 
 ---
 
@@ -326,3 +342,9 @@ pnpm verify:release:full      # 完整验证
 - "深度限制 BFS 替代 A*"的建议是错误的（需要完整路径支持多格移动和绕障）
 - "idle hint 跳过全量扫描"不完全安全（resolveMonsterTarget 还承担仇恨系统 tick 推进）
 - "无玩家实例跳过 tick"不能简单跳过（有 6 项需要补偿的副作用）
+
+**坑：技艺活动互斥與 durable 重放衝突**（2026-08-25 採集+強化衝突修復，commits 112c3921 / 235a274c）：
+- 技藝活動是「單活躍 job + 等待隊列」模型，互斥由 `hasAnyActiveTechniqueActivity`（technique-activity-queue.service.ts）保證，但**它只攔截走隊列的啟動**。Strategy 介面的 `queueStart` 是可選方法：煉丹/煉器/強化/挖礦都實作並檢查互斥，唯獨 GatherStrategy 沒有 → 採集的兩個入口（`dispatchStartGather` 冷命令、gather-tick.helpers 自動重建）都繞過互斥直接寫 `player.gatherJob`。**新增技藝 strategy 時必須實作 `queueStart` 或在所有寫槽入口自證互斥**，否則會與強化的 durable 壓縮提交並行改動資產。
+- 強化（enhancement）是唯一每 20 息走 durable executeAssetMutation 的技藝，payload 含全背包 `assetSnapshotDigest`；並行採集每息改背包 → 提交出錯回滾記憶體後同 opId 重送，digest 必漂移 → `durable_operation_replay_identity_conflict` 100% 復現。**修冪等衝突時收斂方向必須是讀 DB 權威 row 對齊記憶體**（`readPersistedActiveJobRow`），讓位/清槽/要求玩家重登都會把單一衝突升級成隊列永久阻塞（讓位不清 enhancementJob → 互斥恆真 → 採集強化雙卡死）。
+- 既有 smoke 契約釘死「同 opId 不同 payload 必須拒絕」（durable-operation-smoke.ts:3833、commit-reconciliation-smoke.ts:386），修復只能改衝突**後**的行為，不可動搖拒絕語義。
+- `world-runtime-loot-container-smoke` 的 `testGroundTakeFormatsTemplateName` 斷言與 `prove-item-card-constellation-layout.mjs:235`（手機滾動 scrollTop 競態，120ms delay 時序敏感）為**已知 flaky / 既有失敗**：前者 stash 對比 main 同樣失敗（與改動無關），後者在 LXC client 映像建置的 30 個 proof 中偶發輸掉競態，**重跑即過**，不需為此改產品代碼。
