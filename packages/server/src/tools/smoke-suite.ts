@@ -138,6 +138,7 @@ const smokeCases = [
     { name: 'market-auction-outbid-refund', scriptFile: 'market-auction-outbid-refund-smoke.js', standalone: true },
     { name: 'market-transmission', scriptFile: 'market-transmission-smoke.js', standalone: true },
     { name: 'market-runtime-sell-now', scriptFile: 'market-runtime-sell-now-smoke.js', standalone: true },
+    { name: 'market-vendor-recycle', scriptFile: 'market-vendor-recycle-smoke.js', standalone: true },
     { name: 'market-runtime-cancel-order', scriptFile: 'market-runtime-cancel-order-smoke.js', standalone: true },
     { name: 'market-runtime-session-fence', scriptFile: 'market-runtime-session-fence-smoke.js', standalone: true },
     { name: 'market-result-affected-player-sync', scriptFile: 'market-result-affected-player-sync-smoke.js', standalone: true },

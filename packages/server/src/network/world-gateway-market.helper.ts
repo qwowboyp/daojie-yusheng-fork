@@ -418,6 +418,24 @@ class WorldGatewayMarketHelper {
     async handleSellMarketItem(client, payload) {
         await this.executeSellMarketItem(client, payload);
     }
+    /** 處理回收商回收意圖，價格由服務端 NPC 商店貨架裁定。 */
+    async handleVendorRecycleItem(client, payload) {
+        const playerId = this.gateway.gatewayGuardHelper.requirePlayerId(client);
+        if (!playerId) {
+            return;
+        }
+        try {
+            const result = await this.gateway.marketRuntimeService.vendorRecycleItem(playerId, {
+                itemInstanceId: resolveInventoryItemInstanceId(this.gateway.playerRuntimeService, playerId, payload),
+                quantity: payload?.quantity,
+                operationId: payload?.operationId ?? payload?.requestId,
+            });
+            await this.gateway.flushMarketResult(result);
+        }
+        catch (error) {
+            this.gateway.worldClientEventService.emitGatewayError(client, 'VENDOR_RECYCLE_ITEM_FAILED', error);
+        }
+    }
     /**
  * executeCancelMarketOrder：判断executeCancel坊市订单是否满足条件。
  * @param client 参数说明。
