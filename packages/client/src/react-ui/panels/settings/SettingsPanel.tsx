@@ -35,7 +35,7 @@ import { validateDisplayName, validatePassword, validateRoleName } from '../../.
 import { checkDisplayNameAvailability, getAccessToken, removePlayerAvatar, updateDisplayName, updatePassword, updateRoleName, uploadPlayerAvatar } from '../../../ui/auth-api';
 import { getServerAvatarUrl, refreshServerAvatars, SERVER_AVATARS_CHANGED_EVENT } from '../../../renderer/server-avatar-registry';
 import { BGM_VOLUME_CHANGED_EVENT, BGM_VOLUME_STEP, getBgmVolume, isBgmEnabled, setBgmVolume, toggleBgm } from '../../../ui/bgm-player';
-import { isSfxEnabled, toggleSfx } from '../../../ui/sfx-player';
+import { getSfxVolume, isSfxEnabled, setSfxVolume, SFX_VOLUME_CHANGED_EVENT, SFX_VOLUME_STEP, toggleSfx } from '../../../ui/sfx-player';
 import { readOfflineGainReportsFromBrowser, readPlayerStatisticTotalsFromBrowser } from '../../../offline-gain-storage';
 import {
   getRuntimeImageOverride,
@@ -640,6 +640,7 @@ const UiTab = memo(function UiTab() {
   const [bgmEnabled, setBgmEnabled] = useState(() => isBgmEnabled());
   const [bgmVolume, setBgmVolumeState] = useState(() => getBgmVolume());
   const [sfxEnabled, setSfxEnabled] = useState(() => isSfxEnabled());
+  const [sfxVolume, setSfxVolumeState] = useState(() => getSfxVolume());
   const [status, setStatus] = useState(t('settings.ui.status.saved-local', undefined));
 
   const handleColorMode = useCallback((mode: UiColorMode) => {
@@ -713,6 +714,12 @@ const UiTab = memo(function UiTab() {
     setStatus(on ? '戰鬥音效已開啟' : '戰鬥音效已關閉');
   }, []);
 
+  const handleSfxVolumeStep = useCallback((direction: 1 | -1) => {
+    const next = setSfxVolume(getSfxVolume() + direction * SFX_VOLUME_STEP);
+    setSfxVolumeState(next);
+    setStatus(`戰鬥音效音量已調整為 ${Math.round(next * 100)}%`);
+  }, []);
+
   // 以 BGM_VOLUME_STEP（10%）為刻度步進音量；越界由 setBgmVolume 收斂
   const handleBgmVolumeStep = useCallback((direction: 1 | -1) => {
     const next = setBgmVolume(getBgmVolume() + direction * BGM_VOLUME_STEP);
@@ -724,8 +731,15 @@ const UiTab = memo(function UiTab() {
     const handleBgmVolumeChange = (event: Event) => {
       setBgmVolumeState((event as CustomEvent<{ volume: number }>).detail.volume);
     };
+    const handleSfxVolumeChange = (event: Event) => {
+      setSfxVolumeState((event as CustomEvent<{ volume: number }>).detail.volume);
+    };
     window.addEventListener(BGM_VOLUME_CHANGED_EVENT, handleBgmVolumeChange);
-    return () => window.removeEventListener(BGM_VOLUME_CHANGED_EVENT, handleBgmVolumeChange);
+    window.addEventListener(SFX_VOLUME_CHANGED_EVENT, handleSfxVolumeChange);
+    return () => {
+      window.removeEventListener(BGM_VOLUME_CHANGED_EVENT, handleBgmVolumeChange);
+      window.removeEventListener(SFX_VOLUME_CHANGED_EVENT, handleSfxVolumeChange);
+    };
   }, []);
 
   return (
@@ -835,6 +849,33 @@ const UiTab = memo(function UiTab() {
             <div className="settings-performance-actions ui-inline-actions-end-wrap">
               <button className={`small-btn ghost${!sfxEnabled ? ' active' : ''}`} type="button" aria-pressed={!sfxEnabled ? 'true' : 'false'} onClick={() => handleSfxToggle(false)}>關</button>
               <button className={`small-btn ghost${sfxEnabled ? ' active' : ''}`} type="button" aria-pressed={sfxEnabled ? 'true' : 'false'} onClick={() => handleSfxToggle(true)}>開</button>
+            </div>
+          </div>
+          <div className="settings-performance-row ui-data-table-row">
+            <div className="settings-performance-meta ui-data-table-meta">
+              <div className="settings-performance-name ui-data-table-name">音效音量</div>
+              <div className="settings-performance-desc ui-data-table-desc">以 10% 為刻度調整戰鬥音效音量。</div>
+            </div>
+            <div className="settings-performance-actions ui-inline-actions-end-wrap settings-performance-actions--numeric settings-bgm-volume-control">
+              <button
+                className="small-btn ghost"
+                type="button"
+                disabled={sfxVolume <= 0}
+                aria-label="戰鬥音效音量減少10%"
+                onClick={() => handleSfxVolumeStep(-1)}
+              >
+                -
+              </button>
+              <span className="settings-bgm-volume-value">{Math.round(sfxVolume * 100)}%</span>
+              <button
+                className="small-btn ghost"
+                type="button"
+                disabled={sfxVolume >= 1}
+                aria-label="戰鬥音效音量增加10%"
+                onClick={() => handleSfxVolumeStep(1)}
+              >
+                +
+              </button>
             </div>
           </div>
         </div>
