@@ -18,6 +18,7 @@ export * from './editor-item-catalog';
 export * from './numeric';
 export * from './automation-types';
 export * from './action-combat-types';
+export * from './cast-visuals';
 export * from './activity-types';
 export * from './attribute-types';
 export * from './access-policy';

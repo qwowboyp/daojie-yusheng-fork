@@ -5,6 +5,8 @@
  */
 import type { GridPoint } from './targeting';
 import type { TechniqueCategory, TechniqueGrade } from './cultivation-types';
+import type { ElementKey } from './numeric';
+import type { SkillDamageKind } from './skill-types';
 
 /**
  * 行动定义与战斗表现相关的共享类型。
@@ -230,5 +232,51 @@ export interface CombatEffectDamageSummary {
   tile?: CombatDamageSummaryGroup;
 }
 
+/** 技能施放粒子特效的表现形态，由技能定义确定性推导，服务端只发枚举不发表现细节。 */
+export type CastBurstVariant = 'single' | 'aoe' | 'line' | 'heal' | 'buff_self' | 'buff_debuff' | 'tile';
+
+/** 高规格施放特效档位：神通/秘法专属加强表现。 */
+export type CastBurstTier = 'divine' | 'secret';
+
+/** 技能施放粒子特效。 */
+export interface CombatEffectCastBurst {
+  /**
+   * type：type相关字段。
+   */
+  type: 'cast_burst';
+  /**
+   * x：特效中心格 x（single/aoe 为命中锚点，line 为施法者，heal/buff_self 为施法者）。
+   */
+  x: number;
+  /**
+   * y：特效中心格 y。
+   */
+  y: number;
+  /**
+   * toX：line 形态的扫射终点格 x。
+   */
+  toX?: number;
+  /**
+   * toY：line 形态的扫射终点格 y。
+   */
+  toY?: number;
+  /**
+   * variant：表现形态枚举。
+   */
+  variant: CastBurstVariant;
+  /**
+   * element：五行元素（客户端据此选配色与音色）。
+   */
+  element?: ElementKey;
+  /**
+   * damageKind：伤害类型（无元素时的辅助配色）。
+   */
+  damageKind?: SkillDamageKind;
+  /**
+   * tier：高规格档位（神通/秘法）。
+   */
+  tier?: CastBurstTier;
+}
+
 /** 战斗特效联合类型。 */
-export type CombatEffect = CombatEffectAttack | CombatEffectFloat | CombatEffectWarningZone | CombatEffectDamageSummary;
+export type CombatEffect = CombatEffectAttack | CombatEffectFloat | CombatEffectWarningZone | CombatEffectDamageSummary | CombatEffectCastBurst;

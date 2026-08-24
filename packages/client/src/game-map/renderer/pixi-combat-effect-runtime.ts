@@ -24,6 +24,7 @@ import type {
   WarningZoneEffect,
 } from './pixi-render-state';
 import { formatCombatDamageSummaryEffect } from './combat-damage-summary-text';
+import { createPixiCastBurstEffect, drawCastBurstEffect, MAX_CAST_BURSTS, type PixiCastBurstEffect } from './pixi-cast-burst';
 
 const MAX_FLOATING_TEXTS = 256;
 const MAX_ATTACK_TRAILS = 192;
@@ -39,8 +40,13 @@ export class PixiCombatEffectRuntime {
   private readonly floatingTexts: FloatingTextEffect[] = [];
   private readonly attackTrails: AttackTrailEffect[] = [];
   private readonly warningZones: WarningZoneEffect[] = [];
+  private readonly castBursts: PixiCastBurstEffect[] = [];
+  private readonly castBurstGraphics: Graphics;
 
-  constructor(private readonly effectLayer: Container) {}
+  constructor(private readonly effectLayer: Container) {
+    this.castBurstGraphics = new Graphics();
+    this.effectLayer.addChild(this.castBurstGraphics);
+  }
 
   enqueue(effect: CombatEffect): void {
     if (effect.type === 'attack') {
@@ -58,6 +64,10 @@ export class PixiCombatEffectRuntime {
       }
       return;
     }
+    if (effect.type === 'cast_burst') {
+      this.addCastBurst(effect);
+      return;
+    }
     const actionStyle = this.resolveActionTextStyle(effect);
     this.addFloatingText(
       effect.x,
@@ -71,12 +81,13 @@ export class PixiCombatEffectRuntime {
   }
 
   update(): void {
-    if (this.floatingTexts.length === 0 && this.attackTrails.length === 0 && this.warningZones.length === 0) return;
+    if (this.floatingTexts.length === 0 && this.attackTrails.length === 0 && this.warningZones.length === 0 && this.castBursts.length === 0) return;
     const now = performance.now();
     const cellSize = getCellSize();
     this.updateFloatingTexts(now, cellSize);
     this.updateAttackTrails(now, cellSize);
     this.updateWarningZones(now, cellSize);
+    this.updateCastBursts(now, cellSize);
   }
 
   reset(): void {
@@ -86,6 +97,8 @@ export class PixiCombatEffectRuntime {
     this.floatingTexts.length = 0;
     this.attackTrails.length = 0;
     this.warningZones.length = 0;
+    this.castBursts.length = 0;
+    this.castBurstGraphics.clear();
     this.floatingTextBurstLayout.reset();
   }
 
@@ -99,6 +112,34 @@ export class PixiCombatEffectRuntime {
 
   get warningZoneCount(): number {
     return this.warningZones.length;
+  }
+
+  get castBurstCount(): number {
+    return this.castBursts.length;
+  }
+
+  /** 入队一个技能施放粒子特效。 */
+  private addCastBurst(effect: Extract<CombatEffect, { type: 'cast_burst' }>): void {
+    this.castBursts.push(createPixiCastBurstEffect(effect, performance.now()));
+    const overflow = this.castBursts.length - MAX_CAST_BURSTS;
+    if (overflow > 0) {
+      this.castBursts.copyWithin(0, overflow);
+      this.castBursts.length -= overflow;
+    }
+  }
+
+  /** 每帧重绘全部施放粒子并清理过期特效。 */
+  private updateCastBursts(now: number, cellSize: number): void {
+    this.castBurstGraphics.clear();
+    let writeIndex = 0;
+    for (let readIndex = 0; readIndex < this.castBursts.length; readIndex += 1) {
+      const burst = this.castBursts[readIndex];
+      if (drawCastBurstEffect(burst, this.castBurstGraphics, now, cellSize)) {
+        this.castBursts[writeIndex] = burst;
+        writeIndex += 1;
+      }
+    }
+    this.castBursts.length = writeIndex;
   }
 
   private addFloatingText(

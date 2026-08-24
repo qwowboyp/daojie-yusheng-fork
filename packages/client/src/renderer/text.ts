@@ -31,6 +31,7 @@ import {
   RenderEntity,
   SENSE_QI_OVERLAY_STYLE,
   Tile,
+  type CombatEffectCastBurst,
   type FormationRangeShape,
   type MonsterTier,
   TechniqueGrade,
@@ -2883,6 +2884,17 @@ export class TextRenderer implements IRenderer {
     originY?: number,
   ): void {
     this.combatEffectRuntime.addWarningZone(cells, color, durationMs, baseColor, originX, originY);
+  }
+
+  /** 添加技能施放粒子特效。 */
+  addCastBurst(effect: CombatEffectCastBurst): void {
+    this.combatEffectRuntime.addCastBurst(effect);
+  }
+
+  /** 绘制全部施放粒子，自动清理过期条目。 */
+  renderCastBursts(camera: Camera): void {
+    if (!this.ctx) return;
+    this.combatEffectRuntime.renderCastBursts(this.ctx, camera);
   }
 
   /** 绘制所有浮动文字，自动清理过期条目 */

@@ -4,7 +4,7 @@
  * 维护时要保证结算仍由服务端权威执行，客户端只接收结构化结果和必要表现字段。
  */
 import { Inject, BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { TileType, applyCombatAttackIntensityQiCost, buildEffectiveTargetingGeometry, calcQiCostWithOutputLimit, computeAffectedCellsFromAnchor, formatDisplayNumber, horizontalFacingFromTo, parseTileTargetRef, percentModifierToMultiplier, resolvePlayerFacingContentName, resolveSkillPlayerWindupTicks as getPlayerSkillWindupTicks, resolveSkillRequiresTarget, resolveTargetingGeometryMaxTargets, signedRatioValue, uiLabels } from '@mud/shared';
+import { TileType, applyCombatAttackIntensityQiCost, buildEffectiveTargetingGeometry, calcQiCostWithOutputLimit, computeAffectedCellsFromAnchor, formatDisplayNumber, horizontalFacingFromTo, parseTileTargetRef, percentModifierToMultiplier, resolvePlayerFacingContentName, resolveSkillCastVisualProfile, resolveSkillPlayerWindupTicks as getPlayerSkillWindupTicks, resolveSkillRequiresTarget, resolveTargetingGeometryMaxTargets, signedRatioValue, uiLabels } from '@mud/shared';
 import { PlayerCombatService } from '../../combat/player-combat.service';
 import { createCombatOutcomeApplyAdapters, projectCombatOutcomeDeps } from '../../combat/combat-outcome-apply-adapters';
 import { resolveMonsterCombatExpEquivalentFallback } from '../../combat/monster-combat-exp-equivalent.helper';
@@ -121,6 +121,55 @@ function resolveSkillDamageElement(skill) {
         ? skill.effects.find((effect) => effect?.type === 'damage')
         : null;
     return typeof damageEffect?.element === 'string' ? damageEffect.element : undefined;
+}
+function findPlayerSkillCastTier(attacker, skillId) {
+    const techniques = attacker?.techniques?.techniques ?? attacker?.techniques ?? [];
+    if (!Array.isArray(techniques)) {
+        return undefined;
+    }
+    for (const technique of techniques) {
+        if ((technique?.skills ?? []).some((entry) => entry?.id === skillId)) {
+            return technique?.category === 'divine' || technique?.category === 'secret'
+                ? technique.category
+                : undefined;
+        }
+    }
+    return undefined;
+}
+function resolveCastBurstAnchor(attacker, targets, variant, castOptions) {
+    const selfAnchor = { x: Math.trunc(Number(attacker.x)), y: Math.trunc(Number(attacker.y)) };
+    if (variant === 'heal' || variant === 'buff_self') {
+        return selfAnchor;
+    }
+    const firstTarget = (Array.isArray(targets) ? targets : []).find((entry) => entry?.kind !== 'self'
+        && Number.isFinite(Number(entry?.x))
+        && Number.isFinite(Number(entry?.y)));
+    const targetAnchor = firstTarget
+        ? { x: Math.trunc(Number(firstTarget.x)), y: Math.trunc(Number(firstTarget.y)) }
+        : null;
+    if (variant === 'line') {
+        const optionX = Number(castOptions?.targetX);
+        const optionY = Number(castOptions?.targetY);
+        const endPoint = Number.isFinite(optionX) && Number.isFinite(optionY)
+            ? { x: Math.trunc(optionX), y: Math.trunc(optionY) }
+            : (targetAnchor ?? selfAnchor);
+        return { ...selfAnchor, toX: endPoint.x, toY: endPoint.y };
+    }
+    return targetAnchor ?? selfAnchor;
+}
+function buildPlayerSkillCastBurstEffect(attacker, skill, targets, castOptions) {
+    const profile = resolveSkillCastVisualProfile(skill);
+    if (!profile) {
+        return null;
+    }
+    return {
+        type: 'cast_burst',
+        ...resolveCastBurstAnchor(attacker, targets, profile.variant, castOptions),
+        variant: profile.variant,
+        element: profile.element,
+        damageKind: profile.damageKind,
+        tier: findPlayerSkillCastTier(attacker, skill?.id),
+    };
 }
 function resolvePrimaryDamageRoll(result, fallbackDamageKind, fallbackElement) {
     const firstRoll = Array.isArray(result?.damageRolls)
@@ -1479,6 +1528,14 @@ export class WorldRuntimePlayerSkillDispatchService {
             attacker,
             resolvePlayerSkillFacingAnchor(attacker, targets, castOptions),
         );
+        const castBurstEffect = buildPlayerSkillCastBurstEffect(attacker, skill, targets, castOptions);
+        if (castBurstEffect) {
+            emitCombatPresentation({
+                deps,
+                instanceId: attacker.instanceId,
+                combatEffects: [castBurstEffect],
+            });
+        }
         const outcomeDeps = castOptions?.combatActionPhase
             ? projectCombatOutcomeDeps(deps, { combatActionPhase: castOptions.combatActionPhase })
             : deps;

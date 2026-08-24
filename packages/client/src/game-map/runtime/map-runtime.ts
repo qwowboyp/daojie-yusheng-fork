@@ -23,6 +23,7 @@ import type {
 import { ViewportController } from '../viewport/viewport-controller';
 import { DEFAULT_SAFE_AREA } from '../../constants/world/map-runtime';
 import { MAP_TARGET_FPS_RANGE, type MapPerformanceConfig } from '../../constants/ui/performance';
+import { initializeSfxPlayer, playCastBurstSfx } from '../../ui/sfx-player';
 import { advanceFrameDeadlineAfterRender } from './frame-schedule';
 
 const MAP_FRAME_SCHEDULE_MAX_EARLY_TOLERANCE_MS = 2;
@@ -30,6 +31,7 @@ const MAX_RENDERED_COMBAT_EFFECTS_PER_DELTA = 96;
 const MAX_RENDERED_ATTACK_EFFECTS_PER_DELTA = 48;
 const MAX_RENDERED_FLOAT_EFFECTS_PER_DELTA = 64;
 const MAX_RENDERED_WARNING_ZONE_EFFECTS_PER_DELTA = 16;
+const MAX_RENDERED_CAST_BURST_EFFECTS_PER_DELTA = 24;
 
 function selectRenderableCombatEffects(effects: readonly CombatEffect[]): CombatEffect[] {
   if (effects.length <= MAX_RENDERED_COMBAT_EFFECTS_PER_DELTA) {
@@ -39,6 +41,7 @@ function selectRenderableCombatEffects(effects: readonly CombatEffect[]): Combat
   let attackCount = 0;
   let floatCount = 0;
   let warningCount = 0;
+  let castBurstCount = 0;
   for (let index = effects.length - 1; index >= 0 && selected.length < MAX_RENDERED_COMBAT_EFFECTS_PER_DELTA; index -= 1) {
     const effect = effects[index];
     if (!effect) continue;
@@ -48,6 +51,9 @@ function selectRenderableCombatEffects(effects: readonly CombatEffect[]): Combat
     } else if (effect.type === 'warning_zone') {
       if (warningCount >= MAX_RENDERED_WARNING_ZONE_EFFECTS_PER_DELTA) continue;
       warningCount += 1;
+    } else if (effect.type === 'cast_burst') {
+      if (castBurstCount >= MAX_RENDERED_CAST_BURST_EFFECTS_PER_DELTA) continue;
+      castBurstCount += 1;
     } else {
       if (floatCount >= MAX_RENDERED_FLOAT_EFFECTS_PER_DELTA) continue;
       floatCount += 1;
@@ -103,6 +109,7 @@ export class MapRuntime implements MapRuntimeApi {
   private safeArea: MapSafeAreaInsets = { ...DEFAULT_SAFE_AREA };
 
   constructor() {
+    initializeSfxPlayer();
     this.minimap.setMemoryDeleteHandler((mapIds) => {
       this.store.handleRememberedMapsDeleted(mapIds);
       this.requestSceneSync();
@@ -207,6 +214,9 @@ export class MapRuntime implements MapRuntimeApi {
 
     for (const effect of selectRenderableCombatEffects(data.effects ?? [])) {
       this.renderer.enqueueEffect(effect);
+      if (effect.type === 'cast_burst') {
+        playCastBurstSfx(effect.variant, effect.element, effect.tier);
+      }
     }
     this.store.applyWorldDelta(data);
     const snapshot = this.store.getSnapshot();

@@ -1,4 +1,5 @@
 /** Canvas 观察视图的战斗特效状态、布局、绘制与限额边界。 */
+import type { CombatEffectCastBurst } from '@mud/shared';
 import { getCellSize } from '../display';
 import { buildCanvasFont } from '../constants/ui/text';
 import type { Camera } from './camera';
@@ -10,6 +11,11 @@ import {
   resolveFloatingTextDuration,
   resolveWarningZoneOrigin,
 } from './combat-effect-layout';
+import {
+  createCastBurstEffect,
+  MAX_CAST_BURSTS,
+  type CastBurstEffect,
+} from './cast-burst-particles';
 
 interface FloatingTextEffect {
   x: number;
@@ -57,6 +63,7 @@ export class CanvasCombatEffectRuntime {
   private readonly floatingTexts: FloatingTextEffect[] = [];
   private readonly attackTrails: AttackTrailEffect[] = [];
   private readonly warningZones: WarningZoneEffect[] = [];
+  private readonly castBursts: CastBurstEffect[] = [];
 
   addFloatingText(
     x: number,
@@ -322,7 +329,137 @@ export class CanvasCombatEffectRuntime {
     this.floatingTexts.length = 0;
     this.attackTrails.length = 0;
     this.warningZones.length = 0;
+    this.castBursts.length = 0;
     this.floatingTextBurstLayout.reset();
+  }
+
+  /** 入队一个技能施放粒子特效。 */
+  addCastBurst(effect: CombatEffectCastBurst): void {
+    this.castBursts.push(createCastBurstEffect(effect, performance.now()));
+    const overflow = this.castBursts.length - MAX_CAST_BURSTS;
+    if (overflow > 0) {
+      this.castBursts.copyWithin(0, overflow);
+      this.castBursts.length -= overflow;
+    }
+  }
+
+  /** 绘制全部施放粒子并清理过期条目。 */
+  renderCastBursts(ctx: CanvasRenderingContext2D, camera: Camera): void {
+    if (this.castBursts.length === 0) return;
+    const now = performance.now();
+    const cellSize = getCellSize();
+    const screenOffsetX = ctx.canvas.width / 2 - camera.x + camera.offsetX;
+    const screenOffsetY = ctx.canvas.height / 2 - camera.y + camera.offsetY;
+    let writeIndex = 0;
+    for (let readIndex = 0; readIndex < this.castBursts.length; readIndex += 1) {
+      const burst = this.castBursts[readIndex];
+      if (now - burst.createdAt >= burst.duration) {
+        continue;
+      }
+      this.drawCastBurst(ctx, burst, now, cellSize, screenOffsetX, screenOffsetY);
+      this.castBursts[writeIndex] = burst;
+      writeIndex += 1;
+    }
+    this.castBursts.length = writeIndex;
+  }
+
+  private drawCastBurst(
+    ctx: CanvasRenderingContext2D,
+    burst: CastBurstEffect,
+    now: number,
+    cellSize: number,
+    screenOffsetX: number,
+    screenOffsetY: number,
+  ): void {
+    const progress = Math.min(1, (now - burst.createdAt) / burst.duration);
+    const centerX = burst.x * cellSize + cellSize / 2 + screenOffsetX;
+    const centerY = burst.y * cellSize + cellSize / 2 + screenOffsetY;
+    const endX = burst.toX * cellSize + cellSize / 2 + screenOffsetX;
+    const endY = burst.toY * cellSize + cellSize / 2 + screenOffsetY;
+    const dx = endX - centerX;
+    const dy = endY - centerY;
+    ctx.save();
+    for (const particle of burst.particles) {
+      const localProgress = Math.min(1, Math.max(0, (progress - particle.delay) / Math.max(0.2, 1 - particle.delay)));
+      if (localProgress <= 0) continue;
+      const eased = easeOutCubic(localProgress);
+      const alpha = 1 - localProgress;
+      if (alpha <= 0.02) continue;
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = burst.color;
+      ctx.fillStyle = burst.color;
+      switch (particle.shape) {
+        case 'ring': {
+          const radius = (particle.phase === 1
+            ? particle.size * (1 - eased * 0.55)
+            : particle.size * eased) * cellSize;
+          if (radius < 1) break;
+          ctx.lineWidth = Math.max(1.5, cellSize * 0.06);
+          ctx.globalAlpha = alpha * 0.7;
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+          ctx.stroke();
+          break;
+        }
+        case 'square': {
+          const half = (particle.size * eased * cellSize) / 2;
+          if (half < 1) break;
+          ctx.lineWidth = Math.max(1.5, cellSize * 0.05);
+          ctx.globalAlpha = alpha * 0.6;
+          ctx.strokeRect(centerX - half, centerY - half, half * 2, half * 2);
+          break;
+        }
+        case 'streak': {
+          ctx.lineWidth = Math.max(1.5, cellSize * particle.size);
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          if (burst.variant === 'line') {
+            const head = Math.min(1, Math.max(0, particle.phase + eased * 0.55));
+            const trail = Math.max(0, head - 0.18);
+            ctx.moveTo(centerX + dx * trail, centerY + dy * trail);
+            ctx.lineTo(centerX + dx * head, centerY + dy * head);
+          } else {
+            const px = centerX + particle.offsetX * cellSize + particle.velocityX * cellSize * eased * 0.5;
+            const py = centerY + particle.offsetY * cellSize + particle.velocityY * cellSize * eased * 0.5;
+            const tailX = px - Math.cos(particle.phase) * cellSize * particle.size * 2;
+            const tailY = py - Math.sin(particle.phase) * cellSize * particle.size * 2;
+            ctx.moveTo(tailX, tailY);
+            ctx.lineTo(px, py);
+          }
+          ctx.stroke();
+          break;
+        }
+        case 'dot':
+        default: {
+          let px = centerX + particle.offsetX * cellSize + particle.velocityX * cellSize * eased * 0.5;
+          let py = centerY + particle.offsetY * cellSize + particle.velocityY * cellSize * eased * 0.5;
+          if (burst.variant === 'buff_self') {
+            const orbitRadius = cellSize * (0.55 + eased * 0.25);
+            const angle = particle.phase + eased * 2.4;
+            px = centerX + Math.cos(angle) * orbitRadius;
+            py = centerY + Math.sin(angle) * orbitRadius * 0.92;
+          } else if (burst.variant === 'heal') {
+            px += Math.sin(particle.phase + localProgress * 3) * cellSize * 0.08;
+          }
+          const radius = Math.max(1, cellSize * particle.size * (1 - localProgress * 0.4));
+          ctx.beginPath();
+          ctx.arc(px, py, radius, 0, Math.PI * 2);
+          ctx.fill();
+          break;
+        }
+      }
+    }
+    // 神通/秘法加强：金色垂直光柱一闪
+    if (burst.tier) {
+      const pillarAlpha = Math.min(1, Math.max(0, 1 - progress * 1.8));
+      if (pillarAlpha > 0.02) {
+        const pillarWidth = Math.max(3, cellSize * 0.22);
+        ctx.globalAlpha = pillarAlpha * 0.5;
+        ctx.fillStyle = burst.accentColor;
+        ctx.fillRect(centerX - pillarWidth / 2, centerY - cellSize * 1.6, pillarWidth, cellSize * 1.6);
+      }
+    }
+    ctx.restore();
   }
 }
 
