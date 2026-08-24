@@ -231,7 +231,9 @@ cost = round(标准灵力输出 × 0.2 × 品阶指数倍率 × costMultiplier)
 
 - 粒子为纯几何绘制（圆点/短线/圆环/方框），无纹理资源依赖；数据层在 `client/src/renderer/cast-burst-particles.ts`，Pixi 与 Canvas 双渲染器共用
 - 五行配色复用 `ELEMENT_DAMAGE_TRAIL_COLORS`（金金黄/木翠绿/水蔚蓝/火绛红/土棕褐），无元素时按 damageKind 回退（物理橙棕/法术蓝）
-- 音效为 WebAudio 合成短音（`client/src/ui/sfx-player.ts`），无音频文件依赖；按 variant 选 patch、按元素调基频，开关与音量独立于 BGM 持久化，同 variant 60ms 节流防音墙
+- 音效为 WebAudio 合成短音（`client/src/ui/sfx-player.ts`），无音频文件依赖；按 variant 选 patch、按元素调基频，同 variant 60ms 节流防音墙
+- 普攻音效：客户端收到 `attack` 弹道效果时触发轻音效（高频噪声嗖声 + 低频轻响），峰值音量 0.12 刻意压低，90ms 节流；普攻弹道本身已是实例级广播，在場所有玩家可闻
+- SFX 开关：设置面板「背景音樂」卡片内的音效开关行，独立于 BGM 持久化（`mud:sfx-enabled:v1`）
 
 ## 技能公式结构（SkillFormula）
 
