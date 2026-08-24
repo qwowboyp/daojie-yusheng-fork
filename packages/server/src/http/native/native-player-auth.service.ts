@@ -543,7 +543,7 @@ export class NativePlayerAuthService {
       throw new BadRequestException('頭像內容為空');
     }
     if (data.byteLength > MAX_PLAYER_AVATAR_BYTES) {
-      throw new BadRequestException('頭像檔案過大，請上傳 1MB 內的圖片');
+      throw new BadRequestException('頭像檔案過大，請上傳 4MB 內的圖片');
     }
 
     const normalized = await normalizeAvatarImage(data);

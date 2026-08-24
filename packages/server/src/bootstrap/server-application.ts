@@ -237,10 +237,10 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, { logger, abortOnError: false, bodyParser: false });
   bootstrapApp = app;
 
-  // body parser 手動註冊：頭像上傳走 base64 data URL（1MB 圖片 → 約 1.4MB JSON），
-  // 僅該路由放寬到 2MB；其餘路由維持 Nest 預設 100KB，避免全域放大攻擊面。
+  // body parser 手動註冊：頭像上傳走 base64 data URL（4MB 圖片 → 約 5.4MB JSON），
+  // 僅該路由放寬到 6MB；其餘路由維持 Nest 預設 100KB，避免全域放大攻擊面。
   // 路徑專用 parser 必須先註冊：body-parser 命中後會標記 req._body，後續 parser 自動跳過。
-  app.use('/api/account/avatar', json({ limit: '2mb' }));
+  app.use('/api/account/avatar', json({ limit: '6mb' }));
   app.use(json({ limit: '100kb' }));
   app.use(urlencoded({ extended: true, limit: '100kb' }));
 

@@ -406,8 +406,8 @@ const AccountTab = memo(function AccountTab({ state }: { state: SettingsPanelSta
       setAvatarStatusType('error');
       return;
     }
-    if (file.size > 1024 * 1024) {
-      setAvatarStatus('圖片過大，請上傳 1MB 內的檔案');
+    if (file.size > 4 * 1024 * 1024) {
+      setAvatarStatus('圖片過大，請上傳 4MB 內的檔案');
       setAvatarStatusType('error');
       return;
     }
@@ -501,7 +501,7 @@ const AccountTab = memo(function AccountTab({ state }: { state: SettingsPanelSta
       </div>
       <div className="panel-section account-settings-section ui-surface-pane ui-surface-pane--stack">
         <div className="panel-section-title">我的頭像（全服可見）</div>
-        <div className="account-settings-copy ui-form-copy">上傳後所有玩家都會看到這個形象，取代預設圖示。僅支援 PNG / JPEG / GIF / WebP，1MB 內。</div>
+        <div className="account-settings-copy ui-form-copy">上傳後所有玩家都會看到這個形象，取代預設圖示。僅支援 PNG / JPEG / GIF / WebP，4MB 內。</div>
         <div className="account-settings-field ui-form-field">
           <div className="settings-avatar-preview-row">
             {(() => {

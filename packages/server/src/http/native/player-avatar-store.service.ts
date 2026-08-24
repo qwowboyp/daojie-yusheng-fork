@@ -9,8 +9,8 @@ import { Pool } from 'pg';
 
 import { resolveServerDatabaseUrl } from '../../config/env-alias';
 
-/** 单张头像解码后的大小上限（1MB）。 */
-export const MAX_PLAYER_AVATAR_BYTES = 1024 * 1024;
+/** 单张头像解码后的大小上限（4MB）。 */
+export const MAX_PLAYER_AVATAR_BYTES = 4 * 1024 * 1024;
 
 /** 允许上传的图片 MIME 白名单。 */
 export const PLAYER_AVATAR_MIME_WHITELIST: readonly string[] = [

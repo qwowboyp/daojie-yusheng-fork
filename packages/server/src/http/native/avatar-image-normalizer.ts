@@ -54,8 +54,8 @@ export async function normalizeAvatarImage(input: Buffer): Promise<NormalizedAva
       .toBuffer({ resolveWithObject: true });
 
     if (data.byteLength <= 0 || data.byteLength > MAX_PLAYER_AVATAR_BYTES) {
-      // 理論上 128px WebP 遠小於 1MB；此守衛只是防禦性兜底。
-      throw new BadRequestException('頭像壓縮後仍超過 1MB 上限，請更換圖片');
+      // 理論上 128px WebP 遠小於 4MB；此守衛只是防禦性兜底。
+      throw new BadRequestException('頭像壓縮後仍超過 4MB 上限，請更換圖片');
     }
     return { data, mime: AVATAR_NORMALIZED_MIME, width: info.width, height: info.height };
   } catch (error) {
