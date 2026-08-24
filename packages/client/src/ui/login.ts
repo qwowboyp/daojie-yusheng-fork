@@ -21,7 +21,8 @@ import {
 } from './auth-api';
 import { AUTH_API_BASE_PATH } from '../constants/api';
 import { validateAccountName, validateDisplayName, validatePassword, validateRoleName } from './account-rules';
-import { bindBgmToggleButton } from './bgm-player';
+import { bindBgmToggleButton, initializeBgmPlayer } from './bgm-player';
+import { initializeSfxPlayer } from './sfx-player';
 import { startServerAvatarAutoRefresh, stopServerAvatarAutoRefresh } from '../renderer/server-avatar-registry';
 import { t } from './i18n';
 
@@ -96,6 +97,8 @@ export class LoginUI {
 
 
   constructor(private socket: SocketManager) {
+    initializeBgmPlayer();
+    initializeSfxPlayer();
     bindBgmToggleButton(document.getElementById('login-toggle-bgm') as HTMLButtonElement | null);
     this.loginTab.addEventListener('click', () => this.setMode('login'));
     this.registerTab.addEventListener('click', () => this.setMode('register'));

@@ -3,6 +3,7 @@
  *
  * 纯客户端表现层：cast_burst 特效枚举 → 合成器 patch，元素只调整基频音色。
  * 浏览器自动播放政策与 BGM 播放器同套路：首次用户交互后才真正解锁 AudioContext。
+ * 解鎖必須在同一手勢內 resume；戰鬥觸發時若仍 suspended，保留最後一聲待解鎖後補播。
  * 偏好（开关/音量）持久化在 localStorage，与 BGM 相互独立。
  * 任何播放失败都静默忽略，绝不影响渲染主链路。
  */
@@ -13,9 +14,14 @@ import {
   SFX_STORAGE_KEY,
   SFX_VOLUME_STORAGE_KEY,
 } from '@mud/shared';
+import { AUDIO_UNLOCK_EVENTS, resolveAudioContextCtor } from './audio-context-ctor';
 
 /** SFX 预设音量（0~1）。 */
 export const DEFAULT_SFX_VOLUME = 0.5;
+/** SFX 音量調整刻度（0~1），對應 UI 上的 10%。 */
+export const SFX_VOLUME_STEP = 0.1;
+/** SFX 音量變更事件名，供設定面板同步顯示。detail 攜帶 { volume }（0~1）。 */
+export const SFX_VOLUME_CHANGED_EVENT = 'sfx-player-volume-changed';
 /** SFX 实际输出增益系数：UI 音量 100% 对应 60% 输出（短音效比 BGM 穿透力强，略压）。 */
 const SFX_OUTPUT_GAIN = 0.6;
 /** 同一 variant 的最小重复间隔（毫秒），多人混战时防止音墙。 */
@@ -33,6 +39,20 @@ let volume = DEFAULT_SFX_VOLUME;
 let initialized = false;
 const lastPlayedAtByVariant = new Map<CastBurstVariant, number>();
 let lastBasicAttackPlayedAt = 0;
+
+type PendingSfx =
+  | {
+      readonly kind: 'cast';
+      readonly variant: CastBurstVariant;
+      readonly element: ElementKey | undefined;
+      readonly tier: CastBurstTier | undefined;
+    }
+  | {
+      readonly kind: 'attack';
+    };
+
+/** 解鎖完成前最多保留最後一聲，避免戰鬥發生在 resume 完成前被丟棄。 */
+let pendingSfx: PendingSfx | null = null;
 
 /** 读取当前 SFX 开启偏好。 */
 export function isSfxEnabled(): boolean {
@@ -53,14 +73,17 @@ export function initializeSfxPlayer(): void {
   enabled = readStoredEnabled();
   volume = readStoredVolume();
   const unlock = () => {
-    window.removeEventListener('pointerdown', unlock);
-    window.removeEventListener('keydown', unlock);
-    window.removeEventListener('touchstart', unlock);
-    void ensureAudioContext();
+    for (const eventName of AUDIO_UNLOCK_EVENTS) {
+      window.removeEventListener(eventName, unlock);
+    }
+    const audio = ensureAudioContext();
+    if (audio && audio.state !== 'running') {
+      void resumeContextThenFlush(audio);
+    }
   };
-  window.addEventListener('pointerdown', unlock);
-  window.addEventListener('keydown', unlock);
-  window.addEventListener('touchstart', unlock);
+  for (const eventName of AUDIO_UNLOCK_EVENTS) {
+    window.addEventListener(eventName, unlock);
+  }
 }
 
 /** 切换 SFX 开关并持久化。 */
@@ -80,6 +103,7 @@ export function setSfxVolume(value: number): number {
     masterGain.gain.setTargetAtTime(volume * SFX_OUTPUT_GAIN, ctx.currentTime, 0.01);
   }
   persistVolume(volume);
+  window.dispatchEvent(new CustomEvent<{ volume: number }>(SFX_VOLUME_CHANGED_EVENT, { detail: { volume } }));
   return volume;
 }
 
@@ -100,13 +124,18 @@ export function playCastBurstSfx(
   lastPlayedAtByVariant.set(variant, now);
   try {
     const audio = ensureAudioContext();
-    if (!audio || audio.state !== 'running') {
+    if (!audio) {
       return;
     }
-    playVariantPatch(audio, variant, element);
-    if (tier === 'divine' || tier === 'secret') {
-      playBellPatch(audio);
+    if (audio.state === 'running') {
+      playVariantPatch(audio, variant, element);
+      if (tier === 'divine' || tier === 'secret') {
+        playBellPatch(audio);
+      }
+      return;
     }
+    pendingSfx = { kind: 'cast', variant, element, tier };
+    void resumeContextThenFlush(audio);
   } catch {
     // 音频不可用（无 AudioContext/被策略拦截）时静默跳过
   }
@@ -124,19 +153,21 @@ export function playBasicAttackSfx(): void {
   lastBasicAttackPlayedAt = now;
   try {
     const audio = ensureAudioContext();
-    if (!audio || audio.state !== 'running') {
+    if (!audio) {
       return;
     }
-    // 高频噪声快速扫落（挥击嗖声）
-    playNoiseBurst(audio, 1600, 300, 0.09, SFX_BASIC_ATTACK_PEAK_GAIN);
-    // 低频轻响（命中的钝感）
-    playTone(audio, 140, 90, 0.08, SFX_BASIC_ATTACK_PEAK_GAIN * 0.8, 'sine');
+    if (audio.state === 'running') {
+      playBasicAttackPatch(audio);
+      return;
+    }
+    pendingSfx = { kind: 'attack' };
+    void resumeContextThenFlush(audio);
   } catch {
     // 音频不可用时静默跳过
   }
 }
 
-/** 懒创建 AudioContext 与主增益；自动播放策略下可能处于 suspended，返回 null 等待解锁。 */
+/** 懶建立 AudioContext 與主增益；建立當下立刻 resume，避免第一次播放被 suspended 擋掉。 */
 function ensureAudioContext(): AudioContext | null {
   if (ctx) {
     if (ctx.state === 'suspended') {
@@ -144,15 +175,48 @@ function ensureAudioContext(): AudioContext | null {
     }
     return ctx;
   }
-  const AudioCtor = globalThis.AudioContext;
-  if (typeof AudioCtor !== 'function') {
+  const AudioCtor = resolveAudioContextCtor();
+  if (!AudioCtor) {
     return null;
   }
   ctx = new AudioCtor();
   masterGain = ctx.createGain();
   masterGain.gain.value = volume * SFX_OUTPUT_GAIN;
   masterGain.connect(ctx.destination);
+  if (ctx.state === 'suspended') {
+    void ctx.resume();
+  }
   return ctx;
+}
+
+function playBasicAttackPatch(audio: AudioContext): void {
+  playNoiseBurst(audio, 1600, 300, 0.09, SFX_BASIC_ATTACK_PEAK_GAIN);
+  playTone(audio, 140, 90, 0.08, SFX_BASIC_ATTACK_PEAK_GAIN * 0.8, 'sine');
+}
+
+function flushPendingSfx(): void {
+  if (!ctx || ctx.state !== 'running' || !enabled) {
+    return;
+  }
+  const pending = pendingSfx;
+  pendingSfx = null;
+  if (!pending) {
+    return;
+  }
+  if (pending.kind === 'cast') {
+    playVariantPatch(ctx, pending.variant, pending.element);
+    if (pending.tier === 'divine' || pending.tier === 'secret') {
+      playBellPatch(ctx);
+    }
+    return;
+  }
+  playBasicAttackPatch(ctx);
+}
+
+function resumeContextThenFlush(audio: AudioContext): Promise<void> {
+  return audio.resume().then(() => {
+    flushPendingSfx();
+  }).catch(() => undefined);
 }
 
 /** 预分配噪声缓冲（0.3 秒白噪声，所有噪声类 patch 复用）。 */
