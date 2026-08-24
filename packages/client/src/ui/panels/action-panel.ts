@@ -360,6 +360,38 @@ export class ActionPanel {
     this.selectedSkillPresetId = this.skillPresets[0]?.id ?? null;
     window.addEventListener('keydown', (event) => this.handleGlobalKeydown(event));
     window.addEventListener(FLOATING_PANEL_PREFERENCES_CHANGED_EVENT, () => this.refreshInteractionFloatingPanel());
+    this.bindDelegatedTabEvents();
+  }
+
+  /**
+   * 常駐事件委託：主分頁與技能子分頁的點擊統一由 pane 分發。
+   *
+   * pane（#pane-action）是 index.html 常駐節點，這顆 listener 不隨面板重繪撤銷；
+   * 即使全量渲染或 React 橋接時序弄丟了按鈕上的個別 listener，分頁切換仍可用，
+   * 避免「點了沒反應也沒報錯」直到內容指紋變化才自癒的偶發卡死。
+   */
+  private bindDelegatedTabEvents(): void {
+    this.pane.addEventListener('click', (event) => {
+      const target = event.target instanceof Element ? event.target : null;
+      if (!target) {
+        return;
+      }
+      const mainTabButton = target.closest<HTMLElement>('[data-action-tab]');
+      if (mainTabButton) {
+        const tab = mainTabButton.dataset.actionTab as ActionMainTab | undefined;
+        if (!tab) return;
+        this.activeTab = tab;
+        this.render(this.currentActions);
+        return;
+      }
+      const skillTabButton = target.closest<HTMLElement>('[data-action-skill-tab]');
+      if (skillTabButton) {
+        const skillTab = skillTabButton.dataset.actionSkillTab as SkillSubTab | undefined;
+        if (!skillTab) return;
+        this.activeSkillTab = skillTab;
+        this.render(this.currentActions);
+      }
+    });
   }
 
   /** 清空面板、重置缓存并关掉关联弹层。 */
@@ -621,6 +653,14 @@ export class ActionPanel {
 
   /** patch 行动栏里随 tick 变化的节点，失败时由调用方回退到完整渲染。 */
   private patchDynamicActionPanel(): boolean {
+    // 自癒探針：面板上已有分頁按鈕、但本輪渲染的事件信號已失效或從未建立時，
+    // 拒絕局部 patch 並回退全量渲染，確保按鈕監聽一定被重新裝配。
+    if (
+      this.pane.querySelector('[data-action-tab]')
+      && (!this.paneRenderEvents || this.paneRenderEvents.signal.aborted)
+    ) {
+      return false;
+    }
     this.syncCachedAttackIntensityControl();
     return this.patchToggleCards() && this.patchActionRows();
   }
@@ -862,16 +902,8 @@ export class ActionPanel {
     `;
   }
 
-  /** 给当前渲染出来的动作区装配标签切换、入口按钮和快捷操作事件。 */
-  private bindEvents(actions: ActionDef[], signal: AbortSignal): void {
-    this.pane.querySelectorAll<HTMLElement>('[data-action-tab]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const tab = button.dataset.actionTab as ActionMainTab | undefined;
-        if (!tab) return;
-        this.activeTab = tab;
-        this.render(actions);
-      }, { signal });
-    });
+  /** 给当前渲染出来的动作区装配入口按钮和快捷操作事件；分页切换走 constructor 的常驻委託。 */
+  private bindEvents(_actions: ActionDef[], signal: AbortSignal): void {
     this.pane.querySelectorAll<HTMLButtonElement>('[data-attack-intensity]').forEach((button) => {
       button.addEventListener('click', () => {
         const intensity = normalizeCombatAttackIntensity(button.dataset.attackIntensity);
@@ -884,14 +916,6 @@ export class ActionPanel {
         }
         this.syncCachedAttackIntensityControl();
         this.onAction?.(`combat:attack_intensity:${intensity}`, false, undefined, undefined, t('action.attack-intensity.title', undefined));
-      }, { signal });
-    });
-    this.pane.querySelectorAll<HTMLElement>('[data-action-skill-tab]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const tab = button.dataset.actionSkillTab as SkillSubTab | undefined;
-        if (!tab) return;
-        this.activeSkillTab = tab;
-        this.render(actions);
       }, { signal });
     });
     this.pane.querySelectorAll<HTMLElement>('[data-action-skill-manage-open]').forEach((button) => {
