@@ -2006,7 +2006,7 @@ export class PixiMapRendererAdapter {
     const labelY = cellSize - visualCellSize - Math.max(6, cellSize * 0.18);
     this.patchEntityNameplate(view, label, badges, shouldShowLabel, labelY, cellSize);
     this.drawEntityBars(view, visualCellSize);
-    this.drawBuffs(view, cellSize);
+    this.drawBuffs(view, cellSize, labelY);
     this.syncArtifactAura(view, cellSize);
     this.drawNpcQuestMarker(view.questMarker, anim.npcQuestMarker ?? undefined, cellSize);
     this.drawFormationMarker(view.formationMarker, anim, cellSize);
@@ -2286,26 +2286,32 @@ export class PixiMapRendererAdapter {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   }
 
-  private drawBuffs(view: EntityView, cellSize: number): void {
+  private drawBuffs(view: EntityView, cellSize: number, labelY: number): void {
     this.clearContainer(view.buffLayer);
     const visible = (view.anim.buffs ?? []).filter((buff) => buff.visibility === 'public');
     const rows = [
       visible.filter((buff) => buff.category === 'buff'),
       visible.filter((buff) => buff.category === 'debuff'),
     ];
-    rows.forEach((row, rowIndex) => {
-      const badgeSize = Math.max(8, Math.floor(cellSize * 0.24));
+    const badgeSize = Math.max(8, Math.floor(cellSize * 0.24));
+    const rowStride = badgeSize + 4;
+    // 名牌 anchor 为 0.5，取名字文字顶部；行序保持增益在上、减益在下，空行不占位，整体贴名字上方。
+    const labelTop = labelY - view.label.height / 2;
+    let rowY = labelTop - 3 - badgeSize;
+    for (let rowIndex = rows.length - 1; rowIndex >= 0; rowIndex -= 1) {
+      const row = rows[rowIndex];
       row.slice(0, 4).forEach((buff, index) => {
         const root = new Container();
-        root.position.set(index * (badgeSize + 2), rowIndex * (badgeSize + 4));
+        root.position.set(index * (badgeSize + 2), rowY);
         const bg = new Graphics().roundRect(0, 0, badgeSize, badgeSize, 2).fill({ color: 0x0f0c0a, alpha: 0.78 }).stroke({ color: 0xfaf4e9, alpha: 0.14, width: 1 });
         const mark = new Text({ text: buff.shortMark, style: textStyle('badge', Math.max(6, badgeSize * 0.62), '#f7f0dd', 'rgba(0,0,0,0)', 0), anchor: 0.5 });
         mark.position.set(badgeSize / 2, badgeSize / 2);
         root.addChild(bg, mark);
         view.buffLayer.addChild(root);
       });
-    });
-    view.buffLayer.position.set(0, 1);
+      if (row.length > 0) rowY -= rowStride;
+    }
+    view.buffLayer.position.set(0, 0);
   }
 
   private drawNpcQuestMarker(container: Container, marker: NpcQuestMarker | undefined, cellSize: number): void {

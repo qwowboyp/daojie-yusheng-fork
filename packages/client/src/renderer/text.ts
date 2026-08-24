@@ -2241,7 +2241,7 @@ export class TextRenderer implements IRenderer {
         }
 
         if (!isCrowd && isMobileEntity) {
-          this.drawBuffRows(sx, visualSy, renderedCellSize, anim.buffs);
+          this.drawBuffRows(sx, renderedCellSize, anim.buffs, labelY);
         }
 
         if (!isCrowd && !isConstructionBuilding && (isMobileEntity || isGroundInteractable) && (anim.maxHp ?? 0) > 0) {
@@ -2632,8 +2632,8 @@ export class TextRenderer implements IRenderer {
     );
   }
 
-  /** 绘制实体头顶的 Buff 与 Debuff 图标行。 */
-  private drawBuffRows(sx: number, sy: number, cellSize: number, buffs?: VisibleBuffState[]) {
+  /** 绘制实体名字上方的 Buff 与 Debuff 图标行。 */
+  private drawBuffRows(sx: number, cellSize: number, buffs: VisibleBuffState[] | undefined, labelY: number) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     if (!this.ctx || !buffs || buffs.length === 0) return;
@@ -2643,8 +2643,13 @@ export class TextRenderer implements IRenderer {
     const debuffsByCategory = visible.filter((buff) => buff.category === 'debuff');
     const badgeSize = Math.max(8, Math.floor(cellSize * 0.24));
     const gap = 2;
-    this.drawBuffRow(sx, sy + 1, cellSize, buffsByCategory, badgeSize, gap, '#7fd69a');
-    this.drawBuffRow(sx, sy + badgeSize + 4, cellSize, debuffsByCategory, badgeSize, gap, '#ff9072');
+    // 名字为 alphabetic 基线、字号 0.3*cellSize，取文字顶部近似；行序保持增益在上、减益在下，空行不占位，整体贴名字上方。
+    const labelTop = labelY - cellSize * 0.3;
+    const rowStride = badgeSize + 4;
+    let rowY = labelTop - 3 - badgeSize;
+    this.drawBuffRow(sx, rowY, cellSize, debuffsByCategory, badgeSize, gap, '#ff9072');
+    if (debuffsByCategory.length > 0) rowY -= rowStride;
+    this.drawBuffRow(sx, rowY, cellSize, buffsByCategory, badgeSize, gap, '#7fd69a');
   }  
   /**
  * drawBuffRow：执行drawBuffRow相关逻辑。
