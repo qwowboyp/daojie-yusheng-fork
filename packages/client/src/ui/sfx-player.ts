@@ -23,7 +23,7 @@ const SFX_VARIANT_THROTTLE_MS = 60;
 /** 普攻音效的最小重复间隔（毫秒）；普攻频率高于技能，节流更紧。 */
 const SFX_BASIC_ATTACK_THROTTLE_MS = 90;
 /** 普攻音效峰值音量（刻意压低，只做轻反馈）。 */
-const SFX_BASIC_ATTACK_PEAK_GAIN = 0.12;
+const SFX_BASIC_ATTACK_PEAK_GAIN = 0.36;
 
 let ctx: AudioContext | null = null;
 let masterGain: GainNode | null = null;
