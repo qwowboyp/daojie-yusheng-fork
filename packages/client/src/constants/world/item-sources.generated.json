@@ -5904,6 +5904,13 @@
   ],
   "recovery_powder": [
     {
+      "kind": "shop",
+      "mapId": "yunlai_town",
+      "mapName": "雲來鎮",
+      "npcId": "npc_herbalist_lan",
+      "npcName": "蘭藥師"
+    },
+    {
       "kind": "quest",
       "mapId": "guizang_vein_cavern",
       "mapName": "歸藏脈窟",
