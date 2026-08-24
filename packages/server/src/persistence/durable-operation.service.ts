@@ -410,6 +410,16 @@ class DurableOperationShutdownError extends Error {
   }
 }
 
+/**
+ * 重放身分衝突：同一 operationId 已存在但 payload 不一致（冪等鍵重用）。
+ * 呼叫端命中此錯誤時表示記憶體推進結果已與資料庫權威提交分歧，
+ * 應讓位等待重新水合收斂，而非以相同內容無限重試。
+ */
+export function isDurableOperationReplayIdentityConflictError(error: unknown): boolean {
+  return error instanceof Error
+    && error.message.includes('durable_operation_replay_identity_conflict');
+}
+
 function createDurableShutdownSignal(): { promise: Promise<void>; resolve: () => void } {
   let resolve!: () => void;
   const promise = new Promise<void>((next) => {

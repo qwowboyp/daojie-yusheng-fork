@@ -532,5 +532,12 @@ export function buildCraftTickErrorNotice(error: unknown): { text: string; kind:
             '陣法維護任務狀態正在同步，請稍後重試。',
         );
     }
+    if (message.includes('durable_operation_replay_identity_conflict')) {
+        return buildStructuredNotice(
+            'warn',
+            'notice.craft.checkpoint-divergence',
+            '技藝進度與伺服器紀錄不同步，已暫停自動推進，重新登入後將自動恢復。',
+        );
+    }
     return { text: message || '技藝任務處理失敗', kind: 'warn' };
 }

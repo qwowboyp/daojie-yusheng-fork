@@ -25,7 +25,7 @@ import {
 import { PlayerPersistenceFlushService } from '../../persistence/player-persistence-flush.service';
 import { isFlushTaskConsumerMode } from '../../persistence/flush-task-runtime-mode';
 import type { TechniqueActivityQueueReorderAction } from '@mud/shared';
-import { DurableOperationService, type DurableProfessionStateSnapshot } from '../../persistence/durable-operation.service';
+import { DurableOperationService, isDurableOperationReplayIdentityConflictError, type DurableProfessionStateSnapshot } from '../../persistence/durable-operation.service';
 import { resolveProjectPath } from '../../common/project-path';
 import { PlayerRuntimeService } from '../player/player-runtime.service';
 import { CraftPanelAlchemyQueryService, buildForgingAlchemyPanelState } from './craft-panel-alchemy-query.service';
@@ -104,6 +104,14 @@ export class CraftPanelRuntimeService {
     private readonly supersededPlayerSessionFences = new WeakMap<object, {
         runtimeOwnerId: string | null;
         sessionEpoch: number;
+    }>();
+    /**
+     * 強化 durable 檢查點已與資料庫分歧的玩家（重放身分衝突後讓位）。
+     * 記憶體推進結果已被資料庫權威版本超越，重複提交同一 opId 只會無限衝突；
+     * 讓位直到 jobRunId 變化（重新登入水合或開新任務）為止。
+     */
+    private readonly divergentEnhancementCheckpoints = new WeakMap<object, {
+        jobRunId: string;
     }>();
     /** 技艺管线服务。 */
     pipeline: TechniqueActivityPipelineService | null = null;
@@ -539,6 +547,10 @@ export class CraftPanelRuntimeService {
         if (this.isPlayerSessionFenceSuperseded(player)) {
             return buildSupersededCraftTickResult();
         }
+        if (this.isEnhancementCheckpointDivergent(player)) {
+            // 檢查點分歧讓位：記憶體 job 已落後資料庫權威版本，重複提交只會無限衝突。
+            return buildSupersededCraftTickResult();
+        }
         const playerId = typeof player?.playerId === 'string' ? player.playerId.trim() : '';
         const runWhileAssetIdle = this.playerRuntimeService?.tryRunSynchronousPlayerMutationWhileAssetIdle;
         const stateGuarded = player?.enhancementDurableCommitInFlight === true
@@ -699,6 +711,16 @@ export class CraftPanelRuntimeService {
         }
         catch (error) {
             this.restoreEnhancementAssetRuntimeState(player, before);
+            if (isDurableOperationReplayIdentityConflictError(error)) {
+                // 資料庫已存在同 opId 但不同 payload 的提交（記憶體回滾後重送、
+                // 資產快照已漂移）：標記讓位打斷無限衝突，等待重新水合收斂。
+                this.markEnhancementCheckpointDivergent(player, expectedJob);
+                this.notifyEnhancementCheckpointDivergence(
+                    typeof player?.playerId === 'string' ? player.playerId.trim() : '',
+                    deps,
+                );
+                return buildSupersededCraftTickResult();
+            }
             if (
                 isConvergedPlayerPresenceFenceError(error)
                 || isSupersededPlayerAssetFenceError(error)
@@ -915,6 +937,56 @@ export class CraftPanelRuntimeService {
             return false;
         }
         return true;
+    }
+    /** 記錄強化 durable 檢查點已與資料庫分歧；後續 tick 讓位，避免同 opId 無限重放衝突。 */
+    markEnhancementCheckpointDivergent(player, expectedJob): boolean {
+        const jobRunId = typeof expectedJob?.jobRunId === 'string' ? expectedJob.jobRunId.trim() : '';
+        if (!player || typeof player !== 'object' || !jobRunId) {
+            return false;
+        }
+        this.divergentEnhancementCheckpoints.set(player, { jobRunId });
+        return true;
+    }
+    /** 檢查強化檢查點是否處於分歧讓位狀態；jobRunId 變化（重新水合或新任務）時自動解除。 */
+    isEnhancementCheckpointDivergent(player): boolean {
+        if (!player || typeof player !== 'object') {
+            return false;
+        }
+        const mark = this.divergentEnhancementCheckpoints.get(player);
+        if (!mark) {
+            return false;
+        }
+        const currentJobRunId = typeof player?.enhancementJob?.jobRunId === 'string'
+            ? player.enhancementJob.jobRunId.trim()
+            : '';
+        if (currentJobRunId !== mark.jobRunId) {
+            this.divergentEnhancementCheckpoints.delete(player);
+            return false;
+        }
+        return true;
+    }
+    /** 檢查點分歧僅通知一次（讓位後不再進入提交路徑，自然不會重複洗屏）。 */
+    notifyEnhancementCheckpointDivergence(playerId: string, deps): void {
+        if (!playerId) {
+            return;
+        }
+        this.logger.warn(
+            `強化檢查點與資料庫分歧，已讓位等待重新水合：playerId=${playerId}`,
+        );
+        try {
+            deps?.queuePlayerNotice?.(
+                playerId,
+                '強化進度與伺服器紀錄不同步，已暫停自動強化，重新登入後將自動恢復。',
+                'warn',
+                undefined,
+                undefined,
+                { key: 'notice.craft.enhancement.checkpoint-divergence' },
+            );
+        } catch (noticeError) {
+            this.logger.warn(
+                `強化檢查點分歧通知入隊失敗 playerId=${playerId} error=${noticeError instanceof Error ? noticeError.message : String(noticeError)}`,
+            );
+        }
     }
     shouldUseDurableEnhancementPersistence(player, options: { allowSuppressed?: boolean } = {}) {
         return Boolean(
