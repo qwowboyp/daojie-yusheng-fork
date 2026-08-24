@@ -78,8 +78,18 @@ export function resolveFloatingTextDuration(
   actionStyle: 'default' | 'divine' | 'chant' | undefined,
   durationMs: number | undefined,
 ): number {
-  const fallback = variant !== 'action' ? 850 : actionStyle === 'chant' ? 1240 : 1000;
+  // 傷害數字 1400ms、動作字（攻擊/閃避/功法名）1800ms：拉長可讀時間；吟唱 1240ms 僅為服務端未下發時的兜底
+  const fallback = variant !== 'action' ? 1400 : actionStyle === 'chant' ? 1240 : 1800;
   return normalizeTimedEffectDuration(durationMs, fallback);
+}
+
+/** 浮字前段保持全不透明的比例（傷害數字與動作字共用，確保飄出後仍清晰可讀）。 */
+export const FLOATING_TEXT_HOLD_RATIO = 0.6;
+
+/** 保持後淡：前段全不透明、尾段才線性淡出（divine/chant 各有自帶節奏，不使用此曲線）。 */
+export function resolveFloatingTextAlpha(progress: number): number {
+  if (progress <= FLOATING_TEXT_HOLD_RATIO) return 1;
+  return Math.max(0, 1 - (progress - FLOATING_TEXT_HOLD_RATIO) / (1 - FLOATING_TEXT_HOLD_RATIO));
 }
 
 export function normalizeTimedEffectDuration(durationMs: number | undefined, fallback: number): number {

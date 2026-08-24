@@ -233,6 +233,12 @@ assert.equal(advanceFrameDeadlineAfterRender(Number.NaN, 5_000, 20), 5_020);
 assert.equal(advanceFrameDeadlineAfterRender(5_000, 5_000, 0), 5_000 + frameIntervalMs);
 
 assert.equal(combatEffectLayout.resolveFloatingTextDuration('action', 'chant', undefined), 1240, '吟唱浮字默认时长必须与 Canvas 规则一致');
+assert.equal(combatEffectLayout.resolveFloatingTextDuration('damage', undefined, undefined), 1400, '伤害浮字默认时长必须保持长可读');
+assert.equal(combatEffectLayout.resolveFloatingTextDuration('action', 'default', undefined), 1800, '动作浮字默认时长必须保持长可读');
+assert.equal(combatEffectLayout.resolveFloatingTextAlpha(0), 1, '浮字前段必须保持全不透明');
+assert.equal(combatEffectLayout.resolveFloatingTextAlpha(0.6), 1, '浮字保持段结束前不得提前淡化');
+assert.ok(Math.abs(combatEffectLayout.resolveFloatingTextAlpha(0.8) - 0.5) < 1e-9, '浮字尾段必须线性淡出');
+assert.equal(combatEffectLayout.resolveFloatingTextAlpha(1), 0, '浮字寿命终点必须完全透明');
 assert.equal(combatEffectLayout.resolveFloatingTextDuration('damage', undefined, 0), 1, '显式异常时长必须收敛为可推进的正数');
 assert.equal(combatEffectLayout.normalizeTimedEffectDuration(Number.NaN, 1240), 1240, '非有限时长不得让特效永久残留');
 assert.equal(combatEffectLayout.buildVerticalFloatingText(' 天 道 '), '天\n道', '动作文字必须投影为非空字符纵排');

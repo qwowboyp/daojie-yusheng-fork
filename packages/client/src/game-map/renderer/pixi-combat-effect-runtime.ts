@@ -7,6 +7,7 @@ import {
   buildVerticalFloatingText,
   FloatingTextBurstLayout,
   normalizeTimedEffectDuration,
+  resolveFloatingTextAlpha,
   resolveFloatingTextDuration,
   resolveWarningZoneOrigin,
 } from '../../renderer/combat-effect-layout';
@@ -269,8 +270,8 @@ export class PixiCombatEffectRuntime {
       const actionStyle = entry.variant === 'action' ? (entry.actionStyle ?? 'default') : undefined;
       const motionProgress = actionStyle === 'default' ? progress * progress : progress;
       if (entry.variant === 'damage') {
-        const rise = cellSize * (0.2 + progress * 0.8);
-        entry.text.alpha = 1 - progress;
+        const rise = cellSize * (0.2 + progress * 1.5);
+        entry.text.alpha = resolveFloatingTextAlpha(progress);
         entry.text.scale.set(1);
         entry.text.position.set(
           entry.x * cellSize + cellSize / 2 + entry.burstOffsetX,
@@ -296,8 +297,8 @@ export class PixiCombatEffectRuntime {
         );
         continue;
       }
-      const rise = cellSize * (0.08 + motionProgress * 0.46);
-      entry.text.alpha = 1 - progress;
+      const rise = cellSize * (0.12 + motionProgress * 0.78);
+      entry.text.alpha = resolveFloatingTextAlpha(progress);
       entry.text.position.set(
         entry.x * cellSize - cellSize * 0.06 + entry.burstOffsetX,
         entry.y * cellSize - cellSize * 0.08 - rise - entry.burstOffsetY,

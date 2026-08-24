@@ -8,6 +8,7 @@ import {
   FloatingTextBurstLayout,
   normalizeTimedEffectDuration,
   pruneExpiredTimedEffectsInPlace,
+  resolveFloatingTextAlpha,
   resolveFloatingTextDuration,
   resolveWarningZoneOrigin,
 } from './combat-effect-layout';
@@ -167,15 +168,15 @@ export class CanvasCombatEffectRuntime {
       const rise = entry.variant === 'action'
         ? actionStyle === 'divine'
           ? 0
-          : cellSize * (0.08 + motionProgress * 0.46)
-        : cellSize * (0.2 + progress * 0.8);
+          : cellSize * (0.12 + motionProgress * 0.78)
+        : cellSize * (0.2 + progress * 1.5);
       const sx = entry.x * cellSize + screenOffsetX;
       const sy = entry.y * cellSize + screenOffsetY;
       if (sx + cellSize < 0 || sx > ctx.canvas.width || sy + cellSize < 0 || sy > ctx.canvas.height) continue;
       ctx.save();
       ctx.globalAlpha = actionStyle === 'divine'
         ? 1 - Math.max(0, (progress - 0.86) / 0.14)
-        : 1 - progress;
+        : resolveFloatingTextAlpha(progress);
       if (entry.variant === 'damage') {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'alphabetic';
