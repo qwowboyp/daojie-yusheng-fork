@@ -756,7 +756,8 @@ export function isSameSkillTargetingDef(left: SkillTargetingDef | null | undefin
         && left.height === right.height
         && left.checkerParity === right.checkerParity
         && left.maxTargets === right.maxTargets
-        && left.requiresTarget === right.requiresTarget;
+        && left.requiresTarget === right.requiresTarget
+        && left.castStyle === right.castStyle;
 }
 
 export function isSameSkillEffectList(left: SkillEffectDef[] | null | undefined, right: SkillEffectDef[] | null | undefined) {

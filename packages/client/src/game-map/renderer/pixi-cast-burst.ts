@@ -35,6 +35,12 @@ function clamp01(value: number): number {
   return value < 0 ? 0 : value > 1 ? 1 : value;
 }
 
+/** 确定性伪随机（0~1）：保证 bolt/barrage 的抖动在双渲染器逐帧一致，不闪烁。 */
+function fractSin(seed: number): number {
+  const value = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+  return value - Math.floor(value);
+}
+
 /**
  * 逐帧绘制一个施放特效到共享 Graphics。
  * 返回 false 表示已过期可销毁。
@@ -69,7 +75,7 @@ export function drawCastBurstEffect(
     }
     switch (particle.shape) {
       case 'ring': {
-        // phase=1 表示收缩环（buff_self），其余为扩散环
+        // phase=1 表示收缩环（buff_self/vortex），其余为扩散环
         const radius = (particle.phase === 1
           ? particle.size * (1 - eased * 0.55)
           : particle.size * eased) * cellSize;
@@ -86,33 +92,102 @@ export function drawCastBurstEffect(
         if (half < 1) {
           break;
         }
+        let px = centerX + particle.offsetX * cellSize + particle.velocityX * cellSize * eased * 0.5;
+        let py = centerY + particle.offsetY * cellSize + particle.velocityY * cellSize * eased * 0.5;
+        // buff_debuff 封印阵锁与 tile 阵眼锚点：角标向心收拢而非外扩
+        if (burst.variant === 'buff_debuff' || burst.variant === 'tile') {
+          const halfIn = (particle.size * (1 - eased * 0.5) * cellSize) / 2;
+          graphics
+            .rect(px - halfIn, py - halfIn, halfIn * 2, halfIn * 2)
+            .stroke({ color: burst.colorNumber, alpha: alpha * 0.6, width: Math.max(1.5, cellSize * 0.05) });
+          break;
+        }
         graphics
-          .rect(centerX - half, centerY - half, half * 2, half * 2)
+          .rect(px - half, py - half, half * 2, half * 2)
           .stroke({ color: burst.colorNumber, alpha: alpha * 0.6, width: Math.max(1.5, cellSize * 0.05) });
+        break;
+      }
+      case 'bolt': {
+        // 折线连锁：center→end 之间 3~4 段确定性锯齿折线（phase 为种子）
+        const segments = 3 + Math.floor(fractSin(particle.phase * 3.1) * 2);
+        const lineWidth = Math.max(1.5, cellSize * particle.size);
+        const len = Math.hypot(dx, dy) || 1;
+        const nx = dx / len;
+        const ny = dy / len;
+        graphics.moveTo(centerX, centerY);
+        for (let seg = 1; seg < segments; seg += 1) {
+          const t = seg / segments;
+          const jitter = (fractSin(particle.phase * 13.7 + seg * 7.9) - 0.5) * cellSize * 0.55 * (1 - Math.abs(t - 0.5) * 0.7);
+          graphics.lineTo(centerX + dx * t + ny * jitter, centerY + dy * t - nx * jitter);
+        }
+        graphics.lineTo(endX, endY);
+        graphics.stroke({ color: burst.colorNumber, alpha, width: lineWidth });
         break;
       }
       case 'streak': {
         if (burst.variant === 'line') {
-          // 线形扫射：粒子沿施法者→锚点方向按 phase（进度）排布
+          if (particle.phase === -1) {
+            // 贯穿主轴光束：全线路程高亮淡出
+            const coreAlpha = alpha * 0.85;
+            graphics
+              .moveTo(centerX, centerY)
+              .lineTo(endX, endY)
+              .stroke({ color: burst.colorNumber, alpha: coreAlpha, width: Math.max(3, cellSize * particle.size * 2.2) });
+            break;
+          }
+          // 线形扫射侧翼气浪：沿施法者→锚点方向按 phase 排布，横向抖动
           const head = clamp01(particle.phase + eased * 0.55);
-          const px = centerX + dx * head;
-          const py = centerY + dy * head;
+          const side = (fractSin(particle.phase * 17.3) - 0.5) * cellSize * 0.5 * (1 - eased);
+          const px = centerX + dx * head - (dy / (len2(dx, dy) || 1)) * side;
+          const py = centerY + dy * head + (dx / (len2(dx, dy) || 1)) * side;
           const trail = Math.max(0, head - 0.18);
+          const tx = centerX + dx * trail - (dy / (len2(dx, dy) || 1)) * side;
+          const ty = centerY + dy * trail + (dx / (len2(dx, dy) || 1)) * side;
           graphics
-            .moveTo(centerX + dx * trail, centerY + dy * trail)
+            .moveTo(tx, ty)
             .lineTo(px, py)
             .stroke({ color: burst.colorNumber, alpha, width: Math.max(1.5, cellSize * particle.size) });
-        } else {
-          // 爆散 streak：沿速度方向短划
-          const px = centerX + particle.offsetX * cellSize + particle.velocityX * cellSize * eased * 0.5;
-          const py = centerY + particle.offsetY * cellSize + particle.velocityY * cellSize * eased * 0.5;
-          const tailX = px - Math.cos(particle.phase) * cellSize * particle.size * 2;
-          const tailY = py - Math.sin(particle.phase) * cellSize * particle.size * 2;
+          break;
+        }
+        if (burst.variant === 'vortex') {
+          // 气旋引力：外圈粒子沿切向加速旋转并向心收拢
+          const dist = Math.hypot(particle.offsetX, particle.offsetY) || 0.1;
+          const angle = particle.phase + eased * 4.6;
+          const radius = dist * (1 - eased * 0.85);
+          const px = centerX + Math.cos(angle) * radius * cellSize;
+          const py = centerY + Math.sin(angle) * radius * cellSize;
+          const tailX = px - Math.cos(angle + Math.PI / 2) * cellSize * particle.size * 2.4;
+          const tailY = py - Math.sin(angle + Math.PI / 2) * cellSize * particle.size * 2.4;
           graphics
             .moveTo(tailX, tailY)
             .lineTo(px, py)
             .stroke({ color: burst.colorNumber, alpha, width: Math.max(1.5, cellSize * particle.size) });
+          break;
         }
+        if (burst.variant === 'barrage') {
+          // 万刃攒射：从施法者出发的锥形弹幕，横向偏移随生命收拢
+          const head = clamp01((particle.phase - 1) + eased * 0.6);
+          const side = (fractSin(particle.phase * 31.7) - 0.5) * cellSize * 0.55 * (1 - eased);
+          const px = centerX + dx * head - (dy / (len2(dx, dy) || 1)) * side;
+          const py = centerY + dy * head + (dx / (len2(dx, dy) || 1)) * side;
+          const trail = Math.max(0, head - 0.2);
+          const tx = centerX + dx * trail - (dy / (len2(dx, dy) || 1)) * side;
+          const ty = centerY + dy * trail + (dx / (len2(dx, dy) || 1)) * side;
+          graphics
+            .moveTo(tx, ty)
+            .lineTo(px, py)
+            .stroke({ color: burst.colorNumber, alpha, width: Math.max(1.5, cellSize * particle.size) });
+          break;
+        }
+        // 爆散 streak：沿速度方向短划（single 破片 / aoe 地裂放射线）
+        const px = centerX + particle.offsetX * cellSize + particle.velocityX * cellSize * eased * 0.5;
+        const py = centerY + particle.offsetY * cellSize + particle.velocityY * cellSize * eased * 0.5;
+        const tailX = px - Math.cos(particle.phase) * cellSize * particle.size * 2;
+        const tailY = py - Math.sin(particle.phase) * cellSize * particle.size * 2;
+        graphics
+          .moveTo(tailX, tailY)
+          .lineTo(px, py)
+          .stroke({ color: burst.colorNumber, alpha, width: Math.max(1.5, cellSize * particle.size) });
         break;
       }
       case 'dot':
@@ -120,14 +195,18 @@ export function drawCastBurstEffect(
         let px = centerX + particle.offsetX * cellSize + particle.velocityX * cellSize * eased * 0.5;
         let py = centerY + particle.offsetY * cellSize + particle.velocityY * cellSize * eased * 0.5;
         if (burst.variant === 'buff_self') {
-          // 环绕光点：绕中心旋转并缓慢外扩
-          const orbitRadius = cellSize * (0.55 + eased * 0.25);
-          const angle = particle.phase + eased * 2.4;
-          px = centerX + Math.cos(angle) * orbitRadius;
-          py = centerY + Math.sin(angle) * orbitRadius * 0.92;
+          if (particle.phase === 99) {
+            // 中心聚气点：保持中心随生命淡出
+          } else {
+            // 阴阳双逆向环绕：phase 为负时逆时针
+            const orbitRadius = cellSize * (0.55 + eased * 0.25);
+            const angle = particle.phase + eased * 2.4 * (particle.phase < 0 ? -1 : 1);
+            px = centerX + Math.cos(angle) * orbitRadius;
+            py = centerY + Math.sin(angle) * orbitRadius * 0.92;
+          }
         } else if (burst.variant === 'heal') {
-          // 上升光尘左右轻摆
-          px += Math.sin(particle.phase + localProgress * 3) * cellSize * 0.08;
+          // 双螺旋上升光尘：phase 正负决定初始旋向
+          px += Math.cos(particle.phase * 4 + localProgress * 6) * cellSize * 0.22;
         }
         const radius = Math.max(1, cellSize * particle.size * (1 - localProgress * 0.4));
         graphics.circle(px, py, radius).fill({ color: burst.colorNumber, alpha });
@@ -147,4 +226,9 @@ export function drawCastBurstEffect(
     }
   }
   return true;
+}
+
+/** 向量长度平方的别名（避免重复 hypot）。 */
+function len2(dx: number, dy: number): number {
+  return Math.hypot(dx, dy);
 }

@@ -233,7 +233,7 @@ export interface CombatEffectDamageSummary {
 }
 
 /** 技能施放粒子特效的表现形态，由技能定义确定性推导，服务端只发枚举不发表现细节。 */
-export type CastBurstVariant = 'single' | 'aoe' | 'line' | 'heal' | 'buff_self' | 'buff_debuff' | 'tile';
+export type CastBurstVariant = 'single' | 'aoe' | 'line' | 'heal' | 'buff_self' | 'buff_debuff' | 'tile' | 'vortex' | 'chain' | 'barrage';
 
 /** 高规格施放特效档位：神通/秘法专属加强表现。 */
 export type CastBurstTier = 'divine' | 'secret';

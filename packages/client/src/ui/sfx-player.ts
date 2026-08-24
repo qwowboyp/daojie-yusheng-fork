@@ -250,28 +250,59 @@ function playVariantPatch(audio: AudioContext, variant: CastBurstVariant, elemen
   const baseFreq = resolveElementBaseFreq(element);
   switch (variant) {
     case 'single':
-      playNoiseBurst(audio, 1800, 400, 0.12, 0.5);
-      playTone(audio, baseFreq, baseFreq, 0.16, 0.35, 'sine');
+      // 命中：极速下坠次重低音冲击 + 元素本体 + 高频破裂噪声
+      playTone(audio, 260, 45, 0.09, 0.55, 'sine');
+      playTone(audio, baseFreq, baseFreq * 0.85, 0.14, 0.32, 'triangle', 0.01);
+      playNoiseBurst(audio, 2400, 600, 0.1, 0.4);
       break;
     case 'aoe':
-      playTone(audio, 220, 60, 0.26, 0.4, 'sawtooth');
-      playNoiseBurst(audio, 900, 200, 0.24, 0.18);
+      // 范围爆发：双失谐锯齿波拍频撕裂 + 低滚雷噪声
+      playTone(audio, 160, 40, 0.32, 0.4, 'sawtooth');
+      playTone(audio, 164, 38, 0.32, 0.25, 'sawtooth');
+      playNoiseBurst(audio, 800, 120, 0.28, 0.35);
       break;
     case 'line':
-      playNoiseBurst(audio, 2400, 500, 0.2, 0.45);
+      // 线形穿透：超音速下潜滑音 + 命中爆点
+      playTone(audio, 1600, 350, 0.18, 0.38, 'sawtooth');
+      playNoiseBurst(audio, 2800, 600, 0.2, 0.4);
       break;
     case 'heal':
-      playTone(audio, 523, 523, 0.28, 0.22, 'sine');
-      playTone(audio, 659, 659, 0.28, 0.2, 'sine', 0.09);
+      // 治疗：大三和弦琶音（C5-E5-G5）温润复生
+      playTone(audio, 523.25, 523.25, 0.3, 0.22, 'sine', 0);
+      playTone(audio, 659.25, 659.25, 0.28, 0.2, 'sine', 0.06);
+      playTone(audio, 783.99, 783.99, 0.26, 0.18, 'sine', 0.12);
       break;
     case 'buff_self':
-      playTone(audio, 330, 520, 0.26, 0.25, 'sine');
+      // 自身增益：聚气升频漩涡音 + 高八度泛音
+      playTone(audio, 180, 520, 0.26, 0.3, 'sine');
+      playTone(audio, 360, 1040, 0.22, 0.12, 'triangle', 0.04);
       break;
     case 'buff_debuff':
-      playTone(audio, 300, 220, 0.3, 0.25, 'triangle');
+      // 减益：减五度不和谐咒诅滑音（A4→Eb4）+ 沉闷浊气
+      playTone(audio, 440, 311.13, 0.32, 0.35, 'sawtooth');
+      playNoiseBurst(audio, 1200, 300, 0.25, 0.2);
       break;
     case 'tile':
-      playTone(audio, 90, 70, 0.18, 0.45, 'sine');
+      // 地面阵纹：巨石夯地沉重撞击 + 地脉轰鸣
+      playTone(audio, 95, 35, 0.22, 0.55, 'sine');
+      playNoiseBurst(audio, 600, 80, 0.18, 0.35);
+      break;
+    case 'vortex':
+      // 气旋引力：低频向心升频 + 气流收敛噪声
+      playTone(audio, 80, 320, 0.28, 0.35, 'sawtooth');
+      playNoiseBurst(audio, 300, 1400, 0.25, 0.28);
+      break;
+    case 'chain':
+      // 折线连锁：雷弧高频噼啪（双波形微差拍频）+ 空气电离爆破
+      playTone(audio, baseFreq * 2.2, baseFreq * 1.5, 0.12, 0.4, 'square');
+      playTone(audio, baseFreq * 2.25, baseFreq * 1.45, 0.12, 0.3, 'sawtooth', 0.02);
+      playNoiseBurst(audio, 3000, 800, 0.15, 0.35);
+      break;
+    case 'barrage':
+      // 万刃攒射：破空啸声下潜 + 多重风切（错时）
+      playTone(audio, 1200, 400, 0.18, 0.3, 'triangle');
+      playNoiseBurst(audio, 2200, 700, 0.1, 0.25);
+      playNoiseBurst(audio, 2400, 800, 0.1, 0.22);
       break;
   }
 }

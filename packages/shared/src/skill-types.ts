@@ -135,6 +135,11 @@ export interface SkillTargetingDef {
  */
 
   requiresTarget?: boolean;
+  /**
+ * castStyle：施放特效形态覆写（气旋/连锁/攒射）；缺省时按 shape 自动推导，不影响目标选取。
+ */
+
+  castStyle?: 'vortex' | 'chain' | 'barrage';
 }
 
 /** 技能伤害效果定义。 */

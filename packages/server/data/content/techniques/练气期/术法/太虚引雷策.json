@@ -1,0 +1,109 @@
+[
+  {
+    "id": "taixu_yinlei",
+    "name": "太虛引雷策",
+    "desc": "引太虛之氣化作九天引雷，螺旋鎖脈，連環殛體。",
+    "grade": "earth",
+    "category": "arts",
+    "realmLv": 27,
+    "maxLayer": 14,
+    "expDifficulty": 1,
+    "skills": [
+      {
+        "id": "skill.taixu_yinlei_vortex",
+        "name": "太虛聚煞",
+        "desc": "以太虛氣旋攪動方圓氣機，將敵眾絞入漩渦之中。",
+        "cooldown": 24,
+        "cost": 52000,
+        "costMultiplier": 7,
+        "range": 4,
+        "targeting": {
+          "shape": "area",
+          "radius": 2,
+          "maxTargets": 6,
+          "castStyle": "vortex"
+        },
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "metal",
+            "formula": {
+              "op": "mul",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    300,
+                    {
+                      "var": "caster.stat.spellAtk",
+                      "scale": 3.2
+                    }
+                  ]
+                },
+                {
+                  "op": "add",
+                  "args": [
+                    1,
+                    {
+                      "var": "techLevel",
+                      "scale": 0.1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "unlockLevel": 1
+      },
+      {
+        "id": "skill.taixu_yinlei_chain",
+        "name": "九霄劫雷",
+        "desc": "引九霄劫雷鎖定敵身，雷弧折轉連環貫體。",
+        "cooldown": 30,
+        "cost": 78000,
+        "costMultiplier": 9,
+        "range": 5,
+        "targeting": {
+          "shape": "single",
+          "range": 5,
+          "castStyle": "chain"
+        },
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "metal",
+            "formula": {
+              "op": "mul",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    500,
+                    {
+                      "var": "caster.stat.spellAtk",
+                      "scale": 4.2
+                    }
+                  ]
+                },
+                {
+                  "op": "add",
+                  "args": [
+                    1,
+                    {
+                      "var": "techLevel",
+                      "scale": 0.12
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "unlockLevel": 1
+      }
+    ]
+  }
+]

@@ -98,6 +98,12 @@ function resolveDamageCastVariant(
   skill: Pick<SkillDef, 'effects' | 'targeting'> | null | undefined,
 ): CastBurstVariant {
   const targeting = skill?.targeting;
+  // castStyle 显式覆写优先：气旋/连锁/攒射三种特殊形态由内容配置直接指定，
+  // 目标选取仍走 shape 几何，表现形态与命中几何解耦。
+  const castStyle = targeting?.castStyle;
+  if (castStyle === 'vortex' || castStyle === 'chain' || castStyle === 'barrage') {
+    return castStyle;
+  }
   const shape = targeting?.shape;
   if (shape === 'line') {
     return 'line';
