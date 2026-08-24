@@ -282,6 +282,25 @@ export interface MarketUpdateView {
  */
 
   heavenlyDaoShopDiscountPercent?: number;
+  /**
+ * vendorRecycleItems：回收商可收物品目录（itemId → 单件回收價），服务端权威下发。
+ */
+
+  vendorRecycleItems?: MarketVendorRecycleItemView[];
+}
+
+/** 回收商可收物品的单件回收价视图。 */
+export interface MarketVendorRecycleItemView {
+  /**
+ * itemId：可回收道具 ID。
+ */
+
+  itemId: string;
+  /**
+ * unitRecyclePrice：单件回收價（灵石）。
+ */
+
+  unitRecyclePrice: number;
 }
 
 /** 坊市分页分类计数，按服务端分页分组口径统计。 */

@@ -423,6 +423,20 @@ export interface SellMarketItemView {
   quantity: number;
 }
 
+/** 向回收商出售背包物品（按 NPC 商店售价折价回收）。 */
+export interface VendorRecycleItemView {
+  /**
+ * itemRef：背包物品稳定引用。
+ */
+
+  itemRef: InventoryItemRefView;
+  /**
+ * quantity：出售数量。
+ */
+
+  quantity: number;
+}
+
 /** 取消订单。 */
 export interface CancelMarketOrderView {
 /**

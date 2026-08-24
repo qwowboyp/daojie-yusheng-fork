@@ -185,6 +185,8 @@ export interface MarketPanelCallbacks {
   onBuyTransmissionLot: (lotId: string, itemKey: string) => void;
   onCreateTransmissionSellOrder: (itemInstanceId: string, unitPrice: number) => void;
   onBuyHeavenlyDaoShopItem: (itemId: string, quantity: number) => void;
+  /** 向回收商出售背包物品（按 NPC 商店售价折价回收）。 */
+  onVendorRecycleItem: (itemInstanceId: string, quantity: number) => void;
   onCancelOrder: (orderId: string) => void;
   onClaimStorage: () => void;
 }

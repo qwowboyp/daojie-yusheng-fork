@@ -35,6 +35,36 @@ export const HEAVENLY_DAO_SHOP_ITEMS = [
 /** 永恒权益下天道商店折扣百分比。 */
 export const HEAVENLY_DAO_SHOP_ETERNAL_DISCOUNT_PERCENT = 10;
 
+/** 回收商回收折扣百分比：以 NPC 商店售價為基準的回收比例。 */
+export const VENDOR_RECYCLE_RATE_PERCENT = 25;
+
+/** 回收商單件回收價下限（靈石）。 */
+export const VENDOR_RECYCLE_MIN_UNIT_PRICE = 1;
+
+/** 回收商絕不回收的特殊物品：貨幣與權益類物品本身不得進入回收鏈路。 */
+export const VENDOR_RECYCLE_EXCLUDED_ITEM_IDS = [
+  'spirit_stone',
+  'merit',
+  'merit_eternal',
+  'merit_month_card',
+] as const;
+
+/** 回收商不收的物品類型：任務物品回收會卡死任務進度。 */
+export const VENDOR_RECYCLE_EXCLUDED_ITEM_TYPES = ['quest_item'] as const;
+
+/**
+ * 計算回收商單件回收價：NPC 商店售價按比例折扣，無條件捨去小數，最低 1 靈石。
+ * 買價小於等於 0 視為配置異常，返回 0 由呼叫端拒絕回收。
+ */
+export function calculateVendorRecycleUnitPrice(shopPrice: number): number {
+  const normalizedShopPrice = Math.trunc(Number(shopPrice) || 0);
+  if (normalizedShopPrice <= 0) {
+    return 0;
+  }
+  const recycled = Math.floor(normalizedShopPrice * VENDOR_RECYCLE_RATE_PERCENT / 100);
+  return Math.max(VENDOR_RECYCLE_MIN_UNIT_PRICE, recycled);
+}
+
 export function calculateHeavenlyDaoShopDiscountedPrice(price: number, discountPercent = 0): number {
   const normalizedPrice = Math.max(1, Math.trunc(Number(price) || 0));
   const normalizedDiscount = Math.min(99, Math.max(0, Math.trunc(Number(discountPercent) || 0)));

@@ -79,6 +79,7 @@ import type {
   PlaceAuctionBidView,
   SaveAlchemyPresetView,
   SellMarketItemView,
+  VendorRecycleItemView,
   SetArtifactSlotEnabledView,
   SortInventoryView,
   StartAlchemyView,
@@ -240,8 +241,10 @@ export interface C2S_BuyTransmissionLot extends BuyTransmissionLotView {}
 export interface C2S_BuyMarketItem extends BuyMarketItemView {}
 /** 购买天道商店商品。 */
 export interface C2S_BuyHeavenlyDaoShopItem extends BuyHeavenlyDaoShopItemView {}
-/** 直接向坊市出售背包物品。 */
-export interface C2S_SellMarketItem extends SellMarketItemView {}
+  /** 直接向坊市出售背包物品。 */
+  export interface C2S_SellMarketItem extends SellMarketItemView {}
+  /** 向回收商出售背包物品。 */
+  export interface C2S_VendorRecycleItem extends VendorRecycleItemView {}
 /** 取消坊市订单。 */
 export interface C2S_CancelMarketOrder extends CancelMarketOrderView {}
 /** 领取坊市寄售仓库。 */

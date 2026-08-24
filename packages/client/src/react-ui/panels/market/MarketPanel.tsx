@@ -14,6 +14,7 @@ interface MarketPanelCallbacks {
   onOpenAuction: ((tab: AuctionHouseTab) => void) | null;
   onOpenTransmission: (() => void) | null;
   onOpenHeavenlyDaoShop: (() => void) | null;
+  onOpenVendorRecycle: (() => void) | null;
   onOpenTechniqueGeneration: (() => void) | null;
 }
 
@@ -22,6 +23,7 @@ const callbacks: MarketPanelCallbacks = {
   onOpenAuction: null,
   onOpenTransmission: null,
   onOpenHeavenlyDaoShop: null,
+  onOpenVendorRecycle: null,
   onOpenTechniqueGeneration: null,
 };
 
@@ -48,6 +50,10 @@ export const MarketPanel = memo(function MarketPanel() {
     callbacks.onOpenHeavenlyDaoShop?.();
   }, []);
 
+  const handleOpenVendorRecycle = useCallback(() => {
+    callbacks.onOpenVendorRecycle?.();
+  }, []);
+
   const handleOpenTechniqueGeneration = useCallback(() => {
     callbacks.onOpenTechniqueGeneration?.();
   }, []);
@@ -68,6 +74,9 @@ export const MarketPanel = memo(function MarketPanel() {
           </button>
           <button className="small-btn" type="button" onClick={handleOpenHeavenlyDaoShop}>
             天道商店
+          </button>
+          <button className="small-btn" type="button" onClick={handleOpenVendorRecycle}>
+            回收商
           </button>
           <button className="small-btn" type="button" onClick={handleOpenTechniqueGeneration}>
             悟道

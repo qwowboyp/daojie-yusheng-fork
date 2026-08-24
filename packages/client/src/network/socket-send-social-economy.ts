@@ -324,6 +324,13 @@ export function createSocketSocialEconomySender(deps: SocialEconomySenderDeps) {
         quantity,
       });
     },
+    /** 向回收商出售背包物品（按 NPC 商店售价折价回收）。 */
+    sendVendorRecycleItem(itemInstanceId: string, quantity: number): void {
+      deps.emitEvent(C2S.VendorRecycleItem, {
+        itemRef: buildInventoryItemRef(itemInstanceId),
+        quantity,
+      });
+    },
     /**
  * sendCancelMarketOrder：判断sendCancel坊市订单是否满足条件。
  * @param orderId string order ID。

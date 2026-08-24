@@ -182,6 +182,8 @@ interface MarketPanelCallbacks {
   onBuyoutAuctionLot: (lotId: string, itemKey: string) => void;
   /** 购买天道商店商品。 */
   onBuyHeavenlyDaoShopItem: (itemId: string, quantity: number) => void;
+  /** 向回收商出售背包物品（按 NPC 商店售价折价回收）。 */
+  onVendorRecycleItem: (itemInstanceId: string, quantity: number) => void;
   /** 打开自创功法悟道页面。 */
   onOpenTechniqueGeneration?: () => void;
   /**
@@ -387,6 +389,8 @@ export class MarketPanel {
   private static readonly AUCTION_CONSIGN_MODAL_OWNER = 'auction-consign-panel';
   /** 天道商店独立弹窗的归属标识。 */
   private static readonly HEAVENLY_DAO_SHOP_MODAL_OWNER = 'heavenly-dao-shop-panel';
+  /** 回收商独立弹窗的归属标识。 */
+  private static readonly VENDOR_RECYCLE_MODAL_OWNER = 'vendor-recycle-panel';
   /** 交易弹窗根节点的 id。 */
   private static readonly TRADE_MODAL_ID = 'market-trade-modal-root';
   /** 买入确认弹层的归属标识。 */
@@ -460,6 +464,10 @@ export class MarketPanel {
   private readonly heavenlyDaoShopQuantityDrafts = new Map<string, string>();
   /** 天道商店依赖的资产投影签名，用于跳过无变化的每息刷新。 */
   private heavenlyDaoShopAssetSignature = '';
+  /** 回收商每个背包堆的数量草稿（itemInstanceId → 输入文本）。 */
+  private readonly vendorRecycleQuantityDrafts = new Map<string, string>();
+  /** 回收商依赖的资产投影签名，用于跳过无变化的每息刷新。 */
+  private vendorRecycleAssetSignature = '';
   /** 弹窗当前标签页。 */
   private modalTab: MarketModalTab = 'market';
   /** 当前市场主分类筛选。 */
@@ -535,6 +543,7 @@ export class MarketPanel {
       onOpenAuction: (tab) => this.openAuctionFromPane(tab),
       onOpenTransmission: () => this.openTransmissionFromPane(),
       onOpenHeavenlyDaoShop: () => this.openHeavenlyDaoShopFromPane(),
+      onOpenVendorRecycle: () => this.openVendorRecycleFromPane(),
       onOpenTechniqueGeneration: () => this.callbacks?.onOpenTechniqueGeneration?.(),
     });
     this.renderPane();
@@ -583,6 +592,8 @@ export class MarketPanel {
 
     const shouldPatchHeavenlyDaoShop = detailModalHost.isOpenFor(MarketPanel.HEAVENLY_DAO_SHOP_MODAL_OWNER)
       && this.captureHeavenlyDaoShopAssetSignature(this.player, inventory);
+    const shouldPatchVendorRecycle = detailModalHost.isOpenFor(MarketPanel.VENDOR_RECYCLE_MODAL_OWNER)
+      && this.captureVendorRecycleAssetSignature(inventory);
     this.inventory = inventory;
     if (detailModalHost.isOpenFor(MarketPanel.MODAL_OWNER)) {
       this.syncVisibleMarketInventoryState();
@@ -600,6 +611,8 @@ export class MarketPanel {
       this.patchAuctionConsignModalState();
     } else if (shouldPatchHeavenlyDaoShop) {
       this.patchHeavenlyDaoShopModal();
+    } else if (shouldPatchVendorRecycle) {
+      this.patchVendorRecycleModal();
     }
   }
 
@@ -617,6 +630,7 @@ export class MarketPanel {
     const auctionConsignModalOpen = detailModalHost.isOpenFor(MarketPanel.AUCTION_CONSIGN_MODAL_OWNER);
     const transmissionModalOpen = detailModalHost.isOpenFor(MarketTransmissionView.modalOwner);
     const heavenlyDaoShopOpen = detailModalHost.isOpenFor(MarketPanel.HEAVENLY_DAO_SHOP_MODAL_OWNER);
+    const vendorRecycleOpen = detailModalHost.isOpenFor(MarketPanel.VENDOR_RECYCLE_MODAL_OWNER);
     const previousMarketUpdate = this.marketUpdate;
     const knownListedItems = data.listedItems.length > 0 ? data.listedItems : this.getKnownListedItems(this.marketUpdate);
     const nextMarketUpdate = {
@@ -665,6 +679,9 @@ export class MarketPanel {
     } else if (heavenlyDaoShopOpen) {
       this.captureHeavenlyDaoShopAssetSignature(this.player, this.inventory);
       this.patchHeavenlyDaoShopModal();
+    } else if (vendorRecycleOpen) {
+      this.captureVendorRecycleAssetSignature(this.inventory);
+      this.patchVendorRecycleModal();
     } else {
       this.syncTradeDialogOverlay();
     }
@@ -1009,6 +1026,8 @@ export class MarketPanel {
     this.heavenlyDaoShopSelectedItemId = HEAVENLY_DAO_SHOP_ITEMS[0]?.itemId ?? null;
     this.heavenlyDaoShopQuantityDrafts.clear();
     this.heavenlyDaoShopAssetSignature = '';
+    this.vendorRecycleQuantityDrafts.clear();
+    this.vendorRecycleAssetSignature = '';
     this.modalTab = 'market';
     this.activeCategory = 'all';
     this.activeEquipmentCategory = 'all';
@@ -1046,6 +1065,7 @@ export class MarketPanel {
     detailModalHost.close(MarketPanel.AUCTION_MODAL_OWNER);
     detailModalHost.close(MarketPanel.AUCTION_CONSIGN_MODAL_OWNER);
     detailModalHost.close(MarketPanel.HEAVENLY_DAO_SHOP_MODAL_OWNER);
+    detailModalHost.close(MarketPanel.VENDOR_RECYCLE_MODAL_OWNER);
   }
 
   /** 确保坊市唯一的 React 首屏已挂载；重复调用不会重建根节点。 */
@@ -1512,6 +1532,303 @@ export class MarketPanel {
       ? `請輸入 1 至 ${formatDisplayInteger(HEAVENLY_DAO_SHOP_MAX_QUANTITY)} 之間的購買數量。`
       : `${currencyName}不足，需要 ${displayTotal} ${currencyName}。`;
     buttonNode.disabled = invalidTotal || insufficientCurrency;
+  }
+
+  private openVendorRecycleFromPane(): void {
+    if (!this.requestMarketBootstrap()) {
+      this.callbacks?.onRequestMarket();
+    }
+    this.openVendorRecycleModal();
+  }
+
+  /** 回收商货币显示名，跟随坊市权威货币名。 */
+  private getVendorRecycleCurrencyName(): string {
+    return this.marketUpdate?.currencyItemName ?? '靈石';
+  }
+
+  /** 服务端下发的可回收目录（itemId → 单件回收价）；旧版 server 未下发时为空。 */
+  private getVendorRecycleCatalog(): Map<string, number> {
+    const catalog = new Map<string, number>();
+    const entries = this.marketUpdate?.vendorRecycleItems;
+    if (!Array.isArray(entries)) {
+      return catalog;
+    }
+    for (const entry of entries) {
+      const unitPrice = Number(entry?.unitRecyclePrice);
+      if (typeof entry?.itemId === 'string' && entry.itemId.length > 0 && Number.isFinite(unitPrice)) {
+        catalog.set(entry.itemId, Math.max(0, Math.trunc(unitPrice)));
+      }
+    }
+    return catalog;
+  }
+
+  /** 背包中可回收的物品堆视图（itemId 出现在回收目录且带稳定实例 ID 的堆）。 */
+  private collectVendorRecycleRows(inventory: Inventory = this.inventory): Array<{
+    itemInstanceId: string;
+    itemId: string;
+    itemName: string;
+    count: number;
+    unitRecyclePrice: number;
+    totalRecyclePrice: number;
+  }> {
+    const catalog = this.getVendorRecycleCatalog();
+    if (catalog.size === 0) {
+      return [];
+    }
+    const rows: Array<{
+      itemInstanceId: string;
+      itemId: string;
+      itemName: string;
+      count: number;
+      unitRecyclePrice: number;
+      totalRecyclePrice: number;
+    }> = [];
+    for (const item of inventory.items) {
+      const itemInstanceId = typeof item.itemInstanceId === 'string' ? item.itemInstanceId : '';
+      const unitRecyclePrice = catalog.get(item.itemId) ?? null;
+      const count = Math.trunc(Number(item.count));
+      if (!itemInstanceId || unitRecyclePrice === null || !Number.isSafeInteger(count) || count <= 0) {
+        continue;
+      }
+      const template = getLocalItemTemplate(item.itemId);
+      rows.push({
+        itemInstanceId,
+        itemId: item.itemId,
+        itemName: resolveClientItemBaseName(item.itemId, template?.name, item.name),
+        count,
+        unitRecyclePrice,
+        totalRecyclePrice: unitRecyclePrice * count,
+      });
+    }
+    return rows;
+  }
+
+  private captureVendorRecycleAssetSignature(inventory: Inventory): boolean {
+    const nextSignature = this.buildVendorRecycleAssetSignature(inventory);
+    if (nextSignature === this.vendorRecycleAssetSignature) {
+      return false;
+    }
+    this.vendorRecycleAssetSignature = nextSignature;
+    return true;
+  }
+
+  private buildVendorRecycleAssetSignature(inventory: Inventory): string {
+    return this.collectVendorRecycleRows(inventory)
+      .map((row) => `${row.itemInstanceId}:${row.count}:${row.unitRecyclePrice}`)
+      .join('|');
+  }
+
+  private findVendorRecycleRow(inventory: Inventory, itemInstanceId: string) {
+    return this.collectVendorRecycleRows(inventory).find((row) => row.itemInstanceId === itemInstanceId) ?? null;
+  }
+
+  private parseVendorRecycleQuantity(itemInstanceId: string, count: number): number | null {
+    const raw = this.vendorRecycleQuantityDrafts.get(itemInstanceId) ?? '1';
+    if (!raw || !/^\d+$/.test(raw)) {
+      return null;
+    }
+    const quantity = Number(raw);
+    if (!Number.isSafeInteger(quantity) || quantity <= 0 || quantity > count) {
+      return null;
+    }
+    return quantity;
+  }
+
+  private renderVendorRecycleRows(): string {
+    const currencyName = this.getVendorRecycleCurrencyName();
+    const rows = this.collectVendorRecycleRows();
+    if (rows.length === 0) {
+      return '<div class="empty-hint">回收商目前沒有可收購的物品。</div>';
+    }
+    return rows.map((row) => {
+      const quantityText = this.vendorRecycleQuantityDrafts.get(row.itemInstanceId) ?? '1';
+      const quantity = this.parseVendorRecycleQuantity(row.itemInstanceId, row.count);
+      const errorText = `請輸入 1 至 ${formatDisplayInteger(row.count)} 之間的回收數量。`;
+      return `
+        <div class="market-order-card ui-surface-card ui-surface-card--compact" data-vendor-recycle-row="${escapeHtmlAttr(row.itemInstanceId)}">
+          <div class="market-order-card-head">
+            <span class="market-order-name">${escapeHtml(row.itemName)}</span>
+            <span class="market-order-meta">持有 ${formatDisplayInteger(row.count)}</span>
+          </div>
+          <div class="market-order-meta">單價 ${formatDisplayInteger(row.unitRecyclePrice)} ${escapeHtml(currencyName)} · 回收總價 ${formatDisplayInteger(row.totalRecyclePrice)} ${escapeHtml(currencyName)}</div>
+          ${renderTradeQuantityControl({
+            value: quantityText || '1',
+            max: row.count,
+            inputClassName: 'gm-inline-input ui-input',
+            inputAttrs: { 'data-vendor-recycle-quantity': row.itemInstanceId },
+            leftButtons: [{ label: '1', attrs: { 'data-vendor-recycle-quick': row.itemInstanceId, 'data-vendor-recycle-quick-value': '1' } }],
+            rightButtons: [{ label: '全部', attrs: { 'data-vendor-recycle-quick': row.itemInstanceId, 'data-vendor-recycle-quick-value': String(row.count) } }],
+          })}
+          <button class="small-btn" data-vendor-recycle-sell="${escapeHtmlAttr(row.itemInstanceId)}" type="button" ${quantity === null ? 'disabled' : ''}>回收</button>
+          <div class="market-action-hint market-action-hint--error" data-vendor-recycle-error="${escapeHtmlAttr(row.itemInstanceId)}" ${quantity === null ? '' : 'hidden'}>
+            ${escapeHtml(errorText)}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  private openVendorRecycleModal(): void {
+    this.vendorRecycleAssetSignature = this.buildVendorRecycleAssetSignature(this.inventory);
+    detailModalHost.open({
+      ownerId: MarketPanel.VENDOR_RECYCLE_MODAL_OWNER,
+      size: 'full',
+      variantClass: 'detail-modal--market',
+      title: '回收商',
+      subtitle: '將背包物品按 NPC 商店售價折價回收',
+      renderBody: (body: HTMLElement) => {
+        replaceElementHtml(body, `
+          <div class="market-modal-content market-modal-content--wide vendor-recycle-shell">
+            <div class="market-trade-history vendor-recycle-panel">
+              <div class="market-list-toolbar ui-action-row">
+                <div class="market-list-toolbar-meta" data-vendor-recycle-meta="true">只有 NPC 商店有賣的物品可以回收，回收所得為${escapeHtml(this.getVendorRecycleCurrencyName())}。</div>
+              </div>
+              <div class="market-trade-history-list ui-surface-pane ui-surface-pane--stack ui-scroll-panel" data-vendor-recycle-list="true">
+                ${this.renderVendorRecycleRows()}
+              </div>
+            </div>
+          </div>
+        `);
+      },
+      onAfterRender: (body: HTMLElement, signal: AbortSignal) => {
+        this.bindVendorRecycleEvents(body, signal);
+      },
+    });
+  }
+
+  private getOpenVendorRecycleBody(): HTMLElement | null {
+    if (!detailModalHost.isOpenFor(MarketPanel.VENDOR_RECYCLE_MODAL_OWNER)) {
+      return null;
+    }
+    return document.getElementById('detail-modal-body');
+  }
+
+  private patchVendorRecycleModal(): boolean {
+    const body = this.getOpenVendorRecycleBody();
+    if (!body?.querySelector('.vendor-recycle-shell')) {
+      return false;
+    }
+    detailModalHost.patch({
+      ownerId: MarketPanel.VENDOR_RECYCLE_MODAL_OWNER,
+      title: '回收商',
+      subtitle: '將背包物品按 NPC 商店售價折價回收',
+    });
+    const metaNode = body.querySelector<HTMLElement>('[data-vendor-recycle-meta="true"]');
+    if (metaNode) {
+      metaNode.textContent = `只有 NPC 商店有賣的物品可以回收，回收所得為${this.getVendorRecycleCurrencyName()}。`;
+    }
+    this.patchVendorRecycleList();
+    return true;
+  }
+
+  private patchVendorRecycleList(): void {
+    const body = this.getOpenVendorRecycleBody();
+    const listRoot = body?.querySelector<HTMLElement>('[data-vendor-recycle-list="true"]');
+    if (!listRoot) {
+      return;
+    }
+    const scrollTop = listRoot.scrollTop;
+    const activeElement = document.activeElement;
+    const focusedInstanceId = activeElement instanceof HTMLInputElement && listRoot.contains(activeElement)
+      ? activeElement.dataset.vendorRecycleQuantity ?? null
+      : null;
+    const selectionStart = activeElement instanceof HTMLInputElement ? activeElement.selectionStart : null;
+    const selectionEnd = activeElement instanceof HTMLInputElement ? activeElement.selectionEnd : null;
+    replaceElementHtml(listRoot, this.renderVendorRecycleRows());
+    listRoot.scrollTop = scrollTop;
+    if (!focusedInstanceId) {
+      return;
+    }
+    const input = listRoot.querySelector<HTMLInputElement>(`[data-vendor-recycle-quantity="${focusedInstanceId}"]`);
+    if (!input) {
+      return;
+    }
+    input.focus({ preventScroll: true });
+    if (selectionStart !== null && selectionEnd !== null) {
+      input.setSelectionRange(selectionStart, selectionEnd);
+    }
+  }
+
+  private bindVendorRecycleEvents(body: HTMLElement, signal: AbortSignal): void {
+    body.addEventListener('click', (event) => this.handleVendorRecycleClick(event), { signal });
+    body.addEventListener('input', (event) => this.handleVendorRecycleInput(event), { signal });
+  }
+
+  private handleVendorRecycleClick(event: Event): void {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const quickButton = target.closest<HTMLElement>('[data-vendor-recycle-quick]');
+    if (quickButton) {
+      const itemInstanceId = quickButton.dataset.vendorRecycleQuick;
+      const nextQuantity = quickButton.dataset.vendorRecycleQuickValue;
+      if (!itemInstanceId || !nextQuantity) {
+        return;
+      }
+      this.vendorRecycleQuantityDrafts.set(itemInstanceId, nextQuantity);
+      const body = this.getOpenVendorRecycleBody();
+      const input = body?.querySelector<HTMLInputElement>(`[data-vendor-recycle-quantity="${itemInstanceId}"]`);
+      if (input) {
+        input.value = nextQuantity;
+      }
+      if (body) {
+        this.syncVendorRecycleRowState(body, itemInstanceId);
+      }
+      return;
+    }
+
+    const sellButton = target.closest<HTMLElement>('[data-vendor-recycle-sell]');
+    if (!sellButton) {
+      return;
+    }
+    const itemInstanceId = sellButton.dataset.vendorRecycleSell;
+    if (!itemInstanceId) {
+      return;
+    }
+    const row = this.findVendorRecycleRow(this.inventory, itemInstanceId);
+    if (!row) {
+      return;
+    }
+    const quantity = this.parseVendorRecycleQuantity(itemInstanceId, row.count);
+    if (quantity === null) {
+      return;
+    }
+    this.callbacks?.onVendorRecycleItem(itemInstanceId, quantity);
+  }
+
+  private handleVendorRecycleInput(event: Event): void {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement)) {
+      return;
+    }
+    const itemInstanceId = target.dataset.vendorRecycleQuantity;
+    if (!itemInstanceId) {
+      return;
+    }
+    const normalized = target.value.replaceAll(/[^\d]/g, '');
+    this.vendorRecycleQuantityDrafts.set(itemInstanceId, normalized);
+    if (target.value !== normalized) {
+      target.value = normalized;
+    }
+    const body = this.getOpenVendorRecycleBody();
+    if (body) {
+      this.syncVendorRecycleRowState(body, itemInstanceId);
+    }
+  }
+
+  private syncVendorRecycleRowState(root: ParentNode, itemInstanceId: string): void {
+    const row = this.findVendorRecycleRow(this.inventory, itemInstanceId);
+    const buttonNode = root.querySelector<HTMLButtonElement>(`[data-vendor-recycle-sell="${itemInstanceId}"]`);
+    const errorNode = root.querySelector<HTMLElement>(`[data-vendor-recycle-error="${itemInstanceId}"]`);
+    if (!row || !buttonNode || !errorNode) {
+      return;
+    }
+    const invalid = this.parseVendorRecycleQuantity(itemInstanceId, row.count) === null;
+    buttonNode.disabled = invalid;
+    errorNode.hidden = !invalid;
+    errorNode.textContent = `請輸入 1 至 ${formatDisplayInteger(row.count)} 之間的回收數量。`;
   }
 
   /** 打开市场详情弹层，并按当前标签请求需要的数据。 */

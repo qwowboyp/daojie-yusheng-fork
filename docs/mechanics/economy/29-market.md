@@ -116,6 +116,18 @@ fee = 10 + ceil(startPrice × 0.01)
 - 当前调用的 COMMIT 回包丢失时，强事务层通过带身份校验的幂等入口确认或补提后，仍按“本次成功”返回，保留本轮已经计算出的运行态。
 - 显式或晚到的历史 operation ID 重放只在当前参与玩家资产锁内撤销“这一次重复请求”的乐观变更并返回幂等结果；禁止把 operation 日志中的历史订单/资产后态回灌到当前运行态，因为该快照可能早于其后的正常交易与资产变化。
 
+## 回收商
+
+源文件: `packages/shared/src/constants/gameplay/market.ts`、`packages/server/src/runtime/market/market-runtime.service.ts`
+
+- 入口位于坊市 tab 的「回收商」独立按钮；打开后进入 DOM modal，按背包堆列出可回收物品
+- 回收基准：**NPC 商店（地图 `npcs[].shopItems`）有售的物品**，同一 itemId 多店有售时取最低售价；天道商店（merit 货币）不参与回收基准
+- 回收价公式: `unitRecyclePrice = max(1, floor(NPC 商店最低售价 × 25 / 100))`，无条件舍去小数，最低 1 灵石
+- 禁止回收：`spirit_stone`/`merit`/`merit_eternal`/`merit_month_card`（货币与权益物品）与 `type = quest_item`（任务物品）
+- 回收目录与单价由服务端在 `marketUpdate.vendorRecycleItems` 权威下发；客户端只展示，结算价以服务端为准
+- 玩家可自定义单堆回收数量，或一键卖出该堆全部；按 `itemInstanceId` 定位背包堆，与坊市寄售同构
+- 结算走坊市 durable mutation（operationType `market_vendor_recycle`）：拆堆 → 入账灵石 → 同事务提交，与 sellNow 同一资产串行区
+
 ## 天道商店
 
 源文件: `packages/shared/src/constants/gameplay/market.ts`
