@@ -55,6 +55,9 @@ server {
     }
 
     location /api/account {
+        # 頭像上傳走 base64 data URL（4MB 圖片 → 約 5.4MB JSON）；僅此路由放寬，
+        # 其餘路徑維持 nginx 預設 1MB，與 server 端分層 body limit 原則一致。
+        client_max_body_size 8m;
         set $server_upstream http://server:13001;
         proxy_pass $server_upstream;
         proxy_set_header Host $host;
