@@ -15,6 +15,7 @@ import { PlayerRuntimeService } from '../player/player-runtime.service';
 import { resolveCraftSkillExpToNextByLevel } from '../craft/craft-skill-exp.helpers';
 import { resolvePlayerCraftEffectStat } from '../craft/craft-effect-runtime.helpers';
 import { executeGatherTick } from '../craft/pipeline/strategies/gather-tick.helpers';
+import { hasAnyActiveTechniqueActivity } from '../craft/pipeline/technique-activity-queue.service';
 import { resolvePlayerEffectiveLuck } from '../player/player-special-stat.helpers';
 import { reassignItemInstanceId } from './item-instance-id.helpers';
 import { buildStructuredNotice } from './structured-notice.helpers';
@@ -705,6 +706,11 @@ export class WorldRuntimeLootContainerService {
         }
         if (hasActivePlayerGatherJob) {
             return buildContainerMutationResult('當前已有采集任務在進行中。');
+        }
+        // 技藝活動是單活躍 job + 等待隊列模型；採集啟動也必須遵守互斥，
+        // 否則會與強化等 durable 提交並行改動玩家資產，觸發重放衝突。
+        if (hasAnyActiveTechniqueActivity(player)) {
+            return buildContainerMutationResult('已有其他技藝活動進行中，請先完成或取消後再開始採集。');
         }
         const herbRows = groupContainerLootRows(resolved.state.entries);
         const nextRow = (itemKey

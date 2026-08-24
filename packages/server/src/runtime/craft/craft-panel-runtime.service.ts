@@ -713,7 +713,12 @@ export class CraftPanelRuntimeService {
             this.restoreEnhancementAssetRuntimeState(player, before);
             if (isDurableOperationReplayIdentityConflictError(error)) {
                 // 資料庫已存在同 opId 但不同 payload 的提交（記憶體回滾後重送、
-                // 資產快照已漂移）：標記讓位打斷無限衝突，等待重新水合收斂。
+                // 資產快照已漂移）：以資料庫權威版本收斂記憶體，讓強化立即恢復推進；
+                // 僅在無法判定時才讓位，避免同 opId 無限衝突。
+                const converged = await this.tryConvergeEnhancementCheckpointFromPersistence(player, expectedJob, deps);
+                if (converged) {
+                    return buildCraftTickResult();
+                }
                 this.markEnhancementCheckpointDivergent(player, expectedJob);
                 this.notifyEnhancementCheckpointDivergence(
                     typeof player?.playerId === 'string' ? player.playerId.trim() : '',
@@ -938,6 +943,104 @@ export class CraftPanelRuntimeService {
         }
         return true;
     }
+    /**
+     * 重放身分衝突後以資料庫權威 active job row 收斂記憶體：
+     * - 同 jobRunId 且資料庫版本領先 → 用資料庫 row 重建 enhancementJob，強化繼續推進；
+     * - 資料庫是其他 job 或已無 job → 記憶體視為過期殭屍，清空槽位讓隊列恢復；
+     * - 無法判定（讀取失敗、版本不領先）→ 返回 false，由讓位機制兜底。
+     */
+    async tryConvergeEnhancementCheckpointFromPersistence(player, expectedJob, deps): Promise<boolean> {
+        const playerId = typeof player?.playerId === 'string' ? player.playerId.trim() : '';
+        if (!playerId || !player || typeof player !== 'object') {
+            return false;
+        }
+        if (
+            !this.durableOperationService
+            || typeof this.durableOperationService.readPersistedActiveJobRow !== 'function'
+        ) {
+            return false;
+        }
+        let row: Awaited<ReturnType<typeof this.durableOperationService.readPersistedActiveJobRow>> = null;
+        try {
+            row = await this.durableOperationService.readPersistedActiveJobRow(playerId);
+        } catch (error) {
+            this.logger.warn(
+                `強化檢查點收斂讀取資料庫失敗，改走讓位：playerId=${playerId} error=${error instanceof Error ? error.message : String(error)}`,
+            );
+            return false;
+        }
+        const expectedJobRunId = typeof expectedJob?.jobRunId === 'string' ? expectedJob.jobRunId.trim() : '';
+        const expectedJobVersion = Math.max(1, Math.trunc(Number(expectedJob?.jobVersion ?? 1)) || 1);
+        if (!row) {
+            // 資料庫已無活躍 job（例如已由其他路徑完成或取消）：記憶體是殭屍，直接清槽。
+            this.resetEnhancementJobFromPersistence(player, null, deps, playerId);
+            return true;
+        }
+        if (row.jobRunId !== expectedJobRunId || (row.jobType && row.jobType !== 'enhancement')) {
+            // 資料庫是另一個 job：以資料庫為準丟棄記憶體殭屍，隊列與後續水合接管。
+            this.resetEnhancementJobFromPersistence(player, null, deps, playerId);
+            return true;
+        }
+        if (row.jobVersion > expectedJobVersion) {
+            this.resetEnhancementJobFromPersistence(player, row, deps, playerId);
+            return true;
+        }
+        return false;
+    }
+    /** 用資料庫 row（或 null）重置記憶體 enhancementJob 並標髒等待統一 flush。 */
+    resetEnhancementJobFromPersistence(player, row, deps, playerId: string): void {
+        if (row) {
+            const detail = row.detail && typeof row.detail === 'object' ? row.detail : {};
+            player.enhancementJob = {
+                ...(player.enhancementJob ?? {}),
+                ...detail,
+                jobRunId: row.jobRunId,
+                jobType: 'enhancement',
+                jobVersion: row.jobVersion,
+                remainingTicks: row.remainingTicks,
+                workRemainingTicks: row.remainingTicks,
+                ...(row.remainingTicks > 0 ? { status: 'running' } : {}),
+            };
+            this.logger.warn(
+                `強化檢查點已按資料庫版本收斂，繼續推進：playerId=${playerId} jobRunId=${row.jobRunId} jobVersion=${row.jobVersion}`,
+            );
+            try {
+                deps?.queuePlayerNotice?.(
+                    playerId,
+                    '強化進度已與伺服器同步，將繼續自動強化。',
+                    'warn',
+                    undefined,
+                    undefined,
+                    { key: 'notice.craft.enhancement.checkpoint-resynced' },
+                );
+            } catch (noticeError) {
+                this.logger.warn(
+                    `強化檢查點收斂通知入隊失敗 playerId=${playerId} error=${noticeError instanceof Error ? noticeError.message : String(noticeError)}`,
+                );
+            }
+        } else {
+            player.enhancementJob = null;
+            this.logger.warn(
+                `強化檢查點衝突且資料庫已無同 job，已清空記憶體殭屍：playerId=${playerId}`,
+            );
+            try {
+                deps?.queuePlayerNotice?.(
+                    playerId,
+                    '強化狀態已按伺服器紀錄重置，可重新開始強化。',
+                    'warn',
+                    undefined,
+                    undefined,
+                    { key: 'notice.craft.enhancement.checkpoint-reset' },
+                );
+            } catch (noticeError) {
+                this.logger.warn(
+                    `強化檢查點重置通知入隊失敗 playerId=${playerId} error=${noticeError instanceof Error ? noticeError.message : String(noticeError)}`,
+                );
+            }
+        }
+        this.playerRuntimeService.markPersistenceDirtyDomains?.(player, ['active_job']);
+        this.playerRuntimeService.bumpPersistentRevision?.(player);
+    }
     /** 記錄強化 durable 檢查點已與資料庫分歧；後續 tick 讓位，避免同 opId 無限重放衝突。 */
     markEnhancementCheckpointDivergent(player, expectedJob): boolean {
         const jobRunId = typeof expectedJob?.jobRunId === 'string' ? expectedJob.jobRunId.trim() : '';
@@ -976,7 +1079,7 @@ export class CraftPanelRuntimeService {
         try {
             deps?.queuePlayerNotice?.(
                 playerId,
-                '強化進度與伺服器紀錄不同步，已暫停自動強化，重新登入後將自動恢復。',
+                '強化狀態同步異常，已暫停自動強化，請稍後重新操作強化。',
                 'warn',
                 undefined,
                 undefined,

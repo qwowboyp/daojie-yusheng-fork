@@ -18,6 +18,7 @@ import {
   buildContainerSourceId,
   groupContainerLootRows,
 } from '../../../world/world-runtime.normalization.helpers';
+import { hasOtherActiveTechniqueActivity } from '../technique-activity-queue.service';
 
 const HERB_GATHER_TIME_RATE = 0.5;
 const GATHER_SPEED_PER_LEVEL = 0.02;
@@ -162,7 +163,14 @@ export async function executeGatherTick(
   }
 
   const nextRow = groupContainerLootRows(state.entries)[0] ?? null;
-  if (nextRow) {
+  // 單活躍 job 互斥：本輪採集結束後，若其他技藝正在活躍或已有排隊項等待啟動，
+  // 不再自動重建採集 job，把活躍位讓給隊列（如等待中的強化），避免並行改動資產。
+  const pendingQueueLength = Array.isArray(player.techniqueActivityQueue)
+    ? player.techniqueActivityQueue.length
+    : 0;
+  const shouldYieldActiveSlot = hasOtherActiveTechniqueActivity(player, 'gatherJob')
+    || pendingQueueLength > 0;
+  if (nextRow && !shouldYieldActiveSlot) {
     const totalTicks = computeEffectiveHerbGatherTicks(player, container, nextRow);
     const nextJobRunId = createGatherJobRunId();
     state.activeSearch = {

@@ -196,7 +196,19 @@ function queueMutationResult(): CraftMutationResult {
   };
 }
 
-function hasAnyActiveTechniqueActivity(player: any): boolean {
+export function hasAnyActiveTechniqueActivity(player: any): boolean {
+  return hasActiveTechniqueJobSlots(player, null);
+}
+
+/**
+ * 判斷是否有「指定槽位以外」的活躍技藝 job。
+ * 採集自動重建等熱路徑用它避免搶佔其他技藝的活躍位或餓死等待隊列。
+ */
+export function hasOtherActiveTechniqueActivity(player: any, excludedJobSlot: string | null): boolean {
+  return hasActiveTechniqueJobSlots(player, excludedJobSlot);
+}
+
+function hasActiveTechniqueJobSlots(player: any, excludedJobSlot: string | null): boolean {
   return [
     player?.alchemyJob,
     player?.forgingJob,
@@ -206,8 +218,26 @@ function hasAnyActiveTechniqueActivity(player: any): boolean {
     player?.buildingJob,
     player?.miningJob,
     player?.formationJob,
-  ].some((job) => Boolean(job) && Number(job?.remainingTicks) > 0);
+  ].some((job, index) => {
+    const jobSlot = TECHNIQUE_ACTIVITY_JOB_SLOTS[index] ?? '';
+    if (excludedJobSlot && jobSlot === excludedJobSlot) {
+      return false;
+    }
+    return Boolean(job) && Number(job?.remainingTicks) > 0;
+  });
 }
+
+/** 技藝 job 運行態槽位名，與 hasActiveTechniqueJobSlots 的檢查順序一一對應。 */
+const TECHNIQUE_ACTIVITY_JOB_SLOTS = [
+  'alchemyJob',
+  'forgingJob',
+  'enhancementJob',
+  'transmissionJob',
+  'gatherJob',
+  'buildingJob',
+  'miningJob',
+  'formationJob',
+] as const;
 
 function markQueueDirty(player: any, ctx: PipelineContext | null): void {
   if (player?.dirtyDomains && typeof player.dirtyDomains.add === 'function') {

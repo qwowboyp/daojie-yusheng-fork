@@ -4366,6 +4366,50 @@ export class DurableOperationService implements OnModuleInit, OnModuleDestroy {
     return (await this.getOperationStatus(operationId)) === 'committed';
   }
 
+  /**
+   * 只讀查詢玩家當前持久化的 active job row（player_active_job 單行表）。
+   * 供執行端在 durable 重放身分衝突後判定資料庫版本是否領先記憶體，做收斂決策；
+   * 不加鎖、不寫入，可安全在玩家資產串行區內呼叫。
+   */
+  async readPersistedActiveJobRow(playerId: string): Promise<{
+    jobRunId: string;
+    jobType: string;
+    jobVersion: number;
+    remainingTicks: number;
+    detail: Record<string, unknown> | null;
+  } | null> {
+    if (!this.pool || !this.enabled) {
+      return null;
+    }
+    const normalizedPlayerId = normalizeRequiredString(playerId);
+    if (!normalizedPlayerId) {
+      return null;
+    }
+    const result = await this.pool.query<{
+      job_run_id?: unknown;
+      job_type?: unknown;
+      job_version?: string | number | null;
+      remaining_ticks?: string | number | null;
+      detail_jsonb?: unknown;
+    }>(
+      `SELECT job_run_id, job_type, job_version, remaining_ticks, detail_jsonb
+       FROM ${PLAYER_ACTIVE_JOB_TABLE} WHERE player_id = $1 LIMIT 1`,
+      [normalizedPlayerId],
+    );
+    const row = result.rows[0] ?? null;
+    const jobRunId = normalizeRequiredString(row?.job_run_id);
+    if (!jobRunId) {
+      return null;
+    }
+    return {
+      jobRunId,
+      jobType: normalizeRequiredString(row?.job_type),
+      jobVersion: Math.max(1, Math.trunc(Number(row?.job_version ?? 1)) || 1),
+      remainingTicks: Math.max(0, Math.trunc(Number(row?.remaining_ticks ?? 0)) || 0),
+      detail: normalizeDurableJsonObject(row?.detail_jsonb),
+    };
+  }
+
   private async getCompactedOperationStatus(
     operationKey: string,
     operationId: string,
