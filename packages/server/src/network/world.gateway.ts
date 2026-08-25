@@ -378,6 +378,10 @@ class WorldGateway implements WorldGatewayHelperContext {
     handleRequestNearbyDaoistCandidates(@ConnectedSocket() client: Socket, @MessageBody() payload: any) {
         return this.gatewayPlayerControlsHelper.handleRequestNearbyDaoistCandidates(client, payload);
     }
+    @SubscribeMessage(C2S.RequestOnlineDaoists)
+    handleRequestOnlineDaoists(@ConnectedSocket() client: Socket, @MessageBody() payload: any) {
+        return this.gatewayPlayerControlsHelper.handleRequestOnlineDaoists(client, payload);
+    }
     @SubscribeMessage(C2S.SendDaoistRequest)
     handleSendDaoistRequest(@ConnectedSocket() client: Socket, @MessageBody() payload: any) {
         return this.gatewayPlayerControlsHelper.handleSendDaoistRequest(client, payload);

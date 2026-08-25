@@ -37,6 +37,7 @@ interface WorldGatewayPlayerControlsDeps {
   worldSessionService: {
     getSocketByPlayerId(playerId: string): any;
     getBinding(playerId: string): { connected?: boolean; socketId?: string | null } | null;
+    listConnectedBindings(): Array<{ playerId: string; sessionId?: string; connected?: boolean }>;
   };
   worldRuntimeService: {
     buildQuestListView(playerId: string, input?: unknown): unknown;
@@ -397,6 +398,41 @@ export class WorldGatewayPlayerControlsHelper {
       }
     } catch (error) {
       this.gateway.worldClientEventService.emitGatewayError(client, 'REQUEST_DAOIST_CANDIDATES_FAILED', error);
+    }
+  }
+
+  async handleRequestOnlineDaoists(
+    client: Socket,
+    payload: ClientToServerEventPayload<typeof C2S.RequestOnlineDaoists>,
+  ): Promise<void> {
+    const playerId = this.gateway.gatewayGuardHelper.requireActivePlayerId(client);
+    if (!playerId) {
+      return;
+    }
+    if (!this.allowChatRequest(client, 'social-online', 2, 10_000, 'SOCIAL_ONLINE_RATE_LIMITED', '線上修士刷新過於頻繁')) {
+      return;
+    }
+    try {
+      const connectedPlayerIds = this.gateway.worldSessionService.listConnectedBindings()
+        .filter((binding) => {
+          const sessionId = typeof binding.sessionId === 'string' ? binding.sessionId : '';
+          return binding.connected !== false && !sessionId.startsWith('offline:');
+        })
+        .map((binding) => binding.playerId);
+      const list = await this.gateway.socialRuntimeService.buildOnlineCandidates(
+        playerId,
+        connectedPlayerIds,
+        this.gateway.worldRuntimeService,
+        {
+          ...(typeof payload?.cursor === 'string' ? { cursor: payload.cursor } : {}),
+          ...(Number.isFinite(Number(payload?.limit)) ? { limit: Number(payload.limit) } : {}),
+        },
+      );
+      if (this.isCurrentPlayerSocket(client, playerId)) {
+        client.emit(S2C.OnlineDaoists, list);
+      }
+    } catch (error) {
+      this.gateway.worldClientEventService.emitGatewayError(client, 'REQUEST_ONLINE_DAOISTS_FAILED', error);
     }
   }
 
