@@ -93,13 +93,18 @@ function buildPendingCommandNotice(command, message) {
         || command?.kind === 'reorderTechniqueActivityQueue') {
         return buildPendingTechniqueNotice(message);
     }
-    if (command?.kind === 'useItem'
-        && message === '當前位於安全區、出生點、傳送點或 NPC 附近，無法使用地塊資源道具。') {
-        return buildStructuredNotice(
-            'warn',
-            'notice.item.tile-resource-protected-area',
-            '當前位於受保護區域，無法使用地塊資源道具。',
-        );
+    if (command?.kind === 'useItem') {
+        const useItemNotice = buildPendingUseItemNotice(message);
+        if (useItemNotice) {
+            return useItemNotice;
+        }
+        if (message === '當前位於安全區、出生點、傳送點或 NPC 附近，無法使用地塊資源道具。') {
+            return buildStructuredNotice(
+                'warn',
+                'notice.item.tile-resource-protected-area',
+                '當前位於受保護區域，無法使用地塊資源道具。',
+            );
+        }
     }
     return buildStructuredNotice(
         'warn',
@@ -177,6 +182,44 @@ function buildPendingTechniqueNotice(message) {
     return buildStructuredNotice('warn', 'notice.command.failed', '行動未能完成，請稍後重試。');
 }
 
+function buildPendingUseItemNotice(message) {
+    if (typeof message !== 'string' || !message.trim()) {
+        return null;
+    }
+    const trimmed = message.trim();
+    if (trimmed === '靈根幼苗品階無效') {
+        return buildStructuredNotice('warn', 'notice.heaven-gate.seed-tier-invalid', trimmed);
+    }
+    if (trimmed === '至少需在叩仙門境界使用靈根幼苗') {
+        return buildStructuredNotice('warn', 'notice.heaven-gate.seed-realm-invalid', trimmed);
+    }
+    if (trimmed === '當前已入天門，無法再改動靈根') {
+        return buildStructuredNotice('warn', 'notice.heaven-gate.already-entered-no-modify', trimmed);
+    }
+    if (trimmed.startsWith('底蘊不足，使用')) {
+        // 例如：底蘊不足，使用天品靈根幼苗需要 2000 點底蘊
+        const costMatch = trimmed.match(/需要\s*(\d+)\s*點底蘊/);
+        const tierName = trimmed.includes('神品') ? '神品' : trimmed.includes('天品') ? '天品' : '';
+        const cost = costMatch ? Number(costMatch[1]) : undefined;
+        return buildStructuredNotice('warn', 'notice.heaven-gate.seed-foundation-insufficient', trimmed, {
+            vars: {
+                ...(tierName ? { tierName } : {}),
+                ...(Number.isFinite(cost) ? { cost } : {}),
+            },
+        });
+    }
+    if (trimmed.startsWith('碎靈丹') || trimmed === '當前尚未叩開仙門，暫時不能使用碎靈丹' || trimmed === '當前至少需要叩仙門境界，才能使用碎靈丹') {
+        return buildStructuredNotice('warn', 'notice.heaven-gate.shatter-not-unlocked', trimmed);
+    }
+    if (trimmed.includes('冷卻中，還需')) {
+        return buildStructuredNotice('warn', 'notice.command.skill-cooldown', trimmed);
+    }
+    if (trimmed.endsWith('沒有可用效果') || trimmed === '該物品不支持批量使用' || trimmed === '物品數量不足' || trimmed.startsWith('背包物品不存在')) {
+        return buildStructuredNotice('warn', 'notice.command.failed', trimmed);
+    }
+    return null;
+}
+
 function isTerminalAutoCombatTargetFailure(message) {
     return message === '該目標無法被攻擊'
         || message === '沒有可命中的目標'
@@ -242,8 +285,22 @@ function isExpectedInventoryReject(message) {
 
 /** 地块资源道具的位置约束拒绝：确定性业务规则，非系统异常。 */
 function isExpectedUseItemReject(message) {
+    if (typeof message === 'string' && message.trim()) {
+        const trimmed = message.trim();
+        if (trimmed === '靈根幼苗品階無效'
+            || trimmed === '至少需在叩仙門境界使用靈根幼苗'
+            || trimmed === '當前已入天門，無法再改動靈根'
+            || trimmed.startsWith('底蘊不足，使用')
+            || trimmed.includes('冷卻中，還需')
+            || trimmed.endsWith('沒有可用效果')
+            || trimmed === '該物品不支持批量使用'
+            || trimmed === '物品數量不足') {
+            return true;
+        }
+    }
     return message === '當前位於安全區、出生點、傳送點或 NPC 附近，無法使用地塊資源道具。'
-        || resolveTechniqueAggregationOverlapMessage(message) !== null;
+        || resolveTechniqueAggregationOverlapMessage(message) !== null
+        || isMissingInventoryItemFailure(message);
 }
 
 function resolveTechniqueAggregationOverlapMessage(message) {
