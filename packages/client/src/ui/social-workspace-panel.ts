@@ -1,7 +1,7 @@
 /** 道友子功能固定窗口：复用坊市/拍卖行的 detail modal 骨架。 */
 import { WorkspaceModalPanel } from './workspace-modal-panel';
 
-export type SocialWorkspacePanelKind = 'relations' | 'requests' | 'nearby' | 'messages';
+export type SocialWorkspacePanelKind = 'relations' | 'requests' | 'nearby' | 'online' | 'messages';
 
 type SocialWorkspacePanelMeta = {
   title: string;
@@ -12,6 +12,7 @@ const PANEL_META: Record<SocialWorkspacePanelKind, SocialWorkspacePanelMeta> = {
   relations: { title: '道友名錄', subtitle: '查看道友狀態與發起互動' },
   requests: { title: '道友申請', subtitle: '處理收到與發出的道友申請' },
   nearby: { title: '附近修士', subtitle: '查看當前附近可互動的修士' },
+  online: { title: '線上修士', subtitle: '查看當前在線的修士' },
   messages: { title: '私聊', subtitle: '與道友進行一對一傳音' },
 };
 

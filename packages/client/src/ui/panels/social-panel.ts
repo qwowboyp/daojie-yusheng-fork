@@ -7,6 +7,8 @@ import type {
   DaoistDirectMessageView,
   DaoistRelationLevel,
   ItemStack,
+  OnlineDaoistCandidateView,
+  OnlineDaoistListView,
   SocialPanelView,
   SyncedItemStack,
   TreasureVaultDetailView,
@@ -30,6 +32,7 @@ import { SocialWorkspacePanel, type SocialWorkspacePanelKind } from '../social-w
 type SocialPanelCallbacks = {
   onRefresh(): void;
   onScanNearby(): void;
+  onScanOnline(): void;
   onSendRequest(targetPlayerId: string): void;
   onRespondRequest(requestId: string, accept: boolean): void;
   onUpdateRelationLevel(targetPlayerId: string, level: DaoistRelationLevel): void;
@@ -107,6 +110,7 @@ const SOCIAL_PANEL_TABS: ReadonlyArray<{ id: SocialPanelTab; label: string; desc
   { id: 'relations', label: '道友名錄', description: '查看關係、調整親疏與發起私聊', glyph: '友' },
   { id: 'requests', label: '道友申請', description: '處理收到與發出的結交申請', glyph: '帖' },
   { id: 'nearby', label: '附近修士', description: '掃描身邊修士併發起結交或組隊', glyph: '近' },
+  { id: 'online', label: '線上修士', description: '查看當前在線修士並邀請組隊', glyph: '線' },
   { id: 'messages', label: '私聊', description: '打開與道友的往來消息', glyph: '信' },
 ];
 
@@ -135,6 +139,8 @@ export class SocialPanel {
   private partyAvailable = false;
   private readonly floatingMenus: Record<SocialPanelTab, SocialWorkspacePanel>;
   private view: SocialPanelView = { relations: [], incomingRequests: [], outgoingRequests: [], nearbyCandidates: [] };
+  private onlineCandidates: OnlineDaoistCandidateView[] = [];
+  private onlineTotal = 0;
   private activeTab: SocialPanelTab = 'relations';
   private selectedPlayerId: string | null = null;
   private messagesByPlayerId = new Map<string, DaoistDirectMessageView[]>();
@@ -190,6 +196,17 @@ export class SocialPanel {
   setPartyAvailable(available: boolean): void {
     this.partyAvailable = available;
     this.patchTabState();
+  }
+
+  updateOnline(view: OnlineDaoistListView): void {
+    this.onlineCandidates = Array.isArray(view?.players) ? view.players : [];
+    this.onlineTotal = Math.max(this.onlineCandidates.length, Math.trunc(Number(view?.total) || 0));
+    this.patchTabState();
+    if (this.isMenuOpen('online')) {
+      this.captureMenuScroll('online');
+      this.replaceTabContent('online', null);
+      this.restoreMenuScroll('online');
+    }
   }
 
   update(view: SocialPanelView): void {
@@ -295,6 +312,8 @@ export class SocialPanel {
 
   clear(): void {
     this.view = { relations: [], incomingRequests: [], outgoingRequests: [], nearbyCandidates: [] };
+    this.onlineCandidates = [];
+    this.onlineTotal = 0;
     this.activeTab = 'relations';
     this.selectedPlayerId = null;
     this.messagesByPlayerId.clear();
@@ -390,6 +409,7 @@ export class SocialPanel {
       }
       if (action === 'refresh') this.callbacks.onRefresh();
       if (action === 'scan') this.callbacks.onScanNearby();
+      if (action === 'scan-online') this.callbacks.onScanOnline();
       if (action === 'request' && playerId) this.callbacks.onSendRequest(playerId);
       if (action === 'accept' && requestId) this.callbacks.onRespondRequest(requestId, true);
       if (action === 'reject' && requestId) this.callbacks.onRespondRequest(requestId, false);
@@ -496,6 +516,18 @@ export class SocialPanel {
         </section>
       `;
     }
+    if (tab === 'online') {
+      return `
+        <section class="social-panel-section social-panel-tab-pane social-panel-section--online" role="region" aria-label="線上修士" data-social-active-tab="online">
+          ${this.renderSectionHeader(
+            '線上修士',
+            this.onlineTotal,
+            '<button class="small-btn" type="button" data-social-action="scan-online">刷新線上</button>',
+          )}
+          ${this.renderOnline()}
+        </section>
+      `;
+    }
     if (tab === 'messages') {
       return this.renderConversationPanel(selected);
     }
@@ -571,6 +603,40 @@ export class SocialPanel {
             </div>
           </div>
         `).join('')}
+      </div>
+    `;
+  }
+
+  private renderOnline(): string {
+    if (this.onlineCandidates.length === 0) {
+      return `<div class="empty-hint compact">目前沒有其他線上修士</div>`;
+    }
+    return `
+      <div class="ui-list">
+        ${this.onlineCandidates.map((entry) => {
+          const location = entry.instanceName
+            ? resolveSocialInstanceName(entry.instanceId, entry.instanceName)
+            : '';
+          const hasCoord = Number.isFinite(entry.x) && Number.isFinite(entry.y);
+          const coord = hasCoord ? `(${Math.trunc(Number(entry.x))}, ${Math.trunc(Number(entry.y))})` : '';
+          const relation = entry.relationLevel
+            ? RELATION_LABEL[entry.relationLevel]
+            : entry.pendingRequest
+              ? '已有申請'
+              : '';
+          const subtitle = ['線上', location, coord, relation].filter(Boolean).join(' · ');
+          return `
+          <div class="ui-list-row">
+            <div class="ui-list-main">
+              <div class="ui-list-title">${escapeHtml(resolveSocialPlayerName(entry.playerId, entry.name))}</div>
+              <div class="ui-list-subtitle">${escapeHtml(subtitle)}</div>
+            </div>
+            <div class="social-row-actions">
+              <button class="small-btn ghost" type="button" data-social-action="party_invite" data-player-id="${escapeHtml(entry.playerId)}">邀請組隊</button>
+            </div>
+          </div>
+          `;
+        }).join('')}
       </div>
     `;
   }
@@ -760,6 +826,7 @@ export class SocialPanel {
     this.rememberMenuOpener(tab, trigger);
     this.floatingMenus[tab].open();
     const selected = this.resolveSelectedRelation();
+    if (tab === 'online') this.callbacks?.onScanOnline();
     if (tab === 'messages' && selected) this.callbacks?.onOpenConversation(selected.playerId);
     this.replaceTabContent(tab, inputSnapshot);
     this.restoreMenuScroll(tab);
@@ -974,6 +1041,7 @@ export class SocialPanel {
     if (tab === 'relations') return this.view.relations.length;
     if (tab === 'requests') return this.view.incomingRequests.length + this.view.outgoingRequests.length;
     if (tab === 'nearby') return this.view.nearbyCandidates.length;
+    if (tab === 'online') return this.onlineTotal;
     return null;
   }
 
