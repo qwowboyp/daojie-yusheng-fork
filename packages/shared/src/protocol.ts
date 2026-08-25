@@ -55,6 +55,7 @@ import type {
   C2S_RequestChatHistoryView,
   C2S_RequestDaoistDirectMessageHistoryView,
   C2S_RequestNearbyDaoistCandidatesView,
+  C2S_RequestOnlineDaoistsView,
   C2S_RequestSocialPanelView,
   C2S_RequestTreasureVaultView,
   C2S_RespondDaoistRequestView,
@@ -67,6 +68,7 @@ import type {
   DaoistDirectMessageView,
   DaoistDirectMessageHistoryView,
   ServerChatMessageView,
+  OnlineDaoistListView,
   SocialOperationResultView,
   SocialPanelView,
   S2C_MailDetail,
@@ -224,6 +226,7 @@ export const C2S = {
   RequestChatHistory: 'n:c:requestChatHistory',
   RequestSocialPanel: 'n:c:requestSocialPanel',
   RequestNearbyDaoistCandidates: 'n:c:requestNearbyDaoistCandidates',
+  RequestOnlineDaoists: 'n:c:requestOnlineDaoists',
   SendDaoistRequest: 'n:c:sendDaoistRequest',
   RespondDaoistRequest: 'n:c:respondDaoistRequest',
   UpdateDaoistRelationLevel: 'n:c:updateDaoistRelationLevel',
@@ -295,6 +298,7 @@ export const S2C = {
   ChatMessage: 'n:s:chatMessage',
   ChatHistory: 'n:s:chatHistory',
   SocialPanel: 'n:s:socialPanel',
+  OnlineDaoists: 'n:s:onlineDaoists',
   SocialOperationResult: 'n:s:socialOperationResult',
   DaoistDirectMessage: 'n:s:daoistDirectMessage',
   DaoistDirectMessageHistory: 'n:s:daoistDirectMessageHistory',
@@ -473,6 +477,7 @@ export interface C2S_PayloadMap extends Record<C2S_EventName, unknown> {
   [C2S.RequestChatHistory]: C2S_RequestChatHistoryView;
   [C2S.RequestSocialPanel]: C2S_RequestSocialPanelView;
   [C2S.RequestNearbyDaoistCandidates]: C2S_RequestNearbyDaoistCandidatesView;
+  [C2S.RequestOnlineDaoists]: C2S_RequestOnlineDaoistsView;
   [C2S.SendDaoistRequest]: C2S_SendDaoistRequestView;
   [C2S.RespondDaoistRequest]: C2S_RespondDaoistRequestView;
   [C2S.UpdateDaoistRelationLevel]: C2S_UpdateDaoistRelationLevelView;
@@ -544,6 +549,7 @@ export interface S2C_PayloadMap extends Record<S2C_EventName, unknown> {
   [S2C.ChatMessage]: ServerChatMessageView;
   [S2C.ChatHistory]: ChatHistorySyncView;
   [S2C.SocialPanel]: SocialPanelView;
+  [S2C.OnlineDaoists]: OnlineDaoistListView;
   [S2C.SocialOperationResult]: SocialOperationResultView;
   [S2C.DaoistDirectMessage]: DaoistDirectMessageView;
   [S2C.DaoistDirectMessageHistory]: DaoistDirectMessageHistoryView;

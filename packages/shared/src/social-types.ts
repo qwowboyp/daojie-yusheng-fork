@@ -45,6 +45,24 @@ export interface NearbyDaoistCandidateView {
   pendingRequest?: 'incoming' | 'outgoing';
 }
 
+export interface OnlineDaoistCandidateView {
+  playerId: string;
+  name: string;
+  instanceId?: string;
+  /** 玩家可見的位置名稱；instanceId 僅用於內部定位，不直接展示。 */
+  instanceName?: string;
+  x?: number;
+  y?: number;
+  relationLevel?: DaoistRelationLevel;
+  pendingRequest?: 'incoming' | 'outgoing';
+}
+
+export interface OnlineDaoistListView {
+  players: OnlineDaoistCandidateView[];
+  total: number;
+  nextCursor?: string;
+}
+
 export interface SocialPanelView {
   relations: DaoistRelationView[];
   incomingRequests: DaoistRequestView[];
@@ -154,6 +172,11 @@ export interface TreasureVaultOperationResultView {
 export interface C2S_RequestSocialPanelView {}
 
 export interface C2S_RequestNearbyDaoistCandidatesView {}
+
+export interface C2S_RequestOnlineDaoistsView {
+  cursor?: string;
+  limit?: number;
+}
 
 export interface C2S_SendDaoistRequestView {
   targetPlayerId: string;
