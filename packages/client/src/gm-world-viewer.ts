@@ -27,7 +27,7 @@ import {
 import { getEntityKindLabel, getInteractableKindLabel, getTileTypeLabel } from './domain-labels';
 import { TextRenderer } from './renderer/text';
 import { Camera } from './renderer/camera';
-import { getCellSize, setZoom, updateDisplayMetrics } from './display';
+import { getCellSize, getZoom, MAX_ZOOM, MIN_ZOOM, setZoom, updateDisplayMetrics } from './display';
 import { GM_WORLD_VIEW_MAX } from './constants/world/gm-world-viewer';
 import { GM_API_BASE_PATH } from './constants/api';
 
@@ -834,9 +834,12 @@ export class GmWorldViewer {
 
   private handleWheel = (e: WheelEvent): void => {
     e.preventDefault();
-    const current = getCellSize() / 32;
+    // 修复：cellSize 会被 updateDisplayMetrics 的视野适配钳制（fitCellSize）压低，
+    // 用 cellSize/32 反推缩放会低估当前倍率，导致滚轮放大时不增反减、甚至卡死在下限。
+    // 必须读取 display 模块的权威缩放值 getZoom()，并用共享上下限常量钳位。
+    const current = getZoom();
     const delta = e.deltaY < 0 ? 0.25 : -0.25;
-    const next = Math.max(0.5, Math.min(4, current + delta));
+    const next = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, current + delta));
     setZoom(next);
     updateDisplayMetrics(this.canvas.width, this.canvas.height, GM_WORLD_VIEW_MAX);
     this.snapCamera();
