@@ -923,7 +923,7 @@ export class PlayerProgressionService {
         if (!this.hasReachedHeavenGateRealm(realm.realmLv)) {
             return {
                 changed: false,
-                notices: [{ text: '至少需在叩仙門境界使用靈根幼苗', kind: 'warn', structured: { key: 'notice.heaven-gate.seed-realm-invalid' } }],
+                notices: [{ text: '需在叩仙門境界且尚未入天門時方可使用靈根幼苗', kind: 'warn', structured: { key: 'notice.heaven-gate.seed-realm-invalid' } }],
                 dirtyDomains: [],
             };
         }

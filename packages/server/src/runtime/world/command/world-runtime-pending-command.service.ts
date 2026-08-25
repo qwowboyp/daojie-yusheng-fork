@@ -190,7 +190,9 @@ function buildPendingUseItemNotice(message) {
     if (trimmed === '靈根幼苗品階無效') {
         return buildStructuredNotice('warn', 'notice.heaven-gate.seed-tier-invalid', trimmed);
     }
-    if (trimmed === '至少需在叩仙門境界使用靈根幼苗') {
+    if (trimmed === '需在叩仙門境界且尚未入天門時方可使用靈根幼苗'
+        || trimmed === '需在叩仙門境界且尚未入天門時使用靈根幼苗'
+        || trimmed === '至少需在叩仙門境界使用靈根幼苗') {
         return buildStructuredNotice('warn', 'notice.heaven-gate.seed-realm-invalid', trimmed);
     }
     if (trimmed === '當前已入天門，無法再改動靈根') {
@@ -288,6 +290,8 @@ function isExpectedUseItemReject(message) {
     if (typeof message === 'string' && message.trim()) {
         const trimmed = message.trim();
         if (trimmed === '靈根幼苗品階無效'
+            || trimmed === '需在叩仙門境界且尚未入天門時方可使用靈根幼苗'
+            || trimmed === '需在叩仙門境界且尚未入天門時使用靈根幼苗'
             || trimmed === '至少需在叩仙門境界使用靈根幼苗'
             || trimmed === '當前已入天門，無法再改動靈根'
             || trimmed.startsWith('底蘊不足，使用')
