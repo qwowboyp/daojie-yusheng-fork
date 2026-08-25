@@ -14,6 +14,8 @@ import type {
   DaoistRelationView,
   DaoistRequestView,
   NearbyDaoistCandidateView,
+  OnlineDaoistCandidateView,
+  OnlineDaoistListView,
   SocialPanelView,
 } from '@mud/shared';
 import { resolvePlayerFacingContentName } from '@mud/shared';
@@ -29,6 +31,13 @@ const DAOIST_MESSAGE_TABLE = 'player_daoist_message';
 const DAOIST_MESSAGE_READ_TABLE = 'player_daoist_message_read';
 const DAOIST_REQUEST_EXPIRE_MS = 7 * 24 * 60 * 60 * 1000;
 const DAOIST_NEARBY_RADIUS = 8;
+/** 線上修士單次預設條數；與硬頂相同，自用服一次列完。 */
+const ONLINE_DAOIST_DEFAULT_LIMIT = 200;
+/** 線上修士單次上限。 */
+const ONLINE_DAOIST_MAX_LIMIT = 200;
+/** 線上修士總顯示硬頂，避免 5000 併發一次吐完。 */
+const ONLINE_DAOIST_HARD_CAP = 200;
+const OFFLINE_GAIN_SESSION_PREFIX = 'offline:';
 const DAOIST_MESSAGE_HISTORY_LIMIT = 100;
 const DAOIST_MESSAGE_PRUNE_DELAY_MS = 1_000;
 const DAOIST_MESSAGE_PRUNE_BATCH_SIZE = 100;
@@ -176,6 +185,66 @@ export class SocialRuntimeService implements OnModuleDestroy {
       });
     }
     return result.sort((left, right) => left.distance - right.distance || left.name.localeCompare(right.name));
+  }
+
+  async buildOnlineCandidates(
+    playerId: string,
+    connectedPlayerIds: readonly string[],
+    runtime?: any,
+    options?: { cursor?: string; limit?: number },
+  ): Promise<OnlineDaoistListView> {
+    const normalizedPlayerId = normalizePlayerId(playerId);
+    if (!normalizedPlayerId) {
+      return { players: [], total: 0 };
+    }
+    const offset = parseOnlineDaoistCursor(options?.cursor);
+    const requestedLimit = Math.trunc(Number(options?.limit));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit > 0
+      ? Math.min(requestedLimit, ONLINE_DAOIST_MAX_LIMIT)
+      : ONLINE_DAOIST_DEFAULT_LIMIT;
+    const relations = this.pool && this.enabled
+      ? await this.loadRelationLevels(normalizedPlayerId)
+      : new Map<string, DaoistRelationLevel>();
+    const pending = this.pool && this.enabled
+      ? await this.loadPendingRequestDirections(normalizedPlayerId)
+      : new Map<string, 'incoming' | 'outgoing'>();
+    const result: OnlineDaoistCandidateView[] = [];
+    const seen = new Set<string>();
+    for (const rawId of connectedPlayerIds) {
+      const targetPlayerId = normalizePlayerId(rawId);
+      if (!targetPlayerId || targetPlayerId === normalizedPlayerId || seen.has(targetPlayerId)) {
+        continue;
+      }
+      seen.add(targetPlayerId);
+      const targetRuntimePlayer = this.playerRuntimeService.getPlayer(targetPlayerId);
+      const sessionId = normalizeString(targetRuntimePlayer?.sessionId);
+      if (sessionId.startsWith(OFFLINE_GAIN_SESSION_PREFIX)) {
+        continue;
+      }
+      const instanceId = normalizeString(targetRuntimePlayer?.instanceId);
+      result.push({
+        playerId: targetPlayerId,
+        name: this.resolvePlayerName(targetPlayerId, targetRuntimePlayer),
+        ...(instanceId ? {
+          instanceId,
+          instanceName: resolveRuntimeInstanceName(runtime, instanceId),
+        } : {}),
+        ...(Number.isFinite(Number(targetRuntimePlayer?.x)) ? { x: Math.trunc(Number(targetRuntimePlayer.x)) } : {}),
+        ...(Number.isFinite(Number(targetRuntimePlayer?.y)) ? { y: Math.trunc(Number(targetRuntimePlayer.y)) } : {}),
+        ...(relations.get(targetPlayerId) ? { relationLevel: relations.get(targetPlayerId) } : {}),
+        ...(pending.get(targetPlayerId) ? { pendingRequest: pending.get(targetPlayerId) } : {}),
+      });
+    }
+    result.sort((left, right) => left.name.localeCompare(right.name) || left.playerId.localeCompare(right.playerId));
+    const capped = result.slice(0, ONLINE_DAOIST_HARD_CAP);
+    const total = capped.length;
+    const page = capped.slice(offset, offset + limit);
+    const nextOffset = offset + page.length;
+    return {
+      players: page,
+      total,
+      ...(nextOffset < total ? { nextCursor: String(nextOffset) } : {}),
+    };
   }
 
   async sendRequest(fromPlayerId: string, targetPlayerId: string, runtime?: any): Promise<{ ok: boolean; reason?: string; panel?: SocialPanelView; targetPanel?: SocialPanelView }> {
@@ -911,6 +980,11 @@ function normalizeDirectMessage(value: unknown): string {
   return typeof value === 'string'
     ? value.trim().slice(0, 200)
     : '';
+}
+
+function parseOnlineDaoistCursor(cursor: unknown): number {
+  const offset = Math.trunc(Number(cursor));
+  return Number.isFinite(offset) && offset > 0 ? offset : 0;
 }
 
 function normalizeMessageCursor(cursor: ChatHistoryCursorView | null | undefined): ChatHistoryCursorView {

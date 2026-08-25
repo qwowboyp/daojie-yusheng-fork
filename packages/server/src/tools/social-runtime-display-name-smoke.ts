@@ -27,6 +27,9 @@ class InMemoryPool {
     if (sql.includes('FROM player_daoist_request')) {
       return Promise.resolve({ rows: [] });
     }
+    if (sql.includes('INSERT INTO player_daoist_message')) {
+      return Promise.resolve({ rows: [], rowCount: 1 });
+    }
     throw new Error(`unexpected query in social display-name smoke: ${sql}`);
   }
 }
@@ -57,7 +60,19 @@ async function main(): Promise<void> {
         instanceId: 'real:social_smoke',
         x: 12,
         y: 10,
-        sessionId: null,
+        sessionId: 'session:target',
+      },
+    ],
+    [
+      'player:offline-gain',
+      {
+        playerId: 'player:offline-gain',
+        name: '離線收益客',
+        displayName: '離線收益客',
+        instanceId: 'real:social_smoke',
+        x: 1,
+        y: 1,
+        sessionId: 'offline:1:deadbeef',
       },
     ],
   ]);
@@ -95,6 +110,28 @@ async function main(): Promise<void> {
   assert.equal(candidates[0].playerId, targetPlayerId);
   assert.equal(candidates[0].name, '青竹客');
   assert.equal(candidates[0].distance, 2);
+
+  const online = await service.buildOnlineCandidates(
+    selfPlayerId,
+    [selfPlayerId, targetPlayerId, 'player:offline-gain'],
+    {
+      getInstanceRuntime(instanceId: string) {
+        assert.equal(instanceId, 'real:social_smoke');
+        return {
+          template: { name: '社交煙霧圖' },
+          meta: { displayName: '社交煙霧圖' },
+        };
+      },
+    },
+  );
+  assert.equal(online.total, 1);
+  assert.equal(online.players.length, 1);
+  assert.equal(online.players[0].playerId, targetPlayerId);
+  assert.equal(online.players[0].name, '青竹客');
+  assert.equal(online.players[0].instanceName, '社交煙霧圖');
+  assert.equal(online.players[0].x, 12);
+  assert.equal(online.players[0].y, 10);
+  assert.equal(online.players[0].relationLevel, 'dao_friend');
 
   const panel = await service.buildPanel(selfPlayerId, {
     getInstanceRuntime() {
