@@ -53,6 +53,7 @@ export const GAMEPLAY_SERVER_EVENTS = [
   S2C.ChatMessage,
   S2C.ChatHistory,
   S2C.SocialPanel,
+  S2C.OnlineDaoists,
   S2C.SocialOperationResult,
   S2C.PartyPanel,
   S2C.PartyOperationResult,

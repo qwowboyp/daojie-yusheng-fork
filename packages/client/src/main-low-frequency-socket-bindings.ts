@@ -89,6 +89,7 @@ type MainLowFrequencySocketBindingsOptions = {
   onChatMessage: (data: ServerToClientEventPayload<typeof S2C.ChatMessage>) => void;
   onChatHistory: (data: ServerToClientEventPayload<typeof S2C.ChatHistory>) => void;
   onSocialPanel: (data: ServerToClientEventPayload<typeof S2C.SocialPanel>) => void;
+  onOnlineDaoists: (data: ServerToClientEventPayload<typeof S2C.OnlineDaoists>) => void;
   onPartyPanel: (data: ServerToClientEventPayload<typeof S2C.PartyPanel>) => void;
   onPartyOperationResult: (data: ServerToClientEventPayload<typeof S2C.PartyOperationResult>) => void;
   onPartyChatMessage: (data: ServerToClientEventPayload<typeof S2C.PartyChatMessage>) => void;
@@ -245,6 +246,7 @@ export function bindMainLowFrequencySocketEvents(options: MainLowFrequencySocket
   options.socket.on(S2C.ChatMessage, options.onChatMessage);
   options.socket.on(S2C.ChatHistory, options.onChatHistory);
   options.socket.on(S2C.SocialPanel, options.onSocialPanel);
+  options.socket.on(S2C.OnlineDaoists, options.onOnlineDaoists);
   options.socket.on(S2C.PartyPanel, options.onPartyPanel);
   options.socket.on(S2C.PartyOperationResult, options.onPartyOperationResult);
   options.socket.on(S2C.PartyChatMessage, options.onPartyChatMessage);

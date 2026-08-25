@@ -45,6 +45,9 @@ export function createSocketSocialEconomySender(deps: SocialEconomySenderDeps) {
     sendRequestNearbyDaoistCandidates(): void {
       deps.emitEvent(C2S.RequestNearbyDaoistCandidates, {});
     },
+    sendRequestOnlineDaoists(payload: ClientToServerEventPayload<typeof C2S.RequestOnlineDaoists> = {}): void {
+      deps.emitEvent(C2S.RequestOnlineDaoists, payload);
+    },
     sendDaoistRequest(targetPlayerId: string): void {
       deps.emitEvent(C2S.SendDaoistRequest, { targetPlayerId });
     },

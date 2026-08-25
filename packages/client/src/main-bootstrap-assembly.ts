@@ -295,6 +295,7 @@ type MainBootstrapAssemblyOptions = {
   socialStateSource: Pick<
     MainSocialStateSource,
     | 'handleSocialPanel'
+    | 'handleOnlineDaoists'
     | 'handleSocialOperationResult'
     | 'handleDaoistDirectMessage'
     | 'handleDaoistDirectMessageHistory'
@@ -820,6 +821,7 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
     onChatMessage: (data) => options.noticeStateSource.handleChatMessage(data),
     onChatHistory: (data) => options.noticeStateSource.handleChatHistory(data),
     onSocialPanel: (data) => options.socialStateSource.handleSocialPanel(data),
+    onOnlineDaoists: (data) => options.socialStateSource.handleOnlineDaoists(data),
     onPartyPanel: (data) => options.partyStateSource.handlePartyPanel(data),
     onPartyOperationResult: (data) => options.partyStateSource.handlePartyOperationResult(data),
     onPartyChatMessage: (data) => options.partyStateSource.handlePartyChatMessage(data),

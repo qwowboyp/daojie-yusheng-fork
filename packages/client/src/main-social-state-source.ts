@@ -3,6 +3,7 @@ import type {
   DaoistDirectMessageHistoryView,
   DaoistDirectMessageView,
   PlayerState,
+  OnlineDaoistListView,
   SocialOperationResultView,
   SocialPanelView,
   SyncedItemStack,
@@ -23,6 +24,7 @@ type MainSocialStateSourceOptions = {
     SocketSocialEconomySender,
     | 'sendRequestSocialPanel'
     | 'sendRequestNearbyDaoistCandidates'
+    | 'sendRequestOnlineDaoists'
     | 'sendDaoistRequest'
     | 'respondDaoistRequest'
     | 'updateDaoistRelationLevel'
@@ -75,6 +77,7 @@ export function createMainSocialStateSource(options: MainSocialStateSourceOption
   options.socialPanel.setCallbacks({
     onRefresh: () => options.socket.sendRequestSocialPanel(),
     onScanNearby: () => options.socket.sendRequestNearbyDaoistCandidates(),
+    onScanOnline: () => options.socket.sendRequestOnlineDaoists(),
     onSendRequest: (targetPlayerId) => options.socket.sendDaoistRequest(targetPlayerId),
     onRespondRequest: (requestId, accept) => options.socket.respondDaoistRequest(requestId, accept),
     onUpdateRelationLevel: (targetPlayerId, level) => options.socket.updateDaoistRelationLevel(targetPlayerId, level),
@@ -194,6 +197,9 @@ export function createMainSocialStateSource(options: MainSocialStateSourceOption
         options.showToast(`你有 ${unreadCount} 条未读私聊`, 'chat');
       }
       lastKnownUnreadCount = unreadCount;
+    },
+    handleOnlineDaoists(view: OnlineDaoistListView): void {
+      options.socialPanel.updateOnline(view);
     },
     handleSocialOperationResult(result: SocialOperationResultView): void {
       if (result.panel) {
