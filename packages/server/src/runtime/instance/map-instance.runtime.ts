@@ -3840,8 +3840,8 @@ class MapInstanceRuntime {
         }
         return snapshot;
     }
-    /** forEachPathingBlocker：遍历当前实例里的寻路阻挡地块。 */
-    forEachPathingBlocker(excludePlayerId, visitor) {
+    /** forEachPathingBlocker：遍历当前实例里的寻路阻挡地块；options.ignoreMonsters 为 true 时跳过存活妖兽（玩家移动链路专用）。 */
+    forEachPathingBlocker(excludePlayerId, visitor, options = undefined) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
         if (typeof this.dynamicTileBlocker?.forEachBlockedTile === 'function') {
@@ -3857,6 +3857,9 @@ class MapInstanceRuntime {
             }
             /** visitor：visitor。 */
             visitor(player.x, player.y);
+        }
+        if (options?.ignoreMonsters === true) {
+            return;
         }
         for (const monster of this.monstersByRuntimeId.values()) {
             if (!monster.alive) {
@@ -7110,6 +7113,11 @@ class MapInstanceRuntime {
         const remainingPath = Array.isArray(path) && path.length > 0 ? path : null;
         let rechargedMoveBudget = false;
         let requiredMovePoints = 0;
+        /** 玩家穿越妖兽格期间的停靠不变式跟踪：允许路过，但本息结束时不得停在妖兽格上。 */
+        let restingOnMonsterTile = false;
+        /** 最后一个合法停靠格坐标（进入妖兽格前的位置）。 */
+        let lastLegalRestX = Number.NaN;
+        let lastLegalRestY = Number.NaN;
         if (!remainingPath && player.facing !== horizontalFacingFromDelta(offset.x, player.facing)) {
             player.facing = horizontalFacingFromDelta(offset.x, player.facing);
             player.selfRevision += 1;
@@ -7168,9 +7176,11 @@ class MapInstanceRuntime {
             if (!Number.isFinite(stepCost) || stepCost <= 0 || movePoints < stepCost) {
                 break;
             }
-            if (this.npcIdByTile.has(nextTileIndex) || this.monsterRuntimeIdByTile.has(nextTileIndex)) {
+            if (this.npcIdByTile.has(nextTileIndex)) {
                 break;
             }
+            /** 本次步进是否踏入妖兽占据格：允许穿越，但禁止最终停留。 */
+            const enteringMonsterTile = this.monsterRuntimeIdByTile.has(nextTileIndex);
 
             const nextOccupancy = this.occupancy[nextTileIndex];
             if (nextOccupancy !== INVALID_OCCUPANCY && !this.isPlayerOverlapTile(nextX, nextY)) {
@@ -7198,6 +7208,17 @@ class MapInstanceRuntime {
             this.markAoiViewMoved(previousX, previousY, player.x, player.y);
             this.worldRevision += 1;
 
+            if (enteringMonsterTile) {
+                if (!restingOnMonsterTile) {
+                    lastLegalRestX = previousX;
+                    lastLegalRestY = previousY;
+                }
+                restingOnMonsterTile = true;
+            }
+            else {
+                restingOnMonsterTile = false;
+            }
+
             const portal = this.getPortalAt(player.x, player.y);
             if (portal?.trigger === 'auto') {
                 transfers.push(this.buildTransfer(player, portal, 'auto_portal'));
@@ -7209,6 +7230,20 @@ class MapInstanceRuntime {
             if (remainingPath && remainingPath.length === 0) {
                 break;
             }
+        }
+        if (restingOnMonsterTile && moved && Number.isFinite(lastLegalRestX) && Number.isFinite(lastLegalRestY)) {
+            // 停靠不变式收尾：本息结束（预算耗尽/路径走完/被打断）时不得停在妖兽格上，
+            // 撤销最后一步，回到进入妖兽格前的最后一个合法停靠格；移动点数不退还。
+            const restedOnMonsterX = player.x;
+            const restedOnMonsterY = player.y;
+            this.setOccupied(restedOnMonsterX, restedOnMonsterY, INVALID_OCCUPANCY);
+            this.removePlayerFromTileIndex(player.playerId, restedOnMonsterX, restedOnMonsterY);
+            player.x = lastLegalRestX;
+            player.y = lastLegalRestY;
+            this.addPlayerToTileIndex(player);
+            this.setOccupied(player.x, player.y, player.handle);
+            this.markAoiViewMoved(restedOnMonsterX, restedOnMonsterY, player.x, player.y);
+            this.worldRevision += 1;
         }
         if (moved) {
             player.selfRevision += 1;

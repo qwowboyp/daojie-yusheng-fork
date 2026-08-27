@@ -226,8 +226,8 @@ export function resolveInitialRunLength(path, startX, startY, direction) {
     }
     return Math.max(1, length);
 }
-/** 生成寻路阻塞掩码，按是否允许目标占用可回退目标格。 */
-export function buildPathingBlockMask(instance, playerId, goals, allowOccupiedGoals = true) {
+/** 生成寻路阻塞掩码，按是否允许目标占用可回退目标格；options.ignoreMonsters 为 true 时妖兽格不进入阻挡。 */
+export function buildPathingBlockMask(instance, playerId, goals, allowOccupiedGoals = true, options = undefined) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     const blocked = new Set();
@@ -236,7 +236,7 @@ export function buildPathingBlockMask(instance, playerId, goals, allowOccupiedGo
         if (tileIndex >= 0) {
             blocked.add(tileIndex);
         }
-    });
+    }, options);
     if (allowOccupiedGoals) {
         for (const goal of goals) {
             const tileIndex = typeof instance.toTileIndex === 'function' ? instance.toTileIndex(goal.x, goal.y) : -1;
@@ -248,10 +248,10 @@ export function buildPathingBlockMask(instance, playerId, goals, allowOccupiedGo
     return blocked;
 }
 /** 生成寻路阻塞 typed-array 掩码，供 worker/共享寻路使用。 */
-export function buildPathingBlockArray(instance, playerId, goals, allowOccupiedGoals = true) {
+export function buildPathingBlockArray(instance, playerId, goals, allowOccupiedGoals = true, options = undefined) {
     const size = Math.max(instance.occupancy?.length ?? 0, instance.tilePlane?.getCellCapacity?.() ?? 0, instance.template.width * instance.template.height);
     const blocked = new Uint8Array(size);
-    for (const tileIndex of buildPathingBlockIndices(instance, playerId, goals, allowOccupiedGoals)) {
+    for (const tileIndex of buildPathingBlockIndices(instance, playerId, goals, allowOccupiedGoals, options)) {
         if (tileIndex < size) {
             blocked[tileIndex] = 1;
         }
@@ -259,8 +259,8 @@ export function buildPathingBlockArray(instance, playerId, goals, allowOccupiedG
     return blocked;
 }
 /** 生成动态阻挡的稀疏索引；实例批寻路只传真实阻挡，不按玩家复制整张地图。 */
-export function buildPathingBlockIndices(instance, playerId, goals, allowOccupiedGoals = true) {
-    return Uint32Array.from(buildPathingBlockMask(instance, playerId, goals, allowOccupiedGoals));
+export function buildPathingBlockIndices(instance, playerId, goals, allowOccupiedGoals = true, options = undefined) {
+    return Uint32Array.from(buildPathingBlockMask(instance, playerId, goals, allowOccupiedGoals, options));
 }
 /** 计算路径总可行走代价，无穷大表示路径不可达。 */
 export function computePathCost(instance, path, playerId = null, options = undefined) {
@@ -368,7 +368,7 @@ export function resolvePreferredClientPathHint(instance, playerId, currentX, cur
         return null;
     }
 
-    const blocked = buildPathingBlockMask(instance, playerId, goals, true);
+    const blocked = buildPathingBlockMask(instance, playerId, goals, true, options);
 
     let previousX = currentX;
 
@@ -426,7 +426,7 @@ export function findOptimalPathOnMap(instance, playerId, startX, startY, goals, 
         return null;
     }
 
-    const blocked = buildPathingBlockMask(instance, playerId, goals, allowOccupiedGoals);
+    const blocked = buildPathingBlockMask(instance, playerId, goals, allowOccupiedGoals, options);
 
     const size = Math.max(instance.occupancy?.length ?? 0, instance.tilePlane?.getCellCapacity?.() ?? 0, instance.template.width * instance.template.height);
 
@@ -526,7 +526,7 @@ export function findPathToTargetWithinRangeOnMap(instance, playerId, startX, sta
     }
 
     const targetGoal = allowOccupiedTarget ? [{ x: targetX, y: targetY }] : [];
-    const blocked = buildPathingBlockMask(instance, playerId, targetGoal, allowOccupiedTarget);
+    const blocked = buildPathingBlockMask(instance, playerId, targetGoal, allowOccupiedTarget, options);
     const size = Math.max(instance.occupancy?.length ?? 0, instance.tilePlane?.getCellCapacity?.() ?? 0, instance.template.width * instance.template.height);
 
     const bestCost = new Float64Array(size);

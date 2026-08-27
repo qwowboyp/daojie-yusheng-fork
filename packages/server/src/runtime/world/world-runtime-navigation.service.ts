@@ -53,9 +53,11 @@ function resolvePlayerMovementPathingOptions(player, deps) {
     const currentTick = typeof deps?.resolveCurrentTickForPlayerId === 'function'
         ? deps.resolveCurrentTickForPlayerId(player?.playerId)
         : null;
+    // 玩家寻路统一允许穿越妖兽格（可中途路过），但不允许最终停靠在妖兽格上；
+    // 停靠不变式由地图实例的逐息步进层兜底回退，这里只放宽规划层的妖兽阻挡。
     return canPlayerIgnoreStaticObstacle(player, currentTick)
-        ? { allowIgnoreStaticObstacle: true }
-        : undefined;
+        ? { allowIgnoreStaticObstacle: true, ignoreMonsters: true }
+        : { ignoreMonsters: true };
 }
 
 function buildNavigationFailureNotice(error) {
@@ -753,7 +755,7 @@ export class WorldRuntimeNavigationService {
             return { kind: 'done' };
         }
         const preferredPath = intent.kind === 'point'
-            ? resolvePreferredClientPathHint(instance, player.playerId, player.x, player.y, destination.goals, intent.clientPathHint)
+            ? resolvePreferredClientPathHint(instance, player.playerId, player.x, player.y, destination.goals, intent.clientPathHint, playerMovementPathingOptions)
             : null;
         if (preferredPath) {
             const direction = directionFromStep(player.x, player.y, preferredPath.points[0].x, preferredPath.points[0].y);
@@ -762,7 +764,7 @@ export class WorldRuntimeNavigationService {
             }
             return { kind: 'move', direction, maxSteps: preferredPath.points.length, path: preferredPath.points.map((entry) => ({ x: entry.x, y: entry.y })) };
         }
-        const blockedIndices = buildPathingBlockIndices(instance, player.playerId, destination.goals, true);
+        const blockedIndices = buildPathingBlockIndices(instance, player.playerId, destination.goals, true, playerMovementPathingOptions);
         const pathResult = await this.asyncPathfindingService.findPathByBlockedIndicesAsync(
             instance,
             blockedIndices,

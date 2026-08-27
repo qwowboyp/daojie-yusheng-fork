@@ -526,8 +526,273 @@ function testExistingPlayerConnectDoesNotRelocateWithoutExplicitFlag() {
     assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 4, y: 1 });
 }
 
-function testCrossMapPointNavigationSurvivesTransfer() {
-    const notices = [];
+/**
+ * createMonsterCorridorInstance：创建单行走廊地图实例，杜绝绕行使妖兽格成为唯一通道。
+ */
+function createMonsterCorridorInstance(instanceId, templateId, width) {
+    const templateRepository = new MapTemplateRepository();
+    templateRepository.registerRuntimeMapTemplate({
+        id: templateId,
+        name: '妖兽格穿越烟测',
+        width,
+        height: 1,
+        routeDomain: 'system',
+        tiles: ['.'.repeat(width)],
+        spawnPoint: { x: 0, y: 0 },
+        portals: [],
+        npcs: [],
+        monsters: [],
+        safeZones: [],
+        landmarks: [],
+        containers: [],
+        auras: [],
+        tileEffects: [],
+    });
+    const instance = new MapInstanceRuntime({
+        instanceId,
+        template: templateRepository.getOrThrow(templateId),
+        monsterSpawns: [],
+        kind: 'public',
+        persistent: false,
+        createdAt: Date.now(),
+        displayName: '妖兽格穿越烟测',
+        linePreset: 'peaceful',
+        lineIndex: 1,
+        instanceOrigin: 'smoke',
+        defaultEntry: true,
+        canDamageTile: false,
+    });
+    return { templateRepository, instance };
+}
+
+/**
+ * injectLiveMonster：向实例注入最小化存活妖兽并登记占位索引。
+ * 配合 tickOnce(null, { sleepMonsterAi: true }) 使用，AI 休眠不会移动/攻击。
+ */
+function injectLiveMonster(instance, runtimeId, x, y) {
+    const monster = {
+        runtimeId,
+        spawnId: `spawn:${runtimeId}`,
+        x,
+        y,
+        hp: 10,
+        maxHp: 10,
+        qi: 0,
+        maxQi: 0,
+        alive: true,
+        buffs: [],
+    };
+    instance.monstersByRuntimeId.set(runtimeId, monster);
+    instance.monsterRuntimeIdByTile.set(instance.toTileIndex(x, y), runtimeId);
+    return monster;
+}
+
+function assertPlayerNotOnMonsterTile(instance, player) {
+    const position = instance.getPlayerPosition(player.playerId);
+    const monsterTileRuntimeId = instance.monsterRuntimeIdByTile.get(instance.toTileIndex(position.x, position.y));
+    if (monsterTileRuntimeId != null) {
+        throw new Error(`玩家 ${player.playerId} 停靠在妖兽格 ${position.x},${position.y}（runtimeId=${monsterTileRuntimeId}），违反停靠不变式`);
+    }
+    return position;
+}
+
+/** 案例 1：妖兽挡路时路径规划穿过它，玩家跨息抵达妖兽身后目的地。 */
+function testPlayerPlansThroughMonsterTileAndArrives() {
+    const log = [];
+    const { templateRepository, instance } = createMonsterCorridorInstance('smoke:monster-traverse', 'monster_traverse_smoke', 6);
+    const runtimePlayer = instance.connectPlayer({
+        playerId: 'player:traverse',
+        sessionId: 'session:traverse',
+        preferredX: 0,
+        preferredY: 0,
+    });
+    injectLiveMonster(instance, 'monster:traverse:1', 3, 0);
+    const service = new WorldRuntimeNavigationService(templateRepository, {
+        getPlayer(playerId) {
+            return { playerId, templateId: instance.template.mapId, x: runtimePlayer.x, y: runtimePlayer.y };
+        },
+        getPlayerOrThrow(playerId) {
+            return { playerId, templateId: instance.template.mapId, x: runtimePlayer.x, y: runtimePlayer.y };
+        },
+        updateCombatSettings() {},
+        recordActivity() {},
+    });
+    const moveToDeps = {
+        getPlayerLocationOrThrow(playerId) {
+            return { instanceId: instance.meta.instanceId, sessionId: runtimePlayer.sessionId };
+        },
+        getInstanceRuntimeOrThrow(instanceId) {
+            assert.equal(instanceId, instance.meta.instanceId);
+            return instance;
+        },
+        dispatchInstanceCommand(playerId, command) {
+            log.push(['dispatchInstanceCommand', playerId, command]);
+            instance.enqueueMove({ playerId, ...command });
+        },
+        enqueuePendingCommand(playerId, command) {
+            log.push(['enqueuePendingCommand', playerId, command]);
+        },
+        getPlayerViewOrThrow() {
+            return {};
+        },
+        resolveCurrentTickForPlayerId() {
+            return instance.tick;
+        },
+        cancelPendingInstanceCommand() {
+            return false;
+        },
+        logger: null,
+    };
+    service.enqueueMoveTo(runtimePlayer.playerId, 5, 0, false, null, null, null, null, moveToDeps);
+
+    // 规划层必须给出穿过妖兽格 (3,0) 的直线路径
+    const moveEntry = log.find((entry) => entry[0] === 'dispatchInstanceCommand');
+    assert.ok(moveEntry, 'enqueueMoveTo 未派发实例移动命令');
+    assert.deepEqual(moveEntry[2].path, [
+        { x: 1, y: 0 },
+        { x: 2, y: 0 },
+        { x: 3, y: 0 },
+        { x: 4, y: 0 },
+        { x: 5, y: 0 },
+    ]);
+
+    // 基础移动点数每息回复 200（平地单步代价 100），单条移动命令每息最多走两步；
+    // 与线上节奏一致，导航意图逐息重新物化并从当前位置续规划；全程确认从未停靠在妖兽格
+    for (let round = 0; round < 6; round += 1) {
+        if (instance.getPlayerPosition(runtimePlayer.playerId).x === 5) {
+            break;
+        }
+        service.enqueueMoveTo(runtimePlayer.playerId, 5, 0, false, null, null, null, null, moveToDeps);
+        instance.tickOnce(null, { sleepMonsterAi: true });
+        assertPlayerNotOnMonsterTile(instance, runtimePlayer);
+    }
+    assert.deepEqual(instance.getPlayerPosition(runtimePlayer.playerId), { x: 5, y: 0 }, '玩家未抵达妖兽身后的目的地');
+}
+
+/** 案例 2：目的地被妖兽占据时规划可达但最终停靠在其相邻格，绝不重叠。 */
+function testPlayerStopsAdjacentWhenDestinationOccupiedByMonster() {
+    const log = [];
+    const { templateRepository, instance } = createMonsterCorridorInstance('smoke:monster-goal', 'monster_goal_smoke', 4);
+    const runtimePlayer = instance.connectPlayer({
+        playerId: 'player:goal-monster',
+        sessionId: 'session:goal-monster',
+        preferredX: 0,
+        preferredY: 0,
+    });
+    injectLiveMonster(instance, 'monster:goal:1', 2, 0);
+    const service = new WorldRuntimeNavigationService(templateRepository, {
+        getPlayer(playerId) {
+            return { playerId, templateId: instance.template.mapId, x: runtimePlayer.x, y: runtimePlayer.y };
+        },
+        getPlayerOrThrow(playerId) {
+            return { playerId, templateId: instance.template.mapId, x: runtimePlayer.x, y: runtimePlayer.y };
+        },
+        updateCombatSettings() {},
+        recordActivity() {},
+    });
+    service.enqueueMoveTo(runtimePlayer.playerId, 2, 0, false, null, null, null, null, {
+        getPlayerLocationOrThrow(playerId) {
+            return { instanceId: instance.meta.instanceId, sessionId: runtimePlayer.sessionId };
+        },
+        getInstanceRuntimeOrThrow(instanceId) {
+            assert.equal(instanceId, instance.meta.instanceId);
+            return instance;
+        },
+        dispatchInstanceCommand(playerId, command) {
+            log.push(['dispatchInstanceCommand', playerId, command]);
+            instance.enqueueMove({ playerId, ...command });
+        },
+        enqueuePendingCommand(playerId, command) {
+            log.push(['enqueuePendingCommand', playerId, command]);
+        },
+        getPlayerViewOrThrow() {
+            return {};
+        },
+        resolveCurrentTickForPlayerId() {
+            return instance.tick;
+        },
+        cancelPendingInstanceCommand() {
+            return false;
+        },
+        logger: null,
+    });
+    // 规划层允许把被妖兽占据的目标格作为终点（保留 allowOccupiedGoals 语义）
+    const moveEntry = log.find((entry) => entry[0] === 'dispatchInstanceCommand');
+    assert.ok(moveEntry, 'enqueueMoveTo 未派发实例移动命令');
+    assert.equal(moveEntry[2].path[moveEntry[2].path.length - 1].x, 2);
+
+    instance.tickOnce(null, { sleepMonsterAi: true });
+    instance.tickOnce(null, { sleepMonsterAi: true });
+    // 停靠不变式回退最后一步：终点落在妖兽相邻格而非其所在格
+    assert.deepEqual(instance.getPlayerPosition(runtimePlayer.playerId), { x: 1, y: 0 });
+    const goalTileIndex = instance.toTileIndex(2, 0);
+    // 0 为 INVALID_OCCUPANCY（空占位）：妖兽格上不得残留玩家占位
+    assert.equal(instance.occupancy[goalTileIndex], 0);
+    assert.equal(instance.monsterRuntimeIdByTile.get(goalTileIndex), 'monster:goal:1');
+}
+
+/** 案例 3：预算恰好在妖兽格上耗尽时，本息结束时停靠回上一个合法格。 */
+function testBudgetExhaustionOnMonsterTileRestsOnPreviousLegalTile() {
+    const { instance } = createMonsterCorridorInstance('smoke:monster-budget', 'monster_budget_smoke', 5);
+    const player = instance.connectPlayer({
+        playerId: 'player:budget-monster',
+        sessionId: 'session:budget-monster',
+        preferredX: 0,
+        preferredY: 0,
+    });
+    injectLiveMonster(instance, 'monster:budget:1', 2, 0);
+
+    // 手工注入 250 点预算：够走一步平地(100)+踏入妖兽格(100)，第三步耗尽在妖兽格上
+    assert.equal(instance.enqueueMove({
+        playerId: player.playerId,
+        direction: Direction.East,
+        continuous: true,
+        resetBudget: false,
+        path: [
+            { x: 1, y: 0 },
+            { x: 2, y: 0 },
+            { x: 3, y: 0 },
+        ],
+    }), true);
+    player.movePoints = 250;
+    player.lastMoveBudgetTick = instance.tick;
+    instance.tickOnce(null, { sleepMonsterAi: true });
+
+    // 预算在妖兽格上告罄 → 回退停靠到进入妖兽格前的合法格
+    assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 1, y: 0 });
+    const monsterTileIndex = instance.toTileIndex(2, 0);
+    // 0 为 INVALID_OCCUPANCY（空占位）
+    assert.equal(instance.occupancy[monsterTileIndex], 0);
+    assert.equal(instance.occupancy[instance.toTileIndex(1, 0)] !== 0, true);
+    assert.equal(instance.monsterRuntimeIdByTile.get(monsterTileIndex), 'monster:budget:1');
+
+    // 补足行动节奏后继续行进可正常穿过妖兽格抵达后方：
+    // 预算上限随首次步进代价收口，手工巨额注入会被夹回；改为按线上节奏逐息续发剩余路径
+    for (let round = 0; round < 4; round += 1) {
+        const position = instance.getPlayerPosition(player.playerId);
+        if (position.x === 4) {
+            break;
+        }
+        /** 剩余相对路径：从当前位置起保证相邻步进语义成立 */
+        const remainingPath = [];
+        for (let x = position.x + 1; x <= 4; x += 1) {
+            remainingPath.push({ x, y: 0 });
+        }
+        assert.equal(instance.enqueueMove({
+            playerId: player.playerId,
+            direction: Direction.East,
+            continuous: true,
+            resetBudget: false,
+            path: remainingPath,
+        }), true);
+        instance.tickOnce(null, { sleepMonsterAi: true });
+        assertPlayerNotOnMonsterTile(instance, player);
+    }
+    assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 4, y: 0 });
+    assertPlayerNotOnMonsterTile(instance, player);
+}
+
+function testCrossMapPointNavigationSurvivesTransfer() {    const notices = [];
     const service = new WorldRuntimeNavigationService({ getOrThrow: (mapId) => ({ id: mapId, name: mapId }) }, {
         getPlayer(playerId) {
             assert.equal(playerId, 'player:cross-map');
@@ -594,5 +859,8 @@ testMoveToQueuesInitialInstanceMoveImmediately();
 testHighCostTileAccumulatesMoveBudget();
 testExistingPlayerConnectDoesNotRelocateWithoutExplicitFlag();
 testCrossMapPointNavigationSurvivesTransfer();
+testPlayerPlansThroughMonsterTileAndArrives();
+testPlayerStopsAdjacentWhenDestinationOccupiedByMonster();
+testBudgetExhaustionOnMonsterTileRestsOnPreviousLegalTile();
 
 console.log(JSON.stringify({ ok: true, case: 'world-runtime-movement' }, null, 2));
