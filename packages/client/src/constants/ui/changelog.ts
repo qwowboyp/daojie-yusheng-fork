@@ -12,6 +12,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 /** 当前内置的更新日志条目。 */
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    updatedAt: '2026-08-27',
+    summary: '玩家移動可穿越妖獸：路徑不再被怪物攔停，目的地不重疊即可通行。',
+    items: [
+      '戰鬥：移動可穿越妖獸 — 只要目的地沒有妖獸，移動路徑會直接穿過擋路的妖獸，不再被攔下、繞遠路或卡在門口峽谷；穿過期間仍會被妖獸照常攻擊。',
+      '地圖：終點格被妖獸佔住時，會自動停靠在相鄰空格，不會與妖獸重疊。',
+    ],
+  },
+  {
     updatedAt: '2026-08-25',
     summary: '道友介面新增「線上修士」，可查看當前在線玩家的所在地圖與座標並邀請組隊。',
     items: [
