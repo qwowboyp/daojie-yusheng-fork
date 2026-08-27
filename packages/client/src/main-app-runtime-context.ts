@@ -50,7 +50,6 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
     {
       mapRuntime: modules.mapRuntime,
       connection: modules.socket,
-      runtimeSender: modules.runtimeSender,
       login: {
         hasRefreshToken: () => modules.loginUI.hasRefreshToken(),
         restoreSession: () => modules.loginUI.restoreSession(),
@@ -58,7 +57,6 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
       },
       documentRef,
       windowRef,
-      locationHost: windowRef.location.host,
       syncEstimatedServerTickInterval,
       showToast: (message) => showToast(message),
       onBeforeVersionReload: () => {
@@ -82,11 +80,6 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
       fpsValueEl: dom.fpsValueEl,
       fpsLowValueEl: dom.fpsLowValueEl,
       fpsOnePercentValueEl: dom.fpsOnePercentValueEl,
-      pingLatencyEl: dom.pingLatencyEl,
-      pingUnitEl: dom.pingUnitEl,
-      pingHundredsEl: dom.pingHundredsEl,
-      pingTensEl: dom.pingTensEl,
-      pingOnesEl: dom.pingOnesEl,
     },
   );
 

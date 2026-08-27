@@ -185,10 +185,8 @@ try {
   let resetCount = 0;
   let showLoginCount = 0;
   let rejectPendingCount = 0;
-  let clearPingCount = 0;
   let markDisconnectedCount = 0;
   let recoveryCount = 0;
-  let lastPingStatus = null;
   const connectionState = createMainConnectionStateSource({
     socket: { connected: false },
     restoreSession: async () => {
@@ -205,13 +203,10 @@ try {
     showToast: () => undefined,
     logout: () => undefined,
     rejectPendingRedeemCodes: () => { rejectPendingCount += 1; },
-    clearPendingSocketPing: () => { clearPingCount += 1; },
-    renderPingLatency: (_latencyMs, status) => { lastPingStatus = status ?? null; },
     setPanelRuntimeDisconnected: () => { markDisconnectedCount += 1; },
     hasPlayer: () => true,
     scheduleConnectionRecovery: () => { recoveryCount += 1; },
     getDocumentVisibilityState: () => 'visible',
-    handlePong: () => undefined,
   });
   await connectionState.handleError({
     code: SOCKET_BOOTSTRAP_REDIRECT_CODE,
@@ -229,8 +224,6 @@ try {
   assert.equal(showLoginCount, 1, '运行时引导失败应保持登录阻断层可见');
   connectionState.handleDisconnect('transport close');
   assert.equal(rejectPendingCount, 1, '引导失败后的断线仍应清理待决请求');
-  assert.equal(clearPingCount, 1, '引导失败后的断线仍应清理心跳请求');
-  assert.equal(lastPingStatus, 'connection.bootstrap.unavailable', '引导失败后的断线不得伪装成会话恢复');
   assert.equal(markDisconnectedCount, 1, '重定向完成后的真实断线仍应更新面板状态');
   assert.equal(recoveryCount, 0, '服务端明确拒绝 bootstrap 后不得立即进入无效重连循环');
   await connectionState.handleError({
@@ -239,7 +232,6 @@ try {
   });
   connectionState.handleBootstrapReady();
   connectionState.handleDisconnect('transport close');
-  assert.equal(lastPingStatus, 'connection.status.restoring', '新连接 Bootstrap 成功后不得沿用旧失败的断线抑制');
   assert.equal(markDisconnectedCount, 2, '新连接后续真实断线仍应更新面板状态');
   assert.equal(recoveryCount, 1, '新连接 Bootstrap 成功后应恢复正常断线重连');
   await connectionState.handleError({

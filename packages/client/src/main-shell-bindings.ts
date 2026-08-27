@@ -61,29 +61,9 @@ type MainShellBindingsOptions = {
  * scheduleConnectionRecovery：scheduleConnectionRecovery相关字段。
  */
 
-  scheduleConnectionRecovery: (delayMs?: number, forceRefresh?: boolean) => void;  
-  /**
- * restartPingLoop：restartPingLoop相关字段。
- */
-
-  restartPingLoop: () => void;  
-  /**
- * stopPingLoop：stopPingLoop相关字段。
- */
-
-  stopPingLoop: () => void;  
+  scheduleConnectionRecovery: (delayMs?: number, forceRefresh?: boolean) => void;
   /** 页面进入后台时挂起实时连接，回前台再走恢复首包。 */
-  suspendConnectionForHiddenPage: () => void;
-  /**
- * clearPendingSocketPing：clearPendingSocketPing相关字段。
- */
-
-  clearPendingSocketPing: () => void;  
-  /**
- * renderPingLatency：PingLatency相关字段。
- */
-
-  renderPingLatency: (latencyMs: number | null, status?: string) => void;  
+  suspendConnectionForHiddenPage: () => void;  
   /**
  * hasPendingTargetedAction：启用开关或状态标识。
  */
@@ -162,30 +142,19 @@ export function bindMainShellInteractions(options: MainShellBindingsOptions): vo
   window.addEventListener(options.responsiveViewportChangeEvent, options.resizeCanvas as EventListener);
   window.addEventListener('focus', () => {
     options.scheduleConnectionRecovery(150);
-    options.restartPingLoop();
   });
   window.addEventListener('pageshow', () => {
     options.scheduleConnectionRecovery(150);
-    options.restartPingLoop();
   });
   window.addEventListener('online', () => {
     options.scheduleConnectionRecovery(150);
-    options.restartPingLoop();
-  });
-  window.addEventListener('offline', () => {
-    options.clearPendingSocketPing();
-    options.renderPingLatency(null, '氣機斷絕');
   });
   options.documentRef.addEventListener('visibilitychange', () => {
     if (options.documentRef.visibilityState === 'hidden') {
-      options.clearPendingSocketPing();
-      options.stopPingLoop();
       options.suspendConnectionForHiddenPage();
-      options.renderPingLatency(null, '離線');
       return;
     }
     options.scheduleConnectionRecovery(150, true);
-    options.restartPingLoop();
   });
   window.addEventListener('contextmenu', (event) => {
     if (options.hasPendingTargetedAction()) {

@@ -58,10 +58,15 @@ type MainUiStateSourceOptions = {
 
   zoomSlider: HTMLInputElement | null;
   /**
- * zoomLevelEl：zoom等级El相关字段。
- */
+  * zoomLevelEl：zoomLevelEl相关字段。
+  */
 
   zoomLevelEl: HTMLElement | null;
+  /**
+  * mapNameEl：当前地图名显示元素（地图侧栏竖排文本）。
+  */
+
+  mapNameEl: HTMLElement | null;
   /**
  * resizeCanvas：resizeCanva相关字段。
  */
@@ -313,10 +318,14 @@ export function createMainUiStateSource(options: MainUiStateSourceOptions) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
       const player = options.getPlayer();
+      const mapName = options.mapRuntime.getMapMeta()?.name ?? t('hud.map-name.unknown');
+      if (options.mapNameEl && options.mapNameEl.textContent !== mapName) {
+        options.mapNameEl.textContent = mapName;
+      }
       if (!player) return;
       const heavenGateAction = getHeavenGateHudAction(player);
       options.hud.update(player, {
-        mapName: options.mapRuntime.getMapMeta()?.name ?? t('hud.map-name.unknown'),
+        mapName,
         mapDanger: this.resolveMapDanger(),
         realmLabel: player.realm?.displayName ?? resolveRealmLabel(player),
         realmReviewLabel: player.realm?.review ?? player.realmReview,

@@ -160,10 +160,6 @@ type MainBootstrapAssemblyOptions = {
     | 'syncFpsMonitorVisibility'
     | 'handleVersionReloadBefore'
     | 'scheduleConnectionRecovery'
-    | 'restartPingLoop'
-    | 'stopPingLoop'
-    | 'clearPendingSocketPing'
-    | 'renderPingLatency'
   >;
   /**
  * panelRuntimeSource：面板运行态来源相关字段。
@@ -364,7 +360,6 @@ type MainBootstrapAssemblyOptions = {
     | 'handleKick'
     | 'handleConnectError'
     | 'handleDisconnect'
-    | 'handlePong'
   >;
   /**
  * sidePanel：side面板相关字段。
@@ -699,11 +694,7 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
     resizeCanvas: () => options.mapRuntimeBridgeSource.resizeCanvas(),
     responsiveViewportChangeEvent: RESPONSIVE_VIEWPORT_CHANGE_EVENT,
     scheduleConnectionRecovery: (delayMs, forceRefresh) => options.runtimeMonitorSource.scheduleConnectionRecovery(delayMs, forceRefresh),
-    restartPingLoop: () => options.runtimeMonitorSource.restartPingLoop(),
-    stopPingLoop: () => options.runtimeMonitorSource.stopPingLoop(),
     suspendConnectionForHiddenPage: () => options.socket.suspendForHiddenPage(),
-    clearPendingSocketPing: () => options.runtimeMonitorSource.clearPendingSocketPing(),
-    renderPingLatency: (latencyMs, status) => options.runtimeMonitorSource.renderPingLatency(latencyMs, status),
     hasPendingTargetedAction: () => options.targetingStateSource.hasPendingTargetedAction(),
     cancelTargeting: (showMessage) => {
       options.buildingFengShuiStateSource.cancelPendingPlacementTargeting(false);
@@ -1029,9 +1020,6 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
     onKick: (data) => options.connectionStateSource.handleKick(data),
     onConnectError: (message) => options.connectionStateSource.handleConnectError(message),
     onDisconnect: (reason) => options.connectionStateSource.handleDisconnect(reason),
-    onPong: (data) => {
-      options.connectionStateSource.handlePong(data);
-    },
   });
 
   // ContentResolver: 注入发包能力
@@ -1039,7 +1027,6 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
     return options.socket.content.sendRequestContentTemplates(payload);
   });
 
-  options.runtimeMonitorSource.restartPingLoop();
   options.mapRuntimeBridgeSource.bindKeyboardInput();
   void options.loginUI.restoreSession();
 }

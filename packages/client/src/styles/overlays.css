@@ -175,6 +175,20 @@
       line-height: 1;
       text-align: center;
     }
+    /* 地图侧栏当前地图名：竖排展示，超长截断 */
+    .map-map-name-text {
+      display: block;
+      font-family: var(--font-role-body);
+      font-size: var(--font-size-role-body-14);
+      font-weight: var(--font-weight-strong);
+      color: var(--ink-black);
+      letter-spacing: 2px;
+      line-height: 1.4;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      max-height: 140px;
+      overflow: hidden;
+    }
     .map-tick-rate-char {
       font-family: var(--font-role-body);
       font-size: var(--font-size-role-body-14);

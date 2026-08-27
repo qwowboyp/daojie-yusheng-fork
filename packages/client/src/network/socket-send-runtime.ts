@@ -35,17 +35,7 @@ type RuntimeSenderDeps = {
 
 
 export function createSocketRuntimeSender(deps: RuntimeSenderDeps) {
-  return {  
-  /**
- * sendPing：执行sendPing相关逻辑。
- * @param clientAt 参数说明。
- * @returns 返回sendPing。
- */
-
-    sendPing(clientAt = Date.now()): number {
-      deps.emitEvent(C2S.Ping, { clientAt });
-      return clientAt;
-    },    
+  return {
     /**
  * sendMove：执行sendMove相关逻辑。
  * @param direction Direction 方向参数。

@@ -229,6 +229,16 @@
         writing-mode: horizontal-tb;
         text-orientation: mixed;
       }
+      /* 手机横排模式下地图名恢复横排，并限制宽度避免挤压地图工具栏 */
+      .map-map-name-text {
+        writing-mode: horizontal-tb;
+        text-orientation: mixed;
+        max-height: none;
+        max-width: 72px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
       .section-tabs,
       .tab-bar,
       .section-body,

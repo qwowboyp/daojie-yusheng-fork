@@ -41,7 +41,7 @@ type CreateMainPanelContextOptions = {
   /** documentRef：注入浏览器 document，便于测试或宿主环境替换。 */
   documentRef: Document;  
   /** dom：dom相关字段。 */
-  dom: Pick<MainDomElements, 'zoomSlider' | 'zoomLevelEl'>;  
+  dom: Pick<MainDomElements, 'zoomSlider' | 'zoomLevelEl' | 'mapNameEl'>;
   /** modules：模块相关字段。 */
   modules: MainFrontendModules;  
   /** rootRuntimeSource：根容器运行态来源相关字段。 */
@@ -67,7 +67,7 @@ type CreateMainPanelContextOptions = {
 export function createMainPanelContext(options: CreateMainPanelContextOptions) {
   const {
     documentRef,
-    dom: { zoomSlider, zoomLevelEl },
+    dom: { zoomSlider, zoomLevelEl, mapNameEl },
     modules: {
       socket,
       runtimeSender,
@@ -289,6 +289,7 @@ export function createMainPanelContext(options: CreateMainPanelContextOptions) {
     mapRuntime,
     zoomSlider,
     zoomLevelEl,
+    mapNameEl,
     resizeCanvas: callbacks.resizeCanvas,
     documentRef,
     showToastEl: documentRef.getElementById('toast'),

@@ -210,11 +210,6 @@ type MainLowFrequencySocketBindingsOptions = {
  */
 
   onDisconnect: Parameters<SocketManager['onDisconnect']>[0];
-  /**
- * onPong：onPong相关字段。
- */
-
-  onPong: (data: ServerToClientEventPayload<typeof S2C.Pong>) => void;
 };
 /**
  * bindMainLowFrequencySocketEvents：执行bindMainLowFrequencySocket事件相关逻辑。
@@ -292,7 +287,6 @@ export function bindMainLowFrequencySocketEvents(options: MainLowFrequencySocket
     contentResolver.clearDynamicCache();
     options.onDisconnect(...args);
   });
-  options.socket.on(S2C.Pong, options.onPong);
 
   // ContentResolver: 绑定 S2C 响应 + 注入发包能力
   options.socket.on(S2C.ContentTemplates, (data) => {

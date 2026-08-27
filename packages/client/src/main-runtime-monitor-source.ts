@@ -4,19 +4,12 @@
  * 维护时要把用户意图、显示派生和服务端权威数据分清，避免为了展示便利复制业务规则。
  */
 import type { GameTimeState } from '@mud/shared';
-import {
-  CONNECTION_RECOVERY_RETRY_MS,
-  CURRENT_TIME_REFRESH_MS,
-  GAME_TIME_PHASES,
-  SERVER_PING_INTERVAL_MS,
-  SOCKET_PING_TIMEOUT_MS,
-} from '@mud/shared';
+import { CONNECTION_RECOVERY_RETRY_MS, CURRENT_TIME_REFRESH_MS, GAME_TIME_PHASES } from '@mud/shared';
 import {
   MAP_FPS_SAMPLE_INTERVAL_MS,
   MAP_FPS_SAMPLE_WINDOW_SIZE,
 } from './constants/ui/performance';
 import type { MapRuntime } from './game-map/runtime/map-runtime';
-import type { SocketRuntimeSender } from './network/socket-send-runtime';
 /**
  * FpsSampleStats：统一结构类型，保证协议与运行时一致性。
  */
@@ -49,17 +42,12 @@ type MainRuntimeMonitorSourceOptions = {
  * mapRuntime：地图运行态引用。
  */
 
-  mapRuntime: Pick<MapRuntime, 'setTickDurationMs'>;  
+  mapRuntime: Pick<MapRuntime, 'setTickDurationMs'>;
   /**
- * connection：connection相关字段。
- */
+  * connection：connection相关字段。
+  */
 
-  connection: Pick<import('./network/socket').SocketManager, 'connected' | 'reconnect'>;  
-  /**
- * runtimeSender：运行态Sender相关字段。
- */
-
-  runtimeSender: Pick<SocketRuntimeSender, 'sendPing'>;  
+  connection: Pick<import('./network/socket').SocketManager, 'connected' | 'reconnect'>;
   /**
  * login：login相关字段。
  */
@@ -85,20 +73,15 @@ type MainRuntimeMonitorSourceOptions = {
  * documentRef：documentRef相关字段。
  */
 
-  documentRef: Document;  
+  documentRef: Document;
   /**
- * windowRef：窗口Ref相关字段。
- */
+  * windowRef：窗口Ref相关字段。
+  */
 
-  windowRef: Window;  
+  windowRef: Window;
   /**
- * locationHost：位置Host相关字段。
- */
-
-  locationHost: string;  
-  /**
- * syncEstimatedServerTickInterval：EstimatedServertickInterval相关字段。
- */
+  * syncEstimatedServerTickInterval：EstimatedServertickInterval相关字段。
+  */
 
   syncEstimatedServerTickInterval: (dtMs: number) => void;  
   /**
@@ -197,32 +180,7 @@ type MainRuntimeMonitorElements = {
  * fpsOnePercentValueEl：fpOnePercent值El相关字段。
  */
 
-  fpsOnePercentValueEl: HTMLElement | null;  
-  /**
- * pingLatencyEl：pingLatencyEl相关字段。
- */
-
-  pingLatencyEl: HTMLElement | null;  
-  /**
- * pingUnitEl：pingUnitEl相关字段。
- */
-
-  pingUnitEl: HTMLElement | null;  
-  /**
- * pingHundredsEl：pingHundredEl相关字段。
- */
-
-  pingHundredsEl: HTMLElement | null;  
-  /**
- * pingTensEl：pingTenEl相关字段。
- */
-
-  pingTensEl: HTMLElement | null;  
-  /**
- * pingOnesEl：pingOneEl相关字段。
- */
-
-  pingOnesEl: HTMLElement | null;
+  fpsOnePercentValueEl: HTMLElement | null;
 };
 /**
  * MainRuntimeMonitorSource：统一结构类型，保证协议与运行时一致性。
@@ -244,27 +202,6 @@ export function createMainRuntimeMonitorSource(
 ) {
   let connectionRecoveryTimer: ReturnType<typeof setTimeout> | null = null;
   let connectionRecoveryPromise: Promise<void> | null = null;
-  let pingTimer: ReturnType<typeof setTimeout> | null = null;
-  let pingRequestSerial = 0;
-  let pendingSocketPing:
-    | {    
-    /**
- * serial：serial相关字段。
- */
-
-        serial: number;        
-        /**
- * clientAt：clientAt相关字段。
- */
-
-        clientAt: number;        
-        /**
- * timeoutId：超时ID标识。
- */
-
-        timeoutId: ReturnType<typeof setTimeout>;
-      }
-    | null = null;
   let currentTimeState: GameTimeState | null = null;
   let currentTimeStateSyncedAt = performance.now();
   let currentTimeTickIntervalMs = 1000;
@@ -589,41 +526,6 @@ export function createMainRuntimeMonitorSource(
     renderCurrentTime(currentTimeState, now);
   }  
   /**
- * renderPingLatency：执行PingLatency相关逻辑。
- * @param latencyMs number | null 参数说明。
- * @param status 参数说明。
- * @returns 无返回值，直接更新PingLatency相关状态。
- */
-
-
-  function renderPingLatency(latencyMs: number | null, status = '毫秒'): void {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-    const digits = (() => {
-      if (latencyMs === null) {
-        return ['-', '-', '-'];
-      }
-      const rounded = String(Math.min(999, Math.max(0, Math.round(latencyMs))));
-      if (rounded.length >= 3) {
-        return rounded.split('');
-      }
-      if (rounded.length === 2) {
-        return ['·', rounded[0], rounded[1]];
-      }
-      return ['·', '·', rounded[0] ?? '0'];
-    })();
-    if (elements.pingHundredsEl) elements.pingHundredsEl.textContent = digits[0] ?? '-';
-    if (elements.pingTensEl) elements.pingTensEl.textContent = digits[1] ?? '-';
-    if (elements.pingOnesEl) elements.pingOnesEl.textContent = digits[2] ?? '-';
-    if (elements.pingUnitEl) elements.pingUnitEl.textContent = status;
-    if (elements.pingLatencyEl) {
-      const title = latencyMs === null
-        ? `當前域名 ${options.locationHost} 的伺服器延遲${status === '離線' ? '不可用' : `狀態：${status}`}`
-        : `當前域名 ${options.locationHost} 上游戲連接往返約 ${Math.round(latencyMs)}ms`;
-      elements.pingLatencyEl.setAttribute('aria-label', title);
-    }
-  }  
-  /**
  * waitFor：执行waitFor相关逻辑。
  * @param ms number 参数说明。
  * @returns 返回 Promise，完成后得到waitFor。
@@ -689,143 +591,7 @@ export function createMainRuntimeMonitorSource(
       connectionRecoveryTimer = null;
       void recoverConnection(forceRefresh);
     }, delayMs);
-  }  
-  /**
- * clearPendingSocketPing：执行clear待处理SocketPing相关逻辑。
- * @returns 无返回值，直接更新clearPendingSocketPing相关状态。
- */
-
-
-  function clearPendingSocketPing(): void {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-    if (!pendingSocketPing) {
-      return;
-    }
-    options.windowRef.clearTimeout(pendingSocketPing.timeoutId);
-    pendingSocketPing = null;
-  }  
-  /**
- * markSocketPingTimeout：处理SocketPing超时并更新相关状态。
- * @param serial number 参数说明。
- * @returns 无返回值，直接更新SocketPing超时相关状态。
- */
-
-
-  function markSocketPingTimeout(serial: number): void {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-    if (!pendingSocketPing || pendingSocketPing.serial !== serial) {
-      return;
-    }
-    pendingSocketPing = null;
-    renderPingLatency(null, options.connection.connected ? '無迴音' : '離線');
-  }  
-  /**
- * sampleServerPing：执行sampleServerPing相关逻辑。
- * @returns 无返回值，直接更新sampleServerPing相关状态。
- */
-
-
-  function sampleServerPing(): void {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-    if (options.documentRef.visibilityState === 'hidden') {
-      return;
-    }
-    clearPendingSocketPing();
-    if (!navigator.onLine) {
-      renderPingLatency(null, '離線');
-      return;
-    }
-    if (!options.connection.connected) {
-      renderPingLatency(null, options.login.hasRefreshToken() ? '重歸' : '離線');
-      return;
-    }
-    const serial = ++pingRequestSerial;
-    const clientAt = performance.now();
-    options.runtimeSender.sendPing(clientAt);
-    const timeoutId = options.windowRef.setTimeout(() => {
-      markSocketPingTimeout(serial);
-    }, SOCKET_PING_TIMEOUT_MS);
-    pendingSocketPing = { serial, clientAt, timeoutId };
-  }  
-  /**
- * stopPingLoop：执行stopPingLoop相关逻辑。
- * @returns 无返回值，直接更新stopPingLoop相关状态。
- */
-
-
-  function stopPingLoop(): void {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-    if (pingTimer !== null) {
-      options.windowRef.clearTimeout(pingTimer);
-      pingTimer = null;
-    }
-    clearPendingSocketPing();
-  }  
-  /**
- * scheduleNextPing：执行scheduleNextPing相关逻辑。
- * @param delayMs 参数说明。
- * @returns 无返回值，直接更新scheduleNextPing相关状态。
- */
-
-
-  function scheduleNextPing(delayMs = SERVER_PING_INTERVAL_MS): void {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-    if (pingTimer !== null) {
-      options.windowRef.clearTimeout(pingTimer);
-    }
-    pingTimer = options.windowRef.setTimeout(() => {
-      pingTimer = null;
-      sampleServerPing();
-      scheduleNextPing(SERVER_PING_INTERVAL_MS);
-    }, delayMs);
-  }  
-  /**
- * restartPingLoop：执行restartPingLoop相关逻辑。
- * @param immediate 参数说明。
- * @returns 无返回值，直接更新restartPingLoop相关状态。
- */
-
-
-  function restartPingLoop(immediate = true): void {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-    stopPingLoop();
-    if (options.documentRef.visibilityState === 'hidden') {
-      return;
-    }
-    if (!immediate) {
-      scheduleNextPing();
-      return;
-    }
-    sampleServerPing();
-    scheduleNextPing(SERVER_PING_INTERVAL_MS);
-  }  
-  /**
- * handlePong：处理Pong并更新相关状态。
- * @param data { clientAt: number } 原始数据。
- * @returns 无返回值，直接更新Pong相关状态。
- */
-
-
-  function handlePong(data: {  
-  /**
- * clientAt：clientAt相关字段。
- */
- clientAt: number }): void {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-    if (!pendingSocketPing || data.clientAt !== pendingSocketPing.clientAt) {
-      return;
-    }
-    options.windowRef.clearTimeout(pendingSocketPing.timeoutId);
-    pendingSocketPing = null;
-    renderPingLatency(performance.now() - data.clientAt);
-  }  
+  }
   /**
  * initialize：执行initialize相关逻辑。
  * @param showFpsMonitor boolean 参数说明。
@@ -839,7 +605,6 @@ export function createMainRuntimeMonitorSource(
     renderTickRate(1);
     syncFpsMonitorVisibility(showFpsMonitor);
     renderCurrentTime(null);
-    renderPingLatency(null, '待測');
     if (currentTimeIntervalId !== null) {
       options.windowRef.clearInterval(currentTimeIntervalId);
     }
@@ -866,12 +631,7 @@ export function createMainRuntimeMonitorSource(
     getCurrentTimeState(): GameTimeState | null {
       return currentTimeState;
     },
-    renderPingLatency,
-    clearPendingSocketPing,
     scheduleConnectionRecovery,
-    restartPingLoop,
-    stopPingLoop,
-    handlePong,    
     /**
  * getDocumentVisibilityState：读取Document可见性状态。
  * @returns 返回Document可见性状态。

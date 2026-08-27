@@ -378,13 +378,10 @@ export function createMainRuntimeOwnerContext(options: CreateMainRuntimeOwnerCon
     showToast: helpers.showToast,
     logout: (message) => loginUI.logout(message),
     rejectPendingRedeemCodes: (message) => panelContext.settingsStateSource.rejectPendingRedeemCodes(message),
-    clearPendingSocketPing: () => runtimeMonitorSource.clearPendingSocketPing(),
-    renderPingLatency: (latencyMs, status) => runtimeMonitorSource.renderPingLatency(latencyMs, status),
     setPanelRuntimeDisconnected: () => panelContext.panelRuntimeSource.setRuntimeDisconnected(),
     hasPlayer: () => rootRuntimeSource.hasPlayer(),
     scheduleConnectionRecovery: (delayMs, forceRefresh) => runtimeMonitorSource.scheduleConnectionRecovery(delayMs, forceRefresh),
     getDocumentVisibilityState: () => runtimeMonitorSource.getDocumentVisibilityState(),
-    handlePong: (data) => runtimeMonitorSource.handlePong(data),
   });
 
   resetStateSource = createMainResetStateSource({

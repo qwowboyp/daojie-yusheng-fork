@@ -103,33 +103,13 @@ export type MainDomElements = {
 
   fpsOnePercentValueEl: HTMLElement | null;  
   /**
- * pingLatencyEl：pingLatencyEl相关字段。
- */
+  * mapNameEl：当前地图名显示元素。
+  */
 
-  pingLatencyEl: HTMLElement | null;  
+  mapNameEl: HTMLElement | null;
   /**
- * pingUnitEl：pingUnitEl相关字段。
- */
-
-  pingUnitEl: HTMLElement | null;  
-  /**
- * pingHundredsEl：pingHundredEl相关字段。
- */
-
-  pingHundredsEl: HTMLElement | null;  
-  /**
- * pingTensEl：pingTenEl相关字段。
- */
-
-  pingTensEl: HTMLElement | null;  
-  /**
- * pingOnesEl：pingOneEl相关字段。
- */
-
-  pingOnesEl: HTMLElement | null;
-  /**
- * targetingBadgeEl：targetingBadgeEl相关字段。
- */
+  * targetingBadgeEl：targetingBadgeEl相关字段。
+  */
 
   targetingBadgeEl: HTMLElement | null;  
   /**
@@ -170,7 +150,6 @@ export const QQ_GROUP_NUMBER = '940886387';
 export function collectMainDomElements(documentRef: Document): MainDomElements {
   const currentTimeValueEl = documentRef.getElementById('map-current-time-value');
   const tickRateValueEl = documentRef.getElementById('map-tick-rate-value');
-  const pingValueEl = documentRef.getElementById('map-ping-value');
   const observeModalEl = documentRef.getElementById('observe-modal');
 
   return {
@@ -193,11 +172,7 @@ export function collectMainDomElements(documentRef: Document): MainDomElements {
     fpsValueEl: documentRef.getElementById('map-fps-value'),
     fpsLowValueEl: documentRef.getElementById('map-fps-low-value'),
     fpsOnePercentValueEl: documentRef.getElementById('map-fps-one-percent-value'),
-    pingLatencyEl: documentRef.getElementById('map-ping-rate'),
-    pingUnitEl: documentRef.getElementById('map-ping-unit'),
-    pingHundredsEl: pingValueEl?.querySelector<HTMLElement>('[data-ping-part="hundreds"]') ?? null,
-    pingTensEl: pingValueEl?.querySelector<HTMLElement>('[data-ping-part="tens"]') ?? null,
-    pingOnesEl: pingValueEl?.querySelector<HTMLElement>('[data-ping-part="ones"]') ?? null,
+    mapNameEl: documentRef.getElementById('map-map-name')?.querySelector<HTMLElement>('.map-map-name-text') ?? null,
     targetingBadgeEl: documentRef.getElementById('map-targeting-indicator'),
     observeModalEl,
     observeModalBodyEl: documentRef.getElementById('observe-modal-body'),

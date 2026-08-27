@@ -62,17 +62,7 @@ type MainConnectionStateSourceOptions = {
  * rejectPendingRedeemCodes：rejectPendingRedeemCode相关字段。
  */
 
-  rejectPendingRedeemCodes: (message: string) => void;  
-  /**
- * clearPendingSocketPing：clearPendingSocketPing相关字段。
- */
-
-  clearPendingSocketPing: () => void;  
-  /**
- * renderPingLatency：PingLatency相关字段。
- */
-
-  renderPingLatency: (latencyMs: number | null, status?: string) => void;  
+  rejectPendingRedeemCodes: (message: string) => void;
   /**
  * setPanelRuntimeDisconnected：面板运行态Disconnected相关字段。
  */
@@ -92,16 +82,7 @@ type MainConnectionStateSourceOptions = {
  * getDocumentVisibilityState：Document可见性状态状态或数据块。
  */
 
-  getDocumentVisibilityState: () => DocumentVisibilityState;  
-  /**
- * handlePong：Pong相关字段。
- */
-
-  handlePong: (data: {  
-  /**
- * clientAt：clientAt相关字段。
- */
- clientAt: number }) => void;
+  getDocumentVisibilityState: () => DocumentVisibilityState;
 };
 /**
  * MainConnectionStateSource：统一结构类型，保证协议与运行时一致性。
@@ -151,7 +132,6 @@ export function createMainConnectionStateSource(options: MainConnectionStateSour
       const redirectUrl = typeof data.redirectUrl === 'string' ? data.redirectUrl.trim() : '';
       if (data.code === SOCKET_BOOTSTRAP_REDIRECT_CODE) {
         if (redirectUrl && options.redirectConnection(redirectUrl)) {
-          options.renderPingLatency(null, t('connection.status.redirecting', undefined));
           return;
         }
         suppressNextBootstrapFailureDisconnectRecovery = true;
@@ -223,7 +203,6 @@ export function createMainConnectionStateSource(options: MainConnectionStateSour
         return;
       }
       if (options.hasRefreshToken()) {
-        options.renderPingLatency(null, t('connection.status.restoring', undefined));
         options.scheduleConnectionRecovery(300, true);
         return;
       }
@@ -244,35 +223,16 @@ export function createMainConnectionStateSource(options: MainConnectionStateSour
         return;
       }
       options.rejectPendingRedeemCodes(t('connection.redeem.disconnected', undefined));
-      options.clearPendingSocketPing();
       if (suppressNextBootstrapFailureDisconnectRecovery) {
         suppressNextBootstrapFailureDisconnectRecovery = false;
-        options.renderPingLatency(null, t('connection.bootstrap.unavailable', undefined));
         options.setPanelRuntimeDisconnected();
         return;
       }
-      options.renderPingLatency(null, navigator.onLine
-        ? t('connection.status.restoring', undefined)
-        : t('connection.status.offline', undefined));
       options.setPanelRuntimeDisconnected();
       if (options.hasPlayer()) {
         options.showToast(t('connection.toast.reconnecting', undefined));
       }
       options.scheduleConnectionRecovery(options.getDocumentVisibilityState() === 'visible' ? 300 : 0);
-    },    
-    /**
- * handlePong：处理Pong并更新相关状态。
- * @param data { clientAt: number } 原始数据。
- * @returns 无返回值，直接更新Pong相关状态。
- */
-
-
-    handlePong(data: {    
-    /**
- * clientAt：clientAt相关字段。
- */
- clientAt: number }): void {
-      options.handlePong(data);
     },
   };
 }
