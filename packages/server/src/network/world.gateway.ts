@@ -782,6 +782,8 @@ class WorldGateway implements WorldGatewayHelperContext {
     async handleBuyMarketItem(@ConnectedSocket() client: Socket, @MessageBody() payload: any) { return this.gatewayMarketHelper.handleBuyMarketItem(client, payload); }
     @SubscribeMessage(C2S.BuyHeavenlyDaoShopItem)
     async handleBuyHeavenlyDaoShopItem(@ConnectedSocket() client: Socket, @MessageBody() payload: any) { return this.gatewayMarketHelper.handleBuyHeavenlyDaoShopItem(client, payload); }
+    @SubscribeMessage(C2S.BuySpiritStoneShopItem)
+    async handleBuySpiritStoneShopItem(@ConnectedSocket() client: Socket, @MessageBody() payload: any) { return this.gatewayMarketHelper.handleBuySpiritStoneShopItem(client, payload); }
     @SubscribeMessage(C2S.SellMarketItem)
     async handleSellMarketItem(@ConnectedSocket() client: Socket, @MessageBody() payload: any) { return this.gatewayMarketHelper.handleSellMarketItem(client, payload); }
     @SubscribeMessage(C2S.VendorRecycleItem)

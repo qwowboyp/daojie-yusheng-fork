@@ -43,6 +43,7 @@ type MainMarketStateSourceOptions = {
     | 'sendPlaceAuctionBid'
     | 'sendBuyoutAuctionLot'
     | 'sendBuyHeavenlyDaoShopItem'
+    | 'sendBuySpiritStoneShopItem'
     | 'sendVendorRecycleItem'
     | 'sendCancelMarketOrder'
     | 'sendClaimMarketStorage'
@@ -92,6 +93,7 @@ export function createMainMarketStateSource(options: MainMarketStateSourceOption
     onBuyTransmissionLot: (lotId, itemKey) => options.socket.sendBuyTransmissionLot(lotId, itemKey),
     onCreateTransmissionSellOrder: (itemInstanceId, unitPrice) => options.socket.sendCreateMarketSellOrder(itemInstanceId, 1, unitPrice, 'transmission'),
     onBuyHeavenlyDaoShopItem: (itemId, quantity) => options.socket.sendBuyHeavenlyDaoShopItem(itemId, quantity),
+    onBuySpiritStoneShopItem: (itemId, quantity) => options.socket.sendBuySpiritStoneShopItem(itemId, quantity),
     onVendorRecycleItem: (itemInstanceId, quantity) => options.socket.sendVendorRecycleItem(itemInstanceId, quantity),
     onOpenTechniqueGeneration: () => options.openTechniqueGeneration(),
     onCancelOrder: (orderId) => options.socket.sendCancelMarketOrder(orderId),

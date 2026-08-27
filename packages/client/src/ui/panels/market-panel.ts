@@ -33,6 +33,7 @@ import {
   MarketListedItemView,
   MarketOrderBookView,
   MarketOwnOrderView,
+  MarketSpiritStoneShopItemView,
   MarketStorage,
   MarketTradeHistoryScope,
   PlayerState,
@@ -182,6 +183,8 @@ interface MarketPanelCallbacks {
   onBuyoutAuctionLot: (lotId: string, itemKey: string) => void;
   /** 购买天道商店商品。 */
   onBuyHeavenlyDaoShopItem: (itemId: string, quantity: number) => void;
+  /** 購買靈石商店商品。 */
+  onBuySpiritStoneShopItem: (itemId: string, quantity: number) => void;
   /** 向回收商出售背包物品（按 NPC 商店售价折价回收）。 */
   onVendorRecycleItem: (itemInstanceId: string, quantity: number) => void;
   /** 打开自创功法悟道页面。 */
@@ -354,6 +357,10 @@ const MARKET_DIALOG_MAX_PRICE = MARKET_MAX_UNIT_PRICE;
 const MARKET_DIALOG_MAX_QUANTITY = 999_900_000_000;
 /** 天道商店客户端输入上限；服务端仍按固定表和权威上限最终校验。 */
 const HEAVENLY_DAO_SHOP_MAX_QUANTITY = 9_999;
+/** 靈石商店貨幣道具 ID（靈石）。 */
+const SPIRIT_STONE_SHOP_CURRENCY_ITEM_ID = 'spirit_stone'; // 靈石，坊市交易貨幣
+/** 靈石商店客戶端輸入上限；服務端仍按固定表和權威上限最終校驗。 */
+const SPIRIT_STONE_SHOP_MAX_QUANTITY = 9_999;
 /** 功法书筛选按钮的静态配置。 */
 const MARKET_TECHNIQUE_FILTERS: Array<{
 /**
@@ -389,6 +396,8 @@ export class MarketPanel {
   private static readonly AUCTION_CONSIGN_MODAL_OWNER = 'auction-consign-panel';
   /** 天道商店独立弹窗的归属标识。 */
   private static readonly HEAVENLY_DAO_SHOP_MODAL_OWNER = 'heavenly-dao-shop-panel';
+  /** 靈石商店獨立彈窗的歸屬標識。 */
+  private static readonly SPIRIT_STONE_SHOP_MODAL_OWNER = 'spirit-stone-shop-panel';
   /** 回收商独立弹窗的归属标识。 */
   private static readonly VENDOR_RECYCLE_MODAL_OWNER = 'vendor-recycle-panel';
   /** 交易弹窗根节点的 id。 */
@@ -464,6 +473,12 @@ export class MarketPanel {
   private readonly heavenlyDaoShopQuantityDrafts = new Map<string, string>();
   /** 天道商店依赖的资产投影签名，用于跳过无变化的每息刷新。 */
   private heavenlyDaoShopAssetSignature = '';
+  /** 靈石商店當前選中的商品 ID。 */
+  private spiritStoneShopSelectedItemId: string | null = null;
+  /** 靈石商店每個商品的數量草稿。 */
+  private readonly spiritStoneShopQuantityDrafts = new Map<string, string>();
+  /** 靈石商店依賴的資產投影簽名，用於跳過無變化的每息刷新。 */
+  private spiritStoneShopAssetSignature = '';
   /** 回收商每个背包堆的数量草稿（itemInstanceId → 输入文本）。 */
   private readonly vendorRecycleQuantityDrafts = new Map<string, string>();
   /** 回收商依赖的资产投影签名，用于跳过无变化的每息刷新。 */
@@ -545,6 +560,7 @@ export class MarketPanel {
       onOpenAuction: (tab) => this.openAuctionFromPane(tab),
       onOpenTransmission: () => this.openTransmissionFromPane(),
       onOpenHeavenlyDaoShop: () => this.openHeavenlyDaoShopFromPane(),
+      onOpenSpiritStoneShop: () => this.openSpiritStoneShopFromPane(),
       onOpenVendorRecycle: () => this.openVendorRecycleFromPane(),
       onOpenTechniqueGeneration: () => this.callbacks?.onOpenTechniqueGeneration?.(),
     });
@@ -569,6 +585,8 @@ export class MarketPanel {
     const nextPlayer = player ?? null;
     const shouldPatchHeavenlyDaoShop = detailModalHost.isOpenFor(MarketPanel.HEAVENLY_DAO_SHOP_MODAL_OWNER)
       && this.captureHeavenlyDaoShopAssetSignature(nextPlayer, this.inventory);
+    const shouldPatchSpiritStoneShop = detailModalHost.isOpenFor(MarketPanel.SPIRIT_STONE_SHOP_MODAL_OWNER)
+      && this.captureSpiritStoneShopAssetSignature(nextPlayer, this.inventory);
     this.player = nextPlayer;
     if (detailModalHost.isOpenFor(MarketPanel.MODAL_OWNER)) {
       this.syncVisibleMarketInventoryState();
@@ -585,6 +603,8 @@ export class MarketPanel {
       this.patchAuctionConsignModalState();
     } else if (shouldPatchHeavenlyDaoShop) {
       this.patchHeavenlyDaoShopModal();
+    } else if (shouldPatchSpiritStoneShop) {
+      this.patchSpiritStoneShopModal();
     }
   }
 
@@ -594,6 +614,8 @@ export class MarketPanel {
 
     const shouldPatchHeavenlyDaoShop = detailModalHost.isOpenFor(MarketPanel.HEAVENLY_DAO_SHOP_MODAL_OWNER)
       && this.captureHeavenlyDaoShopAssetSignature(this.player, inventory);
+    const shouldPatchSpiritStoneShop = detailModalHost.isOpenFor(MarketPanel.SPIRIT_STONE_SHOP_MODAL_OWNER)
+      && this.captureSpiritStoneShopAssetSignature(this.player, inventory);
     const shouldPatchVendorRecycle = detailModalHost.isOpenFor(MarketPanel.VENDOR_RECYCLE_MODAL_OWNER)
       && this.captureVendorRecycleAssetSignature(inventory);
     this.inventory = inventory;
@@ -613,6 +635,8 @@ export class MarketPanel {
       this.patchAuctionConsignModalState();
     } else if (shouldPatchHeavenlyDaoShop) {
       this.patchHeavenlyDaoShopModal();
+    } else if (shouldPatchSpiritStoneShop) {
+      this.patchSpiritStoneShopModal();
     } else if (shouldPatchVendorRecycle) {
       this.patchVendorRecycleModal();
     }
@@ -632,6 +656,7 @@ export class MarketPanel {
     const auctionConsignModalOpen = detailModalHost.isOpenFor(MarketPanel.AUCTION_CONSIGN_MODAL_OWNER);
     const transmissionModalOpen = detailModalHost.isOpenFor(MarketTransmissionView.modalOwner);
     const heavenlyDaoShopOpen = detailModalHost.isOpenFor(MarketPanel.HEAVENLY_DAO_SHOP_MODAL_OWNER);
+    const spiritStoneShopOpen = detailModalHost.isOpenFor(MarketPanel.SPIRIT_STONE_SHOP_MODAL_OWNER);
     const vendorRecycleOpen = detailModalHost.isOpenFor(MarketPanel.VENDOR_RECYCLE_MODAL_OWNER);
     const previousMarketUpdate = this.marketUpdate;
     const knownListedItems = data.listedItems.length > 0 ? data.listedItems : this.getKnownListedItems(this.marketUpdate);
@@ -681,6 +706,9 @@ export class MarketPanel {
     } else if (heavenlyDaoShopOpen) {
       this.captureHeavenlyDaoShopAssetSignature(this.player, this.inventory);
       this.patchHeavenlyDaoShopModal();
+    } else if (spiritStoneShopOpen) {
+      this.captureSpiritStoneShopAssetSignature(this.player, this.inventory);
+      this.patchSpiritStoneShopModal();
     } else if (vendorRecycleOpen) {
       this.captureVendorRecycleAssetSignature(this.inventory);
       this.patchVendorRecycleModal();
@@ -1028,6 +1056,9 @@ export class MarketPanel {
     this.heavenlyDaoShopSelectedItemId = HEAVENLY_DAO_SHOP_ITEMS[0]?.itemId ?? null;
     this.heavenlyDaoShopQuantityDrafts.clear();
     this.heavenlyDaoShopAssetSignature = '';
+    this.spiritStoneShopSelectedItemId = null;
+    this.spiritStoneShopQuantityDrafts.clear();
+    this.spiritStoneShopAssetSignature = '';
     this.vendorRecycleQuantityDrafts.clear();
     this.vendorRecycleAssetSignature = '';
     this.vendorRecycleSelectedInstanceId = null;
@@ -1068,6 +1099,7 @@ export class MarketPanel {
     detailModalHost.close(MarketPanel.AUCTION_MODAL_OWNER);
     detailModalHost.close(MarketPanel.AUCTION_CONSIGN_MODAL_OWNER);
     detailModalHost.close(MarketPanel.HEAVENLY_DAO_SHOP_MODAL_OWNER);
+    detailModalHost.close(MarketPanel.SPIRIT_STONE_SHOP_MODAL_OWNER);
     detailModalHost.close(MarketPanel.VENDOR_RECYCLE_MODAL_OWNER);
   }
 
@@ -1533,6 +1565,416 @@ export class MarketPanel {
     errorNode.hidden = !(invalidTotal || insufficientCurrency);
     errorNode.textContent = invalidTotal
       ? `請輸入 1 至 ${formatDisplayInteger(HEAVENLY_DAO_SHOP_MAX_QUANTITY)} 之間的購買數量。`
+      : `${currencyName}不足，需要 ${displayTotal} ${currencyName}。`;
+    buttonNode.disabled = invalidTotal || insufficientCurrency;
+  }
+
+  private openSpiritStoneShopFromPane(): void {
+    if (!this.requestMarketBootstrap()) {
+      this.callbacks?.onRequestMarket();
+    }
+    this.openSpiritStoneShopModal();
+  }
+
+  private getSpiritStoneShopEntries(): readonly MarketSpiritStoneShopItemView[] {
+    return this.marketUpdate?.spiritStoneShopItems ?? [];
+  }
+
+  private getSpiritStoneShopCurrencyName(): string {
+    return this.marketUpdate?.currencyItemName ?? '靈石';
+  }
+
+  private getSpiritStoneShopCurrencyOwned(): number {
+    return getPlayerOwnedItemCount(this.player, this.inventory, SPIRIT_STONE_SHOP_CURRENCY_ITEM_ID);
+  }
+
+  private captureSpiritStoneShopAssetSignature(player: PlayerState | null, inventory: Inventory): boolean {
+    const nextSignature = this.buildSpiritStoneShopAssetSignature(player, inventory);
+    if (nextSignature === this.spiritStoneShopAssetSignature) {
+      return false;
+    }
+    this.spiritStoneShopAssetSignature = nextSignature;
+    return true;
+  }
+
+  private buildSpiritStoneShopAssetSignature(player: PlayerState | null, inventory: Inventory): string {
+    const entries = this.getSpiritStoneShopEntries();
+    const trackedItemIds = new Set<string>([SPIRIT_STONE_SHOP_CURRENCY_ITEM_ID]);
+    for (const entry of entries) {
+      trackedItemIds.add(entry.itemId);
+    }
+    const parts: string[] = [];
+    for (const itemId of trackedItemIds) {
+      parts.push(`${itemId}:${getPlayerOwnedItemCount(player, inventory, itemId)}`);
+    }
+    for (const entry of entries) {
+      parts.push(`catalog:${entry.itemId}:${entry.unitPrice}`);
+    }
+    return parts.join('|');
+  }
+
+  private getSpiritStoneShopEntry(itemId: string | null): MarketSpiritStoneShopItemView | null {
+    if (!itemId) {
+      return null;
+    }
+    return this.getSpiritStoneShopEntries().find((entry) => entry.itemId === itemId) ?? null;
+  }
+
+  private ensureSpiritStoneShopSelection(): MarketSpiritStoneShopItemView | null {
+    const entries = this.getSpiritStoneShopEntries();
+    const selected = this.getSpiritStoneShopEntry(this.spiritStoneShopSelectedItemId);
+    if (selected) {
+      return selected;
+    }
+    const first = entries[0] ?? null;
+    this.spiritStoneShopSelectedItemId = first?.itemId ?? null;
+    return first;
+  }
+
+  private buildSpiritStoneShopItemStack(itemId: string, count: number): ItemStack | null {
+    const template = getLocalItemTemplate(itemId);
+    if (!template) {
+      return null;
+    }
+    return {
+      ...template,
+      count: Math.max(1, count),
+      desc: template.desc ?? '',
+    };
+  }
+
+  private parseSpiritStoneShopQuantity(itemId: string): number | null {
+    const raw = this.spiritStoneShopQuantityDrafts.get(itemId) ?? '1';
+    if (!raw || !/^\d+$/.test(raw)) {
+      return null;
+    }
+    const quantity = Number(raw);
+    if (!Number.isSafeInteger(quantity) || quantity <= 0 || quantity > SPIRIT_STONE_SHOP_MAX_QUANTITY) {
+      return null;
+    }
+    return quantity;
+  }
+
+  private renderSpiritStoneShopRows(): string {
+    const entries = this.getSpiritStoneShopEntries();
+    if (entries.length === 0) {
+      return '<div class="empty-hint">暫無可購買商品。</div>';
+    }
+    const owned = this.getSpiritStoneShopCurrencyOwned();
+    const currencyName = this.getSpiritStoneShopCurrencyName();
+    const selectedItemId = this.ensureSpiritStoneShopSelection()?.itemId ?? null;
+    return entries.map((entry) => {
+      const template = getLocalItemTemplate(entry.itemId);
+      const itemName = resolveClientItemBaseName(entry.itemId, template?.name);
+      const ownedCount = getPlayerOwnedItemCount(this.player, this.inventory, entry.itemId);
+      const unitPrice = Math.max(0, Math.trunc(entry.unitPrice));
+      const insufficient = owned < unitPrice;
+      const active = entry.itemId === selectedItemId ? ' active' : '';
+      return `
+        <button class="market-item-cell ui-surface-card ui-surface-card--compact${active}" data-spirit-stone-shop-select="${escapeHtmlAttr(entry.itemId)}" type="button">
+          <div class="market-item-cell-name">
+            <span class="market-item-cell-name-text market-item-title--interactive" data-market-item-tooltip="spirit-stone-shop:${escapeHtmlAttr(entry.itemId)}">${escapeHtml(itemName)}</span>
+            <span class="market-item-cell-owned ${ownedCount > 0 ? '' : 'hidden'}">${ownedCount > 0 ? formatDisplayCountBadge(ownedCount) : ''}</span>
+          </div>
+          <div class="market-item-cell-prices">
+            <span>${formatDisplayInteger(unitPrice)} ${escapeHtml(currencyName)}</span>
+            <span>${insufficient ? `${escapeHtml(currencyName)}不足` : '可購買'}</span>
+          </div>
+        </button>
+      `;
+    }).join('');
+  }
+
+  private renderSpiritStoneShopDetailPanel(): string {
+    const entry = this.ensureSpiritStoneShopSelection();
+    if (!entry) {
+      return '<div class="empty-hint">暫無可購買商品。</div>';
+    }
+    const item = this.buildSpiritStoneShopItemStack(entry.itemId, 1);
+    if (!item) {
+      return '<div class="empty-hint">商品配置不存在。</div>';
+    }
+
+    const currencyName = this.getSpiritStoneShopCurrencyName();
+    const ownedCurrency = this.getSpiritStoneShopCurrencyOwned();
+    const quantityText = this.spiritStoneShopQuantityDrafts.get(entry.itemId) ?? '1';
+    const quantity = this.parseSpiritStoneShopQuantity(entry.itemId);
+    const unitPrice = Math.max(0, Math.trunc(entry.unitPrice));
+    const totalCost = quantity === null ? null : quantity * unitPrice;
+    const invalidTotal = totalCost === null || !Number.isSafeInteger(totalCost) || totalCost <= 0;
+    const insufficientCurrency = !invalidTotal && totalCost > ownedCurrency;
+    const displayTotal = invalidTotal ? '--' : formatDisplayInteger(totalCost ?? 0);
+    const affordableCount = unitPrice > 0 ? Math.floor(ownedCurrency / unitPrice) : 0;
+    const maxPurchasable = Math.min(SPIRIT_STONE_SHOP_MAX_QUANTITY, affordableCount);
+    const ownedCount = getPlayerOwnedItemCount(this.player, this.inventory, entry.itemId);
+    const effectLines = describeItemEffectDetails(item);
+    const errorText = invalidTotal
+      ? `請輸入 1 至 ${formatDisplayInteger(SPIRIT_STONE_SHOP_MAX_QUANTITY)} 之間的購買數量。`
+      : `${currencyName}不足，需要 ${displayTotal} ${currencyName}。`;
+    return `
+      <div class="market-book-header">
+        <div>
+          <div class="market-item-title market-item-title--interactive" data-market-item-tooltip="spirit-stone-shop:${escapeHtmlAttr(entry.itemId)}">${escapeHtml(item.name)}</div>
+          <div class="market-book-subtitle">${escapeHtml(getItemTypeLabel(item.type))} · ${escapeHtml(item.desc)}</div>
+        </div>
+      </div>
+      ${effectLines.length > 0 ? `
+        <div class="market-book-effects ui-surface-pane ui-surface-pane--stack ui-surface-pane--muted">
+          <div class="market-book-effects-title">物品效果</div>
+          <div class="market-book-effects-list">
+            ${effectLines.map((line) => `<div class="market-book-effect-line">${escapeHtml(line)}</div>`).join('')}
+          </div>
+        </div>
+      ` : ''}
+      <div class="market-book-column ui-surface-pane ui-surface-pane--stack ui-scroll-panel" data-spirit-stone-shop-detail-scroll="true">
+        <div class="market-book-column-head">
+          <div class="market-book-column-title">購買數量</div>
+          <button class="small-btn" data-spirit-stone-shop-buy="${escapeHtmlAttr(entry.itemId)}" type="button" ${invalidTotal || insufficientCurrency ? 'disabled' : ''}>購買</button>
+        </div>
+        <div class="market-action-row">
+          <span class="market-order-meta">已持有：${escapeHtml(formatDisplayCountBadge(ownedCount))}</span>
+          <span class="market-order-meta">最多可買：${formatDisplayInteger(maxPurchasable)}</span>
+        </div>
+        <div class="market-trade-dialog-section ui-surface-pane ui-surface-pane--stack ui-surface-pane--muted">
+          <div class="market-trade-dialog-field">
+            <span>單價</span>
+            <div class="market-price-display">
+              <strong>${formatDisplayInteger(unitPrice)}</strong>
+              <span>${escapeHtml(currencyName)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="market-trade-dialog-section ui-surface-pane ui-surface-pane--stack ui-surface-pane--muted">
+          <div class="market-trade-dialog-field">
+            <span>數量</span>
+            ${renderTradeQuantityControl({
+              value: quantityText || '1',
+              max: SPIRIT_STONE_SHOP_MAX_QUANTITY,
+              inputClassName: 'gm-inline-input ui-input',
+              inputAttrs: { 'data-spirit-stone-shop-quantity': entry.itemId },
+              leftButtons: [{ label: '1', attrs: { 'data-spirit-stone-shop-quick-qty': entry.itemId, 'data-spirit-stone-shop-quick-qty-value': '1' } }],
+              rightButtons: [{
+                label: '最大',
+                attrs: { 'data-spirit-stone-shop-quick-qty': entry.itemId, 'data-spirit-stone-shop-quick-qty-value': Math.max(1, maxPurchasable) },
+                disabled: maxPurchasable <= 0,
+              }],
+            })}
+          </div>
+          <div class="market-trade-dialog-total ${invalidTotal || insufficientCurrency ? 'error' : ''}">
+            <span>總價</span>
+            <strong data-spirit-stone-shop-total="${escapeHtmlAttr(entry.itemId)}">${displayTotal} ${escapeHtml(currencyName)}</strong>
+          </div>
+        </div>
+        <div class="market-action-hint market-action-hint--error" data-spirit-stone-shop-error="${escapeHtmlAttr(entry.itemId)}" ${invalidTotal || insufficientCurrency ? '' : 'hidden'}>
+          ${escapeHtml(errorText)}
+        </div>
+        <div class="market-action-hint">商品與價格由服務端按 NPC 商店貨架權威結算，只消耗靈石。</div>
+      </div>
+    `;
+  }
+
+  private openSpiritStoneShopModal(): void {
+    this.ensureSpiritStoneShopSelection();
+    this.spiritStoneShopAssetSignature = this.buildSpiritStoneShopAssetSignature(this.player, this.inventory);
+    detailModalHost.open({
+      ownerId: MarketPanel.SPIRIT_STONE_SHOP_MODAL_OWNER,
+      size: 'full',
+      variantClass: 'detail-modal--market',
+      title: '靈石商店',
+      subtitle: `持有 ${this.getSpiritStoneShopCurrencyName()}：${formatDisplayInteger(this.getSpiritStoneShopCurrencyOwned())}`,
+      renderBody: (body: HTMLElement) => {
+        replaceElementHtml(body, `
+          <div class="market-modal-content market-modal-content--wide spirit-stone-shop-shell">
+            <div class="market-market-tab">
+              <div class="market-board spirit-stone-shop-board">
+                <div class="market-board-list-wrap ui-surface-pane ui-surface-pane--stack">
+                  <div class="market-list-toolbar ui-action-row">
+                    <div class="market-list-toolbar-meta" data-spirit-stone-shop-currency="true">持有 ${escapeHtml(this.getSpiritStoneShopCurrencyName())}：${formatDisplayInteger(this.getSpiritStoneShopCurrencyOwned())}</div>
+                  </div>
+                  <div class="market-board-list npc-shop-board-list ui-scroll-panel" data-spirit-stone-shop-list="true">
+                    ${this.renderSpiritStoneShopRows()}
+                  </div>
+                </div>
+                <div class="market-book-panel ui-surface-pane ui-surface-pane--stack" data-spirit-stone-shop-detail="true">
+                  ${this.renderSpiritStoneShopDetailPanel()}
+                </div>
+              </div>
+            </div>
+          </div>
+        `);
+      },
+      onClose: () => {
+        this.tooltipNode = null;
+        this.tooltip.hide(true);
+      },
+      onAfterRender: (body: HTMLElement, signal: AbortSignal) => {
+        this.bindSpiritStoneShopEvents(body, signal);
+        this.bindMarketModalDelegatedEvents(body, signal);
+      },
+    });
+  }
+
+  private getOpenSpiritStoneShopBody(): HTMLElement | null {
+    if (!detailModalHost.isOpenFor(MarketPanel.SPIRIT_STONE_SHOP_MODAL_OWNER)) {
+      return null;
+    }
+    return document.getElementById('detail-modal-body');
+  }
+
+  private patchSpiritStoneShopModal(): boolean {
+    const body = this.getOpenSpiritStoneShopBody();
+    if (!body?.querySelector('.spirit-stone-shop-shell')) {
+      return false;
+    }
+    detailModalHost.patch({
+      ownerId: MarketPanel.SPIRIT_STONE_SHOP_MODAL_OWNER,
+      title: '靈石商店',
+      subtitle: `持有 ${this.getSpiritStoneShopCurrencyName()}：${formatDisplayInteger(this.getSpiritStoneShopCurrencyOwned())}`,
+    });
+    const currencyNode = body.querySelector<HTMLElement>('[data-spirit-stone-shop-currency="true"]');
+    if (currencyNode) {
+      currencyNode.textContent = `持有 ${this.getSpiritStoneShopCurrencyName()}：${formatDisplayInteger(this.getSpiritStoneShopCurrencyOwned())}`;
+    }
+    this.patchSpiritStoneShopList();
+    this.patchSpiritStoneShopDetailPanel();
+    return true;
+  }
+
+  private patchSpiritStoneShopList(): void {
+    const body = this.getOpenSpiritStoneShopBody();
+    const listRoot = body?.querySelector<HTMLElement>('[data-spirit-stone-shop-list="true"]');
+    if (!listRoot) {
+      return;
+    }
+    replaceElementHtml(listRoot, this.renderSpiritStoneShopRows());
+  }
+
+  private patchSpiritStoneShopDetailPanel(): void {
+    const body = this.getOpenSpiritStoneShopBody();
+    const detailRoot = body?.querySelector<HTMLElement>('[data-spirit-stone-shop-detail="true"]');
+    if (!detailRoot) {
+      return;
+    }
+    const scrollTop = detailRoot.querySelector<HTMLElement>('[data-spirit-stone-shop-detail-scroll="true"]')?.scrollTop ?? 0;
+    const activeElement = document.activeElement;
+    const focusedItemId = activeElement instanceof HTMLInputElement && detailRoot.contains(activeElement)
+      ? activeElement.dataset.spiritStoneShopQuantity ?? null
+      : null;
+    const selectionStart = activeElement instanceof HTMLInputElement ? activeElement.selectionStart : null;
+    const selectionEnd = activeElement instanceof HTMLInputElement ? activeElement.selectionEnd : null;
+    replaceElementHtml(detailRoot, this.renderSpiritStoneShopDetailPanel());
+    const nextScrollRoot = detailRoot.querySelector<HTMLElement>('[data-spirit-stone-shop-detail-scroll="true"]');
+    if (nextScrollRoot) {
+      nextScrollRoot.scrollTop = scrollTop;
+    }
+    if (!focusedItemId) {
+      return;
+    }
+    const input = detailRoot.querySelector<HTMLInputElement>(`[data-spirit-stone-shop-quantity="${focusedItemId}"]`);
+    if (!input) {
+      return;
+    }
+    input.focus({ preventScroll: true });
+    if (selectionStart !== null && selectionEnd !== null) {
+      input.setSelectionRange(selectionStart, selectionEnd);
+    }
+  }
+
+  private bindSpiritStoneShopEvents(body: HTMLElement, signal: AbortSignal): void {
+    body.addEventListener('click', (event) => this.handleSpiritStoneShopClick(event), { signal });
+    body.addEventListener('input', (event) => this.handleSpiritStoneShopInput(event), { signal });
+  }
+
+  private handleSpiritStoneShopClick(event: Event): void {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const selectButton = target.closest<HTMLElement>('[data-spirit-stone-shop-select]');
+    if (selectButton) {
+      const itemId = selectButton.dataset.spiritStoneShopSelect;
+      if (!itemId || itemId === this.spiritStoneShopSelectedItemId) {
+        return;
+      }
+      this.spiritStoneShopSelectedItemId = itemId;
+      this.patchSpiritStoneShopList();
+      this.patchSpiritStoneShopDetailPanel();
+      return;
+    }
+
+    const quickQtyButton = target.closest<HTMLElement>('[data-spirit-stone-shop-quick-qty]');
+    if (quickQtyButton) {
+      const itemId = quickQtyButton.dataset.spiritStoneShopQuickQty;
+      const nextQuantity = quickQtyButton.dataset.spiritStoneShopQuickQtyValue;
+      if (!itemId || !nextQuantity) {
+        return;
+      }
+      this.spiritStoneShopQuantityDrafts.set(itemId, nextQuantity);
+      const body = this.getOpenSpiritStoneShopBody();
+      const input = body?.querySelector<HTMLInputElement>(`[data-spirit-stone-shop-quantity="${itemId}"]`);
+      if (input) {
+        input.value = nextQuantity;
+      }
+      if (body) {
+        this.syncSpiritStoneShopPurchaseState(body, itemId);
+      }
+      return;
+    }
+
+    const buyButton = target.closest<HTMLElement>('[data-spirit-stone-shop-buy]');
+    if (!buyButton) {
+      return;
+    }
+    const itemId = buyButton.dataset.spiritStoneShopBuy;
+    const quantity = itemId ? this.parseSpiritStoneShopQuantity(itemId) : null;
+    if (!itemId || quantity === null) {
+      return;
+    }
+    this.callbacks?.onBuySpiritStoneShopItem(itemId, quantity);
+  }
+
+  private handleSpiritStoneShopInput(event: Event): void {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement)) {
+      return;
+    }
+    const itemId = target.dataset.spiritStoneShopQuantity;
+    if (!itemId) {
+      return;
+    }
+    const normalized = target.value.replaceAll(/[^\d]/g, '');
+    this.spiritStoneShopQuantityDrafts.set(itemId, normalized);
+    if (target.value !== normalized) {
+      target.value = normalized;
+    }
+    const body = this.getOpenSpiritStoneShopBody();
+    if (body) {
+      this.syncSpiritStoneShopPurchaseState(body, itemId);
+    }
+  }
+
+  private syncSpiritStoneShopPurchaseState(root: ParentNode, itemId: string): void {
+    const entry = this.getSpiritStoneShopEntry(itemId);
+    const totalNode = root.querySelector<HTMLElement>(`[data-spirit-stone-shop-total="${itemId}"]`);
+    const buttonNode = root.querySelector<HTMLButtonElement>(`[data-spirit-stone-shop-buy="${itemId}"]`);
+    const errorNode = root.querySelector<HTMLElement>(`[data-spirit-stone-shop-error="${itemId}"]`);
+    if (!entry || !totalNode || !buttonNode || !errorNode) {
+      return;
+    }
+
+    const currencyName = this.getSpiritStoneShopCurrencyName();
+    const quantity = this.parseSpiritStoneShopQuantity(itemId);
+    const unitPrice = Math.max(0, Math.trunc(entry.unitPrice));
+    const totalCost = quantity === null ? null : quantity * unitPrice;
+    const invalidTotal = totalCost === null || !Number.isSafeInteger(totalCost) || totalCost <= 0;
+    const insufficientCurrency = !invalidTotal && totalCost > this.getSpiritStoneShopCurrencyOwned();
+    const displayTotal = invalidTotal ? '--' : formatDisplayInteger(totalCost ?? 0);
+    totalNode.textContent = `${displayTotal} ${currencyName}`;
+    totalNode.parentElement?.classList.toggle('error', invalidTotal || insufficientCurrency);
+    errorNode.hidden = !(invalidTotal || insufficientCurrency);
+    errorNode.textContent = invalidTotal
+      ? `請輸入 1 至 ${formatDisplayInteger(SPIRIT_STONE_SHOP_MAX_QUANTITY)} 之間的購買數量。`
       : `${currencyName}不足，需要 ${displayTotal} ${currencyName}。`;
     buttonNode.disabled = invalidTotal || insufficientCurrency;
   }
@@ -3898,6 +4340,11 @@ export class MarketPanel {
     if (key.startsWith('heavenly-dao-shop:')) {
       const entry = this.getHeavenlyDaoShopEntry(key.slice('heavenly-dao-shop:'.length));
       const item = entry ? this.buildHeavenlyDaoShopItemStack(entry.itemId, entry.count) : null;
+      return item ? this.buildMarketItemTooltipPayload(item) : null;
+    }
+    if (key.startsWith('spirit-stone-shop:')) {
+      const entry = this.getSpiritStoneShopEntry(key.slice('spirit-stone-shop:'.length));
+      const item = entry ? this.buildSpiritStoneShopItemStack(entry.itemId, 1) : null;
       return item ? this.buildMarketItemTooltipPayload(item) : null;
     }
     if (key.startsWith('transmission:')) {

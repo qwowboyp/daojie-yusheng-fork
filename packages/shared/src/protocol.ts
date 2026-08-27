@@ -169,6 +169,7 @@ export const C2S = {
   BuyTransmissionLot: 'n:c:buyTransmissionLot',
   BuyMarketItem: 'n:c:buyMarketItem',
   BuyHeavenlyDaoShopItem: 'n:c:buyHeavenlyDaoShopItem',
+  BuySpiritStoneShopItem: 'n:c:buySpiritStoneShopItem',
   SellMarketItem: 'n:c:sellMarketItem',
   VendorRecycleItem: 'n:c:vendorRecycleItem',
   CancelMarketOrder: 'n:c:cancelMarketOrder',
@@ -425,6 +426,7 @@ export interface C2S_PayloadMap extends Record<C2S_EventName, unknown> {
   [C2S.BuyTransmissionLot]: RequestPayloads.C2S_BuyTransmissionLot;
   [C2S.BuyMarketItem]: RequestPayloads.C2S_BuyMarketItem;
   [C2S.BuyHeavenlyDaoShopItem]: RequestPayloads.C2S_BuyHeavenlyDaoShopItem;
+  [C2S.BuySpiritStoneShopItem]: RequestPayloads.C2S_BuySpiritStoneShopItem;
   [C2S.SellMarketItem]: RequestPayloads.C2S_SellMarketItem;
   [C2S.VendorRecycleItem]: RequestPayloads.C2S_VendorRecycleItem;
   [C2S.CancelMarketOrder]: RequestPayloads.C2S_CancelMarketOrder;

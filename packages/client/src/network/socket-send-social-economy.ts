@@ -313,6 +313,10 @@ export function createSocketSocialEconomySender(deps: SocialEconomySenderDeps) {
     sendBuyHeavenlyDaoShopItem(itemId: string, quantity: number): void {
       deps.emitEvent(C2S.BuyHeavenlyDaoShopItem, { itemId, quantity });
     },
+    /** 購買靈石商店商品（NPC 商店同價目錄）。 */
+    sendBuySpiritStoneShopItem(itemId: string, quantity: number): void {
+      deps.emitEvent(C2S.BuySpiritStoneShopItem, { itemId, quantity });
+    },
     /**
  * sendSellMarketItem：处理sendSell坊市道具并更新相关状态。
  * @param itemInstanceId string 背包物品实例 ID。

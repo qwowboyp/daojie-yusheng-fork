@@ -78,6 +78,8 @@ export class MarketRuntimeService {
     npcTemplateRegistry: NpcTemplateRegistry | null = null;
     /** 回收商單價表快取：模板啟動期凍結，運行期不變。 */
     vendorRecycleUnitPriceByItemId: Map<string, number> | null = null;
+    /** 靈石商店單價表快取：模板啟動期凍結，運行期不變。 */
+    spiritStoneShopUnitPriceByItemId: Map<string, number> | null = null;
     /** 运行时日志器，记录加载、撮合与持久化异常。 */
     logger = new Logger(MarketRuntimeService.name);
     /** 当前仍然有效的求购/出售挂单。 */
@@ -194,6 +196,55 @@ export class MarketRuntimeService {
                 throw new Error('heavenly_dao_shop_purchase_durable_commit_failed');
             }
             return this.singleStructuredMessage(playerId, 'success', 'notice.market.heavenly-dao-shop.purchased', `購買 ${itemLabel}，消耗 ${currencyName} x${totalCost}`, {
+                vars: { itemLabel, currency: currencyName, cost: totalCost },
+                pills: [{ key: 'itemLabel', style: 'target' }, { key: 'currency', style: 'target' }],
+            });
+            });
+        });
+    }
+    /** 购买灵石商店商品：NPC 商店货架的坊市远程入口，与 NPC 商店同价。 */
+    async buySpiritStoneShopItem(playerId, payload) {
+        await this.ensureStorageHydrated(playerId);
+        return this.runExclusiveMarketMutation(playerId, async (context) => {
+            return this.runExclusivePlayerAssetMutation([playerId], async () => {
+            const itemId = typeof payload?.itemId === 'string' ? payload.itemId.trim() : '';
+            const quantity = this.normalizeHeavenlyDaoShopQuantity(payload?.quantity);
+            // 靈石商店目錄查找：與 NPC 商店同價，無折扣邏輯
+            const unitPrice = itemId ? this.getSpiritStoneShopUnitPriceByItemId().get(itemId) : undefined;
+            if (unitPrice == null || !quantity) {
+                return this.singleMessage(playerId, '靈石商店商品不存在。', 'warn');
+            }
+            const totalCost = unitPrice * quantity;
+            if (!Number.isSafeInteger(totalCost) || totalCost <= 0) {
+                return this.singleMessage(playerId, '靈石商店價格異常，已拒絕本次購買。', 'warn');
+            }
+            // NPC 商品單件計價：買 quantity 件發 quantity 個
+            const item = this.contentTemplateRepository.createItem(itemId, quantity);
+            if (!item) {
+                return this.singleMessage(playerId, '靈石商店商品配置不存在。', 'warn');
+            }
+            const currencyName = this.getCurrencyItemName();
+            if (!this.playerRuntimeService.canAffordWallet(playerId, MARKET_CURRENCY_ITEM_ID, totalCost)) {
+                return this.singleMessage(playerId, `${currencyName}不足，無法購買。`);
+            }
+            this.captureOnlinePlayerState(playerId, context);
+            if (!this.playerRuntimeService.canAffordWallet(playerId, MARKET_CURRENCY_ITEM_ID, totalCost)) {
+                return this.singleMessage(playerId, `${currencyName}不足，無法購買。`);
+            }
+            this.playerRuntimeService.debitWallet(playerId, MARKET_CURRENCY_ITEM_ID, totalCost);
+            this.deliverItemToPlayer(playerId, item, context);
+            const itemLabel = this.formatMarketItemStackLabel(item);
+            const durableCommitted = await this.commitDurableMarketMutationIfAvailable(context, playerId, 'spirit_stone_shop_purchase', {
+                operationId: payload?.operationId ?? payload?.requestId,
+                itemId,
+                quantity,
+                totalCost,
+                unitPrice,
+            });
+            if (this.durableOperationService?.isEnabled?.() && !durableCommitted) {
+                throw new Error('spirit_stone_shop_purchase_durable_commit_failed');
+            }
+            return this.singleStructuredMessage(playerId, 'success', 'notice.market.spirit-stone-shop.purchased', `購買 ${itemLabel}，消耗 ${currencyName} x${totalCost}`, {
                 vars: { itemLabel, currency: currencyName, cost: totalCost },
                 pills: [{ key: 'itemLabel', style: 'target' }, { key: 'currency', style: 'target' }],
             });
@@ -479,6 +530,9 @@ export class MarketRuntimeService {
             vendorRecycleItems: Array.from(this.getVendorRecycleUnitPriceByItemId().entries())
                 .map(([itemId, unitRecyclePrice]) => ({ itemId, unitRecyclePrice }))
                 .sort((left, right) => left.itemId.localeCompare(right.itemId)),
+            spiritStoneShopItems: Array.from(this.getSpiritStoneShopUnitPriceByItemId().entries())
+                .map(([itemId, unitPrice]) => ({ itemId, unitPrice }))
+                .sort((left, right) => left.itemId.localeCompare(right.itemId)),
         };
     }
     /** 從 NPC 商店貨架彙總回收商單價；同一物品取最低售價再折算，結果快取至進程結束。 */
@@ -528,6 +582,44 @@ export class MarketRuntimeService {
             prices.set(itemId, unitRecyclePrice);
         }
         this.vendorRecycleUnitPriceByItemId = prices;
+        return prices;
+    }
+    /** 靈石商店目錄：NPC 商店貨架彙總，同一物品取最低售價，與 NPC 商店同價，結果快取。 */
+    getSpiritStoneShopUnitPriceByItemId(): Map<string, number> {
+        if (this.spiritStoneShopUnitPriceByItemId) {
+            return this.spiritStoneShopUnitPriceByItemId;
+        }
+        const prices = new Map<string, number>();
+        const registry = this.npcTemplateRegistry;
+        if (!registry) {
+            this.spiritStoneShopUnitPriceByItemId = prices;
+            return prices;
+        }
+        const lowestShopPriceByItemId = new Map<string, number>();
+        for (const npcId of registry.listIds()) {
+            const shopItems = registry.tryGetRef(npcId)?.shopItems;
+            if (!Array.isArray(shopItems)) {
+                continue;
+            }
+            for (const entry of shopItems) {
+                const itemId = typeof entry?.itemId === 'string' ? entry.itemId.trim() : '';
+                if (!itemId) {
+                    continue;
+                }
+                const shopPrice = Number(entry?.price ?? 0);
+                if (!Number.isInteger(shopPrice) || shopPrice <= 0) {
+                    continue;
+                }
+                const existing = lowestShopPriceByItemId.get(itemId);
+                if (existing == null || shopPrice < existing) {
+                    lowestShopPriceByItemId.set(itemId, shopPrice);
+                }
+            }
+        }
+        for (const [itemId, shopPrice] of lowestShopPriceByItemId) {
+            prices.set(itemId, shopPrice);
+        }
+        this.spiritStoneShopUnitPriceByItemId = prices;
         return prices;
     }
     /** 构造分页坊市列表，支持品类、部位和功法书分类过滤。 */

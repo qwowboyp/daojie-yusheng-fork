@@ -383,6 +383,24 @@ class WorldGatewayMarketHelper {
             this.gateway.worldClientEventService.emitGatewayError(client, 'BUY_HEAVENLY_DAO_SHOP_ITEM_FAILED', error);
         }
     }
+    /** 处理灵石商店购买意图：NPC 商店货架的坊市远程入口，与 NPC 商店同价。 */
+    async handleBuySpiritStoneShopItem(client, payload) {
+        const playerId = this.gateway.gatewayGuardHelper.requirePlayerId(client);
+        if (!playerId) {
+            return;
+        }
+        try {
+            const result = await this.gateway.marketRuntimeService.buySpiritStoneShopItem(playerId, {
+                itemId: payload?.itemId ?? '',
+                quantity: payload?.quantity,
+                operationId: payload?.operationId ?? payload?.requestId,
+            });
+            await this.gateway.flushMarketResult(result);
+        }
+        catch (error) {
+            this.gateway.worldClientEventService.emitGatewayError(client, 'BUY_SPIRIT_STONE_SHOP_ITEM_FAILED', error);
+        }
+    }
     /**
  * executeSellMarketItem：处理executeSell坊市道具并更新相关状态。
  * @param client 参数说明。

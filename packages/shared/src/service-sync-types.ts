@@ -287,6 +287,11 @@ export interface MarketUpdateView {
  */
 
   vendorRecycleItems?: MarketVendorRecycleItemView[];
+  /**
+ * spiritStoneShopItems：灵石商店可售目录（NPC 商店货架汇总，itemId → 单件售价），服务端权威下发。
+ */
+
+  spiritStoneShopItems?: MarketSpiritStoneShopItemView[];
 }
 
 /** 回收商可收物品的单件回收价视图。 */
@@ -301,6 +306,20 @@ export interface MarketVendorRecycleItemView {
  */
 
   unitRecyclePrice: number;
+}
+
+/** 灵石商店可售商品的单件售价视图（NPC 商店货架汇总，同物品取最低售价）。 */
+export interface MarketSpiritStoneShopItemView {
+  /**
+ * itemId：可售道具 ID。
+ */
+
+  itemId: string;
+  /**
+ * unitPrice：单件售价（灵石，与 NPC 商店一致）。
+ */
+
+  unitPrice: number;
 }
 
 /** 坊市分页分类计数，按服务端分页分组口径统计。 */

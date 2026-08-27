@@ -143,6 +143,7 @@ const smokeCases = [
     { name: 'market-runtime-session-fence', scriptFile: 'market-runtime-session-fence-smoke.js', standalone: true },
     { name: 'market-result-affected-player-sync', scriptFile: 'market-result-affected-player-sync-smoke.js', standalone: true },
     { name: 'market-heavenly-dao-shop', scriptFile: 'market-heavenly-dao-shop-smoke.js', standalone: true },
+    { name: 'market-spirit-stone-shop', scriptFile: 'market-spirit-stone-shop-smoke.js', standalone: true },
     { name: 'native-managed-account-ban-market', scriptFile: 'native-managed-account-ban-market-smoke.js', standalone: true },
     { name: 'loot', scriptFile: 'loot-smoke.js' },
     { name: 'auth-bootstrap', scriptFile: 'auth-bootstrap-smoke.js' },
@@ -376,6 +377,7 @@ const SMOKE_CASE_GROUPS = Object.freeze({
     'market-runtime-cancel-order',
     'market-result-affected-player-sync',
     'market-heavenly-dao-shop',
+    'market-spirit-stone-shop',
     'native-managed-account-ban-market',
   ],
   'mail-outbox-flush': [
@@ -458,6 +460,7 @@ const PARALLEL_STANDALONE_CASES = new Set([
     'market-runtime-cancel-order',
     'market-result-affected-player-sync',
     'market-heavenly-dao-shop',
+    'market-spirit-stone-shop',
     'mail-wallet-attachment',
     'world-runtime-instance-capability-guard',
     'world-runtime-player-session-no-auto-instance',

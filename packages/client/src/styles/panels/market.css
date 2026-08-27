@@ -250,6 +250,7 @@
     }
 
     .heavenly-dao-shop-board .market-board-list,
+    .spirit-stone-shop-board .market-board-list,
     .vendor-recycle-board .market-board-list {
       grid-template-rows: repeat(7, minmax(0, 1fr));
     }

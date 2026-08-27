@@ -32,6 +32,7 @@ import type {
 import type {
   AcceptNpcQuestView,
   BuyHeavenlyDaoShopItemView,
+  BuySpiritStoneShopItemView,
   BuyMarketItemView,
   BuyoutAuctionLotView,
   BuyTransmissionLotView,
@@ -241,6 +242,8 @@ export interface C2S_BuyTransmissionLot extends BuyTransmissionLotView {}
 export interface C2S_BuyMarketItem extends BuyMarketItemView {}
 /** 购买天道商店商品。 */
 export interface C2S_BuyHeavenlyDaoShopItem extends BuyHeavenlyDaoShopItemView {}
+/** 购买灵石商店商品（NPC 商店货架汇总目录，价格由服务端裁定）。 */
+export interface C2S_BuySpiritStoneShopItem extends BuySpiritStoneShopItemView {}
   /** 直接向坊市出售背包物品。 */
   export interface C2S_SellMarketItem extends SellMarketItemView {}
   /** 向回收商出售背包物品。 */

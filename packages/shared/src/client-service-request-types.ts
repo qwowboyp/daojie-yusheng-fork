@@ -409,6 +409,20 @@ export interface BuyHeavenlyDaoShopItemView {
   quantity: number;
 }
 
+/** 购买灵石商店商品（NPC 商店货架汇总目录）。 */
+export interface BuySpiritStoneShopItemView {
+  /**
+ * itemId：商品道具 ID。
+ */
+
+  itemId: string;
+  /**
+ * quantity：购买件数（NPC 商品按单件计价）。
+ */
+
+  quantity: number;
+}
+
 /** 出售背包物品。 */
 export interface SellMarketItemView {
 /**
