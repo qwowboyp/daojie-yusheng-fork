@@ -49,13 +49,13 @@ function testClearMainTechnique(): void {
 
 function testSetMainTechniqueWhileTechniqueJobActive(): void {
   const log: CultivationLogEntry[] = [];
-  const service = new WorldRuntimeCultivationService(createPlayerRuntimeService(log, '青木剑诀'));
+  const service = new WorldRuntimeCultivationService(createPlayerRuntimeService(log, '青木劍訣'));
 
   service.dispatchCultivateTechnique('player:1', 'qingmu_sword', createDeps(log));
 
   assert.deepEqual(log, [
     ['cultivateTechnique', 'player:1', 'qingmu_sword'],
-    ['queuePlayerNotice', 'player:1', '已设为主修 青木剑诀', 'success'],
+    ['queuePlayerNotice', 'player:1', '已設為主修 青木劍訣', 'success'],
   ]);
 }
 
