@@ -248,6 +248,11 @@ export function resolveTargetRefForAction(
   if ((geometry.shape ?? 'single') !== 'single') {
     return encodeTileTargetRef({ x: target.x, y: target.y });
   }
+  if (isTemporaryTileSkill(skill)) {
+    // 地块生成类技能一律以地块为目标：点在怪物等实体上时取其所在格坐标，
+    // 避免把实体 ID 当目标送出后被服务端以「必须选择地块目标」拒绝。
+    return encodeTileTargetRef({ x: target.x, y: target.y });
+  }
   if (skill) {
     return entityTargetRef ?? encodeTileTargetRef({ x: target.x, y: target.y });
   }

@@ -61,9 +61,15 @@ function isPlayerSafeFailureReason(message) {
 }
 
 /** 未被枚举识别的失败统一通知：业务拒绝带出具体原因，基础设施错误保持通用文案。 */
-function buildCommandFailedNotice(message) {
+function buildCommandFailedNotice(message, skillName = undefined) {
     if (isPlayerSafeFailureReason(message)) {
         const reason = message.trim();
+        // 施法类指令带技能名：让玩家能对应到具体技能，而非一排无主警告。
+        if (skillName) {
+            return buildStructuredNotice('warn', 'notice.command.skill-failed', `${skillName}施放失敗：${reason}`, {
+                vars: { skillName, reason },
+            });
+        }
         return buildStructuredNotice('warn', 'notice.command.failed-with-reason', reason, {
             vars: { reason },
         });
@@ -104,7 +110,7 @@ function buildPendingCommandNotice(command, message) {
     if (command?.kind === 'engageBattle'
         || command?.kind === 'basicAttack'
         || command?.kind === 'castSkill') {
-        return buildPendingCombatNotice(message);
+        return buildPendingCombatNotice(message, typeof command.skillName === 'string' && command.skillName.trim() ? command.skillName.trim() : undefined);
     }
     if (command?.kind === 'startTechniqueTransmission'
         || command?.kind === 'cancelTechniqueTransmission'
@@ -155,7 +161,7 @@ function buildPendingNavigationNotice(message) {
     return buildStructuredNotice('warn', 'notice.navigation.unreachable', '無法到達該位置');
 }
 
-function buildPendingCombatNotice(message) {
+function buildPendingCombatNotice(message, skillName = undefined) {
     if (message === '當前實例不允許攻擊地形') {
         return buildStructuredNotice('warn', 'notice.command.tile-damage-forbidden', '當前區域禁止攻擊地形。');
     }
@@ -189,7 +195,7 @@ function buildPendingCombatNotice(message) {
     if (typeof message === 'string' && /^(技能|玩家) .+ 元氣不足$/.test(message)) {
         return buildStructuredNotice('warn', 'notice.command.qi-insufficient', '元氣不足。');
     }
-    return buildCommandFailedNotice(message);
+    return buildCommandFailedNotice(message, skillName);
 }
 
 function buildPendingTechniqueNotice(message) {

@@ -15,6 +15,7 @@ const {
     normalizeTechniqueId,
     normalizePositiveCount,
     normalizeCoordinate,
+    findPlayerSkill,
 } = world_runtime_normalization_helpers_1;
 
 function normalizeTechniqueTransmissionMode(value) {
@@ -474,9 +475,13 @@ export class WorldRuntimePlayerCommandEnqueueService {
         if (!targetPlayerId && !targetMonsterId && !targetRef && action.requiresTarget !== false) {
             throw new BadRequestException('必須指定目標');
         }
+        // 附带技能名，供待执行指令失败通知向玩家标明是哪个技能施放失败（仅展示用，不参与校验）。
+        const skill = findPlayerSkill(player, skillId);
+        const skillName = typeof skill?.name === 'string' ? skill.name.trim() : '';
         deps.enqueuePendingCommand(playerId, {
             kind: 'castSkill',
             skillId,
+            skillName: skillName || null,
             targetPlayerId: targetPlayerId || null,
             targetMonsterId: targetMonsterId || null,
             targetRef: targetRef || null,

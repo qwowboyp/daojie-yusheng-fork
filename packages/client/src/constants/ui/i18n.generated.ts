@@ -1984,6 +1984,7 @@ export const CLIENT_I18N_MESSAGES: Record<ClientLocale, Record<string, string>> 
   "notice.command.pvp-forbidden": "當前區域不允許玩家互攻。",
   "notice.command.qi-insufficient": "元氣不足。",
   "notice.command.skill-cooldown": "技能尚在冷卻。",
+  "notice.command.skill-failed": "{skillName}施放失敗：{reason}",
   "notice.command.target-blocked": "目標被遮擋。",
   "notice.command.target-dead": "目標已經死亡。",
   "notice.command.target-left-map": "目標已離開當前地圖。",
