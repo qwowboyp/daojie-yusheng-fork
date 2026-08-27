@@ -2168,7 +2168,11 @@ export class PlayerProgressionService {
                 technique,
             });
         }
-        for (const pending of player.pendingTechniqueComprehensions ?? []) {
+        // 待領悟（pending）功法：依「領悟所需進度」升序（requiredProgress 最小者優先），
+        // 與已學「升級需求最低優先」同精神；複製後排序避免污染 pending 清單原順序。
+        const pendingCandidates = [...(player.pendingTechniqueComprehensions ?? [])]
+            .sort((left, right) => (left.requiredProgress ?? 0) - (right.requiredProgress ?? 0));
+        for (const pending of pendingCandidates) {
             if (!this.canSelfComprehendPendingTechnique(player, pending)) {
                 continue;
             }
