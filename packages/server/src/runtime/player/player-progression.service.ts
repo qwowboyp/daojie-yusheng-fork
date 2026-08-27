@@ -2156,7 +2156,11 @@ export class PlayerProgressionService {
     }
     findNextCultivationTarget(player, currentTechId) {
         const targets = [];
-        for (const technique of this.resolveTechniqueProgressionCache(player).trainableTechniques) {
+        // 已學未滿功法：依「升下一層所需經驗」升序（expToNext 最小者優先），
+        // 自動切換時優先選升級成本最低的功法；複製後排序避免污染 progression cache。
+        const learnedCandidates = [...this.resolveTechniqueProgressionCache(player).trainableTechniques]
+            .sort((left, right) => (left.expToNext ?? 0) - (right.expToNext ?? 0));
+        for (const technique of learnedCandidates) {
             targets.push({
                 kind: 'learned',
                 techId: technique.techId,
