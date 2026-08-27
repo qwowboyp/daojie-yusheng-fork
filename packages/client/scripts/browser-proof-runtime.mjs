@@ -29,8 +29,12 @@ export async function waitFor(probe, label, timeoutMs = 15_000) {
   throw new Error(`等待${label}超时${lastError ? `：${lastError.message}` : ''}`);
 }
 
-async function findChromeExecutable() {
-  const candidates = [
+/** 收集本机 Chrome/Chromium 可执行文件候选路径，覆盖 Linux 容器与 Windows 开发机。 */
+export function chromeExecutableCandidates() {
+  const programFiles = process.env.ProgramFiles ?? process.env.PROGRAMFILES;
+  const programFilesX86 = process.env['ProgramFiles(x86)'] ?? process.env['PROGRAMFILES(X86)'];
+  const localAppData = process.env.LOCALAPPDATA;
+  return [
     process.env.CHROME_BIN,
     '/usr/bin/google-chrome-stable',
     '/usr/bin/google-chrome',
@@ -39,8 +43,16 @@ async function findChromeExecutable() {
     '/usr/bin/chromium-browser',
     '/opt/google/chrome/google-chrome',
     '/opt/google/chrome/chrome',
+    // Windows 开发机常见安装位置（正斜杠路径 Windows API 同样接受；Linux 上探测不到会自动跳过）。
+    programFiles && `${programFiles}/Google/Chrome/Application/chrome.exe`,
+    programFilesX86 && `${programFilesX86}/Google/Chrome/Application/chrome.exe`,
+    localAppData && `${localAppData}/Google/Chrome/Application/chrome.exe`,
+    'C:/Program Files/Google/Chrome/Application/chrome.exe',
   ].filter(Boolean);
-  for (const candidate of candidates) {
+}
+
+async function findChromeExecutable() {
+  for (const candidate of chromeExecutableCandidates()) {
     try {
       await access(candidate);
       return candidate;

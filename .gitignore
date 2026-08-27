@@ -32,3 +32,6 @@ assets/generated/
 .meowart-work/
 .planning/
 .ycode/
+
+# CodeGraph index
+.codegraph/

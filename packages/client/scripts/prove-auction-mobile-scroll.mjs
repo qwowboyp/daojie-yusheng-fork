@@ -12,6 +12,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
+import { chromeExecutableCandidates } from './browser-proof-runtime.mjs';
 
 const MARKER = 'REPAIR_PROOF:ISSUE-000010:PASS';
 const VIEWPORT = { width: 390, height: 844 };
@@ -37,14 +38,7 @@ async function waitFor(probe, label, timeoutMs = 15_000) {
 }
 
 async function findChromeExecutable() {
-  const candidates = [
-    process.env.CHROME_BIN,
-    '/usr/bin/google-chrome-stable',
-    '/usr/bin/google-chrome',
-    '/opt/google/chrome/google-chrome',
-    '/opt/google/chrome/chrome',
-  ].filter(Boolean);
-  for (const candidate of candidates) {
+  for (const candidate of chromeExecutableCandidates()) {
     try {
       await access(candidate);
       return candidate;

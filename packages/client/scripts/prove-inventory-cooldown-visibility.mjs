@@ -12,6 +12,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
+import { chromeExecutableCandidates } from './browser-proof-runtime.mjs';
 
 const MARKER = 'REPAIR_PROOF:ISSUE-000006:PASS';
 const CURRENT_ISSUE_MARKER = 'REPAIR_PROOF:ISSUE-000041:PASS';
@@ -184,14 +185,7 @@ const proofHtml = String.raw`<!doctype html>
 </html>`;
 
 function resolveChromePath() {
-  const candidates = [
-    process.env.CHROME_BIN,
-    '/usr/bin/google-chrome',
-    '/usr/bin/google-chrome-stable',
-    '/usr/bin/chromium',
-    '/usr/bin/chromium-browser',
-  ].filter(Boolean);
-  const chromePath = candidates.find((candidate) => existsSync(candidate));
+  const chromePath = chromeExecutableCandidates().find((candidate) => existsSync(candidate));
   assert.ok(chromePath, '未找到可用于浏览器 proof 的 Chrome/Chromium');
   return chromePath;
 }

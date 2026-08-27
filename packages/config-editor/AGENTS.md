@@ -1,6 +1,6 @@
 # packages/config-editor — 内容配置编辑器
 
-**本目录：56 文件（src/ 45）**。React 19 + Vite + Tailwind v4 + Radix UI。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。
+**本目录：57 文件（src/ 45）**。React 19 + Vite + Tailwind v4 + Radix UI。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。
 
 ## OVERVIEW
 

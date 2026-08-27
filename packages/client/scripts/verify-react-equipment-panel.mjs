@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 import { spawn } from 'node:child_process';
 import crypto from 'node:crypto';
+import { existsSync } from 'node:fs';
 import http from 'node:http';
 import net from 'node:net';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
+import { chromeExecutableCandidates } from './browser-proof-runtime.mjs';
 
 const HOST = process.env.CLIENT_PREVIEW_HOST || '127.0.0.1';
 const PORT = Number(process.env.CLIENT_PREVIEW_PORT || 41922);
 const BASE_URL = `http://${HOST}:${PORT}`;
-const CHROME_BIN = process.env.CHROME_BIN || 'google-chrome';
+// 优先环境变量指定的 Chrome，其次探测本机安装（含 Windows 常见位置），最后回退 PATH 上的通用名。
+const CHROME_BIN = chromeExecutableCandidates().find((candidate) => existsSync(candidate)) ?? 'google-chrome';
 
 const VIEWPORTS = [
   { name: 'desktop-light', width: 1280, height: 800, colorMode: 'light' },
