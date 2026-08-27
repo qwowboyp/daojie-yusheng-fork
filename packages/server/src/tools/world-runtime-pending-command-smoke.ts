@@ -83,8 +83,8 @@ async function testDispatchRoutesAndClearsQueue() {
     });
     assert.deepEqual(log, [
         ['dispatchInstanceCommand', 'player:1', 'move'],
-        ['warn', '处理玩家 player:2 的待执行指令失败：basicAttack（boom） debug=auto=0 manual=0 playerState=missing'],
-        ['queuePlayerNotice', 'player:2', '行动未能完成，请稍后重试。', 'warn', 'notice.command.failed'],
+        ['warn', '處理玩家 player:2 的待執行指令失敗：basicAttack（boom） debug=auto=0 manual=0 playerState=missing'],
+        ['queuePlayerNotice', 'player:2', '行動未能完成，請稍後重試。', 'warn', 'notice.command.failed'],
         ['dispatchInstanceCommand', 'player:3', 'portal'],
     ]);
     assert.equal(service.getPendingCommandCount(), 0);
@@ -335,7 +335,7 @@ async function testAutoCombatRetryFailureStaysSilentWithoutDebugLogger() {
             techniques: [{
                 skills: [{
                     id: 'skill.qingmu_sword',
-                    name: '青木剑诀',
+                    name: '青木劍訣',
                     range: 2,
                     effects: [{ type: 'damage', formula: 1 }],
                 }],
@@ -361,9 +361,9 @@ async function testAutoCombatRetryFailureStaysSilentWithoutDebugLogger() {
         dispatchPlayerCommand(playerId, command) {
             log.push(['dispatchPlayerCommand', playerId, command.kind, command.skillId ?? command.targetMonsterId ?? command.targetRef ?? null]);
             if (command.kind === 'castSkill') {
-                throw new Error('技能 skill.qingmu_sword 元气不足');
+                throw new Error('技能 skill.qingmu_sword 元氣不足');
             }
-            throw new Error('目标超出攻击距离');
+            throw new Error('目標超出攻擊距離');
         },
         buildAutoCombatCommand(instance, runtimePlayer, options) {
             const excludedSkillIds = [...(options?.excludedSkillIds ?? [])].sort();
@@ -496,7 +496,7 @@ async function testInvalidAttackNoticeUsesTargetReason() {
             throw new Error('unexpected dispatchInstanceCommand');
         },
         dispatchPlayerCommand() {
-            throw new Error('该目标无法被攻击');
+            throw new Error('該目標無法被攻擊');
         },
         logger: {
             log(message) {
@@ -511,7 +511,7 @@ async function testInvalidAttackNoticeUsesTargetReason() {
         },
     });
     assert.deepEqual(log, [
-        ['queuePlayerNotice', 'player:1', '没有可命中的目标', 'warn', 'notice.command.no-target'],
+        ['queuePlayerNotice', 'player:1', '沒有可命中的目標', 'warn', 'notice.command.no-target'],
     ]);
     assert.equal(service.getPendingCommandCount(), 0);
 }
@@ -532,7 +532,7 @@ async function testForbiddenTileDamageUsesCapabilityNotice() {
             throw new Error('unexpected dispatchInstanceCommand');
         },
         dispatchPlayerCommand() {
-            throw new Error('当前实例不允许攻击地形');
+            throw new Error('當前實例不允許攻擊地形');
         },
         logger: {
             debug() {},
@@ -543,7 +543,7 @@ async function testForbiddenTileDamageUsesCapabilityNotice() {
         },
     });
     assert.deepEqual(log, [
-        ['queuePlayerNotice', 'player:1', '当前区域禁止攻击地形。', 'warn', 'notice.command.tile-damage-forbidden'],
+        ['queuePlayerNotice', 'player:1', '當前區域禁止攻擊地形。', 'warn', 'notice.command.tile-damage-forbidden'],
     ]);
     assert.equal(service.getPendingCommandCount(), 0);
 }
@@ -562,7 +562,7 @@ async function testMoveToUnreachableFailureDoesNotPromoteDebug() {
             throw new Error('unexpected dispatchInstanceCommand');
         },
         dispatchPlayerCommand() {
-            throw new Error('无法到达该位置');
+            throw new Error('無法到達該位置');
         },
         playerRuntimeService: {
             getPlayer(playerId) {
@@ -589,7 +589,7 @@ async function testMoveToUnreachableFailureDoesNotPromoteDebug() {
         },
     });
     assert.deepEqual(log, [
-        ['queuePlayerNotice', 'player:1', '无法到达该位置', 'warn', 'notice.navigation.unreachable'],
+        ['queuePlayerNotice', 'player:1', '無法到達該位置', 'warn', 'notice.navigation.unreachable'],
     ]);
     assert.equal(service.getPendingCommandCount(), 0);
 }
@@ -610,7 +610,7 @@ async function testAutoCombatInvalidTargetStaysServerInternal() {
             throw new Error('unexpected dispatchInstanceCommand');
         },
         dispatchPlayerCommand() {
-            throw new Error('该目标无法被攻击');
+            throw new Error('該目標無法被攻擊');
         },
         buildAutoCombatCommand() {
             return null;
@@ -669,7 +669,7 @@ async function testAutoCombatInvalidTargetStaysServerInternal() {
             throw new Error('unexpected dispatchInstanceCommand');
         },
         dispatchPlayerCommand() {
-            throw new Error('没有可命中的目标');
+            throw new Error('沒有可命中的目標');
         },
         buildAutoCombatCommand() {
             return null;
@@ -730,7 +730,7 @@ async function testAutoCombatRetaliateFailurePreservesDifferentLockedTarget() {
             throw new Error('unexpected dispatchInstanceCommand');
         },
         dispatchPlayerCommand() {
-            throw new Error('该目标无法被攻击');
+            throw new Error('該目標無法被攻擊');
         },
         buildAutoCombatCommand() {
             return null;
@@ -789,7 +789,7 @@ async function testAutoCombatOutOfRangeClearsTargetWithoutNotice() {
             throw new Error('unexpected dispatchInstanceCommand');
         },
         dispatchPlayerCommand() {
-            throw new Error('技能 skill:area 超出范围');
+            throw new Error('技能 skill:area 超出範圍');
         },
         buildAutoCombatCommand() {
             return null;
@@ -806,7 +806,7 @@ async function testAutoCombatOutOfRangeClearsTargetWithoutNotice() {
                         techniques: [{
                             skills: [{
                                 id: 'skill:area',
-                                name: '地火术',
+                                name: '地火術',
                                 range: 3,
                                 effects: [{ type: 'damage', formula: 1 }],
                             }],
@@ -872,7 +872,7 @@ async function testAutoCombatPlayerOutOfRangeClearsRetaliateAndThreatTarget() {
             throw new Error('unexpected dispatchInstanceCommand');
         },
         dispatchPlayerCommand() {
-            throw new Error('目标超出攻击距离');
+            throw new Error('目標超出攻擊距離');
         },
         buildAutoCombatCommand() {
             return null;
@@ -893,7 +893,7 @@ async function testAutoCombatPlayerOutOfRangeClearsRetaliateAndThreatTarget() {
                             techniques: [{
                                 skills: [{
                                     id: 'skill.cloud_blade',
-                                    name: '流云刀谱',
+                                    name: '流雲刀譜',
                                     range: 3,
                                     effects: [{ type: 'damage', formula: 1 }],
                                 }],
@@ -972,7 +972,7 @@ async function testAutoCombatPlayerPvpDisabledClearsTargetWithoutNotice() {
             throw new Error('unexpected dispatchInstanceCommand');
         },
         dispatchPlayerCommand() {
-            throw new Error('当前实例不允许玩家互攻');
+            throw new Error('當前實例不允許玩家互攻');
         },
         buildAutoCombatCommand() {
             return null;
@@ -1094,7 +1094,7 @@ async function testManualSkillCooldownFailureUsesDebugWhenAvailable() {
             throw new Error('unexpected dispatchInstanceCommand');
         },
         dispatchPlayerCommand() {
-            throw new Error('技能 skill.iron_bone_art 尚在冷却');
+            throw new Error('技能 skill.iron_bone_art 尚在冷卻');
         },
         logger: {
             log(message) {
@@ -1112,8 +1112,8 @@ async function testManualSkillCooldownFailureUsesDebugWhenAvailable() {
         },
     });
     assert.deepEqual(log, [
-        ['debug', '处理玩家 player:1 的待执行指令失败：castSkill（技能 skill.iron_bone_art 尚在冷却） debug=auto=0 manual=0 skill=skill.iron_bone_art playerState=missing'],
-        ['queuePlayerNotice', 'player:1', '技能尚在冷却。', 'warn', 'notice.command.skill-cooldown'],
+        ['debug', '處理玩家 player:1 的待執行指令失敗：castSkill（技能 skill.iron_bone_art 尚在冷卻） debug=auto=0 manual=0 skill=skill.iron_bone_art playerState=missing'],
+        ['queuePlayerNotice', 'player:1', '技能尚在冷卻。', 'warn', 'notice.command.skill-cooldown'],
     ]);
     assert.equal(service.getPendingCommandCount(), 0);
 }
@@ -1134,7 +1134,7 @@ async function testManualEngageNoTargetFailureUsesDebugWhenAvailable() {
             throw new Error('unexpected dispatchInstanceCommand');
         },
         dispatchPlayerCommand() {
-            throw new Error('没有可命中的目标');
+            throw new Error('沒有可命中的目標');
         },
         logger: {
             log(message) {
@@ -1152,8 +1152,8 @@ async function testManualEngageNoTargetFailureUsesDebugWhenAvailable() {
         },
     });
     assert.deepEqual(log, [
-        ['debug', '处理玩家 player:1 的待执行指令失败：engageBattle（没有可命中的目标） debug=auto=0 manual=0 playerState=missing'],
-        ['queuePlayerNotice', 'player:1', '没有可命中的目标', 'warn', 'notice.command.no-target'],
+        ['debug', '處理玩家 player:1 的待執行指令失敗：engageBattle（沒有可命中的目標） debug=auto=0 manual=0 playerState=missing'],
+        ['queuePlayerNotice', 'player:1', '沒有可命中的目標', 'warn', 'notice.command.no-target'],
     ]);
     assert.equal(service.getPendingCommandCount(), 0);
 }
@@ -1185,7 +1185,7 @@ async function testInternalSliceErrorStaysServerInternal() {
         },
     });
     assert.deepEqual(log, [
-        ["error", "处理玩家 player:1 的待执行指令失败：castSkill（Cannot read properties of undefined (reading 'slice')） debug=auto=0 manual=0 skill=skill.baihong_duanyue playerState=missing"],
+        ["error", "處理玩家 player:1 的待執行指令失敗：castSkill（Cannot read properties of undefined (reading 'slice')） debug=auto=0 manual=0 skill=skill.baihong_duanyue playerState=missing"],
     ]);
     assert.equal(service.getPendingCommandCount(), 0);
 }
@@ -1222,9 +1222,9 @@ async function testCaughtHttpExceptionsUseSemanticLogLevels() {
         return logs;
     }
 
-    const missingTeacherTechnique = await dispatch(new BadRequestException('传授者尚未掌握该功法。'));
+    const missingTeacherTechnique = await dispatch(new BadRequestException('傳授者尚未掌握該功法。'));
     const missingTechnique = await dispatch(new NotFoundException('功法不存在：technique:missing'));
-    const unavailable = await dispatch(new ServiceUnavailableException('功法目录暂不可用'));
+    const unavailable = await dispatch(new ServiceUnavailableException('功法目錄暫不可用'));
     const programmingError = await dispatch(new TypeError('unexpected technique projection shape'));
 
     assert.deepEqual(missingTeacherTechnique.map(([level]) => level), ['debug']);
@@ -1239,42 +1239,49 @@ async function testStructuredNoticeAllowlistSanitizesCommandFamilies() {
             name: 'unknown-infrastructure-error',
             command: { kind: 'portal' },
             message: 'database host=internal-db pending write failed',
-            text: '行动未能完成，请稍后重试。',
+            text: '行動未能完成，請稍後重試。',
             key: 'notice.command.failed',
+        },
+        {
+            name: 'unmapped-business-reject-reason',
+            command: { kind: 'startGather', targetRef: 'resource:1' },
+            message: '此處靈草已被採盡',
+            text: '此處靈草已被採盡',
+            key: 'notice.command.failed-with-reason',
         },
         {
             name: 'technique-queue-full',
             command: { kind: 'startAlchemy', payload: { presetId: 'preset:1' } },
-            message: '技艺任务队列已满。',
-            text: '技艺任务队列已满。',
+            message: '技藝任務隊列已滿。',
+            text: '技藝任務隊列已滿。',
             key: 'notice.command.technique-queue-full',
         },
         {
             name: 'protected-item-use',
             command: { kind: 'useItem', itemInstanceId: 'item:secret' },
-            message: '当前位于安全区、出生点、传送点或 NPC 附近，无法使用地块资源道具。',
-            text: '当前位于受保护区域，无法使用地块资源道具。',
+            message: '當前位於安全區、出生點、傳送點或 NPC 附近，無法使用地塊資源道具。',
+            text: '當前位於受保護區域，無法使用地塊資源道具。',
             key: 'notice.item.tile-resource-protected-area',
         },
         {
             name: 'qi-insufficient',
             command: { kind: 'castSkill', skillId: 'skill.internal', targetRef: null },
-            message: '技能 skill.internal 元气不足',
-            text: '元气不足。',
+            message: '技能 skill.internal 元氣不足',
+            text: '元氣不足。',
             key: 'notice.command.qi-insufficient',
         },
         {
             name: 'navigation-route-unavailable',
             command: { kind: 'moveTo', x: 10, y: 10, allowNearestReachable: false },
-            message: '无法规划前往 map.internal 的跨图路线',
-            text: '无法到达该位置',
+            message: '無法規劃前往 map.internal 的跨圖路線',
+            text: '無法到達該位置',
             key: 'notice.navigation.unreachable',
         },
         {
             name: 'navigation-infrastructure-error',
             command: { kind: 'moveTo', x: 20, y: 20, allowNearestReachable: false },
             message: 'path worker=internal-7 crashed',
-            text: '行动未能完成，请稍后重试。',
+            text: '行動未能完成，請稍後重試。',
             key: 'notice.command.failed',
         },
     ];
@@ -1337,9 +1344,9 @@ Promise.resolve()
         ok: true,
         case: 'world-runtime-pending-command',
         answers: [
-            '未知基础设施异常统一映射为稳定通用失败，原始文本只进入服务端诊断。',
-            '战斗、导航、技艺和物品拒绝均使用结构化通知 key，技能与地图内部 ID 不再进入玩家通知。',
-            '自动战斗常态目标失效只进入 DEBUG；未知程序异常进入 ERROR，4xx/5xx 分别进入 DEBUG/WARN。',
+            '未知基礎設施異常統一映射為穩定通用失敗，原始文本只進入服務端診斷。',
+            '戰鬥、導航、技藝和物品拒絕均使用結構化通知 key，技能與地圖內部 ID 不再進入玩家通知。',
+            '自動戰鬥常態目標失效只進入 DEBUG；未知程序異常進入 ERROR，4xx/5xx 分別進入 DEBUG/WARN。',
         ],
     }, null, 2));
 });

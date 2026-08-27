@@ -1979,6 +1979,7 @@ export const CLIENT_I18N_MESSAGES: Record<ClientLocale, Record<string, string>> 
   "notice.command.casting-busy-gather": "吟唱中無法分心採集。",
   "notice.command.casting-busy-mining": "吟唱中無法分心挖礦。",
   "notice.command.failed": "行動未能完成，請稍後重試。",
+  "notice.command.failed-with-reason": "行動未能完成：{reason}",
   "notice.command.no-target": "沒有可命中的目標",
   "notice.command.pvp-forbidden": "當前區域不允許玩家互攻。",
   "notice.command.qi-insufficient": "元氣不足。",

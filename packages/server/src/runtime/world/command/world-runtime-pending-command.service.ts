@@ -38,6 +38,39 @@ function exposesInternalIdentifier(message) {
         || isNoSpawnPointFailure(message);
 }
 
+/** 可安全展示给玩家的失败原因长度上限：超长讯息多半是异常细节而非业务拒绝文案。 */
+const PLAYER_SAFE_FAILURE_REASON_MAX_LENGTH = 60;
+
+/**
+ * 判断失败讯息是否为可安全展示给玩家的业务拒绝原因。
+ * 只放行含中文的简短业务文案；英文基础设施错误（DB / worker / 内部路径）一律
+ * 回退通用文案，避免向玩家外泄内部细节（smoke 契约：不得出现 internal 字样）。
+ */
+function isPlayerSafeFailureReason(message) {
+    if (typeof message !== 'string') {
+        return false;
+    }
+    const trimmed = message.trim();
+    if (!trimmed || trimmed.length > PLAYER_SAFE_FAILURE_REASON_MAX_LENGTH) {
+        return false;
+    }
+    if (exposesInternalIdentifier(message)) {
+        return false;
+    }
+    return /[\u4e00-\u9fff]/.test(trimmed);
+}
+
+/** 未被枚举识别的失败统一通知：业务拒绝带出具体原因，基础设施错误保持通用文案。 */
+function buildCommandFailedNotice(message) {
+    if (isPlayerSafeFailureReason(message)) {
+        const reason = message.trim();
+        return buildStructuredNotice('warn', 'notice.command.failed-with-reason', reason, {
+            vars: { reason },
+        });
+    }
+    return buildStructuredNotice('warn', 'notice.command.failed', '行動未能完成，請稍後重試。');
+}
+
 function buildPendingCommandNotice(command, message) {
     if (exposesInternalIdentifier(message)) {
         return null;
@@ -106,16 +139,12 @@ function buildPendingCommandNotice(command, message) {
             );
         }
     }
-    return buildStructuredNotice(
-        'warn',
-        'notice.command.failed',
-        '行動未能完成，請稍後重試。',
-    );
+    return buildCommandFailedNotice(message);
 }
 
 function buildPendingNavigationNotice(message) {
     if (!isExpectedNavigationReject(message)) {
-        return buildStructuredNotice('warn', 'notice.command.failed', '行動未能完成，請稍後重試。');
+        return buildCommandFailedNotice(message);
     }
     if (message === '目標超出地圖範圍') {
         return buildStructuredNotice('warn', 'notice.navigation.target-out-of-bounds', '目標超出地圖範圍');
@@ -160,7 +189,7 @@ function buildPendingCombatNotice(message) {
     if (typeof message === 'string' && /^(技能|玩家) .+ 元氣不足$/.test(message)) {
         return buildStructuredNotice('warn', 'notice.command.qi-insufficient', '元氣不足。');
     }
-    return buildStructuredNotice('warn', 'notice.command.failed', '行動未能完成，請稍後重試。');
+    return buildCommandFailedNotice(message);
 }
 
 function buildPendingTechniqueNotice(message) {
@@ -179,7 +208,7 @@ function buildPendingTechniqueNotice(message) {
     if (typeof message === 'string' && /^當前沒有可取消的.+任務。$/.test(message)) {
         return buildStructuredNotice('warn', 'notice.command.technique-cancel-none', '當前沒有可取消的技藝任務。');
     }
-    return buildStructuredNotice('warn', 'notice.command.failed', '行動未能完成，請稍後重試。');
+    return buildCommandFailedNotice(message);
 }
 
 function buildPendingUseItemNotice(message) {
@@ -217,7 +246,7 @@ function buildPendingUseItemNotice(message) {
         return buildStructuredNotice('warn', 'notice.command.skill-cooldown', trimmed);
     }
     if (trimmed.endsWith('沒有可用效果') || trimmed === '該物品不支持批量使用' || trimmed === '物品數量不足' || trimmed.startsWith('背包物品不存在')) {
-        return buildStructuredNotice('warn', 'notice.command.failed', trimmed);
+        return buildCommandFailedNotice(trimmed);
     }
     return null;
 }

@@ -330,7 +330,7 @@ function testBodyTrainingInfuse() {
         ['getPlayerLocationOrThrow', 'player:1'],
         ['resolveCurrentTickForPlayerId', 'player:1'],
         ['infuseBodyTraining', 'player:1', 12],
-        ['queuePlayerNotice', 'player:1', '你将 12 点底蕴灌入肉身，转化为 24 点炼体经验', 'success'],
+        ['queuePlayerNotice', 'player:1', '你將 12 點底蘊灌入肉身，轉化為 24 點煉體經驗', 'success'],
         ['getPlayerViewOrThrow', 'player:1'],
     ]);
 }
@@ -375,7 +375,7 @@ function testAutoRootFoundationToggleUsesImmediateRuntimeCheck() {
         ['getPlayerLocationOrThrow', 'player:1'],
         ['resolveCurrentTickForPlayerId', 'player:1'],
         ['updateAutoRootFoundation', 'player:1', true, 77],
-        ['queuePlayerNotice', 'player:1', '已开启自动凝练根基，修为和材料满足时会每息检测并自动凝练。', 'info'],
+        ['queuePlayerNotice', 'player:1', '已開啟自動凝練根基，修為和材料滿足時會每息檢測並自動凝練。', 'info'],
         ['getPlayerViewOrThrow', 'player:1'],
     ]);
     assert.equal(deps.notices.at(-1)?.key, 'notice.action.auto-root-foundation-enabled');
@@ -396,7 +396,7 @@ function testAutoRootFoundationOnActionUsesImmediateRuntimeCheck() {
         ['getPlayerLocationOrThrow', 'player:1'],
         ['resolveCurrentTickForPlayerId', 'player:1'],
         ['updateAutoRootFoundation', 'player:1', true, 77],
-        ['queuePlayerNotice', 'player:1', '已开启自动凝练根基，修为和材料满足时会每息检测并自动凝练。', 'info'],
+        ['queuePlayerNotice', 'player:1', '已開啟自動凝練根基，修為和材料滿足時會每息檢測並自動凝練。', 'info'],
         ['getPlayerViewOrThrow', 'player:1'],
     ]);
     assert.equal(deps.notices.at(-1)?.key, 'notice.action.auto-root-foundation-enabled');
@@ -417,7 +417,7 @@ function testAutoRootFoundationOffKeepsExplicitFalse() {
         ['getPlayerLocationOrThrow', 'player:1'],
         ['resolveCurrentTickForPlayerId', 'player:1'],
         ['updateAutoRootFoundation', 'player:1', false, 77],
-        ['queuePlayerNotice', 'player:1', '已关闭自动凝练根基。', 'info'],
+        ['queuePlayerNotice', 'player:1', '已關閉自動凝練根基。', 'info'],
         ['getPlayerViewOrThrow', 'player:1'],
     ]);
     assert.equal(deps.notices.at(-1)?.key, 'notice.action.auto-root-foundation-disabled');
@@ -438,7 +438,7 @@ function testAutoRootFoundationOffActionKeepsExplicitFalse() {
         ['getPlayerLocationOrThrow', 'player:1'],
         ['resolveCurrentTickForPlayerId', 'player:1'],
         ['updateAutoRootFoundation', 'player:1', false, 77],
-        ['queuePlayerNotice', 'player:1', '已关闭自动凝练根基。', 'info'],
+        ['queuePlayerNotice', 'player:1', '已關閉自動凝練根基。', 'info'],
         ['getPlayerViewOrThrow', 'player:1'],
     ]);
     assert.equal(deps.notices.at(-1)?.key, 'notice.action.auto-root-foundation-disabled');
@@ -497,7 +497,7 @@ function testWorldMigrationSwitchesToRealLine() {
             relocateExisting: true,
         }],
         ['updateWorldPreference', 'player:1', 'real'],
-        ['queuePlayerNotice', 'player:1', '你已切入现世，后续跨图会默认进入现世线。', 'success'],
+        ['queuePlayerNotice', 'player:1', '你已切入現世，後續跨圖會預設進入現世線。', 'success'],
     ]);
     assert.equal(deps.notices.at(-1)?.key, 'notice.action.world-migration-real-complete');
 }
@@ -652,7 +652,7 @@ function testCultivationToggle() {
         ['getPlayerOrThrow', 'player:1'],
         ['interruptCraftForReason', 'player:1', 'player:1', 'cultivate'],
         ['updateCombatSettings', 'player:1', { cultivationActive: true }, 77],
-        ['queuePlayerNotice', 'player:1', '已恢复当前修炼', 'info'],
+        ['queuePlayerNotice', 'player:1', '已恢復當前修煉', 'info'],
         ['getPlayerViewOrThrow', 'player:1'],
     ]);
 }
@@ -681,7 +681,7 @@ function testCultivationToggleWithoutMainTechnique() {
         ['getPlayerOrThrow', 'player:1'],
         ['interruptCraftForReason', 'player:1', 'player:1', 'cultivate'],
         ['updateCombatSettings', 'player:1', { cultivationActive: true }, 77],
-        ['queuePlayerNotice', 'player:1', '已恢复当前修炼', 'info'],
+        ['queuePlayerNotice', 'player:1', '已恢復當前修煉', 'info'],
         ['getPlayerViewOrThrow', 'player:1'],
     ]);
 }
@@ -709,7 +709,7 @@ function testStopCultivationKeepsMainTechnique() {
         ['resolveCurrentTickForPlayerId', 'player:1'],
         ['getPlayerOrThrow', 'player:1'],
         ['updateCombatSettings', 'player:1', { cultivationActive: false }, 77],
-        ['queuePlayerNotice', 'player:1', '已停止当前修炼', 'info'],
+        ['queuePlayerNotice', 'player:1', '已停止當前修煉', 'info'],
         ['getPlayerViewOrThrow', 'player:1'],
     ]);
 }
@@ -847,7 +847,7 @@ async function testInvalidManualCastClearsPendingCommand() {
         },
         async dispatchPlayerCommand(playerId, command) {
             log.push(['dispatchPlayerCommand', playerId, command]);
-            throw new Error('目标无效');
+            throw new Error('目標無效');
         },
         logger: {
             warn(message) {
@@ -881,8 +881,8 @@ async function testInvalidManualCastClearsPendingCommand() {
         ['resolveCurrentTickForPlayerId', 'player:1'],
         ['clearManualEngagePending', 'player:1'],
         ['clearCombatTarget', 'player:1', 88],
-        ['warn', '处理玩家 player:1 的待执行指令失败：castSkill（目标无效） debug=auto=0 manual=1 skill=skill.test playerState=missing'],
-        ['queuePlayerNotice', 'player:1', '行动未能完成，请稍后重试。', 'warn', 'notice.command.failed'],
+        ['warn', '處理玩家 player:1 的待執行指令失敗：castSkill（目標無效） debug=auto=0 manual=1 skill=skill.test playerState=missing'],
+        ['queuePlayerNotice', 'player:1', '目標無效', 'warn', 'notice.command.failed-with-reason'],
     ]);
 }
 
