@@ -1,0 +1,28 @@
+{
+  "ok": true,
+  "command": "sql SELECT sender_type, sender_label, title FROM player_mail",
+  "executedAt": "2026-08-22T00:42:39.276Z",
+  "durationMs": 1,
+  "resultSets": [
+    {
+      "title": "sql",
+      "columns": [
+        "sender_type",
+        "sender_label",
+        "title"
+      ],
+      "rows": [
+        {
+          "sender_type": "system",
+          "sender_label": "司命臺",
+          "title": null
+        }
+      ],
+      "rowCount": 1,
+      "truncated": false
+    }
+  ],
+  "warnings": [
+    "只读 SQL 已强制 READ ONLY、statement_timeout=2000ms、LIMIT=50"
+  ]
+}

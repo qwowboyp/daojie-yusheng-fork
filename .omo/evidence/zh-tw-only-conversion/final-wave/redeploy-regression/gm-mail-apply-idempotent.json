@@ -1,0 +1,35 @@
+{
+  "ok": true,
+  "conversionId": "mail_snapshot_traditionalize",
+  "mode": "apply",
+  "matchedRows": 1,
+  "convertedRows": 0,
+  "skippedRows": 1,
+  "failedRows": 0,
+  "verifiedRows": 0,
+  "samples": [],
+  "errors": [],
+  "batchId": "mail-tw-20260822003250-4lsubi",
+  "tables": [
+    {
+      "tableName": "player_mail",
+      "backupTable": "player_mail_pre_tw_backup",
+      "backupTableCreated": false,
+      "matchedRows": 1,
+      "convertedRows": 0,
+      "skippedRows": 1,
+      "residualSimplifiedRows": 0
+    },
+    {
+      "tableName": "player_mail_archive",
+      "backupTable": "player_mail_archive_pre_tw_backup",
+      "backupTableCreated": false,
+      "matchedRows": 0,
+      "convertedRows": 0,
+      "skippedRows": 0,
+      "residualSimplifiedRows": 0
+    }
+  ],
+  "residualSimplifiedRows": 0,
+  "appliedAt": "2026-08-22T00:32:50.666Z"
+}

@@ -1,0 +1,219 @@
+{
+  "schema_version": 2,
+  "active_work_id": "zh-tw-only-conversion-9a2a7161",
+  "works": {
+    "zh-tw-only-conversion-9a2a7161": {
+      "work_id": "zh-tw-only-conversion-9a2a7161",
+      "active_plan": "X:\\workSpace\\daojie-yusheng-fork\\.omo\\plans\\zh-tw-only-conversion.md",
+      "plan_name": "zh-tw-only-conversion",
+      "status": "completed",
+      "started_at": "2026-08-19T02:11:26.029Z",
+      "updated_at": "2026-08-22T01:42:40.905Z",
+      "session_ids": [
+        "opencode:ses_fe8365b66ffeUM4VukXZQJmQDB"
+      ],
+      "session_origins": {
+        "opencode:ses_fe8365b66ffeUM4VukXZQJmQDB": "direct"
+      },
+      "agent": "atlas",
+      "task_sessions": {
+        "todo:1": {
+          "task_key": "todo:1",
+          "task_label": "1",
+          "task_title": "**Vocabulary table**: `scripts/lib/tw-vocabulary.mjs` exporting `VOCABULARY_CN_TO_TW` (a `Map<string,string>`). Seed vocabulary MUST include at least: 服务器→伺服器、信息→訊息、内存→記憶體、默认→預設、网络→網路、软件→軟體、硬盘→硬碟、视频→影片、音频→音訊、屏幕→螢幕、鼠标→滑鼠、打印→列印、登录→登入、注册→註冊、在线→線上、创建→建立. Pure data, extensible.",
+          "session_id": "opencode:ses_fe833b5f3ffef5vjinjftW7csT",
+          "agent": "Sisyphus-Junior",
+          "category": "deep",
+          "updated_at": "2026-08-19T02:30:02.583Z",
+          "started_at": "2026-08-19T02:28:28.508Z",
+          "status": "completed",
+          "ended_at": "2026-08-19T02:30:02.583Z",
+          "elapsed_ms": 94075
+        },
+        "todo:2": {
+          "task_key": "todo:2",
+          "task_label": "2",
+          "task_title": "轉換 server 內容真源：content 93 檔 + maps 40 檔全數繁體化",
+          "session_id": "opencode:ses_fe6b5feddffenybCOBrGc79yT9",
+          "agent": "Sisyphus-Junior",
+          "category": "quick",
+          "started_at": "2026-08-19T08:40:58.387Z",
+          "status": "completed",
+          "updated_at": "2026-08-19T09:12:22.457Z",
+          "ended_at": "2026-08-19T09:12:22.457Z",
+          "elapsed_ms": 1884070
+        },
+        "todo:3": {
+          "task_key": "todo:3",
+          "task_label": "3",
+          "task_title": "i18n CSV 轉繁 + 更名 zh-TW.csv + 生成管線單語系化 + 引用同步",
+          "session_id": "opencode:ses_fe6b40755ffey52ATh7XxeYbOu",
+          "agent": "Sisyphus-Junior",
+          "category": "unspecified-high",
+          "updated_at": "2026-08-19T12:03:03.991Z",
+          "started_at": "2026-08-19T10:24:38.101Z",
+          "status": "completed",
+          "ended_at": "2026-08-19T12:03:03.991Z",
+          "elapsed_ms": 5905890
+        },
+        "todo:4": {
+          "task_key": "todo:4",
+          "task_label": "4",
+          "task_title": "server 源碼玩家可見字面值轉繁 + 補 4 個缺失 i18n key",
+          "session_id": "opencode:ses_fe4ce8426ffeQsjE8022L7fqT7",
+          "agent": "Sisyphus-Junior",
+          "category": "quick",
+          "started_at": "2026-08-19T13:00:31.850Z",
+          "status": "completed",
+          "updated_at": "2026-08-19T18:07:34.891Z",
+          "ended_at": "2026-08-19T18:07:34.891Z",
+          "elapsed_ms": 18423041
+        },
+        "todo:9": {
+          "task_key": "todo:9",
+          "task_label": "9",
+          "task_title": "guard 接入驗證鏈 + 全量驗證跑綠",
+          "session_id": "opencode:ses_fe41abe49ffeJSiGRG1LI9LqPv",
+          "agent": "Sisyphus-Junior",
+          "category": "visual-engineering",
+          "started_at": "2026-08-19T18:45:44.768Z",
+          "status": "running",
+          "updated_at": "2026-08-19T21:45:22.734Z"
+        },
+        "todo:10": {
+          "task_key": "todo:10",
+          "task_label": "10",
+          "task_title": "LXC 生產部署 + 線上驗證 + GM 郵件轉換執行",
+          "session_id": "opencode:ses_fe3fa4885ffe4X6qs69oYimvR7",
+          "agent": "Sisyphus-Junior",
+          "category": "unspecified-high",
+          "updated_at": "2026-08-19T23:47:45.237Z",
+          "started_at": "2026-08-19T23:39:03.789Z",
+          "status": "completed",
+          "ended_at": "2026-08-19T23:47:45.237Z",
+          "elapsed_ms": 521448
+        },
+        "final-wave:f1": {
+          "task_key": "final-wave:f1",
+          "task_label": "F1",
+          "task_title": "Plan compliance audit",
+          "session_id": "opencode:ses_fd8e04da2ffeD0X4vF6nU9m7CG",
+          "agent": "Sisyphus-Junior",
+          "category": "ultrabrain",
+          "started_at": "2026-08-19T23:55:19.097Z",
+          "status": "completed",
+          "updated_at": "2026-08-22T01:41:33.000Z",
+          "ended_at": "2026-08-22T01:41:33.000Z",
+          "elapsed_ms": 179173903
+        }
+      },
+      "ended_at": "2026-08-22T01:42:40.905Z",
+      "elapsed_ms": 257474876
+    }
+  },
+  "active_plan": "X:\\workSpace\\daojie-yusheng-fork\\.omo\\plans\\zh-tw-only-conversion.md",
+  "started_at": "2026-08-19T02:11:26.029Z",
+  "status": "completed",
+  "updated_at": "2026-08-22T01:42:40.905Z",
+  "session_ids": [
+    "opencode:ses_fe8365b66ffeUM4VukXZQJmQDB"
+  ],
+  "session_origins": {
+    "opencode:ses_fe8365b66ffeUM4VukXZQJmQDB": "direct"
+  },
+  "plan_name": "zh-tw-only-conversion",
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "**Vocabulary table**: `scripts/lib/tw-vocabulary.mjs` exporting `VOCABULARY_CN_TO_TW` (a `Map<string,string>`). Seed vocabulary MUST include at least: 服务器→伺服器、信息→訊息、内存→記憶體、默认→預設、网络→網路、软件→軟體、硬盘→硬碟、视频→影片、音频→音訊、屏幕→螢幕、鼠标→滑鼠、打印→列印、登录→登入、注册→註冊、在线→線上、创建→建立. Pure data, extensible.",
+      "session_id": "opencode:ses_fe833b5f3ffef5vjinjftW7csT",
+      "agent": "Sisyphus-Junior",
+      "category": "deep",
+      "updated_at": "2026-08-19T02:30:02.583Z",
+      "started_at": "2026-08-19T02:28:28.508Z",
+      "status": "completed",
+      "ended_at": "2026-08-19T02:30:02.583Z",
+      "elapsed_ms": 94075
+    },
+    "todo:2": {
+      "task_key": "todo:2",
+      "task_label": "2",
+      "task_title": "轉換 server 內容真源：content 93 檔 + maps 40 檔全數繁體化",
+      "session_id": "opencode:ses_fe6b5feddffenybCOBrGc79yT9",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "started_at": "2026-08-19T08:40:58.387Z",
+      "status": "completed",
+      "updated_at": "2026-08-19T09:12:22.457Z",
+      "ended_at": "2026-08-19T09:12:22.457Z",
+      "elapsed_ms": 1884070
+    },
+    "todo:3": {
+      "task_key": "todo:3",
+      "task_label": "3",
+      "task_title": "i18n CSV 轉繁 + 更名 zh-TW.csv + 生成管線單語系化 + 引用同步",
+      "session_id": "opencode:ses_fe6b40755ffey52ATh7XxeYbOu",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-08-19T12:03:03.991Z",
+      "started_at": "2026-08-19T10:24:38.101Z",
+      "status": "completed",
+      "ended_at": "2026-08-19T12:03:03.991Z",
+      "elapsed_ms": 5905890
+    },
+    "todo:4": {
+      "task_key": "todo:4",
+      "task_label": "4",
+      "task_title": "server 源碼玩家可見字面值轉繁 + 補 4 個缺失 i18n key",
+      "session_id": "opencode:ses_fe4ce8426ffeQsjE8022L7fqT7",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "started_at": "2026-08-19T13:00:31.850Z",
+      "status": "completed",
+      "updated_at": "2026-08-19T18:07:34.891Z",
+      "ended_at": "2026-08-19T18:07:34.891Z",
+      "elapsed_ms": 18423041
+    },
+    "todo:9": {
+      "task_key": "todo:9",
+      "task_label": "9",
+      "task_title": "guard 接入驗證鏈 + 全量驗證跑綠",
+      "session_id": "opencode:ses_fe41abe49ffeJSiGRG1LI9LqPv",
+      "agent": "Sisyphus-Junior",
+      "category": "visual-engineering",
+      "started_at": "2026-08-19T18:45:44.768Z",
+      "status": "running",
+      "updated_at": "2026-08-19T21:45:22.734Z"
+    },
+    "todo:10": {
+      "task_key": "todo:10",
+      "task_label": "10",
+      "task_title": "LXC 生產部署 + 線上驗證 + GM 郵件轉換執行",
+      "session_id": "opencode:ses_fe3fa4885ffe4X6qs69oYimvR7",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-08-19T23:47:45.237Z",
+      "started_at": "2026-08-19T23:39:03.789Z",
+      "status": "completed",
+      "ended_at": "2026-08-19T23:47:45.237Z",
+      "elapsed_ms": 521448
+    },
+    "final-wave:f1": {
+      "task_key": "final-wave:f1",
+      "task_label": "F1",
+      "task_title": "Plan compliance audit",
+      "session_id": "opencode:ses_fd8e04da2ffeD0X4vF6nU9m7CG",
+      "agent": "Sisyphus-Junior",
+      "category": "ultrabrain",
+      "started_at": "2026-08-19T23:55:19.097Z",
+      "status": "completed",
+      "updated_at": "2026-08-22T01:41:33.000Z",
+      "ended_at": "2026-08-22T01:41:33.000Z",
+      "elapsed_ms": 179173903
+    }
+  },
+  "agent": "atlas",
+  "ended_at": "2026-08-22T01:42:40.905Z",
+  "elapsed_ms": 257474876
+}

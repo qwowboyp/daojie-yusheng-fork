@@ -1,0 +1,24 @@
+{
+  "dryRun": {
+    "ok": true, "conversionId": "mail_snapshot_traditionalize", "mode": "dry-run",
+    "matchedRows": 1, "convertedRows": 1, "skippedRows": 0, "failedRows": 0,
+    "samples": [{ "senderLabel": "司命台", "convertedTo": "司命臺" }],
+    "residualSimplifiedRows": 0
+  },
+  "apply": {
+    "ok": true, "mode": "apply", "matchedRows": 1, "convertedRows": 1,
+    "skippedRows": 0, "failedRows": 0, "verifiedRows": 1,
+    "batchId": "mail-tw-20260819222201-i0jjlb",
+    "backupTable": "player_mail_pre_tw_backup", "backupTableCreated": true,
+    "residualSimplifiedRows": 0
+  },
+  "idempotentApply": {
+    "ok": true, "matchedRows": 1, "convertedRows": 0, "skippedRows": 1,
+    "failedRows": 0, "verifiedRows": 0, "residualSimplifiedRows": 0
+  },
+  "dbCrossCheck": {
+    "systemMailSenderLabel": "司命臺",
+    "backupSenderLabel": "司命台",
+    "residualSimplifiedCount": 0
+  }
+}

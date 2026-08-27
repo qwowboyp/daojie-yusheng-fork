@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "command": "sql SELECT COUNT(*) AS n FROM player_mail_archive WHERE COALESCE(sender_label,'') ~ '[体识经闪击伤万亿离线挂机确认练筑炼飞升]' OR COALESCE(title,'') ~ '[体识经闪击伤万亿离线挂机确认练筑炼飞升]'",
+  "executedAt": "2026-08-22T00:43:42.306Z",
+  "durationMs": 1,
+  "resultSets": [
+    {
+      "title": "sql",
+      "columns": [
+        "n"
+      ],
+      "rows": [
+        {
+          "n": "0"
+        }
+      ],
+      "rowCount": 1,
+      "truncated": false
+    }
+  ],
+  "warnings": [
+    "只读 SQL 已强制 READ ONLY、statement_timeout=2000ms、LIMIT=50"
+  ]
+}

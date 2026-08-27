@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-08-22T00:32:50Z",
+  "player_mail": {
+    "sender_type": "system",
+    "count": 1,
+    "sender_label": "司命臺"
+  },
+  "player_mail_archive": {
+    "rowCount": 0,
+    "groupBySenderType": []
+  },
+  "backupTables": [
+    "player_mail_pre_tw_backup",
+    "player_mail_archive_pre_tw_backup"
+  ],
+  "conversionMeta": [
+    {
+      "conversion_key": "mail_snapshot_traditionalize",
+      "note": "todo10 single-table leftover, harmless"
+    },
+    {
+      "conversion_key": "mail_snapshot_traditionalize:player_mail",
+      "batch_id": "mail-tw-20260822003250-4lsubi",
+      "converted_rows": 0,
+      "skipped_rows": 1,
+      "residual_simplified_rows": 0
+    },
+    {
+      "conversion_key": "mail_snapshot_traditionalize:player_mail_archive",
+      "batch_id": "mail-tw-20260822003250-4lsubi",
+      "converted_rows": 0,
+      "skipped_rows": 0,
+      "residual_simplified_rows": 0
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "schemaName": "smoke_3j_mt3pc57o",
+  "dryRun": {
+    "matchedRows": 7,
+    "convertedRows": 3,
+    "tables": [
+      {
+        "tableName": "player_mail",
+        "matchedRows": 4,
+        "convertedRows": 2
+      },
+      {
+        "tableName": "player_mail_archive",
+        "matchedRows": 3,
+        "convertedRows": 1
+      }
+    ]
+  },
+  "driftCase": {
+    "ok": false,
+    "convertedRows": 0,
+    "errors": [
+      "player_mail_convert_row_drift:smoke:mail:sys:1（CAS 防漂移：行内容与扫描快照不一致，UPDATE 命中 0 行，本次转换整体回滚）"
+    ],
+    "rollbackVerified": true
+  },
+  "firstRun": {
+    "matchedRows": 7,
+    "convertedRows": 3,
+    "skippedRows": 4,
+    "residualSimplifiedRows": 0,
+    "tables": [
+      {
+        "tableName": "player_mail",
+        "backupTable": "player_mail_pre_tw_backup",
+        "backupTableCreated": true,
+        "convertedRows": 2
+      },
+      {
+        "tableName": "player_mail_archive",
+        "backupTable": "player_mail_archive_pre_tw_backup",
+        "backupTableCreated": true,
+        "convertedRows": 1
+      }
+    ]
+  },
+  "secondRun": {
+    "matchedRows": 7,
+    "convertedRows": 0,
+    "skippedRows": 7,
+    "residualSimplifiedRows": 0,
+    "backupTablesRecreated": 0
+  },
+  "answers": "双表（player_mail + player_mail_archive）系统邮件（sender_type=system）首轮两段式转换 3 行（词级+字级）、跳过行字节级不变、archive 时间戳列不被触碰、二次执行幂等 0 转换且备份表不重建；CAS 漂移（分类命中但 UPDATE 谓词失配）整体回滚 ok:false 且备份/标记零残留、解除投毒后重跑成功；非 system 来源行绝不更新",
+  "excludes": "不证明真实生产数据迁移、gm_audit_log 持久化可见性或跨节点并发写"
+}

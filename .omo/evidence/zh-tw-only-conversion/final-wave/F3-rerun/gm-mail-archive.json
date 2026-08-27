@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "command": "sql SELECT COUNT(*) AS n FROM player_mail_archive",
+  "executedAt": "2026-08-22T00:42:39.267Z",
+  "durationMs": 1,
+  "resultSets": [
+    {
+      "title": "sql",
+      "columns": [
+        "n"
+      ],
+      "rows": [
+        {
+          "n": "0"
+        }
+      ],
+      "rowCount": 1,
+      "truncated": false
+    }
+  ],
+  "warnings": [
+    "只读 SQL 已强制 READ ONLY、statement_timeout=2000ms、LIMIT=50"
+  ]
+}

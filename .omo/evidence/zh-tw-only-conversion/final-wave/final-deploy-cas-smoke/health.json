@@ -1,0 +1,1 @@
+{"health":{"status":200,"body":{"ok":true,"service":"server"}},"live":{"status":200,"body":{"ok":true,"service":"server","alive":{"ok":true,"service":"server"}}},"warnCountSinceStart":0,"warnBaseline24h":0}

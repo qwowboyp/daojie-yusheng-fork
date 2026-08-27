@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "command": "sql SELECT * FROM player_mail_conversion_meta",
+  "executedAt": "2026-08-22T00:45:56.85Z",
+  "durationMs": 2,
+  "resultSets": [
+    {
+      "title": "sql",
+      "columns": [
+        "conversion_key",
+        "batch_id",
+        "converted_at",
+        "converted_rows",
+        "skipped_rows",
+        "residual_simplified_rows",
+        "payload"
+      ],
+      "rows": [
+        {
+          "conversion_key": "[REDACTED]",
+          "batch_id": "mail-tw-20260819222201-i0jjlb",
+          "converted_at": {},
+          "converted_rows": "0",
+          "skipped_rows": "1",
+          "residual_simplified_rows": "0",
+          "payload": {
+            "mode": "apply",
+            "errors": [],
+            "backupTable": "player_mail_pre_tw_backup",
+            "backupTableCreated": false
+          }
+        },
+        {
+          "conversion_key": "[REDACTED]",
+          "batch_id": "mail-tw-20260822003250-4lsubi",
+          "converted_at": {},
+          "converted_rows": "0",
+          "skipped_rows": "1",
+          "residual_simplified_rows": "0",
+          "payload": {
+            "mode": "apply",
+            "errors": [],
+            "tableName": "player_mail",
+            "backupTable": "player_mail_pre_tw_backup",
+            "backupTableCreated": false
+          }
+        },
+        {
+          "conversion_key": "[REDACTED]",
+          "batch_id": "mail-tw-20260822003250-4lsubi",
+          "converted_at": {},
+          "converted_rows": "0",
+          "skipped_rows": "0",
+          "residual_simplified_rows": "0",
+          "payload": {
+            "mode": "apply",
+            "errors": [],
+            "tableName": "player_mail_archive",
+            "backupTable": "player_mail_archive_pre_tw_backup",
+            "backupTableCreated": false
+          }
+        }
+      ],
+      "rowCount": 3,
+      "truncated": false
+    }
+  ],
+  "warnings": [
+    "只读 SQL 已强制 READ ONLY、statement_timeout=2000ms、LIMIT=50"
+  ]
+}

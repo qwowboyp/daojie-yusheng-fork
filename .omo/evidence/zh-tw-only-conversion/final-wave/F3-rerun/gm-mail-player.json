@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "command": "sql SELECT mail_id, sender_type, title, sender_label FROM player_mail WHERE sender_type='system'",
+  "executedAt": "2026-08-22T00:42:39.24Z",
+  "durationMs": 2,
+  "resultSets": [
+    {
+      "title": "sql",
+      "columns": [
+        "mail_id",
+        "sender_type",
+        "title",
+        "sender_label"
+      ],
+      "rows": [
+        {
+          "mail_id": "mail:p_7aca12c0-6941-42d7-b614-26b5b55a39e0:msz9ye2r:1:0",
+          "sender_type": "system",
+          "title": null,
+          "sender_label": "司命臺"
+        }
+      ],
+      "rowCount": 1,
+      "truncated": false
+    }
+  ],
+  "warnings": [
+    "只读 SQL 已强制 READ ONLY、statement_timeout=2000ms、LIMIT=50"
+  ]
+}
