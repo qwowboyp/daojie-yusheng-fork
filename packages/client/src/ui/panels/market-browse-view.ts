@@ -34,6 +34,9 @@ function isTechniqueEquipmentSlot(slot: unknown): boolean {
   return typeof slot === 'string' && (TECHNIQUE_EQUIP_SLOTS as readonly string[]).includes(slot);
 }
 
+/** 强化为分档浏览时密集补齐占位卡片的最高档位；更高档位只按实际在售结果稀疏显示，避免市场强化档位上限放大后生成巨量占位卡片。 */
+const MARKET_VARIANT_DENSE_FILL_MAX_LEVEL = 20;
+
 const MARKET_TECHNIQUE_FILTERS: Array<{ id: MarketTechniqueFilter; label: string }> = [
   { id: 'all', label: t('market.filter.technique-all', undefined) },
   { id: 'arts', label: getTechniqueCategoryLabel('arts') },
@@ -361,14 +364,19 @@ export class MarketBrowseView {
           if (level < 0 || level > MARKET_MAX_ENHANCE_LEVEL) continue;
           variantsByLevel.set(level, entry);
         }
-        const filledVariants: MarketListedItemView[] = [];
-        for (let level = 0; level <= MARKET_MAX_ENHANCE_LEVEL; level += 1) {
-          const existing = variantsByLevel.get(level);
-          if (existing) { filledVariants.push(existing); continue; }
+        // 低档位（0..密集补齐上限）保持完整占位，便于直接对空档位挂求购单；
+        // 高于密集补齐上限的档位只保留实际在售条目，防止档位上限放大后生成巨量占位卡片。
+        const denseFillMaxLevel = Math.min(MARKET_MAX_ENHANCE_LEVEL, MARKET_VARIANT_DENSE_FILL_MAX_LEVEL);
+        const filledVariantsByLevel = new Map(variantsByLevel);
+        for (let level = 0; level <= denseFillMaxLevel; level += 1) {
+          const existing = filledVariantsByLevel.get(level);
+          if (existing) continue;
           const item = p.buildLocalMarketItem(group.itemId, 1, level);
-          filledVariants.push({ itemKey: createItemStackSignature({ ...item, count: 1 }), item, sellOrderCount: 0, sellQuantity: 0, lowestSellPrice: undefined, buyOrderCount: 0, buyQuantity: 0, highestBuyPrice: undefined });
+          filledVariantsByLevel.set(level, { itemKey: createItemStackSignature({ ...item, count: 1 }), item, sellOrderCount: 0, sellQuantity: 0, lowestSellPrice: undefined, buyOrderCount: 0, buyQuantity: 0, highestBuyPrice: undefined });
         }
-        group.variants = filledVariants;
+        group.variants = [...filledVariantsByLevel.entries()]
+          .sort((left, right) => left[0] - right[0])
+          .map(([, entry]) => entry);
       } else {
         group.variants.sort((left, right) => {
           const leftLevel = p.getMarketEnhanceLevel(left.item);
