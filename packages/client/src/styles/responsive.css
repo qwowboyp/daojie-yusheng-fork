@@ -1339,6 +1339,16 @@
     min-height: 0;
     align-content: stretch;
   }
+  .heavenly-dao-shop-board .market-board-list,
+  .spirit-stone-shop-board .market-board-list,
+  .vendor-recycle-board .market-board-list,
+  .market-board-list.npc-shop-board-list {
+    grid-template-rows: none;
+    grid-auto-rows: minmax(64px, auto); /* 手機商店貨架單卡最小列高，覆蓋上方 grid-auto-rows:0 */
+    align-content: start;
+    height: auto;
+    flex: 1 1 auto;
+  }
   .market-board-list.market-board-list--compact {
     grid-template-rows: repeat(5, minmax(0, 1fr));
   }

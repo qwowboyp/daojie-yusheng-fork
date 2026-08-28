@@ -249,10 +249,36 @@
       padding-top: 2px;
     }
 
+    /* 商店貨架：列高隨內容、超出可視區才滾。勿用 1fr 定死列數，否則內部永不溢出，
+       ui-scroll-panel 的 overscroll-behavior:contain 會吞掉滾輪、外層卷軸不動。 */
     .heavenly-dao-shop-board .market-board-list,
     .spirit-stone-shop-board .market-board-list,
-    .vendor-recycle-board .market-board-list {
-      grid-template-rows: repeat(7, minmax(0, 1fr));
+    .vendor-recycle-board .market-board-list,
+    .market-board-list.npc-shop-board-list {
+      grid-template-rows: none;
+      grid-auto-rows: minmax(72px, auto); /* 商店貨架單卡最小列高，避免 auto 列被壓成一行字 */
+      align-content: start;
+      overscroll-behavior: auto;
+      height: auto;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    .heavenly-dao-shop-board .market-book-panel,
+    .spirit-stone-shop-board .market-book-panel,
+    .vendor-recycle-board .market-book-panel,
+    .npc-shop-modal-shell .market-book-panel {
+      display: flex;
+      flex-direction: column;
+      overscroll-behavior: auto;
+    }
+
+    .heavenly-dao-shop-board .market-book-column,
+    .spirit-stone-shop-board .market-book-column,
+    .vendor-recycle-board .market-book-column,
+    .npc-shop-modal-shell .market-book-column {
+      height: auto;
+      overflow: visible;
     }
 
     .market-item-cell {
