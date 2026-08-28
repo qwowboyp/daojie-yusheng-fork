@@ -2155,24 +2155,20 @@ export class PlayerProgressionService {
         return null;
     }
     findNextCultivationTarget(player, currentTechId) {
+        // 統一候選池：已學未滿成本 = expToNext（升下一層所需經驗），
+        // 待領悟（pending）成本 = 剩餘領悟進度（requiredProgress - progress）。
+        // 兩類混比後依成本升序，「剩餘需求最低」者優先被自動切換選中；同成本時已學優先於待領悟。
         const targets = [];
-        // 已學未滿功法：依「升下一層所需經驗」升序（expToNext 最小者優先），
-        // 自動切換時優先選升級成本最低的功法；複製後排序避免污染 progression cache。
-        const learnedCandidates = [...this.resolveTechniqueProgressionCache(player).trainableTechniques]
-            .sort((left, right) => (left.expToNext ?? 0) - (right.expToNext ?? 0));
-        for (const technique of learnedCandidates) {
+        for (const technique of this.resolveTechniqueProgressionCache(player).trainableTechniques) {
             targets.push({
                 kind: 'learned',
                 techId: technique.techId,
                 name: technique.name,
                 technique,
+                cost: Math.max(0, Number(technique.expToNext) || 0),
             });
         }
-        // 待領悟（pending）功法：依「領悟所需進度」升序（requiredProgress 最小者優先），
-        // 與已學「升級需求最低優先」同精神；複製後排序避免污染 pending 清單原順序。
-        const pendingCandidates = [...(player.pendingTechniqueComprehensions ?? [])]
-            .sort((left, right) => (left.requiredProgress ?? 0) - (right.requiredProgress ?? 0));
-        for (const pending of pendingCandidates) {
+        for (const pending of player.pendingTechniqueComprehensions ?? []) {
             if (!this.canSelfComprehendPendingTechnique(player, pending)) {
                 continue;
             }
@@ -2181,8 +2177,17 @@ export class PlayerProgressionService {
                 techId: pending.techId,
                 name: pending.name,
                 pending,
+                cost: Math.max(0, (Number(pending.requiredProgress) || 0) - (Number(pending.progress) || 0)),
             });
         }
+        targets.sort((left, right) => {
+            if (left.cost !== right.cost) {
+                return left.cost - right.cost;
+            }
+            const leftRank = left.kind === 'learned' ? 0 : 1;
+            const rightRank = right.kind === 'learned' ? 0 : 1;
+            return leftRank - rightRank;
+        });
         if (targets.length === 0) {
             return null;
         }
