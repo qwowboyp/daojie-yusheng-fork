@@ -1607,6 +1607,11 @@ export class MarketPanel {
     for (const entry of entries) {
       parts.push(`catalog:${entry.itemId}:${entry.unitPrice}`);
     }
+    for (const entry of entries) {
+      const item = this.buildSpiritStoneShopItemStack(entry.itemId, 1);
+      const status = item ? this.getItemStatusState(item, player) : null;
+      parts.push(`status:${entry.itemId}:${status?.kind ?? ''}`);
+    }
     return parts.join('|');
   }
 
@@ -1661,14 +1666,19 @@ export class MarketPanel {
     const currencyName = this.getSpiritStoneShopCurrencyName();
     const selectedItemId = this.ensureSpiritStoneShopSelection()?.itemId ?? null;
     return entries.map((entry) => {
-      const template = getLocalItemTemplate(entry.itemId);
+      const item = this.buildSpiritStoneShopItemStack(entry.itemId, 1);
+      const status = item ? this.getItemStatusState(item) : null;
+      const template = item ?? getLocalItemTemplate(entry.itemId);
       const itemName = resolveClientItemBaseName(entry.itemId, template?.name);
       const ownedCount = getPlayerOwnedItemCount(this.player, this.inventory, entry.itemId);
       const unitPrice = Math.max(0, Math.trunc(entry.unitPrice));
       const insufficient = owned < unitPrice;
       const active = entry.itemId === selectedItemId ? ' active' : '';
+      const statusClass = status ? ` market-item-cell--status market-item-cell--status-${status.kind}` : '';
+      const statusRibbon = status ? `<span class="market-item-cell-ribbon" aria-hidden="true"><span>${escapeHtml(status.label)}</span></span>` : '';
       return `
-        <button class="market-item-cell ui-surface-card ui-surface-card--compact${active}" data-spirit-stone-shop-select="${escapeHtmlAttr(entry.itemId)}" type="button">
+        <button class="market-item-cell ui-surface-card ui-surface-card--compact${active}${statusClass}" data-spirit-stone-shop-select="${escapeHtmlAttr(entry.itemId)}" type="button">
+          ${statusRibbon}
           <div class="market-item-cell-name">
             <span class="market-item-cell-name-text market-item-title--interactive" data-market-item-tooltip="spirit-stone-shop:${escapeHtmlAttr(entry.itemId)}">${escapeHtml(itemName)}</span>
             <span class="market-item-cell-owned ${ownedCount > 0 ? '' : 'hidden'}">${ownedCount > 0 ? formatDisplayCountBadge(ownedCount) : ''}</span>
@@ -1692,6 +1702,8 @@ export class MarketPanel {
       return '<div class="empty-hint">商品配置不存在。</div>';
     }
 
+    const status = this.getItemStatusState(item);
+    const statusPill = status ? `<span class="market-book-status-pill market-book-status-pill--${status.kind}">${escapeHtml(status.label)}</span>` : '';
     const currencyName = this.getSpiritStoneShopCurrencyName();
     const ownedCurrency = this.getSpiritStoneShopCurrencyOwned();
     const quantityText = this.spiritStoneShopQuantityDrafts.get(entry.itemId) ?? '1';
@@ -1711,7 +1723,7 @@ export class MarketPanel {
     return `
       <div class="market-book-header">
         <div>
-          <div class="market-item-title market-item-title--interactive" data-market-item-tooltip="spirit-stone-shop:${escapeHtmlAttr(entry.itemId)}">${escapeHtml(item.name)}</div>
+          <div class="market-item-title market-item-title--interactive" data-market-item-tooltip="spirit-stone-shop:${escapeHtmlAttr(entry.itemId)}">${escapeHtml(item.name)}${statusPill}</div>
           <div class="market-book-subtitle">${escapeHtml(getItemTypeLabel(item.type))} · ${escapeHtml(item.desc)}</div>
         </div>
       </div>
@@ -2786,10 +2798,11 @@ export class MarketPanel {
     return this.browseView.renderBookPanel(entry, book, currencyName);
   }
 
-  private getItemStatusState(item: ItemStack): { label: string; kind: 'learned' | 'unlocked' } | null {
+  getItemStatusState(item: ItemStack, player?: PlayerState | null): { label: string; kind: 'learned' | 'unlocked' } | null {
+    const targetPlayer = player !== undefined ? player : this.player;
     if (item.type === 'skill_book') {
       const techniqueId = resolveTechniqueIdFromBookItemId(item.itemId);
-      if (techniqueId && this.player?.techniques.some((technique) => technique.techId === techniqueId)) {
+      if (techniqueId && targetPlayer?.techniques.some((technique) => technique.techId === techniqueId)) {
         return { label: t('market.status.learned', undefined), kind: 'learned' };
       }
     }
@@ -2798,7 +2811,7 @@ export class MarketPanel {
       : item.mapUnlockId
         ? [item.mapUnlockId]
         : [];
-    const unlockedMinimapIds = new Set(this.player?.unlockedMinimapIds ?? []);
+    const unlockedMinimapIds = new Set(targetPlayer?.unlockedMinimapIds ?? []);
     if (mapIds.length > 0 && mapIds.every((mapId) => unlockedMinimapIds.has(mapId))) {
       return { label: t('market.status.unlocked', undefined), kind: 'unlocked' };
     }

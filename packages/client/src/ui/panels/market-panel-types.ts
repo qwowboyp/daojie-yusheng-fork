@@ -289,7 +289,7 @@ export interface MarketPanelInternals {
   getVisibleMarketTotalItems(update: S2C_MarketUpdate | null, items?: unknown[]): number;
   hasCompactCategoryLayout(): boolean;
   resolveTechniqueCategoryForItem(item: ItemStack): TechniqueCategory | null;
-  getItemStatusState(item: ItemStack): { label: string; kind: 'learned' | 'unlocked' } | null;
+  getItemStatusState(item: ItemStack, player?: PlayerState | null): { label: string; kind: 'learned' | 'unlocked' } | null;
   getGroupReferenceEntry(group: MarketListingGroupView): MarketListedItemView | null;
   bindMarketModalDelegatedEvents(body: HTMLElement, signal: AbortSignal): void;
   bindItemTooltipEvents(body: HTMLElement, signal?: AbortSignal): void;

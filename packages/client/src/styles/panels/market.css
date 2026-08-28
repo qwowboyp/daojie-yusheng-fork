@@ -380,6 +380,30 @@
       color: var(--ink-black);
     }
 
+    .market-book-status-pill {
+      --market-status-rgb: 105, 136, 94;
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
+      margin-left: 8px;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      background: color-mix(in srgb, rgba(var(--market-status-rgb), 0.94) 78%, var(--ink-black));
+      color: var(--ribbon-ink);
+      font-size: var(--font-size-11);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+    }
+
+    .market-book-status-pill--learned {
+      --market-status-rgb: 105, 136, 94;
+    }
+
+    .market-book-status-pill--unlocked {
+      --market-status-rgb: 84, 121, 132;
+    }
+
     .market-item-cell-prices {
       display: flex;
       align-items: center;
