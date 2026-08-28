@@ -284,6 +284,11 @@ function isAutoSelfBuffSkill(skill) {
     return getAutoSelfBuffEffects(skill).length > 0;
 }
 
+/** 地块生成类技能（temporary_tile，如叩地成嶽）必须以地块为目标：自动战斗只会构出实体目标 castSkill（targetRef=null），必被服务端以「必须选择地块目标」拒绝，且每息重试刷屏，源头排除。 */
+function isTemporaryTileSkillBlockedFromAutoCombat(skill) {
+    return Array.isArray(skill?.effects) && skill.effects.some((effect) => effect?.type === 'temporary_tile');
+}
+
 function shouldAutoCastSelfBuffSkill(player, skill) {
     const effects = getAutoSelfBuffEffects(skill);
     return effects.length > 0 && effects.some((effect) => !isBuffActive(player, effect.buffId));
@@ -1288,6 +1293,10 @@ export class WorldRuntimeAutoCombatService {
             }
             const skill = findAutoBattlePlayerSkill(player, action.id, activeSkillLookup);
             if (!skill || excludedSkillIds?.has(skill.id)) {
+                continue;
+            }
+            // 地块生成类技能需要地块目标，自动战斗构不出合法载荷，跳过（手動施放不受影响）
+            if (isTemporaryTileSkillBlockedFromAutoCombat(skill)) {
                 continue;
             }
             if (player.qi < resolveAutoBattleSkillQiCost(skill.cost, player.attrs.numericStats.maxQiOutputPerTick, player.combat?.combatAttackIntensity)) {

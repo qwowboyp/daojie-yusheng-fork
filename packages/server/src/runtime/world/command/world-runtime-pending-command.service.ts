@@ -1039,6 +1039,17 @@ export class WorldRuntimePendingCommandService {
                 if (this.isAutoCombatCommand(failedCommandForDiagnostics) && isTerminalAutoCombatTargetFailure(message)) {
                     this.clearAutoCombatTargetAfterFailure(playerId, deps, failedCommandForDiagnostics);
                 }
+                // castSkill 失败通知带技能名：auto combat 构建的命令不携带 skillName（不经 enqueueCastSkill），
+                // 这里从 skillId 反查玩家技能名补齐，避免玩家收到一排无主警告。
+                if (failedCommandForDiagnostics?.kind === 'castSkill'
+                    && !(typeof failedCommandForDiagnostics.skillName === 'string' && failedCommandForDiagnostics.skillName.trim())) {
+                    const failedSkillIdForNotice = typeof failedCommandForDiagnostics.skillId === 'string' ? failedCommandForDiagnostics.skillId.trim() : '';
+                    const playerForNotice = failedSkillIdForNotice ? deps.playerRuntimeService?.getPlayer?.(playerId) : null;
+                    const skillForNotice = playerForNotice ? findPlayerSkill(playerForNotice, failedSkillIdForNotice) : null;
+                    if (skillForNotice?.name) {
+                        failedCommandForDiagnostics = { ...failedCommandForDiagnostics, skillName: skillForNotice.name };
+                    }
+                }
                 const notice = buildPendingCommandNotice(failedCommandForDiagnostics, message);
                 const retrySuffix = failedCommandForDiagnostics !== command ? ` retryOf=${command.kind}` : '';
                 emitPendingCommandFailureLog(
