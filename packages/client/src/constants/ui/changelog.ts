@@ -13,6 +13,13 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-08-28',
+    summary: '修復天道商店、靈石商店、回收商與 NPC 商店視窗滑鼠滾輪無法捲動的問題。',
+    items: [
+      '介面：天道商店、靈石商店、回收商與 NPC 商店 — 滑鼠滾輪可正常帶動視窗卷軸，商品列表超過一屏時也能逐列捲動。',
+    ],
+  },
+  {
+    updatedAt: '2026-08-28',
     summary: '技能施放失敗提示更清晰：會標明是哪個技能失敗；並修正地塊類技能點擊妖獸無法施放的問題。',
     items: [
       '戰鬥：技能施放失敗提示標明技能名稱 — 失敗訊息會顯示是哪個技能施放失敗（如「叩地成嶽施放失敗：必須選擇地塊目標」），不再出現一排無法對應到動作的警告。',
