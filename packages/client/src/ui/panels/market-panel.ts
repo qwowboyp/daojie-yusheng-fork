@@ -1316,7 +1316,7 @@ export class MarketPanel {
           </div>
         </div>
       ` : ''}
-      <div class="market-book-column ui-surface-pane ui-surface-pane--stack ui-scroll-panel" data-heavenly-dao-shop-detail-scroll="true">
+      <div class="market-book-column ui-surface-pane ui-surface-pane--stack" data-heavenly-dao-shop-detail-scroll="true">
         <div class="market-book-column-head">
           <div class="market-book-column-title">兌換數量</div>
           <button class="small-btn" data-heavenly-dao-shop-buy="${escapeHtmlAttr(entry.itemId)}" type="button" ${invalidTotal || insufficientCurrency ? 'disabled' : ''}>購買</button>
@@ -1445,7 +1445,7 @@ export class MarketPanel {
     if (!detailRoot) {
       return;
     }
-    const scrollTop = detailRoot.querySelector<HTMLElement>('[data-heavenly-dao-shop-detail-scroll="true"]')?.scrollTop ?? 0;
+    const scrollTop = detailRoot.scrollTop;
     const activeElement = document.activeElement;
     const focusedItemId = activeElement instanceof HTMLInputElement && detailRoot.contains(activeElement)
       ? activeElement.dataset.heavenlyDaoShopQuantity ?? null
@@ -1453,10 +1453,7 @@ export class MarketPanel {
     const selectionStart = activeElement instanceof HTMLInputElement ? activeElement.selectionStart : null;
     const selectionEnd = activeElement instanceof HTMLInputElement ? activeElement.selectionEnd : null;
     replaceElementHtml(detailRoot, this.renderHeavenlyDaoShopDetailPanel());
-    const nextScrollRoot = detailRoot.querySelector<HTMLElement>('[data-heavenly-dao-shop-detail-scroll="true"]');
-    if (nextScrollRoot) {
-      nextScrollRoot.scrollTop = scrollTop;
-    }
+    detailRoot.scrollTop = scrollTop;
     if (!focusedItemId) {
       return;
     }
@@ -1726,7 +1723,7 @@ export class MarketPanel {
           </div>
         </div>
       ` : ''}
-      <div class="market-book-column ui-surface-pane ui-surface-pane--stack ui-scroll-panel" data-spirit-stone-shop-detail-scroll="true">
+      <div class="market-book-column ui-surface-pane ui-surface-pane--stack" data-spirit-stone-shop-detail-scroll="true">
         <div class="market-book-column-head">
           <div class="market-book-column-title">購買數量</div>
           <button class="small-btn" data-spirit-stone-shop-buy="${escapeHtmlAttr(entry.itemId)}" type="button" ${invalidTotal || insufficientCurrency ? 'disabled' : ''}>購買</button>
@@ -1855,7 +1852,7 @@ export class MarketPanel {
     if (!detailRoot) {
       return;
     }
-    const scrollTop = detailRoot.querySelector<HTMLElement>('[data-spirit-stone-shop-detail-scroll="true"]')?.scrollTop ?? 0;
+    const scrollTop = detailRoot.scrollTop;
     const activeElement = document.activeElement;
     const focusedItemId = activeElement instanceof HTMLInputElement && detailRoot.contains(activeElement)
       ? activeElement.dataset.spiritStoneShopQuantity ?? null
@@ -1863,10 +1860,7 @@ export class MarketPanel {
     const selectionStart = activeElement instanceof HTMLInputElement ? activeElement.selectionStart : null;
     const selectionEnd = activeElement instanceof HTMLInputElement ? activeElement.selectionEnd : null;
     replaceElementHtml(detailRoot, this.renderSpiritStoneShopDetailPanel());
-    const nextScrollRoot = detailRoot.querySelector<HTMLElement>('[data-spirit-stone-shop-detail-scroll="true"]');
-    if (nextScrollRoot) {
-      nextScrollRoot.scrollTop = scrollTop;
-    }
+    detailRoot.scrollTop = scrollTop;
     if (!focusedItemId) {
       return;
     }
@@ -2162,7 +2156,7 @@ export class MarketPanel {
           </div>
         </div>
       ` : ''}
-      <div class="market-book-column ui-surface-pane ui-surface-pane--stack ui-scroll-panel" data-vendor-recycle-detail-scroll="true">
+      <div class="market-book-column ui-surface-pane ui-surface-pane--stack" data-vendor-recycle-detail-scroll="true">
         <div class="market-book-column-head">
           <div class="market-book-column-title">回收數量</div>
           <button class="small-btn" data-vendor-recycle-sell="${escapeHtmlAttr(row.itemInstanceId)}" type="button" ${invalid ? 'disabled' : ''}>回收</button>
@@ -2287,7 +2281,7 @@ export class MarketPanel {
     if (!detailRoot) {
       return;
     }
-    const scrollTop = detailRoot.querySelector<HTMLElement>('[data-vendor-recycle-detail-scroll="true"]')?.scrollTop ?? 0;
+    const scrollTop = detailRoot.scrollTop;
     const activeElement = document.activeElement;
     const focusedInstanceId = activeElement instanceof HTMLInputElement && detailRoot.contains(activeElement)
       ? activeElement.dataset.vendorRecycleQuantity ?? null
@@ -2295,10 +2289,7 @@ export class MarketPanel {
     const selectionStart = activeElement instanceof HTMLInputElement ? activeElement.selectionStart : null;
     const selectionEnd = activeElement instanceof HTMLInputElement ? activeElement.selectionEnd : null;
     replaceElementHtml(detailRoot, this.renderVendorRecycleDetailPanel());
-    const nextScrollRoot = detailRoot.querySelector<HTMLElement>('[data-vendor-recycle-detail-scroll="true"]');
-    if (nextScrollRoot) {
-      nextScrollRoot.scrollTop = scrollTop;
-    }
+    detailRoot.scrollTop = scrollTop;
     if (!focusedInstanceId) {
       return;
     }

@@ -738,7 +738,7 @@ export class NpcShopModal {
           </div>
         </div>
       ` : ''}
-      <div class="market-book-column ui-surface-pane ui-surface-pane--stack ui-scroll-panel">
+      <div class="market-book-column ui-surface-pane ui-surface-pane--stack">
         <div class="market-book-column-head">
           <div class="market-book-column-title">${escapeHtml(t('npc-shop.detail.buy-direct', undefined))}</div>
           <button class="small-btn" data-npc-shop-buy="${escapeHtmlAttr(selectedItem.itemId)}" type="button" ${purchaseBlocked ? 'disabled' : ''}>${escapeHtml(t('npc-shop.action.buy', undefined))}</button>
