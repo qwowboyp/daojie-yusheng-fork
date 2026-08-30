@@ -173,7 +173,8 @@ export function computeEnhancementJobTicks(
   itemLevel: number | undefined,
   speedRate: number | undefined,
 ): number {
-  return computeAdjustedCraftTicks(computeEnhancementJobBaseTicks(itemLevel), speedRate);
+  const rawTicks = computeAdjustedCraftTicks(computeEnhancementJobBaseTicks(itemLevel), speedRate);
+  return Math.max(1, Math.ceil(rawTicks * 0.5)); // 耗時減半：最終 ticks 無條件進位，最低 1 息
 }
 
 /**

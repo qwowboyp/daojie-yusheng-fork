@@ -4258,7 +4258,8 @@ export class MarketPanel {
   /** 计算单次强化任务的基础耗时。 */
   private computeEnhancementJobBaseTicks(itemLevel: number | undefined): number {
     const normalizedLevel = Math.max(1, Math.floor(Number(itemLevel) || 1));
-    return ENHANCEMENT_BASE_JOB_TICKS + Math.max(0, normalizedLevel - 1) * ENHANCEMENT_JOB_TICKS_PER_ITEM_LEVEL;
+    const rawTicks = ENHANCEMENT_BASE_JOB_TICKS + Math.max(0, normalizedLevel - 1) * ENHANCEMENT_JOB_TICKS_PER_ITEM_LEVEL;
+    return Math.max(1, Math.ceil(rawTicks * 0.5)); // 耗時減半：client 預覽與 server 真實對齊，無條件進位最低 1 息
   }
 
   /** 把耗时 ticks 转成更像人工可读的时间。 */

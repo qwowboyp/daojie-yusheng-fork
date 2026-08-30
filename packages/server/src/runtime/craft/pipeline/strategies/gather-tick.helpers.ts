@@ -247,7 +247,8 @@ function computeEffectiveHerbGatherTicks(player: Record<string, any>, container:
   const gatherLevel = Math.max(1, Math.floor(Number(player?.gatherSkill?.level) || 1));
   const skillSpeedRate = gatherLevel * GATHER_SPEED_PER_LEVEL;
   const effectSpeedRate = Math.max(0, resolvePlayerCraftEffectStat(player, 'gather', 'speedRate'));
-  return computeAdjustedCraftTicks(nativeGatherTicks, skillSpeedRate + effectSpeedRate);
+  const rawTicks = computeAdjustedCraftTicks(nativeGatherTicks, skillSpeedRate + effectSpeedRate);
+  return Math.max(1, Math.ceil(rawTicks * 0.5)); // 耗時減半：採集每次單株 ticks 無條件進位，最低 1 息
 }
 
 function prepareLootGrantItemsForReceiver(items: Array<Record<string, any>>): void {
