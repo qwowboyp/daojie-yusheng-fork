@@ -34,6 +34,7 @@ import './styles/panels/market.css';
 import './styles/panels/auction.css';
 import './styles/panels/skill.css';
 import './styles/panels/sect.css';
+import './styles/panels/sect-directory.css';
 import './styles/panels/social.css';
 import './styles/panels/party.css';
 import './styles/panels/world.css';

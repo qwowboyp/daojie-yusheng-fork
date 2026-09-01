@@ -27,7 +27,8 @@ export type ReactPanelId =
   | 'attr'
   | 'inventory'
   | 'craft'
-  | 'action';
+  | 'action'
+  | 'sect-directory';
 
 /** 默认启用 React 版本的面板（迁移完成后加入） */
 const DEFAULT_ENABLED: Set<ReactPanelId> = new Set([
@@ -43,6 +44,7 @@ const DEFAULT_ENABLED: Set<ReactPanelId> = new Set([
   'loot',
   'mail',
   'quest',
+  'sect-directory',
   'settings',
   'technique',
   'tutorial',
@@ -78,7 +80,7 @@ function loadFlags(): Map<ReactPanelId, boolean> {
         'changelog', 'world', 'loot', 'equipment', 'tutorial',
         'body-training', 'quest', 'gm', 'settings',
         'mail', 'chat', 'technique', 'attr', 'inventory',
-        'craft', 'action',
+        'craft', 'action', 'sect-directory',
       ];
       for (const id of allPanels) {
         flagCache.set(id, true);
@@ -139,7 +141,7 @@ export function registerPanelFlagApi(win: Window): void {
         'changelog', 'world', 'loot', 'equipment', 'tutorial',
         'body-training', 'quest', 'gm', 'settings',
         'mail', 'chat', 'technique', 'attr', 'inventory',
-        'craft', 'action',
+        'craft', 'action', 'sect-directory',
       ];
       const result: Record<string, string> = {};
       for (const id of allPanels) {
