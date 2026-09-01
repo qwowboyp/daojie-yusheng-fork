@@ -9,6 +9,9 @@ import {
     SECT_APPLICATION_PAGE_DEFAULT_LIMIT,
     SECT_APPLICATION_PAGE_MAX_LIMIT,
     SECT_APPLICATION_SEARCH_MAX_LENGTH,
+    SECT_DIRECTORY_PAGE_DEFAULT_LIMIT,
+    SECT_DIRECTORY_PAGE_MAX_LIMIT,
+    SECT_DIRECTORY_SEARCH_MAX_LENGTH,
     SECT_ENTRANCE_RELOCATION_COOLDOWN_MS,
     TileType,
     isSectMemberRoleLowerThan,
@@ -110,6 +113,7 @@ class WorldRuntimeSectService {
     worldRuntimeFormationService = null;
     sectMemberProfilesByPlayerId = new Map<string, { name: string | null; realmLv: number | null }>();
     sectMutationQueueBySectId = new Map<string, Promise<void>>();
+    directoryRequestAtByPlayerId = new Map();
     sectDurableCommitQueue = Promise.resolve();
     persistenceClosing = false;
     sectShutdownSignal = createSectShutdownSignal();
@@ -884,6 +888,82 @@ class WorldRuntimeSectService {
         }
         assertSectPermission(sect, normalizedPlayerId, 'member_approve');
         return buildSectApplicationPageView(sect, payload);
+    }
+
+    consumeSectDirectoryRateLimit(playerId, now = Date.now()) {
+        const normalizedPlayerId = normalizeOptionalString(playerId);
+        if (!normalizedPlayerId) {
+            throw new BadRequestException('玩家身份無效');
+        }
+        const cutoff = Math.trunc(Number(now)) - SECT_DIRECTORY_RATE_LIMIT_WINDOW_MS;
+        const recent = (this.directoryRequestAtByPlayerId.get(normalizedPlayerId) ?? [])
+            .filter((timestamp) => timestamp > cutoff);
+        if (recent.length >= SECT_DIRECTORY_RATE_LIMIT_MAX) {
+            return false;
+        }
+        recent.push(Math.max(0, Math.trunc(Number(now)) || 0));
+        this.directoryRequestAtByPlayerId.set(normalizedPlayerId, recent);
+        return true;
+    }
+
+    buildSectDirectoryView(playerId, payload = null) {
+        const normalizedPlayerId = normalizeOptionalString(playerId);
+        if (!normalizedPlayerId) {
+            throw new BadRequestException('玩家身份無效');
+        }
+        this.playerRuntimeService.getPlayerOrThrow(normalizedPlayerId);
+        const requestId = normalizeSectDirectoryPageRequestId(payload?.requestId);
+        const search = normalizeSectDirectoryPageSearch(payload?.search);
+        const offset = normalizeSectDirectoryPageOffset(payload?.offset);
+        const limit = normalizeSectDirectoryPageLimit(payload?.limit);
+        const ledSect = this.findSectLedByPlayer(normalizedPlayerId);
+        const matching = [];
+        let revision = 0;
+        for (const sect of this.sectsById.values()) {
+            if (sect?.status !== 'active' || !Array.isArray(sect.members) || sect.members.length <= 0) {
+                continue;
+            }
+            ensureSectState(sect, this.playerRuntimeService);
+            const updatedAt = Number.isFinite(Number(sect.updatedAt))
+                ? Math.max(0, Math.trunc(Number(sect.updatedAt)))
+                : 0;
+            if (updatedAt > revision) {
+                revision = updatedAt;
+            }
+            if (!matchesSectDirectorySearch(sect, search)) {
+                continue;
+            }
+            matching.push(sect);
+        }
+        matching.sort((left, right) => {
+            const memberDelta = (right.members?.length ?? 0) - (left.members?.length ?? 0);
+            if (memberDelta !== 0) {
+                return memberDelta;
+            }
+            const createdDelta = (Number(left.createdAt) || 0) - (Number(right.createdAt) || 0);
+            if (createdDelta !== 0) {
+                return createdDelta;
+            }
+            return String(left.sectId ?? '').localeCompare(String(right.sectId ?? ''));
+        });
+        const total = matching.length;
+        const items = matching.slice(offset, offset + limit).map((sect) => (
+            projectSectDirectoryEntry(sect, {
+                playerId: normalizedPlayerId,
+                ledSectId: ledSect?.sectId ?? null,
+                templateRepository: this.templateRepository,
+                playerRuntimeService: this.playerRuntimeService,
+            })
+        ));
+        return {
+            requestId,
+            search,
+            offset,
+            limit,
+            total,
+            revision,
+            items,
+        };
     }
 
     async executeSectAction(playerId, actionId, deps) {
@@ -2653,6 +2733,105 @@ function matchesSectApplicationPageSearch(application, search) {
     const playerId = normalizeOptionalString(application?.playerId).toLowerCase();
     const name = normalizeOptionalString(application?.name).toLowerCase();
     return playerId.includes(search) || name.includes(search);
+}
+
+const SECT_DIRECTORY_RATE_LIMIT_MAX = 2;
+const SECT_DIRECTORY_RATE_LIMIT_WINDOW_MS = 10_000;
+
+function normalizeSectDirectoryPageRequestId(value) {
+    const requestId = typeof value === 'string' ? value.trim() : '';
+    if (!requestId || requestId.length > 80) {
+        throw new BadRequestException('宗門目錄請求 ID 無效');
+    }
+    return requestId;
+}
+
+function normalizeSectDirectoryPageSearch(value) {
+    if (typeof value !== 'string') {
+        return '';
+    }
+    return value.replace(/\s+/g, ' ').trim().slice(0, SECT_DIRECTORY_SEARCH_MAX_LENGTH).toLowerCase();
+}
+
+function normalizeSectDirectoryPageOffset(value) {
+    const parsed = Math.trunc(Number(value));
+    return Number.isFinite(parsed) ? Math.max(0, parsed) : 0;
+}
+
+function normalizeSectDirectoryPageLimit(value) {
+    const parsed = Math.trunc(Number(value));
+    if (!Number.isFinite(parsed) || parsed <= 0) {
+        return SECT_DIRECTORY_PAGE_DEFAULT_LIMIT;
+    }
+    return Math.max(1, Math.min(SECT_DIRECTORY_PAGE_MAX_LIMIT, parsed));
+}
+
+function matchesSectDirectorySearch(sect, search) {
+    if (!search) {
+        return true;
+    }
+    return normalizeOptionalString(sect?.name).toLowerCase().includes(search);
+}
+
+function resolveSectDirectoryEntranceMapName(templateRepository, mapId) {
+    const normalizedMapId = normalizeOptionalString(mapId);
+    if (!normalizedMapId) {
+        return '';
+    }
+    try {
+        if (typeof templateRepository?.has === 'function' && !templateRepository.has(normalizedMapId)) {
+            return normalizedMapId;
+        }
+        const template = typeof templateRepository?.getOrThrow === 'function'
+            ? templateRepository.getOrThrow(normalizedMapId)
+            : null;
+        const name = typeof template?.name === 'string' ? template.name.trim() : '';
+        return name || normalizedMapId;
+    } catch {
+        return normalizedMapId;
+    }
+}
+
+function resolveSectDirectoryRelation(sect, playerId) {
+    if (normalizeOptionalString(sect?.leaderPlayerId) === playerId || (sect?.members ?? []).some((member) => (
+        member?.playerId === playerId && member?.roleId === 'leader'
+    ))) {
+        return 'leader';
+    }
+    if (isSectMember(sect, playerId)) {
+        return 'member';
+    }
+    if (findPendingSectApplication(sect, playerId)) {
+        return 'pending';
+    }
+    return 'none';
+}
+
+function projectSectDirectoryEntry(sect, context) {
+    const playerId = context.playerId;
+    const relation = resolveSectDirectoryRelation(sect, playerId);
+    const leadsOtherSect = Boolean(context.ledSectId && context.ledSectId !== sect.sectId);
+    const canApply = relation === 'none' && !leadsOtherSect;
+    const leaderPlayerId = normalizeOptionalString(sect.leaderPlayerId);
+    const leaderMember = (sect.members ?? []).find((member) => member?.playerId === leaderPlayerId) ?? null;
+    const runtimeLeader = context.playerRuntimeService?.getPlayer?.(leaderPlayerId) ?? null;
+    return {
+        sectId: normalizeOptionalString(sect.sectId),
+        name: normalizeOptionalString(sect.name),
+        mark: normalizeOptionalString(sect.mark),
+        memberCount: Array.isArray(sect.members) ? sect.members.length : 0,
+        leaderPlayerId,
+        leaderName: resolvePlayerDisplayName({
+            playerId: leaderPlayerId,
+            name: runtimeLeader?.name || leaderMember?.name,
+        }, '未知宗主'),
+        entranceMapName: resolveSectDirectoryEntranceMapName(context.templateRepository, sect.entranceTemplateId),
+        entranceX: Number.isFinite(Number(sect.entranceX)) ? Math.trunc(Number(sect.entranceX)) : 0,
+        entranceY: Number.isFinite(Number(sect.entranceY)) ? Math.trunc(Number(sect.entranceY)) : 0,
+        createdAt: Number.isFinite(Number(sect.createdAt)) ? Math.max(0, Math.trunc(Number(sect.createdAt))) : 0,
+        relation,
+        canApply,
+    };
 }
 
 function decodeActionPart(value) {
