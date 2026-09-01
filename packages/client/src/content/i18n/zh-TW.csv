@@ -2689,6 +2689,7 @@ notice.redeem.success,通知,兌換成功：{groupName},
 notice.respawn.revived,通知,你在 {mapName} 復生,
 notice.rewrite.target-too-far,通知,目標過遠，神識難及,客戶端路徑提示改寫
 notice.rewrite.unreachable,通知,此地無法抵達,客戶端路徑提示改寫
+notice.sect.application-already-pending,通知,拜帖已在審批中,
 notice.sect.application-approved,通知,{sectName} 已準你入山，護宗大陣會放行同門,
 notice.sect.application-approved-operator,通知,已準 {applicantName} 入宗,
 notice.sect.application-received,通知,{applicantName} 遞交了加入 {sectName} 的拜帖，待審批,

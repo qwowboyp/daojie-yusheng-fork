@@ -2189,6 +2189,7 @@ export const CLIENT_I18N_MESSAGES: Record<ClientLocale, Record<string, string>> 
   "notice.respawn.revived": "你在 {mapName} 復生",
   "notice.rewrite.target-too-far": "目標過遠，神識難及",
   "notice.rewrite.unreachable": "此地無法抵達",
+  "notice.sect.application-already-pending": "拜帖已在審批中",
   "notice.sect.application-approved": "{sectName} 已準你入山，護宗大陣會放行同門",
   "notice.sect.application-approved-operator": "已準 {applicantName} 入宗",
   "notice.sect.application-received": "{applicantName} 遞交了加入 {sectName} 的拜帖，待審批",
