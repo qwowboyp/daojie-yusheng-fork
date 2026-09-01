@@ -710,9 +710,18 @@ async function main() {
   const edgeY = 0;
   const stableSectTemplateId = sectInstance.meta.templateId;
   sectInstance.consumeStaticTileSyncDirtyTiles();
+  // 回歸鎖定：擴張時在場玩家不得被砸回核心 (0,0) 傳送點。
+  // 舊實作在 replaceTemplateForSectExpansion 用模板 width clamp 遷移玩家，
+  // 宗門模板 width 恆為 1 → 全部玩家被搬到 (0,0)。
+  const inSectPlayer = sectInstance.connectPlayer({ playerId, sessionId: "session:sect-smoke", preferredX: 1, preferredY: 0 });
+  assert.equal(inSectPlayer.x, 1);
+  assert.equal(inSectPlayer.y, 0);
   const destroyedEdge = sectInstance.damageTile(edgeX, edgeY, Number.MAX_SAFE_INTEGER);
   assert.equal(destroyedEdge.destroyed, true);
   assert.equal(sectService.expandSectForDestroyedTile(sectInstance.meta.instanceId, edgeX, edgeY, deps), true);
+  assert.equal(inSectPlayer.x, 1);
+  assert.equal(inSectPlayer.y, 0);
+  sectInstance.disconnectPlayer(playerId);
   const boundaryOpenSyncPlan = sectInstance.consumeStaticTileSyncDirtyTiles();
   assert.ok(boundaryOpenSyncPlan.tileKeys.includes(`${edgeX},${edgeY}`));
   assert.ok(boundaryOpenSyncPlan.tileKeys.includes(`${edgeX + 1},${edgeY}`));

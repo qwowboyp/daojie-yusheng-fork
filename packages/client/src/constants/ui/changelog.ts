@@ -12,6 +12,13 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 /** 当前内置的更新日志条目。 */
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    updatedAt: '2026-09-01',
+    summary: '修復宗門擴張時在場玩家被傳送回傳送點的問題。',
+    items: [
+      '宗門：擴張邊界不再把在場玩家傳送回傳送點 — 鑿開界石觸發地脈擴張時，原本會把宗門內所有玩家強制搬回核心傳送點，現在擴張前後位置保持不變。',
+    ],
+  },
+  {
     updatedAt: '2026-08-30',
     summary: '採集、煉丹、鍊器與強化耗時減半，新任務等待時間大幅縮短。',
     items: [

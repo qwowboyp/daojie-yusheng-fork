@@ -1334,17 +1334,30 @@ class MapInstanceRuntime {
         this.runtimePortals = [];
         this.buildingTopologyIndex = new BuildingTopologyIndex(nextCellCapacity);
         this.roomIdByCell = new Int32Array(nextCellCapacity);
-        for (const player of players) {
-            const nextX = Math.max(0, Math.min(nextTemplate.width - 1, Math.trunc(Number(player.x) || 0) + offsetX));
-            const nextY = Math.max(0, Math.min(nextTemplate.height - 1, Math.trunc(Number(player.y) || 0) + offsetY));
-            player.x = nextX;
-            player.y = nextY;
-            player.selfRevision += 1;
-            this.addPlayerToTileIndex(player);
-            this.setOccupied(nextX, nextY, player.handle);
-        }
         this.tileDamageByTile.clear();
         this.temporaryTileByTile.clear();
+        this.hydrateRuntimeTiles(runtimeTileEntries.map((entry) => ({
+            ...entry,
+            x: Math.trunc(Number(entry.x) || 0) + offsetX,
+            y: Math.trunc(Number(entry.y) || 0) + offsetY,
+        })));
+        this.hydrateTemporaryTiles(temporaryTileEntries.map((entry) => ({
+            ...entry,
+            x: Math.trunc(Number(entry.x) || 0) + offsetX,
+            y: Math.trunc(Number(entry.y) || 0) + offsetY,
+        })));
+        // 玩家與地塊傷害遷移必須在 hydrateRuntimeTiles 之後：宗門模板是稀疏座標平面
+        // （width/height 恆為 1），未水合前 isInBounds 對擴張座標判定失敗；
+        // 舊實作用模板 width clamp 遷移，會把全部玩家砸到核心 (0,0) 傳送點。
+        for (const player of players) {
+            const nextX = Math.trunc(Number(player.x) || 0) + offsetX;
+            const nextY = Math.trunc(Number(player.y) || 0) + offsetY;
+            player.x = this.isInBounds(nextX, nextY) ? nextX : this.template.spawnX;
+            player.y = this.isInBounds(nextX, nextY) ? nextY : this.template.spawnY;
+            player.selfRevision += 1;
+            this.addPlayerToTileIndex(player);
+            this.setOccupied(player.x, player.y, player.handle);
+        }
         for (const [tileIndex, state] of tileDamageEntries) {
             const oldIndex = Math.trunc(Number(tileIndex));
             const oldX = previousTilePlane.getX(oldIndex);
@@ -1356,16 +1369,6 @@ class MapInstanceRuntime {
             }
             this.tileDamageByTile.set(this.toTileIndex(nextX, nextY), { ...state });
         }
-        this.hydrateRuntimeTiles(runtimeTileEntries.map((entry) => ({
-            ...entry,
-            x: Math.trunc(Number(entry.x) || 0) + offsetX,
-            y: Math.trunc(Number(entry.y) || 0) + offsetY,
-        })));
-        this.hydrateTemporaryTiles(temporaryTileEntries.map((entry) => ({
-            ...entry,
-            x: Math.trunc(Number(entry.x) || 0) + offsetX,
-            y: Math.trunc(Number(entry.y) || 0) + offsetY,
-        })));
         this.rebuildTileResourceFlowIndices();
         this.markPersistenceDirtyDomains(previousDirtyDomains);
         markMapInstanceDirtyDomainHighPriority(this, previousHighPriorityDirtyDomains);
