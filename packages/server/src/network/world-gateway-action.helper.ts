@@ -32,6 +32,7 @@ interface WorldGatewayActionDeps {
   gatewayGuardHelper: {
     requirePlayerId(client: Socket): string | null | undefined;
     requireActivePlayerId(client: Socket): string | null | undefined;
+    checkRateLimit?(client: Socket, category: string, maxPerWindow: number, windowMs: number): boolean;
   };
   worldClientEventService: {
     markProtocol(client: Socket, protocol: 'mainline'): void;
@@ -97,6 +98,8 @@ interface WorldGatewayActionDeps {
     };
     worldRuntimeSectService?: {
       buildSectApplicationPage(playerId: string, payload: unknown): unknown;
+      buildSectDirectoryView?(playerId: string, payload: unknown): unknown;
+      consumeSectDirectoryRateLimit?(playerId: string, now?: number): boolean;
     };
   };
   worldSyncService?: {
@@ -158,6 +161,31 @@ export class WorldGatewayActionHelper {
       client.emit(S2C.SectApplicationPage, sectService.buildSectApplicationPage(playerId, payload));
     } catch (error) {
       this.gateway.worldClientEventService.emitGatewayError(client, 'REQUEST_SECT_APPLICATION_PAGE_FAILED', error);
+    }
+  }
+
+  handleRequestSectDirectory(
+    client: Socket,
+    payload: ClientToServerEventPayload<typeof C2S.RequestSectDirectory>,
+  ): void {
+    const playerId = this.gateway.gatewayGuardHelper.requireActivePlayerId(client);
+    if (!playerId) {
+      return;
+    }
+    try {
+      const sectService = this.gateway.worldRuntimeService.worldRuntimeSectService;
+      if (!sectService) {
+        throw new Error('宗門服務尚未就緒');
+      }
+      // 先扣減目錄刷新節流額度，超限直接回錯誤，不再扣第二次
+      if (typeof sectService.consumeSectDirectoryRateLimit !== 'function'
+        || !sectService.consumeSectDirectoryRateLimit(playerId)) {
+        client.emit(S2C.Error, { code: 'SECT_DIRECTORY_RATE_LIMITED', message: '宗門列表刷新過於頻繁' });
+        return;
+      }
+      client.emit(S2C.SectDirectory, sectService.buildSectDirectoryView(playerId, payload));
+    } catch (error) {
+      this.gateway.worldClientEventService.emitGatewayError(client, 'REQUEST_SECT_DIRECTORY_FAILED', error);
     }
   }
 
