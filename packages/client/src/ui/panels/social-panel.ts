@@ -77,7 +77,7 @@ type SocialMenuScrollSnapshot = {
 };
 
 type SocialPanelTab = SocialWorkspacePanelKind;
-type SocialFeatureDestination = SocialPanelTab | 'party';
+type SocialFeatureDestination = SocialPanelTab | 'party' | 'sect-directory';
 type PreparedMenuClose = {
   tab: SocialPanelTab;
   destination: SocialFeatureDestination;
@@ -133,6 +133,8 @@ export class SocialPanel {
   private callbacks: SocialPanelCallbacks | null = null;
   private partyInviteHandler: ((targetPlayerId: string) => void) | null = null;
   private partyOpenHandler: ((opener: HTMLElement | null) => void) | null = null;
+  private sectDirectoryOpenHandler: ((opener: HTMLElement | null) => void) | null = null;
+  private sectDirectoryCloseHandler: (() => void) | null = null;
   private featurePanelOpenHandler: ((opener: HTMLElement | null) => void) | null = null;
   private partyPanelOpenStateReader: (() => boolean) | null = null;
   private partyTabUnreadCount = 0;
@@ -179,6 +181,14 @@ export class SocialPanel {
 
   setPartyOpenHandler(handler: ((opener: HTMLElement | null) => void) | null): void {
     this.partyOpenHandler = handler;
+  }
+
+  setSectDirectoryOpenHandler(handler: ((opener: HTMLElement | null) => void) | null): void {
+    this.sectDirectoryOpenHandler = handler;
+  }
+
+  setSectDirectoryCloseHandler(handler: (() => void) | null): void {
+    this.sectDirectoryCloseHandler = handler;
   }
 
   setFeaturePanelOpenHandler(handler: ((opener: HTMLElement | null) => void) | null): void {
@@ -340,9 +350,11 @@ export class SocialPanel {
         : null;
       const destination = target?.dataset.socialAction === 'party'
         ? 'party'
-        : target?.dataset.socialAction === 'menu' && isSocialPanelTab(target.dataset.socialTab)
-          ? target.dataset.socialTab
-          : null;
+        : target?.dataset.socialAction === 'sect-directory'
+          ? 'sect-directory'
+          : target?.dataset.socialAction === 'menu' && isSocialPanelTab(target.dataset.socialTab)
+            ? target.dataset.socialTab
+            : null;
       this.preparedMenuClose = null;
       if (!destination) return;
       const openTab = SOCIAL_PANEL_TABS.map((entry) => entry.id).find((tab) => this.isMenuOpen(tab));
@@ -389,6 +401,13 @@ export class SocialPanel {
       if (action === 'party') {
         const opener = target instanceof HTMLElement ? target : null;
         if (this.partyAvailable) this.partyOpenHandler?.(opener);
+        this.preparedMenuClose = null;
+        return;
+      }
+      if (action === 'sect-directory') {
+        const opener = target instanceof HTMLElement ? target : null;
+        this.closeFeaturePanels('sect-directory');
+        this.sectDirectoryOpenHandler?.(opener);
         this.preparedMenuClose = null;
         return;
       }
@@ -465,6 +484,18 @@ export class SocialPanel {
           <span class="social-menu-card-glyph" aria-hidden="true">伍</span>
           <span class="social-menu-card-copy"><strong>隊伍</strong><small>打開固定尺寸獨立面板，查看成員、邀請與管理</small></span>
           <span class="social-panel-tab-unread" data-social-party-unread="true" aria-hidden="true" ${partyUnread > 0 ? '' : 'hidden'}>${formatSocialUnreadCount(partyUnread)}</span>
+        </button>
+        <button
+          class="social-menu-card social-menu-card--sect-directory"
+          type="button"
+          data-social-action="sect-directory"
+          data-social-menu="sect-directory"
+          aria-controls="detail-modal"
+          aria-label="宗門總覽"
+          aria-expanded="false"
+        >
+          <span class="social-menu-card-glyph" aria-hidden="true">宗</span>
+          <span class="social-menu-card-copy"><strong>宗門總覽</strong><small>查看全伺服器宗門列表與遞交拜帖</small></span>
         </button>
         ${SOCIAL_PANEL_TABS.map((tab) => {
           const count = this.getTabCount(tab.id);
@@ -841,6 +872,10 @@ export class SocialPanel {
       if (!this.isMenuOpen(tab)) continue;
       this.prepareFloatingMenuClose(tab, destination);
       this.floatingMenus[tab].close(false);
+    }
+    // 宗門目錄面板與其他功能入口互斥：開啟非 sect-directory 目的地時收合宗門面板（未掛載時 no-op）。
+    if (destination !== 'sect-directory') {
+      this.sectDirectoryCloseHandler?.();
     }
     this.preparedMenuClose = null;
     this.patchTabState();

@@ -84,6 +84,7 @@ export * from './map-groups';
 export * from './aura';
 export * from './qi';
 export * from './formation-types';
+export * from './sect-directory-types';
 export * from './sect-types';
 export * from './social-types';
 export * from './party-types';

@@ -107,7 +107,9 @@ export function createMainPanelContext(options: CreateMainPanelContextOptions) {
   });
   const activityStateSource = createMainActivityStateSource({ socket: socialEconomySender, isSocketConnected: () => socket.connected });
   const socialStateSource = createMainSocialStateSource({ socialPanel, treasureVaultModal, accessPolicyClient, socket: socialEconomySender, getPlayer: () => rootRuntimeSource.getPlayer(), hydrateInventoryItem: (item, previous) => detailHydrationSource.hydrateSyncedItemStack(item, previous), showToast: (message, kind) => uiStateSource.showToast(message, kind) });
-  const partyPanel = new PartyPanel(); const partyWorkspace = new PartyWorkspacePanel(partyPanel); const partyHud = new PartyFloatingPanel(); const partyNavigation = bindMainSocialPanelNavigation({ socialPanel, partyPanel: partyWorkspace });
+  const partyPanel = new PartyPanel(); const partyWorkspace = new PartyWorkspacePanel(partyPanel); const partyHud = new PartyFloatingPanel();
+  // sectDirectoryPanel 留 null 佔位：todo 7 接入 React 宗門目錄面板（react-ui/panels/sect-directory/）後傳入控制器
+  const partyNavigation = bindMainSocialPanelNavigation({ socialPanel, partyPanel: partyWorkspace, sectDirectoryPanel: null });
   const partyStateSource = createMainPartyStateSource({
     partyPanel, partyHud, chatUI, openPartyPanel: partyNavigation.openPartyPanel, openPartyChat: () => { partyWorkspace.close(false); sidePanel.switchTab('logbook'); chatUI.openChannel('party'); },
     setPartyPanelAvailable: (available) => { partyWorkspace.setAvailable(available); socialPanel.setPartyAvailable(available); },
