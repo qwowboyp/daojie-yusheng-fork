@@ -92,6 +92,11 @@ import {
 const SECT_MANAGEMENT_DATA_MARKER = '@@sect:';
 const SECT_MANAGEMENT_DATA_MARKER_END = '@@';
 
+/** 遠端遞帖防灌水：跨宗同時 pending 申請上限。 */
+const SECT_REMOTE_APPLICATION_MAX_PENDING = 3;
+/** 遠端遞帖防灌水：成功遞帖後的下次可再遠端遞帖冷卻（毫秒）。 */
+const SECT_REMOTE_APPLICATION_COOLDOWN_MS = 30_000;
+
 const { buildPublicInstanceId, parseRuntimeInstanceDescriptor } = world_runtime_normalization_helpers_1;
 
 /** world-runtime sect：宗门地图、入口、核心与护宗大阵运行时编排。 */
@@ -114,6 +119,8 @@ class WorldRuntimeSectService {
     sectMemberProfilesByPlayerId = new Map<string, { name: string | null; realmLv: number | null }>();
     sectMutationQueueBySectId = new Map<string, Promise<void>>();
     directoryRequestAtByPlayerId = new Map();
+    /** 远端遞帖冷卻：玩家下次可再遠端遞交拜帖的時刻（in-memory，重啟即重置）。 */
+    nextRemoteApplyAllowedAtByPlayerId = new Map();
     sectDurableCommitQueue = Promise.resolve();
     persistenceClosing = false;
     sectShutdownSignal = createSectShutdownSignal();
@@ -968,6 +975,9 @@ class WorldRuntimeSectService {
 
     async executeSectAction(playerId, actionId, deps) {
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
+        if (actionId.startsWith('sect:apply-remote:')) {
+            return this.applyJoinSectRemote(playerId, actionId.slice('sect:apply-remote:'.length), deps);
+        }
         if (actionId.startsWith('sect:apply:')) {
             return this.applyJoinSect(playerId, actionId.slice('sect:apply:'.length), deps);
         }
@@ -1254,9 +1264,15 @@ class WorldRuntimeSectService {
         return { kind: 'queued', view: deps.getPlayerViewOrThrow(playerId) };
     }
 
-    applyJoinSect(playerId, encodedSectId, deps) {
+    /**
+     * 遞交拜帖共用核心：宗門存在且未解散 → 成員自動歸位 → 他宗宗主拒絕 → gateFn →
+     * rollback capture → upsert → advanceSectUpdatedAt → durable commit → 郵件 × 2 + 通知 × 2 + refresh。
+     * 走路與遠端兩入口唯一差異是中段 gateFn（走路 = 位置閘，遠端 = 防灌水三閘）。
+     */
+    applyJoinSectWithGate(playerId, encodedSectId, deps, gateFn) {
         const sectId = decodeActionPart(encodedSectId);
         return this.runExclusiveSectPlayerMutation([sectId], [playerId], async () => {
+        let afterCommit = null;
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
         const sect = this.findSectById(sectId);
         if (!sect || sect.status === 'dissolved') {
@@ -1275,12 +1291,14 @@ class WorldRuntimeSectService {
         if (ledSect && ledSect.sectId !== sect.sectId) {
             throw new BadRequestException(`你身為${ledSect.name}宗主，不能加入其他宗門，請先轉讓宗主之位或解散原宗門`);
         }
-        const location = deps.getPlayerLocationOrThrow(playerId);
-        if (location.instanceId !== sect.entranceInstanceId) {
-            throw new BadRequestException('需要在該宗門山門前遞交拜帖');
-        }
-        if (chebyshevDistance(player.x, player.y, sect.entranceX, sect.entranceY) > SECT_ENTRANCE_INTERACTION_RADIUS) {
-            throw new BadRequestException('需要靠近護宗大陣前的山門傳送點');
+        if (typeof gateFn === 'function') {
+            const gateOutcome = await gateFn(player, sect, deps);
+            if (gateOutcome?.shortCircuit) {
+                return gateOutcome.result;
+            }
+            if (gateOutcome?.afterCommit) {
+                afterCommit = gateOutcome.afterCommit;
+            }
         }
         const rollback = captureSectMembershipRollback(this, [sect.sectId], []);
         const beforeSnapshots = rollback.sects.map((entry) => entry.snapshot);
@@ -1289,6 +1307,9 @@ class WorldRuntimeSectService {
         this.rememberSectMemberRuntimeProfile(player);
         advanceSectUpdatedAt(sect);
         await this.commitDurableSectMembershipMutation(beforeSnapshots, new Map());
+        if (typeof afterCommit === 'function') {
+            afterCommit();
+        }
         this.deliverSectMail(playerId, {
             senderLabel: sect.name,
             fallbackTitle: `已向${sect.name}遞交拜帖`,
@@ -1318,6 +1339,58 @@ class WorldRuntimeSectService {
             restoreSectMembershipRollback(this, rollback);
             throw error;
         }
+        });
+    }
+
+    /** 走路入口：共用核心 + 原位置閘（錯誤文案逐字保留）。 */
+    applyJoinSect(playerId, encodedSectId, deps) {
+        return this.applyJoinSectWithGate(playerId, encodedSectId, deps, async (player, sect, actionDeps) => {
+            const location = actionDeps.getPlayerLocationOrThrow(playerId);
+            if (location.instanceId !== sect.entranceInstanceId) {
+                throw new BadRequestException('需要在該宗門山門前遞交拜帖');
+            }
+            if (chebyshevDistance(player.x, player.y, sect.entranceX, sect.entranceY) > SECT_ENTRANCE_INTERACTION_RADIUS) {
+                throw new BadRequestException('需要靠近護宗大陣前的山門傳送點');
+            }
+            return null;
+        });
+    }
+
+    /**
+     * 遠端入口：共用核心 + 防灌水三閘（順序不可調換，全部在 exclusive mutation 內部）：
+     * ①同宗 pending 短路（不重發宗主郵件、不重置 appliedAt、不占冷卻）→ ②冷卻 → ③跨宗 pending 上限 →
+     * ④成功後設冷卻。
+     */
+    applyJoinSectRemote(playerId, encodedSectId, deps) {
+        return this.applyJoinSectWithGate(playerId, encodedSectId, deps, async (player, sect, actionDeps) => {
+            const now = Date.now();
+            const pending = findPendingSectApplication(sect, playerId);
+            if (pending) {
+                queueStructuredSectNotice(actionDeps, playerId, 'info', 'notice.sect.application-already-pending', '拜帖已在審批中');
+                return { shortCircuit: true, result: { kind: 'queued', view: actionDeps.getPlayerViewOrThrow(playerId) } };
+            }
+            const allowedAt = this.nextRemoteApplyAllowedAtByPlayerId.get(playerId) ?? 0;
+            if (now < allowedAt) {
+                throw new BadRequestException('拜帖剛遞出，請稍後再試');
+            }
+            let crossSectPendingCount = 0;
+            for (const candidate of this.sectsById.values()) {
+                if (!candidate || candidate.status === 'dissolved') {
+                    continue;
+                }
+                if (findPendingSectApplication(candidate, playerId)) {
+                    crossSectPendingCount += 1;
+                    if (crossSectPendingCount >= SECT_REMOTE_APPLICATION_MAX_PENDING) {
+                        break;
+                    }
+                }
+            }
+            if (crossSectPendingCount >= SECT_REMOTE_APPLICATION_MAX_PENDING) {
+                throw new BadRequestException('你已有太多待審拜帖，請等待宗主批示');
+            }
+            return { afterCommit: () => {
+                this.nextRemoteApplyAllowedAtByPlayerId.set(playerId, now + SECT_REMOTE_APPLICATION_COOLDOWN_MS);
+            } };
         });
     }
 
