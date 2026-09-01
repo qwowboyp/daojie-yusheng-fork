@@ -10,6 +10,7 @@ async function main(): Promise<void> {
   const playerId = 'player:vendor-recycle';
   const ratTailInstanceId = 'vendor-recycle-rat-tail';
   const unknownInstanceId = 'vendor-recycle-unknown-ore';
+  const fragmentInstanceId = 'vendor-recycle-technique-fragment';
   const durableCommits: Array<{ operationType: string; payload: Record<string, unknown> }> = [];
   const player = {
     playerId,
@@ -19,6 +20,7 @@ async function main(): Promise<void> {
       items: [
         { itemId: 'rat_tail', count: 5, name: '鼠尾', type: 'material', itemInstanceId: ratTailInstanceId },
         { itemId: 'unknown_ore', count: 2, name: '未知礦石', type: 'material', itemInstanceId: unknownInstanceId },
+        { itemId: 'mat.technique_fragment', count: 6, name: '功法殘頁', type: 'material', itemInstanceId: fragmentInstanceId },
       ] as RuntimeItem[],
     },
     wallet: { balances: [] as Array<Record<string, unknown>> },
@@ -48,6 +50,9 @@ async function main(): Promise<void> {
         }
         if (itemId === 'rat_tail') {
           return { itemId, count, name: '鼠尾', type: 'material' };
+        }
+        if (itemId === 'mat.technique_fragment') {
+          return { itemId, count, name: '功法殘頁', type: 'material' };
         }
         if (itemId === 'spirit_stone') {
           return { itemId, count, name: '靈石', type: 'consumable' };
@@ -163,9 +168,13 @@ async function main(): Promise<void> {
   const recyclePrices = service.getVendorRecycleUnitPriceByItemId();
   assert.equal(recyclePrices.get('rat_tail'), 1, 'rat_tail recycle price should be floor(4 * 0.25) = 1');
   assert.equal(recyclePrices.has('quest_relic'), false, 'quest_item must be excluded from recycle table');
+  assert.equal(recyclePrices.get('mat.technique_fragment'), 1, 'technique fragment recycle price should be custom 1 per batch');
 
   const marketUpdate = service.buildMarketUpdate(playerId);
-  assert.deepEqual(marketUpdate.vendorRecycleItems, [{ itemId: 'rat_tail', unitRecyclePrice: 1 }]);
+  assert.deepEqual(marketUpdate.vendorRecycleItems, [
+    { itemId: 'mat.technique_fragment', unitRecyclePrice: 1, batchSize: 4 },
+    { itemId: 'rat_tail', unitRecyclePrice: 1, batchSize: 1 },
+  ]);
 
   const success = await service.vendorRecycleItem(playerId, {
     itemRef: { itemInstanceId: ratTailInstanceId },
@@ -187,6 +196,28 @@ async function main(): Promise<void> {
   });
   assert.equal(rejected.notices.some((entry) => entry.text === '回收商不收這件物品。'), true);
   assert.equal(player.inventory.items.find((entry) => entry.itemInstanceId === unknownInstanceId)?.count, 2);
+
+  // 功法殘頁：4 張 1 組，回收 4 張得 1 靈石
+  const fragmentSuccess = await service.vendorRecycleItem(playerId, {
+    itemRef: { itemInstanceId: fragmentInstanceId },
+    quantity: 4,
+  });
+  assert.equal(fragmentSuccess.notices.some((entry) => entry.playerId === playerId), true);
+  assert.equal(player.inventory.items.find((entry) => entry.itemInstanceId === fragmentInstanceId)?.count, 2);
+  assert.equal(player.inventory.items.find((entry) => entry.itemId === 'spirit_stone')?.count ?? 0, 4);
+  assert.equal(durableCommits[1]?.operationType, 'market_vendor_recycle');
+  assert.equal(durableCommits[1]?.payload.itemId, 'mat.technique_fragment');
+  assert.equal(durableCommits[1]?.payload.quantity, 4);
+  assert.equal(durableCommits[1]?.payload.batchSize, 4);
+  assert.equal(durableCommits[1]?.payload.totalIncome, 1);
+
+  // 功法殘頁：非組倍數數量必須拒絕
+  const fragmentInvalid = await service.vendorRecycleItem(playerId, {
+    itemRef: { itemInstanceId: fragmentInstanceId },
+    quantity: 1,
+  });
+  assert.equal(fragmentInvalid.notices.some((entry) => entry.text === '回收數量必須是 4 的倍數。'), true);
+  assert.equal(player.inventory.items.find((entry) => entry.itemInstanceId === fragmentInstanceId)?.count, 2);
 
   const overflow = await service.vendorRecycleItem(playerId, {
     itemRef: { itemInstanceId: ratTailInstanceId },

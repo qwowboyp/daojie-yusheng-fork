@@ -5,7 +5,7 @@
  */
 import { BadRequestException, Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { createHash, randomUUID } from 'crypto';
-import { AUCTION_DEFAULT_DURATION_HOURS, AUCTION_LISTING_FEE_BASE, AUCTION_LISTING_FEE_RATE, AUCTION_MAX_DURATION_HOURS, AUCTION_MIN_DURATION_HOURS, CUSTOM_TECHNIQUE_BOOK_ITEM_ID, EQUIP_SLOTS, HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID, HEAVENLY_DAO_SHOP_ITEMS, ITEM_TYPES, MARKET_MAX_ENHANCE_LEVEL, MARKET_MAX_UNIT_PRICE, TECHNIQUE_EQUIP_SLOTS, TECHNIQUE_GRADE_ORDER, VENDOR_RECYCLE_EXCLUDED_ITEM_IDS, VENDOR_RECYCLE_EXCLUDED_ITEM_TYPES, calculateHeavenlyDaoShopDiscountedPrice, calculateMarketOrderReservedCost, calculateMarketOrderTradeTotalCost, calculateMarketRoundedTotalCost, calculateMarketTradeTotalCost, calculateVendorRecycleUnitPrice, canMergeItemStack, createItemStackSignature, getItemDisplayName, getMarketMinimumTradeQuantity, getMarketPriceStep, isLegacyMarketPrice, isValidMarketListingPrice, isValidMarketPrice, isValidMarketTradeQuantity, normalizeMarketAuctionPageSize, normalizeMarketAuctionQuery, normalizeMarketListingsPageSize, normalizeMarketPriceUp, normalizeMarketRequestPage, normalizeMarketTradeSource, normalizeTransmissionCategory, normalizeTransmissionListingSort, resolveClampedMarketResponsePage, resolvePlayerFacingContentName } from '@mud/shared';
+import { AUCTION_DEFAULT_DURATION_HOURS, AUCTION_LISTING_FEE_BASE, AUCTION_LISTING_FEE_RATE, AUCTION_MAX_DURATION_HOURS, AUCTION_MIN_DURATION_HOURS, CUSTOM_TECHNIQUE_BOOK_ITEM_ID, EQUIP_SLOTS, HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID, HEAVENLY_DAO_SHOP_ITEMS, ITEM_TYPES, MARKET_MAX_ENHANCE_LEVEL, MARKET_MAX_UNIT_PRICE, TECHNIQUE_EQUIP_SLOTS, TECHNIQUE_GRADE_ORDER, VENDOR_RECYCLE_BATCH_SIZE_BY_ITEM_ID, VENDOR_RECYCLE_CUSTOM_UNIT_PRICES, VENDOR_RECYCLE_EXCLUDED_ITEM_IDS, VENDOR_RECYCLE_EXCLUDED_ITEM_TYPES, calculateHeavenlyDaoShopDiscountedPrice, calculateMarketOrderReservedCost, calculateMarketOrderTradeTotalCost, calculateMarketRoundedTotalCost, calculateMarketTradeTotalCost, calculateVendorRecycleUnitPrice, canMergeItemStack, createItemStackSignature, getItemDisplayName, getMarketMinimumTradeQuantity, getMarketPriceStep, isLegacyMarketPrice, isValidMarketListingPrice, isValidMarketPrice, isValidMarketTradeQuantity, normalizeMarketAuctionPageSize, normalizeMarketAuctionQuery, normalizeMarketListingsPageSize, normalizeMarketPriceUp, normalizeMarketRequestPage, normalizeMarketTradeSource, normalizeTransmissionCategory, normalizeTransmissionListingSort, resolveClampedMarketResponsePage, resolvePlayerFacingContentName } from '@mud/shared';
 import { assignItemInstanceIdIfNeeded } from '../world/item-instance-id.helpers';
 import { ContentTemplateRepository } from '../../content/content-template.repository';
 import { AUCTION_GLOBAL_TRADE_HISTORY_LIMIT, AUCTION_MY_TRADE_HISTORY_VISIBLE_LIMIT, AUCTION_TRADE_HISTORY_PAGE_SIZE, MARKET_CURRENCY_ITEM_ID, MARKET_MAX_ORDER_QUANTITY, MARKET_STORAGE_RUNTIME_CACHE_LIMIT, MARKET_TRADE_HISTORY_PAGE_SIZE, MARKET_TRADE_HISTORY_RUNTIME_CACHE_LIMIT, MARKET_TRADE_HISTORY_VISIBLE_LIMIT } from '../../constants/gameplay/market';
@@ -528,7 +528,11 @@ export class MarketRuntimeService {
             storage: this.getStorage(playerId),
             heavenlyDaoShopDiscountPercent: this.resolveCachedHeavenlyDaoShopDiscountPercent(playerId),
             vendorRecycleItems: Array.from(this.getVendorRecycleUnitPriceByItemId().entries())
-                .map(([itemId, unitRecyclePrice]) => ({ itemId, unitRecyclePrice }))
+                .map(([itemId, unitRecyclePrice]) => ({
+                    itemId,
+                    unitRecyclePrice,
+                    batchSize: this.resolveVendorRecycleBatchSize(itemId),
+                }))
                 .sort((left, right) => left.itemId.localeCompare(right.itemId)),
             spiritStoneShopItems: Array.from(this.getSpiritStoneShopUnitPriceByItemId().entries())
                 .map(([itemId, unitPrice]) => ({ itemId, unitPrice }))
@@ -581,8 +585,25 @@ export class MarketRuntimeService {
             }
             prices.set(itemId, unitRecyclePrice);
         }
+        // 自訂定價表：補齊商店沒賣、但回收商願意收的物品（如功法殘頁）。
+        // 貨架已有的物品以貨架折算價優先，不覆蓋。
+        for (const [itemId, customPrice] of Object.entries(VENDOR_RECYCLE_CUSTOM_UNIT_PRICES)) {
+            if (prices.has(itemId)) {
+                continue;
+            }
+            const normalizedPrice = Math.trunc(Number(customPrice) || 0);
+            if (normalizedPrice <= 0) {
+                continue;
+            }
+            prices.set(itemId, normalizedPrice);
+        }
         this.vendorRecycleUnitPriceByItemId = prices;
         return prices;
+    }
+    /** 回收商按組回收的每組張數；無組裝規則的物品回 1（逐件回收）。 */
+    resolveVendorRecycleBatchSize(itemId: string): number {
+        const batchSize = VENDOR_RECYCLE_BATCH_SIZE_BY_ITEM_ID[String(itemId ?? '').trim()];
+        return Number.isSafeInteger(batchSize) && Number(batchSize) > 0 ? Number(batchSize) : 1;
     }
     /** 靈石商店目錄：NPC 商店貨架彙總，同一物品取最低售價，與 NPC 商店同價，結果快取。 */
     getSpiritStoneShopUnitPriceByItemId(): Map<string, number> {
@@ -1428,7 +1449,15 @@ export class MarketRuntimeService {
                 return this.singleMessage(playerId, '回收商不收這件物品。');
             }
 
-            const totalIncome = unitRecyclePrice * quantity;
+            // 組裝物品（如功法殘頁 4 張 1 組）以「組」為最小結算單位：
+            // 數量必須是 batchSize 的倍數，每組按 unitRecyclePrice 結算，避免產生小數靈石。
+            const batchSize = this.resolveVendorRecycleBatchSize(itemId);
+            if (batchSize > 1 && quantity % batchSize !== 0) {
+                return this.singleMessage(playerId, `回收數量必須是 ${batchSize} 的倍數。`);
+            }
+            const batchCount = batchSize > 1 ? Math.trunc(quantity / batchSize) : quantity;
+
+            const totalIncome = unitRecyclePrice * batchCount;
             if (!Number.isSafeInteger(totalIncome) || totalIncome <= 0) {
                 return this.singleMessage(playerId, '回收總價無效，請重新操作。');
             }
@@ -1454,6 +1483,7 @@ export class MarketRuntimeService {
                         quantity,
                         unitRecyclePrice,
                         totalIncome,
+                        batchSize,
                     });
                     if (this.durableOperationService?.isEnabled?.() && !durableCommitted) {
                         throw new Error('market_vendor_recycle_durable_commit_failed');

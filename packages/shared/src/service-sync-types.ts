@@ -306,6 +306,12 @@ export interface MarketVendorRecycleItemView {
  */
 
   unitRecyclePrice: number;
+  /**
+ * batchSize：按組回收的每組張數；缺省為 1（逐件回收）。
+ * 組裝物品的數量必須是 batchSize 的倍數，每組按 unitRecyclePrice 結算。
+ */
+
+  batchSize?: number;
 }
 
 /** 灵石商店可售商品的单件售价视图（NPC 商店货架汇总，同物品取最低售价）。 */

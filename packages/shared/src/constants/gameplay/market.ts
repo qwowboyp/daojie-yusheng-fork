@@ -3,6 +3,7 @@
  *
  * 维护时要同步检查客户端展示、服务端结算和配置编辑器，避免同一数值在多端分叉。
  */
+import { TECHNIQUE_FRAGMENT_ITEM_ID } from './technique';
 /**
  * 市场交易系统常量。
  */
@@ -40,6 +41,27 @@ export const VENDOR_RECYCLE_RATE_PERCENT = 25;
 
 /** 回收商單件回收價下限（靈石）。 */
 export const VENDOR_RECYCLE_MIN_UNIT_PRICE = 1;
+
+/**
+ * 回收商自訂單價表（itemId → 每組回收價，靈石）。
+ * 與 NPC 商店貨架彙總合併：貨架已有的物品以貨架最低售價折算優先，
+ * 自訂表負責「商店沒賣、但回收商願意收」的物品（如功法殘頁）。
+ * 組裝物品（見 VENDOR_RECYCLE_BATCH_SIZE_BY_ITEM_ID）以「組」為結算單位，
+ * 數量必須是組大小的倍數，每組按本表價格結算。
+ */
+export const VENDOR_RECYCLE_CUSTOM_UNIT_PRICES: Record<string, number> = {
+  // 功法殘頁：4 張 1 組，每組 1 靈石
+  [TECHNIQUE_FRAGMENT_ITEM_ID]: 1,
+};
+
+/**
+ * 回收商按組回收的物品：itemId → 每組張數。
+ * 組裝物品以「組」為最小結算單位，數量必須是組大小的倍數，每組按單件回收價結算。
+ * 例如功法殘頁 4 張 1 組、每組 1 靈石 → 回收 4/8/12 張，得 1/2/3 靈石。
+ */
+export const VENDOR_RECYCLE_BATCH_SIZE_BY_ITEM_ID: Record<string, number> = {
+  [TECHNIQUE_FRAGMENT_ITEM_ID]: 4,
+};
 
 /** 回收商絕不回收的特殊物品：貨幣與權益類物品本身不得進入回收鏈路。 */
 export const VENDOR_RECYCLE_EXCLUDED_ITEM_IDS = [

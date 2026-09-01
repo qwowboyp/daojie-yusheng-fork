@@ -1997,9 +1997,9 @@ export class MarketPanel {
     return this.marketUpdate?.currencyItemName ?? '靈石';
   }
 
-  /** 服务端下发的可回收目录（itemId → 单件回收价）；旧版 server 未下发时为空。 */
-  private getVendorRecycleCatalog(): Map<string, number> {
-    const catalog = new Map<string, number>();
+  /** 服务端下发的可回收目录（itemId → 单件回收价 + 組裝張數）；旧版 server 未下发时为空。 */
+  private getVendorRecycleCatalog(): Map<string, { unitPrice: number; batchSize: number }> {
+    const catalog = new Map<string, { unitPrice: number; batchSize: number }>();
     const entries = this.marketUpdate?.vendorRecycleItems;
     if (!Array.isArray(entries)) {
       return catalog;
@@ -2007,7 +2007,11 @@ export class MarketPanel {
     for (const entry of entries) {
       const unitPrice = Number(entry?.unitRecyclePrice);
       if (typeof entry?.itemId === 'string' && entry.itemId.length > 0 && Number.isFinite(unitPrice)) {
-        catalog.set(entry.itemId, Math.max(0, Math.trunc(unitPrice)));
+        const rawBatchSize = Number(entry?.batchSize);
+        catalog.set(entry.itemId, {
+          unitPrice: Math.max(0, Math.trunc(unitPrice)),
+          batchSize: Number.isSafeInteger(rawBatchSize) && rawBatchSize > 0 ? Math.trunc(rawBatchSize) : 1,
+        });
       }
     }
     return catalog;
@@ -2020,6 +2024,7 @@ export class MarketPanel {
     itemName: string;
     count: number;
     unitRecyclePrice: number;
+    batchSize: number;
     totalRecyclePrice: number;
   }> {
     const catalog = this.getVendorRecycleCatalog();
@@ -2032,23 +2037,27 @@ export class MarketPanel {
       itemName: string;
       count: number;
       unitRecyclePrice: number;
+      batchSize: number;
       totalRecyclePrice: number;
     }> = [];
     for (const item of inventory.items) {
       const itemInstanceId = typeof item.itemInstanceId === 'string' ? item.itemInstanceId : '';
-      const unitRecyclePrice = catalog.get(item.itemId) ?? null;
+      const entry = catalog.get(item.itemId) ?? null;
       const count = Math.trunc(Number(item.count));
-      if (!itemInstanceId || unitRecyclePrice === null || !Number.isSafeInteger(count) || count <= 0) {
+      if (!itemInstanceId || entry === null || !Number.isSafeInteger(count) || count <= 0) {
         continue;
       }
       const template = getLocalItemTemplate(item.itemId);
+      const batchSize = entry.batchSize;
+      const batchCount = batchSize > 1 ? Math.floor(count / batchSize) : count;
       rows.push({
         itemInstanceId,
         itemId: item.itemId,
         itemName: resolveClientItemBaseName(item.itemId, template?.name, item.name),
         count,
-        unitRecyclePrice,
-        totalRecyclePrice: unitRecyclePrice * count,
+        unitRecyclePrice: entry.unitPrice,
+        batchSize,
+        totalRecyclePrice: entry.unitPrice * batchCount,
       });
     }
     return rows;
@@ -2065,7 +2074,7 @@ export class MarketPanel {
 
   private buildVendorRecycleAssetSignature(inventory: Inventory): string {
     return this.collectVendorRecycleRows(inventory)
-      .map((row) => `${row.itemInstanceId}:${row.count}:${row.unitRecyclePrice}`)
+      .map((row) => `${row.itemInstanceId}:${row.count}:${row.unitRecyclePrice}:${row.batchSize}`)
       .join('|');
   }
 
@@ -2099,13 +2108,17 @@ export class MarketPanel {
     };
   }
 
-  private parseVendorRecycleQuantity(itemInstanceId: string, count: number): number | null {
-    const raw = this.vendorRecycleQuantityDrafts.get(itemInstanceId) ?? '1';
+  /** 解析回收數量；組裝物品（batchSize > 1）的數量必須是 batchSize 的倍數。 */
+  private parseVendorRecycleQuantity(itemInstanceId: string, count: number, batchSize = 1): number | null {
+    const raw = this.vendorRecycleQuantityDrafts.get(itemInstanceId) ?? String(batchSize);
     if (!raw || !/^\d+$/.test(raw)) {
       return null;
     }
     const quantity = Number(raw);
     if (!Number.isSafeInteger(quantity) || quantity <= 0 || quantity > count) {
+      return null;
+    }
+    if (batchSize > 1 && quantity % batchSize !== 0) {
       return null;
     }
     return quantity;
@@ -2120,6 +2133,9 @@ export class MarketPanel {
     const selectedInstanceId = this.ensureVendorRecycleSelection()?.itemInstanceId ?? null;
     return rows.map((row) => {
       const active = row.itemInstanceId === selectedInstanceId ? ' active' : '';
+      const priceLabel = row.batchSize > 1
+        ? `${formatDisplayInteger(row.unitRecyclePrice)} ${escapeHtml(currencyName)}/${row.batchSize}張`
+        : `${formatDisplayInteger(row.unitRecyclePrice)} ${escapeHtml(currencyName)}`;
       return `
         <button class="market-item-cell ui-surface-card ui-surface-card--compact${active}" data-vendor-recycle-select="${escapeHtmlAttr(row.itemInstanceId)}" type="button">
           <div class="market-item-cell-name">
@@ -2127,7 +2143,7 @@ export class MarketPanel {
             <span class="market-item-cell-owned">${formatDisplayCountBadge(row.count)}</span>
           </div>
           <div class="market-item-cell-prices">
-            <span>${formatDisplayInteger(row.unitRecyclePrice)} ${escapeHtml(currencyName)}</span>
+            <span>${priceLabel}</span>
             <span>可回收</span>
           </div>
         </button>
@@ -2146,13 +2162,15 @@ export class MarketPanel {
     }
 
     const currencyName = this.getVendorRecycleCurrencyName();
-    const quantityText = this.vendorRecycleQuantityDrafts.get(row.itemInstanceId) ?? '1';
-    const quantity = this.parseVendorRecycleQuantity(row.itemInstanceId, row.count);
+    const quantityText = this.vendorRecycleQuantityDrafts.get(row.itemInstanceId) ?? String(row.batchSize);
+    const quantity = this.parseVendorRecycleQuantity(row.itemInstanceId, row.count, row.batchSize);
     const invalid = quantity === null;
-    const total = quantity === null ? null : quantity * row.unitRecyclePrice;
+    const total = quantity === null ? null : (quantity / row.batchSize) * row.unitRecyclePrice;
     const displayTotal = invalid ? '--' : formatDisplayInteger(total ?? 0);
     const effectLines = describeItemEffectDetails(item);
-    const errorText = `請輸入 1 至 ${formatDisplayInteger(row.count)} 之間的回收數量。`;
+    const errorText = row.batchSize > 1
+      ? `回收數量必須是 ${formatDisplayInteger(row.batchSize)} 的倍數，最多 ${formatDisplayInteger(row.count)} 張。`
+      : `請輸入 1 至 ${formatDisplayInteger(row.count)} 之間的回收數量。`;
     return `
       <div class="market-book-header">
         <div>
@@ -2182,7 +2200,7 @@ export class MarketPanel {
             <span>單價</span>
             <div class="market-price-display">
               <strong>${formatDisplayInteger(row.unitRecyclePrice)}</strong>
-              <span>${escapeHtml(currencyName)}</span>
+              <span>${escapeHtml(currencyName)}${row.batchSize > 1 ? ` / ${formatDisplayInteger(row.batchSize)}張` : ''}</span>
             </div>
           </div>
         </div>
@@ -2190,12 +2208,12 @@ export class MarketPanel {
           <div class="market-trade-dialog-field">
             <span>數量</span>
             ${renderTradeQuantityControl({
-              value: quantityText || '1',
+              value: quantityText || String(row.batchSize),
               max: row.count,
               inputClassName: 'gm-inline-input ui-input',
               inputAttrs: { 'data-vendor-recycle-quantity': row.itemInstanceId },
-              leftButtons: [{ label: '1', attrs: { 'data-vendor-recycle-quick': row.itemInstanceId, 'data-vendor-recycle-quick-value': '1' } }],
-              rightButtons: [{ label: '全部', attrs: { 'data-vendor-recycle-quick': row.itemInstanceId, 'data-vendor-recycle-quick-value': String(row.count) } }],
+              leftButtons: [{ label: String(row.batchSize), attrs: { 'data-vendor-recycle-quick': row.itemInstanceId, 'data-vendor-recycle-quick-value': String(row.batchSize) } }],
+              rightButtons: [{ label: '全部', attrs: { 'data-vendor-recycle-quick': row.itemInstanceId, 'data-vendor-recycle-quick-value': String(Math.floor(row.count / row.batchSize) * row.batchSize) } }],
             })}
           </div>
           <div class="market-trade-dialog-total ${invalid ? 'error' : ''}">
@@ -2206,8 +2224,7 @@ export class MarketPanel {
         <div class="market-action-hint market-action-hint--error" data-vendor-recycle-error="${escapeHtmlAttr(row.itemInstanceId)}" ${invalid ? '' : 'hidden'}>
           ${escapeHtml(errorText)}
         </div>
-        <div class="market-action-hint">回收價由服務端按 NPC 商店售價折算後權威結算。</div>
-      </div>
+        <div class="market-action-hint">回收價由服務端按 NPC 商店售價折算後權威結算。</div>      </div>
     `;
   }
 
@@ -2369,7 +2386,7 @@ export class MarketPanel {
     if (!row) {
       return;
     }
-    const quantity = this.parseVendorRecycleQuantity(itemInstanceId, row.count);
+    const quantity = this.parseVendorRecycleQuantity(itemInstanceId, row.count, row.batchSize);
     if (quantity === null) {
       return;
     }
@@ -2406,13 +2423,15 @@ export class MarketPanel {
     }
 
     const currencyName = this.getVendorRecycleCurrencyName();
-    const quantity = this.parseVendorRecycleQuantity(itemInstanceId, row.count);
+    const quantity = this.parseVendorRecycleQuantity(itemInstanceId, row.count, row.batchSize);
     const invalid = quantity === null;
-    const total = quantity === null ? null : quantity * row.unitRecyclePrice;
+    const total = quantity === null ? null : (quantity / row.batchSize) * row.unitRecyclePrice;
     totalNode.textContent = `${invalid ? '--' : formatDisplayInteger(total ?? 0)} ${currencyName}`;
     totalNode.parentElement?.classList.toggle('error', invalid);
     errorNode.hidden = !invalid;
-    errorNode.textContent = `請輸入 1 至 ${formatDisplayInteger(row.count)} 之間的回收數量。`;
+    errorNode.textContent = row.batchSize > 1
+      ? `回收數量必須是 ${formatDisplayInteger(row.batchSize)} 的倍數，最多 ${formatDisplayInteger(row.count)} 張。`
+      : `請輸入 1 至 ${formatDisplayInteger(row.count)} 之間的回收數量。`;
     buttonNode.disabled = invalid;
   }
 

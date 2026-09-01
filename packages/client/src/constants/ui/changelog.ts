@@ -13,6 +13,13 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-01',
+    summary: '回收商新增功法殘頁回收，每 4 張換 1 靈石。',
+    items: [
+      '坊市：回收商新增功法殘頁回收 — 分解功法書得到的功法殘頁可賣給回收商，每 4 張為 1 組、每組 1 靈石；回收數量必須是 4 的倍數，殘頁不足 4 張時不顯示在回收清單。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-01',
     summary: '修復宗門擴張時在場玩家被傳送回傳送點的問題。',
     items: [
       '宗門：擴張邊界不再把在場玩家傳送回傳送點 — 鑿開界石觸發地脈擴張時，原本會把宗門內所有玩家強制搬回核心傳送點，現在擴張前後位置保持不變。',
