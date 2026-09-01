@@ -1373,6 +1373,7 @@
 
     :root[data-color-mode="dark"] .alchemy-summary-metric {
       border-color: rgba(212, 176, 137, 0.16);
+      background: rgba(42, 34, 28, 0.84);
     }
 
     :root[data-color-mode="dark"] .alchemy-summary-metric--power {
@@ -1464,6 +1465,14 @@
 
     :root[data-color-mode="dark"] .alchemy-preset-empty {
       color: rgba(235, 221, 201, 0.76);
+    }
+
+    :root[data-color-mode="dark"] .alchemy-summary-metric .technique-refining-count-controls {
+      color: var(--ink-grey);
+    }
+
+    :root[data-color-mode="dark"] .alchemy-summary-metric [data-technique-refining-count-label="true"] {
+      color: var(--ink-black);
     }
 
     :root[data-color-mode="dark"] .alchemy-material-count.insufficient,
