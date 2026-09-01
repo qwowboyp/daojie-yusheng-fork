@@ -22,6 +22,8 @@
 }
 
 .sect-directory-panel {
+  container-name: sect-directory-panel;
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -274,7 +276,7 @@
   margin-bottom: 8px;
 }
 
-@media (max-width: 560px) {
+@container sect-directory-panel (max-width: 560px) {
   .sect-directory-grid {
     grid-template-columns: 1fr;
   }

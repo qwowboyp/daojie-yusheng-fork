@@ -21,6 +21,7 @@ export const PANELS_CSS_ORDER = [
   'auction.css',
   'skill.css',
   'sect.css',
+  'sect-directory.css',
   'social.css',
   'party.css',
   'world.css',
