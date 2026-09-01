@@ -109,24 +109,17 @@ export function createMainPanelContext(options: CreateMainPanelContextOptions) {
   const activityStateSource = createMainActivityStateSource({ socket: socialEconomySender, isSocketConnected: () => socket.connected });
   const socialStateSource = createMainSocialStateSource({ socialPanel, treasureVaultModal, accessPolicyClient, socket: socialEconomySender, getPlayer: () => rootRuntimeSource.getPlayer(), hydrateInventoryItem: (item, previous) => detailHydrationSource.hydrateSyncedItemStack(item, previous), showToast: (message, kind) => uiStateSource.showToast(message, kind) });
   const partyPanel = new PartyPanel(); const partyWorkspace = new PartyWorkspacePanel(partyPanel); const partyHud = new PartyFloatingPanel();
-  const sectDirectoryPanel = createSectDirectoryPanelController({
-    socket,
-    panelSender,
-    runtimeSender,
-  });
-  const partyNavigation = bindMainSocialPanelNavigation({ socialPanel, partyPanel: partyWorkspace, sectDirectoryPanel });
+  const sectDirectoryPanel = createSectDirectoryPanelController({ socket, panelSender, runtimeSender });
+  const partyNavigation = bindMainSocialPanelNavigation({ socialPanel, partyPanel: partyWorkspace }); partyNavigation.setSectDirectoryController(sectDirectoryPanel);
   const partyStateSource = createMainPartyStateSource({
     partyPanel, partyHud, chatUI, openPartyPanel: partyNavigation.openPartyPanel, openPartyChat: () => { partyWorkspace.close(false); sidePanel.switchTab('logbook'); chatUI.openChannel('party'); },
     setPartyPanelAvailable: (available) => { partyWorkspace.setAvailable(available); socialPanel.setPartyAvailable(available); },
     setPartyUnread: (count) => { partyWorkspace.setUnreadCount(count); socialPanel.setPartyUnread(count); },
     socket: socket.party, getPlayerId: () => rootRuntimeSource.getPlayer()?.id ?? null, showToast: (message, kind) => uiStateSource.showToast(message, kind),
   });
-  socialPanel.setPartyInviteHandler((targetPlayerId) => socket.party.sendInvitePartyPlayer({ targetPlayerId }));
-  sidePanel.initializeTabs();
-  craftWorkbenchModal.setAccessPolicyClient(accessPolicyClient, (message, kind) => uiStateSource.showToast(message, kind));
+  socialPanel.setPartyInviteHandler((targetPlayerId) => socket.party.sendInvitePartyPlayer({ targetPlayerId })); sidePanel.initializeTabs(); craftWorkbenchModal.setAccessPolicyClient(accessPolicyClient, (message, kind) => uiStateSource.showToast(message, kind));
   const timeChamberStateSource = createMainTimeChamberStateSource({ usageModal: timeChamberUsageModal, managementModal: timeChamberConsoleModal, socket: buildingSender, getPlayer: () => rootRuntimeSource.getPlayer(), showToast: (message, kind) => uiStateSource.showToast(message, kind) });
-  let uiStateSource!: ReturnType<typeof createMainUiStateSource>;
-  let panelDeltaStateSource!: ReturnType<typeof import('./main-panel-delta-state-source').createMainPanelDeltaStateSource>;
+  let uiStateSource!: ReturnType<typeof createMainUiStateSource>; let panelDeltaStateSource!: ReturnType<typeof import('./main-panel-delta-state-source').createMainPanelDeltaStateSource>;
   const techniqueActivityOpeners = { alchemy: () => craftWorkbenchModal.openAlchemy(), forging: () => craftWorkbenchModal.openForging(), enhancement: () => craftWorkbenchModal.openEnhancement() } as const satisfies Record<ClientTechniqueActivityKind | 'forging', () => void>;
   const techniqueGenerationPanelSource = createMainTechniqueGenerationPanelSource({ sender: techniqueGenerationSender });
   const actionStateSource = createMainActionStateSource({

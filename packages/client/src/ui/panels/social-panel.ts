@@ -915,6 +915,8 @@ export class SocialPanel {
       this.prepareFloatingMenuClose(tab, activeTab);
       this.floatingMenus[tab].close(false);
     }
+    // 道友子面板開啟時同時收合宗門目錄獨立面板（未掛載時 no-op）
+    this.sectDirectoryCloseHandler?.();
   }
 
   private openConversation(playerId: string, trigger: HTMLElement | null = null): void {
