@@ -1,0 +1,293 @@
+/* 宗門目錄面板（全服宗門名錄與遠端遞交拜帖）。跟隨宗門/社交面板視覺語言，深淺色由全局 token 驅動。 */
+
+.detail-modal-card.detail-modal--sect-directory {
+  width: min(980px, calc(100vw - 24px));
+  height: min(78dvh, 760px, calc(100dvh - var(--ui-modal-padding-top, 24px) - var(--ui-modal-padding-bottom, 24px) - 24px));
+  min-height: min(500px, calc(100dvh - var(--ui-modal-padding-top, 24px) - var(--ui-modal-padding-bottom, 24px) - 24px));
+  max-height: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(155, 90, 44, 0.08), transparent 30%),
+    var(--surface-gradient-paper);
+}
+
+.detail-modal-card.detail-modal--sect-directory #detail-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sect-directory-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  gap: 12px;
+}
+
+.sect-directory-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.sect-directory-search-box {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.sect-directory-search-input {
+  width: 100%;
+  height: 36px;
+  padding: 6px 32px 6px 12px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--surface-base);
+  color: var(--ink-black);
+  font-family: var(--font-role-body);
+  font-size: var(--font-size-role-body-14);
+  line-height: 1.4;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sect-directory-search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.sect-directory-clear-btn {
+  position: absolute;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--ink-grey);
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.sect-directory-clear-btn:hover {
+  color: var(--ink-black);
+  background: var(--highlight);
+}
+
+.sect-directory-refresh-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sect-directory-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+}
+
+.sect-directory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.sect-directory-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--wash-ink);
+  border-radius: var(--radius-md, 6px);
+  background: var(--surface-card);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sect-directory-card:hover {
+  border-color: var(--accent-border);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.sect-directory-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sect-directory-mark {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--accent-border);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-family: var(--font-role-title);
+  font-size: var(--font-size-role-title-24);
+  font-weight: var(--font-weight-heavy, 800);
+  line-height: 1;
+  user-select: none;
+}
+
+.sect-directory-card-title-group {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sect-directory-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sect-directory-name {
+  color: var(--ink-black);
+  font-family: var(--font-role-title);
+  font-size: var(--font-size-role-title-16);
+  font-weight: var(--font-weight-semibold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sect-directory-leader {
+  color: var(--ink-grey);
+  font-size: var(--font-size-role-body-12);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sect-directory-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: var(--font-size-role-body-11, 11px);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.sect-directory-badge--pending {
+  background: rgba(197, 60, 60, 0.12);
+  color: var(--stamp-red);
+  border: 1px solid rgba(197, 60, 60, 0.3);
+}
+
+.sect-directory-badge--member {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  border: 1px solid var(--accent-border);
+}
+
+.sect-directory-badge--leader {
+  background: rgba(214, 150, 40, 0.16);
+  color: #8b5700;
+  border: 1px solid rgba(214, 150, 40, 0.36);
+}
+
+.sect-directory-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+  border-top: 1px solid var(--wash-ink);
+  border-bottom: 1px solid var(--wash-ink);
+  font-size: var(--font-size-role-body-13);
+}
+
+.sect-directory-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sect-directory-info-label {
+  color: var(--ink-grey);
+  flex-shrink: 0;
+}
+
+.sect-directory-info-value {
+  color: var(--ink-dark);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sect-directory-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.sect-directory-card-actions .small-btn {
+  min-width: 80px;
+}
+
+.sect-directory-apply-btn {
+  background: var(--accent-ink);
+  color: var(--accent-contrast);
+}
+
+.sect-directory-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--wash-ink);
+  flex-shrink: 0;
+}
+
+.sect-directory-page-info {
+  color: var(--ink-grey);
+  font-size: var(--font-size-role-body-13);
+  text-align: center;
+}
+
+.sect-directory-error {
+  color: var(--stamp-red);
+  margin-bottom: 8px;
+}
+
+@media (max-width: 560px) {
+  .sect-directory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sect-directory-search-input {
+    font-size: 16px;
+    min-height: 44px;
+  }
+
+  .sect-directory-refresh-btn,
+  .sect-directory-card-actions .small-btn,
+  .sect-directory-pagination .small-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
