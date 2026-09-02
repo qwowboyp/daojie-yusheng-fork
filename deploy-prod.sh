@@ -360,6 +360,7 @@ if [ "$updated_server" -eq 1 ] || [ "$updated_server_worker" -eq 1 ] || [ "$upda
   log "清理旧镜像（保留最近 3 个版本）..."
   # 清理 dangling 镜像（无标签的中间层）
   docker image prune -f >/dev/null 2>&1 || true
+  docker builder prune -f >/dev/null 2>&1 || true
   # 对每个仓库，保留最近 3 个镜像，删除更旧的
   for repo in "${TENCENT_IMAGE_PREFIX}/daojie-yusheng-server" "${TENCENT_IMAGE_PREFIX}/daojie-yusheng-client"; do
     # 按创建时间倒序列出该仓库所有镜像 ID，跳过前 3 个，删除剩余
@@ -868,6 +869,19 @@ if [ "$wait_failed" -eq 1 ]; then
   log_error "服务未全部就绪，请执行 docker stack services ${STACK_NAME} 和 docker service ps ${STACK_NAME}_server --no-trunc 查看原因"
   exit 1
 fi
+
+# ============================================================
+# 清理悬空镜像层（仅 dangling，不影响回滚 tag）
+# 放在服务健康检查通过之后，避免清理正在切换的可用层
+# ============================================================
+log_step "清理悬空镜像层（仅 dangling 镜像与 BuildKit 缓存）"
+# 磁盘与 Docker 占用简报（best-effort，失败不阻断部署）
+df -h / 2>&1 | tail -5 || true
+docker system df 2>&1 | tail -20 || true
+docker image prune -f >/dev/null 2>&1 || true
+docker builder prune -f >/dev/null 2>&1 || true
+df -h / 2>&1 | tail -5 || true
+docker system df 2>&1 | tail -20 || true
 
 # ============================================================
 # 数据库建表（幂等）
