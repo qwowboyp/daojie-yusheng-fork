@@ -448,6 +448,63 @@ function getAutoTargetingPreferenceMultiplier(mode, candidate, metrics) {
     }
 }
 
+function hasStandingAutoCombatLineOfSight(instance, player, target, range) {
+    if (typeof instance?.canSeeTileFrom !== 'function') {
+        return true;
+    }
+    return instance.canSeeTileFrom(player.x, player.y, target.x, target.y, range) !== false;
+}
+
+function pickNearestAutoCombatCandidate(candidates) {
+    let bestCandidate = null;
+    for (const candidate of candidates) {
+        if (
+            !bestCandidate
+            || candidate.distance < bestCandidate.distance
+            || (candidate.distance === bestCandidate.distance && candidate.threatValue > bestCandidate.threatValue)
+            || (
+                candidate.distance === bestCandidate.distance
+                && candidate.threatValue === bestCandidate.threatValue
+                && candidate.tieBreaker < bestCandidate.tieBreaker
+            )
+        ) {
+            bestCandidate = candidate;
+        }
+    }
+    return bestCandidate;
+}
+
+function pickScoredAutoCombatCandidate(mode, candidates) {
+    if (candidates.length === 0) {
+        return null;
+    }
+    if (mode === 'nearest') {
+        return pickNearestAutoCombatCandidate(candidates);
+    }
+    const metrics = {
+        nearestDistance: candidates.reduce((min, candidate) => Math.min(min, candidate.distance), Number.POSITIVE_INFINITY),
+        lowestHpRatio: candidates.reduce((min, candidate) => Math.min(min, candidate.hpRatio), Number.POSITIVE_INFINITY),
+        highestHpRatio: candidates.reduce((max, candidate) => Math.max(max, candidate.hpRatio), Number.NEGATIVE_INFINITY),
+    };
+    let bestCandidate = null;
+    let bestScore = Number.NEGATIVE_INFINITY;
+    for (const candidate of candidates) {
+        const score = candidate.threatValue
+            * resolveThreatDistanceMultiplier(candidate.distance)
+            * getAutoTargetingPreferenceMultiplier(mode, candidate, metrics);
+        if (
+            score > bestScore
+            || (score === bestScore && bestCandidate && candidate.threatValue > bestCandidate.threatValue)
+            || (score === bestScore && bestCandidate && candidate.distance < bestCandidate.distance)
+            || (score === bestScore && bestCandidate && candidate.distance === bestCandidate.distance && candidate.tieBreaker < bestCandidate.tieBreaker)
+        ) {
+            bestCandidate = candidate;
+            bestScore = score;
+        }
+    }
+    return bestCandidate;
+}
+
 function scoreAutoCombatCandidate(mode, candidate, metrics) {
     const aggroScore = candidate.aggroRank * 100000;
     const relationScore = candidate.priority * 10000;
@@ -810,7 +867,7 @@ export class WorldRuntimeAutoCombatService {
             return attachMiningJobCommandMarker(buildBasicAttackCommandFromAttackableTarget(target), player, target);
         }
         if (player.combat.autoBattleStationary) {
-            return null;
+            return this.buildStationaryInRangeRetargetCommand(instance, player, view, target, deps, options);
         }
         const desiredRange = Math.max(1, Math.round(skillChoice?.range ?? 1));
         const pathStartedAt = performance.now();
@@ -875,6 +932,64 @@ export class WorldRuntimeAutoCombatService {
         return this.buildAutoCombatCommand(instance, refreshedPlayer, deps, {
             ...(options ?? {}),
             retargetingAfterUnreachable: true,
+        });
+    }
+    isStandingHittableAutoCombatCandidate(instance, player, candidate, skillOptions) {
+        const target = candidate?.target;
+        const distance = Number(candidate?.distance);
+        if (!target || !Number.isFinite(distance)) {
+            return false;
+        }
+        if (target.supportsSkill !== false) {
+            const skillChoice = this.resolveAutoBattleSkillChoice(player, distance, skillOptions);
+            if (skillChoice?.skillId) {
+                if (skillChoice.selfCast === true) {
+                    return true;
+                }
+                const range = Math.max(1, Math.round(skillChoice.range ?? 1));
+                return distance <= range && hasStandingAutoCombatLineOfSight(instance, player, target, range);
+            }
+        }
+        if (distance <= 1) {
+            return hasStandingAutoCombatLineOfSight(instance, player, target, 1);
+        }
+        return false;
+    }
+    buildStationaryInRangeRetargetCommand(instance, player, view, currentTarget, deps, options = undefined) {
+        if (options?.stationaryRetargetAfterOutOfRange === true) {
+            return null;
+        }
+        if (player.combat.combatTargetLocked === true || player.combat.manualEngagePending === true) {
+            return null;
+        }
+        const currentTick = deps.resolveCurrentTickForPlayerId(player.playerId);
+        const skillOptions = {
+            ...(options ?? {}),
+            currentTick,
+        };
+        const currentRef = typeof currentTarget?.targetRef === 'string' ? currentTarget.targetRef : '';
+        const hittableCandidates = [];
+        for (const candidate of this.collectThreatTargetCandidates(instance, player, view, deps)) {
+            if (candidate.target?.targetRef === currentRef) {
+                continue;
+            }
+            if (this.isStandingHittableAutoCombatCandidate(instance, player, candidate, skillOptions)) {
+                hittableCandidates.push(candidate);
+            }
+        }
+        if (hittableCandidates.length === 0) {
+            return null;
+        }
+        const bestCandidate = pickScoredAutoCombatCandidate(player.combat.autoBattleTargetingMode, hittableCandidates);
+        if (!bestCandidate) {
+            return null;
+        }
+        this.unreachableThreatReductionByPlayerId.delete(player.playerId);
+        this.playerRuntimeService.setCombatTarget(player.playerId, bestCandidate.target.targetRef, false, currentTick);
+        const refreshedPlayer = this.playerRuntimeService.getPlayer(player.playerId) ?? player;
+        return this.buildAutoCombatCommand(instance, refreshedPlayer, deps, {
+            ...(options ?? {}),
+            stationaryRetargetAfterOutOfRange: true,
         });
     }
     /**
@@ -988,27 +1103,24 @@ export class WorldRuntimeAutoCombatService {
             return null;
         }
         const scoreStartedAt = performance.now();
-        const metrics = {
-            nearestDistance: candidates.reduce((min, candidate) => Math.min(min, candidate.distance), Number.POSITIVE_INFINITY),
-            lowestHpRatio: candidates.reduce((min, candidate) => Math.min(min, candidate.hpRatio), Number.POSITIVE_INFINITY),
-            highestHpRatio: candidates.reduce((max, candidate) => Math.max(max, candidate.hpRatio), Number.NEGATIVE_INFINITY),
+        const targetingMode = player.combat.autoBattleTargetingMode;
+        const skillOptions = {
+            ...(options ?? {}),
+            currentTick: deps.resolveCurrentTickForPlayerId(player.playerId),
         };
-        let bestCandidate = null;
-        let bestScore = Number.NEGATIVE_INFINITY;
-        for (const candidate of candidates) {
-            const score = candidate.threatValue
-                * resolveThreatDistanceMultiplier(candidate.distance)
-                * getAutoTargetingPreferenceMultiplier(player.combat.autoBattleTargetingMode, candidate, metrics);
-            if (
-                score > bestScore
-                || (score === bestScore && bestCandidate && candidate.threatValue > bestCandidate.threatValue)
-                || (score === bestScore && bestCandidate && candidate.distance < bestCandidate.distance)
-                || (score === bestScore && bestCandidate && candidate.distance === bestCandidate.distance && candidate.tieBreaker < bestCandidate.tieBreaker)
-            ) {
-                bestCandidate = candidate;
-                bestScore = score;
+        let scoredCandidates = candidates;
+        if (targetingMode === 'nearest' || player.combat.autoBattleStationary === true) {
+            const hittableCandidates = [];
+            for (const candidate of candidates) {
+                if (this.isStandingHittableAutoCombatCandidate(instance, player, candidate, skillOptions)) {
+                    hittableCandidates.push(candidate);
+                }
+            }
+            if (hittableCandidates.length > 0) {
+                scoredCandidates = hittableCandidates;
             }
         }
+        const bestCandidate = pickScoredAutoCombatCandidate(targetingMode, scoredCandidates);
         recordAutoCombatPerf(deps, 'tick.autoCombat.candidateScoreMs', scoreStartedAt, candidates.length);
         if (!bestCandidate) {
             return null;

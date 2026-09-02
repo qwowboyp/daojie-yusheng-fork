@@ -171,6 +171,97 @@ function createLongRangePathingInstance() {
   };
 }
 
+function createFarAndAdjacentMonsterInstance() {
+  const monsters: Record<string, {
+    runtimeId: string;
+    x: number;
+    y: number;
+    hp: number;
+    maxHp: number;
+    alive: boolean;
+  }> = {
+    'monster:far': {
+      runtimeId: 'monster:far',
+      x: 5,
+      y: 1,
+      hp: 20,
+      maxHp: 20,
+      alive: true,
+    },
+    'monster:near': {
+      runtimeId: 'monster:near',
+      x: 2,
+      y: 1,
+      hp: 20,
+      maxHp: 20,
+      alive: true,
+    },
+  };
+  return {
+    template: {
+      width: 8,
+      height: 4,
+    },
+    meta: {
+      instanceId: 'public:test_map',
+    },
+    isPointInSafeZone() {
+      return false;
+    },
+    isSafeZoneTile() {
+      return false;
+    },
+    buildPlayerView() {
+      return {
+        playerId: 'player:1',
+        self: { x: 1, y: 1 },
+        instance: { width: 8, height: 4 },
+        visiblePlayers: [],
+        localMonsters: [{
+          runtimeId: 'monster:far',
+          x: 5,
+          y: 1,
+          hp: 20,
+        }, {
+          runtimeId: 'monster:near',
+          x: 2,
+          y: 1,
+          hp: 20,
+        }],
+        localNpcs: [],
+        localPortals: [],
+        localGroundPiles: [],
+      };
+    },
+    getMonster(runtimeId: string) {
+      return monsters[runtimeId] ?? null;
+    },
+    isInBounds(x: number, y: number) {
+      return x >= 0 && y >= 0 && x < 8 && y < 4;
+    },
+    toTileIndex(x: number, y: number) {
+      return y * 8 + x;
+    },
+    isWalkable(x: number, y: number) {
+      return x >= 0 && y >= 0 && x < 8 && y < 4;
+    },
+    forEachPathingBlocker(_playerId: string, _callback: (x: number, y: number) => void) {},
+    getTileTraversalCost() {
+      return 1;
+    },
+  };
+}
+
+function seedFarMonsterThreat(service: WorldRuntimeAutoCombatService, now: number): void {
+  const threatService = service.worldRuntimeThreatService;
+  threatService.addThreat(threatService.buildPlayerOwnerId('player:1'), 'monster:far', {
+    baseThreat: 100000,
+    distance: 4,
+    extraAggroRate: 0,
+    now,
+  });
+}
+
 function createWidePathingInstance() {
   let boundsChecks = 0;
   const instance = {
@@ -1117,6 +1208,127 @@ function testStationaryOutOfRangeFirstSkillFallsThroughToLaterInRangeSkill(): vo
     skillId: 'skill:long',
     targetPlayerId: null,
     targetMonsterId: 'monster:1',
+    targetRef: null,
+    autoCombat: true,
+  });
+}
+
+function testStationaryOutOfRangeFarTargetRetargetsAdjacentHittableSameTick(): void {
+  const player = {
+    playerId: 'player:1',
+    hp: 100,
+    x: 1,
+    y: 1,
+    instanceId: 'public:test_map',
+    qi: 100,
+    attrs: {
+      numericStats: {
+        viewRange: 8,
+        maxQiOutputPerTick: 100,
+      },
+    },
+    actions: {
+      actions: [{
+        id: 'skill:ranged',
+        type: 'skill',
+        range: 3,
+        cooldownLeft: 0,
+        autoBattleEnabled: true,
+        skillEnabled: true,
+      }],
+    },
+    techniques: {
+      techniques: [{
+        skills: [{
+          id: 'skill:ranged',
+          cost: 0,
+        }],
+      }],
+    },
+    combat: {
+      autoBattle: true,
+      autoRetaliate: false,
+      autoBattleStationary: true,
+      autoBattleTargetingMode: 'auto',
+      combatTargetId: 'monster:far',
+      combatTargetLocked: false,
+      manualEngagePending: false,
+    },
+  };
+  const service = new WorldRuntimeAutoCombatService(createPlayerRuntimeService(player) as never);
+  seedFarMonsterThreat(service, 14);
+  const command = service.buildAutoCombatCommand(createFarAndAdjacentMonsterInstance() as never, player as never, {
+    resolveCurrentTickForPlayerId() {
+      return 14;
+    },
+    queuePlayerNotice() {},
+  } as never);
+  assert.deepEqual(command, {
+    kind: 'castSkill',
+    skillId: 'skill:ranged',
+    targetPlayerId: null,
+    targetMonsterId: 'monster:near',
+    targetRef: null,
+    autoCombat: true,
+  });
+}
+
+function testNearestPrefersHittableAdjacentOverFarHighThreat(): void {
+  const player = {
+    playerId: 'player:1',
+    hp: 100,
+    x: 1,
+    y: 1,
+    instanceId: 'public:test_map',
+    qi: 100,
+    attrs: {
+      numericStats: {
+        viewRange: 8,
+        maxQiOutputPerTick: 100,
+      },
+    },
+    actions: {
+      actions: [{
+        id: 'skill:ranged',
+        type: 'skill',
+        range: 5,
+        cooldownLeft: 0,
+        autoBattleEnabled: true,
+        skillEnabled: true,
+      }],
+    },
+    techniques: {
+      techniques: [{
+        skills: [{
+          id: 'skill:ranged',
+          cost: 0,
+          range: 5,
+        }],
+      }],
+    },
+    combat: {
+      autoBattle: true,
+      autoRetaliate: false,
+      autoBattleStationary: false,
+      autoBattleTargetingMode: 'nearest',
+      combatTargetId: 'monster:far',
+      combatTargetLocked: false,
+      manualEngagePending: false,
+    },
+  };
+  const service = new WorldRuntimeAutoCombatService(createPlayerRuntimeService(player) as never);
+  seedFarMonsterThreat(service, 15);
+  const command = service.buildAutoCombatCommand(createFarAndAdjacentMonsterInstance() as never, player as never, {
+    resolveCurrentTickForPlayerId() {
+      return 15;
+    },
+    queuePlayerNotice() {},
+  } as never);
+  assert.deepEqual(command, {
+    kind: 'castSkill',
+    skillId: 'skill:ranged',
+    targetPlayerId: null,
+    targetMonsterId: 'monster:near',
     targetRef: null,
     autoCombat: true,
   });
@@ -2449,6 +2661,8 @@ testInRangeButBlockedLineOfSightMovesToCastPosition();
 testUnreachableCurrentTargetIsPenalizedAndRetargetedImmediately();
 testStationaryOutOfRangeSkillSkipsWithoutMove();
 testStationaryOutOfRangeFirstSkillFallsThroughToLaterInRangeSkill();
+testStationaryOutOfRangeFarTargetRetargetsAdjacentHittableSameTick();
+testNearestPrefersHittableAdjacentOverFarHighThreat();
 testAutoBattleSkipsSelfBuffSkillWithoutTarget();
 testAutoBattleCastsMissingSelfBuffSkillWithTarget();
 testAutoBattleCastsSelfAnchoredAreaSkillWithTarget();
@@ -2477,5 +2691,5 @@ testMaterializeAutoCombatClearsExpiredRetaliatorBeforeEarlyExit();
 console.log(JSON.stringify({
   ok: true,
   case: 'world-runtime-auto-combat',
-  answers: '自动战斗物化不依赖在线 session，离线地图居民仍可生成攻击指令；自动战斗不会在本 tick 行动次数已满时继续物化必然失败的攻击指令；一次性接战和自动战斗会按第一个当前可用技能决定停止距离，目标已在射程内但视线被遮挡时会继续寻找可释放站位；自动追击路径缓存不会在上一段移动未真正落位时跳过首步，缓存下一步被动态占位后会重新规划，且追击寻路会沿用玩家忽略静态障碍能力；当前锁定目标不可达时只对该目标做一次 80% 仇恨降权、清理当前目标并立即重选；普通自动战斗每 tick 按实时仇恨重算目标，只有明确锁定或一次性接战才优先沿用 tracked target；原地战斗会按 AOE 覆盖半径作为停止距离；无需目标的自身 buff 技能只有在存在有效自动战斗目标且缺少对应 buff 时才会按自动技能顺序原地施放，已有 buff 时不会重复刷也不会把 buff 技能当成追击距离；锁定目标失效后只清理当前目标锁，不关闭自动战斗、不发丢失提示；锁定草药、挖矿和阵法会在未清空或未摧毁前继续生成下一次攻击；自动反击会临时抢占非玩家锁定目标并保留原锁定，明确锁定玩家时不擅自切目标，且仇敌 30 分钟未续攻会在 tick 内过期；自动丹药会按资源阈值或缺 Buff 条件在 tick 受控流程内使用，空条件不触发，已有 pending command 时不改动背包槽位。',
+  answers: '自动战斗物化不依赖在线 session，离线地图居民仍可生成攻击指令；自动战斗不会在本 tick 行动次数已满时继续物化必然失败的攻击指令；一次性接战和自动战斗会按第一个当前可用技能决定停止距离，目标已在射程内但视线被遮挡时会继续寻找可释放站位；自动追击路径缓存不会在上一段移动未真正落位时跳过首步，缓存下一步被动态占位后会重新规划，且追击寻路会沿用玩家忽略静态障碍能力；当前锁定目标不可达时只对该目标做一次 80% 仇恨降权、清理当前目标并立即重选；普通自动战斗每 tick 按实时仇恨重算目标，只有明确锁定或一次性接战才优先沿用 tracked target；原地战斗当前目标站着打不中且身边有打得到的怪时同一息改打邻格，没有打得到的候选才发呆；近处优先在站着打得到的目标里永远选最近，仇恨只拆同距离平手；原地战斗会按 AOE 覆盖半径作为停止距离；无需目标的自身 buff 技能只有在存在有效自动战斗目标且缺少对应 buff 时才会按自动技能顺序原地施放，已有 buff 时不会重复刷也不会把 buff 技能当成追击距离；锁定目标失效后只清理当前目标锁，不关闭自动战斗、不发丢失提示；锁定草药、挖矿和阵法会在未清空或未摧毁前继续生成下一次攻击；自动反击会临时抢占非玩家锁定目标并保留原锁定，明确锁定玩家时不擅自切目标，且仇敌 30 分钟未续攻会在 tick 内过期；自动丹药会按资源阈值或缺 Buff 条件在 tick 受控流程内使用，空条件不触发，已有 pending command 时不改动背包槽位。',
 }, null, 2));
