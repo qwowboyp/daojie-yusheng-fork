@@ -122,7 +122,7 @@ Start-Sleep -Seconds 15  # let docker build process spawn before first pgrep pol
 # -- step 2: poll build until all images tagged or build process dies --
 Write-Host "[4/6] polling build log (interval ${PollIntervalSec}s, timeout ${BuildTimeoutSec}s)"
 $deadline = (Get-Date).AddSeconds($BuildTimeoutSec)
-$statusLine = "call echo `"STATUS PGREP=`$(pgrep -fc 'docker build') SRV=`$(grep -c 'Successfully tagged daojie-server:lxc' $RemoteBuildLog) CLI=`$(grep -c 'Successfully tagged daojie-client:lxc' $RemoteBuildLog)`""
+$statusLine = "call echo `"STATUS PGREP=`$(pgrep -fc 'docker build') SRV=`$(grep -cE 'Successfully tagged daojie-server:lxc|naming to docker.io/library/daojie-server:lxc' $RemoteBuildLog) CLI=`$(grep -cE 'Successfully tagged daojie-client:lxc|naming to docker.io/library/daojie-client:lxc' $RemoteBuildLog)`""
 $pollScript = Write-WinSCPScript -Name '03-poll.txt' -Lines @(
   'option batch continue',
   $openLine,
@@ -163,6 +163,30 @@ $deployScript = Write-WinSCPScript -Name '05-deploy.txt' -Lines @(
 $deployOut = Invoke-WinSCP -ScriptPath $deployScript
 Write-Host $deployOut
 if ($deployOut -notmatch 'DEPLOY_DONE') { throw 'lxc-deploy.sh did not print DEPLOY_DONE' }
+
+# -- step 3b: prune dangling layers AFTER new containers are running ----
+# lxc-deploy.sh already prunes; this is a logged safety net.
+# Only dangling (untagged) images + dangling build cache; never tagged images.
+Write-Host '[5b/6] prune dangling Docker images / build cache on LXC (best-effort)'
+$pruneScript = Write-WinSCPScript -Name '05b-prune.txt' -Lines @(
+  'option batch continue',
+  $openLine,
+  'call echo PRUNE_BEFORE',
+  'call df -h /',
+  'call docker system df',
+  'call docker image prune -f',
+  'call docker builder prune -f',
+  'call echo PRUNE_AFTER',
+  'call df -h /',
+  'call docker system df',
+  'exit'
+)
+try {
+  $pruneOut = Invoke-WinSCP -ScriptPath $pruneScript
+  Write-Host $pruneOut
+} catch {
+  Write-Host "      [warn] prune step failed (non-fatal): $_" -ForegroundColor Yellow
+}
 
 # -- step 4: verify from local machine ---------------------------------
 if ($SkipVerify) { Write-Host '[6/6] verification skipped'; exit 0 }

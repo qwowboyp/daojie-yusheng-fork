@@ -44,9 +44,9 @@ pwsh -NoProfile -File .claude/skills/daojie-deploy/scripts/deploy.ps1 -DryRun
 1. 解析 `<RepoRoot>/.env/pve.env` 取 LXC 位址與帳密（該檔 gitignored，嚴禁寫入任何進 git 的檔案）
 2. `git archive $Ref` → `daojie-src.tar.gz`（用後即刪）
 3. WinSCP（sftp + hostkey 固定指紋）上傳到 LXC `/tmp/`
-4. 遠端解包 + `nohup docker build`（依 Target 循序建）→ 輪詢 `/tmp/daojie-build.log`（30 秒一次，逾時 30 分鐘，見到 `ERROR` 即fail並印尾部日誌）
-5. `bash /opt/daojie/lxc-deploy.sh`（冪等重建四容器；pgdata/redis-data volume 不動），確認輸出 `DEPLOY_DONE`
-6. 本機 curl 驗證 `/health` `/live`（:13001）與首頁（:11921）皆 200；再抓 server 近 3 分鐘 log 的 warn/error（僅提示不擋）
+4. 遠端解包 + `nohup docker build`（`DOCKER_BUILDKIT=1`，依 Target 循序建）→ 輪詢 `/tmp/daojie-build.log`（30 秒一次，逾時 30 分鐘）。成功判定同時認舊式 `Successfully tagged daojie-*:lxc` 與 BuildKit 的 `naming to docker.io/library/daojie-*:lxc`
+5. `bash /opt/daojie/lxc-deploy.sh`（冪等重建四容器；pgdata/redis-data volume 不動），確認輸出 `DEPLOY_DONE`。腳本尾段在新容器起來後自動 `docker image prune -f` + `docker builder prune -f`（只清 dangling，不動 tagged 映像與 named cache mount）
+6. 本機再跑一次同樣的 prune 並印 `df` / `docker system df`（best-effort，失敗不擋佈署）；接著 curl 驗證 `/health` `/live`（:13001）與首頁（:11921）皆 200；再抓 server 近 3 分鐘 log 的 warn/error（僅提示不擋）
 
 參數：`-Target server|client|both`（預設 both）、`-Ref`（預設 HEAD）、`-DryRun`、`-SkipVerify`、`-RepoRoot`（預設由腳本位置推導 repo 根，跨 clone 可用）。
 
@@ -57,12 +57,12 @@ pwsh -NoProfile -File .claude/skills/daojie-deploy/scripts/deploy.ps1 -DryRun
 | LXC | 192.168.0.191（root，密碼在 `.env/pve.env`）；192.168.0.190 被佔用禁用 |
 | 網頁入口 | http://192.168.0.191:11921（nginx 反代 `/api`、`/socket.io` → server:13001） |
 | 映像 | `daojie-server:lxc`、`daojie-client:lxc`（本地建置） |
-| 磁碟紅線 | LXC 僅 30G；映像快取膨脹時在 LXC 跑 `docker system prune` |
+| 磁碟紅線 | LXC 僅 30G；每次佈署切換容器後自動清懸空映像／dangling build cache。仍告急才手動 `docker system prune`（不要加 `-a`，會刪掉仍 tagged 的映像） |
 | server-data | `/opt/daojie/server-data` owner 必須 `100:101`，否則 GM 備份 EACCES |
 | LXC 內無 curl | 驗證一律從本機 curl.exe 打；容器內檢查用 `docker exec` |
 
 ## 常見故障
 
-- **build 逾時/失敗**：SSH 進 LXC 看 `/tmp/daojie-build.log` 全文；client 映像 build 內含 proof（chromium），本質就慢（數分鐘），屬正常
+- **build 逾時/失敗**：SSH 進 LXC 看 `/tmp/daojie-build.log` 全文；client 映像 build 內含 proof（chromium），本質就慢（數分鐘），屬正常。BuildKit 不會印 `Successfully tagged`，輪詢已同時認 `naming to docker.io/library/daojie-*:lxc`
 - **`DEPLOY_DONE` 未出現**：`docker ps` 看容器狀態，常見是 postgres/redis 未 ready，直接重跑腳本（冪等）
 - **首頁 200 但功能異常**：瀏覽器強制刷新（新版 JS chunk hash 變了才會生效）
