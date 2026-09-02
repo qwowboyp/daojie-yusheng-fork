@@ -784,12 +784,13 @@ export class WorldRuntimeAutoCombatService {
             return null;
         }
         const distance = chebyshevDistance(player.x, player.y, target.x, target.y);
+        const currentTick = deps.resolveCurrentTickForPlayerId(player.playerId);
         const skillChoiceStartedAt = performance.now();
         const skillChoice = target.supportsSkill === false
             ? null
             : this.resolveAutoBattleSkillChoice(player, distance, {
                 ...options,
-                currentTick: deps.resolveCurrentTickForPlayerId(player.playerId),
+                currentTick,
             });
         recordAutoCombatPerf(deps, 'tick.autoCombat.skillChoiceMs', skillChoiceStartedAt);
         if (skillChoice?.skillId) {
@@ -811,9 +812,44 @@ export class WorldRuntimeAutoCombatService {
                 || instance.canSeeTileFrom(player.x, player.y, target.x, target.y, losRange) !== false;
             recordAutoCombatPerf(deps, 'tick.autoCombat.losCheckMs', losStartedAt);
             if (!hasLineOfSight) {
-                // 视线不通 → 尝试寻路靠近；stationary 模式直接放弃
+                // 视线不通 → 先尝试其他能命中同一目标的自动战斗技能（原地 AOE 或视距更长的技能），不再直接发呆
+                const fallbackChoice = this.resolveAutoBattleHittableSkillChoice(instance, player, distance, target, skillChoice.skillId, {
+                    ...options,
+                    currentTick,
+                });
+                if (fallbackChoice) {
+                    if (fallbackChoice.selfCast) {
+                        return attachMiningJobCommandMarker({
+                            kind: 'castSkill',
+                            skillId: fallbackChoice.skill.id,
+                            targetPlayerId: null,
+                            targetMonsterId: null,
+                            targetRef: null,
+                            autoCombat: true,
+                        }, player, target);
+                    }
+                    if (target.targetMonsterId) {
+                        return attachMiningJobCommandMarker({
+                            kind: 'castSkill',
+                            skillId: fallbackChoice.skill.id,
+                            targetPlayerId: null,
+                            targetMonsterId: target.targetMonsterId,
+                            targetRef: null,
+                            autoCombat: true,
+                        }, player, target);
+                    }
+                    return attachMiningJobCommandMarker({
+                        kind: 'castSkill',
+                        skillId: fallbackChoice.skill.id,
+                        targetPlayerId: null,
+                        targetMonsterId: null,
+                        targetRef: target.targetRef,
+                        autoCombat: true,
+                    }, player, target);
+                }
+                // 没有替代技能可命中 → 尝试寻路靠近；stationary 模式改打其他站着打得到的目标
                 if (player.combat.autoBattleStationary) {
-                    return null;
+                    return this.buildStationaryInRangeRetargetCommand(instance, player, view, target, deps, options);
                 }
                 const losPathStartedAt = performance.now();
                 const pathingOptions = resolveAutoCombatPathingOptions(player, deps);
@@ -869,7 +905,9 @@ export class WorldRuntimeAutoCombatService {
         if (player.combat.autoBattleStationary) {
             return this.buildStationaryInRangeRetargetCommand(instance, player, view, target, deps, options);
         }
-        const desiredRange = Math.max(1, Math.round(skillChoice?.range ?? 1));
+        const desiredRange = skillChoice
+            ? Math.max(1, this.resolveAutoBattleMaxUsableSkillRange(player, options))
+            : 1;
         const pathStartedAt = performance.now();
         const pathingOptions = resolveAutoCombatPathingOptions(player, deps);
         const pathResult = this.findPathWithCache(instance, player, target.x, target.y, desiredRange, pathingOptions);
@@ -1493,6 +1531,53 @@ export class WorldRuntimeAutoCombatService {
             skillId: null,
             range,
         };
+    }
+    /**
+     * resolveAutoBattleHittableSkillChoice：当前技能打不中目标（超射程或无视线）时，
+     * 扫描其余启用中的自动战斗技能能否命中同一目标（射程内且有视线，或原地 AOE 覆盖得到）。
+     * @param instance 地图实例。
+     * @param player 玩家对象。
+     * @param distance 与目标的 chebyshev 距离。
+     * @param target 当前目标。
+     * @param failedSkillId 刚被打不中判定的技能 ID，扫描时跳过。
+     * @param options 技能选择选项。
+     * @returns 返回可命中的技能选择，无法命中时为 null。
+     */
+
+    resolveAutoBattleHittableSkillChoice(instance, player, distance, target, failedSkillId, options = undefined) {
+        const skillLookup = buildAutoBattleSkillLookup(player);
+        return this.resolveFirstUsableAutoBattleSkill(player, options, skillLookup, (candidate) => {
+            if (candidate.skill.id === failedSkillId) {
+                return false;
+            }
+            const candidateRange = Math.max(1, Math.round(candidate.range));
+            if (candidate.selfCast === true) {
+                // 自身 buff 不构成对目标的命中；原地 AOE 不需要视线，覆盖即命中
+                return !isAutoSelfBuffSkill(candidate.skill) && distance <= candidateRange;
+            }
+            return distance <= candidateRange
+                && hasStandingAutoCombatLineOfSight(instance, player, target, candidateRange);
+        });
+    }
+    /**
+     * resolveAutoBattleMaxUsableSkillRange：扫描所有可用自动战斗技能里的最长射程，
+     * 用于无技能在射程内时的追击停止距离，避免短技能拖着一身长技能贴脸走路。
+     * @param player 玩家对象。
+     * @param options 技能选择选项。
+     * @returns 返回最长可用射程，至少为 1。
+     */
+
+    resolveAutoBattleMaxUsableSkillRange(player, options = undefined) {
+        const skillLookup = buildAutoBattleSkillLookup(player);
+        let maxRange = 0;
+        this.resolveFirstUsableAutoBattleSkill(player, options, skillLookup, (candidate) => {
+            if (candidate.selfCast && isAutoSelfBuffSkill(candidate.skill)) {
+                return false;
+            }
+            maxRange = Math.max(maxRange, Math.max(1, Math.round(candidate.range)));
+            return false;
+        });
+        return Math.max(1, maxRange);
     }
     /**
  * pickAutoBattleSkill：执行pickAutoBattle技能相关逻辑。

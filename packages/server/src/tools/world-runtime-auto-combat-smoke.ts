@@ -525,7 +525,7 @@ function testAutoUsePillTriggersBeforeAutoCombatCommandMaterialization(): void {
   assert.deepEqual(playerRuntimeService.log, [
     ['useItemByInstanceId', 'player:1', 'auto-pill-minor-heal'],
     ['refreshQuestStates', 'player:1'],
-    ['queuePlayerNotice', 'player:1', '自动使用 回春散', 'success'],
+    ['queuePlayerNotice', 'player:1', '自動使用 回春散', 'success'],
   ]);
   assert.equal(((player.inventory as { items: Array<{ count: number }> }).items[0]?.count), 2);
 }
@@ -594,7 +594,7 @@ function testAutoUseBuffPillTriggersOnlyWhenBuffMissing(): void {
   assert.deepEqual(playerRuntimeService.log, [
     ['useItemByInstanceId', 'player:1', 'auto-pill-crimson-bud'],
     ['refreshQuestStates', 'player:1'],
-    ['queuePlayerNotice', 'player:1', '自动使用 赤芽丹', 'success'],
+    ['queuePlayerNotice', 'player:1', '自動使用 赤芽丹', 'success'],
   ]);
 }
 
@@ -649,7 +649,7 @@ function testInstanceMaterializationIncludesOfflineMapResidents(): void {
 
   service.materializeAutoCombatCommandsForInstance('public:test_map', deps as never);
 
-  assert.equal(enqueueLog.length, 1, '断线后仍驻留地图的玩家必须在按实例调度中物化自动战斗命令');
+  assert.equal(enqueueLog.length, 1, '斷線後仍駐留地圖的玩家必須在按實例調度中物化自動戰鬥命令');
   assert.equal((enqueueLog[0]?.[1] as { targetMonsterId?: string })?.targetMonsterId, 'monster:1');
 }
 
@@ -1332,6 +1332,254 @@ function testNearestPrefersHittableAdjacentOverFarHighThreat(): void {
     targetRef: null,
     autoCombat: true,
   });
+}
+
+function createSkillFallbackInstance(canSeeTileFrom: (radius: number) => boolean, monsterX = 1, monsterY = 5) {
+  return {
+    template: { width: 8, height: 8 },
+    meta: { instanceId: 'public:test_map' },
+    isPointInSafeZone() {
+      return false;
+    },
+    isSafeZoneTile() {
+      return false;
+    },
+    buildPlayerView() {
+      return {
+        playerId: 'player:1',
+        self: { x: 1, y: 1 },
+        instance: { width: 8, height: 8 },
+        visiblePlayers: [],
+        localMonsters: [{
+          runtimeId: 'monster:1',
+          x: monsterX,
+          y: monsterY,
+          hp: 20,
+        }],
+        localNpcs: [],
+        localPortals: [],
+        localGroundPiles: [],
+      };
+    },
+    getMonster(runtimeId: string) {
+      assert.equal(runtimeId, 'monster:1');
+      return {
+        runtimeId: 'monster:1',
+        x: monsterX,
+        y: monsterY,
+        hp: 20,
+        maxHp: 20,
+        alive: true,
+      };
+    },
+    canSeeTileFrom(_originX: number, _originY: number, _targetX: number, _targetY: number, radius: number) {
+      return canSeeTileFrom(radius);
+    },
+    isInBounds(x: number, y: number) {
+      return x >= 0 && y >= 0 && x < 8 && y < 8;
+    },
+    toTileIndex(x: number, y: number) {
+      return y * 8 + x;
+    },
+    isWalkable(x: number, y: number) {
+      return x >= 0 && y >= 0 && x < 8 && y < 8;
+    },
+    forEachPathingBlocker(_playerId: string, _callback: (x: number, y: number) => void) {},
+    getTileTraversalCost() {
+      return 1;
+    },
+  };
+}
+
+function createSkillFallbackPlayer(stationary: boolean, includeSelfCastArea: boolean) {
+  const actions: Array<Record<string, unknown>> = [
+    {
+      id: 'skill:short',
+      type: 'skill',
+      range: 1,
+      cooldownLeft: 0,
+      autoBattleEnabled: true,
+      skillEnabled: true,
+    },
+    {
+      id: 'skill:long',
+      type: 'skill',
+      range: 6,
+      cooldownLeft: 0,
+      autoBattleEnabled: true,
+      skillEnabled: true,
+    },
+  ];
+  const skills: Array<Record<string, unknown>> = [
+    { id: 'skill:short', name: '短擊訣', cost: 0, range: 1 },
+    { id: 'skill:long', name: '長鞭術', cost: 0, range: 6 },
+  ];
+  if (includeSelfCastArea) {
+    actions.push({
+      id: 'skill:self-area',
+      type: 'skill',
+      range: 0,
+      cooldownLeft: 0,
+      autoBattleEnabled: true,
+      skillEnabled: true,
+    });
+    skills.push({
+      id: 'skill:self-area',
+      name: '原地劫焰',
+      cost: 0,
+      requiresTarget: false,
+      range: 0,
+      targeting: { shape: 'box', width: 9, height: 9, maxTargets: 81 },
+      effects: [{ type: 'damage', formula: 1 }],
+    });
+  }
+  return {
+    playerId: 'player:1',
+    hp: 100,
+    x: 1,
+    y: 1,
+    instanceId: 'public:test_map',
+    qi: 100,
+    attrs: {
+      numericStats: {
+        viewRange: 8,
+        maxQiOutputPerTick: 100,
+      },
+    },
+    actions: { actions },
+    techniques: {
+      techniques: [{
+        skills,
+      }],
+    },
+    combat: {
+      autoBattle: true,
+      autoRetaliate: false,
+      autoBattleStationary: stationary,
+      autoBattleTargetingMode: 'nearest',
+      combatTargetId: 'monster:1',
+      combatTargetLocked: false,
+      manualEngagePending: false,
+    },
+  };
+}
+
+function createSkillFallbackDeps(now: number) {
+  return {
+    resolveCurrentTickForPlayerId() {
+      return now;
+    },
+    queuePlayerNotice() {},
+  };
+}
+
+function seedSkillFallbackThreat(service: WorldRuntimeAutoCombatService, now: number): void {
+  const threatService = service.worldRuntimeThreatService;
+  threatService.addThreat(threatService.buildPlayerOwnerId('player:1'), 'monster:1', {
+    baseThreat: 100000,
+    distance: 4,
+    extraAggroRate: 0,
+    now,
+  });
+}
+
+function testStationaryOutOfRangeFirstSkillCastsLongerSkillOnSameTarget(): void {
+  const player = createSkillFallbackPlayer(true, false);
+  const service = new WorldRuntimeAutoCombatService(createPlayerRuntimeService(player) as never);
+  seedSkillFallbackThreat(service, 20);
+  const command = service.buildAutoCombatCommand(
+    createSkillFallbackInstance(() => true) as never,
+    player as never,
+    createSkillFallbackDeps(20) as never,
+  );
+  assert.deepEqual(command, {
+    kind: 'castSkill',
+    skillId: 'skill:long',
+    targetPlayerId: null,
+    targetMonsterId: 'monster:1',
+    targetRef: null,
+    autoCombat: true,
+  });
+}
+
+function testMobileOutOfRangeFirstSkillCastsLongerSkillOnSameTarget(): void {
+  const player = createSkillFallbackPlayer(false, false);
+  const service = new WorldRuntimeAutoCombatService(createPlayerRuntimeService(player) as never);
+  seedSkillFallbackThreat(service, 20);
+  const command = service.buildAutoCombatCommand(
+    createSkillFallbackInstance(() => true) as never,
+    player as never,
+    createSkillFallbackDeps(20) as never,
+  );
+  assert.deepEqual(command, {
+    kind: 'castSkill',
+    skillId: 'skill:long',
+    targetPlayerId: null,
+    targetMonsterId: 'monster:1',
+    targetRef: null,
+    autoCombat: true,
+  });
+}
+
+function testStationaryBlockedSightFallsBackToSelfCastAreaOnSameTarget(): void {
+  // 指向型技能視線全被遮擋時，原地 AOE（9x9，覆蓋半徑 4）能打中距離 4 的同一目標，不應發呆
+  const player = createSkillFallbackPlayer(true, true);
+  const service = new WorldRuntimeAutoCombatService(createPlayerRuntimeService(player) as never);
+  seedSkillFallbackThreat(service, 21);
+  const command = service.buildAutoCombatCommand(
+    createSkillFallbackInstance(() => false) as never,
+    player as never,
+    createSkillFallbackDeps(21) as never,
+  );
+  assert.deepEqual(command, {
+    kind: 'castSkill',
+    skillId: 'skill:self-area',
+    targetPlayerId: null,
+    targetMonsterId: null,
+    targetRef: null,
+    autoCombat: true,
+  });
+}
+
+function testMobileBlockedSightFallsBackToSelfCastAreaOnSameTarget(): void {
+  const player = createSkillFallbackPlayer(false, true);
+  const service = new WorldRuntimeAutoCombatService(createPlayerRuntimeService(player) as never);
+  seedSkillFallbackThreat(service, 21);
+  const command = service.buildAutoCombatCommand(
+    createSkillFallbackInstance(() => false) as never,
+    player as never,
+    createSkillFallbackDeps(21) as never,
+  );
+  assert.deepEqual(command, {
+    kind: 'castSkill',
+    skillId: 'skill:self-area',
+    targetPlayerId: null,
+    targetMonsterId: null,
+    targetRef: null,
+    autoCombat: true,
+  });
+}
+
+function testShortSkillBlindedButLongerSkillSeesTargetCastsLongSkill(): void {
+  // 視線檢查以技能射程封頂：短技(1)看不清、長技(6)看得見同一目標 → 放長技
+  for (const stationary of [true, false]) {
+    const player = createSkillFallbackPlayer(stationary, false);
+    const service = new WorldRuntimeAutoCombatService(createPlayerRuntimeService(player) as never);
+    seedSkillFallbackThreat(service, 22);
+    const command = service.buildAutoCombatCommand(
+      createSkillFallbackInstance((radius) => radius >= 6, 2, 1) as never,
+      player as never,
+      createSkillFallbackDeps(22) as never,
+    );
+    assert.deepEqual(command, {
+      kind: 'castSkill',
+      skillId: 'skill:long',
+      targetPlayerId: null,
+      targetMonsterId: 'monster:1',
+      targetRef: null,
+      autoCombat: true,
+    }, `stationary=${stationary}`);
+  }
 }
 
 function testAutoBattleSkipsSelfBuffSkillWithoutTarget(): void {
@@ -2663,6 +2911,11 @@ testStationaryOutOfRangeSkillSkipsWithoutMove();
 testStationaryOutOfRangeFirstSkillFallsThroughToLaterInRangeSkill();
 testStationaryOutOfRangeFarTargetRetargetsAdjacentHittableSameTick();
 testNearestPrefersHittableAdjacentOverFarHighThreat();
+testStationaryOutOfRangeFirstSkillCastsLongerSkillOnSameTarget();
+testMobileOutOfRangeFirstSkillCastsLongerSkillOnSameTarget();
+testStationaryBlockedSightFallsBackToSelfCastAreaOnSameTarget();
+testMobileBlockedSightFallsBackToSelfCastAreaOnSameTarget();
+testShortSkillBlindedButLongerSkillSeesTargetCastsLongSkill();
 testAutoBattleSkipsSelfBuffSkillWithoutTarget();
 testAutoBattleCastsMissingSelfBuffSkillWithTarget();
 testAutoBattleCastsSelfAnchoredAreaSkillWithTarget();
@@ -2691,5 +2944,5 @@ testMaterializeAutoCombatClearsExpiredRetaliatorBeforeEarlyExit();
 console.log(JSON.stringify({
   ok: true,
   case: 'world-runtime-auto-combat',
-  answers: '自动战斗物化不依赖在线 session，离线地图居民仍可生成攻击指令；自动战斗不会在本 tick 行动次数已满时继续物化必然失败的攻击指令；一次性接战和自动战斗会按第一个当前可用技能决定停止距离，目标已在射程内但视线被遮挡时会继续寻找可释放站位；自动追击路径缓存不会在上一段移动未真正落位时跳过首步，缓存下一步被动态占位后会重新规划，且追击寻路会沿用玩家忽略静态障碍能力；当前锁定目标不可达时只对该目标做一次 80% 仇恨降权、清理当前目标并立即重选；普通自动战斗每 tick 按实时仇恨重算目标，只有明确锁定或一次性接战才优先沿用 tracked target；原地战斗当前目标站着打不中且身边有打得到的怪时同一息改打邻格，没有打得到的候选才发呆；近处优先在站着打得到的目标里永远选最近，仇恨只拆同距离平手；原地战斗会按 AOE 覆盖半径作为停止距离；无需目标的自身 buff 技能只有在存在有效自动战斗目标且缺少对应 buff 时才会按自动技能顺序原地施放，已有 buff 时不会重复刷也不会把 buff 技能当成追击距离；锁定目标失效后只清理当前目标锁，不关闭自动战斗、不发丢失提示；锁定草药、挖矿和阵法会在未清空或未摧毁前继续生成下一次攻击；自动反击会临时抢占非玩家锁定目标并保留原锁定，明确锁定玩家时不擅自切目标，且仇敌 30 分钟未续攻会在 tick 内过期；自动丹药会按资源阈值或缺 Buff 条件在 tick 受控流程内使用，空条件不触发，已有 pending command 时不改动背包槽位。',
+  answers: '自動戰鬥物化不依賴線上 session，離線地圖居民仍可生成攻擊指令；自動戰鬥不會在本 tick 行動次數已滿時繼續物化必然失敗的攻擊指令；一次性接戰按第一個當前可用技能決定停止距離，自動戰鬥沒有技能在射程內時按最長可用技能射程決定追擊停止距離，目標已在射程內但視線被遮擋時，會改用其他打得到同一目標的自動戰鬥技能（原地 AOE 或視距更長的技能），沒有替代才尋路找可釋放站位；自動追擊路徑快取不會在上一段移動未真正落位時跳過首步，快取下一步被動態佔位後會重新規劃，且追擊尋路會沿用玩家忽略靜態障礙能力；當前鎖定目標不可達時只對該目標做一次 80% 仇恨降權、清理當前目標並立即重選；普通自動戰鬥每 tick 按即時仇恨重算目標，只有明確鎖定或一次性接戰才優先沿用 tracked target；原地戰鬥當前目標站著打不中且身邊有打得到的怪時同一息改打鄰格，沒有打得到的候選才發呆；近處優先在站著打得到的目標裡永遠選最近，仇恨只拆同距離平手；原地戰鬥會按 AOE 覆蓋半徑作為停止距離；無需目標的自身 buff 技能只有在存在有效自動戰鬥目標且缺少對應 buff 時才會按自動技能順序原地施放，已有 buff 時不會重複刷也不會把 buff 技能當成追擊距離；鎖定目標失效後只清理當前目標鎖，不關閉自動戰鬥、不發遺失提示；鎖定草藥、挖礦和陣法會在未清空或未摧毀前繼續生成下一次攻擊；自動反擊會臨時搶佔非玩家鎖定目標並保留原鎖定，明確鎖定玩家時不擅自切目標，且仇敵 30 分鐘未續攻會在 tick 內過期；自動丹藥會按資源閾值或缺 Buff 條件在 tick 受控流程內使用，空條件不觸發，已有 pending command 時不改動背包槽位。',
 }, null, 2));
