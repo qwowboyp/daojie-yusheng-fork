@@ -85,7 +85,8 @@ Write-Host "      tarball: $tarMb MB"
 
 $targets = if ($Target -eq 'both') { @('server', 'client') } else { @($Target) }
 $buildChain = ($targets | ForEach-Object { "docker build -f packages/$($_)/Dockerfile -t daojie-$($_):lxc ." }) -join ' && '
-$remoteBuildCmd = "cd $RemoteSrc && $buildChain"
+# DOCKER_BUILDKIT=1 讓 --mount=type=cache 生效（Docker 20.10 預設關閉）
+$remoteBuildCmd = "cd $RemoteSrc && export DOCKER_BUILDKIT=1 && $buildChain"
 
 Write-Host "[plan] target=$Target ref=$Ref"
 Write-Host "[plan] remote build chain: $buildChain"

@@ -9,7 +9,9 @@ ARG NPM_CONFIG_REGISTRY=https://registry.npmmirror.com
 ENV NPM_CONFIG_REGISTRY=${NPM_CONFIG_REGISTRY}
 RUN npm install -g "pnpm@${PNPM_VERSION}" --registry="${NPM_CONFIG_REGISTRY}" \
   && pnpm --version
-RUN pnpm install --frozen-lockfile
+# pnpm store 走 BuildKit 掛載快取：重複 build 不複製 node_modules 層，節省磁碟
+RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile
 COPY scripts scripts
 COPY packages/shared packages/shared
 COPY packages/server packages/server
@@ -29,7 +31,9 @@ ARG NPM_CONFIG_REGISTRY=https://registry.npmmirror.com
 ENV NPM_CONFIG_REGISTRY=${NPM_CONFIG_REGISTRY}
 RUN npm install -g "pnpm@${PNPM_VERSION}" --registry="${NPM_CONFIG_REGISTRY}" \
   && pnpm --version
-RUN pnpm install --frozen-lockfile --prod --filter @mud/server...
+# pnpm store 走 BuildKit 掛載快取：重複 build 不複製 node_modules 層，節省磁碟
+RUN --mount=type=cache,id=pnpm-store-prod,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile --prod --filter @mud/server...
 
 FROM node:20-alpine
 ARG BUILD_CACHEBUST=local

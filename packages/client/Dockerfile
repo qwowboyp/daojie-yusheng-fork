@@ -13,7 +13,9 @@ RUN sed -i 's#dl-cdn.alpinelinux.org#mirrors.aliyun.com#' /etc/apk/repositories 
 RUN test -x "$CHROME_BIN"
 RUN npm install -g "pnpm@${PNPM_VERSION}" --registry="${NPM_CONFIG_REGISTRY}" \
   && pnpm --version
-RUN pnpm install --frozen-lockfile
+# pnpm store 走 BuildKit 掛載快取：重複 build 不複製 node_modules 層，節省磁碟
+RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile
 COPY scripts scripts
 COPY packages/shared packages/shared
 COPY packages/client packages/client
