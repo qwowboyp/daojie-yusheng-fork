@@ -69,6 +69,7 @@ const fixtureExpression = String.raw`
     const fixtureActions = [
       { id: 'wang_qi:toggle', name: '王氣切換', desc: '常駐工具動作，不應顯示為附近行動', type: 'interact', category: 'interact' },
       { id: 'proof-nearby-interact', name: '調查石碑', desc: '調查附近的古老石碑', type: 'interact', category: 'interact', cooldownLeft: 0, requiresTarget: false },
+      { id: 'proof-craft-action', name: '技藝操作', desc: '保留在技藝工作窗的操作', type: 'craft', cooldownLeft: 0, requiresTarget: false },
       { id: 'battle:force_attack', name: '強攻', desc: '對指定目標發動強攻', type: 'battle', cooldownLeft: 0, requiresTarget: true, targetMode: 'any', range: 4 },
       { id: 'travel:return_spawn', name: '遁返', desc: '返回綁定的復活點', type: 'travel', cooldownLeft: 0, requiresTarget: false },
       { id: 'loot:open', name: '拿取', desc: '拿取指定地格的物品', type: 'toggle', cooldownLeft: 0, requiresTarget: true, targetMode: 'tile', range: 1 },
@@ -168,8 +169,9 @@ const verifyAllWorkspacesExpression = String.raw`
     for (const [id, title] of expected) {
       menu.click();
       await window.__gameWorkspaceProof.nextPaint();
-      const entry = document.querySelector('#workspace-menu [data-workspace-open="' + id + '"]');
+      const entry = document.querySelector((id === 'craft' ? '#game-dock .workspace-dock-nav > ' : '#workspace-menu ') + '[data-workspace-open="' + id + '"]');
       if (!(entry instanceof HTMLButtonElement)) throw new Error('全部功能缺少分類：' + id);
+      if (id === 'craft' && (!entry.getClientRects().length || entry.textContent !== '技藝')) throw new Error('右下角缺少可見技藝入口');
       entry.click();
       await window.__gameWorkspaceProof.nextPaint();
       const activeTab = document.querySelector('#game-workspace-controls [role="tab"][aria-selected="true"]');
@@ -177,6 +179,11 @@ const verifyAllWorkspacesExpression = String.raw`
       const pane = paneId ? document.getElementById(paneId) : null;
       const activePane = pane instanceof HTMLElement && document.getElementById('game-workspace-body')?.contains(pane)
         && !pane.hidden && pane.getAttribute('aria-hidden') === 'false';
+      if (id === 'craft') {
+        if (paneId !== 'workspace-craft-launcher') throw new Error('技藝入口未開啟正式技藝工作窗');
+        const actions = [...pane.querySelectorAll('[data-workspace-action]')].map((button) => button.dataset.workspaceAction);
+        if (actions.join(',') !== 'alchemy,forging,enhancement,transmission,building') throw new Error('技藝工作窗原有功能不完整');
+      }
       results.push({ id, expectedTitle: title, title: document.getElementById('workspace-title')?.textContent, activePane });
     }
     return results;
@@ -740,8 +747,8 @@ const verifyMobileInteractionExpression = String.raw`
 const verifyInteractionPresenceExpression = String.raw`
   (async () => {
     const proof = window.__gameWorkspaceProof;
-    const utilityOnly = proof.quickActions.filter((action) => action.id === 'wang_qi:toggle');
-    proof.actionPanel.update(utilityOnly, false, false, proof.player);
+    const nonNearby = proof.quickActions.filter((action) => action.id === 'wang_qi:toggle' || action.type === 'craft');
+    proof.actionPanel.update(nonNearby, false, false, proof.player);
     await proof.nextPaint();
     const hiddenPanel = document.getElementById('floating-interaction-list');
     const hidden = !(hiddenPanel instanceof HTMLElement) || hiddenPanel.hidden || hiddenPanel.getClientRects().length === 0;
@@ -1056,6 +1063,8 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assert.equal(interactionAndQuick.nearby?.belowZoom, true, 'interaction 浮窗未錨定在縮放控制下方');
   assert.equal(interactionAndQuick.nearby?.buttons.some((button) => button.id === 'wang_qi:toggle'), false,
     '常駐王氣切換錯誤顯示為附近行動');
+  assert.equal(interactionAndQuick.nearby?.buttons.some((button) => button.id === 'proof-craft-action'), false,
+    '技藝不應混入附近交互列表');
   assert.equal(interactionAndQuick.nearby?.buttons.some((button) => button.id === 'proof-nearby-interact'), true,
     '真實附近行動未進入 interaction 浮窗');
   assert.deepEqual(interactionAndQuick.quick.map((button) => button.id),

@@ -74,7 +74,7 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
   const open = (id: WorkspaceId) => { setMenuOpen(false); state.onOpen(id); };
   return (
     <nav className="workspace-dock-nav" aria-label="遊戲功能">
-      {([{ id: 'items', label: '背包' }, { id: 'cultivation', label: '修行' }, { id: 'quests', label: '任務' }] as const).map((item) => (
+      {([{ id: 'items', label: '背包' }, { id: 'cultivation', label: '修行' }, { id: 'craft', label: '技藝' }, { id: 'quests', label: '任務' }] as const).map((item) => (
         <button key={item.id} type="button" className="workspace-dock-button" data-workspace-open={item.id}
           aria-controls="game-workspace" aria-expanded={state.activeWorkspace === item.id}
           onPointerDown={(event) => { if (event.button === 0) state.onPrepareOpen(item.id); }} onClick={() => open(item.id)}>{item.label}</button>

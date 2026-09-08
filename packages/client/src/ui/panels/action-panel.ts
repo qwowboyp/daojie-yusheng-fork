@@ -76,7 +76,7 @@ type SkillEnabledEntry = {
   skillEnabled?: boolean;
 };
 
-const FLOATING_INTERACTION_ACTION_TYPES = new Set(['quest', 'interact', 'travel', 'craft']);
+const FLOATING_INTERACTION_ACTION_TYPES = new Set(['quest', 'interact', 'travel']);
 const PERSISTENT_INTERACTION_ACTION_IDS = new Set(['wang_qi:toggle']);
 const QUICK_ACTION_IDS = ['battle:force_attack', RETURN_TO_SPAWN_ACTION_ID, 'loot:open', 'client:observe'] as const;
 
@@ -931,7 +931,6 @@ export class ActionPanel {
 
   private getFloatingInteractionGroups(actions: ActionDef[]): Array<{ label: string; actions: ActionDef[] }> {
     const order: Array<{ type: ActionDef['type']; label: string }> = [
-      { type: 'craft', label: '技藝' },
       { type: 'quest', label: '任務' },
       { type: 'travel', label: '傳送' },
       { type: 'interact', label: '交互' },
