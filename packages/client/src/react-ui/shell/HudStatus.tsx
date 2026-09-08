@@ -7,6 +7,7 @@ import { StrictMode, memo, useCallback, useEffect, useState } from 'react';
 import { createPortal, flushSync } from 'react-dom';
 import { createRoot, type Root } from 'react-dom/client';
 import { t } from '../../ui/i18n';
+import { requestMobileSurface, subscribeMobileSurface } from '../../ui/mobile-surface';
 import { createExternalStore } from '../stores/create-external-store';
 import { useExternalStoreSnapshot } from '../hooks/use-external-store-snapshot';
 
@@ -157,6 +158,7 @@ export function setReactHudBreakthroughHandler(callback: (() => void) | null): v
 const HudStatusView = memo(function HudStatusView() {
   const state = useExternalStoreSnapshot(hudStatusStore);
   const [expanded, setExpanded] = useState(false);
+  useEffect(() => subscribeMobileSurface('hud', () => setExpanded(false)), []);
   const profileHost = document.getElementById('workspace-profile-content');
   const profile = (
     <div className="hud-grid">
@@ -168,14 +170,22 @@ const HudStatusView = memo(function HudStatusView() {
   );
   return (
     <>
-      <div className="hud-identity" data-hud-expanded={expanded}>
+      <div
+        className="hud-identity"
+        data-hud-expanded={expanded}
+        data-hud-mobile-layout={expanded ? 'expanded' : 'compact'}
+      >
         <div className="hud-name" id="hud-name">
           <span className="hud-name-text">{state.name}</span>
           <span className="hud-name-level" id="hud-realm-level">{state.realmLevelLabel}</span>
         </div>
         <button className="hud-expand-toggle" type="button" aria-expanded={expanded} aria-controls="hud-summary-details"
           aria-label={expanded ? '收合人物資訊' : '展開人物資訊'}
-          onClick={(event) => { event.stopPropagation(); setExpanded(!expanded); }}>
+          onClick={(event) => {
+            event.stopPropagation();
+            if (!expanded) requestMobileSurface('hud');
+            setExpanded(!expanded);
+          }}>
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
             {expanded ? <path d="M5 12h14" /> : <path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4" />}
           </svg>

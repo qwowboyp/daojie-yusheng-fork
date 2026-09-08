@@ -335,70 +335,6 @@
 @media (max-width: 1100px) {
   #game-workspace { width: min(780px, calc(100% - 32px)); top: 160px; }
 }
-@media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
-  #game-shell[data-workspace-mode="true"] { --workspace-dock-height: 60px; }
-  #game-shell[data-workspace-mode="true"] #hud {
-    top: max(8px, env(safe-area-inset-top, 0px));
-    left: max(8px, env(safe-area-inset-left, 0px));
-    width: calc(100% - 124px);
-    max-width: 300px;
-    max-height: min(360px, calc(100% - 96px));
-  }
-  #game-shell[data-workspace-mode="true"] .hud-panel { padding: 8px; gap: 5px; }
-  #game-shell[data-workspace-mode="true"] .hud-expand-toggle { display: inline-flex; flex: 0 0 44px; width: 44px; height: 44px; align-items: center; justify-content: center; margin-left: auto; border: 1px solid var(--border-soft); border-radius: 6px; background: var(--surface-muted); color: var(--ink-dark); cursor: pointer; }
-  #game-shell[data-workspace-mode="true"] .hud-identity[data-hud-expanded="false"] + .hud-mobile-scroll .hud-top-row { display: none; }
-  #game-shell[data-workspace-mode="true"] .map-side-rail.left { top: 112px; left: 8px; }
-  #game-shell[data-workspace-mode="true"]:has(.hud-identity[data-hud-expanded="true"]) .map-side-rail.left { top: 208px; }
-  #game-shell[data-workspace-mode="true"] .map-side-rail.right { right: 8px; max-width: 108px; }
-  #game-shell[data-workspace-mode="true"] .map-minimap-shell { right: 8px; top: 96px; }
-  #game-shell[data-workspace-mode="true"] .map-zoom-stack { width: 128px; }
-  #game-shell[data-workspace-mode="true"] .map-zoom-slider { width: 100%; inline-size: 100%; }
-  #game-dock { left: max(8px, env(safe-area-inset-left, 0px)); right: max(8px, env(safe-area-inset-right, 0px)); bottom: max(8px, env(safe-area-inset-bottom, 0px)); max-width: none; }
-  .workspace-dock-nav { width: 100%; }
-  .workspace-dock-nav button { flex: 1 1 0; min-width: 0; padding: 8px 4px; font-size: 14px; }
-  .workspace-menu { width: 100%; }
-  #game-workspace {
-    left: max(6px, env(safe-area-inset-left, 0px));
-    right: max(6px, env(safe-area-inset-right, 0px));
-    top: calc(max(8px, env(safe-area-inset-top, 0px)) + 156px);
-    bottom: calc(78px + env(safe-area-inset-bottom, 0px));
-    width: auto;
-    border-radius: 8px;
-  }
-  .workspace-header { padding: 8px 10px 0; gap: 8px; }
-  .workspace-title { font-size: 18px; }
-  .workspace-tabs { padding: 2px 10px 6px; }
-  #game-workspace-body > .workspace-pane { padding: 10px; }
-  #workspace-profile-content .hud-grid { grid-template-columns: 1fr; }
-  .workspace-action-grid { gap: 8px; }
-  #game-shell[data-workspace-mode="true"] #chat-panel { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); left: 8px; width: calc(100% - 16px); height: min(340px, calc(100% - 240px)); }
-  .chat-action-toggle { display: inline-flex; grid-column: 2; grid-row: 1; justify-self: end; align-items: center; }
-  .chat-action-buttons { display: none; grid-column: 1 / -1; grid-row: 2; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
-  .chat-quick-actions[data-expanded="true"] .chat-action-buttons { display: grid; }
-  .chat-quick-actions[data-expanded="true"] .chat-action-help { display: block; grid-column: 1 / -1; grid-row: 3; max-height: min(200px, 28dvh); overflow: auto; overscroll-behavior: contain; font-weight: normal; }
-  .chat-action-help summary { min-height: 44px; padding: 10px 4px; cursor: pointer; }
-  .chat-action-help p, .chat-action-help dd { margin: 4px 0 12px; line-height: 1.5; }
-  #floating-interaction-list { max-height: min(260px, 38dvh); }
-  #floating-interaction-list .floating-list-panel__bar { cursor: pointer; }
-  #floating-interaction-list .floating-list-panel__tool { min-height: 44px; min-width: 44px; }
-  #game-shell[data-workspace-mode="true"][data-workspace-open="true"] #chat-panel { visibility: hidden; }
-  #game-workspace :is(input, select, textarea) { font-size: max(16px, var(--font-size-16)); }
-  #game-workspace :is(.small-btn, .action-btn, .tab-btn) { min-height: 44px; }
-  #game-workspace .ui-filter-tab { min-height: 44px; padding: 6px 8px; }
-  #game-workspace .inventory-workspace-detail--empty { display: none; }
-}
-@media (max-height: 520px) {
-  #game-shell[data-workspace-mode="true"] #hud { max-height: 112px; }
-  #game-shell[data-workspace-mode="true"] .hud-progress-shell { display: none; }
-  #game-shell[data-workspace-mode="true"] .map-side-rail.left { top: 132px; }
-  #game-workspace { top: max(8px, env(safe-area-inset-top, 0px)); left: 310px; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); width: auto; }
-  .workspace-header { padding-top: 4px; }
-  .workspace-tabs { padding-bottom: 2px; }
-  #game-shell[data-workspace-mode="true"] #chat-panel { height: 240px; width: min(480px, calc(100% - 16px)); }
-}
-@media (max-width: 560px) and (max-height: 620px) {
-  #game-workspace { left: 6px; top: 120px; }
-}
 
 /* 桌面視窗共用拖曳與縮放控制；內容自己捲動，控制列保留在框內。 */
 .desktop-window-resize { position: absolute; right: 0; bottom: 0; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 4px; color: var(--ink-dark); background: var(--surface-muted); cursor: nwse-resize; touch-action: none; z-index: 5; }
@@ -414,8 +350,4 @@
   #workspace-profile-content .hud-grid,
   #workspace-system-content .hud-link-actions,
   #workspace-system-content .hud-corner-actions { grid-template-columns: minmax(0, 1fr); }
-}
-@media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
-  #game-shell[data-workspace-mode="true"] #hud:has(.hud-identity[data-hud-expanded="true"]) { max-height: calc(100% - 88px); }
-  #game-shell[data-workspace-mode="true"] .hud-identity[data-hud-expanded="true"] + .hud-mobile-scroll .hud-progress-shell { display: block; }
 }

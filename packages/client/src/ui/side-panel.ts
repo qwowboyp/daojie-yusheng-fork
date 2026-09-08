@@ -6,6 +6,7 @@
 /** 页面布局与多组标签页控制器 */
 import { DESKTOP_LAYOUT_DRAG_LIMITS } from '../constants/ui/responsive';
 import { shouldUseMobileUi } from './responsive-viewport';
+import { requestMobileSurface, subscribeMobileSurface } from './mobile-surface';
 import { t } from './i18n';
 import { isReactPanelEnabled } from '../react-ui/bridge/panel-flags';
 import { mountFloatingListPanelLayer, refreshFloatingListPanelLayout } from './floating-list-panel';
@@ -152,6 +153,10 @@ export class SidePanel {
   private hudWindow: ReturnType<typeof bindDesktopWindow> | null = null;
   private workspaceActionHandler: ((action: WorkspaceAction) => void) | null = null;
   private readonly workspaceActionRoots: { unmount(): void }[] = [];
+  private readonly mobileSurfaceCleanup: (() => void)[] = [];
+  private readonly dismissMobileSurfacesOnMap = (event: PointerEvent): void => {
+    if (event.target instanceof Element && event.target.closest('#game-canvas')) requestMobileSurface(null);
+  };
   /**
  * layoutState：layout状态状态或数据块。
  */
@@ -393,6 +398,7 @@ export class SidePanel {
   /** 聊天只摺疊內容，保留原頻道、輸入框、訊息列表與常駐標題列。 */
   setChatOpen(open: boolean, restoreFocus = !open): void {
     if (!this.workspace) return;
+    if (open) requestMobileSurface('chat');
     if (open && this.mobileLayoutActive) this.closeWorkspace(false);
     this.chatOpen = open;
     this.syncChatVisibility();
@@ -525,11 +531,17 @@ export class SidePanel {
     });
     this.syncChatVisibility();
     window.addEventListener('keydown', this.handleWorkspaceEscape, true);
+    this.mobileSurfaceCleanup.push(
+      subscribeMobileSurface('chat', () => { if (this.isChatOpen()) this.setChatOpen(false, false); }),
+      subscribeMobileSurface('workspace', () => { if (this.isWorkspaceOpen()) this.closeWorkspace(false); }),
+    );
+    this.panel.addEventListener('pointerdown', this.dismissMobileSurfacesOnMap);
   }
 
   private showWorkspaceTab(tabName: string): void {
     const definition = this.workspaceDefinitions.find((entry) => entry.tabs.some((tab) => tab.id === tabName));
     if (!this.workspace || !definition) return;
+    requestMobileSurface('workspace');
     const opening = this.activeWorkspace === null;
     if (opening) this.workspaceReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     this.activeWorkspace = definition.id;
@@ -637,6 +649,8 @@ export class SidePanel {
 
   /** 销毁面板，释放事件监听器。 */
   destroy(): void {
+    this.mobileSurfaceCleanup.forEach((cleanup) => cleanup());
+    this.panel.removeEventListener('pointerdown', this.dismissMobileSurfacesOnMap);
     this.workspaceWindow?.destroy();
     this.chatWindow?.destroy();
     this.hudWindow?.destroy();

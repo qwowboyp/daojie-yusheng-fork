@@ -10,6 +10,8 @@ import path from 'node:path';
 import { delay, withClientBrowserProof, waitFor } from './browser-proof-runtime.mjs';
 
 const PHONE = { width: 390, height: 844 };
+const PHONE_BROWSER_CHROME = { width: 390, height: 670 };
+const PHONE_SMALL = { width: 375, height: 667 };
 const LANDSCAPE = { width: 844, height: 390 };
 const DESKTOP = { width: 1440, height: 900 };
 const LARGE_DESKTOP = { width: 3727, height: 2233 };
@@ -24,7 +26,7 @@ const fixtureExpression = String.raw`
       name: '驗證玩家長名', displayName: '驗證玩家長名',
       realm: { realmLv: 30, stage: 'qi_refining', displayName: '煉氣境', review: '初窺門徑', progress: 660, progressToNext: 1000,
         breakthroughReady: true, breakthrough: { canBreakthrough: true, targetDisplayName: '築基境' } }, foundation: 18, qi: 66000,
-      x: 14, y: 22, hp: 680000, maxHp: 1000000, numericStats: { maxQi: 400000 },
+      x: 14, y: 22, viewRange: 12, hp: 680000, maxHp: 1000000, numericStats: { maxQi: 400000 },
       equipment: { weapon: { itemId: 'proof-iron-sword', itemInstanceId: 'proof-sword', name: '驗證鐵劍', desc: '目前裝備的對照武器', type: 'equipment', count: 1, level: 2, equipSlot: 'weapon', equipStats: { maxHp: 18 } } },
       artifacts: [], techniques: [], unlockedMinimapIds: [], inventory: { capacity: 24, items: [] }, quests: [],
     };
@@ -69,6 +71,8 @@ const fixtureExpression = String.raw`
     const fixtureActions = [
       { id: 'wang_qi:toggle', name: '王氣切換', desc: '常駐工具動作，不應顯示為附近行動', type: 'interact', category: 'interact' },
       { id: 'proof-nearby-interact', name: '調查石碑', desc: '調查附近的古老石碑', type: 'interact', category: 'interact', cooldownLeft: 0, requiresTarget: false },
+      { id: 'proof-nearby-travel', name: '傳送至：地方老爹爹', desc: '沿著山間古道前往已發現的傳送地點。', type: 'travel', cooldownLeft: 0, requiresTarget: false },
+      { id: 'proof-nearby-sect', name: '進入宗門：地方老爹爹', desc: '進入附近宗門領地，查看此處提供的交互。', type: 'travel', cooldownLeft: 0, requiresTarget: false },
       { id: 'proof-craft-action', name: '技藝操作', desc: '保留在技藝工作窗的操作', type: 'craft', cooldownLeft: 0, requiresTarget: false },
       { id: 'battle:force_attack', name: '強攻', desc: '對指定目標發動強攻', type: 'battle', cooldownLeft: 0, requiresTarget: true, targetMode: 'any', range: 4 },
       { id: 'travel:return_spawn', name: '遁返', desc: '返回綁定的復活點', type: 'travel', cooldownLeft: 0, requiresTarget: false },
@@ -83,10 +87,48 @@ const fixtureExpression = String.raw`
     const hud = new HUD();
     hud.setCallbacks(() => calls.push({ kind: 'breakthrough' }));
     hud.update(player, { mapName: '驗證山谷', titleLabel: '築基修士', showRealmAction: true, realmActionLabel: '突破' });
+    const mapStage = document.getElementById('game-stage');
+    let mapRuntime = null;
+    let mapPixels = [];
+    if (mapStage instanceof HTMLElement) {
+      const mapHost = document.createElement('div');
+      mapHost.id = 'workspace-proof-real-map';
+      mapHost.style.cssText = 'position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;';
+      const mapCanvas = document.createElement('canvas');
+      mapCanvas.id = 'workspace-proof-map-canvas';
+      mapHost.appendChild(mapCanvas);
+      mapStage.prepend(mapHost);
+      const { createMapRuntime } = await import('/src/game-map/runtime/map-runtime.ts');
+      mapRuntime = createMapRuntime();
+      mapRuntime.attach(mapHost);
+      const tiles = Array.from({ length: 25 }, (_, y) => Array.from({ length: 25 }, (_, x) => {
+        const water = x >= 5 + Math.floor(y / 8) && x <= 7 + Math.floor(y / 8);
+        return { type: water ? 'water' : 'grass', terrainType: water ? 'water' : 'cold_bog', surfaceType: Math.abs(x - 12) <= 1 ? 'road' : null,
+          walkable: !water, blocksSight: false, aura: 3, occupiedBy: null, modifiedAt: null };
+      }));
+      mapRuntime.applyBootstrap({ self: player, mapMeta: { id: player.mapId, name: '驗證山谷', width: 128, height: 128, mapLv: 1 }, tiles,
+        players: [{ id: 'proof-observer', x: player.x + 2, y: player.y, char: '觀', color: '#f5c542', kind: 'player', name: '觀察者' }] });
+      mapRuntime.setViewportSize(Math.max(1, mapStage.clientWidth), Math.max(1, mapStage.clientHeight), window.devicePixelRatio || 1);
+      mapRuntime.setRenderFrameObserver(() => {
+        const gl = mapCanvas.getContext('webgl2');
+        if (!gl || gl.isContextLost()) return;
+        const pixel = new Uint8Array(4);
+        gl.readPixels(Math.floor(mapCanvas.width / 2), Math.floor(mapCanvas.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+        mapPixels = Array.from(pixel);
+      });
+      const resizeMap = () => mapRuntime.setViewportSize(mapStage.clientWidth, mapStage.clientHeight, devicePixelRatio || 1,
+        mapStage.getBoundingClientRect().width / mapStage.clientWidth);
+      window.addEventListener('mud:responsive-viewport-change', resizeMap);
+      document.getElementById('map-map-name').querySelector('.map-map-name-text').textContent = '寒汐澤';
+      document.getElementById('map-current-time-value').textContent = '23:04';
+      document.getElementById('map-current-time-phase').textContent = '夜闌';
+      document.getElementById('map-minimap-shell')?.classList.remove('hidden');
+      await nextPaint();
+    }
     const runtimeErrors = [];
     window.addEventListener('error', (event) => runtimeErrors.push(String(event.error?.stack ?? event.message)));
     window.addEventListener('unhandledrejection', (event) => runtimeErrors.push(String(event.reason?.stack ?? event.reason)));
-    window.__gameWorkspaceProof = { calls, player, inventory, inventoryPanel, equipmentPanel, questPanel, actionPanel, hud, quickActions: fixtureActions, nextPaint, runtimeErrors };
+    window.__gameWorkspaceProof = { calls, player, inventory, inventoryPanel, equipmentPanel, questPanel, actionPanel, hud, quickActions: fixtureActions, nextPaint, runtimeErrors, mapRuntime, getMapPixels: () => mapPixels };
     await nextPaint();
     return {
       inventoryCells: document.querySelectorAll('[data-inventory-grid="true"] [data-open-item]').length,
@@ -759,11 +801,148 @@ const verifyMobileInteractionExpression = String.raw`
     const nearby = panel.querySelector('.floating-interaction-quick-btn[data-action="proof-nearby-interact"], .floating-interaction-quick-btn[data-action-exec="proof-nearby-interact"]');
     const before = proof.calls.length;
     if (!(nearby instanceof HTMLButtonElement)) throw new Error('手機附近行動缺少真實 action 按鈕');
+    const expanded = !panel.classList.contains('is-collapsed');
+    const visible = Boolean(nearby.getClientRects().length);
     nearby.click();
     await proof.nextPaint();
-    return { initiallyCollapsed, collapsed, expanded: !(panel.classList.contains('is-collapsed') || panel.dataset.collapsed === 'true'),
+    return { initiallyCollapsed, collapsed, expanded,
       executed: proof.calls.slice(before).some((entry) => entry.kind === 'action' && entry.actionId === 'proof-nearby-interact'),
-      visible: Boolean(nearby.getClientRects().length) };
+      visible, closedAfterAction: panel.classList.contains('is-collapsed') };
+  })()
+`;
+
+const verifyMobileSurfaceExpression = String.raw`
+  (async () => {
+    const proof = window.__gameWorkspaceProof;
+    const shell = document.getElementById('game-shell');
+    const stage = document.getElementById('game-stage');
+    const canvas = document.getElementById('workspace-proof-map-canvas') ?? document.getElementById('game-canvas');
+    const hud = document.getElementById('hud');
+    const dockButtons = [...document.querySelectorAll('#game-dock .workspace-dock-nav > button')];
+    const mapToggle = document.getElementById('mobile-map-tools-toggle');
+    const zoom = document.querySelector('.map-zoom-stack');
+    const chatInput = document.getElementById('chat-input');
+    if (chatInput instanceof HTMLInputElement) {
+      chatInput.value = '赤鐵';
+      chatInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    if (!(shell instanceof HTMLElement) || !(stage instanceof HTMLElement) || !(canvas instanceof HTMLCanvasElement)) throw new Error('手機主舞台缺少正式地圖 canvas');
+    if (proof.mapRuntime) proof.mapRuntime.setViewportSize(Math.max(1, stage.clientWidth), Math.max(1, stage.clientHeight), devicePixelRatio || 1);
+    await proof.nextPaint();
+    const chatToggle = document.getElementById('workspace-chat-toggle');
+    if (chatToggle instanceof HTMLButtonElement && chatToggle.getAttribute('aria-expanded') === 'true') { chatToggle.click(); await proof.nextPaint(); }
+    const nearbyPanel = document.getElementById('floating-interaction-list');
+    const nearbyCollapse = nearbyPanel?.querySelector('[data-floating-list-collapse="true"]');
+    if (nearbyPanel instanceof HTMLElement && nearbyCollapse instanceof HTMLButtonElement && !(nearbyPanel.classList.contains('is-collapsed') || nearbyPanel.dataset.collapsed === 'true')) { nearbyCollapse.click(); await proof.nextPaint(); }
+    const actionToggle = document.querySelector('.chat-action-toggle');
+    if (actionToggle instanceof HTMLButtonElement && actionToggle.getAttribute('aria-expanded') === 'true') { actionToggle.click(); await proof.nextPaint(); }
+    const stageRect = stage.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
+    const renderedPixel = proof.getMapPixels();
+    const center = { x: stageRect.left + stageRect.width / 2, y: stageRect.top + stageRect.height * 0.48 };
+    const centerElement = document.elementFromPoint(center.x, center.y);
+    const visiblePanels = ['#game-workspace', '#chat-panel', '#floating-interaction-list'].flatMap((selector) => {
+      const node = document.querySelector(selector);
+      if (!(node instanceof HTMLElement) || node.hidden || !node.getClientRects().length) return [];
+      const rect = node.getBoundingClientRect();
+      return rect.left <= center.x && rect.right >= center.x && rect.top <= center.y && rect.bottom >= center.y ? [selector] : [];
+    });
+    const base = {
+      viewport: { width: innerWidth, height: innerHeight },
+      hudHeight: hud?.getBoundingClientRect().height ?? -1,
+      canvas: { width: canvas.width, height: canvas.height, cssWidth: canvasRect.width, cssHeight: canvasRect.height, renderedPixel,
+        rendered: renderedPixel.slice(0, 3).some((value) => value > 0) && !!proof.mapRuntime.getKnownTileAt(proof.player.x, proof.player.y) },
+      centerMapHit: centerElement === canvas || centerElement instanceof HTMLElement && (centerElement === stage || stage.contains(centerElement)),
+      centerCoveredBy: visiblePanels,
+      dockCount: dockButtons.length,
+      dockMinHeight: Math.min(...dockButtons.map((button) => button.getBoundingClientRect().height)),
+      touchTargets: ['#mobile-map-tools-toggle', '#workspace-chat-toggle', '.chat-action-toggle', '#floating-interaction-list [data-floating-list-collapse="true"]'].map((selector) => {
+        const node = document.querySelector(selector); return { selector, height: node instanceof HTMLElement ? node.getBoundingClientRect().height : 0, visible: node instanceof HTMLElement && Boolean(node.getClientRects().length) };
+      }),
+      mapTools: { expanded: mapToggle?.getAttribute('aria-expanded'), shellOpen: shell.dataset.mapToolsOpen, zoomVisible: Boolean(zoom?.getClientRects().length) },
+      inputConnected: chatInput instanceof HTMLInputElement && chatInput.isConnected,
+      inputValue: chatInput instanceof HTMLInputElement ? chatInput.value : '',
+    };
+    if (!(mapToggle instanceof HTMLButtonElement)) throw new Error('手機地圖工具開關不存在');
+    mapToggle.click();
+    await proof.nextPaint();
+    const opened = { expanded: mapToggle.getAttribute('aria-expanded'), shellOpen: shell.dataset.mapToolsOpen,
+      zoomVisible: Boolean(zoom?.getClientRects().length), zoomHit: zoom instanceof HTMLElement && zoom.getClientRects().length > 0 };
+    const menu = document.getElementById('workspace-menu-toggle');
+    if (!(menu instanceof HTMLButtonElement)) throw new Error('手機全部功能入口不存在');
+    menu.click();
+    await proof.nextPaint();
+    const mutuallyExclusive = { menuOpen: menu.getAttribute('aria-expanded') === 'true', mapClosed: shell.dataset.mapToolsOpen === 'false' };
+    menu.click();
+    await proof.nextPaint();
+    if (shell.dataset.mapToolsOpen === 'true') { mapToggle.click(); await proof.nextPaint(); }
+    const nearby = document.getElementById('floating-interaction-list');
+    const actionsToggle = document.querySelector('.chat-action-toggle');
+    if (nearby instanceof HTMLElement && actionsToggle instanceof HTMLButtonElement) {
+      const collapse = nearby.querySelector('[data-floating-list-collapse="true"]');
+      if (collapse instanceof HTMLButtonElement && (nearby.classList.contains('is-collapsed') || nearby.dataset.collapsed === 'true')) { collapse.click(); await proof.nextPaint(); }
+      if (actionsToggle.getAttribute('aria-expanded') !== 'true') actionsToggle.click();
+      await proof.nextPaint();
+    }
+    const actionsExclusive = nearby instanceof HTMLElement && (nearby.classList.contains('is-collapsed') || nearby.dataset.collapsed === 'true');
+    (await import('/src/ui/mobile-surface.ts')).requestMobileSurface(null);
+    await proof.nextPaint();
+    return { base, opened, mutuallyExclusive, actionsExclusive,
+      actionInput: chatInput instanceof HTMLInputElement ? { connected: chatInput.isConnected, value: chatInput.value, focused: document.activeElement === chatInput } : null };
+  })()
+`;
+
+const mockVisualViewportExpression = String.raw`
+  (async () => {
+    const proof = window.__gameWorkspaceProof;
+    const originalDescriptor = Object.getOwnPropertyDescriptor(window, 'visualViewport');
+    const original = window.visualViewport;
+    const fake = new EventTarget();
+    Object.defineProperties(fake, {
+      width: { configurable: true, value: 390 }, height: { configurable: true, value: 390 },
+      offsetLeft: { configurable: true, value: 0 }, offsetTop: { configurable: true, value: 40 }, scale: { configurable: true, value: 1 },
+    });
+    Object.defineProperty(window, 'visualViewport', { configurable: true, value: fake });
+    window.dispatchEvent(new Event('resize')); window.dispatchEvent(new Event('scroll'));
+    await proof.nextPaint();
+    const root = document.getElementById('app-viewport-root');
+    const input = document.getElementById('chat-input');
+    input?.focus();
+    window.dispatchEvent(new Event('resize')); window.dispatchEvent(new Event('scroll'));
+    await proof.nextPaint();
+    const keyboard = { marker: document.documentElement.dataset.mobileKeyboard, rootWidth: root?.getBoundingClientRect().width ?? -1,
+      rootHeight: root?.getBoundingClientRect().height ?? -1, inputVisible: Boolean(input?.getClientRects().length),
+      inputBottom: input?.getBoundingClientRect().bottom ?? -1, visualHeight: window.visualViewport.height, offsetTop: window.visualViewport.offsetTop,
+      cssOffsetY: Number.parseFloat(document.documentElement.style.getPropertyValue('--app-viewport-offset-y') ?? '') || 0,
+      point: (await import('/src/ui/responsive-viewport.ts')).clientToViewportPoint(window, 50, 90) };
+    proof.restoreVisualViewport = () => {
+      input?.blur();
+      if (originalDescriptor) Object.defineProperty(window, 'visualViewport', originalDescriptor); else Object.defineProperty(window, 'visualViewport', { configurable: true, value: original });
+      window.dispatchEvent(new Event('resize'));
+    };
+    return keyboard;
+  })()
+`;
+
+const verifyMobileWorkspaceExpression = String.raw`
+  (async () => {
+    const proof = window.__gameWorkspaceProof;
+    const open = document.querySelector('[data-workspace-open="items"]');
+    if (!(open instanceof HTMLButtonElement)) throw new Error('手機工作窗物品入口不存在');
+    open.click();
+    await proof.nextPaint();
+    const workspace = document.getElementById('game-workspace');
+    const equipment = document.querySelector('#game-workspace [data-tab="equipment"]');
+    const rect = workspace?.getBoundingClientRect();
+    const viewport = { width: innerWidth, height: innerHeight };
+    const nearFullscreen = workspace instanceof HTMLElement && rect && rect.left >= -1 && rect.top >= -1
+      && rect.right <= viewport.width + 1 && rect.bottom <= viewport.height + 1
+      && rect.width >= viewport.width - 24 && rect.height >= viewport.height - 150;
+    if (equipment instanceof HTMLButtonElement) { equipment.click(); await proof.nextPaint(); }
+    const activeEquipment = document.querySelector('#pane-equipment:not(.hidden)') instanceof HTMLElement;
+    document.querySelector('#game-workspace .workspace-close')?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await proof.nextPaint();
+    return { nearFullscreen, activeEquipment, closed: document.getElementById('game-workspace')?.classList.contains('hidden') ?? false };
   })()
 `;
 
@@ -832,6 +1011,21 @@ async function captureWorkspace(cdp, name) {
   await writeFile(path.join(VISUALIZATION_DIR, name), Buffer.from(result.data, 'base64'));
 }
 
+async function clickCenterWithCdp(cdp, selector) {
+  const target = await cdp.evaluate(`(() => {
+    const node = document.querySelector(${JSON.stringify(selector)});
+    if (!(node instanceof HTMLElement)) throw new Error('CDP 點擊目標不存在：' + ${JSON.stringify(selector)});
+    const rect = node.getBoundingClientRect();
+    const x = rect.left + rect.width / 2; const y = rect.top + rect.height / 2;
+    const hit = document.elementFromPoint(x, y);
+    return { x, y, hit: hit === node || hit instanceof Node && node.contains(hit), width: rect.width, height: rect.height };
+  })()`);
+  await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: target.x, y: target.y, button: 'left', clickCount: 1 });
+  await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: target.x, y: target.y, button: 'left', clickCount: 1 });
+  await delay(80);
+  return target;
+}
+
 function assertInsideViewport(rect, viewport, label) {
   assert(rect.left >= -1 && rect.right <= viewport.width + 1 && rect.top >= -1 && rect.bottom <= viewport.height + 1,
     `${label}超出視口：${JSON.stringify({ rect, viewport })}`);
@@ -854,6 +1048,7 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assertInsideViewport(shown.dock, shown.viewport, '手機功能入口');
 
   const fixture = await cdp.evaluate(fixtureExpression);
+  await waitFor(() => cdp.evaluate(`window.__gameWorkspaceProof.getMapPixels().slice(0,3).some(value=>value>0)`), '正式 Pixi 地圖繪製');
   assert(fixture.inventoryCells > 0, '正式背包 Panel 未載入非空 fixture');
   assert(fixture.actionTabs > 0, '正式行動 Panel 未載入非空 fixture');
   assert.match(fixture.hpText ?? '', /68萬\s*\/\s*100萬/, '正式 HUD 未顯示長數值 fixture 氣血');
@@ -1150,6 +1345,95 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assert.equal(mobileInteraction.expanded, true, '手機附近行動浮窗無法展開');
   assert.equal(mobileInteraction.executed, true, '手機附近行動展開後無法執行真實 action');
   assert.equal(mobileInteraction.visible, true, '手機附近行動按鈕不可見');
+  const mobileSurface = await cdp.evaluate(verifyMobileSurfaceExpression);
+  assert.equal(mobileSurface.base.viewport.width, PHONE.width, '手機主畫面寬度未同步');
+  assert(mobileSurface.base.hudHeight > 0 && mobileSurface.base.hudHeight <= 90, `手機 compact HUD 超過 90px：${mobileSurface.base.hudHeight}`);
+  assert(mobileSurface.base.canvas.width > 0 && mobileSurface.base.canvas.height > 0 && mobileSurface.base.canvas.cssWidth > 0,
+    '手機主畫面沒有真實地圖 canvas backbuffer');
+  assert.equal(mobileSurface.base.canvas.rendered, true, `手機主畫面地圖 backbuffer 為空白：${mobileSurface.base.canvas.renderedPixel}`);
+  assert.equal(mobileSurface.base.centerCoveredBy.length, 0, `手機中央角色區被面板覆蓋：${mobileSurface.base.centerCoveredBy.join(',')}`);
+  assert.equal(mobileSurface.base.dockCount, 5, `手機底部 dock 項目數錯誤：${mobileSurface.base.dockCount}`);
+  assert(mobileSurface.base.dockMinHeight >= 44, '手機底部 dock 觸控高度不足 44px');
+  for (const target of mobileSurface.base.touchTargets) {
+    assert.equal(target.visible, true, `手機觸控入口不可見：${target.selector}`);
+    assert(target.height >= 44, `手機觸控入口高度不足 44px：${target.selector}=${target.height}`);
+  }
+  assert.equal(mobileSurface.base.mapTools.zoomVisible, false, '手機主畫面平時顯示縮放工具');
+  assert.equal(mobileSurface.opened.expanded, 'true', '手機地圖工具未展開');
+  assert.equal(mobileSurface.opened.zoomVisible, true, '手機地圖工具展開後縮放控制不可見');
+  assert.equal(mobileSurface.mutuallyExclusive.mapClosed, true, '手機地圖工具未與全部功能互斥');
+  assert.equal(mobileSurface.actionsExclusive, true, '手機聊天行動展開後附近浮窗未收合');
+  assert.equal(mobileSurface.actionInput?.connected, true, '手機 surface 切換卸載聊天輸入');
+  assert.equal(mobileSurface.actionInput?.value, '赤鐵', '手機 surface 切換遺失聊天輸入值');
+  const mapToolsPointer = await clickCenterWithCdp(cdp, '#mobile-map-tools-toggle');
+  assert.equal(mapToolsPointer.hit, true, '手機地圖工具開關中心被透明浮層遮擋');
+  const mapToolsPointerState = await cdp.evaluate(`document.getElementById('game-shell')?.dataset.mapToolsOpen`);
+  assert.equal(mapToolsPointerState, 'true', 'CDP 點擊手機地圖工具未展開');
+  await clickCenterWithCdp(cdp, '#mobile-map-tools-toggle');
+  assert.equal(await cdp.evaluate(`document.getElementById('game-shell')?.dataset.mapToolsOpen`), 'false', 'CDP 點擊手機地圖工具無法收合');
+  await captureWorkspace(cdp, 'implemented-mobile-main-light.png');
+  await cdp.evaluate(`(async () => { const { updateUiColorMode } = await import('/src/ui/ui-style-config.ts'); updateUiColorMode('dark'); await window.__gameWorkspaceProof.nextPaint(); })()`);
+  await captureWorkspace(cdp, 'implemented-mobile-main-dark.png');
+  await cdp.evaluate(`(async () => { const { updateUiColorMode } = await import('/src/ui/ui-style-config.ts'); updateUiColorMode('light'); await window.__gameWorkspaceProof.nextPaint(); })()`);
+  const phoneNearbyOpen = await cdp.evaluate(verifyMobileInteractionExpression);
+  assert.equal(phoneNearbyOpen.expanded, true, '390x844 手機附近行動無法展開');
+  assert.equal(phoneNearbyOpen.closedAfterAction, true, '手機選擇交互後未收起面板');
+  const nearbyPointer = await clickCenterWithCdp(cdp, '#floating-interaction-list [data-floating-list-collapse="true"]');
+  assert.equal(nearbyPointer.hit, true, '手機附近交互入口被透明層遮擋');
+  assert.equal(await cdp.evaluate(`document.getElementById('floating-interaction-list').classList.contains('is-collapsed')`), false, '實際點擊未開啟附近交互');
+  await captureWorkspace(cdp, 'implemented-phone-nearby-open.png');
+  const chatPointer = await clickCenterWithCdp(cdp, '#workspace-chat-toggle');
+  assert.equal(chatPointer.hit, true, '手機聊天入口被透明層遮擋');
+  assert.equal(await cdp.evaluate(`document.getElementById('workspace-chat-toggle').getAttribute('aria-expanded')`), 'true', '實際點擊未開啟聊天');
+  assert.equal(await cdp.evaluate(`document.getElementById('floating-interaction-list').classList.contains('is-collapsed')`), true, '聊天未收起附近交互');
+  await setViewport(cdp, PHONE_BROWSER_CHROME);
+  const phoneChromeSurface = await cdp.evaluate(verifyMobileSurfaceExpression);
+  assert.equal(phoneChromeSurface.base.viewport.width, PHONE_BROWSER_CHROME.width, '390x670 手機視口未同步');
+  assert(phoneChromeSurface.base.hudHeight > 0 && phoneChromeSurface.base.hudHeight <= 90, '390x670 compact HUD 超過 90px');
+  await captureWorkspace(cdp, 'implemented-phone-browser-chrome.png');
+  await setViewport(cdp, PHONE_SMALL);
+  const phoneSmallSurface = await cdp.evaluate(verifyMobileSurfaceExpression);
+  assert.equal(phoneSmallSurface.base.viewport.width, PHONE_SMALL.width, '375x667 手機視口未同步');
+  assert(phoneSmallSurface.base.hudHeight > 0 && phoneSmallSurface.base.hudHeight <= 90, '375x667 compact HUD 超過 90px');
+  await captureWorkspace(cdp, 'implemented-phone-small.png');
+  const mobileWorkspace = await cdp.evaluate(verifyMobileWorkspaceExpression);
+  assert.equal(mobileWorkspace.nearFullscreen, true, '手機工作窗未接近全屏且完整位於視口內');
+  assert.equal(mobileWorkspace.activeEquipment, true, '手機工作窗無法導航到裝備分頁');
+  assert.equal(mobileWorkspace.closed, true, '手機工作窗導航後無法返回地圖');
+  await setViewport(cdp, PHONE);
+  await cdp.evaluate(`(async () => {
+    const toggle = document.getElementById('workspace-chat-toggle'); if (toggle?.getAttribute('aria-expanded') !== 'true') toggle?.click();
+    await window.__gameWorkspaceProof.nextPaint();
+    const picker = document.querySelector('#chat-panel [data-chat-slot-select]');
+    if (!(picker instanceof HTMLSelectElement)) throw new Error('聊天頻道選單不存在');
+    picker.value = 'nearby'; picker.dispatchEvent(new Event('change', { bubbles: true }));
+    document.querySelector('[data-chat-slot-activate="' + picker.dataset.chatSlotSelect + '"]').click();
+    await window.__gameWorkspaceProof.nextPaint();
+    const input = document.getElementById('chat-input');
+    if (input.disabled) throw new Error('附近頻道輸入欄位不可輸入');
+    if (input instanceof HTMLInputElement) { input.value = '赤鐵'; input.dispatchEvent(new Event('input', { bubbles: true })); }
+    await window.__gameWorkspaceProof.nextPaint();
+  })()`);
+  const mockedVisualViewport = await cdp.evaluate(mockVisualViewportExpression);
+  assert.equal(mockedVisualViewport.visualHeight, 390, 'mock visualViewport 高度未套用');
+  assert.equal(mockedVisualViewport.offsetTop, 40, 'mock visualViewport offsetTop 未套用');
+  assert(Math.abs(mockedVisualViewport.cssOffsetY - 40) <= 1, `responsive root 未套用 visualViewport offsetTop：${mockedVisualViewport.cssOffsetY}`);
+  assert.equal(mockedVisualViewport.marker, 'true', 'mock 鍵盤視口未啟用 data-mobile-keyboard');
+  assert(mockedVisualViewport.rootHeight <= 390 + 2, `鍵盤可視 root 高度未貼齊：${mockedVisualViewport.rootHeight}`);
+  assert.deepEqual(mockedVisualViewport.point, { x: 50, y: 50 }, 'visual viewport 偏移後座標換算錯誤');
+  assert(mockedVisualViewport.inputVisible && mockedVisualViewport.inputBottom <= 430 + 2, '鍵盤視口聊天輸入未位於可視區');
+  await captureWorkspace(cdp, 'implemented-mobile-keyboard.png');
+  await cdp.evaluate(`window.__gameWorkspaceProof.restoreVisualViewport(); true`);
+  await setViewport(cdp, LANDSCAPE);
+  const landscapeSurface = await cdp.evaluate(verifyMobileSurfaceExpression);
+  assert.equal(landscapeSurface.base.viewport.width, LANDSCAPE.width, '844x390 touch 視口未同步');
+  assert(landscapeSurface.base.canvas.width > 0 && landscapeSurface.base.canvas.height > 0, '844x390 touch 沒有真實地圖 canvas');
+  assert.equal(landscapeSurface.base.dockCount, 5, '844x390 touch 底部 dock 項目數錯誤');
+  const nearbyOpen = await cdp.evaluate(verifyMobileInteractionExpression);
+  assert.equal(nearbyOpen.expanded, true, '844x390 touch 附近行動無法展開');
+  assert.equal(nearbyOpen.executed, true, '844x390 touch 附近行動無法執行');
+  await clickCenterWithCdp(cdp, '#floating-interaction-list [data-floating-list-collapse="true"]');
+  await captureWorkspace(cdp, 'implemented-mobile-nearby-open.png');
   await setViewport(cdp, LARGE_DESKTOP, { touch: false });
   await waitFor(() => cdp.evaluate(`document.documentElement.dataset.desktopScaleLock === 'true'`), '恢復大型桌面 responsive locked');
 

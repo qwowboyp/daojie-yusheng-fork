@@ -24,6 +24,7 @@ import {
 } from '@mud/shared';
 import { detailModalHost } from '../detail-modal-host';
 import { FloatingTooltip, prefersPinnedTooltipInteraction } from '../floating-tooltip';
+import { requestMobileSurface } from '../mobile-surface';
 import { FloatingListPanel } from '../floating-list-panel';
 import { buildSkillTooltipContent } from '../skill-tooltip';
 import { getResponsiveViewportMetrics, shouldUseMobileUi } from '../responsive-viewport';
@@ -833,6 +834,7 @@ export class ActionPanel {
       this.bindFloatingInteractionTooltipEvents(panel.body, signal);
     }
     panel.setTransientHidden(false);
+    panel.setMobileLabel(`附近 · ${actions.length}`);
   }
 
   private ensureInteractionFloatingPanel(): FloatingListPanel {
@@ -847,6 +849,7 @@ export class ActionPanel {
         defaultPosition: () => this.getInteractionFloatingDefaultPosition(),
         defaultCollapsed: shouldUseMobileUi(window),
         dismissible: false,
+        mobileSheet: true,
         minWidth: 200,
         maxWidth: 280,
       });
@@ -964,7 +967,7 @@ export class ActionPanel {
         data-action-target="${action.requiresTarget ? '1' : '0'}"
         data-action-target-mode="${action.targetMode ?? ''}"
         ${onCd ? 'disabled aria-disabled="true" title="冷卻中"' : ''}
-      >${escapeHtml(action.name)}</button>
+      ><span>${escapeHtml(action.name)}</span><span class="floating-interaction-description">${escapeHtml(action.desc)}</span></button>
     `;
   }
 
@@ -2120,6 +2123,7 @@ export class ActionPanel {
         event.preventDefault();
         event.stopPropagation();
         const actionId = button.dataset.action!;
+        if (button.classList.contains('floating-interaction-quick-btn')) requestMobileSurface(null);
         if (actionId === 'sect:manage') {
           this.openSectManagementModal();
           return;

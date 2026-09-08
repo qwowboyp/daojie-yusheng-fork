@@ -5,6 +5,7 @@
  */
 import { getResponsiveViewportMetrics, getViewportRoot, shouldUseMobileUi } from './responsive-viewport';
 import { bindDesktopWindow } from './desktop-window';
+import { requestMobileSurface, subscribeMobileSurface } from './mobile-surface';
 
 export type FloatingListPanelState = {
   left: number | null;
@@ -23,6 +24,7 @@ export type FloatingListPanelOptions = {
   defaultPosition?: () => { left: number; top: number };
   defaultCollapsed?: boolean;
   dismissible?: boolean;
+  mobileSheet?: boolean;
   minWidth?: number;
   maxWidth?: number;
   onBeforeClose?: () => void;
@@ -99,6 +101,10 @@ export class FloatingListPanel {
   private readonly defaultTop: number;
   private readonly defaultPosition?: FloatingListPanelOptions['defaultPosition'];
   private readonly dismissible: boolean;
+  private readonly mobileSheet: boolean;
+  private mobileCollapsed = true;
+  private dismissMobileSurface: (() => void) | null = null;
+  private mobileLabel = '附近';
   private positionCustomized: boolean;
   private readonly minWidth: number;
   private readonly maxWidth: number;
@@ -119,6 +125,7 @@ export class FloatingListPanel {
     this.defaultTop = options.defaultTop;
     this.defaultPosition = options.defaultPosition;
     this.dismissible = options.dismissible !== false;
+    this.mobileSheet = options.mobileSheet === true;
     this.minWidth = options.minWidth ?? DEFAULT_MIN_WIDTH;
     this.maxWidth = options.maxWidth ?? DEFAULT_MAX_WIDTH;
     this.onBeforeClose = options.onBeforeClose ?? null;
@@ -137,13 +144,19 @@ export class FloatingListPanel {
       <div class="floating-list-panel__bar" data-floating-list-drag-handle="true">
         <span class="floating-list-panel__title">${options.title}</span>
         <div class="floating-list-panel__tools">
-          <button class="floating-list-panel__tool" data-floating-list-collapse="true" type="button" aria-label="摺疊"></button>
+          <button class="floating-list-panel__tool" data-floating-list-collapse="true" type="button" aria-label="摺疊"><span class="floating-list-panel__collapse-icon"></span><span class="floating-list-panel__mobile-label"></span></button>
           ${this.dismissible ? '<button class="floating-list-panel__tool" data-floating-list-close="true" type="button" aria-label="關閉">×</button>' : ''}
         </div>
       </div>
       <div class="floating-list-panel__body" data-floating-list-body="true"></div>
     `;
     this.body = this.root.querySelector<HTMLElement>('[data-floating-list-body="true"]')!;
+    this.body.id = `${options.id}-body`;
+    this.root.querySelector('[data-floating-list-collapse]')?.setAttribute('aria-controls', this.body.id);
+    if (this.mobileSheet) {
+      this.root.dataset.mobileSheet = 'true';
+      this.dismissMobileSurface = subscribeMobileSurface('nearby', () => this.setCollapsed(true));
+    }
     (document.getElementById('game-floating-layer') ?? document.body).appendChild(this.root);
     floatingPanels.add(this);
     bringFloatingPanelToFront(this.root);
@@ -151,7 +164,7 @@ export class FloatingListPanel {
     this.desktopWindow = bindDesktopWindow(this.root, {
       storageKey: this.storageKey, handleSelector: '[data-floating-list-drag-handle]',
       minWidth: this.minWidth, minHeight: 140, drag: false,
-      isCollapsed: () => this.state.collapsed,
+      isCollapsed: () => this.isCollapsed(),
       onResize: () => this.repositionWithinViewport(),
     });
     this.applyState();
@@ -177,8 +190,8 @@ export class FloatingListPanel {
     if (this.root.hidden) {
       return;
     }
-    this.desktopWindow.refresh();
-    this.repositionWithinViewport();
+    this.applyState();
+    this.persist();
   }
 
   setBodyKey(value: string): void {
@@ -194,6 +207,7 @@ export class FloatingListPanel {
   }
 
   destroy(): void {
+    this.dismissMobileSurface?.();
     this.desktopWindow.destroy();
     this.eventAbort.abort();
     floatingPanels.delete(this);
@@ -203,6 +217,27 @@ export class FloatingListPanel {
   setTransientHidden(hidden: boolean): void {
     this.transientHidden = hidden;
     if (!hidden) bringFloatingPanelToFront(this.root);
+    this.applyState();
+  }
+
+  setMobileLabel(label: string): void {
+    if (this.mobileLabel === label) return;
+    this.mobileLabel = label;
+    this.applyState();
+  }
+
+  private isCollapsed(): boolean {
+    return this.mobileSheet && shouldUseMobileUi(window) ? this.mobileCollapsed : this.state.collapsed;
+  }
+
+  setCollapsed(collapsed: boolean): void {
+    if (this.mobileSheet && shouldUseMobileUi(window)) {
+      if (!collapsed) requestMobileSurface('nearby');
+      this.mobileCollapsed = collapsed;
+    } else {
+      this.state.collapsed = collapsed;
+      this.persist();
+    }
     this.applyState();
   }
 
@@ -272,12 +307,10 @@ export class FloatingListPanel {
     dragHandle?.addEventListener('pointercancel', finishDrag, { signal });
 
     collapseButton?.addEventListener('click', () => {
-      this.state.collapsed = !this.state.collapsed;
       if (this.state.closed) {
         this.state.closed = false;
       }
-      this.persist();
-      this.applyState();
+      this.setCollapsed(!this.isCollapsed());
     }, { signal });
 
     closeButton?.addEventListener('click', () => this.close(), { signal });
@@ -290,9 +323,7 @@ export class FloatingListPanel {
 
   private close(): void {
     if (!this.dismissible) {
-      this.state.collapsed = true;
-      this.persist();
-      this.applyState();
+      this.setCollapsed(true);
       return;
     }
     if (this.state.closed) return;
@@ -329,14 +360,18 @@ export class FloatingListPanel {
   }
 
   private applyState(): void {
-    this.root.classList.toggle('is-collapsed', this.state.collapsed);
+    const collapsed = this.isCollapsed();
+    this.root.classList.toggle('is-collapsed', collapsed);
     this.root.classList.toggle('is-closed', this.state.closed);
     this.root.hidden = this.state.closed || this.transientHidden;
     const collapseButton = this.root.querySelector<HTMLButtonElement>('[data-floating-list-collapse="true"]');
     if (collapseButton) {
-      collapseButton.textContent = this.state.collapsed ? '+' : '−';
-      collapseButton.setAttribute('aria-label', this.state.collapsed ? '展開' : '摺疊');
-      collapseButton.setAttribute('aria-expanded', String(!this.state.collapsed));
+      const icon = collapseButton.querySelector('.floating-list-panel__collapse-icon');
+      if (icon) icon.textContent = collapsed ? '+' : '−';
+      const mobileLabel = collapseButton.querySelector('.floating-list-panel__mobile-label');
+      if (mobileLabel) mobileLabel.textContent = this.mobileLabel;
+      collapseButton.setAttribute('aria-label', `${collapsed ? '展開' : '收合'}${this.mobileSheet && shouldUseMobileUi(window) ? this.mobileLabel : this.root.getAttribute('aria-label') ?? '列表'}`);
+      collapseButton.setAttribute('aria-expanded', String(!collapsed));
     }
     const { left, top } = this.getPreferredPosition();
     this.moveTo(left, top);

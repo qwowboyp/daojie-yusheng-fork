@@ -4,6 +4,7 @@
 import { memo, useEffect, useRef, useState } from 'react';
 import { prefersPinnedTooltipInteraction } from '../../../ui/floating-tooltip';
 import { useFloatingTooltip } from '../../hooks/use-floating-tooltip';
+import { requestMobileSurface, subscribeMobileSurface } from '../../../ui/mobile-surface';
 
 export interface QuickActionView {
   id: string;
@@ -24,6 +25,7 @@ export const QuickActions = memo(function QuickActions({ actions, onExecute }: Q
   const [expanded, setExpanded] = useState(false);
   const { show, hide, hideImmediate } = useFloatingTooltip();
   const activeTooltipActionId = useRef<string | null>(null);
+  useEffect(() => subscribeMobileSurface('actions', () => setExpanded(false)), []);
 
   useEffect(() => {
     const activeId = activeTooltipActionId.current;
@@ -57,10 +59,11 @@ export const QuickActions = memo(function QuickActions({ actions, onExecute }: Q
         type="button"
         aria-expanded={expanded}
         aria-controls="chat-quick-action-buttons"
-        onClick={() => setExpanded((current) => !current)}
+        onClick={() => { if (!expanded) requestMobileSurface('actions'); setExpanded(!expanded); }}
       >
-        行動 <span aria-hidden="true">▾</span>
+        <svg className="workspace-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="m14 2-9 12h6l-1 8 9-12h-6l1-8Z" /></svg>行動 <span aria-hidden="true">{expanded ? '▴' : '▾'}</span>
       </button>
+      <div className="chat-action-sheet">
       <div className="chat-action-buttons" id="chat-quick-action-buttons">
         {actions.map((action) => {
           const onCooldown = action.cooldownLeft > 0;
@@ -72,7 +75,7 @@ export const QuickActions = memo(function QuickActions({ actions, onExecute }: Q
               type="button"
               disabled={onCooldown}
               aria-disabled={onCooldown || undefined}
-              onClick={() => onExecute(action.id)}
+              onClick={() => { requestMobileSurface(null); onExecute(action.id); }}
               onMouseEnter={(event) => showDescription(action, event.clientX, event.clientY)}
               onMouseMove={(event) => showDescription(action, event.clientX, event.clientY)}
               onMouseLeave={hideDescription}
@@ -98,6 +101,7 @@ export const QuickActions = memo(function QuickActions({ actions, onExecute }: Q
           ))}
         </dl>
       </details>
+      </div>
     </div>
   );
 });

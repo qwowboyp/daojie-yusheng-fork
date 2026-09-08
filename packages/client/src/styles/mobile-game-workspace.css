@@ -1,0 +1,135 @@
+/* 手機主舞台：頂部摘要、地圖留白、拇指操作列與按需展開的底部面板。 */
+.workspace-nav-icon, .chat-toggle-mobile, #mobile-map-tools,
+.floating-list-panel__mobile-label, .floating-interaction-description { display: none; }
+.chat-action-sheet { display: contents; }
+
+@media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
+  #game-shell[data-workspace-mode="true"] {
+    position: absolute;
+    --mobile-top: max(8px, env(safe-area-inset-top, 0px));
+    --mobile-left: max(8px, env(safe-area-inset-left, 0px));
+    --mobile-right: max(8px, env(safe-area-inset-right, 0px));
+    --mobile-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+    --workspace-dock-height: 60px;
+    --mobile-action-bottom: calc(var(--mobile-bottom) + 68px);
+    --mobile-sheet-height: min(400px, calc(100% - 210px));
+  }
+  #game-shell[data-workspace-mode="true"] #hud {
+    top: var(--mobile-top); left: var(--mobile-left);
+    width: calc(100% - var(--mobile-left) - var(--mobile-right) - 100px);
+    max-width: 360px; max-height: calc(100% - 140px);
+    border-radius: 12px;
+  }
+  #game-shell[data-workspace-mode="true"] .hud-panel { padding: 8px 10px; gap: 6px; }
+  #game-shell[data-workspace-mode="true"] .hud-expand-toggle { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: 8px; background: var(--surface-muted); color: var(--ink-dark); }
+  #game-shell[data-workspace-mode="true"] .hud-progress-shell { display: block; }
+  #game-shell[data-workspace-mode="true"] .map-side-rail.left,
+  #game-shell[data-workspace-mode="true"] .map-side-rail.right,
+  #game-shell[data-workspace-mode="true"] .map-side-info-stack { display: contents; }
+  #game-shell[data-workspace-mode="true"] .map-side-tool-top { position: absolute; top: calc(var(--mobile-top) + 88px); left: var(--mobile-left); z-index: 31; }
+  #game-shell[data-workspace-mode="true"] #map-map-name { padding: 4px 8px; border-radius: 6px; max-width: 230px; box-shadow: 0 1px 6px rgb(0 0 0 / 12%); }
+  #game-shell[data-workspace-mode="true"] .map-map-name-text { padding: 0; font-size: 12px; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #game-shell[data-workspace-mode="true"]:has(.hud-identity[data-hud-expanded="true"]) .map-side-tool-top { visibility: hidden; }
+  #game-shell[data-workspace-mode="true"] #map-current-time { position: absolute; top: var(--mobile-top); right: var(--mobile-right); width: 92px; min-height: 28px; padding: 5px; flex-wrap: nowrap; gap: 4px; z-index: 31; }
+  #game-shell[data-workspace-mode="true"] #map-current-time > .map-tick-rate-char { display: none; }
+  #game-shell[data-workspace-mode="true"] #map-current-time-value { gap: 0; padding: 0; white-space: nowrap; }
+  #game-shell[data-workspace-mode="true"] #map-current-time-phase { font-size: 11px; }
+  #mobile-map-tools { display: block; position: absolute; top: calc(var(--mobile-top) + 36px); right: var(--mobile-right); z-index: 35; }
+  #mobile-map-tools-toggle { min-width: 92px; height: 44px; display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--wash-ink); border-radius: 10px; background: var(--paper-light); color: var(--ink-dark); font: 600 13px var(--font-role-body); }
+  .workspace-nav-icon { display: block; width: 20px; height: 20px; flex: 0 0 20px; }
+  #game-shell[data-workspace-mode="true"] .map-side-tool-center { display: none; position: absolute; top: calc(var(--mobile-top) + 88px); right: var(--mobile-right); left: auto; z-index: 36; }
+  #game-shell[data-workspace-mode="true"] .map-zoom-stack { width: 244px; padding: 10px; border-radius: 10px; }
+  #game-shell[data-workspace-mode="true"] .map-tool-controls { display: flex; }
+  #game-shell[data-workspace-mode="true"] #map-tick-rate { display: none; position: absolute; top: calc(var(--mobile-top) + 156px); right: var(--mobile-right); width: 244px; min-height: 36px; z-index: 36; }
+  #game-shell[data-workspace-mode="true"] .map-minimap-shell { display: none; top: calc(var(--mobile-top) + 196px); right: var(--mobile-right); max-width: min(244px, calc(100% - 16px)); z-index: 36; }
+  #game-shell[data-workspace-mode="true"][data-map-tools-open="true"] .map-side-tool-center,
+  #game-shell[data-workspace-mode="true"][data-map-tools-open="true"] #map-tick-rate,
+  #game-shell[data-workspace-mode="true"][data-map-tools-open="true"] .map-minimap-shell:not(.hidden) { display: flex; }
+  #game-shell[data-workspace-mode="true"] .map-minimap-controls { width: 244px; max-width: 100%; gap: 8px; }
+  #game-shell[data-workspace-mode="true"] .map-minimap-btn { min-width: 80px; width: auto; min-height: 44px; flex: 1; font-size: 0; background: var(--paper-light); color: var(--ink-dark); border: 1px solid var(--wash-ink); border-radius: 8px; }
+  #map-minimap-toggle::after { content: '小地圖'; font-size: 13px; }
+  #map-minimap-open::after { content: '展開輿圖'; font-size: 13px; }
+
+  #game-dock { left: var(--mobile-left); right: var(--mobile-right); bottom: var(--mobile-bottom); max-width: none; }
+  .workspace-dock-nav { width: 100%; height: 60px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; padding: 2px; border-radius: 14px; }
+  .workspace-dock-nav > button { min-width: 0; min-height: 52px; padding: 4px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border-color: transparent; border-radius: 10px; font-size: 12px; line-height: 1.2; }
+  .workspace-dock-nav > button[aria-expanded="true"] { color: var(--stamp-red); background: var(--surface-muted); }
+  .workspace-menu { width: 100%; bottom: calc(100% + 8px); max-height: calc(100dvh - 160px); overflow: auto; border-radius: 14px; }
+  .workspace-menu-group button { min-height: 44px; }
+  .workspace-dock-nav button:active, #mobile-map-tools-toggle:active, .chat-header button:active { background: var(--surface-muted); }
+
+  #game-shell[data-workspace-mode="true"] #chat-panel {
+    left: var(--mobile-left); right: var(--mobile-right); bottom: var(--mobile-action-bottom);
+    width: auto; height: var(--mobile-sheet-height); max-height: calc(100% - var(--mobile-action-bottom) - 108px);
+    padding: 0; border: 0; background: none; box-shadow: none; backdrop-filter: none; overflow: visible; pointer-events: none;
+    display: flex; flex-direction: column-reverse; gap: 8px;
+  }
+  #game-shell[data-workspace-mode="true"] #chat-panel[data-chat-collapsed="true"] { height: 44px; }
+  #game-shell[data-workspace-mode="true"] .chat-header {
+    position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
+    width: calc((100% - 16px) * 2 / 3 + 8px); min-height: 44px; pointer-events: auto;
+  }
+  .chat-header-title, .chat-toggle-desktop { display: none; }
+  .chat-toggle-mobile { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; }
+  .chat-header > .chat-collapse-toggle { grid-column: 1; width: 100%; height: 44px; border: 1px solid var(--wash-ink); border-radius: 10px; background: var(--paper-light); }
+  .chat-action-toggle { display: flex; grid-column: 2; grid-row: 1; width: 100%; height: 44px; padding: 6px; align-items: center; justify-content: center; gap: 5px; border-radius: 10px; background: var(--paper-light); font-size: 13px; }
+  .chat-action-sheet { display: none; position: absolute; bottom: 52px; left: 0; width: calc((100% - 8px) * 1.5 + 16px); max-height: min(380px, calc(100dvh - 220px)); padding: 12px; border: 1px solid var(--wash-ink); border-radius: 14px; background: var(--paper-light); box-shadow: 0 6px 24px rgb(0 0 0 / 24%); overflow: auto; overscroll-behavior: contain; }
+  .chat-quick-actions[data-expanded="true"] .chat-action-sheet { display: block; }
+  .chat-action-buttons { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .chat-action-buttons button { font-size: 16px; padding: 8px 4px; }
+  .chat-action-help { display: block; margin-top: 8px; font-weight: normal; }
+  .chat-action-help summary { min-height: 44px; padding: 12px 0; font-size: 13px; cursor: pointer; }
+  .chat-action-help dl { font-size: 14px; line-height: 1.5; }
+  .chat-action-help dt { font-weight: 700; }
+  .chat-action-help dd { margin: 2px 0 12px; }
+  #workspace-chat-content { pointer-events: auto; padding: 10px; border: 1px solid var(--wash-ink); border-radius: 14px; background: var(--paper-light); box-shadow: 0 6px 24px rgb(0 0 0 / 24%); overflow: hidden; }
+  #workspace-chat-content[hidden] { display: none; }
+  #game-shell[data-workspace-mode="true"] #chat-panel .tab-btn { min-height: 44px; min-width: 44px; padding: 6px; font-size: 13px; }
+  #game-shell[data-workspace-mode="true"] #chat-panel .chat-log { min-height: 64px; }
+
+  #floating-interaction-list[data-mobile-sheet="true"] {
+    top: auto !important; left: var(--mobile-left) !important; right: var(--mobile-right) !important;
+    bottom: var(--mobile-action-bottom); width: auto !important; min-width: 0 !important; max-width: none !important;
+    height: auto !important; max-height: var(--mobile-sheet-height); padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; backdrop-filter: none;
+    display: flex; flex-direction: column-reverse; gap: 8px; pointer-events: none;
+  }
+  #floating-interaction-list[data-mobile-sheet="true"][hidden] { display: none; }
+  #floating-interaction-list[data-mobile-sheet="true"] .floating-list-panel__bar { flex: 0 0 44px; width: calc((100% - 16px) / 3); margin-left: auto; min-height: 44px; padding: 0; border: 0; background: none; pointer-events: auto; }
+  #floating-interaction-list[data-mobile-sheet="true"] .floating-list-panel__title { display: none; }
+  #floating-interaction-list[data-mobile-sheet="true"] .floating-list-panel__tools { width: 100%; }
+  #floating-interaction-list[data-mobile-sheet="true"] .floating-list-panel__tool { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; height: 44px; border: 1px solid var(--wash-ink); border-radius: 10px; background: var(--paper-light); color: var(--ink-dark); font: 600 13px var(--font-role-body); }
+  #floating-interaction-list .floating-list-panel__mobile-label { display: inline; }
+  #floating-interaction-list .floating-list-panel__collapse-icon { font-size: 18px; }
+  #floating-interaction-list[data-mobile-sheet="true"] .floating-list-panel__body { pointer-events: auto; flex: 1 1 auto; min-height: 0; padding: 12px; border: 1px solid var(--wash-ink); border-radius: 14px; background: var(--paper-light); box-shadow: 0 6px 24px rgb(0 0 0 / 24%); overflow: auto; overscroll-behavior: contain; }
+  #floating-interaction-list.is-collapsed .floating-list-panel__body { display: none; }
+  #floating-interaction-list .floating-interaction-quick-btn { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px 12px; font-size: 16px; text-align: left; }
+  #floating-interaction-list .floating-interaction-description { display: block; font-size: 14px; line-height: 1.5; font-weight: 400; color: var(--ink-grey); }
+
+  #game-workspace { left: var(--mobile-left); right: var(--mobile-right); top: var(--mobile-top); bottom: calc(var(--mobile-bottom) + 68px); width: auto; border-radius: 14px; }
+  .workspace-header { padding: 10px 12px 0; gap: 4px; }
+  .workspace-title { font-size: 18px; }
+  .workspace-tabs { padding: 4px 0 8px; }
+  #game-workspace-body > .workspace-pane { padding: 12px; }
+  #game-workspace :is(input, select, textarea) { font-size: max(16px, var(--font-size-16)); }
+  #game-workspace :is(.small-btn, .action-btn, .tab-btn, .ui-filter-tab) { min-height: 44px; }
+  #game-workspace .inventory-workspace-detail--empty { display: none; }
+  .workspace-action-grid { gap: 8px; }
+  #workspace-profile-content .hud-grid { grid-template-columns: 1fr; }
+  #game-shell[data-workspace-open="true"] :is(#chat-panel, #floating-interaction-list, #mobile-map-tools, #hud, .map-side-tool-top, #map-current-time) { visibility: hidden; }
+  html[data-mobile-keyboard="true"] #game-shell { --mobile-action-bottom: 8px; --mobile-sheet-height: calc(100% - 16px); }
+  html[data-mobile-keyboard="true"] #game-shell :is(#game-dock, #hud, #floating-interaction-list, #mobile-map-tools, .map-side-tool-top, #map-current-time) { visibility: hidden; }
+  html[data-mobile-keyboard="true"] #game-shell #chat-panel { max-height: calc(100% - 16px); }
+  html[data-mobile-keyboard="true"] #game-workspace { bottom: 8px; }
+}
+
+@media (pointer: coarse) and (min-width: 600px) and (max-height: 520px) {
+  #game-shell[data-workspace-mode="true"] { --mobile-sheet-height: calc(100% - 24px); --mobile-action-bottom: var(--mobile-bottom); }
+  #game-dock { left: auto; width: 320px; }
+  #game-shell[data-workspace-mode="true"] #chat-panel { right: auto; width: 320px; max-height: calc(100% - 112px); }
+  #floating-interaction-list[data-mobile-sheet="true"] { right: auto !important; width: 320px !important; max-height: calc(100% - 112px); }
+  #game-workspace { left: max(292px, env(safe-area-inset-left, 0px)); bottom: calc(var(--mobile-bottom) + 68px); }
+  .chat-action-sheet { max-height: calc(100dvh - 116px); }
+  #game-shell[data-workspace-mode="true"] .map-side-tool-center { top: var(--mobile-top); right: calc(var(--mobile-right) + 100px); }
+  #game-shell[data-workspace-mode="true"] #map-tick-rate { top: calc(var(--mobile-top) + 68px); right: calc(var(--mobile-right) + 100px); }
+  #game-shell[data-workspace-mode="true"] .map-minimap-shell { top: calc(var(--mobile-top) + 108px); right: calc(var(--mobile-right) + 100px); }
+}

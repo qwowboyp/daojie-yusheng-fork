@@ -1,6 +1,7 @@
-import { StrictMode, useState, type KeyboardEvent } from 'react';
+import { StrictMode, useEffect, useState, type KeyboardEvent } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { flushSync } from 'react-dom';
+import { requestMobileSurface, subscribeMobileSurface } from '../../ui/mobile-surface';
 
 export type WorkspaceId = 'character' | 'items' | 'cultivation' | 'craft' | 'quests' | 'social' | 'market' | 'world' | 'system';
 export type WorkspaceAction = 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'building' | 'settings' | 'tutorial' | 'guided-tour' | 'mail' | 'activity' | 'chronicle' | 'logout';
@@ -47,6 +48,11 @@ export function mountWorkspaceNavigation(dock: HTMLElement, controls: HTMLElemen
   const dockRoot = createRoot(dock);
   const controlsRoot = createRoot(controls);
   const chatRoot = createRoot(chatHeader);
+  const mapToolsHost = document.createElement('div');
+  mapToolsHost.id = 'mobile-map-tools';
+  dock.parentElement?.appendChild(mapToolsHost);
+  const mapToolsRoot = createRoot(mapToolsHost);
+  flushSync(() => mapToolsRoot.render(<MobileMapTools />));
   let closeMenu: () => boolean = () => false;
   return {
     update(state) {
@@ -55,16 +61,17 @@ export function mountWorkspaceNavigation(dock: HTMLElement, controls: HTMLElemen
         controlsRoot.render(<StrictMode><WorkspaceHeader state={state} /></StrictMode>);
         chatRoot.render(<StrictMode><span className="chat-header-title">聊天</span><div id="chat-quick-actions" /><button id="workspace-chat-toggle" className="chat-collapse-toggle" type="button"
           aria-controls="workspace-chat-content" aria-expanded={state.chatOpen} aria-label={state.chatOpen ? '收合聊天' : '展開聊天'}
-          onClick={state.onToggleChat}>{state.chatOpen ? '−' : '＋'}</button></StrictMode>);
+          onClick={state.onToggleChat}><span className="chat-toggle-desktop">{state.chatOpen ? '−' : '＋'}</span><span className="chat-toggle-mobile"><NavigationIcon name="chat" />{state.chatOpen ? '收合聊天' : '聊天'}</span></button></StrictMode>);
       });
     },
     closeMenu: () => closeMenu(),
-    destroy() { dockRoot.unmount(); controlsRoot.unmount(); chatRoot.unmount(); },
+    destroy() { dockRoot.unmount(); controlsRoot.unmount(); chatRoot.unmount(); mapToolsRoot.unmount(); mapToolsHost.remove(); },
   };
 }
 
 function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigationState; registerCloseMenu: (handler: () => boolean) => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => subscribeMobileSurface('menu', () => setMenuOpen(false)), []);
   registerCloseMenu(() => {
     if (!menuOpen) return false;
     setMenuOpen(false);
@@ -77,10 +84,10 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
       {([{ id: 'items', label: '背包' }, { id: 'cultivation', label: '修行' }, { id: 'craft', label: '技藝' }, { id: 'quests', label: '任務' }] as const).map((item) => (
         <button key={item.id} type="button" className="workspace-dock-button" data-workspace-open={item.id}
           aria-controls="game-workspace" aria-expanded={state.activeWorkspace === item.id}
-          onPointerDown={(event) => { if (event.button === 0) state.onPrepareOpen(item.id); }} onClick={() => open(item.id)}>{item.label}</button>
+          onPointerDown={(event) => { if (event.button === 0) state.onPrepareOpen(item.id); }} onClick={() => open(item.id)}><NavigationIcon name={item.id} /><span>{item.label}</span></button>
       ))}
       <button id="workspace-menu-toggle" type="button" className="workspace-dock-button" aria-expanded={menuOpen}
-        aria-controls="workspace-menu" onClick={() => setMenuOpen(!menuOpen)}>全部功能</button>
+        aria-controls="workspace-menu" onClick={() => { if (!menuOpen) requestMobileSurface('menu'); setMenuOpen(!menuOpen); }}><NavigationIcon name="menu" /><span>全部功能</span></button>
       <div id="workspace-menu" className="workspace-menu" hidden={!menuOpen}>
         {([
           { label: '人物與成長', ids: ['character', 'items', 'cultivation', 'craft'] },
@@ -95,6 +102,30 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
       </div>
     </nav>
   );
+}
+
+function NavigationIcon({ name }: { name: string }) {
+  const paths: Record<string, string> = {
+    items: 'M7 8V6a5 5 0 0 1 10 0v2M5 8h14l1 13H4L5 8Zm4 5h6',
+    cultivation: 'M12 3c-1 5-7 6-7 12a7 7 0 0 0 14 0c0-3-2-6-3-7 0 4-2 5-3 5 1-4 0-7-1-10Z',
+    craft: 'm4 20 8-8m-5-7 3-3 12 12-3 3L7 5Zm-4 8 4 4',
+    quests: 'M6 3h12v18H6V3Zm3 5h6m-6 4h6m-6 4h4',
+    menu: 'M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Zm10 0h6v6h-6v-6Z',
+    chat: 'M4 4h16v12H9l-5 4V4Zm4 5h8m-8 3h5',
+    map: 'm3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5Zm6-2v16m6-14v16',
+  };
+  return <svg className="workspace-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[name]} /></svg>;
+}
+
+function MobileMapTools() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => subscribeMobileSurface('map-tools', () => setOpen(false)), []);
+  useEffect(() => {
+    const shell = document.getElementById('game-shell');
+    if (shell) shell.dataset.mapToolsOpen = String(open);
+  }, [open]);
+  return <button id="mobile-map-tools-toggle" type="button" aria-expanded={open} aria-controls="zoom-slider map-tick-rate map-minimap-shell"
+    onClick={() => { if (!open) requestMobileSurface('map-tools'); setOpen(!open); }}><NavigationIcon name="map" /><span>{open ? '收起' : '地圖'}</span></button>;
 }
 
 function WorkspaceHeader({ state }: { state: WorkspaceNavigationState }) {

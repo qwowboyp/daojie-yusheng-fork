@@ -15,42 +15,42 @@ export interface ResponsiveViewportMetrics {
  * locked：locked相关字段。
  */
 
-  locked: boolean;  
+  locked: boolean;
   /**
  * rawWidth：rawWidth相关字段。
  */
 
-  rawWidth: number;  
+  rawWidth: number;
   /**
  * rawHeight：rawHeight相关字段。
  */
 
-  rawHeight: number;  
+  rawHeight: number;
   /**
  * viewportWidth：viewportWidth相关字段。
  */
 
-  viewportWidth: number;  
+  viewportWidth: number;
   /**
  * viewportHeight：viewportHeight相关字段。
  */
 
-  viewportHeight: number;  
+  viewportHeight: number;
   /**
  * scale：scale相关字段。
  */
 
-  scale: number;  
+  scale: number;
   /**
  * offsetX：offsetX相关字段。
  */
 
-  offsetX: number;  
+  offsetX: number;
   /**
  * offsetY：offsetY相关字段。
  */
 
-  offsetY: number;  
+  offsetY: number;
   /**
  * dpr：dpr相关字段。
  */
@@ -103,11 +103,6 @@ function getDesktopAdjustedViewportWidth(win: Window): number {
   return Math.round(getRawViewportWidth(win) * getDesktopScaleFactor(win));
 }
 
-/** getDesktopAdjustedViewportHeight：读取Desktop Adjusted视口Height。 */
-function getDesktopAdjustedViewportHeight(win: Window): number {
-  return Math.round(getRawViewportHeight(win) * getDesktopScaleFactor(win));
-}
-
 /** shouldLockDesktopViewport：判断是否Lock Desktop视口。 */
 function shouldLockDesktopViewport(win: Window): boolean {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
@@ -131,15 +126,18 @@ export function getResponsiveViewportMetrics(win: Window = window): ResponsiveVi
   const locked = shouldLockDesktopViewport(win);
 
   if (!locked) {
+    // 手機鍵盤與網址列可只改變 visual viewport；捏合放大時保留原佈局供使用者平移。
+    const visual = shouldUseMobileUi(win) && win.visualViewport && Math.abs(win.visualViewport.scale - 1) < 0.01
+      ? win.visualViewport : null;
     return {
       locked: false,
       rawWidth,
       rawHeight,
-      viewportWidth: rawWidth,
-      viewportHeight: rawHeight,
+      viewportWidth: visual ? Math.min(rawWidth, visual.width) : rawWidth,
+      viewportHeight: visual ? Math.min(rawHeight, visual.height) : rawHeight,
       scale: 1,
-      offsetX: 0,
-      offsetY: 0,
+      offsetX: visual?.offsetLeft ?? 0,
+      offsetY: visual?.offsetTop ?? 0,
       dpr: Math.max(1, dpr),
     };
   }
@@ -191,12 +189,6 @@ export function clientToViewportPoint(
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
   const metrics = getResponsiveViewportMetrics(win);
-  if (!metrics.locked || metrics.scale === 1) {
-    return {
-      x: clientX,
-      y: clientY,
-    };
-  }
   return {
     x: (clientX - metrics.offsetX) / metrics.scale,
     y: (clientY - metrics.offsetY) / metrics.scale,
@@ -228,7 +220,7 @@ export function getEffectiveViewportWidth(win: Window): number {
 /** getEffectiveViewportHeight：读取Effective视口Height。 */
 export function getEffectiveViewportHeight(win: Window): number {
   const metrics = getResponsiveViewportMetrics(win);
-  return metrics.locked ? Math.round(metrics.viewportHeight) : getDesktopAdjustedViewportHeight(win);
+  return metrics.locked ? Math.round(metrics.viewportHeight) : Math.round(metrics.viewportHeight * getDesktopScaleFactor(win));
 }
 
 /** getEffectiveLayoutBreakpoint：读取Effective布局Breakpoint。 */
@@ -267,12 +259,12 @@ function syncViewportRootStyles(win: Window, metrics: ResponsiveViewportMetrics)
   root.dataset.designLocked = metrics.locked ? 'true' : 'false';
 
   if (!metrics.locked) {
-    root.style.right = '0';
-    root.style.bottom = '0';
-    root.style.left = '0';
-    root.style.top = '0';
-    root.style.width = '100vw';
-    root.style.height = '100dvh';
+    root.style.right = 'auto';
+    root.style.bottom = 'auto';
+    root.style.left = `${metrics.offsetX}px`;
+    root.style.top = `${metrics.offsetY}px`;
+    root.style.width = `${metrics.viewportWidth}px`;
+    root.style.height = `${metrics.viewportHeight}px`;
     root.style.transform = 'none';
     return;
   }
@@ -293,6 +285,8 @@ export function syncResponsiveViewportCss(win: Window): void {
 
   root.dataset.effectiveLayoutBreakpoint = getEffectiveLayoutBreakpoint(win);
   root.dataset.desktopScaleLock = metrics.locked ? 'true' : 'false';
+  const editing = win.document.activeElement?.matches('input, textarea, [contenteditable="true"]');
+  root.dataset.mobileKeyboard = String(!metrics.locked && !!editing && metrics.rawHeight - metrics.viewportHeight > 100);
   root.style.setProperty('--desktop-scale-factor', '1');
   root.style.setProperty('--desktop-scale-inverse', '1');
   root.style.setProperty('--effective-viewport-width', `${getEffectiveViewportWidth(win)}px`);
@@ -317,6 +311,8 @@ export function bindResponsiveViewportCss(win: Window = window): () => void {
       metrics.rawHeight,
       metrics.viewportWidth,
       metrics.viewportHeight,
+      metrics.offsetX,
+      metrics.offsetY,
       metrics.scale.toFixed(6),
       metrics.dpr.toFixed(4),
     ].join(':');
@@ -333,11 +329,17 @@ export function bindResponsiveViewportCss(win: Window = window): () => void {
   win.addEventListener('resize', refresh);
   win.addEventListener('orientationchange', refresh);
   win.visualViewport?.addEventListener('resize', refresh);
+  win.visualViewport?.addEventListener('scroll', refresh);
+  win.document.addEventListener('focusin', refresh);
+  win.document.addEventListener('focusout', refresh);
   refresh();
 
   return () => {
     win.removeEventListener('resize', refresh);
     win.removeEventListener('orientationchange', refresh);
     win.visualViewport?.removeEventListener('resize', refresh);
+    win.visualViewport?.removeEventListener('scroll', refresh);
+    win.document.removeEventListener('focusin', refresh);
+    win.document.removeEventListener('focusout', refresh);
   };
 }
