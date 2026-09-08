@@ -658,6 +658,28 @@ const verifyInteractionAndQuickActionsExpression = String.raw`
         })) };
     };
     const initialPanel = readPanel();
+    const nearbyCollapse = panel?.querySelector('[data-floating-list-collapse="true"]');
+    if (initialPanel?.collapsed && nearbyCollapse instanceof HTMLButtonElement) {
+      nearbyCollapse.click();
+      await nextPaint();
+    }
+    const nearbyButton = panel?.querySelector('.floating-interaction-quick-btn[data-action="proof-nearby-interact"]');
+    let nearbyHoverDescription = '';
+    let nearbyFocusDescription = '';
+    if (nearbyButton instanceof HTMLButtonElement) {
+      nearbyButton.dispatchEvent(new MouseEvent('mouseenter', { clientX: 80, clientY: 220 }));
+      await nextPaint();
+      nearbyHoverDescription = document.querySelector('.floating-tooltip.visible')?.textContent?.trim() ?? '';
+      nearbyButton.dispatchEvent(new MouseEvent('mouseleave'));
+      nearbyButton.focus();
+      await nextPaint();
+      nearbyFocusDescription = document.querySelector('.floating-tooltip.visible')?.textContent?.trim() ?? '';
+      nearbyButton.blur();
+    }
+    if (initialPanel?.collapsed && nearbyCollapse instanceof HTMLButtonElement) {
+      nearbyCollapse.click();
+      await nextPaint();
+    }
     const quickHost = document.getElementById('chat-quick-actions');
     const quickButtons = quickHost ? [...quickHost.querySelectorAll('.chat-action-buttons [data-quick-action-id]')] : [];
     const expected = ['battle:force_attack', 'travel:return_spawn', 'loot:open', 'client:observe'];
@@ -710,6 +732,7 @@ const verifyInteractionAndQuickActionsExpression = String.raw`
     const zoomRect = zoom?.getBoundingClientRect();
     return {
       nearby: initialPanel ? { visible: Boolean(initialPanel.node.getClientRects().length), collapsed: initialPanel.collapsed, buttons: initialPanel.buttons,
+        hoverDescription: nearbyHoverDescription, focusDescription: nearbyFocusDescription,
         belowZoom: zoomRect ? initialPanel.rect.top >= zoomRect.bottom - 2 : false } : null,
       quick: quick.map(({ id, description, disabled, visible }) => ({ id, description, disabled, visible })),
       hoverCallCount, callsBeforeHover, hoverDidNotExecute: hoverCallCount === callsBeforeHover, hoverDescriptions,
@@ -1067,6 +1090,10 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
     '技藝不應混入附近交互列表');
   assert.equal(interactionAndQuick.nearby?.buttons.some((button) => button.id === 'proof-nearby-interact'), true,
     '真實附近行動未進入 interaction 浮窗');
+  assert(interactionAndQuick.nearby?.hoverDescription.includes('調查附近的古老石碑'),
+    '附近交互滑鼠懸停未顯示原始動作說明');
+  assert(interactionAndQuick.nearby?.focusDescription.includes('調查附近的古老石碑'),
+    '附近交互鍵盤焦點未顯示原始動作說明');
   assert.deepEqual(interactionAndQuick.quick.map((button) => button.id),
     ['battle:force_attack', 'travel:return_spawn', 'loot:open', 'client:observe'], '聊天快捷行動 ID 不完整或順序錯誤');
   assert(interactionAndQuick.quick.every((button) => button.visible && button.description !== ''), '聊天快捷行動缺少可見按鈕或原始說明');

@@ -337,6 +337,8 @@ export class ActionPanel {
  knownSkills: SkillDef[] }>();
   /** 面板内统一复用的悬浮提示。 */
   private tooltip = new FloatingTooltip();
+  /** 附近交互列表獨立使用的懸浮提示，避免列表刷新干擾主行動面板。 */
+  private interactionFloatingTooltip = new FloatingTooltip();
   /** 战斗设置中的丹药提示。 */
   private autoUsePillTooltip = new FloatingTooltip('floating-tooltip inventory-tooltip');
   /** 当前显示丹药提示的节点。 */
@@ -403,6 +405,7 @@ export class ActionPanel {
   /** 清空面板、重置缓存并关掉关联弹层。 */
   clear(): void {
     this.tooltip.hide(true);
+    this.interactionFloatingTooltip.hide(true);
     this.autoUsePillTooltip.hide(true);
     this.autoUsePillTooltipNode = null;
     this.paneRenderEvents?.abort();
@@ -808,6 +811,7 @@ export class ActionPanel {
     const actions = this.getFloatingInteractionActions();
     if (actions.length === 0) {
       this.interactionFloatingPanel?.setTransientHidden(true);
+      this.interactionFloatingTooltip.hide(true);
       this.interactionFloatingEvents?.abort();
       this.interactionFloatingEvents = null;
       return;
@@ -817,6 +821,7 @@ export class ActionPanel {
     const contentKey = this.buildFloatingInteractionKey(actions);
     const contentChanged = panel.getBodyKey() !== contentKey;
     if (contentChanged) {
+      this.interactionFloatingTooltip.hide(true);
       panel.updateContent(this.renderFloatingInteractionList(actions));
       panel.setBodyKey(contentKey);
     }
@@ -825,6 +830,7 @@ export class ActionPanel {
       this.interactionFloatingEvents = new AbortController();
       const signal = this.interactionFloatingEvents.signal;
       this.bindActionExecEvents(panel.body, signal);
+      this.bindFloatingInteractionTooltipEvents(panel.body, signal);
     }
     panel.setTransientHidden(false);
   }
@@ -905,6 +911,7 @@ export class ActionPanel {
         action.id,
         action.type,
         action.name,
+        action.desc,
         action.cooldownLeft,
         action.range ?? '',
         action.requiresTarget ? 'target' : 'instant',
@@ -952,6 +959,7 @@ export class ActionPanel {
         data-action="${escapeHtml(action.id)}"
         data-action-exec="${escapeHtml(action.id)}"
         data-action-name="${escapeHtml(action.name)}"
+        data-action-desc="${escapeHtml(action.desc)}"
         data-action-range="${action.range ?? ''}"
         data-action-target="${action.requiresTarget ? '1' : '0'}"
         data-action-target-mode="${action.targetMode ?? ''}"
@@ -2123,6 +2131,33 @@ export class ActionPanel {
         const range = rangeText ? Number(rangeText) : undefined;
         this.onAction?.(actionId, requiresTarget, targetMode, Number.isFinite(range) ? range : undefined, actionName);
       }, { signal });
+    });
+  }
+
+  /** 附近交互按鈕沿用正式動作名稱與說明，並支援滑鼠懸停及鍵盤焦點。 */
+  private bindFloatingInteractionTooltipEvents(root: HTMLElement, signal: AbortSignal): void {
+    root.querySelectorAll<HTMLElement>('.floating-interaction-quick-btn').forEach((button) => {
+      const showAt = (clientX: number, clientY: number): void => {
+        const title = button.dataset.actionName?.trim() || '未知行動';
+        const description = button.dataset.actionDesc?.trim() || '';
+        this.interactionFloatingTooltip.show(title, description ? [description] : [], clientX, clientY);
+      };
+      button.addEventListener('mouseenter', (event) => {
+        if (!prefersPinnedTooltipInteraction()) {
+          showAt(event.clientX, event.clientY);
+        }
+      }, { signal });
+      button.addEventListener('mousemove', (event) => {
+        if (!prefersPinnedTooltipInteraction()) {
+          showAt(event.clientX, event.clientY);
+        }
+      }, { signal });
+      button.addEventListener('mouseleave', () => this.interactionFloatingTooltip.hide(), { signal });
+      button.addEventListener('focus', () => {
+        const rect = button.getBoundingClientRect();
+        showAt(rect.left + rect.width / 2, rect.bottom);
+      }, { signal });
+      button.addEventListener('blur', () => this.interactionFloatingTooltip.hide(), { signal });
     });
   }
 
