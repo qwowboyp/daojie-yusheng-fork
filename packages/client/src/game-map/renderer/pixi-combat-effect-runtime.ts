@@ -25,7 +25,7 @@ import type {
   WarningZoneEffect,
 } from './pixi-render-state';
 import { formatCombatDamageSummaryEffect } from './combat-damage-summary-text';
-import { createPixiCastBurstEffect, drawCastBurstEffect, MAX_CAST_BURSTS, type PixiCastBurstEffect } from './pixi-cast-burst';
+import { createPixiCastBurstEffect, destroyPixiCastBurstEffect, MAX_CAST_BURSTS, updatePixiCastBurstEffect, warmPixiCastBurstTexture, type PixiCastBurstEffect } from './pixi-cast-burst';
 
 const MAX_FLOATING_TEXTS = 256;
 const MAX_ATTACK_TRAILS = 192;
@@ -42,11 +42,12 @@ export class PixiCombatEffectRuntime {
   private readonly attackTrails: AttackTrailEffect[] = [];
   private readonly warningZones: WarningZoneEffect[] = [];
   private readonly castBursts: PixiCastBurstEffect[] = [];
-  private readonly castBurstGraphics: Graphics;
+  private readonly castBurstLayer: Container;
 
   constructor(private readonly effectLayer: Container) {
-    this.castBurstGraphics = new Graphics();
-    this.effectLayer.addChild(this.castBurstGraphics);
+    this.castBurstLayer = new Container();
+    this.effectLayer.addChild(this.castBurstLayer);
+    warmPixiCastBurstTexture();
   }
 
   enqueue(effect: CombatEffect): void {
@@ -98,8 +99,8 @@ export class PixiCombatEffectRuntime {
     this.floatingTexts.length = 0;
     this.attackTrails.length = 0;
     this.warningZones.length = 0;
+    for (const burst of this.castBursts) destroyPixiCastBurstEffect(burst);
     this.castBursts.length = 0;
-    this.castBurstGraphics.clear();
     this.floatingTextBurstLayout.reset();
   }
 
@@ -121,23 +122,25 @@ export class PixiCombatEffectRuntime {
 
   /** 入队一个技能施放粒子特效。 */
   private addCastBurst(effect: Extract<CombatEffect, { type: 'cast_burst' }>): void {
-    this.castBursts.push(createPixiCastBurstEffect(effect, performance.now()));
+    this.castBursts.push(createPixiCastBurstEffect(effect, performance.now(), this.castBurstLayer));
     const overflow = this.castBursts.length - MAX_CAST_BURSTS;
     if (overflow > 0) {
+      for (let index = 0; index < overflow; index += 1) destroyPixiCastBurstEffect(this.castBursts[index]);
       this.castBursts.copyWithin(0, overflow);
       this.castBursts.length -= overflow;
     }
   }
 
-  /** 每帧重绘全部施放粒子并清理过期特效。 */
+  /** 每幀更新既有施放 Sprite 並清理過期特效。 */
   private updateCastBursts(now: number, cellSize: number): void {
-    this.castBurstGraphics.clear();
     let writeIndex = 0;
     for (let readIndex = 0; readIndex < this.castBursts.length; readIndex += 1) {
       const burst = this.castBursts[readIndex];
-      if (drawCastBurstEffect(burst, this.castBurstGraphics, now, cellSize)) {
+      if (updatePixiCastBurstEffect(burst, now, cellSize)) {
         this.castBursts[writeIndex] = burst;
         writeIndex += 1;
+      } else {
+        destroyPixiCastBurstEffect(burst);
       }
     }
     this.castBursts.length = writeIndex;

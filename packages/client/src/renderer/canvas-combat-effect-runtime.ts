@@ -15,8 +15,11 @@ import {
 import {
   createCastBurstEffect,
   MAX_CAST_BURSTS,
+  resolveCastBurstSpritePose,
   type CastBurstEffect,
+  type CastBurstSpritePose,
 } from './cast-burst-particles';
+import { getTintedCastBurstFrame, warmCastBurstSpriteSheet } from './cast-burst-sprite-sheet';
 
 interface FloatingTextEffect {
   x: number;
@@ -65,6 +68,12 @@ export class CanvasCombatEffectRuntime {
   private readonly attackTrails: AttackTrailEffect[] = [];
   private readonly warningZones: WarningZoneEffect[] = [];
   private readonly castBursts: CastBurstEffect[] = [];
+  private readonly castBurstPose: CastBurstSpritePose = { frame: 0, accentFrame: 10, x: 0, y: 0, rotation: 0, width: 0, height: 0, alpha: 0, accentWidth: 0, accentHeight: 0, accentAlpha: 0, accentRotation: 0 };
+
+  constructor() {
+    // 只啟動冷路徑載入；事件仍由既有時長自然過期，失敗後下一次會重試。
+    warmCastBurstSpriteSheet();
+  }
 
   addFloatingText(
     x: number,
@@ -334,7 +343,7 @@ export class CanvasCombatEffectRuntime {
     this.floatingTextBurstLayout.reset();
   }
 
-  /** 入队一个技能施放粒子特效。 */
+  /** 加入一個技能施放圖片特效。 */
   addCastBurst(effect: CombatEffectCastBurst): void {
     this.castBursts.push(createCastBurstEffect(effect, performance.now()));
     const overflow = this.castBursts.length - MAX_CAST_BURSTS;
@@ -344,7 +353,7 @@ export class CanvasCombatEffectRuntime {
     }
   }
 
-  /** 绘制全部施放粒子并清理过期条目。 */
+  /** 繪製全部施放圖片並清理過期條目。 */
   renderCastBursts(ctx: CanvasRenderingContext2D, camera: Camera): void {
     if (this.castBursts.length === 0) return;
     const now = performance.now();
@@ -372,154 +381,21 @@ export class CanvasCombatEffectRuntime {
     screenOffsetX: number,
     screenOffsetY: number,
   ): void {
-    const progress = Math.min(1, (now - burst.createdAt) / burst.duration);
-    const centerX = burst.x * cellSize + cellSize / 2 + screenOffsetX;
-    const centerY = burst.y * cellSize + cellSize / 2 + screenOffsetY;
-    const endX = burst.toX * cellSize + cellSize / 2 + screenOffsetX;
-    const endY = burst.toY * cellSize + cellSize / 2 + screenOffsetY;
-    const dx = endX - centerX;
-    const dy = endY - centerY;
+    const pose = this.castBurstPose;
+    if (!resolveCastBurstSpritePose(burst, now, cellSize, pose)) return;
+    const primary = getTintedCastBurstFrame(pose.frame, burst.color);
+    if (!primary) return;
     ctx.save();
-    for (const particle of burst.particles) {
-      const localProgress = Math.min(1, Math.max(0, (progress - particle.delay) / Math.max(0.2, 1 - particle.delay)));
-      if (localProgress <= 0) continue;
-      const eased = easeOutCubic(localProgress);
-      const alpha = 1 - localProgress;
-      if (alpha <= 0.02) continue;
-      ctx.globalAlpha = alpha;
-      ctx.strokeStyle = burst.color;
-      ctx.fillStyle = burst.color;
-      switch (particle.shape) {
-        case 'ring': {
-          const radius = (particle.phase === 1
-            ? particle.size * (1 - eased * 0.55)
-            : particle.size * eased) * cellSize;
-          if (radius < 1) break;
-          ctx.lineWidth = Math.max(1.5, cellSize * 0.06);
-          ctx.globalAlpha = alpha * 0.7;
-          ctx.beginPath();
-          ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-          ctx.stroke();
-          break;
-        }
-        case 'square': {
-          let px = centerX + particle.offsetX * cellSize + particle.velocityX * cellSize * eased * 0.5;
-          let py = centerY + particle.offsetY * cellSize + particle.velocityY * cellSize * eased * 0.5;
-          ctx.lineWidth = Math.max(1.5, cellSize * 0.05);
-          ctx.globalAlpha = alpha * 0.6;
-          if (burst.variant === 'buff_debuff' || burst.variant === 'tile') {
-            // buff_debuff 封印阵锁与 tile 阵眼锚点：角标向心收拢而非外扩
-            const half = (particle.size * (1 - eased * 0.5) * cellSize) / 2;
-            if (half < 1) break;
-            ctx.strokeRect(px - half, py - half, half * 2, half * 2);
-            break;
-          }
-          const half = (particle.size * eased * cellSize) / 2;
-          if (half < 1) break;
-          ctx.strokeRect(px - half, py - half, half * 2, half * 2);
-          break;
-        }
-        case 'bolt': {
-          // 折线连锁：center→end 之间 3~4 段确定性锯齿折线（phase 为种子）
-          const segments = 3 + Math.floor(fractSin(particle.phase * 3.1) * 2);
-          const len = Math.hypot(dx, dy) || 1;
-          const nx = dx / len;
-          const ny = dy / len;
-          ctx.lineWidth = Math.max(1.5, cellSize * particle.size);
-          ctx.lineCap = 'round';
-          ctx.beginPath();
-          ctx.moveTo(centerX, centerY);
-          for (let seg = 1; seg < segments; seg += 1) {
-            const t = seg / segments;
-            const jitter = (fractSin(particle.phase * 13.7 + seg * 7.9) - 0.5) * cellSize * 0.55 * (1 - Math.abs(t - 0.5) * 0.7);
-            ctx.lineTo(centerX + dx * t + ny * jitter, centerY + dy * t - nx * jitter);
-          }
-          ctx.lineTo(endX, endY);
-          ctx.stroke();
-          break;
-        }
-        case 'streak': {
-          ctx.lineWidth = Math.max(1.5, cellSize * particle.size);
-          ctx.lineCap = 'round';
-          ctx.beginPath();
-          if (burst.variant === 'line') {
-            if (particle.phase === -1) {
-              // 贯穿主轴光束：全线路程高亮淡出
-              ctx.globalAlpha = alpha * 0.85;
-              ctx.moveTo(centerX, centerY);
-              ctx.lineTo(endX, endY);
-              ctx.lineWidth = Math.max(3, cellSize * particle.size * 2.2);
-            } else {
-              // 线形扫射侧翼气浪：沿施法者→锚点方向按 phase 排布，横向抖动
-              const head = Math.min(1, Math.max(0, particle.phase + eased * 0.55));
-              const side = (fractSin(particle.phase * 17.3) - 0.5) * cellSize * 0.5 * (1 - eased);
-              const px = centerX + dx * head - (dy / (Math.hypot(dx, dy) || 1)) * side;
-              const py = centerY + dy * head + (dx / (Math.hypot(dx, dy) || 1)) * side;
-              const trail = Math.max(0, head - 0.18);
-              ctx.moveTo(centerX + dx * trail - (dy / (Math.hypot(dx, dy) || 1)) * side, centerY + dy * trail + (dx / (Math.hypot(dx, dy) || 1)) * side);
-              ctx.lineTo(px, py);
-            }
-          } else if (burst.variant === 'vortex') {
-            // 气旋引力：外圈粒子沿切向加速旋转并向心收拢
-            const dist = Math.hypot(particle.offsetX, particle.offsetY) || 0.1;
-            const angle = particle.phase + eased * 4.6;
-            const radius = dist * (1 - eased * 0.85);
-            const px = centerX + Math.cos(angle) * radius * cellSize;
-            const py = centerY + Math.sin(angle) * radius * cellSize;
-            ctx.moveTo(px - Math.cos(angle + Math.PI / 2) * cellSize * particle.size * 2.4, py - Math.sin(angle + Math.PI / 2) * cellSize * particle.size * 2.4);
-            ctx.lineTo(px, py);
-          } else if (burst.variant === 'barrage') {
-            // 万刃攒射：从施法者出发的锥形弹幕，横向偏移随生命收拢
-            const head = Math.min(1, Math.max(0, (particle.phase - 1) + eased * 0.6));
-            const side = (fractSin(particle.phase * 31.7) - 0.5) * cellSize * 0.55 * (1 - eased);
-            const px = centerX + dx * head - (dy / (Math.hypot(dx, dy) || 1)) * side;
-            const py = centerY + dy * head + (dx / (Math.hypot(dx, dy) || 1)) * side;
-            const trail = Math.max(0, head - 0.2);
-            ctx.moveTo(centerX + dx * trail - (dy / (Math.hypot(dx, dy) || 1)) * side, centerY + dy * trail + (dx / (Math.hypot(dx, dy) || 1)) * side);
-            ctx.lineTo(px, py);
-          } else {
-            const px = centerX + particle.offsetX * cellSize + particle.velocityX * cellSize * eased * 0.5;
-            const py = centerY + particle.offsetY * cellSize + particle.velocityY * cellSize * eased * 0.5;
-            const tailX = px - Math.cos(particle.phase) * cellSize * particle.size * 2;
-            const tailY = py - Math.sin(particle.phase) * cellSize * particle.size * 2;
-            ctx.moveTo(tailX, tailY);
-            ctx.lineTo(px, py);
-          }
-          ctx.stroke();
-          break;
-        }
-        case 'dot':
-        default: {
-          let px = centerX + particle.offsetX * cellSize + particle.velocityX * cellSize * eased * 0.5;
-          let py = centerY + particle.offsetY * cellSize + particle.velocityY * cellSize * eased * 0.5;
-          if (burst.variant === 'buff_self') {
-            if (particle.phase !== 99) {
-              // 阴阳双逆向环绕：phase 为负时逆时针
-              const orbitRadius = cellSize * (0.55 + eased * 0.25);
-              const angle = particle.phase + eased * 2.4 * (particle.phase < 0 ? -1 : 1);
-              px = centerX + Math.cos(angle) * orbitRadius;
-              py = centerY + Math.sin(angle) * orbitRadius * 0.92;
-            }
-          } else if (burst.variant === 'heal') {
-            // 双螺旋上升光尘：phase 正负决定初始旋向
-            px += Math.cos(particle.phase * 4 + localProgress * 6) * cellSize * 0.22;
-          }
-          const radius = Math.max(1, cellSize * particle.size * (1 - localProgress * 0.4));
-          ctx.beginPath();
-          ctx.arc(px, py, radius, 0, Math.PI * 2);
-          ctx.fill();
-          break;
-        }
-      }
-    }
-    // 神通/秘法加强：金色垂直光柱一闪
-    if (burst.tier) {
-      const pillarAlpha = Math.min(1, Math.max(0, 1 - progress * 1.8));
-      if (pillarAlpha > 0.02) {
-        const pillarWidth = Math.max(3, cellSize * 0.22);
-        ctx.globalAlpha = pillarAlpha * 0.5;
-        ctx.fillStyle = burst.accentColor;
-        ctx.fillRect(centerX - pillarWidth / 2, centerY - cellSize * 1.6, pillarWidth, cellSize * 1.6);
+    ctx.translate(pose.x + screenOffsetX, pose.y + screenOffsetY);
+    ctx.rotate(pose.rotation);
+    ctx.globalAlpha = pose.alpha;
+    ctx.drawImage(primary, -pose.width / 2, -pose.height / 2, pose.width, pose.height);
+    if (pose.accentAlpha > 0.01) {
+      const accent = getTintedCastBurstFrame(pose.accentFrame, burst.accentColor);
+      if (accent) {
+        ctx.rotate(pose.accentRotation - pose.rotation);
+        ctx.globalAlpha = pose.accentAlpha;
+        ctx.drawImage(accent, -pose.accentWidth / 2, -pose.accentHeight / 2, pose.accentWidth, pose.accentHeight);
       }
     }
     ctx.restore();
@@ -535,12 +411,6 @@ function trimFromFront<T>(entries: T[], limit: number): void {
 
 function easeOutCubic(value: number): number {
   return 1 - Math.pow(1 - value, 3);
-}
-
-/** 确定性伪随机（0~1）：保证 bolt/barrage 的抖动逐帧一致，不闪烁。 */
-function fractSin(seed: number): number {
-  const value = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
-  return value - Math.floor(value);
 }
 
 function resolveVerticalTextHeight(text: string, lineHeight: number, fontSize: number): number {

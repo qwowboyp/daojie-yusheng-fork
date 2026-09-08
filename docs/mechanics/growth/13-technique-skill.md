@@ -209,7 +209,7 @@ cost = round(标准灵力输出 × 0.2 × 品阶指数倍率 × costMultiplier)
 
 源文件: `packages/shared/src/cast-visuals.ts`（分类推导单一真源）
 
-技能施放时服务端在 `dispatchSkillTargets` 结算点推送一条 `cast_burst` 战斗特效，随 tick envelope 实例级广播，同实例所有在线玩家的客户端都会渲染粒子与播放音效。服务端只发结构化枚举（variant/element/damageKind/tier），不发表表现细节；配色与音色由客户端查表决定。
+技能施放时服务端在 `dispatchSkillTargets` 结算点推送一条 `cast_burst` 战斗特效，随 tick envelope 实例级广播，同实例所有在线玩家的客户端都会渲染圖片特效与播放音效。服务端只发结构化枚举（variant/element/damageKind/tier），不发表表现细节；配色与音色由客户端查表决定。
 
 ### 表现形态推导（variant）
 
@@ -225,11 +225,11 @@ cost = round(标准灵力输出 × 0.2 × 品阶指数倍率 × costMultiplier)
 
 ### 高规格档位（tier）
 
-施放者功法 `category` 为 `divine`（神通）或 `secret`（秘法）时附带 tier 字段，客户端渲染金白色光柱、粒子数 1.5 倍、时长 1.6 倍，并叠加钟声音效。内功无施放动作，不进入此链路。
+施放者功法 `category` 为 `divine`（神通）或 `secret`（秘法）时附带 tier 字段，客户端渲染金白色主圖與神通／秘法專屬光環、放大圖片、时长 1.6 倍，并叠加钟声音效。内功无施放动作，不进入此链路。
 
 ### 客户端渲染
 
-- 粒子为纯几何绘制（圆点/短线/圆环/方框），无纹理资源依赖；数据层在 `client/src/renderer/cast-burst-particles.ts`，Pixi 与 Canvas 双渲染器共用
+- 施放特效使用透明 WebP 圖集（`client/public/assets/vfx/technique-cast-v1.webp`，1536×1024，4×3 共 12 格）；`client/src/renderer/cast-burst-particles.ts` 提供共用動畫位置／大小／透明度，Pixi 與 Canvas 雙渲染器分別使用 Sprite／快取切圖。保留現有配色、施放位置、技能名、傷害飄字、預警格與音效，不改服務端判定。神通／秘法改用金白主圖與專屬光環，保留 1.6 倍時長。詳見 `docs/design/technique-image-vfx.md`。
 - 五行配色复用 `ELEMENT_DAMAGE_TRAIL_COLORS`（金金黄/木翠绿/水蔚蓝/火绛红/土棕褐），无元素时按 damageKind 回退（物理橙棕/法术蓝）
 - 音效为 WebAudio 合成短音（`client/src/ui/sfx-player.ts`），无音频文件依赖；按 variant 选 patch、按元素调基频，同 variant 60ms 节流防音墙
 - 普攻音效：客户端收到 `attack` 弹道效果时触发轻音效（高频噪声嗖声 + 低频轻响），峰值音量 0.36（轻反馈但仍低于施法音效），90ms 节流；普攻弹道本身已是实例级广播，在場所有玩家可闻
