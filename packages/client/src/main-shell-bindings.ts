@@ -109,8 +109,11 @@ type MainShellBindingsOptions = {
 
 export function bindMainShellInteractions(options: MainShellBindingsOptions): void {
   const syncChatLogbookVisibility = (): void => {
-    const logbookPane = options.documentRef.querySelector<HTMLElement>('.split-tab-pane[data-pane="logbook"]');
-    options.chatUI.setLogbookVisible(options.sidePanel.isVisible() && logbookPane?.classList.contains('active') === true);
+    const chatPane = options.documentRef.getElementById('chat-panel');
+    const visible = options.sidePanel.isVisible() && !!chatPane
+      && !chatPane.classList.contains('hidden') && !chatPane.hidden
+      && chatPane.getClientRects().length > 0 && getComputedStyle(chatPane).visibility !== 'hidden';
+    options.chatUI.setLogbookVisible(visible);
   };
 
   options.sidePanel.setVisibilityChangeCallback((visible) => {
@@ -122,6 +125,7 @@ export function bindMainShellInteractions(options: MainShellBindingsOptions): vo
   });
 
   options.sidePanel.setLayoutChangeCallback(() => {
+    syncChatLogbookVisibility();
     if (!options.sidePanel.isVisible()) {
       return;
     }
@@ -130,7 +134,7 @@ export function bindMainShellInteractions(options: MainShellBindingsOptions): vo
 
   options.sidePanel.setTabChangeCallback((tabName) => {
     syncChatLogbookVisibility();
-    if (tabName === 'world') {
+    if (tabName === 'world' || tabName === 'map-intel' || tabName === 'tianji') {
       options.sendRequestLeaderboard();
       options.sendRequestWorldSummary();
     }

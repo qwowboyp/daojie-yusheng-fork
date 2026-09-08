@@ -92,7 +92,11 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
     rootRuntimeSource,
     callbacks: {
       showToast,
-      beginTargeting: (actionId, actionName, targetMode, range) => runtimeOwnerContext.mapRuntimeBridgeSource.beginTargeting(actionId, actionName, targetMode, range),
+      beginTargeting: (actionId, actionName, targetMode, range) => {
+        runtimeOwnerContext.mapRuntimeBridgeSource.beginTargeting(actionId, actionName, targetMode, range);
+        modules.sidePanel.closeWorkspace(false);
+        documentRef.getElementById('game-stage')?.focus({ preventScroll: true });
+      },
       cancelTargeting: () => runtimeOwnerContext.mapRuntimeBridgeSource.cancelTargeting(),
       hideObserveModal: () => runtimeOwnerContext.mapRuntimeBridgeSource.hideObserveModal(),
       getInfoRadius: () => runtimeOwnerContext.getInfoRadius(),
@@ -116,6 +120,16 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
     runtimeMonitorSource,
     panelContext,
     helpers: { showToast },
+  });
+
+  modules.sidePanel.setWorkspaceActionHandler((action) => {
+    switch (action) {
+      case 'alchemy': modules.craftWorkbenchModal.openAlchemy(); break;
+      case 'forging': modules.craftWorkbenchModal.openForging(); break;
+      case 'enhancement': modules.craftWorkbenchModal.openEnhancement(); break;
+      case 'transmission': modules.craftWorkbenchModal.openTransmission(); break;
+      case 'building': panelContext.buildingFengShuiStateSource.openBuildingPanel(); break;
+    }
   });
 
   return {

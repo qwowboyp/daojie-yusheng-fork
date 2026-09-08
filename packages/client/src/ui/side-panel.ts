@@ -7,6 +7,12 @@
 import { DESKTOP_LAYOUT_DRAG_LIMITS } from '../constants/ui/responsive';
 import { shouldUseMobileUi } from './responsive-viewport';
 import { t } from './i18n';
+import { isReactPanelEnabled } from '../react-ui/bridge/panel-flags';
+import { mountFloatingListPanelLayer, refreshFloatingListPanelLayout } from './floating-list-panel';
+import {
+  WORKSPACES, mountWorkspaceNavigation, mountWorkspaceActions,
+  type WorkspaceId, type WorkspaceAction, type WorkspaceDefinition, type WorkspaceNavigationMount,
+} from '../react-ui/shell/WorkspaceNavigation';
 import {
   buildSidePanelTabId,
   mountReactSidePanelTabGroup,
@@ -128,6 +134,19 @@ export class SidePanel {
   private readonly activeTabNames = new WeakMap<HTMLElement, string>();
   private readonly preparedTabTransitions = new WeakMap<HTMLElement, SidePanelTabTransition>();
   private tabsInitialized = false;
+  private workspace: HTMLElement | null = null;
+  private workspaceNavigation: WorkspaceNavigationMount | null = null;
+  private workspaceDefinitions: WorkspaceDefinition[] = [];
+  private readonly workspacePanes = new Map<string, HTMLElement>();
+  private workspaceGroups: HTMLElement[] | null = null;
+  private readonly workspaceGroupTabs = new Map<HTMLElement, HTMLElement[]>();
+  private readonly workspaceGroupPanes = new Map<HTMLElement, HTMLElement[]>();
+  private activeWorkspace: WorkspaceId | null = null;
+  private workspaceTab: string | null = null;
+  private workspaceReturnFocus: HTMLElement | null = null;
+  private chatOpen: boolean | null = null;
+  private workspaceActionHandler: ((action: WorkspaceAction) => void) | null = null;
+  private readonly workspaceActionRoots: { unmount(): void }[] = [];
   /**
  * layoutState：layout状态状态或数据块。
  */
@@ -158,6 +177,7 @@ export class SidePanel {
     this.bindMobileExpandToggle();
     this.restorePersistedLayoutSizes();
     this.initializeTabStates();
+    this.initializeWorkspace();
     this.syncLayoutState();
     this.syncResponsiveLayout();
     this.mountReactTabGroups();
@@ -167,11 +187,17 @@ export class SidePanel {
   show(): void {
     this.panel.classList.remove('hidden');
     this.visible = true;
+    if (this.workspace) refreshFloatingListPanelLayout();
+    if (this.workspace) {
+      this.chatOpen ??= !this.mobileLayoutActive;
+      this.syncChatVisibility();
+    }
     this.onVisibilityChange?.(true);
   }
 
   /** hide：处理hide。 */
   hide(): void {
+    this.closeWorkspace(false);
     this.panel.classList.add('hidden');
     this.visible = false;
     this.onVisibilityChange?.(false);
@@ -228,6 +254,7 @@ export class SidePanel {
   }
 
   setBuildingModeActive(active: boolean): void {
+    if (active) this.closeWorkspace(false);
     this.buildingModeActive = active;
     this.syncReactLayoutState();
     this.onLayoutChange?.();
@@ -277,7 +304,7 @@ export class SidePanel {
     if (this.tabsInitialized) return;
     this.tabsInitialized = true;
     const persistedTabs = this.persistedState?.activeTabs ?? {};
-    this.panel.querySelectorAll<HTMLElement>('[data-tab-group]').forEach((group) => {
+    this.getTabGroups().forEach((group) => {
       const groupId = group.dataset.tabGroup;
       const currentTabName = this.getGroupActiveTabName(group);
       if (!groupId || !currentTabName) return;
@@ -292,14 +319,35 @@ export class SidePanel {
   }
 
   getActiveTabName(groupId: string): string | null {
-    const group = [...this.panel.querySelectorAll<HTMLElement>('[data-tab-group]')]
+    const group = this.getTabGroups()
       .find((entry) => entry.dataset.tabGroup === groupId);
     return group ? this.getGroupActiveTabName(group) : null;
   }
 
   /** switchTab：处理switch Tab。 */
   switchTab(tabName: string): void {
-    const groups = this.panel.querySelectorAll<HTMLElement>('[data-tab-group]');
+    if (this.workspace) {
+      if (tabName === 'logbook') {
+        this.setChatOpen(true, false);
+        this.onTabChange?.(tabName);
+        return;
+      }
+      const aliases: Record<string, string> = {
+        'mobile-overview': 'overview', 'mobile-attrs': 'attr', 'mobile-bag': 'inventory',
+        'mobile-action': 'action', 'mobile-world': 'map-intel', intel: 'map-intel',
+      };
+      tabName = aliases[tabName] ?? tabName;
+      if (this.workspacePanes.has(tabName)) {
+        const group = this.getTabGroups().find((entry) => this.getGroupTabs(entry).some((tab) => tab.dataset.tab === tabName));
+        if (group) this.switchGroupTab(group, tabName);
+        else {
+          this.showWorkspaceTab(tabName);
+          this.onTabChange?.(tabName);
+        }
+        return;
+      }
+    }
+    const groups = this.getTabGroups();
     groups.forEach(group => {
       const hasTarget = this.getGroupTabs(group)
         .some(button => button.dataset.tab === tabName);
@@ -308,6 +356,213 @@ export class SidePanel {
       }
     });
   }
+
+  /** 同一正式工作區可從 dock、HUD 摘要或場景入口直達。 */
+  openWorkspace(id: WorkspaceId): void {
+    const tab = this.getWorkspaceEntryTab(id);
+    if (tab) this.switchTab(tab);
+  }
+
+  private getWorkspaceEntryTab(id: WorkspaceId): string | null {
+    const definition = this.workspaceDefinitions.find((entry) => entry.id === id);
+    if (!definition) return null;
+    const remembered = this.persistedState?.activeTabs?.[`workspace-${id}`];
+    const tab = definition.tabs.find((entry) => entry.id === remembered) ?? definition.tabs[0];
+    return tab?.id ?? null;
+  }
+
+  isWorkspaceOpen(): boolean {
+    return this.activeWorkspace !== null;
+  }
+
+  isChatOpen(): boolean {
+    return this.chatOpen === true;
+  }
+
+  toggleChat(): void {
+    this.setChatOpen(!this.isChatOpen());
+  }
+
+  /** 只切換原聊天節點的可見性，不重建頻道、輸入框或訊息列表。 */
+  setChatOpen(open: boolean, restoreFocus = !open): void {
+    if (!this.workspace) return;
+    if (open) this.closeWorkspace(false);
+    this.chatOpen = open;
+    this.syncChatVisibility();
+    if (!open && restoreFocus) document.getElementById('workspace-chat-toggle')?.focus({ preventScroll: true });
+  }
+
+  private syncChatVisibility(): void {
+    const chat = document.getElementById('chat-panel');
+    if (!chat) return;
+    const open = this.isChatOpen();
+    this.panel.dataset.chatOpen = String(open);
+    chat.hidden = !open;
+    chat.classList.toggle('hidden', !open);
+    chat.setAttribute('aria-hidden', String(!open));
+    chat.dataset.expanded = String(open);
+    this.renderWorkspaceNavigation();
+    this.onLayoutChange?.();
+  }
+
+  setWorkspaceActionHandler(handler: (action: WorkspaceAction) => void): void {
+    this.workspaceActionHandler = handler;
+  }
+
+  closeWorkspace(restoreFocus = true): void {
+    if (!this.workspace || !this.activeWorkspace) return;
+    const previousWorkspace = this.activeWorkspace;
+    this.activeWorkspace = null;
+    this.workspace.hidden = true;
+    this.workspace.classList.add('hidden');
+    this.workspace.setAttribute('aria-hidden', 'true');
+    this.panel.dataset.workspaceOpen = 'false';
+    this.renderWorkspaceNavigation();
+    if (restoreFocus) {
+      const previous = this.workspaceReturnFocus;
+      const fallback = document.querySelector<HTMLElement>(`#game-dock [data-workspace-open="${previousWorkspace}"]`);
+      const target = previous?.isConnected && previous.getClientRects().length ? previous
+        : fallback?.getClientRects().length ? fallback : document.getElementById('workspace-menu-toggle');
+      target?.focus({ preventScroll: true });
+    }
+    this.onLayoutChange?.();
+  }
+
+  private getTabGroups(): HTMLElement[] {
+    return this.workspaceGroups ?? [...this.panel.querySelectorAll<HTMLElement>('[data-tab-group]')];
+  }
+
+  private initializeWorkspace(): void {
+    const workspace = document.getElementById('game-workspace');
+    const body = document.getElementById('game-workspace-body');
+    const controls = document.getElementById('game-workspace-controls');
+    const dock = document.getElementById('game-dock');
+    if (!workspace || !body || !controls || !dock || !isReactPanelEnabled('workspace-navigation')) {
+      delete this.panel.dataset.workspaceMode;
+      return;
+    }
+    this.workspaceGroups = this.getTabGroups();
+    for (const group of this.workspaceGroups) {
+      const tabs = this.getGroupTabs(group);
+      this.workspaceGroupTabs.set(group, tabs);
+      this.workspaceGroupPanes.set(group, this.getGroupPanes(group));
+      // 舊入口只留在控制器映射中；不讓選擇器／輔助科技找到第二套隱藏導覽。
+      for (const tab of tabs) this.resolveReactTabContainer(tab)?.remove();
+    }
+    this.workspace = workspace;
+    this.panel.dataset.workspaceMode = 'true';
+    this.panel.dataset.workspaceOpen = 'false';
+    workspace.hidden = true;
+    mountFloatingListPanelLayer(this.panel);
+    const buildingToolbar = document.getElementById('building-mode-toolbar');
+    if (buildingToolbar) this.panel.appendChild(buildingToolbar);
+    workspace.classList.add('hidden');
+    workspace.setAttribute('role', 'region');
+    workspace.setAttribute('aria-labelledby', 'workspace-title');
+    workspace.setAttribute('aria-hidden', 'true');
+
+    const launcher = document.createElement('section');
+    launcher.id = 'workspace-craft-launcher';
+    body.appendChild(launcher);
+    this.workspaceActionRoots.push(mountWorkspaceActions(launcher, (action) => this.workspaceActionHandler?.(action)));
+
+    const systemContent = document.getElementById('workspace-system-content');
+    if (systemContent) {
+      for (const actions of this.panel.querySelectorAll<HTMLElement>('.hud-link-actions, .hud-corner-actions')) {
+        systemContent.appendChild(actions);
+      }
+    }
+    const chat = document.getElementById('chat-panel');
+    if (chat) {
+      this.panel.appendChild(chat);
+      chat.hidden = true;
+      chat.setAttribute('aria-hidden', 'true');
+      this.panel.dataset.chatOpen = 'false';
+    }
+    for (const definition of WORKSPACES) {
+      const tabs = definition.tabs.filter((tab) => {
+        const pane = document.getElementById(tab.paneId);
+        if (!pane) return false;
+        body.appendChild(pane);
+        pane.classList.add('workspace-pane');
+        pane.classList.remove('active');
+        pane.classList.add('hidden');
+        pane.hidden = true;
+        pane.setAttribute('role', 'tabpanel');
+        pane.setAttribute('aria-hidden', 'true');
+        this.workspacePanes.set(tab.id, pane);
+        return true;
+      });
+      if (tabs.length) this.workspaceDefinitions.push({ ...definition, tabs });
+    }
+    this.workspaceNavigation = mountWorkspaceNavigation(dock, controls);
+    this.renderWorkspaceNavigation();
+    window.addEventListener('keydown', this.handleWorkspaceEscape, true);
+  }
+
+  private showWorkspaceTab(tabName: string): void {
+    const definition = this.workspaceDefinitions.find((entry) => entry.tabs.some((tab) => tab.id === tabName));
+    if (!this.workspace || !definition) return;
+    const opening = this.activeWorkspace === null;
+    if (opening) this.workspaceReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    this.activeWorkspace = definition.id;
+    this.workspaceTab = tabName;
+    this.workspace.dataset.workspace = definition.id;
+    this.workspace.hidden = false;
+    this.workspace.classList.remove('hidden');
+    this.workspace.setAttribute('aria-hidden', 'false');
+    this.panel.dataset.workspaceOpen = 'true';
+    for (const [id, pane] of this.workspacePanes) {
+      const active = id === tabName;
+      pane.hidden = !active;
+      pane.classList.toggle('hidden', !active);
+      pane.classList.toggle('active', active);
+      pane.setAttribute('aria-hidden', active ? 'false' : 'true');
+      if (active) pane.setAttribute('aria-labelledby', `workspace-tab-${tabName}`);
+      else pane.removeAttribute('aria-labelledby');
+    }
+    this.persistedState = {
+      ...this.persistedState, version: 1,
+      activeTabs: { ...this.persistedState?.activeTabs, [`workspace-${definition.id}`]: tabName },
+    };
+    this.writePersistedState();
+    this.renderWorkspaceNavigation();
+    if (opening) document.getElementById(`workspace-tab-${tabName}`)?.focus({ preventScroll: true });
+    this.onLayoutChange?.();
+  }
+
+  private renderWorkspaceNavigation(): void {
+    this.workspaceNavigation?.update({
+      activeWorkspace: this.activeWorkspace, activeTab: this.workspaceTab, chatOpen: this.isChatOpen(), workspaces: this.workspaceDefinitions,
+      onOpen: (id) => this.openWorkspace(id), onSelectTab: (tab) => this.switchTab(tab), onClose: () => this.closeWorkspace(),
+      onPrepareTab: (tab) => this.prepareWorkspaceTab(tab),
+      onPrepareOpen: (id) => { const tab = this.getWorkspaceEntryTab(id); if (tab) this.prepareWorkspaceTab(tab); },
+      onToggleChat: () => this.toggleChat(),
+    });
+  }
+
+  private prepareWorkspaceTab(tabName: string): void {
+    const group = this.getTabGroups().find((entry) => this.getGroupTabs(entry).some((tab) => tab.dataset.tab === tabName));
+    if (group) this.prepareGroupTabTransition(group, tabName);
+  }
+
+  private readonly handleWorkspaceEscape = (event: KeyboardEvent): void => {
+    if (event.key !== 'Escape' || event.defaultPrevented || this.panel.classList.contains('hidden')) return;
+    // 在 capture 階段記住是否有上層視窗；由既有 host 完成詳情／確認的關閉和返回。
+    const overlays = document.querySelectorAll<HTMLElement>(
+      '[role="dialog"], [aria-modal="true"], .modal, .modal-overlay, .detail-modal-layer, .confirm-modal-layer, .react-ui-modal-layer, [id$="-modal"], .guided-tour-overlay',
+    );
+    if ([...overlays].some((element) => element !== this.workspace && !element.hidden && element.getClientRects().length > 0)) return;
+    if (this.workspaceNavigation?.closeMenu()) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return;
+    }
+    if (!this.activeWorkspace) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    this.closeWorkspace();
+  };
 
   /** bindTabGroups：绑定Tab分组。 */
   private bindTabGroups(): void {
@@ -354,6 +609,9 @@ export class SidePanel {
 
   /** 销毁面板，释放事件监听器。 */
   destroy(): void {
+    window.removeEventListener('keydown', this.handleWorkspaceEscape, true);
+    this.workspaceNavigation?.destroy();
+    this.workspaceActionRoots.forEach((root) => root.unmount());
     this.responsiveCleanup?.();
     this.responsiveCleanup = null;
     if (this.mobileExpandTransitionHandler) {
@@ -542,6 +800,7 @@ export class SidePanel {
  * title：title名称或显示文本。
  */
  title: string }): void {
+    if (this.workspace) return;
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     const button = this.panel.querySelector<HTMLButtonElement>(`[data-layout-toggle="${target}"]`);
@@ -582,6 +841,7 @@ export class SidePanel {
   }
 
   private syncReactMobileLayout(): void {
+    if (this.workspace) return;
     syncReactSidePanelMobileLayout(this.panel, {
       mobileShell: this.mobileShell,
       active: this.mobileLayoutActive,
@@ -655,6 +915,7 @@ export class SidePanel {
     if (notifyLifecycle && !prepared) this.notifyBeforeTabChange(transition);
     this.activeTabNames.set(group, tabName);
     this.applyGroupTabState(group, tabName);
+    if (this.workspace && !options.initializing && this.workspacePanes.has(tabName)) this.showWorkspaceTab(tabName);
     if (options.persist !== false) this.persistGroupActiveTab(group, tabName);
     this.syncReactTabGroup(group);
     this.onTabChange?.(tabName);
@@ -701,6 +962,7 @@ export class SidePanel {
       else button.removeAttribute('aria-controls');
     });
     for (const [paneTabName, pane] of panes) {
+      if (this.workspace) continue;
       const active = paneTabName === tabName;
       pane.classList.toggle('active', active);
       pane.setAttribute('role', 'tabpanel');
@@ -716,6 +978,7 @@ export class SidePanel {
   }
 
   private syncReactTabGroup(group: HTMLElement): void {
+    if (this.workspace) return;
     const groupId = group.dataset.tabGroup;
     if (!groupId) {
       return;
@@ -792,12 +1055,16 @@ export class SidePanel {
 
   /** getGroupTabs：读取分组标签页。 */
   private getGroupTabs(group: HTMLElement): HTMLElement[] {
+    const stored = this.workspaceGroupTabs.get(group);
+    if (stored) return stored;
     return [...group.querySelectorAll<HTMLElement>('[data-tab]')]
       .filter((button) => button.closest<HTMLElement>('[data-tab-group]') === group);
   }
 
   /** getGroupPanes：读取分组Panes。 */
   private getGroupPanes(group: HTMLElement): HTMLElement[] {
+    const stored = this.workspaceGroupPanes.get(group);
+    if (stored) return stored;
     return [...group.querySelectorAll<HTMLElement>('[data-pane]')]
       .filter((pane) => pane.closest<HTMLElement>('[data-tab-group]') === group);
   }

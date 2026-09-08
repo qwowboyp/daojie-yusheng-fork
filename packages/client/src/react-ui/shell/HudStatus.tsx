@@ -4,7 +4,7 @@
  * 维护时应把它视为前端表现层：只组织视图和用户意图，不保存会与主运行态冲突的真源。
  */
 import { StrictMode, memo, useCallback, useEffect, useState } from 'react';
-import { flushSync } from 'react-dom';
+import { createPortal, flushSync } from 'react-dom';
 import { createRoot, type Root } from 'react-dom/client';
 import { t } from '../../ui/i18n';
 import { createExternalStore } from '../stores/create-external-store';
@@ -156,6 +156,15 @@ export function setReactHudBreakthroughHandler(callback: (() => void) | null): v
 
 const HudStatusView = memo(function HudStatusView() {
   const state = useExternalStoreSnapshot(hudStatusStore);
+  const profileHost = document.getElementById('workspace-profile-content');
+  const profile = (
+    <div className="hud-grid">
+      <HudRow label={t('shell.hud-label-map', undefined)} value={state.map} id="hud-map" />
+      <HudRow label={t('shell.hud-label-position', undefined)} value={state.position} id="hud-pos" />
+      <HudRow label={t('shell.hud-label-age', undefined)} value={state.objective} id="hud-objective" />
+      <HudRow label={t('shell.hud-label-lifespan', undefined)} value={state.threat} id="hud-threat" />
+    </div>
+  );
   return (
     <>
       <div className="hud-identity">
@@ -210,12 +219,7 @@ const HudStatusView = memo(function HudStatusView() {
           />
         </div>
 
-        <div className="hud-grid">
-          <HudRow label={t('shell.hud-label-map', undefined)} value={state.map} id="hud-map" />
-          <HudRow label={t('shell.hud-label-position', undefined)} value={state.position} id="hud-pos" />
-          <HudRow label={t('shell.hud-label-age', undefined)} value={state.objective} id="hud-objective" />
-          <HudRow label={t('shell.hud-label-lifespan', undefined)} value={state.threat} id="hud-threat" />
-        </div>
+        {profileHost ? createPortal(profile, profileHost) : profile}
       </div>
     </>
   );

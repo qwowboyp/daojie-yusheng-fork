@@ -1,0 +1,442 @@
+/* 主舞台與按需工作區：保持既有 pane、資料與操作，只替換外框布局。 */
+#game-shell[data-workspace-mode="true"] {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  background: var(--paper-bg);
+  --workspace-gap: 16px;
+  --workspace-dock-height: 56px;
+}
+#game-shell[data-workspace-mode="true"].hidden { display: none; }
+#game-floating-layer { position: absolute; inset: 0; z-index: 40; pointer-events: none; }
+#game-floating-layer > .floating-list-panel { pointer-events: auto; }
+#game-shell[data-workspace-mode="true"] > #building-mode-toolbar { z-index: 50; }
+#game-shell[data-workspace-mode="true"][data-building-mode="true"] #game-dock,
+#game-shell[data-workspace-mode="true"][data-building-mode="true"] #chat-panel { visibility: hidden; }
+#game-shell[data-workspace-mode="true"] #layout-center,
+#game-shell[data-workspace-mode="true"] .map-section,
+#game-shell[data-workspace-mode="true"] .map-shell {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+#game-shell[data-workspace-mode="true"] #game-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+}
+#game-shell[data-workspace-mode="true"] .map-section::before,
+#game-shell[data-workspace-mode="true"] .map-section::after,
+#game-shell[data-workspace-mode="true"] .layout-collapse-toggle,
+#game-shell[data-workspace-mode="true"] #layout-center-bottom,
+#game-shell[data-workspace-mode="true"] #layout-right,
+#game-shell[data-workspace-mode="true"] #mobile-ui-shell { display: none; }
+#game-shell[data-workspace-mode="true"] #layout-left,
+#game-shell[data-workspace-mode="true"] #layout-left > .layout-section {
+  display: contents;
+}
+#game-shell[data-workspace-mode="true"] #layout-left .section-shell { display: none; }
+
+/* 持續狀態不占據固定欄。人物詳情由同一 HUD store 投射至概況頁。 */
+#game-shell[data-workspace-mode="true"] #hud {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top, 0px));
+  left: max(12px, env(safe-area-inset-left, 0px));
+  z-index: 32;
+  width: min(300px, calc(100% - 160px));
+  height: auto;
+  max-height: 210px;
+  border: 1px solid var(--wash-ink);
+  border-radius: 8px;
+  background: var(--paper-light);
+  box-shadow: 0 3px 16px rgb(0 0 0 / 14%);
+  overflow: auto;
+}
+#game-shell[data-workspace-mode="true"] .hud-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: auto;
+  padding: 12px;
+  overflow: visible;
+}
+#game-shell[data-workspace-mode="true"] .hud-identity {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+}
+#game-shell[data-workspace-mode="true"] .hud-name {
+  font-size: max(18px, var(--font-size-18));
+  line-height: 1.2;
+  letter-spacing: 0;
+  writing-mode: horizontal-tb;
+}
+#game-shell[data-workspace-mode="true"] .hud-title {
+  font-size: max(12px, var(--font-size-12));
+  letter-spacing: 0;
+  writing-mode: horizontal-tb;
+}
+#game-shell[data-workspace-mode="true"] .hud-mobile-scroll { display: contents; }
+#game-shell[data-workspace-mode="true"] .hud-top-row { display: block; }
+#game-shell[data-workspace-mode="true"] .hud-realm-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 8px;
+  padding: 0;
+  min-height: 0;
+  border: 0;
+  background: none;
+}
+#game-shell[data-workspace-mode="true"] .hud-realm-label,
+#game-shell[data-workspace-mode="true"] .hud-realm-sub { display: none; }
+#game-shell[data-workspace-mode="true"] .hud-realm-main {
+  grid-column: 1;
+  grid-row: 1;
+  padding: 0;
+  min-height: 0;
+}
+#game-shell[data-workspace-mode="true"] .hud-realm-heading { gap: 6px; }
+#game-shell[data-workspace-mode="true"] .hud-realm-value {
+  font: 600 max(14px, var(--font-size-14)) / 1.4 var(--font-role-body);
+  text-align: left;
+}
+#game-shell[data-workspace-mode="true"] .hud-realm-level { font-size: 12px; }
+#game-shell[data-workspace-mode="true"] .hud-realm-action {
+  position: static;
+  grid-column: 2;
+  grid-row: 1 / 3;
+  min-width: 48px;
+  min-height: 44px;
+  max-width: 128px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 13px;
+}
+#game-shell[data-workspace-mode="true"] .hud-progress-shell {
+  grid-column: 1;
+  grid-row: 2;
+  padding: 0;
+  border: 0;
+}
+#game-shell[data-workspace-mode="true"] .hud-progress-value {
+  position: static;
+  transform: none;
+  text-align: left;
+  font-size: max(11px, var(--font-size-11));
+  line-height: 1.3;
+}
+#game-shell[data-workspace-mode="true"] .hud-progress-track { margin-top: 3px; height: 4px; }
+#game-shell[data-workspace-mode="true"] .hud-resource-bars {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+#game-shell[data-workspace-mode="true"] .hud-resource-bar { gap: 3px; }
+#game-shell[data-workspace-mode="true"] .hud-resource-label,
+#game-shell[data-workspace-mode="true"] .hud-resource-text { font-size: max(12px, var(--font-size-12)); margin: 0; }
+#game-shell[data-workspace-mode="true"] .hud-resource-head { gap: 4px; }
+
+/* 原本占欄的地圖工具改成小型情境控件。 */
+#game-shell[data-workspace-mode="true"] .map-side-rail {
+  position: absolute;
+  z-index: 31;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: auto;
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  overflow: visible;
+}
+#game-shell[data-workspace-mode="true"] .map-side-rail.left {
+  top: 222px;
+  left: max(12px, env(safe-area-inset-left, 0px));
+}
+#game-shell[data-workspace-mode="true"] .map-side-rail.right {
+  top: max(12px, env(safe-area-inset-top, 0px));
+  right: max(12px, env(safe-area-inset-right, 0px));
+  max-width: 160px;
+}
+#game-shell[data-workspace-mode="true"] .map-tick-rate,
+#game-shell[data-workspace-mode="true"] .map-map-name-text {
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  transform: none;
+  max-height: none;
+  max-width: 180px;
+  white-space: normal;
+  font-size: 12px;
+  line-height: 1.4;
+  background: var(--paper-light);
+  border-radius: 5px;
+  padding: 4px 6px;
+}
+#game-shell[data-workspace-mode="true"] .map-side-tool-top,
+#game-shell[data-workspace-mode="true"] .map-side-tool-center { position: static; transform: none; }
+#game-shell[data-workspace-mode="true"] .map-zoom-stack {
+  display: flex;
+  flex-direction: row;
+  width: 154px;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--wash-ink);
+  border-radius: 6px;
+  background: var(--paper-light);
+}
+#game-shell[data-workspace-mode="true"] .map-tool-controls { display: grid; grid-template-columns: minmax(0, 1fr) 44px; width: 100%; min-width: 0; gap: 6px; align-items: center; }
+#game-shell[data-workspace-mode="true"] .map-zoom-value { display: none; }
+#game-shell[data-workspace-mode="true"] .map-zoom-slider {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  writing-mode: horizontal-tb;
+  direction: ltr;
+  inline-size: 100%;
+  block-size: 44px;
+  cursor: ew-resize;
+}
+#game-shell[data-workspace-mode="true"] .map-zoom-reset { width: 44px; min-width: 44px; min-height: 44px; font-size: 12px; }
+#game-shell[data-workspace-mode="true"] .map-zoom-slider::-webkit-slider-runnable-track { width: 100%; height: 4px; }
+#game-shell[data-workspace-mode="true"] .map-zoom-slider::-webkit-slider-thumb { margin-top: -7px; }
+#game-shell[data-workspace-mode="true"] .map-zoom-slider::-moz-range-track { height: 4px; }
+#game-shell[data-workspace-mode="true"] .map-tick-rate,
+#game-shell[data-workspace-mode="true"] .map-tick-rate-value { flex-direction: row; gap: 2px; flex-wrap: wrap; }
+#game-shell[data-workspace-mode="true"] .map-tick-rate-char,
+#game-shell[data-workspace-mode="true"] .map-tick-rate-number { font-size: 12px; }
+#game-shell[data-workspace-mode="true"] .map-side-phase { writing-mode: horizontal-tb; letter-spacing: 0; font-size: 12px; }
+#game-shell[data-workspace-mode="true"] .map-minimap-shell { top: 84px; right: 12px; z-index: 33; }
+
+/* 主入口與完整分類菜單。 */
+#game-dock {
+  position: absolute;
+  bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  right: max(12px, env(safe-area-inset-right, 0px));
+  z-index: 82;
+  max-width: calc(100% - 24px);
+}
+.workspace-dock-nav {
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  background: var(--paper-light);
+  border: 1px solid var(--wash-ink);
+  border-radius: 9px;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 18%);
+}
+.workspace-dock-nav button,
+.workspace-menu button,
+.workspace-close,
+.workspace-tab,
+.workspace-action-grid button {
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--ink-dark);
+  font: 500 max(14px, var(--font-size-14)) / 1.4 var(--font-role-body);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.workspace-dock-nav button:hover,
+.workspace-menu button:hover,
+.workspace-tab:hover,
+.workspace-action-grid button:hover { background: var(--highlight); }
+.workspace-dock-nav button[aria-expanded="true"],
+.workspace-dock-nav button[aria-pressed="true"],
+.workspace-tab[aria-selected="true"] {
+  background: var(--highlight);
+  color: var(--stamp-red);
+  border-bottom-color: var(--stamp-red);
+}
+#game-dock button:focus-visible,
+#game-workspace button:focus-visible,
+#game-workspace input:focus-visible,
+#game-workspace select:focus-visible {
+  outline: 2px solid var(--stamp-red);
+  outline-offset: 2px;
+}
+.workspace-menu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 10px);
+  width: min(420px, calc(100vw - 24px));
+  max-height: min(620px, calc(100dvh - 104px));
+  overflow: auto;
+  padding: 16px;
+  background: var(--paper-light);
+  border: 1px solid var(--wash-ink);
+  border-radius: 8px;
+  box-shadow: 0 10px 36px rgb(0 0 0 / 24%);
+}
+.workspace-menu h2,
+.workspace-menu h3 { margin: 8px 0; font-size: 14px; color: var(--ink-grey); }
+.workspace-menu button { text-align: left; width: 100%; }
+
+/* 所有 pane 仍是原本的節點；切工作區不銷毀業務元件。 */
+#game-workspace {
+  position: absolute;
+  z-index: 70;
+  top: max(18px, env(safe-area-inset-top, 0px));
+  right: max(18px, env(safe-area-inset-right, 0px));
+  bottom: calc(var(--workspace-dock-height, 56px) + 28px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  width: min(960px, calc(100% - 348px));
+  min-width: 0;
+  border: 1px solid var(--wash-ink);
+  border-radius: 10px;
+  background: var(--paper-light);
+  color: var(--ink-dark);
+  box-shadow: 0 12px 42px rgb(0 0 0 / 24%);
+  overflow: hidden;
+  font-size: max(14px, var(--font-size-14));
+}
+#game-workspace.hidden { display: none; }
+#game-workspace-controls { flex: 0 0 auto; min-width: 0; border-bottom: 1px solid var(--wash-ink); }
+.workspace-header { display: flex; flex-direction: column; gap: 4px; padding: 12px 16px 4px; }
+.workspace-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; }
+.workspace-title { margin: 0; font: 600 max(20px, var(--font-size-20)) / 1.4 var(--font-role-body); }
+.workspace-close { flex: 0 0 auto; min-width: 44px; }
+.workspace-tabs { display: flex; gap: 4px; padding: 4px 0 8px; width: 100%; overflow-x: auto; }
+.workspace-tab { flex: 0 0 auto; white-space: nowrap; border-radius: 4px 4px 0 0; }
+#game-workspace-body { flex: 1 1 auto; min-height: 0; min-width: 0; overflow: hidden; }
+#game-workspace-body > .workspace-pane {
+  display: none;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  padding: 16px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+#game-workspace-body > .workspace-pane.active:not(.hidden):not([hidden]) { display: block; }
+#game-workspace .ui-filter-tabs { gap: 6px; flex-wrap: wrap; }
+#game-workspace .ui-filter-tab { min-height: 40px; padding: 6px 12px; font-size: max(13px, var(--font-size-13)); }
+#game-workspace .inventory-search-input { min-height: 44px; font-size: 16px; }
+#game-workspace .inventory-cell-name { font-size: max(14px, var(--font-size-14)); line-height: 1.5; }
+#game-workspace .inventory-workspace-detail-lines { font-size: max(14px, var(--font-size-14)); }
+#game-workspace .inventory-workspace-detail-section-title { font-size: max(13px, var(--font-size-13)); }
+#game-workspace .inventory-workspace-detail-actions { gap: 8px; flex-wrap: wrap; }
+#game-workspace .inventory-workspace-detail-actions .small-btn { min-height: 44px; font-size: 14px; }
+.workspace-section-title { margin: 0 0 16px; font-size: 18px; font-weight: 600; }
+.workspace-action-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.workspace-action-grid button { min-height: 72px; border-color: var(--wash-ink); text-align: left; background: var(--surface-muted); }
+#workspace-profile-content .hud-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+#workspace-profile-content .hud-row { padding: 16px; border: 1px solid var(--wash-ink); border-radius: 6px; }
+#workspace-profile-content .hud-label { display: block; font-size: 14px; margin-bottom: 8px; }
+#workspace-profile-content .hud-value { font-size: 16px; }
+#workspace-system-content .hud-link-actions,
+#workspace-system-content .hud-corner-actions {
+  position: static;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+#workspace-system-content .hud-corner-btn { width: 100%; min-height: 52px; padding: 12px; font-size: 15px; border-radius: 6px; }
+#game-shell[data-workspace-mode="true"] #chat-panel {
+  position: absolute;
+  left: max(12px, env(safe-area-inset-left, 0px));
+  bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  z-index: 34;
+  width: min(380px, calc(100% - 24px));
+  height: min(230px, 30%);
+  padding: 6px;
+  border: 1px solid var(--wash-ink);
+  border-radius: 8px;
+  background: var(--paper-light);
+  box-shadow: 0 3px 16px rgb(0 0 0 / 14%);
+  font-size: max(13px, var(--font-size-13));
+}
+#game-shell[data-workspace-mode="true"] #chat-panel.hidden { display: none; }
+#game-shell[data-workspace-mode="true"] #chat-panel[hidden],
+#game-shell[data-workspace-mode="true"][data-chat-open="false"] #chat-panel { display: none; }
+#game-shell[data-workspace-mode="true"] #chat-panel .chat-compose { min-height: 44px; }
+#game-shell[data-workspace-mode="true"] #chat-panel input { min-height: 44px; font-size: 16px; }
+#game-shell[data-workspace-mode="true"] #chat-panel .tab-btn { min-height: 36px; font-size: 13px; }
+
+@media (max-width: 1100px) {
+  #game-workspace { width: min(780px, calc(100% - 32px)); top: 160px; }
+}
+@media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
+  #game-shell[data-workspace-mode="true"] { --workspace-dock-height: 60px; }
+  #game-shell[data-workspace-mode="true"] #hud {
+    top: max(8px, env(safe-area-inset-top, 0px));
+    left: max(8px, env(safe-area-inset-left, 0px));
+    width: calc(100% - 124px);
+    max-width: 300px;
+    max-height: 152px;
+  }
+  #game-shell[data-workspace-mode="true"] .hud-panel { padding: 8px; gap: 5px; }
+  #game-shell[data-workspace-mode="true"] .hud-name { font-size: 16px; }
+  #game-shell[data-workspace-mode="true"] .hud-title { display: none; }
+  #game-shell[data-workspace-mode="true"] .hud-realm-action { max-width: 96px; font-size: 12px; }
+  #game-shell[data-workspace-mode="true"] .hud-resource-bars { grid-template-columns: 1fr; gap: 4px; }
+  #game-shell[data-workspace-mode="true"] .hud-resource-bar { display: grid; grid-template-columns: 1fr; gap: 2px; }
+  #game-shell[data-workspace-mode="true"] .hud-resource-meter { height: 5px; }
+  #game-shell[data-workspace-mode="true"] .map-side-rail.left { top: 172px; left: 8px; }
+  #game-shell[data-workspace-mode="true"] .map-side-rail.right { right: 8px; max-width: 108px; }
+  #game-shell[data-workspace-mode="true"] .map-minimap-shell { right: 8px; top: 96px; }
+  #game-shell[data-workspace-mode="true"] .map-zoom-stack { width: 128px; }
+  #game-shell[data-workspace-mode="true"] .map-zoom-slider { width: 100%; inline-size: 100%; }
+  #game-dock { left: max(8px, env(safe-area-inset-left, 0px)); right: max(8px, env(safe-area-inset-right, 0px)); bottom: max(8px, env(safe-area-inset-bottom, 0px)); max-width: none; }
+  .workspace-dock-nav { width: 100%; }
+  .workspace-dock-nav button { flex: 1 1 0; min-width: 0; padding: 8px 4px; font-size: 14px; }
+  .workspace-menu { width: 100%; }
+  #game-workspace {
+    left: max(6px, env(safe-area-inset-left, 0px));
+    right: max(6px, env(safe-area-inset-right, 0px));
+    top: calc(max(8px, env(safe-area-inset-top, 0px)) + 156px);
+    bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+    width: auto;
+    border-radius: 8px;
+  }
+  .workspace-header { padding: 8px 10px 0; gap: 8px; }
+  .workspace-title { font-size: 18px; }
+  .workspace-tabs { padding: 2px 10px 6px; }
+  #game-workspace-body > .workspace-pane { padding: 10px; }
+  #workspace-profile-content .hud-grid { grid-template-columns: 1fr; }
+  .workspace-action-grid { gap: 8px; }
+  #game-shell[data-workspace-mode="true"] #chat-panel { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); left: 8px; width: calc(100% - 16px); height: min(220px, 30%); }
+  #game-shell[data-workspace-mode="true"][data-workspace-open="true"] #chat-panel { visibility: hidden; }
+  #game-workspace :is(input, select, textarea) { font-size: max(16px, var(--font-size-16)); }
+  #game-workspace :is(.small-btn, .action-btn, .tab-btn) { min-height: 44px; }
+  #game-workspace .ui-filter-tab { min-height: 44px; padding: 6px 8px; }
+  #game-workspace .inventory-workspace-detail--empty { display: none; }
+}
+@media (max-height: 520px) {
+  #game-shell[data-workspace-mode="true"] #hud { max-height: 112px; }
+  #game-shell[data-workspace-mode="true"] .hud-progress-shell { display: none; }
+  #game-shell[data-workspace-mode="true"] .map-side-rail.left { top: 132px; }
+  #game-workspace { top: max(8px, env(safe-area-inset-top, 0px)); left: 310px; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); width: auto; }
+  .workspace-header { padding-top: 4px; }
+  .workspace-tabs { padding-bottom: 2px; }
+  #game-shell[data-workspace-mode="true"] #chat-panel { height: 130px; width: 290px; }
+}
+@media (max-width: 560px) and (max-height: 620px) {
+  #game-workspace { left: 6px; top: 120px; }
+}

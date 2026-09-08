@@ -73,7 +73,10 @@ import {
   syncReactInventoryPanelState,
   unmountReactInventoryPanel,
 } from '../../react-ui/panels/inventory/mount-inventory-panel';
-import type { ReactInventoryItemView } from '../../react-ui/panels/inventory/InventoryPanel';
+import type {
+  ReactInventoryEquippedComparison,
+  ReactInventoryItemView,
+} from '../../react-ui/panels/inventory/InventoryPanel';
 import {
   InventoryPageRequestState,
   normalizeInventoryPageLimit,
@@ -387,6 +390,7 @@ export class InventoryPanel {
       onPageChange: (direction) => this.requestAdjacentInventoryPage(direction),
       onSearchChange: (value) => this.handleInventorySearchInput(value),
       onPrimaryAction: (slotIndex, itemInstanceId) => this.handlePrimaryAction(slotIndex, itemInstanceId, { closeModal: false }),
+      onOpenItemDetail: (slotIndex, itemKey) => this.openReactItemDetail(slotIndex, itemKey),
     });
     this.bindPaneEvents();
     this.bindTooltipEvents();
@@ -882,6 +886,11 @@ export class InventoryPanel {
     const ribbon = this.getInventoryCellRibbon(item, itemMeta);
     const learnedRibbon = this.getInventoryLearnedRibbon(item);
     const primaryActionHint = this.getPrimaryActionHint(primaryAction);
+    const previewItem = resolvePreviewItem(item);
+    const bonusLines = item.type === 'equipment' || item.type === 'artifact'
+      ? describeEquipmentBonuses(previewItem, this.playerRealm?.realmLv)
+      : describePreviewBonuses(previewItem.equipAttrs, previewItem.equipStats, previewItem.equipValueStats);
+    const equippedItem = this.getEquippedItemForCompare(item);
     return {
       slotIndex,
       itemInstanceId: this.getInventoryItemInstanceId(item) || null,
@@ -910,6 +919,27 @@ export class InventoryPanel {
         : undefined,
       cooldownRemaining,
       primaryAction,
+      detail: {
+        typeLabel: getItemTypeLabel(item.type),
+        description: previewItem.desc,
+        statusLabel: this.getItemStatusLabel(item, cooldownState) ?? undefined,
+        equipSlotLabel: item.equipSlot ? getEquipSlotLabel(item.equipSlot) : undefined,
+        bonusLines,
+        materialValueLines: item.type === 'material' ? describeMaterialValueDetails(previewItem) : [],
+        effectLines: formatItemEffects(item),
+        equippedComparison: equippedItem ? this.buildReactEquippedComparison(equippedItem) : undefined,
+      },
+    };
+  }
+
+  private buildReactEquippedComparison(item: ItemStack): ReactInventoryEquippedComparison {
+    const meta = getItemDisplayMeta(item);
+    return {
+      name: meta.displayItem.name,
+      gradeLineLabel: this.getInventoryGradeLineLabel(item) ?? undefined,
+      levelLabel: meta.levelLabel ?? undefined,
+      enhanceLabel: meta.enhanceLabel ?? undefined,
+      bonusLines: describeEquipmentBonuses(resolvePreviewItem(item), this.playerRealm?.realmLv),
     };
   }
 
@@ -1029,7 +1059,8 @@ export class InventoryPanel {
     };
 
     this.pane.addEventListener('click', (event) => {
-      if (!tapMode) {
+      // React 物品格以點選開啟同窗詳情，不能讓舊觸控提示先截斷事件。
+      if (!tapMode || this.useReactPanel()) {
         return;
       }
       const target = event.target;
@@ -1694,6 +1725,19 @@ export class InventoryPanel {
       },
     });
     this.lastModalRenderKey = this.buildModalRenderKey(item);
+  }
+
+  /** React 工作區僅顯示常用資訊；完整詳情沿用既有彈窗與所有資產操作。 */
+  private openReactItemDetail(slotIndex: number, itemKey: string): void {
+    const item = this.lastInventory?.items[slotIndex];
+    if (!item || this.getItemIdentity(item) !== itemKey) {
+      return;
+    }
+    this.selectedSlotIndex = slotIndex;
+    this.selectedItemKey = itemKey;
+    this.tooltip.hide();
+    this.tooltipCell = null;
+    this.renderModal();
   }
 
   /** renderFormationDialog：渲染布阵对话。 */

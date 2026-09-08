@@ -55,19 +55,15 @@ export interface GuidedTourFlow {
 export const STARTER_GUIDED_TOUR_FLOW_ID = 'starter-basics';
 
 const OPEN_ACTION_PANEL_PREPARE: GuidedTourPrepareAction[] = [
-  { type: 'set-layout-collapsed', target: 'right', collapsed: false, when: 'desktop' },
-  { type: 'switch-tab', tabName: 'mobile-action', when: 'mobile' },
+  { type: 'switch-tab', tabName: 'action' },
 ];
 
 const OPEN_TECHNIQUE_PANEL_PREPARE: GuidedTourPrepareAction[] = [
-  { type: 'set-layout-collapsed', target: 'right', collapsed: false, when: 'desktop' },
-  { type: 'switch-tab', tabName: 'mobile-bag', when: 'mobile' },
   { type: 'switch-tab', tabName: 'technique' },
 ];
 
 const OPEN_ATTR_PANEL_PREPARE: GuidedTourPrepareAction[] = [
-  { type: 'set-layout-collapsed', target: 'left', collapsed: false, when: 'desktop' },
-  { type: 'switch-tab', tabName: 'mobile-attrs', when: 'mobile' },
+  { type: 'switch-tab', tabName: 'attr' },
 ];
 
 const OPEN_ATTR_CRAFT_PANEL_PREPARE: GuidedTourPrepareAction[] = [
@@ -75,10 +71,14 @@ const OPEN_ATTR_CRAFT_PANEL_PREPARE: GuidedTourPrepareAction[] = [
   { type: 'click', selector: '[data-guided-tour-attr-tab="craft"]' },
 ];
 
+const CLOSE_WORKSPACE_PREPARE: GuidedTourPrepareAction[] = [
+  { type: 'click', selector: '#game-workspace .workspace-close' },
+];
+
 export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
   {
     id: STARTER_GUIDED_TOUR_FLOW_ID,
-    storageVersion: 2,
+    storageVersion: 3,
     autoStart: true,
     titleKey: 'guided-tour.flow.starter.title',
     titleFallback: '基礎界面導覽',
@@ -91,10 +91,6 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.hud.body',
         bodyFallback: '這裡顯示角色、境界、氣血、靈力和突破入口。後續能突破時，按鈕會出現在境界區域。',
         placement: 'right',
-        prepare: [
-          { type: 'set-layout-collapsed', target: 'left', collapsed: false, when: 'desktop' },
-          { type: 'switch-tab', tabName: 'mobile-overview', when: 'mobile' },
-        ],
       },
       {
         id: 'map',
@@ -104,9 +100,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.map.body',
         bodyFallback: '點擊可見地圖格子可以移動或選擇目標。戰鬥、採集、觀察等指向性操作也會落在這裡。',
         placement: 'top',
-        prepare: [
-          { type: 'set-layout-collapsed', target: 'bottom', collapsed: false, when: 'desktop' },
-        ],
+        prepare: CLOSE_WORKSPACE_PREPARE,
       },
       {
         id: 'map-icons',
@@ -116,23 +110,17 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.map-icons.body',
         bodyFallback: 'NPC 頭頂出現任務標記時，! 表示可接任務，? 表示可交付，... 表示任務正在進行。傳送點和樓梯用於跨地圖，寶箱、草藥、礦脈等資源點可以觀察或交互，紅色敵對目標通常會進入戰鬥。',
         placement: 'top',
-        prepare: [
-          { type: 'set-layout-collapsed', target: 'bottom', collapsed: false, when: 'desktop' },
-        ],
+        prepare: CLOSE_WORKSPACE_PREPARE,
       },
       {
         id: 'inventory-tab',
-        targetSelector: '[data-tab="inventory"]',
-        mobileTargetSelector: '[data-tab="mobile-bag"]',
+        targetSelector: '#game-dock [data-workspace-open="items"]',
         titleKey: 'guided-tour.step.inventory.title',
-        titleFallback: '打開行囊',
+        titleFallback: '打開背包工作區',
         bodyKey: 'guided-tour.step.inventory.body',
-        bodyFallback: '背包、裝備、功法和任務都在這一側。點擊高亮按鈕進入行囊頁籤。',
+        bodyFallback: '背包與裝備集中在工作區。點擊高亮的「背包」開啟物品與裝備分頁。',
         placement: 'left',
         advanceMode: 'target-click',
-        prepare: [
-          { type: 'set-layout-collapsed', target: 'right', collapsed: false, when: 'desktop' },
-        ],
       },
       {
         id: 'action-panel',
@@ -142,10 +130,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.action.body',
         bodyFallback: '常用互動、技能、開關和通用操作都在行動欄。需要點目標的操作會先進入選擇狀態，再到地圖上點目標。',
         placement: 'left',
-        prepare: [
-          { type: 'set-layout-collapsed', target: 'right', collapsed: false, when: 'desktop' },
-          { type: 'switch-tab', tabName: 'mobile-action', when: 'mobile' },
-        ],
+        prepare: OPEN_ACTION_PANEL_PREPARE,
       },
       {
         id: 'tutorial-book',
@@ -155,10 +140,6 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.tutorial.body',
         bodyFallback: '不清楚系統規則時，可以從這裡打開百科。導覽完成後也能從設置或調試入口重新打開。',
         placement: 'bottom',
-        prepare: [
-          { type: 'set-layout-collapsed', target: 'left', collapsed: false, when: 'desktop' },
-          { type: 'switch-tab', tabName: 'mobile-overview', when: 'mobile' },
-        ],
       },
     ],
   },
@@ -173,9 +154,9 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         id: 'alchemy-attr-panel',
         targetSelector: '#pane-attr',
         titleKey: 'guided-tour.step.alchemy-attr-panel.title',
-        titleFallback: '先看左側修行卷',
+        titleFallback: '先看人物屬性',
         bodyKey: 'guided-tour.step.alchemy-attr-panel.body',
-        bodyFallback: '煉丹入口在左側修行卷的技藝頁裡。桌面端展開左側，手機端先切到屬性頁。',
+        bodyFallback: '煉丹入口在「人物」工作區的屬性分頁裡。切到技藝即可查看煉丹能力與入口。',
         placement: 'right',
         prepare: OPEN_ATTR_PANEL_PREPARE,
       },
@@ -349,6 +330,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.observe-map.body',
         bodyFallback: '觀察可以查看視野內格子的地形、資源、建築或實體訊息。選中目標後，詳情會在界面中彈出。',
         placement: 'top',
+        prepare: CLOSE_WORKSPACE_PREPARE,
       },
     ],
   },
@@ -392,6 +374,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.sense-qi-map.body',
         bodyFallback: '開啟後回到地圖查看氣機疊層。不同地點的靈氣、陣法、地塊狀態會影響後續判斷。',
         placement: 'top',
+        prepare: CLOSE_WORKSPACE_PREPARE,
       },
     ],
   },
@@ -404,18 +387,13 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
     steps: [
       {
         id: 'cultivation-open-bag',
-        targetSelector: '[data-tab="inventory"]',
-        mobileTargetSelector: '[data-tab="mobile-bag"]',
+        targetSelector: '#game-dock [data-workspace-open="cultivation"]',
         titleKey: 'guided-tour.step.cultivation-open-bag.title',
-        titleFallback: '打開行囊側欄',
+        titleFallback: '打開修行工作區',
         bodyKey: 'guided-tour.step.cultivation-open-bag.body',
-        bodyFallback: '功法面板在行囊側欄裡。桌面端展開右側，手機端先切到行囊頁。',
+        bodyFallback: '功法位於「修行」工作區。點擊高亮的「修行」開啟功法與煉體分頁。',
         placement: 'left',
         advanceMode: 'target-click',
-        prepare: [
-          { type: 'set-layout-collapsed', target: 'right', collapsed: false, when: 'desktop' },
-          { type: 'switch-tab', tabName: 'mobile-bag', when: 'mobile' },
-        ],
       },
       {
         id: 'cultivation-technique-tab',
@@ -426,10 +404,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyFallback: '修煉功法前，先進入功法頁查看已學功法、領悟進度和主修按鈕。',
         placement: 'bottom',
         advanceMode: 'target-click',
-        prepare: [
-          { type: 'set-layout-collapsed', target: 'right', collapsed: false, when: 'desktop' },
-          { type: 'switch-tab', tabName: 'mobile-bag', when: 'mobile' },
-        ],
+        prepare: OPEN_TECHNIQUE_PANEL_PREPARE,
       },
       {
         id: 'cultivation-technique-card',
@@ -520,6 +495,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.force-attack-map.body',
         bodyFallback: '在地圖上點擊視野內目標即可發起攻擊。請注意玩家、怪物、建築或陣法目標的可攻擊規則不同。',
         placement: 'top',
+        prepare: CLOSE_WORKSPACE_PREPARE,
       },
     ],
   },
@@ -532,18 +508,13 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
     steps: [
       {
         id: 'mining-quest-tab',
-        targetSelector: '[data-tab="quest"]',
-        mobileTargetSelector: '[data-tab="quest"]',
+        targetSelector: '#game-dock [data-workspace-open="quests"]',
         titleKey: 'guided-tour.step.mining-quest-tab.title',
         titleFallback: '先從任務定位入口',
         bodyKey: 'guided-tour.step.mining-quest-tab.body',
         bodyFallback: '帶挖礦引導的任務詳情裡會出現“打開引導”和“前往目標”。任務導航負責找當前任務地點；本引導用雲來鎮舊屋礦窖演示入門挖礦路線。',
         placement: 'bottom',
         advanceMode: 'target-click',
-        prepare: [
-          { type: 'set-layout-collapsed', target: 'right', collapsed: false, when: 'desktop' },
-          { type: 'switch-tab', tabName: 'mobile-bag', when: 'mobile' },
-        ],
       },
       {
         id: 'mining-town-entrance',
@@ -553,6 +524,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.mining-town-entrance.body',
         bodyFallback: '雲來鎮舊屋礦窖入口地標在 (42,17) 附近，實際樓梯傳送點在 (38,14)。如果門口石頭擋住路線，先在地圖上選中石頭目標處理掉，再靠近樓梯。',
         placement: 'top',
+        prepare: CLOSE_WORKSPACE_PREPARE,
       },
       {
         id: 'mining-clear-stone',
@@ -562,6 +534,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.mining-clear-stone.body',
         bodyFallback: '石頭和礦脈都屬於可受損地塊。選中石頭後使用強制攻擊或可用的採掘操作，服務端會按地塊耐久結算；石頭被破壞後路線才會打開。',
         placement: 'top',
+        prepare: CLOSE_WORKSPACE_PREPARE,
       },
       {
         id: 'mining-use-portal',
@@ -571,6 +544,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.mining-use-portal.body',
         bodyFallback: '點擊樓梯傳送點會自動尋路；角色站到傳送點後會進入雲來鎮·舊屋礦窖。傳送和落點仍由服務端處理，導覽不會替你跨圖。',
         placement: 'top',
+        prepare: CLOSE_WORKSPACE_PREPARE,
       },
       {
         id: 'mining-basement-node',
@@ -580,6 +554,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.mining-basement-node.body',
         bodyFallback: '進入舊屋礦窖後，移動到玄鐵礦脈 (10,9) 附近。挖礦按鈕只會在附近存在可見礦脈時出現，找不到按鈕時先繼續靠近或觀察目標格。',
         placement: 'top',
+        prepare: CLOSE_WORKSPACE_PREPARE,
       },
       {
         id: 'mining-skill-tab',
@@ -614,6 +589,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyKey: 'guided-tour.step.mining-map.body',
         bodyFallback: '移動到礦脈附近後，在地圖上選擇可見礦脈格即可開始採集。挖礦按鈕隨位置和可見目標動態出現。',
         placement: 'top',
+        prepare: CLOSE_WORKSPACE_PREPARE,
       },
     ],
   },

@@ -27,10 +27,26 @@ const DEFAULT_MIN_WIDTH = 240;
 const DEFAULT_MAX_WIDTH = 420;
 const VIEWPORT_MARGIN = 8;
 const FLOATING_PANEL_BASE_Z_INDEX = 1800;
-const floatingPanelRoots = new Set<HTMLElement>();
+const floatingPanels = new Set<FloatingListPanel>();
+
+/** 地圖摘要與工作區共用 shell 堆疊；詳情／確認視窗仍由原 host 管理。 */
+export function mountFloatingListPanelLayer(shell: HTMLElement): void {
+  let layer = shell.querySelector<HTMLElement>(':scope > #game-floating-layer');
+  if (!layer) {
+    layer = document.createElement('div');
+    layer.id = 'game-floating-layer';
+    shell.appendChild(layer);
+  }
+  for (const panel of floatingPanels) layer.appendChild(panel.root);
+}
+
+/** shell 首次顯示後才有實際尺寸，交回原實例校正位置與本地偏好。 */
+export function refreshFloatingListPanelLayout(): void {
+  for (const panel of floatingPanels) panel.refreshLayout();
+}
 
 function bringFloatingPanelToFront(root: HTMLElement): void {
-  const ordered = [...floatingPanelRoots].filter((panel) => panel.isConnected && panel !== root);
+  const ordered = [...floatingPanels].map((panel) => panel.root).filter((panel) => panel.isConnected && panel !== root);
   ordered.push(root);
   ordered.forEach((panel, index) => {
     panel.style.zIndex = String(FLOATING_PANEL_BASE_Z_INDEX + index);
@@ -114,8 +130,8 @@ export class FloatingListPanel {
       <div class="floating-list-panel__body" data-floating-list-body="true"></div>
     `;
     this.body = this.root.querySelector<HTMLElement>('[data-floating-list-body="true"]')!;
-    document.body.appendChild(this.root);
-    floatingPanelRoots.add(this.root);
+    (document.getElementById('game-floating-layer') ?? document.body).appendChild(this.root);
+    floatingPanels.add(this);
     bringFloatingPanelToFront(this.root);
     this.bindEvents();
     this.applyState();
@@ -158,7 +174,7 @@ export class FloatingListPanel {
 
   destroy(): void {
     this.eventAbort.abort();
-    floatingPanelRoots.delete(this.root);
+    floatingPanels.delete(this);
     this.root.remove();
   }
 

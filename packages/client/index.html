@@ -59,6 +59,20 @@
   </div>
 
   <div id="game-shell" class="hidden">
+    <div id="game-dock"></div>
+    <section id="game-workspace" class="hidden" role="region" aria-label="遊戲工作區" tabindex="-1">
+      <div id="game-workspace-controls"></div>
+      <div id="game-workspace-body">
+        <div id="pane-profile" class="workspace-pane hidden" data-pane="overview">
+          <h2 class="workspace-section-title">人物概況</h2>
+          <div id="workspace-profile-content"></div>
+        </div>
+        <div id="pane-system" class="workspace-pane hidden" data-pane="system">
+          <h2 class="workspace-section-title">系統與協助</h2>
+          <div id="workspace-system-content"></div>
+        </div>
+      </div>
+    </section>
     <aside id="layout-left" class="layout-column">
       <section class="layout-section" data-mobile-section="overview">
         <div id="hud" class="hidden">
@@ -212,7 +226,7 @@
               </div>
             </div>
           </div>
-        <div id="game-stage">
+            <div id="game-stage" tabindex="-1" aria-label="地圖行動區">
             <div id="map-targeting-indicator" class="map-targeting-indicator hidden"></div>
             <div id="map-fps-rate" class="map-fps-indicator" data-i18n-aria-label="shell.map-fps-rate.title" aria-label="客户端当前渲染帧率" hidden>
               <div class="map-fps-metric">
