@@ -377,12 +377,23 @@
     }
     .hud-resource-meter {
       position: relative;
-      height: 8px;
+      height: 24px;
       border: 1px solid var(--wash-ink);
       border-radius: 999px;
-      background: var(--highlight);
+      background: #4a352c;
       overflow: hidden;
     }
+    .hud-resource-meter--qi { background: #263747; }
+    .hud-resource-meter .hud-resource-head {
+      position: absolute;
+      inset: 0;
+      justify-content: center;
+      gap: 2px;
+      white-space: nowrap;
+      color: #fff9ed;
+      text-shadow: 0 1px 2px #1d1710;
+    }
+    .hud-resource-meter .hud-resource-head > * { font-size: 12px; line-height: 1; color: inherit; }
     .hud-resource-fill {
       position: absolute;
       inset: 0;

@@ -4,6 +4,7 @@
  * 维护时优先保持局部更新和原有焦点/滚动状态，不在 UI 层裁定资产、战斗或移动合法性。
  */
 import { t } from './i18n';
+import { bindDesktopWindow, type DesktopWindowController } from './desktop-window';
 
 type ConfirmModalOptions = {
   ownerId: string;
@@ -38,6 +39,7 @@ class ConfirmModalHost {
   private onConfirm: (() => void) | null = null;
   private onClose: (() => void) | null = null;
   private initialized = false;
+  private desktopWindow: DesktopWindowController | null = null;
 
   open(options: ConfirmModalOptions): void {
     this.ensureInitialized();
@@ -59,6 +61,7 @@ class ConfirmModalHost {
     this.actions.classList.toggle('hidden', options.hideActions === true);
     this.modal.classList.remove('hidden');
     this.modal.setAttribute('aria-hidden', 'false');
+    this.ensureDesktopWindow().refresh();
   }
 
   close(ownerId: string): void {
@@ -83,15 +86,15 @@ class ConfirmModalHost {
     modal.setAttribute('aria-hidden', 'true');
     modal.innerHTML = `
       <div class="confirm-modal-backdrop" data-confirm-modal-backdrop="true"></div>
-      <div class="confirm-modal-card" role="dialog" aria-modal="true">
-        <div class="confirm-modal-head">
+      <div class="confirm-modal-card ui-modal-card" role="dialog" aria-modal="true">
+        <div class="confirm-modal-head ui-modal-head">
           <div>
-            <div class="confirm-modal-title"></div>
-            <div class="confirm-modal-subtitle hidden"></div>
+            <div class="confirm-modal-title ui-modal-title"></div>
+            <div class="confirm-modal-subtitle ui-modal-subtitle hidden"></div>
           </div>
         </div>
-        <div class="confirm-modal-body"></div>
-        <div class="confirm-modal-actions">
+        <div class="confirm-modal-body ui-modal-body"></div>
+        <div class="confirm-modal-actions ui-modal-actions">
           <button class="small-btn ghost" type="button" data-confirm-modal-cancel="true"></button>
           <button class="small-btn" type="button" data-confirm-modal-confirm="true"></button>
         </div>
@@ -149,6 +152,22 @@ class ConfirmModalHost {
     if (notify) {
       onClose?.();
     }
+  }
+
+  /** 同一 owner 保留尺寸與位置，切換 owner 時由 storageKey 載入各自工作狀態。 */
+  private ensureDesktopWindow(): DesktopWindowController {
+    if (!this.desktopWindow && this.card) {
+      this.desktopWindow = bindDesktopWindow(this.card, {
+        storageKey: () => `confirm-modal:${this.ownerId ?? 'default'}`,
+        handleSelector: '.ui-modal-head',
+        minWidth: 320,
+        minHeight: 220,
+      });
+    }
+    if (!this.desktopWindow) {
+      throw new Error('確認視窗框架尚未初始化');
+    }
+    return this.desktopWindow;
   }
 }
 

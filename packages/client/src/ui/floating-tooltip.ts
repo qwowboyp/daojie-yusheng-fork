@@ -20,6 +20,14 @@ const FLOATING_TOOLTIP_ROOT_Z_INDEX = '4000';
 
 let floatingTooltipRoot: HTMLDivElement | null = null;
 let floatingTooltipRootBound = false;
+const floatingTooltips = new Set<FloatingTooltip>();
+
+/** 收起目前所有触控固定说明；工作区切换可调用，详情弹层不在此范围。 */
+export function dismissPinnedFloatingTooltips(): void {
+  for (const tooltip of floatingTooltips) {
+    tooltip.hide(true);
+  }
+}
 
 /** syncFloatingTooltipRoot：同步 tooltip 顶层容器，确保其位于详情弹层之上。 */
 function syncFloatingTooltipRoot(win: Window = window): HTMLDivElement | null {
@@ -163,6 +171,19 @@ export class FloatingTooltip {
     }
     this.hide(true);
   };
+  /** 触控开始拖动时不保留说明，避免滚动列表后留下遮挡内容的旧定位浮层。 */
+  private readonly handleDocumentPointerMove = (event: PointerEvent): void => {
+    if (this.destroyed || !this.pinned || event.pointerType !== 'touch') {
+      return;
+    }
+    this.hide(true);
+  };
+  /** 任意滚动都会改变说明锚点的上下文，固定说明必须立即收起。 */
+  private readonly handleDocumentScroll = (): void => {
+    if (!this.destroyed && this.pinned) {
+      this.hide(true);
+    }
+  };
   /**
  * 构造器：初始化 当前 实例并建立基础状态。
  * @param className 参数说明。
@@ -174,7 +195,10 @@ export class FloatingTooltip {
     this.el = document.createElement('div');
     this.el.className = className;
     (getFloatingTooltipRoot(document) ?? getViewportRoot(document) ?? document.body).appendChild(this.el);
+    floatingTooltips.add(this);
     document.addEventListener('pointerdown', this.handleDocumentPointerDown, true);
+    document.addEventListener('pointermove', this.handleDocumentPointerMove, true);
+    document.addEventListener('scroll', this.handleDocumentScroll, true);
   }
 
   /** 显示提示框并定位到鼠标附近 */
@@ -300,7 +324,10 @@ export class FloatingTooltip {
     this.destroyed = true;
     this.pinned = false;
     this.pinnedAnchor = null;
+    floatingTooltips.delete(this);
     this.el.ownerDocument.removeEventListener('pointerdown', this.handleDocumentPointerDown, true);
+    this.el.ownerDocument.removeEventListener('pointermove', this.handleDocumentPointerMove, true);
+    this.el.ownerDocument.removeEventListener('scroll', this.handleDocumentScroll, true);
     this.el.replaceChildren();
     this.el.remove();
   }

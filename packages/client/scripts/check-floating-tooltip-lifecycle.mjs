@@ -26,6 +26,12 @@ class FakeElement extends FakeNode {
   id = '';
   isConnected = false;
   style = {};
+  classList = {
+    values: new Set(),
+    add: (...names) => names.forEach((name) => this.classList.values.add(name)),
+    remove: (...names) => names.forEach((name) => this.classList.values.delete(name)),
+    contains: (name) => this.classList.values.has(name),
+  };
 
   constructor(ownerDocument) {
     super();
@@ -62,6 +68,10 @@ class FakeElement extends FakeNode {
     this.isConnected = connected;
     for (const child of this.children) child.setConnected(connected);
   }
+
+  getBoundingClientRect() {
+    return { width: 0, height: 0 };
+  }
 }
 
 class FakeHtmlElement extends FakeElement {}
@@ -76,6 +86,12 @@ class FakeDocument {
   }
 
   createElement(tagName) {
+    if (tagName.toLowerCase() === 'template') {
+      return {
+        innerHTML: '',
+        content: { cloneNode: () => new FakeHtmlElement(this) },
+      };
+    }
     if (tagName.toLowerCase() === 'div') return new FakeHtmlDivElement(this);
     return new FakeHtmlElement(this);
   }
@@ -104,6 +120,12 @@ class FakeDocument {
 
   listenerCount(type) {
     return this.listeners.get(type)?.size ?? 0;
+  }
+
+  dispatch(type, event = {}) {
+    for (const listener of this.listeners.get(type) ?? []) {
+      listener({ type, ...event });
+    }
   }
 }
 
@@ -141,7 +163,7 @@ try {
     window,
   });
 
-  const { FloatingTooltip } = await server.ssrLoadModule('/src/ui/floating-tooltip.ts');
+  const { FloatingTooltip, dismissPinnedFloatingTooltips } = await server.ssrLoadModule('/src/ui/floating-tooltip.ts');
   const first = new FloatingTooltip();
   const second = new FloatingTooltip();
   const root = document.getElementById('floating-tooltip-root');
@@ -149,16 +171,40 @@ try {
   assert.ok(root, '应创建全局 tooltip 容器');
   assert.equal(root.children.length, 2, '每个实例应挂载一个独立节点');
   assert.equal(document.listenerCount('pointerdown'), 2, '每个实例应注册一个文档监听器');
+  assert.equal(document.listenerCount('pointermove'), 2, '每个实例应注册触控拖动收起监听器');
+  assert.equal(document.listenerCount('scroll'), 2, '每个实例应注册滚动收起监听器');
+
+  const anchor = document.createElement('button');
+  document.body.appendChild(anchor);
+  first.showPinned(anchor, '物品說明', ['拖動時應收起'], 16, 16);
+  document.dispatch('pointerdown', { target: anchor, pointerType: 'touch' });
+  assert.equal(first.isPinned(), true, '點擊原錨點不得提前收起固定說明');
+  document.dispatch('pointermove', { target: anchor, pointerType: 'touch' });
+  assert.equal(first.isPinned(), false, '觸控拖動開始時必須收起固定說明');
+
+  first.showPinned(anchor, '物品說明', ['捲動時應收起'], 16, 16);
+  document.dispatch('scroll', { target: document.body });
+  assert.equal(first.isPinned(), false, '工作窗或頁面捲動時必須收起固定說明');
+
+  first.showPinned(anchor, '物品說明', ['切換時應收起'], 16, 16);
+  second.showPinned(anchor, '能力說明', ['切換時應收起'], 16, 16);
+  dismissPinnedFloatingTooltips();
+  assert.equal(first.isPinned(), false, '工作區切換介面必須收起物品固定說明');
+  assert.equal(second.isPinned(), false, '工作區切換介面必須收起能力固定說明');
 
   first.destroy();
   first.destroy();
   assert.equal(root.children.length, 1, '重复销毁不得误删其他实例节点');
   assert.equal(document.listenerCount('pointerdown'), 1, '重复销毁不得残留或误删其他实例监听器');
+  assert.equal(document.listenerCount('pointermove'), 1, '重复销毁不得残留触控拖动监听器');
+  assert.equal(document.listenerCount('scroll'), 1, '重复销毁不得残留滚动监听器');
   assert.equal(first.isPinned(), false, '销毁后的实例不得保持固定展示状态');
 
   second.destroy();
   assert.equal(root.children.length, 0, '全部销毁后不得残留实例节点');
   assert.equal(document.listenerCount('pointerdown'), 0, '全部销毁后不得残留实例监听器');
+  assert.equal(document.listenerCount('pointermove'), 0, '全部销毁后不得残留触控拖动监听器');
+  assert.equal(document.listenerCount('scroll'), 0, '全部销毁后不得残留滚动监听器');
 
   const hookSource = fs.readFileSync(path.join(clientRoot, 'src/react-ui/hooks/use-floating-tooltip.ts'), 'utf8');
   assert.match(

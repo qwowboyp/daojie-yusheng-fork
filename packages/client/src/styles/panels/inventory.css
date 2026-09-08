@@ -16,6 +16,12 @@
       margin-bottom: 0;
     }
 
+    .inventory-panel {
+      container-name: game-workspace-body;
+      container-type: inline-size;
+      min-width: 0;
+    }
+
     .inventory-panel-controls {
       display: flex;
       align-items: center;
@@ -133,25 +139,6 @@
         inset 0 0 0 1px rgba(255,255,255,0.68),
         0 0 0 2px rgba(139, 48, 35, 0.15),
         0 8px 20px rgba(0,0,0,0.1);
-    }
-
-    @media (max-width: 700px) {
-      #game-shell[data-workspace-mode="true"] .inventory-workspace {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      #game-shell[data-workspace-mode="true"] .inventory-workspace[data-detail-open="true"] .inventory-workspace-list {
-        display: none;
-      }
-
-      .inventory-workspace-detail-back {
-        display: inline-flex;
-        flex: 0 0 auto;
-      }
-
-      .inventory-workspace-detail-actions .small-btn {
-        min-height: 36px;
-      }
     }
 
     .inventory-load-hint {
@@ -1027,4 +1014,101 @@
 
     :root[data-color-mode="dark"] .enhancement-picker-cell .inventory-cell-count {
       color: rgba(235, 221, 201, 0.78);
+    }
+
+    @container game-workspace-body (max-width: 720px) {
+      #game-shell[data-workspace-mode="true"] .inventory-workspace {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      #game-shell[data-workspace-mode="true"] .inventory-workspace[data-detail-open="true"] .inventory-workspace-list {
+        display: none;
+      }
+
+      .inventory-workspace-detail-back {
+        display: inline-flex;
+        flex: 0 0 auto;
+      }
+
+      .inventory-workspace-detail-actions .small-btn {
+        min-height: 36px;
+      }
+
+      .inventory-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .inventory-cell {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: auto;
+        align-items: center;
+        min-height: 48px;
+        padding: 8px 10px;
+        overflow: hidden;
+      }
+
+      .inventory-cell-head {
+        display: contents;
+      }
+
+      .inventory-cell-name {
+        grid-column: 1;
+        grid-row: 1;
+        display: block;
+        align-self: center;
+        min-width: 0;
+        min-height: 0;
+        max-height: none;
+        padding-right: 8px;
+        text-align: left;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        overflow: visible;
+        text-overflow: clip;
+        line-height: 1.35;
+      }
+
+      .inventory-cell-count {
+        position: static;
+        grid-column: 2;
+        grid-row: 1;
+        align-self: center;
+        min-width: max-content;
+        padding: 3px 0 3px 10px;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        font-size: var(--font-size-12);
+      }
+
+      .inventory-cell-count { font-size: 0; }
+
+      .inventory-cell-count::before {
+        content: '數量：' attr(data-quantity);
+        font-size: var(--font-size-12);
+        font-weight: var(--font-weight-normal);
+        color: var(--ink-grey);
+      }
+
+      .inventory-cell-type,
+      .inventory-cell-learned-ribbon,
+      .inventory-cell-grade-line,
+      .inventory-cell-action-hint,
+      .inventory-cell > .item-card-chip {
+        display: none;
+      }
+
+      .inventory-cell-cooldown {
+        left: auto;
+        right: 78px;
+        transform: translateY(-50%);
+      }
+
+      .inventory-cell-cooldown-label {
+        min-width: 22px;
+        height: 22px;
+        padding: 0 4px;
+      }
     }

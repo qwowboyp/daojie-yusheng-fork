@@ -82,6 +82,51 @@
   min-width: 96px;
 }
 
+/* 桌面視窗控制器只在非手機模式標記此屬性；行動版仍沿用既有彈層尺寸與捲動。 */
+.ui-modal-card[data-desktop-window="true"] {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.ui-modal-card[data-desktop-window="true"] > .ui-modal-head {
+  flex: 0 0 auto;
+  min-width: 0;
+  cursor: move;
+  user-select: none;
+}
+
+.ui-modal-card[data-desktop-window="true"] > .ui-modal-head > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ui-modal-card[data-desktop-window="true"] > .ui-modal-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.confirm-modal-card.ui-modal-card[data-desktop-window="true"] {
+  gap: 14px;
+}
+
+.confirm-modal-card.ui-modal-card[data-desktop-window="true"] > .confirm-modal-actions {
+  flex: 0 0 auto;
+}
+
+@container (max-width: 420px) {
+  .ui-modal-actions .small-btn,
+  .confirm-modal-actions .small-btn {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+
 .ui-modal-section + .ui-modal-section {
   margin-top: 16px;
   padding-top: 16px;

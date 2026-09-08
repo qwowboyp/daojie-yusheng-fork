@@ -9,6 +9,8 @@ import { shouldUseMobileUi } from './responsive-viewport';
 import { t } from './i18n';
 import { isReactPanelEnabled } from '../react-ui/bridge/panel-flags';
 import { mountFloatingListPanelLayer, refreshFloatingListPanelLayout } from './floating-list-panel';
+import { dismissPinnedFloatingTooltips } from './floating-tooltip';
+import { bindDesktopWindow } from './desktop-window';
 import {
   WORKSPACES, mountWorkspaceNavigation, mountWorkspaceActions,
   type WorkspaceId, type WorkspaceAction, type WorkspaceDefinition, type WorkspaceNavigationMount,
@@ -145,6 +147,9 @@ export class SidePanel {
   private workspaceTab: string | null = null;
   private workspaceReturnFocus: HTMLElement | null = null;
   private chatOpen: boolean | null = null;
+  private workspaceWindow: ReturnType<typeof bindDesktopWindow> | null = null;
+  private chatWindow: ReturnType<typeof bindDesktopWindow> | null = null;
+  private hudWindow: ReturnType<typeof bindDesktopWindow> | null = null;
   private workspaceActionHandler: ((action: WorkspaceAction) => void) | null = null;
   private readonly workspaceActionRoots: { unmount(): void }[] = [];
   /**
@@ -187,6 +192,7 @@ export class SidePanel {
   show(): void {
     this.panel.classList.remove('hidden');
     this.visible = true;
+    this.hudWindow?.refresh();
     if (this.workspace) refreshFloatingListPanelLayout();
     if (this.workspace) {
       this.chatOpen ??= !this.mobileLayoutActive;
@@ -326,6 +332,7 @@ export class SidePanel {
 
   /** switchTab：处理switch Tab。 */
   switchTab(tabName: string): void {
+    dismissPinnedFloatingTooltips();
     if (this.workspace) {
       if (tabName === 'logbook') {
         this.setChatOpen(true, false);
@@ -383,10 +390,10 @@ export class SidePanel {
     this.setChatOpen(!this.isChatOpen());
   }
 
-  /** 只切換原聊天節點的可見性，不重建頻道、輸入框或訊息列表。 */
+  /** 聊天只摺疊內容，保留原頻道、輸入框、訊息列表與常駐標題列。 */
   setChatOpen(open: boolean, restoreFocus = !open): void {
     if (!this.workspace) return;
-    if (open) this.closeWorkspace(false);
+    if (open && this.mobileLayoutActive) this.closeWorkspace(false);
     this.chatOpen = open;
     this.syncChatVisibility();
     if (!open && restoreFocus) document.getElementById('workspace-chat-toggle')?.focus({ preventScroll: true });
@@ -397,11 +404,15 @@ export class SidePanel {
     if (!chat) return;
     const open = this.isChatOpen();
     this.panel.dataset.chatOpen = String(open);
-    chat.hidden = !open;
-    chat.classList.toggle('hidden', !open);
-    chat.setAttribute('aria-hidden', String(!open));
+    chat.hidden = false;
+    chat.classList.remove('hidden');
+    chat.setAttribute('aria-hidden', 'false');
+    chat.dataset.chatCollapsed = String(!open);
+    const content = document.getElementById('workspace-chat-content');
+    if (content) content.hidden = !open;
     chat.dataset.expanded = String(open);
     this.renderWorkspaceNavigation();
+    this.chatWindow?.refresh();
     this.onLayoutChange?.();
   }
 
@@ -410,6 +421,7 @@ export class SidePanel {
   }
 
   closeWorkspace(restoreFocus = true): void {
+    dismissPinnedFloatingTooltips();
     if (!this.workspace || !this.activeWorkspace) return;
     const previousWorkspace = this.activeWorkspace;
     this.activeWorkspace = null;
@@ -473,11 +485,14 @@ export class SidePanel {
       }
     }
     const chat = document.getElementById('chat-panel');
+    const chatHeader = document.createElement('div');
+    chatHeader.className = 'chat-header';
     if (chat) {
       this.panel.appendChild(chat);
-      chat.hidden = true;
-      chat.setAttribute('aria-hidden', 'true');
-      this.panel.dataset.chatOpen = 'false';
+      const content = document.createElement('div');
+      content.id = 'workspace-chat-content';
+      content.append(...chat.childNodes);
+      chat.append(chatHeader, content);
     }
     for (const definition of WORKSPACES) {
       const tabs = definition.tabs.filter((tab) => {
@@ -495,8 +510,20 @@ export class SidePanel {
       });
       if (tabs.length) this.workspaceDefinitions.push({ ...definition, tabs });
     }
-    this.workspaceNavigation = mountWorkspaceNavigation(dock, controls);
-    this.renderWorkspaceNavigation();
+    this.workspaceNavigation = mountWorkspaceNavigation(dock, controls, chatHeader);
+    this.workspaceWindow = bindDesktopWindow(workspace, {
+      storageKey: () => `workspace-${this.activeWorkspace ?? 'items'}`,
+      handleSelector: '.workspace-heading', minWidth: 360, minHeight: 320,
+    });
+    if (chat) this.chatWindow = bindDesktopWindow(chat, {
+      storageKey: 'chat', handleSelector: '.chat-header', minWidth: 360, minHeight: 280,
+      isCollapsed: () => !this.isChatOpen(),
+    });
+    const hud = document.getElementById('hud');
+    if (hud) this.hudWindow = bindDesktopWindow(hud, {
+      storageKey: 'hud', handleSelector: '.hud-identity', minWidth: 260, minHeight: 140,
+    });
+    this.syncChatVisibility();
     window.addEventListener('keydown', this.handleWorkspaceEscape, true);
   }
 
@@ -527,6 +554,7 @@ export class SidePanel {
     };
     this.writePersistedState();
     this.renderWorkspaceNavigation();
+    this.workspaceWindow?.refresh();
     if (opening) document.getElementById(`workspace-tab-${tabName}`)?.focus({ preventScroll: true });
     this.onLayoutChange?.();
   }
@@ -609,6 +637,9 @@ export class SidePanel {
 
   /** 销毁面板，释放事件监听器。 */
   destroy(): void {
+    this.workspaceWindow?.destroy();
+    this.chatWindow?.destroy();
+    this.hudWindow?.destroy();
     window.removeEventListener('keydown', this.handleWorkspaceEscape, true);
     this.workspaceNavigation?.destroy();
     this.workspaceActionRoots.forEach((root) => root.unmount());

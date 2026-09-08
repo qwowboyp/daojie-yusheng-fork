@@ -314,6 +314,52 @@
       }
     }
 
+    @container workspace-body (max-width: 720px) {
+      .equip-slot-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .equip-slot-item,
+      .equip-slot-empty,
+      .equip-slot-meta {
+        overflow: visible;
+        overflow-wrap: anywhere;
+        text-overflow: clip;
+        white-space: normal;
+      }
+
+      .artifact-slot {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      .artifact-slot-head {
+        align-items: flex-start;
+      }
+
+      .artifact-slot-title,
+      .artifact-state-badge,
+      .artifact-qi-text {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        white-space: normal;
+      }
+
+      .artifact-qi {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .artifact-qi-track {
+        min-width: 0;
+      }
+
+      .artifact-actions {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+    }
+
     .equipment-tooltip-tag-list {
       display: flex;
       flex-wrap: wrap;

@@ -146,7 +146,7 @@ export const InventoryPanel = memo(function InventoryPanel() {
   }, [selectedItem, selectedItemKey]);
 
   return (
-    <div className="panel-section">
+    <div className="panel-section inventory-panel">
       <div className="inventory-panel-head">
         <div className="panel-section-title" data-inventory-title="true">{state.title}</div>
         <div className="inventory-panel-controls">
@@ -274,6 +274,7 @@ const InventoryCell = memo(function InventoryCell({
       data-item-grade-line-visible={item.gradeLineLabel ? 'true' : undefined}
       data-item-action-hint={item.primaryActionHint}
       data-item-selected={selected ? 'true' : undefined}
+      aria-label={`${item.name}，${item.countLabel}${item.primaryActionHint ? `，${item.primaryActionHint}` : ''}`}
       role="button"
       tabIndex={0}
       onClick={(event) => {
@@ -318,7 +319,7 @@ const InventoryCell = memo(function InventoryCell({
         >
           {item.ribbonLabel ?? ''}
         </span>
-        <span className="inventory-cell-count" data-item-count="true">{item.countLabel}</span>
+        <span className="inventory-cell-count" data-item-count="true" data-quantity={item.countLabel.replace(/^x\s*/, '')}>{item.countLabel}</span>
       </div>
       {item.learnedRibbonLabel && (
         <span

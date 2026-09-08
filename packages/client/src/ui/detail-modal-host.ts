@@ -15,6 +15,7 @@ import {
   resolveDetailModalSize,
   type UiModalSize,
 } from './ui-modal-frame';
+import { bindDesktopWindow, type DesktopWindowController } from './desktop-window';
 
 /** 弹层配置项 */
 type DetailModalOptions = {
@@ -260,6 +261,7 @@ class DetailModalHost {
   private bodyRenderEvents: AbortController | null = null;
   /** initialized：initialized。 */
   private initialized = false;
+  private desktopWindow: DesktopWindowController | null = null;
 
   /** 打开弹层，若已有其他 owner 的弹层则先关闭 */
   open(options: DetailModalOptions): void {
@@ -290,6 +292,7 @@ class DetailModalHost {
     });
     this.modal.classList.remove('hidden');
     this.modal.setAttribute('aria-hidden', 'false');
+    this.ensureDesktopWindow().refresh();
     options.onAfterRender?.(this.body, renderSignal);
   }
 
@@ -406,6 +409,19 @@ class DetailModalHost {
       layerClasses: splitModalLayerClasses(variantClass),
       cardClasses: buildModalCardClassList(resolvedSize, variantClass),
     });
+  }
+
+  /** 視窗顯示後才初始化，避免隱藏元素的零尺寸污染 owner 專屬儲存位置。 */
+  private ensureDesktopWindow(): DesktopWindowController {
+    if (!this.desktopWindow) {
+      this.desktopWindow = bindDesktopWindow(this.card, {
+        storageKey: () => `detail-modal:${this.ownerId ?? 'default'}`,
+        handleSelector: '.ui-modal-head',
+        minWidth: 360,
+        minHeight: 320,
+      });
+    }
+    return this.desktopWindow;
   }
 
   /** 为下一轮 body 渲染创建事件生命周期。 */

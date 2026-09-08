@@ -156,6 +156,7 @@ export function setReactHudBreakthroughHandler(callback: (() => void) | null): v
 
 const HudStatusView = memo(function HudStatusView() {
   const state = useExternalStoreSnapshot(hudStatusStore);
+  const [expanded, setExpanded] = useState(false);
   const profileHost = document.getElementById('workspace-profile-content');
   const profile = (
     <div className="hud-grid">
@@ -167,12 +168,19 @@ const HudStatusView = memo(function HudStatusView() {
   );
   return (
     <>
-      <div className="hud-identity">
+      <div className="hud-identity" data-hud-expanded={expanded}>
         <div className="hud-name" id="hud-name">{state.name}</div>
         <div className="hud-title" id="hud-title">{state.title}</div>
+        <button className="hud-expand-toggle" type="button" aria-expanded={expanded} aria-controls="hud-summary-details"
+          aria-label={expanded ? '收合人物資訊' : '展開人物資訊'}
+          onClick={(event) => { event.stopPropagation(); setExpanded(!expanded); }}>
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
+            {expanded ? <path d="M5 12h14" /> : <path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4" />}
+          </svg>
+        </button>
       </div>
       <div className="hud-mobile-scroll">
-        <div className="hud-top-row">
+        <div className="hud-top-row" id="hud-summary-details">
           <div className="hud-realm-block">
             <div className="hud-realm-label">{t('shell.hud-realm-label-realm', undefined)}</div>
             <button
@@ -286,13 +294,13 @@ const HudResource = memo(function HudResource({
   qi?: boolean;
 }) {
   return (
-    <div className="hud-resource-bar">
-      <div className="hud-resource-head">
-        <div className="hud-resource-label">{label}</div>
-        <div className="hud-resource-text" id={textId}>{text}</div>
-      </div>
+    <div className="hud-resource-bar" aria-label={`${label}：${text}`}>
       <div className={`hud-resource-meter${qi ? ' hud-resource-meter--qi' : ''}`}>
         <div className="hud-resource-fill" id={fillId} style={{ width }} />
+        <div className="hud-resource-head">
+          <span className="hud-resource-label">{qi ? '靈' : '命'}：</span>
+          <span className="hud-resource-text" id={textId}>{text}</span>
+        </div>
       </div>
     </div>
   );

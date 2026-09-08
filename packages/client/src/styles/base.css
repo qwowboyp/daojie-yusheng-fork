@@ -19,7 +19,8 @@
       width: 100vw;
       height: 100dvh;
       background: var(--paper-bg);
-      overflow: hidden;
+      /* 固定畫布不可被浮窗 focus / scrollIntoView 捲離原位；捲動由各面板管理。 */
+      overflow: clip;
       transform-origin: center center;
     }
     body.layout-resizing,

@@ -112,6 +112,7 @@ export function bindMainShellInteractions(options: MainShellBindingsOptions): vo
     const chatPane = options.documentRef.getElementById('chat-panel');
     const visible = options.sidePanel.isVisible() && !!chatPane
       && !chatPane.classList.contains('hidden') && !chatPane.hidden
+      && chatPane.dataset.chatCollapsed !== 'true'
       && chatPane.getClientRects().length > 0 && getComputedStyle(chatPane).visibility !== 'hidden';
     options.chatUI.setLogbookVisible(visible);
   };

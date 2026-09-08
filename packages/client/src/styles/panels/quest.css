@@ -180,3 +180,27 @@
       background: var(--surface-hover);
       box-shadow: 0 8px 18px rgba(53, 26, 12, 0.08);
     }
+
+    @container workspace-body (max-width: 720px) {
+      .quest-card,
+      .quest-title-row {
+        min-width: 0;
+      }
+
+      .quest-title-row {
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .quest-title,
+      .quest-desc,
+      .quest-meta,
+      .quest-detail-line {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .quest-status {
+        white-space: normal;
+      }
+    }

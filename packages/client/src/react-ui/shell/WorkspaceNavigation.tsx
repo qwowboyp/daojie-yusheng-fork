@@ -43,19 +43,23 @@ export interface WorkspaceNavigationMount {
 }
 
 /** 導覽和業務內容各自只有一個根；更新導覽不會卸載面板。 */
-export function mountWorkspaceNavigation(dock: HTMLElement, controls: HTMLElement): WorkspaceNavigationMount {
+export function mountWorkspaceNavigation(dock: HTMLElement, controls: HTMLElement, chatHeader: HTMLElement): WorkspaceNavigationMount {
   const dockRoot = createRoot(dock);
   const controlsRoot = createRoot(controls);
+  const chatRoot = createRoot(chatHeader);
   let closeMenu: () => boolean = () => false;
   return {
     update(state) {
       flushSync(() => {
         dockRoot.render(<StrictMode><WorkspaceDock state={state} registerCloseMenu={(handler) => { closeMenu = handler; }} /></StrictMode>);
         controlsRoot.render(<StrictMode><WorkspaceHeader state={state} /></StrictMode>);
+        chatRoot.render(<StrictMode><span>聊天</span><button id="workspace-chat-toggle" className="chat-collapse-toggle" type="button"
+          aria-controls="workspace-chat-content" aria-expanded={state.chatOpen} aria-label={state.chatOpen ? '收合聊天' : '展開聊天'}
+          onClick={state.onToggleChat}>{state.chatOpen ? '−' : '＋'}</button></StrictMode>);
       });
     },
     closeMenu: () => closeMenu(),
-    destroy() { dockRoot.unmount(); controlsRoot.unmount(); },
+    destroy() { dockRoot.unmount(); controlsRoot.unmount(); chatRoot.unmount(); },
   };
 }
 
@@ -70,6 +74,10 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
   const open = (id: WorkspaceId) => { setMenuOpen(false); state.onOpen(id); };
   return (
     <nav className="workspace-dock-nav" aria-label="遊戲功能">
+      <button type="button" className="workspace-dock-button workspace-dock-button--action" data-workspace-open="craft"
+        aria-controls="game-workspace" aria-expanded={state.activeWorkspace === 'craft' && state.activeTab === 'action'}
+        onPointerDown={(event) => { if (event.button === 0) state.onPrepareTab('action'); }}
+        onClick={() => { setMenuOpen(false); state.onSelectTab('action'); }}>交互與行動</button>
       {([{ id: 'items', label: '背包' }, { id: 'cultivation', label: '修行' }, { id: 'quests', label: '任務' }] as const).map((item) => (
         <button key={item.id} type="button" className="workspace-dock-button" data-workspace-open={item.id}
           aria-controls="game-workspace" aria-expanded={state.activeWorkspace === item.id}
@@ -77,8 +85,6 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
       ))}
       <button id="workspace-menu-toggle" type="button" className="workspace-dock-button" aria-expanded={menuOpen}
         aria-controls="workspace-menu" onClick={() => setMenuOpen(!menuOpen)}>全部功能</button>
-      <button id="workspace-chat-toggle" type="button" className="workspace-dock-button" aria-expanded={state.chatOpen}
-        aria-controls="chat-panel" onClick={() => { setMenuOpen(false); state.onToggleChat(); }}>聊天</button>
       <div id="workspace-menu" className="workspace-menu" hidden={!menuOpen}>
         {([
           { label: '人物與成長', ids: ['character', 'items', 'cultivation', 'craft'] },

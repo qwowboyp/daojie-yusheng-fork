@@ -3,6 +3,9 @@
  *
  * 只负责位置、折叠和可见性；业务内容和按钮事件仍由各自面板绑定。
  */
+import { getResponsiveViewportMetrics, getViewportRoot } from './responsive-viewport';
+import { bindDesktopWindow } from './desktop-window';
+
 export type FloatingListPanelState = {
   left: number | null;
   top: number | null;
@@ -97,6 +100,7 @@ export class FloatingListPanel {
   private readonly onClose: (() => void) | null;
   private readonly eventAbort = new AbortController();
   private transientHidden = false;
+  private readonly desktopWindow: ReturnType<typeof bindDesktopWindow>;
   private dragState: {
     pointerId: number;
     offsetX: number;
@@ -134,6 +138,12 @@ export class FloatingListPanel {
     floatingPanels.add(this);
     bringFloatingPanelToFront(this.root);
     this.bindEvents();
+    this.desktopWindow = bindDesktopWindow(this.root, {
+      storageKey: this.storageKey, handleSelector: '[data-floating-list-drag-handle]',
+      minWidth: this.minWidth, minHeight: 140, drag: false,
+      isCollapsed: () => this.state.collapsed,
+      onResize: () => this.repositionWithinViewport(),
+    });
     this.applyState();
     window.addEventListener('resize', () => this.refreshLayout(), { signal: this.eventAbort.signal });
   }
@@ -157,6 +167,7 @@ export class FloatingListPanel {
     if (this.root.hidden) {
       return;
     }
+    this.desktopWindow.refresh();
     this.repositionWithinViewport();
   }
 
@@ -173,6 +184,7 @@ export class FloatingListPanel {
   }
 
   destroy(): void {
+    this.desktopWindow.destroy();
     this.eventAbort.abort();
     floatingPanels.delete(this);
     this.root.remove();
@@ -229,7 +241,11 @@ export class FloatingListPanel {
       if (!this.dragState || this.dragState.pointerId !== event.pointerId) {
         return;
       }
-      this.moveTo(event.clientX - this.dragState.offsetX, event.clientY - this.dragState.offsetY);
+      const space = this.getPositionSpace();
+      this.moveTo(
+        (event.clientX - this.dragState.offsetX - space.offsetX) / space.scale,
+        (event.clientY - this.dragState.offsetY - space.offsetY) / space.scale,
+      );
     }, { signal });
 
     const finishDrag = (event: PointerEvent) => {
@@ -264,10 +280,20 @@ export class FloatingListPanel {
     this.onClose?.();
   }
 
+  /** 浮窗移入設計畫布後使用畫布座標；尚未掛入的 body 浮窗使用視窗座標。 */
+  private getPositionSpace() {
+    if (getViewportRoot(document)?.contains(this.root)) {
+      const metrics = getResponsiveViewportMetrics();
+      return { width: metrics.viewportWidth, height: metrics.viewportHeight,
+        scale: metrics.scale, offsetX: metrics.offsetX, offsetY: metrics.offsetY };
+    }
+    return { width: window.innerWidth, height: window.innerHeight, scale: 1, offsetX: 0, offsetY: 0 };
+  }
+
   private moveTo(left: number, top: number): void {
-    const rect = this.root.getBoundingClientRect();
-    const maxLeft = Math.max(VIEWPORT_MARGIN, window.innerWidth - rect.width - VIEWPORT_MARGIN);
-    const maxTop = Math.max(VIEWPORT_MARGIN, window.innerHeight - rect.height - VIEWPORT_MARGIN);
+    const space = this.getPositionSpace();
+    const maxLeft = Math.max(VIEWPORT_MARGIN, space.width - this.root.offsetWidth - VIEWPORT_MARGIN);
+    const maxTop = Math.max(VIEWPORT_MARGIN, space.height - this.root.offsetHeight - VIEWPORT_MARGIN);
     this.state.left = clamp(left, VIEWPORT_MARGIN, maxLeft);
     this.state.top = clamp(top, VIEWPORT_MARGIN, maxTop);
     this.root.style.left = `${this.state.left}px`;
@@ -287,11 +313,12 @@ export class FloatingListPanel {
     const left = this.state.left ?? this.defaultLeft;
     const top = this.state.top ?? this.defaultTop;
     this.moveTo(left, top);
+    this.desktopWindow.refresh();
+    this.moveTo(left, top);
   }
 
   private repositionWithinViewport(): void {
-    const rect = this.root.getBoundingClientRect();
-    this.moveTo(rect.left, rect.top);
+    this.moveTo(this.state.left ?? this.defaultLeft, this.state.top ?? this.defaultTop);
     this.persist();
   }
 
