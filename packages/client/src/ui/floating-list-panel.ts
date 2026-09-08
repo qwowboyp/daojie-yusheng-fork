@@ -3,7 +3,7 @@
  *
  * 只负责位置、折叠和可见性；业务内容和按钮事件仍由各自面板绑定。
  */
-import { getResponsiveViewportMetrics, getViewportRoot } from './responsive-viewport';
+import { getResponsiveViewportMetrics, getViewportRoot, shouldUseMobileUi } from './responsive-viewport';
 import { bindDesktopWindow } from './desktop-window';
 
 export type FloatingListPanelState = {
@@ -20,6 +20,9 @@ export type FloatingListPanelOptions = {
   className?: string;
   defaultLeft: number;
   defaultTop: number;
+  defaultPosition?: () => { left: number; top: number };
+  defaultCollapsed?: boolean;
+  dismissible?: boolean;
   minWidth?: number;
   maxWidth?: number;
   onBeforeClose?: () => void;
@@ -60,11 +63,11 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
 }
 
-function readStoredState(storageKey: string): FloatingListPanelState {
+function readStoredState(storageKey: string, defaultCollapsed = false): FloatingListPanelState {
   try {
     const raw = window.localStorage.getItem(storageKey);
     if (!raw) {
-      return { left: null, top: null, collapsed: false, closed: false };
+      return { left: null, top: null, collapsed: defaultCollapsed, closed: false };
     }
     const parsed = JSON.parse(raw) as Partial<FloatingListPanelState>;
     return {
@@ -74,7 +77,7 @@ function readStoredState(storageKey: string): FloatingListPanelState {
       closed: parsed.closed === true,
     };
   } catch {
-    return { left: null, top: null, collapsed: false, closed: false };
+    return { left: null, top: null, collapsed: defaultCollapsed, closed: false };
   }
 }
 
@@ -94,6 +97,9 @@ export class FloatingListPanel {
   private readonly storageKey: string;
   private readonly defaultLeft: number;
   private readonly defaultTop: number;
+  private readonly defaultPosition?: FloatingListPanelOptions['defaultPosition'];
+  private readonly dismissible: boolean;
+  private positionCustomized: boolean;
   private readonly minWidth: number;
   private readonly maxWidth: number;
   private readonly onBeforeClose: (() => void) | null;
@@ -111,11 +117,15 @@ export class FloatingListPanel {
     this.storageKey = options.storageKey;
     this.defaultLeft = options.defaultLeft;
     this.defaultTop = options.defaultTop;
+    this.defaultPosition = options.defaultPosition;
+    this.dismissible = options.dismissible !== false;
     this.minWidth = options.minWidth ?? DEFAULT_MIN_WIDTH;
     this.maxWidth = options.maxWidth ?? DEFAULT_MAX_WIDTH;
     this.onBeforeClose = options.onBeforeClose ?? null;
     this.onClose = options.onClose ?? null;
-    this.state = readStoredState(this.storageKey);
+    this.state = readStoredState(this.storageKey, options.defaultCollapsed);
+    this.positionCustomized = !this.defaultPosition || this.state.left !== null || this.state.top !== null;
+    if (!this.dismissible) this.state.closed = false;
 
     this.root = document.createElement('section');
     this.root.id = options.id;
@@ -128,7 +138,7 @@ export class FloatingListPanel {
         <span class="floating-list-panel__title">${options.title}</span>
         <div class="floating-list-panel__tools">
           <button class="floating-list-panel__tool" data-floating-list-collapse="true" type="button" aria-label="摺疊"></button>
-          <button class="floating-list-panel__tool" data-floating-list-close="true" type="button" aria-label="關閉">×</button>
+          ${this.dismissible ? '<button class="floating-list-panel__tool" data-floating-list-close="true" type="button" aria-label="關閉">×</button>' : ''}
         </div>
       </div>
       <div class="floating-list-panel__body" data-floating-list-body="true"></div>
@@ -222,6 +232,7 @@ export class FloatingListPanel {
     }, { signal });
 
     dragHandle?.addEventListener('pointerdown', (event) => {
+      if (this.defaultPosition && shouldUseMobileUi(window)) return;
       const target = event.target;
       if (target instanceof HTMLElement && target.closest('button, a, input, select, textarea')) {
         return;
@@ -242,6 +253,7 @@ export class FloatingListPanel {
         return;
       }
       const space = this.getPositionSpace();
+      this.positionCustomized = true;
       this.moveTo(
         (event.clientX - this.dragState.offsetX - space.offsetX) / space.scale,
         (event.clientY - this.dragState.offsetY - space.offsetY) / space.scale,
@@ -269,9 +281,20 @@ export class FloatingListPanel {
     }, { signal });
 
     closeButton?.addEventListener('click', () => this.close(), { signal });
+    dragHandle?.addEventListener('click', (event) => {
+      if (!this.defaultPosition || !shouldUseMobileUi(window)) return;
+      if (event.target instanceof Element && event.target.closest('button')) return;
+      collapseButton?.click();
+    }, { signal });
   }
 
   private close(): void {
+    if (!this.dismissible) {
+      this.state.collapsed = true;
+      this.persist();
+      this.applyState();
+      return;
+    }
     if (this.state.closed) return;
     this.onBeforeClose?.();
     this.state.closed = true;
@@ -294,10 +317,14 @@ export class FloatingListPanel {
     const space = this.getPositionSpace();
     const maxLeft = Math.max(VIEWPORT_MARGIN, space.width - this.root.offsetWidth - VIEWPORT_MARGIN);
     const maxTop = Math.max(VIEWPORT_MARGIN, space.height - this.root.offsetHeight - VIEWPORT_MARGIN);
-    this.state.left = clamp(left, VIEWPORT_MARGIN, maxLeft);
-    this.state.top = clamp(top, VIEWPORT_MARGIN, maxTop);
-    this.root.style.left = `${this.state.left}px`;
-    this.root.style.top = `${this.state.top}px`;
+    const boundedLeft = clamp(left, VIEWPORT_MARGIN, maxLeft);
+    const boundedTop = clamp(top, VIEWPORT_MARGIN, maxTop);
+    if (!(this.defaultPosition && shouldUseMobileUi(window))) {
+      this.state.left = boundedLeft;
+      this.state.top = boundedTop;
+    }
+    this.root.style.left = `${boundedLeft}px`;
+    this.root.style.top = `${boundedTop}px`;
     this.root.style.right = 'auto';
   }
 
@@ -309,20 +336,26 @@ export class FloatingListPanel {
     if (collapseButton) {
       collapseButton.textContent = this.state.collapsed ? '+' : '−';
       collapseButton.setAttribute('aria-label', this.state.collapsed ? '展開' : '摺疊');
+      collapseButton.setAttribute('aria-expanded', String(!this.state.collapsed));
     }
-    const left = this.state.left ?? this.defaultLeft;
-    const top = this.state.top ?? this.defaultTop;
+    const { left, top } = this.getPreferredPosition();
     this.moveTo(left, top);
     this.desktopWindow.refresh();
     this.moveTo(left, top);
   }
 
   private repositionWithinViewport(): void {
-    this.moveTo(this.state.left ?? this.defaultLeft, this.state.top ?? this.defaultTop);
+    const { left, top } = this.getPreferredPosition();
+    this.moveTo(left, top);
     this.persist();
   }
 
+  private getPreferredPosition(): { left: number; top: number } {
+    if (this.defaultPosition && (!this.positionCustomized || shouldUseMobileUi(window))) return this.defaultPosition();
+    return { left: this.state.left ?? this.defaultLeft, top: this.state.top ?? this.defaultTop };
+  }
+
   private persist(): void {
-    writeStoredState(this.storageKey, this.state);
+    writeStoredState(this.storageKey, this.positionCustomized ? this.state : { ...this.state, left: null, top: null });
   }
 }

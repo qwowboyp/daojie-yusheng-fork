@@ -20,9 +20,10 @@ const fixtureExpression = String.raw`
     const nextPaint = () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     const calls = [];
     const player = {
-      id: 'workspace-proof-player', mapId: 'starter_village', realmLv: 3,
+      id: 'workspace-proof-player', mapId: 'starter_village', realmLv: 30, level: 30,
       name: '驗證玩家長名', displayName: '驗證玩家長名',
-      realm: { realmLv: 3, stage: 'qi_refining' }, foundation: 18, qi: 66000,
+      realm: { realmLv: 30, stage: 'qi_refining', displayName: '煉氣境', review: '初窺門徑', progress: 660, progressToNext: 1000,
+        breakthroughReady: true, breakthrough: { canBreakthrough: true, targetDisplayName: '築基境' } }, foundation: 18, qi: 66000,
       x: 14, y: 22, hp: 680000, maxHp: 1000000, numericStats: { maxQi: 400000 },
       equipment: { weapon: { itemId: 'proof-iron-sword', itemInstanceId: 'proof-sword', name: '驗證鐵劍', desc: '目前裝備的對照武器', type: 'equipment', count: 1, level: 2, equipSlot: 'weapon', equipStats: { maxHp: 18 } } },
       artifacts: [], techniques: [], unlockedMinimapIds: [], inventory: { capacity: 24, items: [] }, quests: [],
@@ -62,14 +63,29 @@ const fixtureExpression = String.raw`
       targetMonsterId: '', rewardText: '少量靈石', rewardItemId: '', rewardItemIds: [], rewards: [], giverId: 'proof-guide', giverName: '引路人',
     }]);
     const actionPanel = new ActionPanel();
-    actionPanel.setCallbacks((actionId) => calls.push({ kind: 'action', actionId }));
-    actionPanel.update([{ id: 'proof-rest', name: '吐納調息', desc: '以靈氣調整內息', type: 'interact', category: 'interact' }], false, false, player);
+    actionPanel.setCallbacks((actionId, requiresTarget, targetMode, range, actionName) => calls.push({
+      kind: 'action', actionId, requiresTarget, targetMode, range, actionName,
+    }));
+    const fixtureActions = [
+      { id: 'wang_qi:toggle', name: '王氣切換', desc: '常駐工具動作，不應顯示為附近行動', type: 'interact', category: 'interact' },
+      { id: 'proof-nearby-interact', name: '調查石碑', desc: '調查附近的古老石碑', type: 'interact', category: 'interact', cooldownLeft: 0, requiresTarget: false },
+      { id: 'battle:force_attack', name: '強攻', desc: '對指定目標發動強攻', type: 'battle', cooldownLeft: 0, requiresTarget: true, targetMode: 'any', range: 4 },
+      { id: 'travel:return_spawn', name: '遁返', desc: '返回綁定的復活點', type: 'travel', cooldownLeft: 0, requiresTarget: false },
+      { id: 'loot:open', name: '拿取', desc: '拿取指定地格的物品', type: 'toggle', cooldownLeft: 0, requiresTarget: true, targetMode: 'tile', range: 1 },
+      { id: 'client:observe', name: '觀察', desc: '觀察指定地格', type: 'toggle', cooldownLeft: 0, requiresTarget: true, targetMode: 'tile', range: 8 },
+    ];
+    actionPanel.update(fixtureActions, false, false, player);
+    const quickActionsHost = document.getElementById('chat-quick-actions');
+    if (quickActionsHost instanceof HTMLElement && typeof actionPanel.mountQuickActions === 'function') {
+      actionPanel.mountQuickActions(quickActionsHost);
+    }
     const hud = new HUD();
-    hud.update(player, { mapName: '驗證山谷', titleLabel: '築基修士', showRealmAction: false });
+    hud.setCallbacks(() => calls.push({ kind: 'breakthrough' }));
+    hud.update(player, { mapName: '驗證山谷', titleLabel: '築基修士', showRealmAction: true, realmActionLabel: '突破' });
     const runtimeErrors = [];
     window.addEventListener('error', (event) => runtimeErrors.push(String(event.error?.stack ?? event.message)));
     window.addEventListener('unhandledrejection', (event) => runtimeErrors.push(String(event.reason?.stack ?? event.reason)));
-    window.__gameWorkspaceProof = { calls, player, inventory, inventoryPanel, equipmentPanel, questPanel, actionPanel, hud, nextPaint, runtimeErrors };
+    window.__gameWorkspaceProof = { calls, player, inventory, inventoryPanel, equipmentPanel, questPanel, actionPanel, hud, quickActions: fixtureActions, nextPaint, runtimeErrors };
     await nextPaint();
     return {
       inventoryCells: document.querySelectorAll('[data-inventory-grid="true"] [data-open-item]').length,
@@ -275,7 +291,7 @@ const measureLargeDesktopExpression = String.raw`
     const html = document.documentElement;
     const root = document.getElementById('app-viewport-root');
     const hud = document.getElementById('hud');
-    const name = document.getElementById('hud-name');
+    const name = document.querySelector('#hud-name .hud-name-text');
     const currentTime = document.getElementById('map-current-time');
     const chat = document.getElementById('chat-panel');
     const tabs = chat?.querySelector('.chat-tabs');
@@ -566,6 +582,183 @@ const verifyMobileHudCompactExpression = String.raw`
   })()
 `;
 
+const verifyHudRowsExpression = String.raw`
+  (async () => {
+    const proof = window.__gameWorkspaceProof;
+    proof.hud.update(proof.player, { mapName: '驗證山谷', titleLabel: '築基修士', showRealmAction: true, realmActionLabel: '突破' });
+    await proof.nextPaint();
+    const expandToggle = document.querySelector('.hud-expand-toggle');
+    const wasExpanded = expandToggle instanceof HTMLButtonElement && expandToggle.getAttribute('aria-expanded') === 'true';
+    if (expandToggle instanceof HTMLButtonElement && !wasExpanded) {
+      expandToggle.click();
+      await proof.nextPaint();
+    }
+    const text = (selector) => document.querySelector(selector)?.textContent?.trim() ?? '';
+    const resource = (textSelector, barSelector) => {
+      const value = document.querySelector(textSelector);
+      const bar = document.querySelector(barSelector);
+      if (!(value instanceof HTMLElement) || !(bar instanceof HTMLElement)) throw new Error('HUD 資源節點缺失：' + textSelector);
+      const group = value.closest('.hud-resource-head') ?? value;
+      const meter = value.closest('.hud-resource-meter') ?? bar;
+      const groupStyle = getComputedStyle(group);
+      const meterStyle = getComputedStyle(meter);
+      return { text: value.textContent?.trim() ?? '', whiteSpace: groupStyle.whiteSpace, clipped: group.scrollWidth > group.clientWidth + 1,
+        barHeight: Math.max(meter.getBoundingClientRect().height, Number.parseFloat(meterStyle.height) || 0) };
+    };
+    const rows = {
+      name: text('#hud-name'), level: text('#hud-realm-level'), realm: text('#hud-realm'), title: text('#hud-title'),
+      realmReview: text('#hud-realm-sub'), cultivate: text('#hud-cultivate'),
+    };
+    const nameNode = document.getElementById('hud-name');
+    const levelNode = document.getElementById('hud-realm-level');
+    const breakthrough = document.getElementById('hud-breakthrough');
+    const hp = resource('#hud-hp-text', '#hud-hp-bar');
+    const qi = resource('#hud-qi-text', '#hud-qi-bar');
+    const callbackBefore = proof.calls.length;
+    if (breakthrough instanceof HTMLButtonElement && !breakthrough.hidden) breakthrough.click();
+    const result = { rows, hp, qi, breakthrough: breakthrough instanceof HTMLButtonElement ? {
+        visible: Boolean(breakthrough.getClientRects().length) && !breakthrough.hidden,
+        minHeight: Number.parseFloat(getComputedStyle(breakthrough).minHeight) || breakthrough.getBoundingClientRect().height,
+        text: breakthrough.textContent?.trim() ?? '',
+      } : null, breakthroughCallback: proof.calls.slice(callbackBefore).some((entry) => entry.kind === 'breakthrough'),
+      levelInName: nameNode instanceof HTMLElement && levelNode instanceof HTMLElement && nameNode.contains(levelNode),
+      levelTop: levelNode instanceof HTMLElement ? levelNode.getBoundingClientRect().top : -1,
+      nameTop: nameNode instanceof HTMLElement ? nameNode.getBoundingClientRect().top : -1 };
+    if (expandToggle instanceof HTMLButtonElement && !wasExpanded) {
+      expandToggle.click();
+      await proof.nextPaint();
+    }
+    return result;
+  })()
+`;
+
+const verifyInteractionAndQuickActionsExpression = String.raw`
+  (async () => {
+    const proof = window.__gameWorkspaceProof;
+    const nextPaint = proof.nextPaint;
+    const panel = document.getElementById('floating-interaction-list');
+    const zoom = document.querySelector('.map-zoom-stack');
+    const readPanel = () => {
+      const node = document.getElementById('floating-interaction-list');
+      if (!(node instanceof HTMLElement)) return null;
+      const rect = node.getBoundingClientRect();
+      return { node, rect: { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom },
+        collapsed: node.dataset.collapsed === 'true' || node.classList.contains('is-collapsed'),
+        buttons: [...node.querySelectorAll('.floating-interaction-quick-btn')].map((button) => ({
+          id: button.getAttribute('data-action') ?? button.getAttribute('data-action-exec') ?? '',
+          disabled: button instanceof HTMLButtonElement && button.disabled,
+          visible: Boolean(button.getClientRects().length),
+        })) };
+    };
+    const initialPanel = readPanel();
+    const quickHost = document.getElementById('chat-quick-actions');
+    const quickButtons = quickHost ? [...quickHost.querySelectorAll('.chat-action-buttons [data-quick-action-id]')] : [];
+    const expected = ['battle:force_attack', 'travel:return_spawn', 'loot:open', 'client:observe'];
+    const quick = expected.map((id) => {
+      const button = quickButtons.find((entry) => entry.getAttribute('data-quick-action-id') === id);
+      if (!(button instanceof HTMLButtonElement)) throw new Error('聊天快捷行動缺失：' + id);
+      const description = proof.quickActions.find((action) => action.id === id)?.desc ?? '';
+      return { id, button, description, disabled: button.disabled, visible: Boolean(button.getClientRects().length) };
+    });
+    const callsBeforeHover = proof.calls.length;
+    const hoverDescriptions = {};
+    for (const entry of quick) {
+      entry.button.dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
+      entry.button.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
+      await nextPaint();
+      hoverDescriptions[entry.id] = document.querySelector('.floating-tooltip.visible')?.textContent?.trim() ?? '';
+      entry.button.dispatchEvent(new MouseEvent('mouseout', { bubbles: true }));
+    }
+    await nextPaint();
+    const hoverCallCount = proof.calls.length;
+    for (const entry of quick) {
+      if (entry.disabled) continue;
+      entry.button.click();
+      await nextPaint();
+    }
+    const actionCalls = proof.calls.filter((entry) => entry.kind === 'action' && expected.includes(entry.actionId));
+    const coolingActions = proof.quickActions.map((action) => action.id === 'client:observe' ? { ...action, cooldownLeft: 3 } : action);
+    proof.actionPanel.update(coolingActions, false, false, proof.player);
+    if (quickHost instanceof HTMLElement && typeof proof.actionPanel.mountQuickActions === 'function') proof.actionPanel.mountQuickActions(quickHost);
+    await nextPaint();
+    const cooledObserve = quickHost?.querySelector('[data-quick-action-id="client:observe"]');
+    const input = document.getElementById('chat-input');
+    if (!(input instanceof HTMLInputElement)) throw new Error('聊天快捷行動驗證缺少輸入框');
+    input.focus();
+    const focusBeforeDisclosure = document.activeElement === input;
+    const toggle = quickHost?.querySelector('.chat-action-toggle');
+    let disclosure = null;
+    if (toggle instanceof HTMLButtonElement) {
+      if (toggle.getAttribute('aria-expanded') !== 'true') {
+        toggle.click();
+        await nextPaint();
+      }
+      const row = quickHost.querySelector('.chat-action-buttons');
+      const help = quickHost.querySelector('.chat-action-help');
+      disclosure = { expanded: toggle.getAttribute('aria-expanded'), rowVisible: row instanceof HTMLElement && Boolean(row.getClientRects().length),
+        helpInteractive: help instanceof HTMLDetailsElement && help.querySelector('summary') instanceof HTMLElement,
+        inputRetained: input.isConnected, focusAfter: document.activeElement === input };
+    }
+    const panelAfter = readPanel();
+    const zoomRect = zoom?.getBoundingClientRect();
+    return {
+      nearby: initialPanel ? { visible: Boolean(initialPanel.node.getClientRects().length), collapsed: initialPanel.collapsed, buttons: initialPanel.buttons,
+        belowZoom: zoomRect ? initialPanel.rect.top >= zoomRect.bottom - 2 : false } : null,
+      quick: quick.map(({ id, description, disabled, visible }) => ({ id, description, disabled, visible })),
+      hoverCallCount, callsBeforeHover, hoverDidNotExecute: hoverCallCount === callsBeforeHover, hoverDescriptions,
+      actionCalls, expectedTargeting: actionCalls.map(({ actionId, requiresTarget, targetMode, range }) => ({ actionId, requiresTarget, targetMode, range })),
+      cooldownDisabled: cooledObserve instanceof HTMLButtonElement && cooledObserve.disabled,
+      disclosure, focusBeforeDisclosure, inputRetained: input.isConnected, panelAfter: panelAfter ? panelAfter.buttons : [],
+    };
+  })()
+`;
+
+const verifyMobileInteractionExpression = String.raw`
+  (async () => {
+    const proof = window.__gameWorkspaceProof;
+    const panel = document.getElementById('floating-interaction-list');
+    if (!(panel instanceof HTMLElement)) throw new Error('手機真實附近行動浮窗不存在');
+    const collapse = panel.querySelector('[data-floating-list-collapse="true"]');
+    if (!(collapse instanceof HTMLButtonElement)) throw new Error('手機附近行動缺少收合控制');
+    const initiallyCollapsed = panel.classList.contains('is-collapsed') || panel.dataset.collapsed === 'true';
+    if (!initiallyCollapsed) collapse.click();
+    await proof.nextPaint();
+    const collapsed = panel.classList.contains('is-collapsed') || panel.dataset.collapsed === 'true';
+    collapse.click();
+    await proof.nextPaint();
+    const nearby = panel.querySelector('.floating-interaction-quick-btn[data-action="proof-nearby-interact"], .floating-interaction-quick-btn[data-action-exec="proof-nearby-interact"]');
+    const before = proof.calls.length;
+    if (!(nearby instanceof HTMLButtonElement)) throw new Error('手機附近行動缺少真實 action 按鈕');
+    nearby.click();
+    await proof.nextPaint();
+    return { initiallyCollapsed, collapsed, expanded: !(panel.classList.contains('is-collapsed') || panel.dataset.collapsed === 'true'),
+      executed: proof.calls.slice(before).some((entry) => entry.kind === 'action' && entry.actionId === 'proof-nearby-interact'),
+      visible: Boolean(nearby.getClientRects().length) };
+  })()
+`;
+
+const verifyInteractionPresenceExpression = String.raw`
+  (async () => {
+    const proof = window.__gameWorkspaceProof;
+    const utilityOnly = proof.quickActions.filter((action) => action.id === 'wang_qi:toggle');
+    proof.actionPanel.update(utilityOnly, false, false, proof.player);
+    await proof.nextPaint();
+    const hiddenPanel = document.getElementById('floating-interaction-list');
+    const hidden = !(hiddenPanel instanceof HTMLElement) || hiddenPanel.hidden || hiddenPanel.getClientRects().length === 0;
+    proof.actionPanel.update(proof.quickActions, false, false, proof.player);
+    const host = document.getElementById('chat-quick-actions');
+    if (host instanceof HTMLElement && typeof proof.actionPanel.mountQuickActions === 'function') proof.actionPanel.mountQuickActions(host);
+    await proof.nextPaint();
+    const shownPanel = document.getElementById('floating-interaction-list');
+    const nearby = shownPanel?.querySelector('.floating-interaction-quick-btn[data-action="proof-nearby-interact"], .floating-interaction-quick-btn[data-action-exec="proof-nearby-interact"]');
+    const before = proof.calls.length;
+    if (nearby instanceof HTMLButtonElement) nearby.click();
+    await proof.nextPaint();
+    return { hidden, shown: shownPanel instanceof HTMLElement && !shownPanel.hidden && shownPanel.getClientRects().length > 0,
+      restored: nearby instanceof HTMLButtonElement, callback: proof.calls.slice(before).some((entry) => entry.kind === 'action' && entry.actionId === 'proof-nearby-interact') };
+  })()
+`;
+
 async function resizeDesktopWorkspace(cdp, width, height) {
   const pointer = await cdp.evaluate(`(() => {
     const workspace = document.getElementById('game-workspace');
@@ -635,6 +828,23 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assert(fixture.actionTabs > 0, '正式行動 Panel 未載入非空 fixture');
   assert.match(fixture.hpText ?? '', /68萬\s*\/\s*100萬/, '正式 HUD 未顯示長數值 fixture 氣血');
   assert.match(fixture.qiText ?? '', /6\.6萬\s*\/\s*40萬/, '正式 HUD 未顯示長數值 fixture 靈氣');
+  const hudRows = await cdp.evaluate(verifyHudRowsExpression);
+  assert(hudRows.rows.name.includes('驗證玩家長名'), 'HUD 五行缺少玩家名稱');
+  assert.match(hudRows.rows.level, /lv\s*30/i, `HUD 未顯示 LV30：${hudRows.rows.level}`);
+  assert.equal(hudRows.levelInName, true, 'HUD LV30 未位於玩家名稱列');
+  assert(Math.abs(hudRows.levelTop - hudRows.nameTop) < 48, 'HUD LV30 未與玩家名稱保持同列');
+  assert.notEqual(hudRows.rows.realm, '', 'HUD 缺少境界主字');
+  assert.notEqual(hudRows.rows.title, '', 'HUD 缺少境界稱號小字');
+  assert.notEqual(hudRows.rows.realmReview, '', 'HUD 缺少境界評語小字');
+  assert.match(hudRows.rows.cultivate, /^修為：660 \/ 1000$/, 'HUD 未使用精簡修為 current/max 格式');
+  assert.equal(hudRows.breakthrough?.visible, true, 'HUD 缺少可見突破操作');
+  assert(hudRows.breakthrough?.minHeight >= 44, `HUD 突破操作觸控高度不足：${hudRows.breakthrough?.minHeight}`);
+  assert.equal(hudRows.breakthroughCallback, true, 'HUD 突破操作未保留 callback');
+  for (const resource of [hudRows.hp, hudRows.qi]) {
+    assert.equal(resource.whiteSpace, 'nowrap', `HUD 資源文字允許換行：${resource.text}`);
+    assert.equal(resource.clipped, false, `HUD 資源文字被裁切：${resource.text}`);
+    assert(Math.abs(resource.barHeight - 12) <= 1, `HUD 資源 bar 高度不是 12px：${resource.barHeight}`);
+  }
   const mobileHud = await cdp.evaluate(verifyMobileHudCompactExpression);
   assert.equal(mobileHud.compact.expanded, 'false', '手機 HUD 初始未維持 compact');
   assert.equal(mobileHud.compact.identity, 'false', '手機 HUD 初始 data-hud-expanded 錯誤');
@@ -841,6 +1051,39 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
     return document.activeElement === picker;
   })()`);
   assert.equal(pickerFocused, true, '聊天頻道選擇器無法取得焦點點擊');
+  const interactionAndQuick = await cdp.evaluate(verifyInteractionAndQuickActionsExpression);
+  assert.equal(interactionAndQuick.nearby?.visible, true, '存在真實附近行動時未顯示 interaction 浮窗');
+  assert.equal(interactionAndQuick.nearby?.belowZoom, true, 'interaction 浮窗未錨定在縮放控制下方');
+  assert.equal(interactionAndQuick.nearby?.buttons.some((button) => button.id === 'wang_qi:toggle'), false,
+    '常駐王氣切換錯誤顯示為附近行動');
+  assert.equal(interactionAndQuick.nearby?.buttons.some((button) => button.id === 'proof-nearby-interact'), true,
+    '真實附近行動未進入 interaction 浮窗');
+  assert.deepEqual(interactionAndQuick.quick.map((button) => button.id),
+    ['battle:force_attack', 'travel:return_spawn', 'loot:open', 'client:observe'], '聊天快捷行動 ID 不完整或順序錯誤');
+  assert(interactionAndQuick.quick.every((button) => button.visible && button.description !== ''), '聊天快捷行動缺少可見按鈕或原始說明');
+  assert.equal(interactionAndQuick.hoverDidNotExecute, true, '聊天快捷行動 hover 錯誤執行 callback');
+  for (const [id, description] of Object.entries({
+    'battle:force_attack': '對指定目標發動強攻',
+    'travel:return_spawn': '返回綁定的復活點',
+    'loot:open': '拿取指定地格的物品',
+    'client:observe': '觀察指定地格',
+  })) {
+    assert(interactionAndQuick.hoverDescriptions[id]?.includes(description), `聊天快捷行動 hover 未顯示完整說明：${id}`);
+  }
+  assert.equal(interactionAndQuick.cooldownDisabled, true, '聊天快捷行動未遵守冷卻 disabled 狀態');
+  for (const id of ['battle:force_attack', 'travel:return_spawn', 'loot:open', 'client:observe']) {
+    assert.equal(interactionAndQuick.actionCalls.some((call) => call.actionId === id), true, `聊天快捷行動未執行 callback：${id}`);
+  }
+  await captureWorkspace(cdp, 'implemented-gameplay-actions.png');
+  const attackCall = interactionAndQuick.expectedTargeting.find((call) => call.actionId === 'battle:force_attack');
+  assert.equal(attackCall?.requiresTarget, true, '強攻快捷行動遺失 targeting 參數');
+  assert.equal(attackCall?.targetMode, 'any', '強攻快捷行動 targetMode 錯誤');
+  assert.equal(interactionAndQuick.disclosure?.inputRetained, true, '聊天行動 disclosure 破壞輸入節點');
+  const interactionPresence = await cdp.evaluate(verifyInteractionPresenceExpression);
+  assert.equal(interactionPresence.hidden, true, '沒有附近 action 時 interaction 浮窗仍常駐');
+  assert.equal(interactionPresence.shown, true, '恢復附近 action 後 interaction 浮窗未重新顯示');
+  assert.equal(interactionPresence.restored, true, '附近 action 隱藏後重新顯示缺少按鈕');
+  assert.equal(interactionPresence.callback, true, '附近 action 隱藏後重新顯示 callback 未重新綁定');
   const chatCollapse = await cdp.evaluate(verifyChatCollapseExpression);
   assert.equal(chatCollapse.collapsed.state, 'true', '聊天收合未更新 data-chat-collapsed');
   assert.equal(chatCollapse.collapsed.ariaExpanded, 'false', '聊天收合未更新 aria-expanded');
@@ -858,6 +1101,21 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assert.notEqual(darkTheme.after, darkTheme.before, '工作窗仍使用淺色背景');
   await captureWorkspace(cdp, 'implemented-dark.png');
   await cdp.evaluate(`(async () => { const { updateUiColorMode } = await import('/src/ui/ui-style-config.ts'); updateUiColorMode('light'); await window.__gameWorkspaceProof.nextPaint(); })()`);
+
+  await setViewport(cdp, PHONE);
+  const mobileInteractionAndQuick = await cdp.evaluate(verifyInteractionAndQuickActionsExpression);
+  assert.equal(mobileInteractionAndQuick.disclosure?.expanded, 'true', '手機聊天行動列未能展開');
+  assert.equal(mobileInteractionAndQuick.disclosure?.rowVisible, true, '手機聊天行動列展開後不可見');
+  assert.equal(mobileInteractionAndQuick.disclosure?.helpInteractive, true, '手機聊天行動說明不可操作');
+  assert.equal(mobileInteractionAndQuick.disclosure?.inputRetained, true, '手機聊天行動 disclosure 破壞輸入框');
+  await captureWorkspace(cdp, 'implemented-mobile-actions-open.png');
+  const mobileInteraction = await cdp.evaluate(verifyMobileInteractionExpression);
+  assert.equal(mobileInteraction.collapsed, true, '手機附近行動浮窗預設未收合');
+  assert.equal(mobileInteraction.expanded, true, '手機附近行動浮窗無法展開');
+  assert.equal(mobileInteraction.executed, true, '手機附近行動展開後無法執行真實 action');
+  assert.equal(mobileInteraction.visible, true, '手機附近行動按鈕不可見');
+  await setViewport(cdp, LARGE_DESKTOP, { touch: false });
+  await waitFor(() => cdp.evaluate(`document.documentElement.dataset.desktopScaleLock === 'true'`), '恢復大型桌面 responsive locked');
 
   // Escape 先關工作窗；它不得當作取消活動意圖送至 fixture callback。
   await cdp.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 });

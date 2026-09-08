@@ -53,7 +53,7 @@ export function mountWorkspaceNavigation(dock: HTMLElement, controls: HTMLElemen
       flushSync(() => {
         dockRoot.render(<StrictMode><WorkspaceDock state={state} registerCloseMenu={(handler) => { closeMenu = handler; }} /></StrictMode>);
         controlsRoot.render(<StrictMode><WorkspaceHeader state={state} /></StrictMode>);
-        chatRoot.render(<StrictMode><span>聊天</span><button id="workspace-chat-toggle" className="chat-collapse-toggle" type="button"
+        chatRoot.render(<StrictMode><span className="chat-header-title">聊天</span><div id="chat-quick-actions" /><button id="workspace-chat-toggle" className="chat-collapse-toggle" type="button"
           aria-controls="workspace-chat-content" aria-expanded={state.chatOpen} aria-label={state.chatOpen ? '收合聊天' : '展開聊天'}
           onClick={state.onToggleChat}>{state.chatOpen ? '−' : '＋'}</button></StrictMode>);
       });
@@ -74,10 +74,6 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
   const open = (id: WorkspaceId) => { setMenuOpen(false); state.onOpen(id); };
   return (
     <nav className="workspace-dock-nav" aria-label="遊戲功能">
-      <button type="button" className="workspace-dock-button workspace-dock-button--action" data-workspace-open="craft"
-        aria-controls="game-workspace" aria-expanded={state.activeWorkspace === 'craft' && state.activeTab === 'action'}
-        onPointerDown={(event) => { if (event.button === 0) state.onPrepareTab('action'); }}
-        onClick={() => { setMenuOpen(false); state.onSelectTab('action'); }}>交互與行動</button>
       {([{ id: 'items', label: '背包' }, { id: 'cultivation', label: '修行' }, { id: 'quests', label: '任務' }] as const).map((item) => (
         <button key={item.id} type="button" className="workspace-dock-button" data-workspace-open={item.id}
           aria-controls="game-workspace" aria-expanded={state.activeWorkspace === item.id}

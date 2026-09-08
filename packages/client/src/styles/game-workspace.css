@@ -74,84 +74,7 @@
   padding: 12px;
   overflow: visible;
 }
-#game-shell[data-workspace-mode="true"] .hud-identity {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  gap: 10px;
-  padding: 0;
-  border: 0;
-}
-#game-shell[data-workspace-mode="true"] .hud-name {
-  font-size: max(18px, var(--font-size-18));
-  line-height: 1.2;
-  letter-spacing: 0;
-  writing-mode: horizontal-tb;
-}
-#game-shell[data-workspace-mode="true"] .hud-title {
-  font-size: max(12px, var(--font-size-12));
-  letter-spacing: 0;
-  writing-mode: horizontal-tb;
-}
-#game-shell[data-workspace-mode="true"] .hud-mobile-scroll { display: contents; }
-#game-shell[data-workspace-mode="true"] .hud-top-row { display: block; }
-#game-shell[data-workspace-mode="true"] .hud-realm-block {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 4px 8px;
-  padding: 0;
-  min-height: 0;
-  border: 0;
-  background: none;
-}
-#game-shell[data-workspace-mode="true"] .hud-realm-label,
-#game-shell[data-workspace-mode="true"] .hud-realm-sub { display: none; }
-#game-shell[data-workspace-mode="true"] .hud-realm-main {
-  grid-column: 1;
-  grid-row: 1;
-  padding: 0;
-  min-height: 0;
-}
-#game-shell[data-workspace-mode="true"] .hud-realm-heading { gap: 6px; }
-#game-shell[data-workspace-mode="true"] .hud-realm-value {
-  font: 600 max(14px, var(--font-size-14)) / 1.4 var(--font-role-body);
-  text-align: left;
-}
-#game-shell[data-workspace-mode="true"] .hud-realm-level { font-size: 12px; }
-#game-shell[data-workspace-mode="true"] .hud-realm-action {
-  position: static;
-  grid-column: 2;
-  grid-row: 1 / 3;
-  min-width: 48px;
-  min-height: 44px;
-  max-width: 128px;
-  padding: 4px 8px;
-  border-radius: 5px;
-  font-size: 13px;
-}
-#game-shell[data-workspace-mode="true"] .hud-progress-shell {
-  grid-column: 1;
-  grid-row: 2;
-  padding: 0;
-  border: 0;
-}
-#game-shell[data-workspace-mode="true"] .hud-progress-value {
-  position: static;
-  transform: none;
-  text-align: left;
-  font-size: max(11px, var(--font-size-11));
-  line-height: 1.3;
-}
-#game-shell[data-workspace-mode="true"] .hud-progress-track { margin-top: 3px; height: 4px; }
-#game-shell[data-workspace-mode="true"] .hud-resource-bars {
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
-#game-shell[data-workspace-mode="true"] .hud-resource-bar { gap: 3px; }
-#game-shell[data-workspace-mode="true"] .hud-resource-label,
-#game-shell[data-workspace-mode="true"] .hud-resource-text { font-size: max(12px, var(--font-size-12)); margin: 0; }
 .hud-expand-toggle { display: none; }
-#game-shell[data-workspace-mode="true"] .hud-resource-label { flex-shrink: 0; white-space: nowrap; }
 
 /* 原本占欄的地圖工具改成小型情境控件。 */
 #game-shell[data-workspace-mode="true"] .map-side-rail {
@@ -168,7 +91,7 @@
   overflow: visible;
 }
 #game-shell[data-workspace-mode="true"] .map-side-rail.left {
-  top: 222px;
+  top: 186px;
   left: max(12px, env(safe-area-inset-left, 0px));
 }
 #game-shell[data-workspace-mode="true"] .map-side-rail.right {
@@ -375,7 +298,18 @@
 }
 #game-shell[data-workspace-mode="true"] #chat-panel.hidden { display: none; }
 #game-shell[data-workspace-mode="true"] #chat-panel[hidden] { display: none; }
-.chat-header { display: flex; flex: 0 0 44px; align-items: center; justify-content: space-between; gap: 12px; font-size: 14px; font-weight: 700; }
+.chat-header { display: grid; grid-template-columns: auto minmax(0, 1fr) 44px; flex: 0 0 auto; min-height: 44px; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; }
+.chat-header-title { grid-column: 1; grid-row: 1; }
+.chat-header > .chat-collapse-toggle { grid-column: 3; grid-row: 1; }
+#chat-quick-actions, .react-panel-host--quick-actions, .chat-quick-actions { display: contents; }
+.chat-action-toggle, .chat-action-help { display: none; }
+.chat-action-buttons { grid-column: 2; grid-row: 1; display: flex; flex-wrap: wrap; gap: 6px; }
+.chat-action-buttons button, .chat-action-toggle { min-height: 44px; min-width: 44px; padding: 6px 9px; border: 1px solid var(--wash-ink); border-radius: 5px; background: var(--surface-muted); color: var(--ink-dark); font: inherit; cursor: pointer; }
+.chat-action-buttons button:disabled { opacity: .5; cursor: not-allowed; }
+.chat-action-buttons button:focus-visible, .chat-action-toggle:focus-visible { outline: 2px solid var(--cinnabar); outline-offset: 2px; }
+#floating-interaction-list .floating-list-panel__bar { min-height: 44px; }
+#floating-interaction-list .floating-list-panel__tool { min-height: 32px; min-width: 32px; }
+#floating-interaction-list .floating-interaction-quick-btn { min-height: 44px; white-space: normal; overflow-wrap: anywhere; }
 .chat-collapse-toggle { width: 44px; height: 44px; border: 0; border-radius: 6px; background: var(--surface-muted); color: var(--ink-dark); font-size: 22px; cursor: pointer; }
 #workspace-chat-content { display: flex; flex: 1 1 auto; flex-direction: column; min-height: 0; }
 #workspace-chat-content[hidden] { display: none; }
@@ -408,22 +342,13 @@
     left: max(8px, env(safe-area-inset-left, 0px));
     width: calc(100% - 124px);
     max-width: 300px;
-    max-height: 152px;
+    max-height: min(360px, calc(100% - 96px));
   }
   #game-shell[data-workspace-mode="true"] .hud-panel { padding: 8px; gap: 5px; }
-  #game-shell[data-workspace-mode="true"] .hud-name { font-size: 16px; }
-  #game-shell[data-workspace-mode="true"] .hud-title { display: none; }
-  #game-shell[data-workspace-mode="true"] #hud { max-height: min(360px, calc(100% - 96px)); }
-  #game-shell[data-workspace-mode="true"] .hud-identity { align-items: center; }
-  #game-shell[data-workspace-mode="true"] .hud-name { min-width: 0; overflow-wrap: anywhere; }
   #game-shell[data-workspace-mode="true"] .hud-expand-toggle { display: inline-flex; flex: 0 0 44px; width: 44px; height: 44px; align-items: center; justify-content: center; margin-left: auto; border: 1px solid var(--border-soft); border-radius: 6px; background: var(--surface-muted); color: var(--ink-dark); cursor: pointer; }
   #game-shell[data-workspace-mode="true"] .hud-identity[data-hud-expanded="false"] + .hud-mobile-scroll .hud-top-row { display: none; }
-  #game-shell[data-workspace-mode="true"] .hud-identity[data-hud-expanded="true"] .hud-title { display: block; }
-  #game-shell[data-workspace-mode="true"] .hud-realm-action { max-width: 96px; font-size: 12px; }
-  #game-shell[data-workspace-mode="true"] .hud-resource-bars { grid-template-columns: 1fr; gap: 4px; }
-  #game-shell[data-workspace-mode="true"] .hud-resource-bar { display: grid; grid-template-columns: 1fr; gap: 2px; }
-  #game-shell[data-workspace-mode="true"] .hud-resource-meter { height: 24px; }
-  #game-shell[data-workspace-mode="true"] .map-side-rail.left { top: 172px; left: 8px; }
+  #game-shell[data-workspace-mode="true"] .map-side-rail.left { top: 112px; left: 8px; }
+  #game-shell[data-workspace-mode="true"]:has(.hud-identity[data-hud-expanded="true"]) .map-side-rail.left { top: 208px; }
   #game-shell[data-workspace-mode="true"] .map-side-rail.right { right: 8px; max-width: 108px; }
   #game-shell[data-workspace-mode="true"] .map-minimap-shell { right: 8px; top: 96px; }
   #game-shell[data-workspace-mode="true"] .map-zoom-stack { width: 128px; }
@@ -431,7 +356,6 @@
   #game-dock { left: max(8px, env(safe-area-inset-left, 0px)); right: max(8px, env(safe-area-inset-right, 0px)); bottom: max(8px, env(safe-area-inset-bottom, 0px)); max-width: none; }
   .workspace-dock-nav { width: 100%; }
   .workspace-dock-nav button { flex: 1 1 0; min-width: 0; padding: 8px 4px; font-size: 14px; }
-  .workspace-dock-nav .workspace-dock-button--action { flex: 1.7 1 0; }
   .workspace-menu { width: 100%; }
   #game-workspace {
     left: max(6px, env(safe-area-inset-left, 0px));
@@ -448,6 +372,15 @@
   #workspace-profile-content .hud-grid { grid-template-columns: 1fr; }
   .workspace-action-grid { gap: 8px; }
   #game-shell[data-workspace-mode="true"] #chat-panel { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); left: 8px; width: calc(100% - 16px); height: min(340px, calc(100% - 240px)); }
+  .chat-action-toggle { display: inline-flex; grid-column: 2; grid-row: 1; justify-self: end; align-items: center; }
+  .chat-action-buttons { display: none; grid-column: 1 / -1; grid-row: 2; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .chat-quick-actions[data-expanded="true"] .chat-action-buttons { display: grid; }
+  .chat-quick-actions[data-expanded="true"] .chat-action-help { display: block; grid-column: 1 / -1; grid-row: 3; max-height: min(200px, 28dvh); overflow: auto; overscroll-behavior: contain; font-weight: normal; }
+  .chat-action-help summary { min-height: 44px; padding: 10px 4px; cursor: pointer; }
+  .chat-action-help p, .chat-action-help dd { margin: 4px 0 12px; line-height: 1.5; }
+  #floating-interaction-list { max-height: min(260px, 38dvh); }
+  #floating-interaction-list .floating-list-panel__bar { cursor: pointer; }
+  #floating-interaction-list .floating-list-panel__tool { min-height: 44px; min-width: 44px; }
   #game-shell[data-workspace-mode="true"][data-workspace-open="true"] #chat-panel { visibility: hidden; }
   #game-workspace :is(input, select, textarea) { font-size: max(16px, var(--font-size-16)); }
   #game-workspace :is(.small-btn, .action-btn, .tab-btn) { min-height: 44px; }

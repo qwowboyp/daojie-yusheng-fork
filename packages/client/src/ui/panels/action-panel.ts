@@ -25,12 +25,8 @@ import {
 import { detailModalHost } from '../detail-modal-host';
 import { FloatingTooltip, prefersPinnedTooltipInteraction } from '../floating-tooltip';
 import { FloatingListPanel } from '../floating-list-panel';
-import {
-  FLOATING_PANEL_PREFERENCES_CHANGED_EVENT,
-  isFloatingPanelEnabled,
-  updateFloatingPanelPreference,
-} from '../floating-panel-preferences';
 import { buildSkillTooltipContent } from '../skill-tooltip';
+import { getResponsiveViewportMetrics, shouldUseMobileUi } from '../responsive-viewport';
 import { preserveSelection } from '../selection-preserver';
 import { getLocalRealmLevelEntry, resolveClientTechniqueName } from '../../content/local-templates';
 import { getActionTypeLabel, getTechniqueCategoryLabel, getTechniqueGradeLabel } from '../../domain-labels';
@@ -70,12 +66,19 @@ import {
   syncReactActionPanelState,
   unmountReactActionPanel,
 } from '../../react-ui/panels/action/mount-action-panel';
+import {
+  mountReactQuickActions,
+  syncReactQuickActions,
+} from '../../react-ui/panels/action/mount-quick-actions';
+import type { QuickActionView } from '../../react-ui/panels/action/QuickActions';
 
 type SkillEnabledEntry = {
   skillEnabled?: boolean;
 };
 
 const FLOATING_INTERACTION_ACTION_TYPES = new Set(['quest', 'interact', 'travel', 'craft']);
+const PERSISTENT_INTERACTION_ACTION_IDS = new Set(['wang_qi:toggle']);
+const QUICK_ACTION_IDS = ['battle:force_attack', RETURN_TO_SPAWN_ACTION_ID, 'loot:open', 'client:observe'] as const;
 
 function replaceElementHtml(root: HTMLElement, html: string): void {
   const template = document.createElement('template');
@@ -359,8 +362,11 @@ export class ActionPanel {
     this.skillPresets = this.skillMgmt.loadSkillPresets();
     this.selectedSkillPresetId = this.skillPresets[0]?.id ?? null;
     window.addEventListener('keydown', (event) => this.handleGlobalKeydown(event));
-    window.addEventListener(FLOATING_PANEL_PREFERENCES_CHANGED_EVENT, () => this.refreshInteractionFloatingPanel());
     this.bindDelegatedTabEvents();
+    const quickActionsHost = document.getElementById('chat-quick-actions');
+    if (quickActionsHost instanceof HTMLElement) {
+      this.mountQuickActions(quickActionsHost);
+    }
   }
 
   /**
@@ -464,6 +470,12 @@ export class ActionPanel {
     return this.getBindButtonLabel(actionId);
   }
 
+  /** 掛載聊天列旁捷徑；外層殼只負責提供穩定容器。 */
+  mountQuickActions(container: HTMLElement): void {
+    if (!shouldUseReactActionPanel()) return;
+    mountReactQuickActions(container, this.getQuickActionsProps());
+  }
+
   /** 供属性等外部面板进入或退出行动绑键模式。 */
   toggleShortcutBinding(actionId: string): void {
     this.bindingActionId = this.bindingActionId === actionId ? null : actionId;
@@ -488,6 +500,7 @@ export class ActionPanel {
       this.cultivationActive = player.cultivationActive === true;
     }
     this.currentActions = this.withUtilityActions(actions);
+    this.refreshQuickActions();
     if (_autoBattle !== undefined) this.autoBattle = _autoBattle;
     if (_autoRetaliate !== undefined) this.autoRetaliate = _autoRetaliate;
     const contentKey = this.buildActionPanelContentKey(this.currentActions);
@@ -522,6 +535,7 @@ export class ActionPanel {
       this.cultivationActive = player.cultivationActive === true;
     }
     this.currentActions = this.withUtilityActions(actions);
+    this.refreshQuickActions();
     if (_autoBattle !== undefined) this.autoBattle = _autoBattle;
     if (_autoRetaliate !== undefined) this.autoRetaliate = _autoRetaliate;
 
@@ -542,6 +556,7 @@ export class ActionPanel {
     this.previewPlayer = player;
     this.syncPlayerContext(player);
     this.currentActions = this.withUtilityActions(player.actions);
+    this.refreshQuickActions();
     this.autoBattle = player.autoBattle ?? false;
     this.autoRetaliate = player.autoRetaliate !== false;
     this.autoBattleStationary = player.autoBattleStationary === true;
@@ -790,10 +805,6 @@ export class ActionPanel {
 
   /** 刷新独立浮动交互列表，保持主行动面板以外也能快速执行附近交互。 */
   private refreshInteractionFloatingPanel(): void {
-    if (!isFloatingPanelEnabled('interactionList')) {
-      this.interactionFloatingPanel?.setTransientHidden(true);
-      return;
-    }
     const actions = this.getFloatingInteractionActions();
     if (actions.length === 0) {
       this.interactionFloatingPanel?.setTransientHidden(true);
@@ -804,9 +815,12 @@ export class ActionPanel {
     const panel = this.ensureInteractionFloatingPanel();
     panel.setClosed(false);
     const contentKey = this.buildFloatingInteractionKey(actions);
-    if (panel.getBodyKey() !== contentKey) {
+    const contentChanged = panel.getBodyKey() !== contentKey;
+    if (contentChanged) {
       panel.updateContent(this.renderFloatingInteractionList(actions));
       panel.setBodyKey(contentKey);
+    }
+    if (contentChanged || !this.interactionFloatingEvents) {
       this.interactionFloatingEvents?.abort();
       this.interactionFloatingEvents = new AbortController();
       const signal = this.interactionFloatingEvents.signal;
@@ -820,13 +834,15 @@ export class ActionPanel {
       this.interactionFloatingPanel = new FloatingListPanel({
         id: 'floating-interaction-list',
         title: '交互列表',
-        storageKey: 'mud:floating-interaction-list:v2',
+        storageKey: 'mud:floating-interaction-list:v3',
         className: 'floating-list-panel--interaction',
-        defaultLeft: Math.max(12, window.innerWidth - 280),
+        defaultLeft: 12,
         defaultTop: 128,
+        defaultPosition: () => this.getInteractionFloatingDefaultPosition(),
+        defaultCollapsed: shouldUseMobileUi(window),
+        dismissible: false,
         minWidth: 200,
         maxWidth: 280,
-        onClose: () => updateFloatingPanelPreference('interactionList', false),
       });
     }
     return this.interactionFloatingPanel;
@@ -837,7 +853,50 @@ export class ActionPanel {
       FLOATING_INTERACTION_ACTION_TYPES.has(action.type)
       && !this.isUtilityAction(action)
       && !this.isSwitchAction(action)
+      && !PERSISTENT_INTERACTION_ACTION_IDS.has(action.id)
     ));
+  }
+
+  private getInteractionFloatingDefaultPosition(): { left: number; top: number } {
+    const metrics = getResponsiveViewportMetrics(window);
+    const anchor = document.querySelector<HTMLElement>('.map-zoom-stack');
+    if (anchor) {
+      const rect = anchor.getBoundingClientRect();
+      return {
+        left: (rect.left - metrics.offsetX) / metrics.scale,
+        top: (rect.bottom - metrics.offsetY) / metrics.scale + 8,
+      };
+    }
+    return { left: Math.max(12, metrics.viewportWidth - 280), top: 128 };
+  }
+
+  /** 只投影正式可用動作；所有執行仍回到既有 onAction callback。 */
+  private getQuickActionsProps(): { actions: QuickActionView[]; onExecute: (actionId: string) => void } {
+    const actions = QUICK_ACTION_IDS
+      .map((id) => this.currentActions.find((action) => action.id === id))
+      .filter((action): action is ActionDef => action != null)
+      .map((action) => ({
+        id: action.id,
+        name: action.name,
+        desc: action.desc,
+        cooldownLeft: action.cooldownLeft,
+        requiresTarget: action.requiresTarget,
+        targetMode: action.targetMode,
+        range: action.range,
+      }));
+    return { actions, onExecute: this.executeQuickAction };
+  }
+
+  private readonly executeQuickAction = (actionId: string): void => {
+    const action = this.currentActions.find((entry) => entry.id === actionId);
+    if (!action || action.cooldownLeft > 0) {
+      return;
+    }
+    this.onAction?.(action.id, action.requiresTarget, action.targetMode, action.range, action.name.trim() || '未知行動');
+  };
+
+  private refreshQuickActions(): void {
+    syncReactQuickActions(this.getQuickActionsProps());
   }
 
   private buildFloatingInteractionKey(actions: ActionDef[]): string {
@@ -1743,6 +1802,7 @@ export class ActionPanel {
       }));
     const mutated = this.normalizeSkillActions(mutator(skillActions));
     this.currentActions = this.replaceSkillActions(mutated);
+    this.refreshQuickActions();
     if (this.previewPlayer) {
       this.previewPlayer.actions = this.currentActions.filter((action) => action.id !== 'client:observe');
       this.previewPlayer.autoBattleSkills = this.getAutoBattleSkillConfigs(this.currentActions);

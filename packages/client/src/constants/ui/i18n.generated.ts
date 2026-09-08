@@ -3888,7 +3888,7 @@ export const CLIENT_I18N_MESSAGES: Record<ClientLocale, Record<string, string>> 
   "hud.age.years": "{years}載",
   "hud.age.years-days": "{years}載{days}日",
   "hud.cultivate.complete": "境界圓滿",
-  "hud.cultivate.progress": "境界修為 ({current}/{next})",
+  "hud.cultivate.progress": "修為：{current} / {next}",
   "hud.lifespan.unknown": "???",
   "hud.lifespan.years": "{years}載",
   "hud.map-name.unknown": "未知地域",

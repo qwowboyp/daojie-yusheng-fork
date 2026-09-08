@@ -755,3 +755,196 @@
       font-size: var(--font-size-14);
       word-break: break-word;
     }
+
+    /* React HUD status: five readable rows, scoped away from the legacy fallback DOM. */
+    #hud:has(.react-hud-status-host) .hud-panel {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto auto minmax(0, 1fr);
+    }
+    #hud .react-hud-status-host .hud-identity {
+      grid-column: 1;
+      grid-row: 1;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: flex-start;
+      gap: 8px;
+      padding: 4px 0 6px;
+      border-right: 0;
+      border-bottom: 1px solid var(--wash-ink);
+    }
+    #hud .react-hud-status-host .hud-identity .hud-name {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      min-width: 0;
+      font-size: 18px;
+      letter-spacing: 1px;
+      line-height: 1.1;
+      writing-mode: horizontal-tb;
+      text-orientation: mixed;
+    }
+    #hud .react-hud-status-host .hud-identity .hud-name-text {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    #hud .react-hud-status-host .hud-identity .hud-name-level {
+      flex: 0 0 auto;
+      color: var(--ink-grey);
+      font-family: var(--font-role-body);
+      font-size: var(--font-size-role-body-13);
+      font-weight: var(--font-weight-strong);
+      letter-spacing: 0;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    #hud .react-hud-status-host .hud-identity .hud-expand-toggle {
+      margin-left: auto;
+      flex: 0 0 auto;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll {
+      display: contents;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll > .hud-top-row {
+      grid-column: 1;
+      grid-row: 2;
+      min-width: 0;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-realm-block {
+      min-width: 0;
+      min-height: 0;
+      gap: 4px;
+      padding: 0;
+      border: 0;
+      background: none;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-realm-label {
+      display: none;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-realm-main {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: flex-start;
+      padding: 0;
+      gap: 6px;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-realm-heading {
+      flex: 0 0 auto;
+      width: auto;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-realm-value {
+      width: auto;
+      font-size: 14px;
+      line-height: 1.2;
+      text-align: left;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-realm-sub {
+      margin-top: 0;
+      text-align: left;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-title {
+      display: inline;
+      font-size: 12px;
+      line-height: 1.2;
+      white-space: normal;
+      writing-mode: horizontal-tb;
+      letter-spacing: 0;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-progress-shell {
+      margin-top: 2px;
+      padding-top: 0;
+      border-top: 0;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-progress-track {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      height: 44px;
+      min-height: 44px;
+      margin-top: 0;
+      padding: 0 6px;
+      overflow: hidden;
+      border-radius: 5px;
+      background: #4a352c;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-progress-value {
+      position: relative;
+      top: auto;
+      left: auto;
+      flex: 1 1 auto;
+      min-width: 0;
+      transform: none;
+      padding: 0;
+      overflow: visible;
+      font-size: var(--font-size-role-body-11);
+      line-height: 1;
+      text-align: left;
+      white-space: nowrap;
+      color: #fff9ed;
+      text-shadow: 0 1px 2px #1d1710;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-realm-action {
+      position: relative;
+      inset: auto;
+      z-index: 1;
+      flex: 0 0 auto;
+      min-width: max-content;
+      min-height: 44px;
+      padding: 1px 6px;
+      font-size: var(--font-size-role-body-11);
+      line-height: 1.1;
+      white-space: nowrap;
+      background: var(--paper-light);
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll > .hud-resource-bars {
+      grid-column: 1;
+      grid-row: 3;
+      grid-template-columns: minmax(0, 1fr);
+      min-width: 0;
+      gap: 6px;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-resource-bar {
+      min-width: 0;
+      gap: 0;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-resource-meter {
+      height: 12px;
+      min-height: 12px;
+      border: 0;
+      box-shadow: inset 0 0 0 1px var(--wash-ink);
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-resource-meter .hud-resource-head > * {
+      font-size: 11px;
+      line-height: 12px;
+      font-family: var(--font-role-body);
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
+      #hud .react-hud-status-host .hud-identity {
+        grid-column: 1;
+        grid-row: 1;
+        padding: 4px 0 6px;
+      }
+      #hud .react-hud-status-host .hud-identity .hud-name {
+        font-size: 16px;
+      }
+      #hud .react-hud-status-host .hud-mobile-scroll > .hud-top-row,
+      #hud .react-hud-status-host .hud-mobile-scroll > .hud-resource-bars {
+        grid-column: 1;
+      }
+      #hud .react-hud-status-host .hud-mobile-scroll > .hud-top-row {
+        grid-row: 2;
+      }
+      #hud .react-hud-status-host .hud-mobile-scroll > .hud-resource-bars {
+        grid-row: 3;
+      }
+      #hud .react-hud-status-host .hud-identity[data-hud-expanded="false"] + .hud-mobile-scroll .hud-top-row {
+        display: none;
+      }
+      #hud .react-hud-status-host .hud-identity[data-hud-expanded="true"] + .hud-mobile-scroll .hud-top-row {
+        display: flex;
+      }
+    }

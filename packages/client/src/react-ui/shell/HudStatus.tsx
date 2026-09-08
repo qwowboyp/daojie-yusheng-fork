@@ -169,8 +169,10 @@ const HudStatusView = memo(function HudStatusView() {
   return (
     <>
       <div className="hud-identity" data-hud-expanded={expanded}>
-        <div className="hud-name" id="hud-name">{state.name}</div>
-        <div className="hud-title" id="hud-title">{state.title}</div>
+        <div className="hud-name" id="hud-name">
+          <span className="hud-name-text">{state.name}</span>
+          <span className="hud-name-level" id="hud-realm-level">{state.realmLevelLabel}</span>
+        </div>
         <button className="hud-expand-toggle" type="button" aria-expanded={expanded} aria-controls="hud-summary-details"
           aria-label={expanded ? '收合人物資訊' : '展開人物資訊'}
           onClick={(event) => { event.stopPropagation(); setExpanded(!expanded); }}>
@@ -183,27 +185,28 @@ const HudStatusView = memo(function HudStatusView() {
         <div className="hud-top-row" id="hud-summary-details">
           <div className="hud-realm-block">
             <div className="hud-realm-label">{t('shell.hud-realm-label-realm', undefined)}</div>
-            <button
-              className={`hud-realm-action${state.realmActionAvailable ? '' : ' is-unavailable'}`}
-              id="hud-breakthrough"
-              type="button"
-              hidden={!state.showRealmAction}
-              aria-disabled={state.realmActionAvailable ? 'false' : 'true'}
-              onClick={() => onBreakthrough?.()}
-            >
-              {state.realmActionLabel}
-            </button>
             <div className="hud-realm-main">
               <div className="hud-realm-heading">
                 <div className="hud-realm-value" id="hud-realm">{state.realmLabel}</div>
-                <div className="hud-realm-level" id="hud-realm-level">{state.realmLevelLabel}</div>
               </div>
-              <div className="hud-realm-sub" id="hud-realm-sub">{state.realmReviewLabel}</div>
+              <div className="hud-realm-sub" id="hud-realm-sub">
+                <span className="hud-title" id="hud-title">{state.title}</span>
+              </div>
             </div>
             <div className="hud-progress-shell">
-              <div className="hud-progress-value" id="hud-cultivate">{state.cultivateText}</div>
               <div className="hud-progress-track">
                 <div className="hud-progress-fill" id="hud-cultivate-bar" style={{ width: state.cultivateWidth }} />
+                <div className="hud-progress-value" id="hud-cultivate">{state.cultivateText}</div>
+                <button
+                  className={`hud-realm-action${state.realmActionAvailable ? '' : ' is-unavailable'}`}
+                  id="hud-breakthrough"
+                  type="button"
+                  hidden={!state.showRealmAction}
+                  aria-disabled={state.realmActionAvailable ? 'false' : 'true'}
+                  onClick={() => onBreakthrough?.()}
+                >
+                  {state.realmActionLabel}
+                </button>
               </div>
             </div>
           </div>

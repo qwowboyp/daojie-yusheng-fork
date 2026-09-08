@@ -3880,7 +3880,7 @@ hud.action.breakthrough-target,HUD,突破 · {target},突破按鈕目標文案
 hud.age.years,HUD,{years}載,骨齡整年文本
 hud.age.years-days,HUD,{years}載{days}日,骨齡年月日文本
 hud.cultivate.complete,HUD,境界圓滿,修為圓滿文本
-hud.cultivate.progress,HUD,境界修為 ({current}/{next}),修為進度文本
+hud.cultivate.progress,HUD,修為：{current} / {next},修為進度文本
 hud.lifespan.unknown,HUD,???,壽元未知文本
 hud.lifespan.years,HUD,{years}載,壽元整年文本
 hud.map-name.unknown,HUD,未知地域,地圖名fallback
