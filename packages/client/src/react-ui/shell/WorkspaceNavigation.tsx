@@ -2,6 +2,7 @@ import { StrictMode, useEffect, useState, type KeyboardEvent } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { flushSync } from 'react-dom';
 import { requestMobileSurface, subscribeMobileSurface } from '../../ui/mobile-surface';
+import { shouldUseMobileUi } from '../../ui/responsive-viewport';
 
 export type WorkspaceId = 'character' | 'items' | 'cultivation' | 'craft' | 'quests' | 'social' | 'market' | 'world' | 'system';
 export type WorkspaceAction = 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'building' | 'settings' | 'tutorial' | 'guided-tour' | 'mail' | 'activity' | 'chronicle' | 'logout';
@@ -79,12 +80,20 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
     return true;
   });
   const open = (id: WorkspaceId) => { setMenuOpen(false); state.onOpen(id); };
+  const isMobileActiveDock = (id: WorkspaceId) => shouldUseMobileUi(window) && state.activeWorkspace === id;
+  const toggleDock = (id: WorkspaceId) => {
+    if (isMobileActiveDock(id)) {
+      state.onClose();
+      return;
+    }
+    open(id);
+  };
   return (
     <nav className="workspace-dock-nav" aria-label="遊戲功能">
       {([{ id: 'items', label: '背包' }, { id: 'cultivation', label: '修行' }, { id: 'craft', label: '技藝' }, { id: 'quests', label: '任務' }] as const).map((item) => (
         <button key={item.id} type="button" className="workspace-dock-button" data-workspace-open={item.id}
           aria-controls="game-workspace" aria-expanded={state.activeWorkspace === item.id}
-          onPointerDown={(event) => { if (event.button === 0) state.onPrepareOpen(item.id); }} onClick={() => open(item.id)}><NavigationIcon name={item.id} /><span>{item.label}</span></button>
+          onPointerDown={(event) => { if (event.button === 0 && !isMobileActiveDock(item.id)) state.onPrepareOpen(item.id); }} onClick={() => toggleDock(item.id)}><NavigationIcon name={item.id} /><span>{item.label}</span></button>
       ))}
       <button id="workspace-menu-toggle" type="button" className="workspace-dock-button" aria-expanded={menuOpen}
         aria-controls="workspace-menu" onClick={() => { if (!menuOpen) requestMobileSurface('menu'); setMenuOpen(!menuOpen); }}><NavigationIcon name="menu" /><span>全部功能</span></button>

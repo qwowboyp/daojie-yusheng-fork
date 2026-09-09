@@ -8,6 +8,7 @@ import type { Inventory, ItemType } from '@mud/shared';
 import { createPanelStore } from '../../stores/create-panel-store';
 import { INVENTORY_FILTER_TABS, type InventoryFilter } from '../../../constants/ui/inventory';
 import { t } from '../../../ui/i18n';
+import { shouldUseMobileUi } from '../../../ui/responsive-viewport';
 
 export interface ReactInventoryItemView {
   slotIndex: number;
@@ -132,6 +133,7 @@ export const InventoryPanel = memo(function InventoryPanel() {
   const [selectedItemKey, setSelectedItemKey] = useState<string | null>(null);
   const [showDetailOnMobile, setShowDetailOnMobile] = useState(false);
   const selectedCellRef = useRef<HTMLElement | null>(null);
+  const listScrollRef = useRef<{ pane: HTMLElement; top: number } | null>(null);
   const selectedItem = state.items.find((item) => item.itemKey === selectedItemKey) ?? null;
 
   useEffect(() => {
@@ -199,6 +201,16 @@ export const InventoryPanel = memo(function InventoryPanel() {
                   selected={item.itemKey === selectedItemKey}
                   onSelect={(cell) => {
                     selectedCellRef.current = cell;
+                    if (shouldUseMobileUi(window)) {
+                      const pane = cell.closest<HTMLElement>('.workspace-pane');
+                      if (pane) {
+                        listScrollRef.current = { pane, top: pane.scrollTop };
+                        requestAnimationFrame(() => {
+                          pane.scrollTop = 0;
+                          pane.querySelector<HTMLButtonElement>('.inventory-workspace-detail-back')?.focus({ preventScroll: true });
+                        });
+                      }
+                    }
                     setSelectedItemKey(item.itemKey);
                     setShowDetailOnMobile(true);
                   }}
@@ -238,6 +250,9 @@ export const InventoryPanel = memo(function InventoryPanel() {
           onBack={() => {
             setShowDetailOnMobile(false);
             requestAnimationFrame(() => {
+              const savedScroll = listScrollRef.current;
+              if (savedScroll) savedScroll.pane.scrollTop = savedScroll.top;
+              listScrollRef.current = null;
               const selectedCell = selectedCellRef.current;
               const target = selectedCell?.isConnected ? selectedCell
                 : document.querySelector<HTMLElement>('#pane-inventory [data-item-selected="true"]');

@@ -1031,9 +1031,103 @@ function assertInsideViewport(rect, viewport, label) {
     `${label}超出視口：${JSON.stringify({ rect, viewport })}`);
 }
 
+async function verifyMobileInventoryInteractions(cdp, viewport, theme = 'light') {
+  await setViewport(cdp, viewport);
+  await cdp.evaluate(`(async () => {
+    document.documentElement.dataset.colorMode = ${JSON.stringify(theme)};
+    (await import('/src/ui/mobile-surface.ts')).requestMobileSurface(null);
+    const proof = window.__gameWorkspaceProof;
+    proof.inventoryPanel.update({ ...proof.inventory, revision: 2, capacity: 64, items: [
+      ...proof.inventory.items,
+      ...Array.from({ length: 30 }, (_, index) => ({ itemId: 'scroll-proof-' + index, itemInstanceId: 'scroll-proof-' + index,
+        name: '捲動驗證物品' + index, desc: '詳細屬性與用途說明，返回按鈕應持續可用。'.repeat(35), type: 'material', count: 16600 + index, level: 1 })),
+    ] });
+    await proof.nextPaint();
+  })()`);
+  for (const id of ['items', 'cultivation', 'craft', 'quests']) {
+    const selector = '#game-dock .workspace-dock-nav > [data-workspace-open="' + id + '"]';
+    await clickCenterWithCdp(cdp, selector);
+    assert.equal(await cdp.evaluate(`document.querySelector(${JSON.stringify(selector)}).getAttribute('aria-expanded')`), 'true', '手機 dock 未開啟 ' + id);
+    await clickCenterWithCdp(cdp, selector);
+    assert.equal(await cdp.evaluate(`document.getElementById('game-workspace').classList.contains('hidden') && !document.getElementById('game-workspace').contains(document.activeElement)`), true, '手機重點同項目未收起並移出焦點：' + id);
+  }
+  await clickCenterWithCdp(cdp, '#game-dock .workspace-dock-nav > [data-workspace-open="items"]');
+  await cdp.evaluate(`(async () => {
+    document.getElementById('workspace-tab-inventory').click();
+    const back = document.querySelector('.inventory-workspace-detail-back');
+    if (back?.getClientRects().length) back.click();
+    await window.__gameWorkspaceProof.nextPaint();
+    document.getElementById('pane-inventory').scrollTop = 0;
+    window.__inventoryTooltipObservations = [];
+    window.__inventoryTooltipObserver = new MutationObserver(() => {
+      if (document.querySelector('.inventory-tooltip.visible')) window.__inventoryTooltipObservations.push('visible');
+    });
+    window.__inventoryTooltipObserver.observe(document.getElementById('floating-tooltip-root'), { subtree: true, attributes: true, attributeFilter: ['class'] });
+  })()`);
+  const swipe = await cdp.evaluate(`(() => {
+    const pane = document.getElementById('pane-inventory'); const rect = pane.getBoundingClientRect();
+    const cells = [...pane.querySelectorAll('.inventory-cell')];
+    for (const cell of cells.slice(0, 5)) cell.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, pointerType: 'touch', clientX: rect.left + 40, clientY: rect.top + 70 }));
+    return { x: rect.left + rect.width / 2, startY: rect.bottom - 45, endY: rect.top + 50, before: pane.scrollTop };
+  })()`);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: swipe.x, y: swipe.startY, id: 1 }] });
+  for (let step = 1; step <= 8; step += 1) {
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: swipe.x, y: swipe.startY + (swipe.endY - swipe.startY) * step / 8, id: 1 }] });
+    await delay(35);
+  }
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await delay(180);
+  const scrolled = await cdp.evaluate(`({ top: document.getElementById('pane-inventory').scrollTop, detail: document.querySelector('.inventory-workspace').dataset.detailOpen,
+    tooltips: window.__inventoryTooltipObservations.length, visible: !!document.querySelector('.inventory-tooltip.visible') })`);
+  assert(scrolled.top > swipe.before + 10, '真實觸控拖曳未捲動背包');
+  assert.notEqual(scrolled.detail, 'true', '捲動背包誤開詳情');
+  assert.equal(scrolled.tooltips, 0, '手指移動期間曾出現道具數值浮窗');
+  assert.equal(scrolled.visible, false, '捲動後留下道具浮窗');
+  const selection = await cdp.evaluate(`(async () => {
+    const cell = document.querySelector('[data-item-key="scroll-proof-12"]') ?? [...document.querySelectorAll('.inventory-cell')].find(c => c.textContent.includes('捲動驗證物品12'));
+    if (!cell) throw new Error('缺少長清單正式道具');
+    cell.scrollIntoView({ block: 'center', behavior: 'instant' });
+    await window.__gameWorkspaceProof.nextPaint();
+    const rect = cell.getBoundingClientRect();
+    return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2, scrollTop: document.getElementById('pane-inventory').scrollTop };
+  })()`);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: selection.x, y: selection.y, id: 2 }] });
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await delay(100);
+  assert.equal(await cdp.evaluate(`document.querySelector('.inventory-workspace').dataset.detailOpen`), 'true', '明確點選未開啟物品詳情');
+  await cdp.evaluate(`document.getElementById('pane-inventory').scrollTop = 10000; true`);
+  await delay(50);
+  const back = await cdp.evaluate(`(() => {
+    const pane = document.getElementById('pane-inventory'); const button = pane.querySelector('.inventory-workspace-detail-back');
+    const rect = button.getBoundingClientRect(); const area = pane.getBoundingClientRect();
+    const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    return { top: rect.top, bottom: rect.bottom, height: rect.height, width: rect.width, paneTop: area.top, paneBottom: area.bottom, hit: button === hit || button.contains(hit), scrollTop: pane.scrollTop };
+  })()`);
+  assert(back.scrollTop > 100, '長詳情 fixture 沒有形成可捲動內容');
+  assert(back.top >= back.paneTop - 1 && back.bottom <= back.paneBottom + 1 && back.hit, '捲到詳情底部後返回背包按鈕不可見或被遮擋：' + JSON.stringify(back));
+  assert(back.height >= 44 && back.width >= 44, '返回背包觸控範圍不足');
+  await captureWorkspace(cdp, 'inventory-detail-back-' + viewport.width + '-' + theme + '.png');
+  await clickCenterWithCdp(cdp, '.inventory-workspace-detail-back');
+  const restored = await cdp.evaluate(`({ top: document.getElementById('pane-inventory').scrollTop, detail: document.querySelector('.inventory-workspace').dataset.detailOpen,
+    focus: document.activeElement?.textContent, tooltips: window.__inventoryTooltipObservations.length })`);
+  assert(Math.abs(restored.top - selection.scrollTop) <= 2, '返回背包遺失原捲動位置：' + JSON.stringify({ restored, selection }));
+  assert.notEqual(restored.detail, 'true', '返回背包沒有收起詳情');
+  assert.match(restored.focus, /捲動驗證物品12/, '返回背包沒有回到原道具');
+  assert.equal(restored.tooltips, 0, '觸控詳情返回時誤開懸浮說明');
+  await captureWorkspace(cdp, 'inventory-scroll-restored-' + viewport.width + '-' + theme + '.png');
+  await cdp.evaluate(`window.__inventoryTooltipObserver.disconnect(); window.__gameWorkspaceProof.inventoryPanel.update(window.__gameWorkspaceProof.inventory); true`);
+  await clickCenterWithCdp(cdp, '#game-dock .workspace-dock-nav > [data-workspace-open="items"]');
+}
+
 await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-proof-' }, async (cdp) => {
   // 舊 active tab 不得在啟動時自動打開按需工作窗。
-  await cdp.evaluate(`localStorage.setItem('mud:side-panel-state:v1', JSON.stringify({ version: 1, activeTabs: { 'side-primary': 'inventory' } })); location.reload(); true`);
+  await cdp.evaluate(`(async () => {
+    localStorage.setItem('mud:side-panel-state:v1', JSON.stringify({ version: 1, activeTabs: { 'side-primary': 'inventory' } }));
+    // 操作驗證使用已看過引導的使用者偏好，避免延遲出現的教學接管手勢。
+    const { GUIDED_TOUR_FLOWS } = await import('/src/constants/ui/guided-tour.ts');
+    localStorage.setItem('mud:guided-tour:v1', JSON.stringify({ completed: {}, dismissed: Object.fromEntries(GUIDED_TOUR_FLOWS.map(flow => [flow.id, flow.storageVersion])) }));
+    location.reload(); return true;
+  })()`);
   await waitFor(() => cdp.evaluate(`document.readyState === 'complete' && document.getElementById('game-shell')?.dataset.workspaceMode === 'true'`), '工作窗控制器初始化');
   const initial = await cdp.evaluate(measureShellExpression);
   assert.equal(initial.mode, 'true', '主舞台未啟用 workspace mode');
@@ -1450,6 +1544,20 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assert.equal(closed.hidden, true, '返回地圖未關閉工作窗');
   assert.equal(closed.focusInsideHidden, false, '返回地圖後焦點仍停在 hidden 工作窗');
   assert.equal(closed.calls.some((entry) => entry.kind === 'cancel'), false, '返回地圖錯誤發出取消活動意圖');
+  await verifyMobileInventoryInteractions(cdp, PHONE_SMALL);
+  await verifyMobileInventoryInteractions(cdp, PHONE_BROWSER_CHROME, 'dark');
+  await verifyMobileInventoryInteractions(cdp, LANDSCAPE);
+  await setViewport(cdp, DESKTOP, { touch: false });
+  await cdp.evaluate(openWorkspaceExpression);
+  await cdp.evaluate(openWorkspaceExpression);
+  assert.equal(await cdp.evaluate(`document.getElementById('game-workspace').classList.contains('hidden')`), false, '桌面重點同項目意外關閉工作窗');
+  const desktopHover = await cdp.evaluate(`(async () => {
+    const cell = document.querySelector('.inventory-cell'); cell.scrollIntoView({ block: 'center' });
+    cell.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, pointerType: 'mouse', clientX: 100, clientY: 150 }));
+    await window.__gameWorkspaceProof.nextPaint();
+    return document.querySelector('.inventory-tooltip.visible')?.textContent ?? '';
+  })()`);
+  assert.match(desktopHover, /回春散/, '桌面滑鼠道具說明遺失');
 });
 
 console.log('game workspace proof: PASS');

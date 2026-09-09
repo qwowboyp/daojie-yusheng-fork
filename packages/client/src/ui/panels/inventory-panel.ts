@@ -1038,7 +1038,6 @@ export class InventoryPanel {
 
   /** bindTooltipEvents：绑定提示事件。 */
   private bindTooltipEvents(): void {
-    const tapMode = prefersPinnedTooltipInteraction();
     /** show：处理显示。 */
     const show = (cell: HTMLElement, event: PointerEvent) => {
       const rawIndex = cell.dataset.itemSlot;
@@ -1060,7 +1059,7 @@ export class InventoryPanel {
 
     this.pane.addEventListener('click', (event) => {
       // React 物品格以點選開啟同窗詳情，不能讓舊觸控提示先截斷事件。
-      if (!tapMode || this.useReactPanel()) {
+      if (!prefersPinnedTooltipInteraction() || this.useReactPanel()) {
         return;
       }
       const target = event.target;
@@ -1097,7 +1096,10 @@ export class InventoryPanel {
     }, true);
 
     this.pane.addEventListener('pointermove', (event) => {
-      if (tapMode && this.tooltip.isPinned()) {
+      // 手指滑動只捲動清單；同窗詳情由明確點選開啟。
+      if (event.pointerType === 'touch' || prefersPinnedTooltipInteraction()) {
+        this.tooltipCell = null;
+        this.tooltip.hide(true);
         return;
       }
       const target = event.target;
