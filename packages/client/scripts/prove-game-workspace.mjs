@@ -1142,7 +1142,9 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assertInsideViewport(shown.dock, shown.viewport, '手機功能入口');
 
   const fixture = await cdp.evaluate(fixtureExpression);
-  await waitFor(() => cdp.evaluate(`window.__gameWorkspaceProof.getMapPixels().slice(0,3).some(value=>value>0)`), '正式 Pixi 地圖繪製');
+  // 無 GPU 容器（SwiftShader）首次上傳 29 張 1024² atlas 生成 mipmap 較慢，
+  // 預算提高至 90 秒；真機 GPU 環境通常 1-2 秒內就緒。
+  await waitFor(() => cdp.evaluate(`window.__gameWorkspaceProof.getMapPixels().slice(0,3).some(value=>value>0)`), '正式 Pixi 地圖繪製', 90_000);
   assert(fixture.inventoryCells > 0, '正式背包 Panel 未載入非空 fixture');
   assert(fixture.actionTabs > 0, '正式行動 Panel 未載入非空 fixture');
   assert.match(fixture.hpText ?? '', /68萬\s*\/\s*100萬/, '正式 HUD 未顯示長數值 fixture 氣血');
