@@ -252,6 +252,8 @@ export class PixiMapRendererAdapter {
   private readonly dualGridVertexRefsScratch: Array<PixiTileSpriteRef | null> = [null, null, null, null];
   private readonly dualGridVertexMasksScratch: number[] = [0, 0, 0, 0];
   private readonly dualGridFeatherCache = new PixiDualGridFeatherCache();
+  /** 軟體光柵化（SwiftShader 等無 GPU 環境）下停用 atlas mipmap：純 CPU 生成 mipmap 鏈與 trilinear 取樣成本過高，會拖垮首幀就緒。 */
+  private runtimeAtlasMipmapsEnabled = true;
   private runtimeAtlasTextures = new Map<string, Texture>();
   private runtimeTileTextures = new Map<string, Texture>();
   private runtimeTileTextureRequests = new Set<string>();
@@ -383,10 +385,22 @@ export class PixiMapRendererAdapter {
     }
     const gl = (this.app.renderer as WebGLRenderer<HTMLCanvasElement>).gl;
     if (!(gl instanceof WebGL2RenderingContext)) throw new Error('主世界 Pixi 渲染器必須使用 WebGL2 上下文');
+    this.detectSoftwareRasterizer(gl);
     this.app.renderer.resize(this.width, this.height, 1);
     this.ready = true;
     this.ensureRuntimeImageOverrideListener();
     this.ensureRuntimeTileSpritesRequested();
+  }
+
+  /** 偵測軟體光柵化（SwiftShader/llvmpipe 等）：無 GPU 環境停用 atlas mipmap，保留相位與羽化修復。 */
+  private detectSoftwareRasterizer(gl: WebGL2RenderingContext): void {
+    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+    const raw = debugInfo
+      ? String(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) ?? '')
+      : String(gl.getParameter(gl.RENDERER) ?? '');
+    if (/swiftshader|software|llvmpipe|basic render/i.test(raw)) {
+      this.runtimeAtlasMipmapsEnabled = false;
+    }
   }
 
   /** Pixi 完成初始化后统一释放 renderer，避免 init 期间直接 destroy 访问未赋值字段。 */
@@ -780,7 +794,7 @@ export class PixiMapRendererAdapter {
       return false;
     }
     this.runtimeAtlasTextures.set(src, loaded);
-    enableRuntimeAtlasMipmaps(loaded);
+    if (this.runtimeAtlasMipmapsEnabled) enableRuntimeAtlasMipmaps(loaded);
     return true;
   }
 
