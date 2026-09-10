@@ -23,6 +23,7 @@ interface TileStateInstanceLike {
   getTileAura(x: number, y: number): unknown | null;
   getEffectiveTileType?: (x: number, y: number) => unknown;
   getTileLayerState?: (x: number, y: number) => unknown;
+  getBuildingVisualDefIdAtTile?: (x: number, y: number) => string | null;
   isWalkable?: (x: number, y: number, playerId?: string | null) => boolean;
   isTileSightBlocked?: (x: number, y: number) => boolean;
   listTileResources?: (x: number, y: number) => unknown[];
@@ -43,6 +44,7 @@ export interface RuntimeInstanceTileStateView {
   groundPile: unknown;
   combat: unknown;
   layers?: unknown;
+  buildingDefId?: string;
 }
 
 @Injectable()
@@ -73,6 +75,7 @@ export class WorldRuntimeInstanceQueryService {
       walkable: typeof instance.isWalkable === 'function' ? instance.isWalkable(x, y, null) : undefined,
       blocksSight: typeof instance.isTileSightBlocked === 'function' ? instance.isTileSightBlocked(x, y) : undefined,
       layers: typeof instance.getTileLayerState === 'function' ? instance.getTileLayerState(x, y) : undefined,
+      buildingDefId: instance.getBuildingVisualDefIdAtTile?.(x, y) ?? undefined,
       aura,
       resources: instance.listTileResources?.(x, y) ?? [],
       safeZone: instance.getSafeZoneAtTile(x, y),

@@ -183,6 +183,7 @@ export class PixiMapRendererAdapter {
   private readonly terrainOverlayLayer = new Container();
   private readonly terrainFogLayer = new Container();
   private readonly pathLayer = new Container();
+  private readonly buildPreviewLayer = new Container();
   private readonly interactionOverlayGraphics = new Graphics();
   private readonly targetingGraphics = new Graphics();
   private readonly senseQiHoverGraphics = new Graphics();
@@ -267,7 +268,7 @@ export class PixiMapRendererAdapter {
     this.canvas = canvas;
     this.ready = false;
     this.profiler.refresh();
-    this.pathLayer.addChild(this.interactionOverlayGraphics, this.targetingGraphics, this.senseQiHoverGraphics, this.pathGraphics);
+    this.pathLayer.addChild(this.buildPreviewLayer, this.interactionOverlayGraphics, this.targetingGraphics, this.senseQiHoverGraphics, this.pathGraphics);
     this.threatArrowGraphics.name = 'threat-arrows';
     this.threatArrowLayer.addChild(this.threatArrowGraphics);
     this.screenLayer.addChild(this.timeOverlayGraphics);
@@ -477,6 +478,7 @@ export class PixiMapRendererAdapter {
     this.clearContainer(this.groundLayer);
     this.combatEffectRuntime.reset();
     this.threatArrowGraphics.clear();
+    this.clearContainer(this.buildPreviewLayer);
     this.interactionOverlayGraphics.clear();
     this.targetingGraphics.clear();
     this.senseQiHoverGraphics.clear();
@@ -510,6 +512,7 @@ export class PixiMapRendererAdapter {
     this.senseQiHoverSignature = '';
     this.pathLayerSignature = '';
     this.clearContainer(this.groundLayer);
+    this.clearContainer(this.buildPreviewLayer);
     this.interactionOverlayGraphics.clear();
     this.targetingGraphics.clear();
     this.senseQiHoverGraphics.clear();
@@ -662,6 +665,7 @@ export class PixiMapRendererAdapter {
       this.runtimeTileManifestState = 'loaded';
       this.runtimeTileSpriteRevision += 1;
       this.invalidateTerrainChunks();
+      this.interactionOverlaySignature = '';
       this.invalidateEntityStaticViews();
     } catch (error) {
       if (this.destroyed || generation !== this.runtimeImageGeneration) return;
@@ -836,7 +840,7 @@ export class PixiMapRendererAdapter {
     });
   }
 
-  private resolveRuntimeEntitySpriteSelection(entity: Pick<ObservedMapEntity, 'id' | 'kind' | 'name' | 'char' | 'facing' | 'monsterId'>): RuntimeEntitySpriteSelection | null {
+  private resolveRuntimeEntitySpriteSelection(entity: Pick<ObservedMapEntity, 'id' | 'kind' | 'name' | 'char' | 'facing' | 'monsterId' | 'buildingDefId'>): RuntimeEntitySpriteSelection | null {
     if (this.runtimeTileManifestState !== 'loaded') return null;
     return pickRuntimeEntitySpriteSelection(entity, this.runtimeEntitySpriteRefs);
   }
@@ -881,6 +885,7 @@ export class PixiMapRendererAdapter {
       this.rememberRuntimeAtlasTexture(ref.src, texture);
       this.runtimeTileSpriteRevision += 1;
       this.invalidateEntityStaticViews();
+      this.interactionOverlaySignature = '';
     }).catch((error) => {
       if (this.destroyed || generation !== this.runtimeImageGeneration) return;
       this.runtimeEntityTextureRequests.delete(ref.src);
@@ -1634,7 +1639,7 @@ export class PixiMapRendererAdapter {
         ? `${scene.overlays.formationRange.rangeHighlightColor ?? ''}:${buildGridPointSignature(scene.overlays.formationRange.affectedCells)}`
         : 'formation:null',
       scene.overlays.buildPreview
-        ? `${scene.overlays.buildPreview.defId}:${scene.overlays.buildPreview.originX},${scene.overlays.buildPreview.originY}:${scene.overlays.buildPreview.rotation ?? ''}:${buildBuildPreviewSignature(scene.overlays.buildPreview.cells)}`
+        ? `${scene.overlays.buildPreview.defId}:${scene.overlays.buildPreview.imageKey ?? ''}:${scene.overlays.buildPreview.originX},${scene.overlays.buildPreview.originY}:${scene.overlays.buildPreview.rotation ?? ''}:${buildBuildPreviewSignature(scene.overlays.buildPreview.cells)}:${this.runtimeTileSpriteRevision}`
         : 'build:null',
       scene.overlays.fengShui
         ? `${scene.terrain.visibleTileRevision}:${scene.overlays.fengShui.instanceId}:${scene.overlays.fengShui.revision}:${buildFengShuiOverlaySignature(scene.overlays.fengShui.cells)}`
@@ -1644,6 +1649,7 @@ export class PixiMapRendererAdapter {
       return;
     }
     this.interactionOverlaySignature = signature;
+    this.clearContainer(this.buildPreviewLayer);
     this.interactionOverlayGraphics.clear();
     const formationRange = scene.overlays.formationRange;
     if (formationRange) {
@@ -1677,7 +1683,35 @@ export class PixiMapRendererAdapter {
         this.interactionOverlayGraphics.rect(sx + 1.5, sy + 1.5, cellSize - 3, cellSize - 3).stroke({ ...getFengShuiOverlayStroke(cell), width: 1 });
       }
     }
-    for (const cell of scene.overlays.buildPreview?.cells ?? []) {
+    const buildPreview = scene.overlays.buildPreview;
+    if (buildPreview?.imageKey) {
+      const ref = this.runtimeEntitySpriteRefs.get(buildPreview.imageKey) ?? this.runtimeTileSpriteRefs.get(buildPreview.imageKey);
+      if (ref) {
+        const texture = this.getRuntimeEntityTexture(ref);
+        if (!texture) {
+          this.requestRuntimeEntityTexture(ref);
+        } else {
+          const inset = Math.max(0, Math.min(0.4, ref.insetRatio)) * cellSize;
+          const maxW = Math.max(1, cellSize - inset * 2);
+          const maxH = Math.max(1, cellSize - inset * 2);
+          const scale = ref.fit === 'contain'
+            ? Math.min(maxW / Math.max(1, texture.width), maxH / Math.max(1, texture.height))
+            : null;
+          const targetW = scale === null ? maxW : Math.max(1, texture.width * scale);
+          const targetH = scale === null ? maxH : Math.max(1, texture.height * scale);
+          for (const cell of buildPreview.cells) {
+            const sprite = new Sprite(texture);
+            sprite.anchor.set(0.5);
+            sprite.position.set(cell.x * cellSize + cellSize / 2, cell.y * cellSize + cellSize / 2);
+            sprite.width = targetW;
+            sprite.height = targetH;
+            sprite.alpha = 0.72;
+            this.buildPreviewLayer.addChild(sprite);
+          }
+        }
+      }
+    }
+    for (const cell of buildPreview?.cells ?? []) {
       this.drawCellHighlight(
         this.interactionOverlayGraphics,
         cell.x * cellSize,
@@ -1974,6 +2008,7 @@ export class PixiMapRendererAdapter {
       anim.respawnRemainingTicks ?? '', anim.respawnTotalTicks ?? '',
       anim.monsterTier ?? '',
       anim.monsterId ?? '',
+      anim.buildingDefId ?? '',
       buildNameplateBadgeSignature(badges), anim.hostile ? 1 : 0,
       anim.artifactActive === true ? 1 : 0,
       anim.monsterScale ?? '', anim.facing ?? '',

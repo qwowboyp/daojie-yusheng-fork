@@ -473,6 +473,8 @@ interface AnimEntity {
  */
 
   monsterId?: string;
+  /** 建築定義 ID，用於選擇穩定視覺資源。 */
+  buildingDefId?: string;
   /**
  * monsterScale：怪物Scale相关字段。
  */
@@ -1644,6 +1646,13 @@ export class TextRenderer implements IRenderer {
           }
           const buildPreviewCell = this.buildPreviewCellByKey.get(key);
           if (buildPreviewCell) {
+            const previewImageKey = this.buildPreviewOverlay?.imageKey;
+            if (previewImageKey) {
+              ctx.save();
+              ctx.globalAlpha = 0.72;
+              runtimeImagePack.drawBuildingPreview(ctx, previewImageKey, sx, sy, cellSize);
+              ctx.restore();
+            }
             ctx.fillStyle = buildPreviewCell.ok
               ? (buildPreviewCell.warning ? 'rgba(217, 119, 6, 0.24)' : 'rgba(22, 163, 74, 0.24)')
               : 'rgba(220, 38, 38, 0.30)';
@@ -1809,6 +1818,8 @@ export class TextRenderer implements IRenderer {
  * monsterId：怪物模板 ID，用于选择稳定视觉资源。
  */
  monsterId?: string;
+ /** 建築定義 ID，用於選擇穩定視覺資源。 */
+ buildingDefId?: string;
  /**
  * monsterTier：怪物Tier相关字段。
  */
@@ -1933,6 +1944,7 @@ export class TextRenderer implements IRenderer {
         anim.name = e.name;
         anim.kind = e.kind;
         anim.monsterId = e.monsterId;
+        anim.buildingDefId = e.buildingDefId;
         anim.monsterTier = e.monsterTier;
         anim.monsterScale = e.monsterScale;
         if (anim.facing !== e.facing) {
@@ -1978,6 +1990,7 @@ export class TextRenderer implements IRenderer {
           name: e.name,
           kind: e.kind,
           monsterId: e.monsterId,
+          buildingDefId: e.buildingDefId,
           monsterTier: e.monsterTier,
           monsterScale: e.monsterScale,
           facing: e.facing,

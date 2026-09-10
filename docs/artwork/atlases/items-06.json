@@ -1,0 +1,229 @@
+{
+  "id": "items-06",
+  "columns": 6,
+  "rows": 6,
+  "items": [
+    {
+      "id": "nurturing_leaf",
+      "name": "養脈葉",
+      "desc": "晾乾後仍能緩慢吐出草木氣息，是養脈藥最常用的底材。",
+      "type": "material"
+    },
+    {
+      "id": "spiritwood_heart",
+      "name": "生靈木心",
+      "desc": "老藤與木魅在地脈交匯處凝出的木心，最適合做續航與養脈法器。",
+      "type": "material"
+    },
+    {
+      "id": "coldspirit_dew",
+      "name": "寒魄露",
+      "desc": "寒汐澤夜露凝成的冷滴，入手清寒，常被拿去壓雜氣和做回靈藥。",
+      "type": "material"
+    },
+    {
+      "id": "moonwell_frost_sand",
+      "name": "月井冰砂",
+      "desc": "月井邊結出的細砂，帶著遲滯與收斂兩種水性。",
+      "type": "material"
+    },
+    {
+      "id": "cleantide_essence",
+      "name": "淨潮水精",
+      "desc": "多層寒潮反覆淘洗後留下的淨水精華，是洗脈與寒性法衣的核心煉材。",
+      "type": "material"
+    },
+    {
+      "id": "ember_sand",
+      "name": "隕火砂",
+      "desc": "赤隕庭地火烤出的細砂，捏在指間都還能感到餘燙。",
+      "type": "material"
+    },
+    {
+      "id": "embershard_char",
+      "name": "炎髓炭",
+      "desc": "火脈熬出來的深色炭芯，最適合做淬體和爆發類耗材。",
+      "type": "material"
+    },
+    {
+      "id": "furnace_red_crystal",
+      "name": "爐心赤晶",
+      "desc": "爐心臺深處結出的赤色晶核，常被拿來壓成烈性器墜或爆發藥引。",
+      "type": "material"
+    },
+    {
+      "id": "earthbearing_stone",
+      "name": "承脈石",
+      "desc": "厚脈嶺地氣壓出來的承重石，拿在手裡就覺得氣機往下沉。",
+      "type": "material"
+    },
+    {
+      "id": "thickrock_core",
+      "name": "厚巖核",
+      "desc": "厚石裡最密最實的一截岩心，煉體和護甲都用得上。",
+      "type": "material"
+    },
+    {
+      "id": "stonegall_core",
+      "name": "鎮嶽石膽",
+      "desc": "石膽久受土行重壓而成，最適合做穩脈、鎮嶽一類的核心煉材。",
+      "type": "material"
+    },
+    {
+      "id": "half_base_embryo",
+      "name": "半基靈胚",
+      "desc": "舊陣把五炁壓成半成品後遺下的靈胚，拿在手裡都像要自行立基。",
+      "type": "material"
+    },
+    {
+      "id": "mat.longvein_vine",
+      "name": "長脈藤",
+      "desc": "沿谷壁攀出的韌藤，藤芯溫潤，最擅長牽引木行藥力深入經脈。",
+      "type": "material"
+    },
+    {
+      "id": "mat.returnspring_leaf",
+      "name": "回春葉",
+      "desc": "葉背常藏一線回生青氣，曬乾後仍能緩慢吐納木息。",
+      "type": "material"
+    },
+    {
+      "id": "mat.coldmarrow_reed",
+      "name": "寒髓葦",
+      "desc": "生在寒汐淺灘的青白葦芯，內裡一縷冷意直入髓海。",
+      "type": "material"
+    },
+    {
+      "id": "mat.moonwell_stamen",
+      "name": "月井蕊",
+      "desc": "月井寒蓮退花後留下的細蕊，最善收束散亂水氣。",
+      "type": "material"
+    },
+    {
+      "id": "mat.scorchheart_petal",
+      "name": "灼心瓣",
+      "desc": "貼著地火邊緣生出的赤瓣，藥性熾而不躁，適合做烈性主藥。",
+      "type": "material"
+    },
+    {
+      "id": "mat.flamegrain_spike",
+      "name": "炎穗芒",
+      "desc": "火穗結出的細芒，入爐後能把火行藥勢拉成一線。",
+      "type": "material"
+    },
+    {
+      "id": "mat.bearingroot_ginseng",
+      "name": "承脈參",
+      "desc": "深扎裂巖的厚根，嚼之微澀，卻最能穩住下沉地氣。",
+      "type": "material"
+    },
+    {
+      "id": "mat.stonecore_lingzhi",
+      "name": "巖髓芝",
+      "desc": "貼石而生的灰芝，內蘊綿長土息，是護脈丹常見主材。",
+      "type": "material"
+    },
+    {
+      "id": "mat.goldthread_briar",
+      "name": "金芒棘",
+      "desc": "棘藤細刺泛著淡金光，輕折便能聞到鋒銳藥香。",
+      "type": "material"
+    },
+    {
+      "id": "mat.ironvein_caltrop",
+      "name": "鐵脈蒺",
+      "desc": "生在埋鋒砂地的硬刺草，藥性緊收，最宜淬鋒。",
+      "type": "material"
+    },
+    {
+      "id": "pill.guiding_powder",
+      "name": "引基散",
+      "desc": "藥散入腹後會把亂氣往氣海底部慢慢攏住，3600 息內讓境界修為 +30%、功法經驗 +30%。",
+      "type": "consumable"
+    },
+    {
+      "id": "recovery_powder",
+      "name": "回靈散",
+      "desc": "散末遇氣即化，清涼靈意貼著經絡迴轉，收攏散失靈機。",
+      "type": "consumable"
+    },
+    {
+      "id": "stabilizing_pellet",
+      "name": "鎮脈丸",
+      "desc": "丸體沉厚，藥勢貼脈而行，能壓住亂血並穩住經絡根基。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.edge_quenching_powder",
+      "name": "淬鋒散",
+      "desc": "金行藥粉入口發澀，3900 息內使命中 +14%、暴擊 +10%、破招 +15%。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.chiyang_draught",
+      "name": "赤陽液",
+      "desc": "藥液烈得像一口吞火，3900 息內使物理攻擊 +18%、法術攻擊 +18%、暴擊 +12%、靈力輸出速率 +18%。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.fivephase_harmony_pellet",
+      "name": "五和丸",
+      "desc": "把幾種溫順藥性壓成一丸，4800 息內使法術防禦 +18%、境界修為 +36%、功法經驗 +36%。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.breakmirror_pellet",
+      "name": "破鏡丹",
+      "desc": "藥力會強行撬開六維潛勢，短時間內把根骨、體魄與神識一併拔高，但也會壓碎氣血與靈力根基，只適合搏命時服下。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.ningxiang",
+      "name": "凝相丹",
+      "desc": "以重傷金丹真人的殘丹法門逆煉成丸，服下後會強行凝出法相虛影。虛影若要維持，必須持續燃燒靈力，一旦後繼無力便會當場崩散。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.qizhen_crossing",
+      "name": "棲真渡街圖",
+      "desc": "記著棲真渡三重錯臺、行修街和五行出入口的主城街圖。使用後可永久解鎖棲真渡地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.deepvein_ridge",
+      "name": "厚脈嶺採脈圖",
+      "desc": "描出厚脈嶺外坪、裂坡和採脈險路。使用後可永久解鎖厚脈嶺地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.cold_tide_marsh",
+      "name": "寒汐澤霧行圖",
+      "desc": "按霧橋、水線和寒核方位謄錄的行圖。使用後可永久解鎖寒汐澤地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.verdant_vine_vale",
+      "name": "青蘿谷藤徑圖",
+      "desc": "把藤門、橋徑和谷中靈植帶都標了出來。使用後可永久解鎖青蘿谷六段藤徑圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.emberfall_court",
+      "name": "赤隕庭火路圖",
+      "desc": "火路臺階、爐庭轉折和退路都被壓進了這張舊圖。使用後可永久解鎖赤隕庭地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.cleft_blade_plain",
+      "name": "裂鋒原戰線圖",
+      "desc": "按殘陣、砂兵線和斷兵冢口整理出的長線戰圖。使用後可永久解鎖裂鋒原地圖。",
+      "type": "consumable"
+    }
+  ],
+  "prompt": "Make ONE production inventory sprite atlas, exactly 36 SEPARATE icons arranged as 6 columns by 6 rows in EQUAL SQUARE CELLS. Canvas aspect ratio 6:6; ideally 1536 by 1536 pixels. True transparent alpha background. Keep each whole object and all its effects within the CENTER 64% of its assigned cell, with 18% transparent empty padding on every side. No icons cross cells. NO grid lines, frames, text, letters, labels or watermark. Chinese xianxia hand-painted fantasy RPG item art, crisp silhouettes and identifiable materials readable at 40px. Every object follows its own supplied description, varying forms/colors/materials; technique books have unique abstract motifs but NO writing. Output only the grid of objects, with exact positions in this roster:\nROW 1 COL 1: 養脈葉 [nurturing_leaf] (material): 晾乾後仍能緩慢吐出草木氣息，是養脈藥最常用的底材。\nROW 1 COL 2: 生靈木心 [spiritwood_heart] (material): 老藤與木魅在地脈交匯處凝出的木心，最適合做續航與養脈法器。\nROW 1 COL 3: 寒魄露 [coldspirit_dew] (material): 寒汐澤夜露凝成的冷滴，入手清寒，常被拿去壓雜氣和做回靈藥。\nROW 1 COL 4: 月井冰砂 [moonwell_frost_sand] (material): 月井邊結出的細砂，帶著遲滯與收斂兩種水性。\nROW 1 COL 5: 淨潮水精 [cleantide_essence] (material): 多層寒潮反覆淘洗後留下的淨水精華，是洗脈與寒性法衣的核心煉材。\nROW 1 COL 6: 隕火砂 [ember_sand] (material): 赤隕庭地火烤出的細砂，捏在指間都還能感到餘燙。\nROW 2 COL 1: 炎髓炭 [embershard_char] (material): 火脈熬出來的深色炭芯，最適合做淬體和爆發類耗材。\nROW 2 COL 2: 爐心赤晶 [furnace_red_crystal] (material): 爐心臺深處結出的赤色晶核，常被拿來壓成烈性器墜或爆發藥引。\nROW 2 COL 3: 承脈石 [earthbearing_stone] (material): 厚脈嶺地氣壓出來的承重石，拿在手裡就覺得氣機往下沉。\nROW 2 COL 4: 厚巖核 [thickrock_core] (material): 厚石裡最密最實的一截岩心，煉體和護甲都用得上。\nROW 2 COL 5: 鎮嶽石膽 [stonegall_core] (material): 石膽久受土行重壓而成，最適合做穩脈、鎮嶽一類的核心煉材。\nROW 2 COL 6: 半基靈胚 [half_base_embryo] (material): 舊陣把五炁壓成半成品後遺下的靈胚，拿在手裡都像要自行立基。\nROW 3 COL 1: 長脈藤 [mat.longvein_vine] (material): 沿谷壁攀出的韌藤，藤芯溫潤，最擅長牽引木行藥力深入經脈。\nROW 3 COL 2: 回春葉 [mat.returnspring_leaf] (material): 葉背常藏一線回生青氣，曬乾後仍能緩慢吐納木息。\nROW 3 COL 3: 寒髓葦 [mat.coldmarrow_reed] (material): 生在寒汐淺灘的青白葦芯，內裡一縷冷意直入髓海。\nROW 3 COL 4: 月井蕊 [mat.moonwell_stamen] (material): 月井寒蓮退花後留下的細蕊，最善收束散亂水氣。\nROW 3 COL 5: 灼心瓣 [mat.scorchheart_petal] (material): 貼著地火邊緣生出的赤瓣，藥性熾而不躁，適合做烈性主藥。\nROW 3 COL 6: 炎穗芒 [mat.flamegrain_spike] (material): 火穗結出的細芒，入爐後能把火行藥勢拉成一線。\nROW 4 COL 1: 承脈參 [mat.bearingroot_ginseng] (material): 深扎裂巖的厚根，嚼之微澀，卻最能穩住下沉地氣。\nROW 4 COL 2: 巖髓芝 [mat.stonecore_lingzhi] (material): 貼石而生的灰芝，內蘊綿長土息，是護脈丹常見主材。\nROW 4 COL 3: 金芒棘 [mat.goldthread_briar] (material): 棘藤細刺泛著淡金光，輕折便能聞到鋒銳藥香。\nROW 4 COL 4: 鐵脈蒺 [mat.ironvein_caltrop] (material): 生在埋鋒砂地的硬刺草，藥性緊收，最宜淬鋒。\nROW 4 COL 5: 引基散 [pill.guiding_powder] (consumable): 藥散入腹後會把亂氣往氣海底部慢慢攏住，3600 息內讓境界修為 +30%、功法經驗 +30%。\nROW 4 COL 6: 回靈散 [recovery_powder] (consumable): 散末遇氣即化，清涼靈意貼著經絡迴轉，收攏散失靈機。\nROW 5 COL 1: 鎮脈丸 [stabilizing_pellet] (consumable): 丸體沉厚，藥勢貼脈而行，能壓住亂血並穩住經絡根基。\nROW 5 COL 2: 淬鋒散 [pill.edge_quenching_powder] (consumable): 金行藥粉入口發澀，3900 息內使命中 +14%、暴擊 +10%、破招 +15%。\nROW 5 COL 3: 赤陽液 [pill.chiyang_draught] (consumable): 藥液烈得像一口吞火，3900 息內使物理攻擊 +18%、法術攻擊 +18%、暴擊 +12%、靈力輸出速率 +18%。\nROW 5 COL 4: 五和丸 [pill.fivephase_harmony_pellet] (consumable): 把幾種溫順藥性壓成一丸，4800 息內使法術防禦 +18%、境界修為 +36%、功法經驗 +36%。\nROW 5 COL 5: 破鏡丹 [pill.breakmirror_pellet] (consumable): 藥力會強行撬開六維潛勢，短時間內把根骨、體魄與神識一併拔高，但也會壓碎氣血與靈力根基，只適合搏命時服下。\nROW 5 COL 6: 凝相丹 [pill.ningxiang] (consumable): 以重傷金丹真人的殘丹法門逆煉成丸，服下後會強行凝出法相虛影。虛影若要維持，必須持續燃燒靈力，一旦後繼無力便會當場崩散。\nROW 6 COL 1: 棲真渡街圖 [map.qizhen_crossing] (consumable): 記著棲真渡三重錯臺、行修街和五行出入口的主城街圖。使用後可永久解鎖棲真渡地圖。\nROW 6 COL 2: 厚脈嶺採脈圖 [map.deepvein_ridge] (consumable): 描出厚脈嶺外坪、裂坡和採脈險路。使用後可永久解鎖厚脈嶺地圖。\nROW 6 COL 3: 寒汐澤霧行圖 [map.cold_tide_marsh] (consumable): 按霧橋、水線和寒核方位謄錄的行圖。使用後可永久解鎖寒汐澤地圖。\nROW 6 COL 4: 青蘿谷藤徑圖 [map.verdant_vine_vale] (consumable): 把藤門、橋徑和谷中靈植帶都標了出來。使用後可永久解鎖青蘿谷六段藤徑圖。\nROW 6 COL 5: 赤隕庭火路圖 [map.emberfall_court] (consumable): 火路臺階、爐庭轉折和退路都被壓進了這張舊圖。使用後可永久解鎖赤隕庭地圖。\nROW 6 COL 6: 裂鋒原戰線圖 [map.cleft_blade_plain] (consumable): 按殘陣、砂兵線和斷兵冢口整理出的長線戰圖。使用後可永久解鎖裂鋒原地圖。",
+  "sourceSha256": "9b16ae41860374cecf4f72600dc0052d2d6e95a9fcbe313f4425d9427643a221",
+  "dimensions": [
+    1254,
+    1254
+  ]
+}

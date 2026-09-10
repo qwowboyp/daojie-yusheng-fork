@@ -79,6 +79,11 @@
       gap: 8px;
     }
 
+    .inventory-cell > .item-art--cell {
+      grid-row: span 2;
+      align-self: center;
+    }
+
     .inventory-workspace-detail-title,
     .inventory-workspace-comparison-name {
       color: var(--ink-black);

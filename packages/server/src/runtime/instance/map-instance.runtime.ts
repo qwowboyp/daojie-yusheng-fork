@@ -2758,6 +2758,36 @@ class MapInstanceRuntime {
             fengShui: roomId ? this.fengShuiByRoomId.get(roomId) ?? null : null,
         };
     }
+    /** 取得最上層可見的完工 tile 建築定義 ID；只做派生視覺投影。 */
+    getBuildingVisualDefIdAtTile(xInput: unknown, yInput: unknown): string | null {
+        const x = Math.trunc(Number(xInput));
+        const y = Math.trunc(Number(yInput));
+        if (!Number.isFinite(x) || !Number.isFinite(y)) {
+            return null;
+        }
+        const tileIndex = this.toTileIndex(x, y);
+        if (tileIndex < 0) {
+            return null;
+        }
+        let floorDefId: string | null = null;
+        for (const buildingId of this.buildingIdByCell.get(tileIndex) ?? []) {
+            const building = this.buildingById.get(buildingId);
+            if (!building || !buildingUsesActiveTopology(building)) {
+                continue;
+            }
+            const compiled = resolveCompiledBuildingDefinition(this.buildingCatalog, building);
+            if (!compiled?.visualTileType) {
+                continue;
+            }
+            if (compiled.layerId === 1) {
+                return building.defId;
+            }
+            if (compiled.layerId === 2 && floorDefId === null) {
+                floorDefId = building.defId;
+            }
+        }
+        return this.tilePlane.getStructureType(tileIndex) ? null : floorDefId;
+    }
     /** rebuildRoomCellIndices：重建 roomId -> cell 列表索引，供单房间风水重算复用。 */
     rebuildRoomCellIndices() {
         this.roomCellIndicesById = new Map();
@@ -7646,6 +7676,7 @@ class MapInstanceRuntime {
         const name = resolvePlayerFacingContentName(building.defId, '未知建築', building?.name, compiled?.name);
         const cached = this.localBuildingViewCacheById.get(building.id);
         if (cached
+            && cached.defId === building.defId
             && cached.x === building.x
             && cached.y === building.y
             && cached.name === name
@@ -7657,6 +7688,7 @@ class MapInstanceRuntime {
         }
         const entry = freezeRuntimeProjection({
             id: building.id,
+            defId: building.defId,
             x: building.x,
             y: building.y,
             name,

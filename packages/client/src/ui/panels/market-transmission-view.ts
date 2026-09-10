@@ -17,6 +17,7 @@ import {
   TECHNIQUE_GRADE_ORDER,
 } from '@mud/shared';
 import { contentResolver } from '../../content/content-resolver';
+import { renderItemIcon } from '../../content/item-art';
 import { getLocalRealmLevelEntry, getLocalTechniqueTemplate, resolveClientTechniqueName } from '../../content/local-templates';
 import { getTechniqueCategoryLabel, getTechniqueGradeLabel } from '../../domain-labels';
 import { formatDisplayInteger } from '../../utils/number';
@@ -454,8 +455,8 @@ export class MarketTransmissionView {
       >
         <span class="auction-lot-ribbon ${lot.isMine ? '' : 'hidden'}" data-transmission-lot-ribbon aria-hidden="true"><span>${escapeHtml(t('market.transmission.ribbon.mine', undefined))}</span></span>
         <span class="auction-lot-item">
-          <strong data-transmission-lot-name>${escapeHtml(lot.itemName)}</strong>
-          <small data-transmission-lot-realm>${escapeHtml(lot.realmLevelLabel ?? lot.sellerLabel)}</small>
+          ${renderItemIcon(lot.item.itemId)}
+          <span><strong data-transmission-lot-name>${escapeHtml(lot.itemName)}</strong><small data-transmission-lot-realm>${escapeHtml(lot.realmLevelLabel ?? lot.sellerLabel)}</small></span>
         </span>
         <span data-transmission-lot-category>${escapeHtml(lot.categoryLabel)}</span>
         <span class="auction-quality-tag" data-transmission-lot-quality>${escapeHtml(lot.qualityLabel)}</span>
@@ -472,7 +473,7 @@ export class MarketTransmissionView {
     const canBuy = !lot.isMine && ownedCurrency >= lot.price;
     return `
       <div class="auction-detail-head transmission-detail-head">
-        <div class="auction-item-icon" aria-hidden="true">${escapeHtml(getTechniqueInitial(lot.itemName))}</div>
+        ${renderItemIcon(lot.item.itemId, 'detail')}
         <div class="auction-detail-title">
           <div class="market-item-title market-item-title--interactive" data-market-item-tooltip="transmission:${escapeHtmlAttr(lot.itemKey)}">${escapeHtml(lot.itemName)}</div>
           <div class="market-book-subtitle">${escapeHtml([lot.realmLevelLabel, lot.qualityLabel, lot.categoryLabel].filter(Boolean).join(' · '))}</div>
@@ -989,6 +990,7 @@ export class MarketTransmissionView {
         aria-pressed="${active ? 'true' : 'false'}"
         type="button"
       >
+        ${renderItemIcon(entry.item.itemId, 'cell')}
         <div class="inventory-cell-head">
           <span class="inventory-cell-type" data-transmission-consign-item-category>${escapeHtml(entry.categoryLabel)}</span>
           <span class="inventory-cell-count" data-transmission-consign-item-count>${formatDisplayInteger(entry.item.count)}</span>

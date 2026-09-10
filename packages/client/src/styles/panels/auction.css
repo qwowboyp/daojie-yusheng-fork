@@ -465,7 +465,7 @@
 
     .auction-detail-head {
       display: grid;
-      grid-template-columns: 60px minmax(0, 1fr) auto;
+      grid-template-columns: 80px minmax(0, 1fr) auto;
       gap: 12px;
       align-items: center;
       padding-bottom: 10px;
@@ -1062,5 +1062,11 @@
     @media (max-width: 720px) {
       .transmission-teach-picker {
         grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
+      .detail-modal--auction-house .auction-detail-head {
+        grid-template-columns: 64px minmax(0, 1fr);
       }
     }

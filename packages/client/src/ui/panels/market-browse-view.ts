@@ -8,6 +8,7 @@ import { COMBAT_EQUIP_SLOTS, ITEM_TYPES, MARKET_MAX_ENHANCE_LEVEL, TECHNIQUE_EQU
 import { formatDisplayCountBadge, formatDisplayInteger } from '../../utils/number';
 import { getEquipSlotLabel, getItemTypeLabel, getTechniqueCategoryLabel } from '../../domain-labels';
 import { t } from '../i18n';
+import { renderItemIcon } from '../../content/item-art';
 import type {
   MarketPanelInternals,
   MarketCategoryFilter,
@@ -110,6 +111,7 @@ export class MarketBrowseView {
     return `
       <button class="market-item-cell ui-surface-card ui-surface-card--compact ${entry.itemKey === activeItemKey ? 'active' : ''}${statusClass}" data-market-select-item="${escapeHtmlAttr(entry.itemKey)}" ${groupItemId ? `data-market-select-item-group="${escapeHtmlAttr(groupItemId)}"` : ''} data-market-item-tooltip="${escapeHtmlAttr(entry.itemKey)}" type="button">
         ${statusRibbon}
+        ${renderItemIcon(entry.item.itemId)}
         <div class="market-item-cell-name">
           <span class="market-item-cell-name-text">${escapeHtml(itemName)}</span>
           ${ownedLabel}
@@ -136,6 +138,7 @@ export class MarketBrowseView {
     return `
       <button class="market-item-cell ui-surface-card ui-surface-card--compact ${entry.itemId === activeItemId ? 'active' : ''}${statusClass}" data-market-select-group="${escapeHtmlAttr(entry.itemId)}" ${referenceEntry ? `data-market-item-tooltip="${escapeHtmlAttr(referenceEntry.itemKey)}"` : ''} type="button">
         ${statusRibbon}
+        ${renderItemIcon(entry.itemId)}
         <div class="market-item-cell-name">
           <span class="market-item-cell-name-text">${escapeHtml(itemName)}</span>
           ${ownedLabel}
@@ -158,6 +161,7 @@ export class MarketBrowseView {
     const showOrderBook = book !== null || !p.itemBookLoading;
     return `
       <div class="market-book-header">
+        ${renderItemIcon(entry.item.itemId, 'detail')}
         <div>
           <div class="market-item-title market-item-title--interactive" data-market-item-tooltip="selected">${escapeHtml(itemName)}</div>
           <div class="market-book-subtitle">${escapeHtml(getItemTypeLabel(entry.item.type))}${itemDesc ? ` · ${escapeHtml(itemDesc)}` : ''}</div>
@@ -197,12 +201,12 @@ export class MarketBrowseView {
     const itemName = p.getMarketDisplayName(referenceEntry?.item ?? group.item);
     if (browsingEnhancementVariants) {
       return `
-        <div class="market-book-header"><div><div class="${titleClass}"${titleTooltipAttr}>${escapeHtml(itemName)}</div><div class="market-book-subtitle">${escapeHtml(t('market.book.subtitle.enhance-select', undefined))}</div></div></div>
+        <div class="market-book-header">${renderItemIcon(group.itemId, 'detail')}<div><div class="${titleClass}"${titleTooltipAttr}>${escapeHtml(itemName)}</div><div class="market-book-subtitle">${escapeHtml(t('market.book.subtitle.enhance-select', undefined))}</div></div></div>
         <div class="empty-hint">${escapeHtml(t('market.book.empty.enhance-level', undefined))}</div>
       `;
     }
     return `
-      <div class="market-book-header"><div><div class="${titleClass}"${titleTooltipAttr}>${escapeHtml(itemName)}</div><div class="market-book-subtitle">${escapeHtml(t('market.book.subtitle.group', { typeLabel: getItemTypeLabel(group.item.type) }))}</div></div></div>
+      <div class="market-book-header">${renderItemIcon(group.itemId, 'detail')}<div><div class="${titleClass}"${titleTooltipAttr}>${escapeHtml(itemName)}</div><div class="market-book-subtitle">${escapeHtml(t('market.book.subtitle.group', { typeLabel: getItemTypeLabel(group.item.type) }))}</div></div></div>
       <div class="empty-hint">${group.canEnhance ? escapeHtml(t('market.book.group.hint.enhance', undefined)) : escapeHtml(t('market.book.group.hint.normal', undefined))}</div>
     `;
   }

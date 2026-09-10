@@ -239,7 +239,7 @@ export function diffBuildingEntries(previous: Map<string, ProjectedBuildingEntry
     for (const [buildingId, entry] of current) {
         const prev = previous.get(buildingId);
         if (!prev) {
-            result.push({ id: buildingId, x: entry.x, y: entry.y, n: entry.n, ch: entry.ch, c: entry.c, rt: entry.rt, tt: entry.tt });
+            result.push({ id: buildingId, di: entry.di, x: entry.x, y: entry.y, n: entry.n, ch: entry.ch, c: entry.c, rt: entry.rt, tt: entry.tt });
             continue;
         }
         if (prev === entry) {
@@ -247,6 +247,7 @@ export function diffBuildingEntries(previous: Map<string, ProjectedBuildingEntry
         }
         const delta: WorldBuildingPatchView = { id: buildingId };
         let changed = false;
+        if (prev.di !== entry.di) { delta.di = entry.di; changed = true; }
         if (prev.x !== entry.x) { delta.x = entry.x; changed = true; }
         if (prev.y !== entry.y) { delta.y = entry.y; changed = true; }
         if (prev.n !== entry.n) { delta.n = entry.n; changed = true; }

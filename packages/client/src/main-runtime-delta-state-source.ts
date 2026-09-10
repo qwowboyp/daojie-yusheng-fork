@@ -617,6 +617,7 @@ export function createMainRuntimeDeltaStateSource(options: MainRuntimeDeltaState
       color: patch.c ?? previous?.color ?? BUILDING_ENTITY_COLOR,
       name: patch.n ?? previous?.name ?? '未完工建築',
       kind: 'building',
+      buildingDefId: patch.di === null ? undefined : patch.di ?? previous?.buildingDefId,
       hp: previous?.hp,
       maxHp: previous?.maxHp,
       qi: previous?.qi,

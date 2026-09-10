@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "defaults": {
     "tile": {
       "cols": 4,
@@ -186,6 +186,46 @@
       "meta": {
         "zIndex": 370
       }
+    },
+    "building:stone_wall": {
+      "src": "/assets/building-art/v1/stone_wall-ground-256.webp",
+      "meta": {
+        "zIndex": 300,
+        "dualGrid": false
+      },
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:wooden_door": {
+      "src": "/assets/building-art/v1/wooden_door-ground-256.webp",
+      "meta": {
+        "zIndex": 310,
+        "dualGrid": false
+      },
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:wooden_window": {
+      "src": "/assets/building-art/v1/wooden_window-ground-256.webp",
+      "meta": {
+        "zIndex": 315,
+        "dualGrid": false
+      },
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:plain_floor": {
+      "src": "/assets/building-art/v1/plain_floor-ground-256.webp",
+      "meta": {
+        "zIndex": 190,
+        "dualGrid": false
+      },
+      "cols": 1,
+      "rows": 1,
+      "fit": "cover"
     }
   },
   "legacyTiles": {
@@ -1820,6 +1860,42 @@
       "row": 0,
       "fit": "contain",
       "insetRatio": 0.04
+    },
+    "building:scripture_platform": {
+      "src": "/assets/building-art/v1/scripture_platform-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:treasure_vault": {
+      "src": "/assets/building-art/v1/treasure_vault-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:technique_refining_table": {
+      "src": "/assets/building-art/v1/technique_refining_table-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:technique_unification_platform": {
+      "src": "/assets/building-art/v1/technique_unification_platform-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:time_chamber": {
+      "src": "/assets/building-art/v1/time_chamber-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:meditation_mat": {
+      "src": "/assets/building-art/v1/meditation_mat-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
     }
   }
 }

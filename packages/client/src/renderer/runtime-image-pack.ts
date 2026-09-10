@@ -336,6 +336,12 @@ function normalizeLegacyTileMap(value: unknown): Map<string, string> {
 }
 
 function resolveTopTileSpriteKey(tile: Tile, legacyTileKeys: ReadonlyMap<string, string>): string | null {
+  const buildingDefId = typeof tile.buildingDefId === 'string' && tile.buildingDefId.length > 0
+    ? tile.buildingDefId
+    : null;
+  if (buildingDefId) {
+    return `building:${buildingDefId}`;
+  }
   const structureType = typeof tile.structureType === 'string' && tile.structureType.length > 0
     ? tile.structureType
     : null;
@@ -368,7 +374,7 @@ function resolveTopTileSpriteKey(tile: Tile, legacyTileKeys: ReadonlyMap<string,
 }
 
 function resolveEntitySpriteSelection(
-  entity: Pick<RenderEntity, 'id' | 'kind' | 'name' | 'char' | 'facing' | 'monsterId'>,
+  entity: Pick<RenderEntity, 'id' | 'kind' | 'name' | 'char' | 'facing' | 'monsterId' | 'buildingDefId'>,
   sprites: ReadonlyMap<string, AtlasSpriteRef>,
 ): EntitySpriteSelection | null {
   const plan = buildEntitySpriteLookupPlan(entity);
@@ -683,7 +689,7 @@ export class RuntimeImagePack {
 
   drawEntity(
     ctx: CanvasRenderingContext2D,
-    entity: Pick<RenderEntity, 'id' | 'kind' | 'name' | 'char' | 'facing' | 'monsterId'>,
+    entity: Pick<RenderEntity, 'id' | 'kind' | 'name' | 'char' | 'facing' | 'monsterId' | 'buildingDefId'>,
     dx: number,
     dy: number,
     size: number,
@@ -694,6 +700,13 @@ export class RuntimeImagePack {
       return false;
     }
     return this.drawAtlasSprite(ctx, selection.ref, dx, dy, size, selection.transform);
+  }
+
+  /** 依已解析的 manifest key 繪製建造預覽；未載入或缺圖時讓合法性高亮照常顯示。 */
+  drawBuildingPreview(ctx: CanvasRenderingContext2D, imageKey: string, dx: number, dy: number, size: number): boolean {
+    this.ensureManifestRequested();
+    const ref = this.entitySprites.get(imageKey) ?? this.tileSprites.get(imageKey);
+    return ref ? this.drawAtlasSprite(ctx, ref, dx, dy, size, { flipX: false }) : false;
   }
 
   private ensureManifestRequested(): void {
@@ -716,7 +729,7 @@ export class RuntimeImagePack {
         this.tileSprites = normalizeSpriteMap(manifest.tiles, this.manifestUrl, version, manifest.defaults?.tile);
         this.legacyTileKeys = normalizeLegacyTileMap(manifest.legacyTiles);
         this.entitySprites = normalizeSpriteMap(manifest.entities, this.manifestUrl, version);
-        // 实体形象统一由服务器头像供给（player:<id>）；本地覆盖仅对地形 key 生效。
+        // 玩家形象來自伺服器頭像；建築等穩定實體形象由 runtime image pack 提供。
         addServerAvatarSpriteRefs(this.entitySprites);
         this.dualGridTileKeys = [...this.tileSprites.entries()]
           .filter(([, ref]) => ref.dualGrid?.enabled === true)

@@ -1,6 +1,10 @@
 import { Direction, normalizeHorizontalFacing, type RenderEntity } from '@mud/shared';
 
-type SpriteLookupEntity = Pick<RenderEntity, 'id' | 'kind' | 'name' | 'char' | 'facing' | 'monsterId'>;
+type SpriteLookupEntity = Pick<RenderEntity, 'id' | 'kind' | 'name' | 'char' | 'facing' | 'monsterId' | 'buildingDefId'>;
+
+type BuildingPreviewVisual = {
+  id: string;
+};
 
 export type EntitySpriteLookupPlan = {
   keys: string[];
@@ -22,6 +26,7 @@ function normalizeEntitySpriteSegment(value: string | null | undefined): string 
 
 function buildBaseEntitySpriteKeys(entity: SpriteLookupEntity): string[] {
   const monsterId = normalizeEntitySpriteSegment(entity.monsterId);
+  const buildingDefId = normalizeEntitySpriteSegment(entity.buildingDefId);
   const id = normalizeEntitySpriteSegment(entity.id);
   const name = normalizeEntitySpriteSegment(entity.name);
   const char = normalizeEntitySpriteSegment(entity.char);
@@ -34,9 +39,17 @@ function buildBaseEntitySpriteKeys(entity: SpriteLookupEntity): string[] {
       return [id && `container:${id}`, name && `container:${name}`, char && `container:${char}`, 'container:default'].filter(Boolean) as string[];
     case 'player':
       return [id && `player:${id}`, name && `player:${name}`, 'player:default'].filter(Boolean) as string[];
+    case 'building':
+      return buildingDefId ? [`building:${buildingDefId}`] : [];
     default:
       return [];
   }
+}
+
+/** 建造預覽只依 catalog 的穩定定義 ID 映射 manifest key，不猜名稱或 glyph。 */
+export function resolveBuildingPreviewSpriteKey(def: BuildingPreviewVisual): string | null {
+  const defId = normalizeEntitySpriteSegment(def.id);
+  return defId ? `building:${defId}` : null;
 }
 
 export function resolveMonsterFacing(

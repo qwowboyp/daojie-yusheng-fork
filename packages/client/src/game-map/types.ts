@@ -117,6 +117,8 @@ export interface ObservedMapEntity {
  */
 
   monsterId?: string;
+  /** 建築定義 ID，用於選擇穩定視覺資源。 */
+  buildingDefId?: string;
   /**
  * monsterScale：怪物Scale相关字段。
  */
@@ -295,6 +297,8 @@ export interface MapBuildPreviewOverlayCell {
 export interface MapBuildPreviewOverlayState {
   requestId?: string;
   defId: string;
+  /** 已按建築 catalog 穩定定義 ID 解析的 runtime-image manifest key。 */
+  imageKey?: string;
   originX: number;
   originY: number;
   rotation?: 0 | 90 | 180 | 270;

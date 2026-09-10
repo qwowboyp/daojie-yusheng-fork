@@ -64,6 +64,7 @@ import {
 } from '@mud/shared';
 import { getLocalItemTemplate, getLocalTechniqueCategoryForBookItem, resolvePreviewItem, resolveTechniqueIdFromBookItemId } from '../../content/local-templates';
 import { resolveClientItemBaseName } from '../../content/item-display-name';
+import { renderItemIcon } from '../../content/item-art';
 import { buildItemTooltipPayload, describeItemEffectDetails } from '../equipment-tooltip';
 import { FloatingTooltip, prefersPinnedTooltipInteraction } from '../floating-tooltip';
 import { detailModalHost } from '../detail-modal-host';
@@ -1260,6 +1261,7 @@ export class MarketPanel {
       const active = entry.itemId === selectedItemId ? ' active' : '';
       return `
         <button class="market-item-cell ui-surface-card ui-surface-card--compact${active}" data-heavenly-dao-shop-select="${escapeHtmlAttr(entry.itemId)}" type="button">
+          ${renderItemIcon(entry.itemId)}
           <div class="market-item-cell-name">
             <span class="market-item-cell-name-text market-item-title--interactive" data-market-item-tooltip="heavenly-dao-shop:${escapeHtmlAttr(entry.itemId)}">${escapeHtml(itemName)}${escapeHtml(countText)}</span>
             <span class="market-item-cell-owned ${ownedCount > 0 ? '' : 'hidden'}">${ownedCount > 0 ? formatDisplayCountBadge(ownedCount) : ''}</span>
@@ -1303,6 +1305,7 @@ export class MarketPanel {
       : `${currencyName}不足，需要 ${displayTotal} ${currencyName}。`;
     return `
       <div class="market-book-header">
+        ${renderItemIcon(entry.itemId, 'detail')}
         <div>
           <div class="market-item-title market-item-title--interactive" data-market-item-tooltip="heavenly-dao-shop:${escapeHtmlAttr(entry.itemId)}">${escapeHtml(item.name)}${escapeHtml(countText)}</div>
           <div class="market-book-subtitle">${escapeHtml(getItemTypeLabel(item.type))} · ${escapeHtml(item.desc)}</div>
@@ -1679,6 +1682,7 @@ export class MarketPanel {
       return `
         <button class="market-item-cell ui-surface-card ui-surface-card--compact${active}${statusClass}" data-spirit-stone-shop-select="${escapeHtmlAttr(entry.itemId)}" type="button">
           ${statusRibbon}
+          ${renderItemIcon(entry.itemId)}
           <div class="market-item-cell-name">
             <span class="market-item-cell-name-text market-item-title--interactive" data-market-item-tooltip="spirit-stone-shop:${escapeHtmlAttr(entry.itemId)}">${escapeHtml(itemName)}</span>
             <span class="market-item-cell-owned ${ownedCount > 0 ? '' : 'hidden'}">${ownedCount > 0 ? formatDisplayCountBadge(ownedCount) : ''}</span>
@@ -1722,6 +1726,7 @@ export class MarketPanel {
       : `${currencyName}不足，需要 ${displayTotal} ${currencyName}。`;
     return `
       <div class="market-book-header">
+        ${renderItemIcon(entry.itemId, 'detail')}
         <div>
           <div class="market-item-title market-item-title--interactive" data-market-item-tooltip="spirit-stone-shop:${escapeHtmlAttr(entry.itemId)}">${escapeHtml(item.name)}${statusPill}</div>
           <div class="market-book-subtitle">${escapeHtml(getItemTypeLabel(item.type))} · ${escapeHtml(item.desc)}</div>
@@ -2138,6 +2143,7 @@ export class MarketPanel {
         : `${formatDisplayInteger(row.unitRecyclePrice)} ${escapeHtml(currencyName)}`;
       return `
         <button class="market-item-cell ui-surface-card ui-surface-card--compact${active}" data-vendor-recycle-select="${escapeHtmlAttr(row.itemInstanceId)}" type="button">
+          ${renderItemIcon(row.itemId)}
           <div class="market-item-cell-name">
             <span class="market-item-cell-name-text market-item-title--interactive" data-market-item-tooltip="vendor-recycle:${escapeHtmlAttr(row.itemId)}">${escapeHtml(row.itemName)}</span>
             <span class="market-item-cell-owned">${formatDisplayCountBadge(row.count)}</span>
@@ -2173,6 +2179,7 @@ export class MarketPanel {
       : `請輸入 1 至 ${formatDisplayInteger(row.count)} 之間的回收數量。`;
     return `
       <div class="market-book-header">
+        ${renderItemIcon(row.itemId, 'detail')}
         <div>
           <div class="market-item-title market-item-title--interactive" data-market-item-tooltip="vendor-recycle:${escapeHtmlAttr(row.itemId)}">${escapeHtml(item.name)}</div>
           <div class="market-book-subtitle">${escapeHtml(getItemTypeLabel(item.type))} · ${escapeHtml(item.desc)}</div>

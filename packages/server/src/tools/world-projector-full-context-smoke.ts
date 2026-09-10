@@ -31,6 +31,7 @@ const view: ProjectorViewLike = {
   localContainers: [],
   localBuildings: [{
     id: 'build:meditation-mat',
+    defId: 'meditation_mat',
     x: 1,
     y: 1,
     name: '蒲团',

@@ -1,0 +1,229 @@
+{
+  "id": "items-01",
+  "columns": 6,
+  "rows": 6,
+  "items": [
+    {
+      "id": "ridge_beast_claw",
+      "name": "嶺獸爪",
+      "desc": "靈嶺猛獸留下的巨大爪痕骨。",
+      "type": "material"
+    },
+    {
+      "id": "frost_essence",
+      "name": "霜華精粹",
+      "desc": "極寒靈氣凝結的藍白晶滴。",
+      "type": "material"
+    },
+    {
+      "id": "spirit_ridge_sigil",
+      "name": "靈嶺行令",
+      "desc": "靈嶺守關者留下的通行令符。",
+      "type": "quest_item"
+    },
+    {
+      "id": "star_metal",
+      "name": "星隕金",
+      "desc": "墜星坑深處採得的高純靈金。",
+      "type": "material"
+    },
+    {
+      "id": "sky_pattern_page",
+      "name": "天紋殘頁",
+      "desc": "記錄古天宮陣紋的殘頁。",
+      "type": "material"
+    },
+    {
+      "id": "sky_seal_core",
+      "name": "天封核心",
+      "desc": "封印天宮裂隙所需的核心組件。",
+      "type": "quest_item"
+    },
+    {
+      "id": "mat.moondew_grass",
+      "name": "月露草",
+      "desc": "清晨葉尖常掛月白露珠，是最常見的溫和藥底。",
+      "type": "material"
+    },
+    {
+      "id": "mat.red_flame_leaf",
+      "name": "赤火葉",
+      "desc": "葉脈似有火線流過，微溫不烈，常用來提振爐火藥性。",
+      "type": "material"
+    },
+    {
+      "id": "mat.green_spirit_stem",
+      "name": "青靈莖",
+      "desc": "蘊有淡薄靈機的草莖，常作聚氣和緩衝藥引。",
+      "type": "material"
+    },
+    {
+      "id": "mat.frost_lotus_petal",
+      "name": "寒蓮瓣",
+      "desc": "帶著寒霧水汽的薄瓣，能壓住燥烈藥勢。",
+      "type": "material"
+    },
+    {
+      "id": "mat.clear_mind_flower",
+      "name": "明心花",
+      "desc": "花香清冽，煉入丹中常能扶正心神、澄明五感。",
+      "type": "material"
+    },
+    {
+      "id": "mat.bloodbud_fruit",
+      "name": "赤芽果",
+      "desc": "果肉辛甜，藥氣偏熱，最適合催發血氣。",
+      "type": "material"
+    },
+    {
+      "id": "mat.breakarray_shard",
+      "name": "破紋砂",
+      "desc": "從舊陣裂縫裡篩出的細砂，藥性帶著輕微撕裂感。",
+      "type": "material"
+    },
+    {
+      "id": "mat.swiftwind_reed",
+      "name": "疾風葦",
+      "desc": "細長葦芯中藏著輕靈風息，常用來煉製輕身類丹藥。",
+      "type": "material"
+    },
+    {
+      "id": "mat.bitterheart_vine",
+      "name": "苦心藤",
+      "desc": "入口極苦，藥勁卻最能逼出修者經脈裡的勤修之意。",
+      "type": "material"
+    },
+    {
+      "id": "mat.sunmelt_seed",
+      "name": "融陽子",
+      "desc": "在熾熱巖縫裡長成的赤金種子，蘊著強橫烈陽藥引。",
+      "type": "material"
+    },
+    {
+      "id": "merit_month_card",
+      "name": "功德月卡",
+      "desc": "使用後為功德月卡總池增加 3000 功德，並將領取時間重置為 30 天；可在背包中批量使用。重複使用會把當前剩餘池與新增功德合併後重新計算每日可領取功德。月卡有效期間最大離線掛機時長提升至 72 小時。",
+      "type": "consumable"
+    },
+    {
+      "id": "merit_eternal",
+      "name": "永恆",
+      "desc": "使用後為功德月卡總池增加 90000 功德，並將領取時間重置為 30 天；永久擁有功德月卡權益，每日簽到固定池增加 1000 功德，天道商店所有物品打 9 折。只要不被擊殺，離線掛機不會因時長耗盡而離場。",
+      "type": "consumable"
+    },
+    {
+      "id": "formation_disk.mortal",
+      "name": "凡品陣盤",
+      "desc": "通用佈陣載體。佈陣時消耗 1 個，可承載任意陣法，靈力增幅 1 倍。",
+      "type": "consumable"
+    },
+    {
+      "id": "formation_disk.yellow",
+      "name": "黃階陣盤",
+      "desc": "通用佈陣載體。佈陣時消耗 1 個，可承載任意陣法，靈力增幅 2 倍。",
+      "type": "consumable"
+    },
+    {
+      "id": "formation_disk.mystic",
+      "name": "玄階陣盤",
+      "desc": "通用佈陣載體。佈陣時消耗 1 個，可承載任意陣法，靈力增幅 4 倍。",
+      "type": "consumable"
+    },
+    {
+      "id": "formation_disk.earth",
+      "name": "地階陣盤",
+      "desc": "通用佈陣載體。佈陣時消耗 1 個，可承載任意陣法，靈力增幅 8 倍。",
+      "type": "consumable"
+    },
+    {
+      "id": "sect_founding_token",
+      "name": "建宗令",
+      "desc": "持令可在當前地點開闢宗門山門，並生成獨立宗門地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "sect_entrance_relocation_token",
+      "name": "遷宗令",
+      "desc": "宗主或副宗主可使用，將本宗山門入口傳送陣遷至當前位置；宗門遷移冷卻為 3 天，冷卻綁定宗門。",
+      "type": "consumable"
+    },
+    {
+      "id": "cloud_puff",
+      "name": "雲朵",
+      "desc": "揉散後像把一團輕雲按進經脈，1800 息內身形飄然，移動速度提高 20。",
+      "type": "consumable"
+    },
+    {
+      "id": "minor_qi_pill",
+      "name": "小還靈丹",
+      "desc": "丹氣清薄如晨霧，入腹後沿經脈迴旋，牽引散亂靈機歸於氣海。",
+      "type": "consumable"
+    },
+    {
+      "id": "major_qi_pill",
+      "name": "大還靈丹",
+      "desc": "丹中靈潮沉穩，一經化開便如潮聲回谷，續上枯竭氣海。",
+      "type": "consumable"
+    },
+    {
+      "id": "frost_heart_paste",
+      "name": "寒心膏",
+      "desc": "膏色微寒，貼脈而行，能以寒意鎮住躁血並回護心脈。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.crimson_bud_elixir",
+      "name": "赤芽丹",
+      "desc": "服後 2400 息內血勇更盛，即使身死藥勢也不會散，暴擊 +9%。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.break_array_elixir",
+      "name": "破陣丹",
+      "desc": "藥力凝在手眼與發力節點，2400 息內破招 +14%、命中 +7%，身死不散。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.clear_eye_elixir",
+      "name": "明目丹",
+      "desc": "服後心神澄明，2400 息內命中 +9%、視野 +14%，死亡不消失。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.windstride_elixir",
+      "name": "輕身丹",
+      "desc": "藥勁順著經脈卸到腳下，2400 息內移動速度 +22%、閃避 +7%，死亡不消失。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.bitter_cultivation_elixir",
+      "name": "苦修丹",
+      "desc": "強行催運行功，3000 息內境界修為 +25%、功法經驗 +25%，但移動速度 -12%。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.yunlai_town",
+      "name": "雲來初境圖",
+      "desc": "描摹新手區域的基礎地圖。使用後可永久解鎖雲來初境的完整輿圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.bamboo_forest",
+      "name": "青竹林野圖",
+      "desc": "記載青竹林野地勢與出入口。使用後可永久解鎖竹林地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.wildlands",
+      "name": "荒原遊獵圖",
+      "desc": "標註荒原地貌、營地遺蹟與危險通路。使用後可永久解鎖荒原地圖。",
+      "type": "consumable"
+    }
+  ],
+  "prompt": "Generate ONE production sprite atlas containing MULTIPLE inventory icons, exactly 6 columns by 6 rows (36 equal square cells), ideally 1536x1536 pixels. NOT one giant object. Each cell is its own isolated icon on real transparent alpha. Read order left to right, top to bottom. Each object centered within its assigned cell and fits inside the central 74% of that cell; fully transparent 13% padding on each side. NO visible grid lines, NO cell borders, NO labels, NO text, NO letters, NO watermark, no scenery, no objects crossing cells. Consistent hand-painted Chinese xianxia fantasy game style, distinct physical silhouettes readable at 40px, clear dark edges and subtle highlights, restrained aura. Observe each object's supplied material and form; powders, liquids, roots, pelts, teeth, ores, armor, tools and books must look physically distinct. The numbered roster describes exact positions, numbers and identifiers are instructions only and must NOT appear in the image.\nCELL row 1 column 1: 嶺獸爪 [ridge_beast_claw] (material). Description: 靈嶺猛獸留下的巨大爪痕骨。\nCELL row 1 column 2: 霜華精粹 [frost_essence] (material). Description: 極寒靈氣凝結的藍白晶滴。\nCELL row 1 column 3: 靈嶺行令 [spirit_ridge_sigil] (quest_item). Description: 靈嶺守關者留下的通行令符。\nCELL row 1 column 4: 星隕金 [star_metal] (material). Description: 墜星坑深處採得的高純靈金。\nCELL row 1 column 5: 天紋殘頁 [sky_pattern_page] (material). Description: 記錄古天宮陣紋的殘頁。\nCELL row 1 column 6: 天封核心 [sky_seal_core] (quest_item). Description: 封印天宮裂隙所需的核心組件。\nCELL row 2 column 1: 月露草 [mat.moondew_grass] (material). Description: 清晨葉尖常掛月白露珠，是最常見的溫和藥底。\nCELL row 2 column 2: 赤火葉 [mat.red_flame_leaf] (material). Description: 葉脈似有火線流過，微溫不烈，常用來提振爐火藥性。\nCELL row 2 column 3: 青靈莖 [mat.green_spirit_stem] (material). Description: 蘊有淡薄靈機的草莖，常作聚氣和緩衝藥引。\nCELL row 2 column 4: 寒蓮瓣 [mat.frost_lotus_petal] (material). Description: 帶著寒霧水汽的薄瓣，能壓住燥烈藥勢。\nCELL row 2 column 5: 明心花 [mat.clear_mind_flower] (material). Description: 花香清冽，煉入丹中常能扶正心神、澄明五感。\nCELL row 2 column 6: 赤芽果 [mat.bloodbud_fruit] (material). Description: 果肉辛甜，藥氣偏熱，最適合催發血氣。\nCELL row 3 column 1: 破紋砂 [mat.breakarray_shard] (material). Description: 從舊陣裂縫裡篩出的細砂，藥性帶著輕微撕裂感。\nCELL row 3 column 2: 疾風葦 [mat.swiftwind_reed] (material). Description: 細長葦芯中藏著輕靈風息，常用來煉製輕身類丹藥。\nCELL row 3 column 3: 苦心藤 [mat.bitterheart_vine] (material). Description: 入口極苦，藥勁卻最能逼出修者經脈裡的勤修之意。\nCELL row 3 column 4: 融陽子 [mat.sunmelt_seed] (material). Description: 在熾熱巖縫裡長成的赤金種子，蘊著強橫烈陽藥引。\nCELL row 3 column 5: 功德月卡 [merit_month_card] (consumable). Description: 使用後為功德月卡總池增加 3000 功德，並將領取時間重置為 30 天；可在背包中批量使用。重複使用會把當前剩餘池與新增功德合併後重新計算每日可領取功德。月卡有效期間最大離線掛機時長提升至 72 小時。\nCELL row 3 column 6: 永恆 [merit_eternal] (consumable). Description: 使用後為功德月卡總池增加 90000 功德，並將領取時間重置為 30 天；永久擁有功德月卡權益，每日簽到固定池增加 1000 功德，天道商店所有物品打 9 折。只要不被擊殺，離線掛機不會因時長耗盡而離場。\nCELL row 4 column 1: 凡品陣盤 [formation_disk.mortal] (consumable). Description: 通用佈陣載體。佈陣時消耗 1 個，可承載任意陣法，靈力增幅 1 倍。\nCELL row 4 column 2: 黃階陣盤 [formation_disk.yellow] (consumable). Description: 通用佈陣載體。佈陣時消耗 1 個，可承載任意陣法，靈力增幅 2 倍。\nCELL row 4 column 3: 玄階陣盤 [formation_disk.mystic] (consumable). Description: 通用佈陣載體。佈陣時消耗 1 個，可承載任意陣法，靈力增幅 4 倍。\nCELL row 4 column 4: 地階陣盤 [formation_disk.earth] (consumable). Description: 通用佈陣載體。佈陣時消耗 1 個，可承載任意陣法，靈力增幅 8 倍。\nCELL row 4 column 5: 建宗令 [sect_founding_token] (consumable). Description: 持令可在當前地點開闢宗門山門，並生成獨立宗門地圖。\nCELL row 4 column 6: 遷宗令 [sect_entrance_relocation_token] (consumable). Description: 宗主或副宗主可使用，將本宗山門入口傳送陣遷至當前位置；宗門遷移冷卻為 3 天，冷卻綁定宗門。\nCELL row 5 column 1: 雲朵 [cloud_puff] (consumable). Description: 揉散後像把一團輕雲按進經脈，1800 息內身形飄然，移動速度提高 20。\nCELL row 5 column 2: 小還靈丹 [minor_qi_pill] (consumable). Description: 丹氣清薄如晨霧，入腹後沿經脈迴旋，牽引散亂靈機歸於氣海。\nCELL row 5 column 3: 大還靈丹 [major_qi_pill] (consumable). Description: 丹中靈潮沉穩，一經化開便如潮聲回谷，續上枯竭氣海。\nCELL row 5 column 4: 寒心膏 [frost_heart_paste] (consumable). Description: 膏色微寒，貼脈而行，能以寒意鎮住躁血並回護心脈。\nCELL row 5 column 5: 赤芽丹 [pill.crimson_bud_elixir] (consumable). Description: 服後 2400 息內血勇更盛，即使身死藥勢也不會散，暴擊 +9%。\nCELL row 5 column 6: 破陣丹 [pill.break_array_elixir] (consumable). Description: 藥力凝在手眼與發力節點，2400 息內破招 +14%、命中 +7%，身死不散。\nCELL row 6 column 1: 明目丹 [pill.clear_eye_elixir] (consumable). Description: 服後心神澄明，2400 息內命中 +9%、視野 +14%，死亡不消失。\nCELL row 6 column 2: 輕身丹 [pill.windstride_elixir] (consumable). Description: 藥勁順著經脈卸到腳下，2400 息內移動速度 +22%、閃避 +7%，死亡不消失。\nCELL row 6 column 3: 苦修丹 [pill.bitter_cultivation_elixir] (consumable). Description: 強行催運行功，3000 息內境界修為 +25%、功法經驗 +25%，但移動速度 -12%。\nCELL row 6 column 4: 雲來初境圖 [map.yunlai_town] (consumable). Description: 描摹新手區域的基礎地圖。使用後可永久解鎖雲來初境的完整輿圖。\nCELL row 6 column 5: 青竹林野圖 [map.bamboo_forest] (consumable). Description: 記載青竹林野地勢與出入口。使用後可永久解鎖竹林地圖。\nCELL row 6 column 6: 荒原遊獵圖 [map.wildlands] (consumable). Description: 標註荒原地貌、營地遺蹟與危險通路。使用後可永久解鎖荒原地圖。",
+  "sourceSha256": "539573cac42a1d380b2fc20d567053e6d16c237e8b3460875b5a2652547fd6b8",
+  "dimensions": [
+    1254,
+    1254
+  ]
+}

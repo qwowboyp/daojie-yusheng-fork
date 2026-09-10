@@ -63,6 +63,8 @@ export interface TickRenderEntityView {
  */
 
   monsterId?: string | null;
+  /** 建築定義 ID，用於客戶端選擇穩定視覺資源。 */
+  buildingDefId?: string | null;
   /**
  * monsterScale：怪物Scale相关字段。
  */
@@ -544,6 +546,8 @@ export interface WorldContainerPatchView {
 /** 世界增量中的半成品建筑补丁。 */
 export interface WorldBuildingPatchView {
   id: string;
+  /** 建築定義 ID；低頻穩定視覺身份，與執行期建築 ID 分離。 */
+  di?: string | null;
   x?: number;
   y?: number;
   n?: string;

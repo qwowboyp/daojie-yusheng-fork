@@ -39,6 +39,7 @@ import {
   preloadItemSourceCatalog,
   renderItemSourceListHtml,
 } from '../../content/item-sources';
+import { getItemIconSources, ITEM_ICON_LIST_SIZES } from '../../content/item-art';
 import {
   fetchTechniqueTemplateForBookItem,
   getLocalTechniqueTemplate,
@@ -1332,12 +1333,24 @@ export class InventoryPanel {
     name.className = 'inventory-cell-name';
     name.dataset.itemName = 'true';
 
+    const icon = document.createElement('img');
+    icon.className = 'item-art item-art--cell';
+    icon.dataset.itemIcon = 'true';
+    icon.width = 48;
+    icon.height = 48;
+    icon.alt = '';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.loading = 'lazy';
+    icon.decoding = 'async';
+    icon.draggable = false;
+    icon.hidden = true;
+
     const actionHint = document.createElement('span');
     actionHint.className = 'inventory-cell-action-hint';
     actionHint.dataset.itemActionHintNode = 'true';
     actionHint.hidden = true;
 
-    cell.append(cooldown, head, learnedRibbon, gradeLine, name, actionHint);
+    cell.append(icon, cooldown, head, learnedRibbon, gradeLine, name, actionHint);
     this.cellRefs.set(cell, {
       type,
       learnedRibbon,
@@ -1521,6 +1534,18 @@ export class InventoryPanel {
     refs.gradeLine.hidden = !gradeLineLabel;
     refs.gradeLine.textContent = gradeLineLabel ?? '';
     refs.count.textContent = formatDisplayCountBadge(item.count);
+    const icon = cell.querySelector<HTMLImageElement>('[data-item-icon="true"]');
+    const iconSources = getItemIconSources(item.itemId);
+    if (icon && iconSources) {
+      icon.src = iconSources.src;
+      icon.srcset = iconSources.srcSet;
+      icon.sizes = ITEM_ICON_LIST_SIZES;
+      icon.hidden = false;
+    } else if (icon) {
+      icon.removeAttribute('src');
+      icon.removeAttribute('srcset');
+      icon.hidden = true;
+    }
     refs.name.textContent = displayName;
     refs.name.setAttribute('aria-label', displayName);
     refs.name.className = 'inventory-cell-name';

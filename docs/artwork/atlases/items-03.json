@@ -1,0 +1,229 @@
+{
+  "id": "items-03",
+  "columns": 6,
+  "rows": 6,
+  "items": [
+    {
+      "id": "mat.deep_iron_essence",
+      "name": "深淵鐵精",
+      "desc": "鐵甲玄龜體內經年累月凝鍊的鐵行精華，極為稀有。",
+      "type": "material"
+    },
+    {
+      "id": "mat.frost_crystal",
+      "name": "霜刃晶",
+      "desc": "霜刃淵深處結晶的寒冰礦石，內含凝固靈氣。",
+      "type": "material"
+    },
+    {
+      "id": "mat.cold_iron_shard",
+      "name": "寒鐵碎",
+      "desc": "霜刃淵礦脈中採出的寒鐵碎塊，帶著刺骨寒意。",
+      "type": "material"
+    },
+    {
+      "id": "mat.deepwater_moss",
+      "name": "淵水苔",
+      "desc": "生長在霜刃淵深水處的靈苔，吸收了大量水行靈氣。",
+      "type": "material"
+    },
+    {
+      "id": "mat.flame_fox_fur",
+      "name": "焰狐皮",
+      "desc": "焰尾狐的皮毛，觸手溫熱，帶有淡淡火靈氣息。",
+      "type": "material"
+    },
+    {
+      "id": "mat.fire_fox_core",
+      "name": "焰狐火核",
+      "desc": "焰尾狐體內的火行靈核，溫度極高，是煉製火性丹藥的好材料。",
+      "type": "material"
+    },
+    {
+      "id": "mat.charwood_bark",
+      "name": "焦木皮",
+      "desc": "枯木行者身上剝落的樹皮，半焦半活，蘊含木火雙行靈氣。",
+      "type": "material"
+    },
+    {
+      "id": "mat.living_charcoal",
+      "name": "活炭",
+      "desc": "枯木行者體內仍在燃燒的木炭，火焰不滅，是煉器的優質燃料。",
+      "type": "material"
+    },
+    {
+      "id": "mat.blaze_lizard_scale",
+      "name": "烈焰蜥鱗",
+      "desc": "烈焰蜥身上的鱗片，耐高溫且堅硬，是煉製火屬性防具的好材料。",
+      "type": "material"
+    },
+    {
+      "id": "mat.fire_lizard_blood",
+      "name": "焰蜥精血",
+      "desc": "烈焰蜥的精血，溫度極高，滴落即焦，是火行丹藥的上品主材。",
+      "type": "material"
+    },
+    {
+      "id": "mat.molten_core_shard",
+      "name": "熔核碎片",
+      "desc": "烈焰蜥體內熔岩凝結的核心碎片，蘊含極純火行精華。",
+      "type": "material"
+    },
+    {
+      "id": "mat.vine_serpent_tendon",
+      "name": "藤蟒筋",
+      "desc": "藤焰蟒體內的筋腱，韌性極強，可用於煉製弓弦或繩索類法器。",
+      "type": "material"
+    },
+    {
+      "id": "mat.flame_venom_sac",
+      "name": "焰毒囊",
+      "desc": "藤焰蟒的毒囊，內含灼熱毒液，兼具木火雙行之性。",
+      "type": "material"
+    },
+    {
+      "id": "mat.wood_fire_essence",
+      "name": "木火精華",
+      "desc": "藤焰蟒體內木火二行交融凝結的精華，極為珍稀。",
+      "type": "material"
+    },
+    {
+      "id": "mat.blazewood_king_heartwood",
+      "name": "焚王心木",
+      "desc": "焚木妖王核心處的心木，歷經千年焚燒不朽，蘊含濃郁木火道韻。",
+      "type": "material"
+    },
+    {
+      "id": "mat.blazewood_king_ember",
+      "name": "焚王餘燼",
+      "desc": "焚木妖王死後殘留的餘燼，火焰經久不滅，是煉製天階火器的珍材。",
+      "type": "material"
+    },
+    {
+      "id": "mat.wood_fire_dao_seed",
+      "name": "木火道種",
+      "desc": "焚木妖王體內凝結的道種，蘊含木火大道的一絲本源，極為罕見。",
+      "type": "material"
+    },
+    {
+      "id": "mat.ember_branch",
+      "name": "餘燼枝",
+      "desc": "焚木荒臺上半焦的樹枝，仍有微弱火靈殘留。",
+      "type": "material"
+    },
+    {
+      "id": "mat.fire_seed",
+      "name": "焚靈種",
+      "desc": "焚木荒臺深處的靈種，外殼焦黑但內蘊火行生機。",
+      "type": "material"
+    },
+    {
+      "id": "mat.charwood_heart",
+      "name": "焦木心",
+      "desc": "焦木深處未被燒盡的木心，蘊含頑強木行靈氣。",
+      "type": "material"
+    },
+    {
+      "id": "mat.darksoil_refined_earth",
+      "name": "玄壤精土",
+      "desc": "玄壤深淵地脈中提煉的精純土行礦物，質地細膩如膏。",
+      "type": "material"
+    },
+    {
+      "id": "mat.mixed_vein_stone",
+      "name": "混元脈石",
+      "desc": "玄壤深淵混脈交匯處凝結的脈石，五行雜糅，是煉製混元類法器的基礎材料。",
+      "type": "material"
+    },
+    {
+      "id": "mat.abyss_spirit_mud",
+      "name": "深淵靈泥",
+      "desc": "玄壤深淵最深處的靈泥，吸收了千年地脈靈氣，是煉製土行丹藥的極品輔材。",
+      "type": "material"
+    },
+    {
+      "id": "mat.darksoil_carapace",
+      "name": "玄土甲殼",
+      "desc": "玄土甲蟲的外殼，堅硬如石，帶有濃郁土行靈氣。",
+      "type": "material"
+    },
+    {
+      "id": "mat.earth_beetle_core",
+      "name": "土蟲內核",
+      "desc": "玄土甲蟲體內的靈核，蘊含純粹土行之力。",
+      "type": "material"
+    },
+    {
+      "id": "mat.centipede_fang",
+      "name": "裂地蜈牙",
+      "desc": "裂地蜈蚣的毒牙，鋒利異常，可用於煉製穿刺類法器。",
+      "type": "material"
+    },
+    {
+      "id": "mat.earth_centipede_segment",
+      "name": "蜈蚣節甲",
+      "desc": "裂地蜈蚣的節甲，層層疊疊堅韌無比，是煉製甲冑的好材料。",
+      "type": "material"
+    },
+    {
+      "id": "mat.deep_earth_venom",
+      "name": "地脈蜈毒",
+      "desc": "裂地蜈蚣體內積蓄的地脈毒素，劇毒無比，是煉製毒性丹藥的極品材料。",
+      "type": "material"
+    },
+    {
+      "id": "mat.mixed_toad_pearl",
+      "name": "混元蟾珠",
+      "desc": "混元石蟾口中含養的靈珠，五行混雜，是煉製混元類丹藥的輔材。",
+      "type": "material"
+    },
+    {
+      "id": "mat.stone_toad_skin",
+      "name": "石蟾皮",
+      "desc": "混元石蟾的皮膚，粗糙如石，防禦力極強。",
+      "type": "material"
+    },
+    {
+      "id": "mat.fivephase_secretion",
+      "name": "五行蟾液",
+      "desc": "混元石蟾分泌的五行靈液，五行俱全，是煉製混元丹藥的珍稀主材。",
+      "type": "material"
+    },
+    {
+      "id": "mat.dragon_spine_bone",
+      "name": "地龍脊骨",
+      "desc": "玄壤地龍的脊骨，堅逾精鋼，是煉製天階重器的珍材。",
+      "type": "material"
+    },
+    {
+      "id": "mat.dragon_inner_core",
+      "name": "地龍內丹",
+      "desc": "玄壤地龍修煉凝結的內丹，蘊含濃郁土行道韻，極為珍貴。",
+      "type": "material"
+    },
+    {
+      "id": "mat.deep_earth_essence",
+      "name": "深淵土精",
+      "desc": "玄壤地龍體內凝鍊的土行精華，是煉製土屬性天階丹藥的極品材料。",
+      "type": "material"
+    },
+    {
+      "id": "mat.devourer_beast_core",
+      "name": "噬脈獸核",
+      "desc": "五行噬脈獸的核心，五行靈力交織其中，是煉製混元法器的極品材料。",
+      "type": "material"
+    },
+    {
+      "id": "mat.fivephase_mixed_essence",
+      "name": "五行混元精",
+      "desc": "五行噬脈獸體內五行交融凝結的精華，五行均衡，極為罕見。",
+      "type": "material"
+    }
+  ],
+  "prompt": "Generate ONE production game inventory sprite atlas containing exactly 36 SEPARATE icons in a PERFECT 6-column by 6-row grid of equal square cells, square canvas ideally 1536x1536. Actual transparent alpha background, NO grid lines, borders, frames, labels, letters, writing, watermark or background. Each icon is compact and fits within the CENTER 64% of its cell. Leave at least 18% fully empty transparent margin around every cell, including glow. Icons MUST NOT touch the cell edges or cross cells. Consistent detailed hand-painted Chinese xianxia fantasy game assets with sharp material edges readable at 40px. Differentiate physical forms and materials per descriptions; powders stay powders, liquids in bowls/vials, pills as pills, weapons and armor distinct. Strict row-major order in this roster. Text below is guidance only, NEVER render text.\nROW 1 COL 1: 深淵鐵精 [mat.deep_iron_essence], material; 鐵甲玄龜體內經年累月凝鍊的鐵行精華，極為稀有。\nROW 1 COL 2: 霜刃晶 [mat.frost_crystal], material; 霜刃淵深處結晶的寒冰礦石，內含凝固靈氣。\nROW 1 COL 3: 寒鐵碎 [mat.cold_iron_shard], material; 霜刃淵礦脈中採出的寒鐵碎塊，帶著刺骨寒意。\nROW 1 COL 4: 淵水苔 [mat.deepwater_moss], material; 生長在霜刃淵深水處的靈苔，吸收了大量水行靈氣。\nROW 1 COL 5: 焰狐皮 [mat.flame_fox_fur], material; 焰尾狐的皮毛，觸手溫熱，帶有淡淡火靈氣息。\nROW 1 COL 6: 焰狐火核 [mat.fire_fox_core], material; 焰尾狐體內的火行靈核，溫度極高，是煉製火性丹藥的好材料。\nROW 2 COL 1: 焦木皮 [mat.charwood_bark], material; 枯木行者身上剝落的樹皮，半焦半活，蘊含木火雙行靈氣。\nROW 2 COL 2: 活炭 [mat.living_charcoal], material; 枯木行者體內仍在燃燒的木炭，火焰不滅，是煉器的優質燃料。\nROW 2 COL 3: 烈焰蜥鱗 [mat.blaze_lizard_scale], material; 烈焰蜥身上的鱗片，耐高溫且堅硬，是煉製火屬性防具的好材料。\nROW 2 COL 4: 焰蜥精血 [mat.fire_lizard_blood], material; 烈焰蜥的精血，溫度極高，滴落即焦，是火行丹藥的上品主材。\nROW 2 COL 5: 熔核碎片 [mat.molten_core_shard], material; 烈焰蜥體內熔岩凝結的核心碎片，蘊含極純火行精華。\nROW 2 COL 6: 藤蟒筋 [mat.vine_serpent_tendon], material; 藤焰蟒體內的筋腱，韌性極強，可用於煉製弓弦或繩索類法器。\nROW 3 COL 1: 焰毒囊 [mat.flame_venom_sac], material; 藤焰蟒的毒囊，內含灼熱毒液，兼具木火雙行之性。\nROW 3 COL 2: 木火精華 [mat.wood_fire_essence], material; 藤焰蟒體內木火二行交融凝結的精華，極為珍稀。\nROW 3 COL 3: 焚王心木 [mat.blazewood_king_heartwood], material; 焚木妖王核心處的心木，歷經千年焚燒不朽，蘊含濃郁木火道韻。\nROW 3 COL 4: 焚王餘燼 [mat.blazewood_king_ember], material; 焚木妖王死後殘留的餘燼，火焰經久不滅，是煉製天階火器的珍材。\nROW 3 COL 5: 木火道種 [mat.wood_fire_dao_seed], material; 焚木妖王體內凝結的道種，蘊含木火大道的一絲本源，極為罕見。\nROW 3 COL 6: 餘燼枝 [mat.ember_branch], material; 焚木荒臺上半焦的樹枝，仍有微弱火靈殘留。\nROW 4 COL 1: 焚靈種 [mat.fire_seed], material; 焚木荒臺深處的靈種，外殼焦黑但內蘊火行生機。\nROW 4 COL 2: 焦木心 [mat.charwood_heart], material; 焦木深處未被燒盡的木心，蘊含頑強木行靈氣。\nROW 4 COL 3: 玄壤精土 [mat.darksoil_refined_earth], material; 玄壤深淵地脈中提煉的精純土行礦物，質地細膩如膏。\nROW 4 COL 4: 混元脈石 [mat.mixed_vein_stone], material; 玄壤深淵混脈交匯處凝結的脈石，五行雜糅，是煉製混元類法器的基礎材料。\nROW 4 COL 5: 深淵靈泥 [mat.abyss_spirit_mud], material; 玄壤深淵最深處的靈泥，吸收了千年地脈靈氣，是煉製土行丹藥的極品輔材。\nROW 4 COL 6: 玄土甲殼 [mat.darksoil_carapace], material; 玄土甲蟲的外殼，堅硬如石，帶有濃郁土行靈氣。\nROW 5 COL 1: 土蟲內核 [mat.earth_beetle_core], material; 玄土甲蟲體內的靈核，蘊含純粹土行之力。\nROW 5 COL 2: 裂地蜈牙 [mat.centipede_fang], material; 裂地蜈蚣的毒牙，鋒利異常，可用於煉製穿刺類法器。\nROW 5 COL 3: 蜈蚣節甲 [mat.earth_centipede_segment], material; 裂地蜈蚣的節甲，層層疊疊堅韌無比，是煉製甲冑的好材料。\nROW 5 COL 4: 地脈蜈毒 [mat.deep_earth_venom], material; 裂地蜈蚣體內積蓄的地脈毒素，劇毒無比，是煉製毒性丹藥的極品材料。\nROW 5 COL 5: 混元蟾珠 [mat.mixed_toad_pearl], material; 混元石蟾口中含養的靈珠，五行混雜，是煉製混元類丹藥的輔材。\nROW 5 COL 6: 石蟾皮 [mat.stone_toad_skin], material; 混元石蟾的皮膚，粗糙如石，防禦力極強。\nROW 6 COL 1: 五行蟾液 [mat.fivephase_secretion], material; 混元石蟾分泌的五行靈液，五行俱全，是煉製混元丹藥的珍稀主材。\nROW 6 COL 2: 地龍脊骨 [mat.dragon_spine_bone], material; 玄壤地龍的脊骨，堅逾精鋼，是煉製天階重器的珍材。\nROW 6 COL 3: 地龍內丹 [mat.dragon_inner_core], material; 玄壤地龍修煉凝結的內丹，蘊含濃郁土行道韻，極為珍貴。\nROW 6 COL 4: 深淵土精 [mat.deep_earth_essence], material; 玄壤地龍體內凝鍊的土行精華，是煉製土屬性天階丹藥的極品材料。\nROW 6 COL 5: 噬脈獸核 [mat.devourer_beast_core], material; 五行噬脈獸的核心，五行靈力交織其中，是煉製混元法器的極品材料。\nROW 6 COL 6: 五行混元精 [mat.fivephase_mixed_essence], material; 五行噬脈獸體內五行交融凝結的精華，五行均衡，極為罕見。",
+  "sourceSha256": "c1823b199d72bc18c0639eb3834907352b3dc4761abaeedeaaccd214481c77dc",
+  "dimensions": [
+    1254,
+    1254
+  ]
+}

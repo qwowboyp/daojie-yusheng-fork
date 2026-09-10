@@ -1032,6 +1032,13 @@
         border-radius: 7px;
       }
       .building-mode-item-label {
+        inset: auto 1px 1px;
+        min-height: 12px;
+        padding: 0 1px;
+        font-size: 8px;
+      }
+      .building-mode-item.image-unavailable .building-mode-item-label {
+        inset: 1px;
         font-size: 10px;
       }
       .building-mode-footer {

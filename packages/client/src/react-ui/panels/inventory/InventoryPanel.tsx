@@ -9,6 +9,11 @@ import { createPanelStore } from '../../stores/create-panel-store';
 import { INVENTORY_FILTER_TABS, type InventoryFilter } from '../../../constants/ui/inventory';
 import { t } from '../../../ui/i18n';
 import { shouldUseMobileUi } from '../../../ui/responsive-viewport';
+import {
+  getItemIconSources,
+  ITEM_ICON_DETAIL_SIZES,
+  ITEM_ICON_LIST_SIZES,
+} from '../../../content/item-art';
 
 export interface ReactInventoryItemView {
   slotIndex: number;
@@ -274,6 +279,7 @@ const InventoryCell = memo(function InventoryCell({
   selected: boolean;
   onSelect: (cell: HTMLElement) => void;
 }) {
+  const icon = getItemIconSources(item.itemId);
   const cooldownStyle = item.cooldown
     ? ({ '--inventory-cooldown-progress': item.cooldown.progress } as CSSProperties)
     : ({ '--inventory-cooldown-progress': '0' } as CSSProperties);
@@ -310,6 +316,7 @@ const InventoryCell = memo(function InventoryCell({
         callbacks.onPrimaryAction?.(item.slotIndex, item.itemInstanceId);
       }}
     >
+      {icon && <img className="item-art item-art--cell" src={icon.src} srcSet={icon.srcSet} sizes={ITEM_ICON_LIST_SIZES} width={48} height={48} alt="" aria-hidden="true" loading="lazy" decoding="async" draggable={false} />}
       <div
         className="inventory-cell-cooldown"
         data-item-cooldown="true"
@@ -386,10 +393,12 @@ const InventoryDetail = memo(function InventoryDetail({
   }
 
   const { detail } = item;
+  const icon = getItemIconSources(item.itemId);
   return (
     <aside className="inventory-workspace-detail" aria-live="polite">
       <div className="inventory-workspace-detail-head">
         <button className="small-btn ghost inventory-workspace-detail-back" type="button" onClick={onBack}>返回背包</button>
+        {icon && <img className="item-art item-art--detail" src={icon.src} srcSet={icon.srcSet} sizes={ITEM_ICON_DETAIL_SIZES} width={80} height={80} alt="" aria-hidden="true" loading="lazy" decoding="async" draggable={false} />}
         <div>
           <div className="inventory-workspace-detail-title">{item.name}</div>
           <div className="inventory-workspace-detail-meta">{detail.typeLabel} · {item.countLabel}</div>

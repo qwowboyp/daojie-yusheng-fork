@@ -1,0 +1,229 @@
+{
+  "id": "items-04",
+  "columns": 6,
+  "rows": 6,
+  "items": [
+    {
+      "id": "mat.fivephase_vein_crystal",
+      "name": "五行脈晶",
+      "desc": "五行噬脈獸吞噬地脈後凝結的晶體，蘊含五行大道本源之力，是築基期最珍稀的材料之一。",
+      "type": "material"
+    },
+    {
+      "id": "mat.void_boundary_crystal",
+      "name": "太虛界晶",
+      "desc": "虛空邊界偶然凝成的五行界晶，能夠錨定一方獨立空間，是營造密室的核心異材。",
+      "type": "material"
+    },
+    {
+      "id": "pill.foundation_coldmarrow_heal",
+      "name": "寒髓回春丹",
+      "desc": "丹色如霜，入口卻生溫潤春意，能把斷續生機重新攏回經絡。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.foundation_frostspring_qi",
+      "name": "霜泉還靈丹",
+      "desc": "霜泉凝作一丸，化開時如清流入海，能引散亂靈機重歸氣海。",
+      "type": "consumable"
+    },
+    {
+      "id": "wudao_yujian",
+      "name": "悟道玉簡",
+      "desc": "蘊含前人道韻的玉簡，使用後可開啟功法領悟，凝聚天地靈機推演出一門全新功法。",
+      "type": "consumable"
+    },
+    {
+      "id": "equip.foundation_iron_soul_blade",
+      "name": "鐵魄斷山刃",
+      "desc": "以深鐵魄紋壓成的重刃，重在破甲與正面斬擊。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_cold_abyss_spell_ruler",
+      "name": "寒淵法尺",
+      "desc": "尺身封寒淵細紋，適合牽引法術靈力直入敵脈。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_mixed_dual_sword",
+      "name": "混元雙儀劍",
+      "desc": "劍脊分陰陽雙槽，能同時承載體魄勁與法力勁。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_frostsplit_crit_blade",
+      "name": "霜裂爆鋒",
+      "desc": "刃口覆霜晶裂紋，普通揮斬不算厚重，爆開時傷口極深。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_returnbreath_cooldown_staff",
+      "name": "歸息玄杖",
+      "desc": "杖心一呼一吸，自行牽回散氣，適合頻繁運轉術式。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_coldiron_heavy_helm",
+      "name": "寒鐵重盔",
+      "desc": "整頂盔由寒鐵甲片壓合，最擅長硬擋實打實的兵刃。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_iceheart_spell_crown",
+      "name": "冰心法冠",
+      "desc": "冰心紋貼著識海，能讓外來法力衝擊變得遲滯。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_mixed_guard_crown",
+      "name": "混元護神冠",
+      "desc": "冠上五行輪轉，不偏一門，勝在穩住雙防。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_darksoil_life_helm",
+      "name": "玄土命盔",
+      "desc": "盔內覆玄壤生息紋，厚重但極能護住命門。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_inverse_life_war_crown",
+      "name": "逆命戰冠",
+      "desc": "以逆命紋強逼氣血上攻，護身大損，攻勢陡增。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_ironshell_plate",
+      "name": "鐵甲玄胄",
+      "desc": "大片鐵甲碎片層疊扣合，正面抗擊極強。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_turtle_spell_robe",
+      "name": "玄龜法衣",
+      "desc": "玄龜寒髓浸過的法衣，專克法力沖刷。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_mixed_body_armor",
+      "name": "混元護身甲",
+      "desc": "甲心嵌混元蟾珠，能把兩類衝擊分攤到五行紋路里。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_abyss_life_armor",
+      "name": "深淵壽甲",
+      "desc": "甲片沉重如泥，行動不輕，卻極能續命。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_devour_attack_armor",
+      "name": "蝕命攻甲",
+      "desc": "甲內噬脈紋持續壓榨身軀，換來更兇的雙攻。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_dragonstride_boots",
+      "name": "地龍疾履",
+      "desc": "靴底刻地龍脊紋，踏地時像被地脈向前推了一步。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_returnflow_boots",
+      "name": "回息玄履",
+      "desc": "鞋底迴流紋不斷收束散氣，適合壓短術式空窗。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_returnflow_pendant",
+      "name": "歸息玄佩",
+      "desc": "佩中寒髓緩緩迴旋，能讓氣機週轉更快。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_mountainbreaker_ring",
+      "name": "斷嶽指環",
+      "desc": "指環沉重如小山，出手時更容易把勁打穿。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_flameheart_charm",
+      "name": "焚心法佩",
+      "desc": "法佩內火心不滅，催動法術時靈力吐出更急。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_fivephase_output_pendant",
+      "name": "五行出靈墜",
+      "desc": "墜中五行脈晶開闔有序，重在提高每息靈力輸出。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_quiet_cultivation_pendant",
+      "name": "靜玄修真佩",
+      "desc": "佩紋不入戰鬥，只在靜修時緩緩牽引境界與功法成長。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_burning_origin_furnace",
+      "name": "焚元丹爐",
+      "desc": "爐心以焚王餘燼壓火，能承受築基期更烈的藥性衝突。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_deepiron_forging_tongs",
+      "name": "深鐵煉器鉗",
+      "desc": "鉗身深鐵紋路極穩，夾住高階器胚時不易炸紋。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_darksoil_enhancement_hammer",
+      "name": "玄壤強化錘",
+      "desc": "錘面覆玄壤精土，落錘時能把強化餘震壓回器身。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_dragonspine_mining_pickaxe",
+      "name": "地龍礦鎬",
+      "desc": "鎬身帶地龍脊骨紋，能順著深層礦脈撬開厚殼。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.foundation_mixed_origin_building_hammer",
+      "name": "混元營造錘",
+      "desc": "錘內混元脈石與木火精華相沖相合，適合壓定築基建築地基。",
+      "type": "equipment"
+    },
+    {
+      "id": "book.genghua_ningfeng",
+      "name": "《庚華凝鋒訣》",
+      "desc": "記載庚華凝鋒訣的修行法門，使用後學會庚華凝鋒訣。",
+      "type": "skill_book"
+    },
+    {
+      "id": "book.guicang_hemai",
+      "name": "《歸藏合脈經》",
+      "desc": "記載歸藏合脈經的修行法門，使用後學會歸藏合脈經。",
+      "type": "skill_book"
+    },
+    {
+      "id": "book.hanxi_ximai",
+      "name": "《寒汐洗脈法》",
+      "desc": "記載寒汐洗脈法的修行法門，使用後學會寒汐洗脈法。",
+      "type": "skill_book"
+    },
+    {
+      "id": "book.houtu_chengyuan",
+      "name": "《厚土承元功》",
+      "desc": "記載厚土承元功的修行法門，使用後學會厚土承元功。",
+      "type": "skill_book"
+    }
+  ],
+  "prompt": "Create ONE sprite atlas with exactly 36 different Chinese xianxia game item icons, strict 6 columns x 6 rows of equal square cells, ideally 1536x1536. True transparent alpha everywhere outside objects. Each icon is small, fits only the central 64% of its assigned square cell, at least 18% empty transparent padding on ALL sides INCLUDING any glow. Nothing crosses cells. No grid lines, border, frame, text, letters, labels or watermark. Cohesive hand-painted fantasy inventory art, readable silhouette at 40px, clear material highlights and edges, restrained effects. Accurately distinguish weapon types, armor and tools; distinguish herbs, powders, liquids, pills, stones and books. EXACT row-major roster follows; these descriptions and IDs must not appear as text.\nROW 1 COLUMN 1: 五行脈晶 [mat.fivephase_vein_crystal], material. 五行噬脈獸吞噬地脈後凝結的晶體，蘊含五行大道本源之力，是築基期最珍稀的材料之一。\nROW 1 COLUMN 2: 太虛界晶 [mat.void_boundary_crystal], material. 虛空邊界偶然凝成的五行界晶，能夠錨定一方獨立空間，是營造密室的核心異材。\nROW 1 COLUMN 3: 寒髓回春丹 [pill.foundation_coldmarrow_heal], consumable. 丹色如霜，入口卻生溫潤春意，能把斷續生機重新攏回經絡。\nROW 1 COLUMN 4: 霜泉還靈丹 [pill.foundation_frostspring_qi], consumable. 霜泉凝作一丸，化開時如清流入海，能引散亂靈機重歸氣海。\nROW 1 COLUMN 5: 悟道玉簡 [wudao_yujian], consumable. 蘊含前人道韻的玉簡，使用後可開啟功法領悟，凝聚天地靈機推演出一門全新功法。\nROW 1 COLUMN 6: 鐵魄斷山刃 [equip.foundation_iron_soul_blade], equipment. 以深鐵魄紋壓成的重刃，重在破甲與正面斬擊。\nROW 2 COLUMN 1: 寒淵法尺 [equip.foundation_cold_abyss_spell_ruler], equipment. 尺身封寒淵細紋，適合牽引法術靈力直入敵脈。\nROW 2 COLUMN 2: 混元雙儀劍 [equip.foundation_mixed_dual_sword], equipment. 劍脊分陰陽雙槽，能同時承載體魄勁與法力勁。\nROW 2 COLUMN 3: 霜裂爆鋒 [equip.foundation_frostsplit_crit_blade], equipment. 刃口覆霜晶裂紋，普通揮斬不算厚重，爆開時傷口極深。\nROW 2 COLUMN 4: 歸息玄杖 [equip.foundation_returnbreath_cooldown_staff], equipment. 杖心一呼一吸，自行牽回散氣，適合頻繁運轉術式。\nROW 2 COLUMN 5: 寒鐵重盔 [equip.foundation_coldiron_heavy_helm], equipment. 整頂盔由寒鐵甲片壓合，最擅長硬擋實打實的兵刃。\nROW 2 COLUMN 6: 冰心法冠 [equip.foundation_iceheart_spell_crown], equipment. 冰心紋貼著識海，能讓外來法力衝擊變得遲滯。\nROW 3 COLUMN 1: 混元護神冠 [equip.foundation_mixed_guard_crown], equipment. 冠上五行輪轉，不偏一門，勝在穩住雙防。\nROW 3 COLUMN 2: 玄土命盔 [equip.foundation_darksoil_life_helm], equipment. 盔內覆玄壤生息紋，厚重但極能護住命門。\nROW 3 COLUMN 3: 逆命戰冠 [equip.foundation_inverse_life_war_crown], equipment. 以逆命紋強逼氣血上攻，護身大損，攻勢陡增。\nROW 3 COLUMN 4: 鐵甲玄胄 [equip.foundation_ironshell_plate], equipment. 大片鐵甲碎片層疊扣合，正面抗擊極強。\nROW 3 COLUMN 5: 玄龜法衣 [equip.foundation_turtle_spell_robe], equipment. 玄龜寒髓浸過的法衣，專克法力沖刷。\nROW 3 COLUMN 6: 混元護身甲 [equip.foundation_mixed_body_armor], equipment. 甲心嵌混元蟾珠，能把兩類衝擊分攤到五行紋路里。\nROW 4 COLUMN 1: 深淵壽甲 [equip.foundation_abyss_life_armor], equipment. 甲片沉重如泥，行動不輕，卻極能續命。\nROW 4 COLUMN 2: 蝕命攻甲 [equip.foundation_devour_attack_armor], equipment. 甲內噬脈紋持續壓榨身軀，換來更兇的雙攻。\nROW 4 COLUMN 3: 地龍疾履 [equip.foundation_dragonstride_boots], equipment. 靴底刻地龍脊紋，踏地時像被地脈向前推了一步。\nROW 4 COLUMN 4: 回息玄履 [equip.foundation_returnflow_boots], equipment. 鞋底迴流紋不斷收束散氣，適合壓短術式空窗。\nROW 4 COLUMN 5: 歸息玄佩 [equip.foundation_returnflow_pendant], equipment. 佩中寒髓緩緩迴旋，能讓氣機週轉更快。\nROW 4 COLUMN 6: 斷嶽指環 [equip.foundation_mountainbreaker_ring], equipment. 指環沉重如小山，出手時更容易把勁打穿。\nROW 5 COLUMN 1: 焚心法佩 [equip.foundation_flameheart_charm], equipment. 法佩內火心不滅，催動法術時靈力吐出更急。\nROW 5 COLUMN 2: 五行出靈墜 [equip.foundation_fivephase_output_pendant], equipment. 墜中五行脈晶開闔有序，重在提高每息靈力輸出。\nROW 5 COLUMN 3: 靜玄修真佩 [equip.foundation_quiet_cultivation_pendant], equipment. 佩紋不入戰鬥，只在靜修時緩緩牽引境界與功法成長。\nROW 5 COLUMN 4: 焚元丹爐 [equip.foundation_burning_origin_furnace], equipment. 爐心以焚王餘燼壓火，能承受築基期更烈的藥性衝突。\nROW 5 COLUMN 5: 深鐵煉器鉗 [equip.foundation_deepiron_forging_tongs], equipment. 鉗身深鐵紋路極穩，夾住高階器胚時不易炸紋。\nROW 5 COLUMN 6: 玄壤強化錘 [equip.foundation_darksoil_enhancement_hammer], equipment. 錘面覆玄壤精土，落錘時能把強化餘震壓回器身。\nROW 6 COLUMN 1: 地龍礦鎬 [equip.foundation_dragonspine_mining_pickaxe], equipment. 鎬身帶地龍脊骨紋，能順著深層礦脈撬開厚殼。\nROW 6 COLUMN 2: 混元營造錘 [equip.foundation_mixed_origin_building_hammer], equipment. 錘內混元脈石與木火精華相沖相合，適合壓定築基建築地基。\nROW 6 COLUMN 3: 《庚華凝鋒訣》 [book.genghua_ningfeng], skill_book. 記載庚華凝鋒訣的修行法門，使用後學會庚華凝鋒訣。\nROW 6 COLUMN 4: 《歸藏合脈經》 [book.guicang_hemai], skill_book. 記載歸藏合脈經的修行法門，使用後學會歸藏合脈經。\nROW 6 COLUMN 5: 《寒汐洗脈法》 [book.hanxi_ximai], skill_book. 記載寒汐洗脈法的修行法門，使用後學會寒汐洗脈法。\nROW 6 COLUMN 6: 《厚土承元功》 [book.houtu_chengyuan], skill_book. 記載厚土承元功的修行法門，使用後學會厚土承元功。",
+  "sourceSha256": "111759278ccc28b249b25dca4f8ab47db55d5374aff88ab5d76035a24888b40e",
+  "dimensions": [
+    1254,
+    1254
+  ]
+}

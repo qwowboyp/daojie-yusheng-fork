@@ -470,6 +470,9 @@ export class WorldSyncMapSnapshotService {
     const tile: any = {
       type: tileType,
     };
+    if (typeof state.buildingDefId === 'string' && state.buildingDefId.length > 0) {
+      tile.buildingDefId = state.buildingDefId;
+    }
     applyTileEffectProjection(tile, template, x, y, tileType);
     const walkable = destroyed
       ? true
@@ -722,6 +725,7 @@ function isSameTileProjection(left, right) {
     && left.terrainType === right.terrainType
     && left.surfaceType === right.surfaceType
     && left.structureType === right.structureType
+    && left.buildingDefId === right.buildingDefId
     && isSameTileResourceProjectionList(left.resources, right.resources)
     && isSameStringList(left.interactableKinds, right.interactableKinds)
     && left.hiddenEntrance?.portalId === right.hiddenEntrance?.portalId

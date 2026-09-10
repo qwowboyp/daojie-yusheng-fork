@@ -1,0 +1,229 @@
+{
+  "id": "items-02",
+  "columns": 6,
+  "rows": 6,
+  "items": [
+    {
+      "id": "map.black_iron_mine",
+      "name": "黑鐵礦脈圖",
+      "desc": "礦道分佈與豎井方位都被謄錄其上。使用後可永久解鎖黑鐵礦洞地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.ancient_ruins",
+      "name": "古遺蹟殘圖",
+      "desc": "殘缺卻仍可辨認主要遺蹟輪廓。使用後可永久解鎖古遺蹟地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.spirit_ridge",
+      "name": "靈脈山嶺圖",
+      "desc": "繪有山脊、靈穴與險峻通路。使用後可永久解鎖靈脈山嶺地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.beast_valley",
+      "name": "群獸谷行圖",
+      "desc": "專為獵妖者整理的谷地行圖。使用後可永久解鎖群獸谷地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "map.sky_ruins",
+      "name": "天闕遺墟圖",
+      "desc": "記載高階遺墟的主要路徑與坍塌區域。使用後可永久解鎖天闕遺墟地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "fate_stone",
+      "name": "命石",
+      "desc": "以當前地脈落腳處為引的命石。只能在雲來鎮、棲真渡、雲墟臺或自己所屬宗門使用，使用後會將當前地圖設為復活點與遁返落點。",
+      "type": "consumable"
+    },
+    {
+      "id": "root_seed.heaven",
+      "name": "天品靈根幼苗",
+      "desc": "封著五行先天氣機的幼苗。使用後會將五行靈根先定為 99，再逐系以 50% 機率催至 100，且至少保底一系為 100；同時逆天改命累計額外增加 10 次。需在叩仙門境界且尚未入天門時使用（突破至練氣前），基礎消耗相當於 10 次逆天改命的底蘊，已有逆天改命積累會等額抵扣。",
+      "type": "consumable"
+    },
+    {
+      "id": "root_seed.divine",
+      "name": "神品靈根幼苗",
+      "desc": "被道蘊徹底養成的靈根幼苗。使用後會將五行靈根全部固定為 100，同時逆天改命累計額外增加 100 次。需在叩仙門境界且尚未入天門時使用（突破至練氣前），基礎消耗相當於 100 次逆天改命的底蘊，已有逆天改命積累會等額抵扣。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.shatter_spirit",
+      "name": "碎靈丹",
+      "desc": "藥力專碎命宮舊痕。使用後會立刻重置天門，清掉當前已開出的靈根結果，並額外增加 1 次逆天改命累計；同時消耗當前境界修為的 25%。至少需在叩仙門境界使用。",
+      "type": "consumable"
+    },
+    {
+      "id": "pill.wangsheng",
+      "name": "往生丹",
+      "desc": "丹成如返照回光，服下後會散盡舊日修為，重歸凡胎。使用後境界回到凡胎，境界修為與底蘊歸零。",
+      "type": "consumable"
+    },
+    {
+      "id": "equip.copper_luopan",
+      "name": "銅羅盤",
+      "desc": "凡匠鑄成的小羅盤，針腳不算靈敏，卻能幫人辨出屋內氣機偏向。裝備後可使用望氣視角觀察風水。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.gate_headcloth",
+      "name": "門丁裹頭巾",
+      "desc": "值夜門丁常用的厚布頭巾，夜裡守門的人比白日看得更細。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.trench_runner_boots",
+      "name": "越溝快靴",
+      "desc": "鞋跟窄而硬，踩溝躍坎時比尋常鞋更利索。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.herb_mist_robe",
+      "name": "藥煙輕袍",
+      "desc": "曬藥時沾過苦煙的薄袍，能稍稍護住氣海。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.gather_qi_pendant",
+      "name": "採氣木墜",
+      "desc": "刻著簡陋聚氣紋的木墜，聊勝於無。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.orebreak_hammer",
+      "name": "礦衛破巖錘",
+      "desc": "錘頭沉得驚人，砸石和砸骨頭時都帶著同一種悶響。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.soot_lamp_hood",
+      "name": "熄火礦燈冠",
+      "desc": "礦燈雖然熄了，舊燈罩仍能幫人摸清黑暗裡的輪廓。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.broken_rune_blade",
+      "name": "斷碑紋劍",
+      "desc": "劍脊嵌著未熄的殘紋，揮動時像是在拖著半截舊陣。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.rift_guard_armor",
+      "name": "鎮煞護心甲",
+      "desc": "甲心嵌著舊鎮煞片，護得住胸口那一口氣，也護得住人不亂。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.soul_devour_token",
+      "name": "噬元骨牌",
+      "desc": "骨牌內封著一縷不肯散去的殘意，靜修時殘意會層層侵體，殺敵時反能回湧一口濁氣。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.copper_pill_furnace",
+      "name": "銅胎丹爐",
+      "desc": "小巧耐燒的銅胎丹爐，爐壁內側刻著穩火與散藥氣的淺紋，正適合初學煉丹者隨身攜帶。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.copper_enhancement_hammer",
+      "name": "銅強化錘",
+      "desc": "錘頭嵌著穩靈銅片，敲擊時能短暫收束器物靈紋，正適合初學者用來打底強化。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.copper_forging_tool",
+      "name": "銅煉器鉗",
+      "desc": "銅柄火鉗嵌著穩紋小環，能夾持低階器胚，是初學煉器者最常用的入門工具。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.copper_mining_pickaxe",
+      "name": "銅礦鎬",
+      "desc": "鎬尖嵌著聚力銅片，揮擊礦脈時能集中力道於一點，是礦工入門的基礎採掘工具。",
+      "type": "equipment"
+    },
+    {
+      "id": "book.ningqi_chengji",
+      "name": "《凝氣成基法》",
+      "desc": "記載凝氣成基法的修行法門，使用後學會凝氣成基法。",
+      "type": "skill_book"
+    },
+    {
+      "id": "book.xuesha_huanling_jue",
+      "name": "《血煞喚靈決》",
+      "desc": "記載血煞喚靈決的修行法門，使用後學會血煞喚靈決。",
+      "type": "skill_book"
+    },
+    {
+      "id": "artifact.flying_sword",
+      "name": "巡天飛劍",
+      "desc": "劍中藏一線破障靈機，靈力充盈時可載人巡天越險。",
+      "type": "artifact"
+    },
+    {
+      "id": "stone.blood_essence",
+      "name": "血精石",
+      "desc": "裹著血煞與殘魄的晶石。捏碎後會為當前地塊增加 10 點凝練煞氣，可批量使用。",
+      "type": "consumable"
+    },
+    {
+      "id": "mat.frost_scale",
+      "name": "霜鱗片",
+      "desc": "霜鱗蛇脫落的鱗片，表面覆著一層薄冰，觸手生寒。",
+      "type": "material"
+    },
+    {
+      "id": "mat.cold_serpent_gall",
+      "name": "寒蛇膽",
+      "desc": "霜鱗蛇膽囊，內含凝寒靈液，是煉製寒性丹藥的上品輔材。",
+      "type": "material"
+    },
+    {
+      "id": "mat.cold_iron_carapace",
+      "name": "寒鐵甲殼",
+      "desc": "寒鐵蠍背甲碎片，堅硬如鐵且帶寒氣，可用於煉器。",
+      "type": "material"
+    },
+    {
+      "id": "mat.scorpion_venom_sac",
+      "name": "蠍毒囊",
+      "desc": "寒鐵蠍尾部毒囊，內含劇毒寒液，煉丹時可入毒性方劑。",
+      "type": "material"
+    },
+    {
+      "id": "mat.ice_crystal_silk",
+      "name": "冰晶絲",
+      "desc": "冰晶蜘蛛吐出的絲線，透明如冰，韌性極強。",
+      "type": "material"
+    },
+    {
+      "id": "mat.frozen_spider_core",
+      "name": "冰蛛內核",
+      "desc": "冰晶蜘蛛體內凝結的靈核，蘊含純粹水行之力。",
+      "type": "material"
+    },
+    {
+      "id": "mat.ironshell_fragment",
+      "name": "鐵甲碎片",
+      "desc": "鐵甲玄龜龜殼碎片，質地極為堅硬，是上等煉器材料。",
+      "type": "material"
+    },
+    {
+      "id": "mat.turtle_cold_marrow",
+      "name": "玄龜寒髓",
+      "desc": "鐵甲玄龜骨髓精華，寒氣凝聚如膏，是煉製防禦類丹藥的珍貴材料。",
+      "type": "material"
+    }
+  ],
+  "prompt": "Generate ONE production game inventory sprite atlas containing exactly 36 SEPARATE icons in a PERFECT 6-column by 6-row grid of equal square cells, square canvas ideally 1536x1536. Actual transparent alpha background, NO grid lines, borders, frames, labels, letters, writing, watermark or background. Each icon is compact and fits within the CENTER 64% of its cell. Leave at least 18% fully empty transparent margin around every cell, including glow. Icons MUST NOT touch the cell edges or cross cells. Consistent detailed hand-painted Chinese xianxia fantasy game assets with sharp material edges readable at 40px. Differentiate physical forms and materials per descriptions; powders stay powders, liquids in bowls/vials, pills as pills, weapons and armor distinct. Strict row-major order in this roster. Text below is guidance only, NEVER render text.\nROW 1 COL 1: 黑鐵礦脈圖 [map.black_iron_mine], consumable; 礦道分佈與豎井方位都被謄錄其上。使用後可永久解鎖黑鐵礦洞地圖。\nROW 1 COL 2: 古遺蹟殘圖 [map.ancient_ruins], consumable; 殘缺卻仍可辨認主要遺蹟輪廓。使用後可永久解鎖古遺蹟地圖。\nROW 1 COL 3: 靈脈山嶺圖 [map.spirit_ridge], consumable; 繪有山脊、靈穴與險峻通路。使用後可永久解鎖靈脈山嶺地圖。\nROW 1 COL 4: 群獸谷行圖 [map.beast_valley], consumable; 專為獵妖者整理的谷地行圖。使用後可永久解鎖群獸谷地圖。\nROW 1 COL 5: 天闕遺墟圖 [map.sky_ruins], consumable; 記載高階遺墟的主要路徑與坍塌區域。使用後可永久解鎖天闕遺墟地圖。\nROW 1 COL 6: 命石 [fate_stone], consumable; 以當前地脈落腳處為引的命石。只能在雲來鎮、棲真渡、雲墟臺或自己所屬宗門使用，使用後會將當前地圖設為復活點與遁返落點。\nROW 2 COL 1: 天品靈根幼苗 [root_seed.heaven], consumable; 封著五行先天氣機的幼苗。使用後會將五行靈根先定為 99，再逐系以 50% 機率催至 100，且至少保底一系為 100；同時逆天改命累計額外增加 10 次。需在叩仙門境界且尚未入天門時使用（突破至練氣前），基礎消耗相當於 10 次逆天改命的底蘊，已有逆天改命積累會等額抵扣。\nROW 2 COL 2: 神品靈根幼苗 [root_seed.divine], consumable; 被道蘊徹底養成的靈根幼苗。使用後會將五行靈根全部固定為 100，同時逆天改命累計額外增加 100 次。需在叩仙門境界且尚未入天門時使用（突破至練氣前），基礎消耗相當於 100 次逆天改命的底蘊，已有逆天改命積累會等額抵扣。\nROW 2 COL 3: 碎靈丹 [pill.shatter_spirit], consumable; 藥力專碎命宮舊痕。使用後會立刻重置天門，清掉當前已開出的靈根結果，並額外增加 1 次逆天改命累計；同時消耗當前境界修為的 25%。至少需在叩仙門境界使用。\nROW 2 COL 4: 往生丹 [pill.wangsheng], consumable; 丹成如返照回光，服下後會散盡舊日修為，重歸凡胎。使用後境界回到凡胎，境界修為與底蘊歸零。\nROW 2 COL 5: 銅羅盤 [equip.copper_luopan], equipment; 凡匠鑄成的小羅盤，針腳不算靈敏，卻能幫人辨出屋內氣機偏向。裝備後可使用望氣視角觀察風水。\nROW 2 COL 6: 門丁裹頭巾 [equip.gate_headcloth], equipment; 值夜門丁常用的厚布頭巾，夜裡守門的人比白日看得更細。\nROW 3 COL 1: 越溝快靴 [equip.trench_runner_boots], equipment; 鞋跟窄而硬，踩溝躍坎時比尋常鞋更利索。\nROW 3 COL 2: 藥煙輕袍 [equip.herb_mist_robe], equipment; 曬藥時沾過苦煙的薄袍，能稍稍護住氣海。\nROW 3 COL 3: 採氣木墜 [equip.gather_qi_pendant], equipment; 刻著簡陋聚氣紋的木墜，聊勝於無。\nROW 3 COL 4: 礦衛破巖錘 [equip.orebreak_hammer], equipment; 錘頭沉得驚人，砸石和砸骨頭時都帶著同一種悶響。\nROW 3 COL 5: 熄火礦燈冠 [equip.soot_lamp_hood], equipment; 礦燈雖然熄了，舊燈罩仍能幫人摸清黑暗裡的輪廓。\nROW 3 COL 6: 斷碑紋劍 [equip.broken_rune_blade], equipment; 劍脊嵌著未熄的殘紋，揮動時像是在拖著半截舊陣。\nROW 4 COL 1: 鎮煞護心甲 [equip.rift_guard_armor], equipment; 甲心嵌著舊鎮煞片，護得住胸口那一口氣，也護得住人不亂。\nROW 4 COL 2: 噬元骨牌 [equip.soul_devour_token], equipment; 骨牌內封著一縷不肯散去的殘意，靜修時殘意會層層侵體，殺敵時反能回湧一口濁氣。\nROW 4 COL 3: 銅胎丹爐 [equip.copper_pill_furnace], equipment; 小巧耐燒的銅胎丹爐，爐壁內側刻著穩火與散藥氣的淺紋，正適合初學煉丹者隨身攜帶。\nROW 4 COL 4: 銅強化錘 [equip.copper_enhancement_hammer], equipment; 錘頭嵌著穩靈銅片，敲擊時能短暫收束器物靈紋，正適合初學者用來打底強化。\nROW 4 COL 5: 銅煉器鉗 [equip.copper_forging_tool], equipment; 銅柄火鉗嵌著穩紋小環，能夾持低階器胚，是初學煉器者最常用的入門工具。\nROW 4 COL 6: 銅礦鎬 [equip.copper_mining_pickaxe], equipment; 鎬尖嵌著聚力銅片，揮擊礦脈時能集中力道於一點，是礦工入門的基礎採掘工具。\nROW 5 COL 1: 《凝氣成基法》 [book.ningqi_chengji], skill_book; 記載凝氣成基法的修行法門，使用後學會凝氣成基法。\nROW 5 COL 2: 《血煞喚靈決》 [book.xuesha_huanling_jue], skill_book; 記載血煞喚靈決的修行法門，使用後學會血煞喚靈決。\nROW 5 COL 3: 巡天飛劍 [artifact.flying_sword], artifact; 劍中藏一線破障靈機，靈力充盈時可載人巡天越險。\nROW 5 COL 4: 血精石 [stone.blood_essence], consumable; 裹著血煞與殘魄的晶石。捏碎後會為當前地塊增加 10 點凝練煞氣，可批量使用。\nROW 5 COL 5: 霜鱗片 [mat.frost_scale], material; 霜鱗蛇脫落的鱗片，表面覆著一層薄冰，觸手生寒。\nROW 5 COL 6: 寒蛇膽 [mat.cold_serpent_gall], material; 霜鱗蛇膽囊，內含凝寒靈液，是煉製寒性丹藥的上品輔材。\nROW 6 COL 1: 寒鐵甲殼 [mat.cold_iron_carapace], material; 寒鐵蠍背甲碎片，堅硬如鐵且帶寒氣，可用於煉器。\nROW 6 COL 2: 蠍毒囊 [mat.scorpion_venom_sac], material; 寒鐵蠍尾部毒囊，內含劇毒寒液，煉丹時可入毒性方劑。\nROW 6 COL 3: 冰晶絲 [mat.ice_crystal_silk], material; 冰晶蜘蛛吐出的絲線，透明如冰，韌性極強。\nROW 6 COL 4: 冰蛛內核 [mat.frozen_spider_core], material; 冰晶蜘蛛體內凝結的靈核，蘊含純粹水行之力。\nROW 6 COL 5: 鐵甲碎片 [mat.ironshell_fragment], material; 鐵甲玄龜龜殼碎片，質地極為堅硬，是上等煉器材料。\nROW 6 COL 6: 玄龜寒髓 [mat.turtle_cold_marrow], material; 鐵甲玄龜骨髓精華，寒氣凝聚如膏，是煉製防禦類丹藥的珍貴材料。",
+  "sourceSha256": "1270040dc6034baa7dd99f2fad8661a08e8ad0b96d9bbd4907e5ea97404937df",
+  "dimensions": [
+    1254,
+    1254
+  ]
+}

@@ -256,6 +256,11 @@ function testTickAlchemyMarksActiveJob() {
   });
   assert.equal(start.ok, true);
   assert.equal(player.alchemyJob?.jobVersion, 2);
+  assert.ok(player.alchemyJob);
+  // 固定為非結算進度 tick，避免配方耗時調整令此案例在首 tick 完成。
+  player.alchemyJob.remainingTicks = 2;
+  player.alchemyJob.workRemainingTicks = 2;
+  player.alchemyJob.currentBatchRemainingTicks = 2;
   resetDirty(player);
   activeJobWrites.length = 0;
 

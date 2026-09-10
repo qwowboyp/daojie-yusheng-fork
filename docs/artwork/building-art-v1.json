@@ -1,0 +1,383 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "id": "stone_wall",
+      "name": "石牆",
+      "description": "厚重灰色石材砌成的單格直線牆段，形成房間邊界，阻擋移動與視線。天然切石橫向交錯疊砌。",
+      "variant": "icon",
+      "mode": "built-in-imagegen",
+      "prompt": "Generate ONE UI BUILDING ICON, three-quarter illustrated object view with a very clear silhouette at 40 pixels. Central object fits within 78% square canvas.\nGame 道劫餘生. Building 石牆 [stone_wall]. Authoritative function and material brief: 厚重灰色石材砌成的單格直線牆段，形成房間邊界，阻擋移動與視線。天然切石橫向交錯疊砌。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
+      "sourceSha256": "2efe504f10abe5f949c6acabdf7e21f5e3d1866eb1dda80b9725d542e0b7f0c5",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        96,
+        192
+      ]
+    },
+    {
+      "id": "stone_wall",
+      "name": "石牆",
+      "description": "厚重灰色石材砌成的單格直線牆段，形成房間邊界，阻擋移動與視線。天然切石橫向交錯疊砌。",
+      "variant": "ground",
+      "mode": "built-in-imagegen",
+      "prompt": "Generate ONE IN-WORLD PLACED BUILDING SPRITE for a square top-down grid, overhead orthographic high-angle view, no isometric diamond base, no perspective scenery. Compact single-cell footprint; align front to bottom of image, show upper surfaces. All content including subtle contact shadow fits within central 88% of square; floor tile may fill square edge-to-edge. Static grounded object, not a floating inventory item.\nGame 道劫餘生. Building 石牆 [stone_wall]. Authoritative function and material brief: 厚重灰色石材砌成的單格直線牆段，形成房間邊界，阻擋移動與視線。天然切石橫向交錯疊砌。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
+      "sourceSha256": "5f0c89c49a68decd73d492bea16419b56bcd961039da073fa27c1d52299ec985",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        256
+      ]
+    },
+    {
+      "id": "wooden_door",
+      "name": "木門",
+      "description": "深棕木製房間開口，讓人與視線通過。厚木門框、簡樸木門板與古銅鉸鏈，門扇半開，清楚保留通道。",
+      "variant": "icon",
+      "mode": "built-in-imagegen",
+      "prompt": "Generate ONE UI BUILDING ICON, three-quarter illustrated object view with a very clear silhouette at 40 pixels. Central object fits within 78% square canvas.\nGame 道劫餘生. Building 木門 [wooden_door]. Authoritative function and material brief: 深棕木製房間開口，讓人與視線通過。厚木門框、簡樸木門板與古銅鉸鏈，門扇半開，清楚保留通道。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
+      "sourceSha256": "a1f664016f8c5ebfefe21b8f9dd7f93b3418951b93aaab40e7bd583f744612a6",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        96,
+        192
+      ]
+    },
+    {
+      "id": "wooden_window",
+      "name": "木窗",
+      "description": "木製窗格開口，可透視但不通行。淺棕木框與細緻格柵，只有低矮窗框構件。",
+      "variant": "icon",
+      "mode": "built-in-imagegen",
+      "prompt": "Generate ONE UI BUILDING ICON, three-quarter illustrated object view with a very clear silhouette at 40 pixels. Central object fits within 78% square canvas.\nGame 道劫餘生. Building 木窗 [wooden_window]. Authoritative function and material brief: 木製窗格開口，可透視但不通行。淺棕木框與細緻格柵，只有低矮窗框構件。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
+      "sourceSha256": "31085e8b485a222c2f23062ee75f45f5fa727ebb4d1fc09403789d7de35d8329",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        96,
+        192
+      ]
+    },
+    {
+      "id": "wooden_door",
+      "name": "木門",
+      "description": "深棕木製房間開口，讓人與視線通過。厚木門框、簡樸木門板與古銅鉸鏈，門扇半開，清楚保留通道。",
+      "variant": "ground",
+      "mode": "built-in-imagegen",
+      "prompt": "Generate ONE IN-WORLD PLACED BUILDING SPRITE for a square top-down grid, overhead orthographic high-angle view, no isometric diamond base, no perspective scenery. Compact single-cell footprint; align front to bottom of image, show upper surfaces. All content including subtle contact shadow fits within central 88% of square; floor tile may fill square edge-to-edge. Static grounded object, not a floating inventory item.\nGame 道劫餘生. Building 木門 [wooden_door]. Authoritative function and material brief: 深棕木製房間開口，讓人與視線通過。厚木門框、簡樸木門板與古銅鉸鏈，門扇半開，清楚保留通道。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
+      "sourceSha256": "7effbd2e605bab62c5a8cc10a9e225254ded46902d8feb3e5b434de7861ed353",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        256
+      ]
+    },
+    {
+      "id": "plain_floor",
+      "name": "地板",
+      "description": "平整木地板鋪層，樸素暖灰棕木板，以工整平行長條拼接，單格正方形地面構件。",
+      "variant": "icon",
+      "mode": "built-in-imagegen",
+      "prompt": "Generate ONE UI BUILDING ICON, three-quarter illustrated object view with a very clear silhouette at 40 pixels. Central object fits within 78% square canvas.\nGame 道劫餘生. Building 地板 [plain_floor]. Authoritative function and material brief: 平整木地板鋪層，樸素暖灰棕木板，以工整平行長條拼接，單格正方形地面構件。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
+      "sourceSha256": "24925bac00dde7418a0766ef0dbe5e0d4b2e927705771d0ed5a7db5955adf0b3",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        96,
+        192
+      ]
+    },
+    {
+      "id": "plain_floor",
+      "name": "地板",
+      "description": "平整木地板鋪層，樸素暖灰棕木板，以工整平行長條拼接，單格正方形地面構件。",
+      "variant": "ground",
+      "mode": "built-in-imagegen",
+      "prompt": "Generate ONE IN-WORLD PLACED BUILDING SPRITE for a square top-down grid, overhead orthographic high-angle view, no isometric diamond base, no perspective scenery. Compact single-cell footprint; align front to bottom of image, show upper surfaces. All content including subtle contact shadow fits within central 88% of square; floor tile may fill square edge-to-edge. Static grounded object, not a floating inventory item.\nGame 道劫餘生. Building 地板 [plain_floor]. Authoritative function and material brief: 平整木地板鋪層，樸素暖灰棕木板，以工整平行長條拼接，單格正方形地面構件。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
+      "sourceSha256": "f078344bf13ff9cdb971815f550bad4982e005389cac10c8c4f0637701edcecd",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        256
+      ]
+    },
+    {
+      "id": "wooden_window",
+      "name": "木窗",
+      "description": "木製窗格開口，可透視但不通行。淺棕木框與細緻格柵，只有低矮窗框構件。",
+      "variant": "ground",
+      "mode": "built-in-imagegen",
+      "prompt": "Generate ONE IN-WORLD PLACED BUILDING SPRITE for a square top-down grid, overhead orthographic high-angle view, no isometric diamond base, no perspective scenery. Compact single-cell footprint; align front to bottom of image, show upper surfaces. All content including subtle contact shadow fits within central 88% of square; floor tile may fill square edge-to-edge. Static grounded object, not a floating inventory item.\nGame 道劫餘生. Building 木窗 [wooden_window]. Authoritative function and material brief: 木製窗格開口，可透視但不通行。淺棕木框與細緻格柵，只有低矮窗框構件。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
+      "sourceSha256": "f84565c133f3581450e3ef7daa4cce79b3aa193212c9ae4cebdb46b3fe22bb2c",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        256
+      ]
+    },
+    {
+      "id": "scripture_platform",
+      "name": "藏經臺",
+      "description": "low dark wooden scripture stand with a jade slip and ancient book, subtle pale green spiritual focus, for recording one self-created technique",
+      "variant": "icon",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 0,
+        "row": 0,
+        "left": 0,
+        "top": 0,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "id": "scripture_platform",
+      "name": "藏經臺",
+      "description": "low dark wooden scripture stand with a jade slip and ancient book, subtle pale green spiritual focus, for recording one self-created technique",
+      "variant": "ground",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 1,
+        "row": 0,
+        "left": 362,
+        "top": 0,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        256
+      ]
+    },
+    {
+      "id": "treasure_vault",
+      "name": "寶庫",
+      "description": "compact reinforced wooden storage chest with bronze fittings, warm gold detail, contains precious items; no house",
+      "variant": "icon",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 2,
+        "row": 0,
+        "left": 724,
+        "top": 0,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "id": "treasure_vault",
+      "name": "寶庫",
+      "description": "compact reinforced wooden storage chest with bronze fittings, warm gold detail, contains precious items; no house",
+      "variant": "ground",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 3,
+        "row": 0,
+        "left": 1086,
+        "top": 0,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        256
+      ]
+    },
+    {
+      "id": "technique_refining_table",
+      "name": "煉法臺",
+      "description": "small wood desk on stone base with scroll pages, brush and ink dish, restrained purple technique refinement pattern",
+      "variant": "icon",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 0,
+        "row": 1,
+        "left": 0,
+        "top": 362,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "id": "technique_refining_table",
+      "name": "煉法臺",
+      "description": "small wood desk on stone base with scroll pages, brush and ink dish, restrained purple technique refinement pattern",
+      "variant": "ground",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 1,
+        "row": 1,
+        "left": 362,
+        "top": 362,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        256
+      ]
+    },
+    {
+      "id": "technique_unification_platform",
+      "name": "統法臺",
+      "description": "wood and stone circular dais with several jade slips and converging teal and water-blue technique lineage currents",
+      "variant": "icon",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 2,
+        "row": 1,
+        "left": 724,
+        "top": 362,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "id": "technique_unification_platform",
+      "name": "統法臺",
+      "description": "wood and stone circular dais with several jade slips and converging teal and water-blue technique lineage currents",
+      "variant": "ground",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 3,
+        "row": 1,
+        "left": 1086,
+        "top": 362,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        256
+      ]
+    },
+    {
+      "id": "time_chamber",
+      "name": "密室",
+      "description": "compact gray-purple stone portal pedestal, upright small oval violet portal with a violet boundary crystal, an entrance to separate space, no large room",
+      "variant": "icon",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 0,
+        "row": 2,
+        "left": 0,
+        "top": 724,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "id": "time_chamber",
+      "name": "密室",
+      "description": "compact gray-purple stone portal pedestal, upright small oval violet portal with a violet boundary crystal, an entrance to separate space, no large room",
+      "variant": "ground",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 1,
+        "row": 2,
+        "left": 362,
+        "top": 724,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        256
+      ]
+    },
+    {
+      "id": "meditation_mat",
+      "name": "蒲團",
+      "description": "low round woven yellow-brown grass and cloth meditation cushion, faint green spiritual glow, no throne",
+      "variant": "icon",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 2,
+        "row": 2,
+        "left": 724,
+        "top": 724,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "id": "meditation_mat",
+      "name": "蒲團",
+      "description": "low round woven yellow-brown grass and cloth meditation cushion, faint green spiritual glow, no throne",
+      "variant": "ground",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/buildings-facilities.webp",
+      "cell": {
+        "col": 3,
+        "row": 2,
+        "left": 1086,
+        "top": 724,
+        "width": 362,
+        "height": 362
+      },
+      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "variants": [
+        256
+      ]
+    }
+  ]
+}

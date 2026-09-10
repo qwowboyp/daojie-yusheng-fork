@@ -1,0 +1,193 @@
+{
+  "id": "items-07",
+  "columns": 6,
+  "rows": 5,
+  "items": [
+    {
+      "id": "map.guizang_vein_cavern",
+      "name": "歸藏脈窟陣脈圖",
+      "desc": "窟內歸竅支路、斷脈井與回渡節點都被細細標出。使用後可永久解鎖歸藏脈窟地圖。",
+      "type": "consumable"
+    },
+    {
+      "id": "equip.scar_tread_boots",
+      "name": "裂痕踏靴",
+      "desc": "鞋底盡是舊裂紋，踩在碎刃和砂地上反而不容易打滑。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.full_edge_blade",
+      "name": "滿鋒刀",
+      "desc": "刀身每一寸都被重新開鋒，狠是夠狠，就是不太講後勁。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.sand_ghost_mask",
+      "name": "砂魘面",
+      "desc": "戴久了會讓人下意識壓低呼吸，適合在亂刃間找空門。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.chasing_edge_boots",
+      "name": "逐鋒履",
+      "desc": "鞋尖很薄，專為追著對手步點補刀。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.cleft_blade_cloak",
+      "name": "裂鋒披",
+      "desc": "披擺裡縫了不少碎刃片，轉身時總能帶出一點險勁。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.geng_gate_blade",
+      "name": "庚門斷鋒",
+      "desc": "埋在門闕下多年的古刃，拔出來時還帶著一股壓門鎮路的狠意。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.sealed_path_token",
+      "name": "封路令",
+      "desc": "舊時封山閉路的令牌，修煉時有股強行把氣機壓回主脈的蠻勁。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.fallrock_maul",
+      "name": "墜巖槌",
+      "desc": "舉起來慢，落下去卻像整塊坡石滾下來。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.ridgewall_armor",
+      "name": "嶺垣甲",
+      "desc": "甲面像小型巖垣一樣一層層壘起，硬擋很出色。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.shieldvein_stone",
+      "name": "護脈石",
+      "desc": "貼身佩著時，真氣會不自覺繞著經脈走得更穩。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.yuetown_mask",
+      "name": "御土面",
+      "desc": "面甲內側覆著一層細土膜，能把心火和浮氣一起壓下去。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.ridgecleft_halberd",
+      "name": "裂嶺戟",
+      "desc": "戟鋒像從山脊豁口裡抽出來的一截石鐵，砸出去就帶裂地聲。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.mount_guard_helm",
+      "name": "鎮嶺盔",
+      "desc": "盔壁很厚，像把半圈矮城牆扣在了頭上。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.mountainseal_plate",
+      "name": "封嶽甲",
+      "desc": "甲心像壓著半座山印，硬碰硬時最能把人往死裡釘。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.deepvein_core",
+      "name": "厚脈核",
+      "desc": "像一枚被地氣反覆壓實的脈核，行功時很會往主脈裡聚勁。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.returnbreath_copper_pendant",
+      "name": "歸息銅佩",
+      "desc": "聽脈之後發下來的小銅佩，佩口雖舊，卻很會把散出去的真氣慢慢攏回來。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.vineguide_staff",
+      "name": "養枝引脈杖",
+      "desc": "藤芯削成的細杖，揮出去時像在牽著周身經脈一同舒展開。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.verdant_crown",
+      "name": "青蘿束冠",
+      "desc": "細藤束成的淺冠，戴久了能讓人下意識放緩呼吸。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.hanxi_flow_ruler",
+      "name": "寒汐引流尺",
+      "desc": "細尺裡封著一縷寒汐潮氣，出手時更容易把氣機引到對方脈門上。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.cleantide_robe",
+      "name": "淨潮法衣",
+      "desc": "用淨潮水精反覆浸過的法衣，最擅長把雜氣擋在衣外。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.ember_scorch_spear",
+      "name": "赤隕灼槍",
+      "desc": "槍鋒燙得發暗，最適合一口氣捅進人還沒穩住的空門。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.furnace_red_ring",
+      "name": "爐心赤戒",
+      "desc": "戒心裡封著一粒爐心赤晶，真正開打時會把人的火勁再往上頂半截。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.guizang_conflux_blade",
+      "name": "歸藏合流刃",
+      "desc": "刀脊裡壓著多股細氣，揮起來像把幾路勁同時併成一股。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.returnarray_boots",
+      "name": "回陣行履",
+      "desc": "靴底留著舊陣步紋，踩在亂流甬道里比尋常鞋更容易搶回步點。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.qi_crimson_pattern_furnace",
+      "name": "赤紋丹爐",
+      "desc": "爐壁內嵌赤紋與淨潮細槽，能把練氣期藥性收束得更穩。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.qi_fengyue_forging_tongs",
+      "name": "鋒嶽煉器鉗",
+      "desc": "鉗口一邊開鋒一邊鎮嶽，夾住器胚時不容易讓靈紋散開。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.qi_fivephase_enhancement_hammer",
+      "name": "五炁強化錘",
+      "desc": "錘頭嵌著五炁塵，落錘時能短暫調平器物五行。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.qi_guizang_mining_pickaxe",
+      "name": "歸藏礦鎬",
+      "desc": "鎬尖壓著歸藏脈紋，敲入礦脈時能順著暗脈裂開。",
+      "type": "equipment"
+    },
+    {
+      "id": "equip.qi_halfbase_building_hammer",
+      "name": "半基營造錘",
+      "desc": "錘柄中藏半基靈胚，定柱、壓梁時更容易把地氣壓穩。",
+      "type": "equipment"
+    }
+  ],
+  "prompt": "Make ONE production inventory sprite atlas, exactly 30 SEPARATE icons arranged as 6 columns by 5 rows in EQUAL SQUARE CELLS. Canvas aspect ratio 6:5; ideally 1536 by 1280 pixels. True transparent alpha background. Keep each whole object and all its effects within the CENTER 64% of its assigned cell, with 18% transparent empty padding on every side. No icons cross cells. NO grid lines, frames, text, letters, labels or watermark. Chinese xianxia hand-painted fantasy RPG item art, crisp silhouettes and identifiable materials readable at 40px. Every object follows its own supplied description, varying forms/colors/materials; technique books have unique abstract motifs but NO writing. Output only the grid of objects, with exact positions in this roster:\nROW 1 COL 1: 歸藏脈窟陣脈圖 [map.guizang_vein_cavern] (consumable): 窟內歸竅支路、斷脈井與回渡節點都被細細標出。使用後可永久解鎖歸藏脈窟地圖。\nROW 1 COL 2: 裂痕踏靴 [equip.scar_tread_boots] (equipment): 鞋底盡是舊裂紋，踩在碎刃和砂地上反而不容易打滑。\nROW 1 COL 3: 滿鋒刀 [equip.full_edge_blade] (equipment): 刀身每一寸都被重新開鋒，狠是夠狠，就是不太講後勁。\nROW 1 COL 4: 砂魘面 [equip.sand_ghost_mask] (equipment): 戴久了會讓人下意識壓低呼吸，適合在亂刃間找空門。\nROW 1 COL 5: 逐鋒履 [equip.chasing_edge_boots] (equipment): 鞋尖很薄，專為追著對手步點補刀。\nROW 1 COL 6: 裂鋒披 [equip.cleft_blade_cloak] (equipment): 披擺裡縫了不少碎刃片，轉身時總能帶出一點險勁。\nROW 2 COL 1: 庚門斷鋒 [equip.geng_gate_blade] (equipment): 埋在門闕下多年的古刃，拔出來時還帶著一股壓門鎮路的狠意。\nROW 2 COL 2: 封路令 [equip.sealed_path_token] (equipment): 舊時封山閉路的令牌，修煉時有股強行把氣機壓回主脈的蠻勁。\nROW 2 COL 3: 墜巖槌 [equip.fallrock_maul] (equipment): 舉起來慢，落下去卻像整塊坡石滾下來。\nROW 2 COL 4: 嶺垣甲 [equip.ridgewall_armor] (equipment): 甲面像小型巖垣一樣一層層壘起，硬擋很出色。\nROW 2 COL 5: 護脈石 [equip.shieldvein_stone] (equipment): 貼身佩著時，真氣會不自覺繞著經脈走得更穩。\nROW 2 COL 6: 御土面 [equip.yuetown_mask] (equipment): 面甲內側覆著一層細土膜，能把心火和浮氣一起壓下去。\nROW 3 COL 1: 裂嶺戟 [equip.ridgecleft_halberd] (equipment): 戟鋒像從山脊豁口裡抽出來的一截石鐵，砸出去就帶裂地聲。\nROW 3 COL 2: 鎮嶺盔 [equip.mount_guard_helm] (equipment): 盔壁很厚，像把半圈矮城牆扣在了頭上。\nROW 3 COL 3: 封嶽甲 [equip.mountainseal_plate] (equipment): 甲心像壓著半座山印，硬碰硬時最能把人往死裡釘。\nROW 3 COL 4: 厚脈核 [equip.deepvein_core] (equipment): 像一枚被地氣反覆壓實的脈核，行功時很會往主脈裡聚勁。\nROW 3 COL 5: 歸息銅佩 [equip.returnbreath_copper_pendant] (equipment): 聽脈之後發下來的小銅佩，佩口雖舊，卻很會把散出去的真氣慢慢攏回來。\nROW 3 COL 6: 養枝引脈杖 [equip.vineguide_staff] (equipment): 藤芯削成的細杖，揮出去時像在牽著周身經脈一同舒展開。\nROW 4 COL 1: 青蘿束冠 [equip.verdant_crown] (equipment): 細藤束成的淺冠，戴久了能讓人下意識放緩呼吸。\nROW 4 COL 2: 寒汐引流尺 [equip.hanxi_flow_ruler] (equipment): 細尺裡封著一縷寒汐潮氣，出手時更容易把氣機引到對方脈門上。\nROW 4 COL 3: 淨潮法衣 [equip.cleantide_robe] (equipment): 用淨潮水精反覆浸過的法衣，最擅長把雜氣擋在衣外。\nROW 4 COL 4: 赤隕灼槍 [equip.ember_scorch_spear] (equipment): 槍鋒燙得發暗，最適合一口氣捅進人還沒穩住的空門。\nROW 4 COL 5: 爐心赤戒 [equip.furnace_red_ring] (equipment): 戒心裡封著一粒爐心赤晶，真正開打時會把人的火勁再往上頂半截。\nROW 4 COL 6: 歸藏合流刃 [equip.guizang_conflux_blade] (equipment): 刀脊裡壓著多股細氣，揮起來像把幾路勁同時併成一股。\nROW 5 COL 1: 回陣行履 [equip.returnarray_boots] (equipment): 靴底留著舊陣步紋，踩在亂流甬道里比尋常鞋更容易搶回步點。\nROW 5 COL 2: 赤紋丹爐 [equip.qi_crimson_pattern_furnace] (equipment): 爐壁內嵌赤紋與淨潮細槽，能把練氣期藥性收束得更穩。\nROW 5 COL 3: 鋒嶽煉器鉗 [equip.qi_fengyue_forging_tongs] (equipment): 鉗口一邊開鋒一邊鎮嶽，夾住器胚時不容易讓靈紋散開。\nROW 5 COL 4: 五炁強化錘 [equip.qi_fivephase_enhancement_hammer] (equipment): 錘頭嵌著五炁塵，落錘時能短暫調平器物五行。\nROW 5 COL 5: 歸藏礦鎬 [equip.qi_guizang_mining_pickaxe] (equipment): 鎬尖壓著歸藏脈紋，敲入礦脈時能順著暗脈裂開。\nROW 5 COL 6: 半基營造錘 [equip.qi_halfbase_building_hammer] (equipment): 錘柄中藏半基靈胚，定柱、壓梁時更容易把地氣壓穩。",
+  "sourceSha256": "6e7b606c493890b22b951079597c587e0dbb6d93850d374970b20abdc5b12a8f",
+  "dimensions": [
+    1373,
+    1145
+  ]
+}

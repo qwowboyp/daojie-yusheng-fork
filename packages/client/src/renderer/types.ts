@@ -92,6 +92,8 @@ export interface SenseQiOverlayState {
 }
 
 export interface BuildPreviewOverlayState {
+  /** 已依建築 catalog 解析的 runtime-image manifest key。 */
+  imageKey?: string;
   cells: Array<{ x: number; y: number; ok: boolean; warning?: boolean }>;
 }
 

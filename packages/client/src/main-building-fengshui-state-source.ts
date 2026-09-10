@@ -19,6 +19,7 @@ import {
 } from '@mud/shared';
 import buildingCatalog from './constants/world/building-catalog.generated.json';
 import { getElementKeyLabel } from './domain-labels';
+import { resolveBuildingPreviewSpriteKey } from './entity-facing';
 import type { MapBuildPreviewOverlayState, MapFengShuiOverlayState } from './game-map/types';
 import type { SocketBuildingSender } from './network/socket-send-building';
 import { resolveClientItemBaseName } from './content/item-display-name';
@@ -1077,7 +1078,14 @@ function updateBuildPreview(
   }
   const cells = rotateFootprint(def.footprint ?? [{ dx: 0, dy: 0 }], rotation)
     .map((cell) => ({ x: originX + cell.dx, y: originY + cell.dy, ok: true }));
-  options.setBuildPreviewOverlay({ defId, originX, originY, rotation, cells });
+  options.setBuildPreviewOverlay({
+    defId,
+    imageKey: resolveBuildingPreviewSpriteKey(def) ?? undefined,
+    originX,
+    originY,
+    rotation,
+    cells,
+  });
 }
 
 function rotateFootprint(footprint: Array<{ dx: number; dy: number }>, rotation: 0 | 90 | 180 | 270): Array<{ dx: number; dy: number }> {
@@ -1335,12 +1343,23 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
     button.dataset.defId = def.id;
     button.dataset.tooltipTitle = def.name;
     button.dataset.tooltipDetail = buildBuildingTooltipText(def, options.buildStrength, builderSkillLevel);
+    button.setAttribute('aria-label', def.name);
     button.style.setProperty('--building-material-accent', resolveBuildMaterialAccent(materialCategoryKey));
     button.style.setProperty('--building-material-tint', resolveBuildMaterialTint(materialCategoryKey));
+    const image = document.createElement('img');
+    image.className = 'building-mode-item-image';
+    image.src = `/assets/building-art/v1/${encodeURIComponent(def.id)}-icon-96.webp`;
+    image.srcset = `/assets/building-art/v1/${encodeURIComponent(def.id)}-icon-192.webp 2x`;
+    image.alt = '';
+    image.setAttribute('aria-hidden', 'true');
+    image.addEventListener('error', () => {
+      image.hidden = true;
+      button.classList.add('image-unavailable');
+    }, { once: true });
     const label = document.createElement('strong');
     label.className = 'building-mode-item-label';
     label.textContent = resolveBuildingDisplayLabel(def);
-    button.replaceChildren(label);
+    button.replaceChildren(image, label);
     itemGrid.appendChild(button);
   }
   if (options.filteredEntries.length === 0) {

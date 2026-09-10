@@ -583,6 +583,7 @@ function buildFullWorldDeltaFromState(
     }));
     const buildings: WorldBuildingPatchView[] = Array.from(state.buildings, ([id, entry]) => ({
         id,
+        di: entry.di,
         x: entry.x,
         y: entry.y,
         n: entry.n,
@@ -893,7 +894,7 @@ function projectBuildingEntry(entry: ProjectorBuildingLike): ProjectedBuildingEn
     const cached = buildingProjectionCache.get(entry);
     if (cached) { return cached; }
     const projected = freezeProjectedEntry({
-        x: entry.x, y: entry.y, n: entry.name, ch: entry.char, c: entry.color, rt: normalizeOptionalNonNegativeInteger(entry.remainingTicks), tt: normalizeOptionalNonNegativeInteger(entry.totalTicks),
+        di: entry.defId, x: entry.x, y: entry.y, n: entry.name, ch: entry.char, c: entry.color, rt: normalizeOptionalNonNegativeInteger(entry.remainingTicks), tt: normalizeOptionalNonNegativeInteger(entry.totalTicks),
     });
     buildingProjectionCache.set(entry, projected);
     return projected;

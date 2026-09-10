@@ -1,0 +1,34 @@
+/* 所有交易入口與背包共用圖片尺寸，預留空間避免載入時推擠文字。 */
+.item-art {
+  display: block;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.24));
+}
+
+.item-art--detail {
+  width: 80px;
+  height: 80px;
+}
+
+.item-art[hidden] {
+  display: none;
+}
+
+@media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
+  .item-art {
+    width: 40px;
+    height: 40px;
+  }
+
+  .item-art--detail {
+    width: 64px;
+    height: 64px;
+  }
+}

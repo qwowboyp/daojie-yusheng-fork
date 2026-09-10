@@ -235,14 +235,17 @@
     .market-board-list {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      grid-template-rows: repeat(8, minmax(0, 1fr));
+      grid-template-rows: none;
+      grid-auto-rows: minmax(60px, auto);
       gap: 8px;
       height: 100%;
       min-height: 0;
+      align-content: start;
+      overflow-y: auto;
     }
 
     .market-board-list.market-board-list--compact {
-      grid-template-rows: repeat(7, minmax(0, 1fr));
+      grid-template-rows: none;
     }
 
     .npc-shop-board-list {
@@ -282,8 +285,9 @@
     }
 
     .market-item-cell {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr);
+      align-items: center;
       justify-content: space-between;
       position: relative;
       gap: 8px;
@@ -325,6 +329,7 @@
 
     .market-item-cell-name {
       display: inline-flex;
+      grid-column: 2;
       align-items: baseline;
       gap: 6px;
       min-width: 0;
@@ -332,6 +337,24 @@
       font-size: var(--font-size-role-body-14);
       font-weight: var(--font-weight-semibold);
       color: var(--ink-black);
+    }
+
+    .market-item-cell-prices {
+      grid-column: 2;
+    }
+
+    .market-book-header,
+    .auction-detail-head,
+    .auction-lot-item,
+    .auction-consign-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .auction-lot-item > span {
+      display: grid;
+      min-width: 0;
     }
 
     .market-item-cell--status .market-item-cell-name {
@@ -597,6 +620,32 @@
     .market-storage-card {
       flex: 0 0 auto;
     }
+
+@media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
+  .market-side-tabs .ui-workspace-rail-tabs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .market-side-tab {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .market-item-cell {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+
+  .market-board-list.market-board-list {
+    grid-template-rows: none;
+    grid-auto-rows: minmax(52px, auto);
+    align-content: start;
+    overflow-y: auto;
+  }
+
+  .market-board-list.market-board-list.market-board-list--compact {
+    grid-template-rows: none;
+  }
+}
 
     .market-trade-modal-layer {
       position: fixed;

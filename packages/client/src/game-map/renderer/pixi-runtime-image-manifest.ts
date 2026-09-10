@@ -123,6 +123,8 @@ function normalizePixiTileSpriteRef(
 }
 
 export function resolveTopTileSpriteKey(tile: Tile, legacyTileKeys: ReadonlyMap<string, string>): string | null {
+  const buildingDefId = typeof tile.buildingDefId === 'string' && tile.buildingDefId.length > 0 ? tile.buildingDefId : null;
+  if (buildingDefId) return `building:${buildingDefId}`;
   const structureType = typeof tile.structureType === 'string' && tile.structureType.length > 0 ? tile.structureType : null;
   if (structureType) return `structure:${structureType}`;
   const interactable = Array.isArray(tile.interactableKinds)
@@ -194,7 +196,7 @@ export function normalizeLegacyTileMap(value: unknown): Map<string, string> {
 }
 
 export function pickRuntimeEntitySpriteSelection(
-  entity: Pick<ObservedMapEntity, 'id' | 'kind' | 'name' | 'char' | 'facing' | 'monsterId'>,
+  entity: Pick<ObservedMapEntity, 'id' | 'kind' | 'name' | 'char' | 'facing' | 'monsterId' | 'buildingDefId'>,
   sprites: ReadonlyMap<string, PixiTileSpriteRef>,
 ): RuntimeEntitySpriteSelection | null {
   const plan = buildEntitySpriteLookupPlan(entity);

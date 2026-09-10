@@ -128,6 +128,7 @@ function buildTerrainTileStaticSignature(tile: Tile | null | undefined): string 
     tile.terrainType ?? '',
     tile.surfaceType ?? '',
     tile.structureType ?? '',
+    tile.buildingDefId ?? '',
     Array.isArray(tile.interactableKinds) ? tile.interactableKinds.join('+') : '',
   ].join(':');
 }
@@ -169,6 +170,7 @@ function toObservedEntity(entity: RenderEntity): ObservedMapEntity {
     name: entity.name,
     kind,
     monsterId: entity.monsterId,
+    buildingDefId: entity.buildingDefId,
     monsterTier: entity.monsterTier,
     monsterScale: entity.monsterScale,
     facing: resolveObservedFacing(kind, entity.facing, undefined),
@@ -216,6 +218,7 @@ function mergeObservedEntityPatch(patch: TickRenderEntity, previous?: ObservedMa
     name: applyNullablePatch(patch.name, previous?.name),
     kind,
     monsterId: applyNullablePatch(patch.monsterId, previous?.monsterId),
+    buildingDefId: applyNullablePatch(patch.buildingDefId, previous?.buildingDefId),
     monsterTier: applyNullablePatch(patch.monsterTier, previous?.monsterTier),
     monsterScale: applyNullablePatch(patch.monsterScale, previous?.monsterScale),
     facing: resolveObservedFacing(kind, patch.facing, previous?.facing),
@@ -1499,6 +1502,9 @@ function normalizeVisibleTile(tile: VisibleTile): VisibleTile {
     structureType: hasStructureType
       ? (typeof tile.structureType === 'string' && tile.structureType.length > 0 ? tile.structureType : undefined)
       : defaultLayerSeed.structure ?? undefined,
+    buildingDefId: typeof tile.buildingDefId === 'string' && tile.buildingDefId.length > 0
+      ? tile.buildingDefId
+      : undefined,
     interactableKinds: hasInteractableKinds && Array.isArray(tile.interactableKinds)
       ? tile.interactableKinds.filter((kind) => typeof kind === 'string' && kind.length > 0)
       : defaultLayerSeed.interactables.length > 0 ? [...defaultLayerSeed.interactables] : undefined,

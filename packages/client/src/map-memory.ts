@@ -16,7 +16,7 @@ import {
 } from '@mud/shared';
 
 /** 已探索地块的持久化字段。 */
-type RememberedTile = Pick<Tile, 'type' | 'walkable' | 'blocksSight' | 'aura' | 'resources' | 'terrainType' | 'surfaceType' | 'structureType' | 'interactableKinds'>;
+type RememberedTile = Pick<Tile, 'type' | 'walkable' | 'blocksSight' | 'aura' | 'resources' | 'terrainType' | 'surfaceType' | 'structureType' | 'buildingDefId' | 'interactableKinds'>;
 /** 已探索标记的持久化字段。 */
 type RememberedMarker = Pick<MapMinimapMarker, 'id' | 'kind' | 'x' | 'y' | 'label' | 'detail'>;
 /** 地图级地块记忆序列化结构。 */
@@ -79,7 +79,7 @@ function isTileType(value: unknown): value is TileType {
 }
 
 /** 将地块压缩为持久化记录。 */
-function toRememberedTile(tile: Pick<Tile, 'type' | 'walkable' | 'blocksSight' | 'aura' | 'resources' | 'terrainType' | 'surfaceType' | 'structureType' | 'interactableKinds'>): Tile {
+function toRememberedTile(tile: Pick<Tile, 'type' | 'walkable' | 'blocksSight' | 'aura' | 'resources' | 'terrainType' | 'surfaceType' | 'structureType' | 'buildingDefId' | 'interactableKinds'>): Tile {
   return {
     type: tile.type,
     walkable: tile.walkable,
@@ -88,6 +88,7 @@ function toRememberedTile(tile: Pick<Tile, 'type' | 'walkable' | 'blocksSight' |
     terrainType: typeof tile.terrainType === 'string' ? tile.terrainType : undefined,
     surfaceType: typeof tile.surfaceType === 'string' ? tile.surfaceType : undefined,
     structureType: typeof tile.structureType === 'string' ? tile.structureType : undefined,
+    buildingDefId: typeof tile.buildingDefId === 'string' ? tile.buildingDefId : undefined,
     interactableKinds: Array.isArray(tile.interactableKinds)
       ? tile.interactableKinds.filter((kind) => typeof kind === 'string' && kind.length > 0)
       : undefined,

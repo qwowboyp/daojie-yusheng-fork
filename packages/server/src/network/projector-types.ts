@@ -181,6 +181,7 @@ export interface ProjectorContainerLike {
 }
 export interface ProjectorBuildingLike {
   id: string;
+  defId: string;
   x: number;
   y: number;
   name: string;
@@ -301,6 +302,7 @@ export interface ProjectedContainerEntry {
   rr?: number;
 }
 export interface ProjectedBuildingEntry {
+  di: string;
   x: number;
   y: number;
   n: string;

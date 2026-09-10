@@ -288,6 +288,8 @@ export interface Tile {
   surfaceType?: SurfaceType | null;
   /** 地上结构类型。 */
   structureType?: StructureType | null;
+  /** 玩家建造后留下的稳定定义 ID；只供图像选择，不参与权威地形判定。 */
+  buildingDefId?: string;
   /** 交互对象种类。只携带短枚举，不携带对象详情。 */
   interactableKinds?: InteractableKind[];
   /** GM/诊断用 composite flags；普通客户端不参与权威裁定。 */
@@ -669,6 +671,8 @@ export interface RenderEntity {
  */
 
   monsterId?: string;
+  /** 建築定義 ID，用於客戶端選擇穩定視覺資源。 */
+  buildingDefId?: string;
   /**
  * monsterScale：怪物Scale相关字段。
  */

@@ -71,6 +71,8 @@ export type MainRuntimeObservedEntity = {
  */
 
   monsterId?: string;
+  /** 建築定義 ID，用於選擇穩定視覺資源。 */
+  buildingDefId?: string;
   /**
  * facing：渲染朝向，仅用于表现层。
  */

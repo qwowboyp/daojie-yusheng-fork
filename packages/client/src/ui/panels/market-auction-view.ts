@@ -9,6 +9,7 @@ import { formatDisplayCountBadge, formatDisplayInteger } from '../../utils/numbe
 import { getItemTypeLabel } from '../../domain-labels';
 import { getLocalItemTemplate, getLocalRealmLevelEntry, resolvePreviewItem } from '../../content/local-templates';
 import { getItemDisplayMeta } from '../item-display';
+import { renderItemIcon } from '../../content/item-art';
 import { detailModalHost } from '../detail-modal-host';
 import { t } from '../i18n';
 import { renderTradePriceStepControl, renderTradeQuantityControl } from '../trade-control-renderers';
@@ -297,8 +298,8 @@ export class MarketAuctionView {
       >
         ${mineRibbon}
         <span class="auction-lot-item">
-          <strong>${escapeHtml(displayName)}</strong>
-          <small>${escapeHtml(this.formatAuctionLotSubtitle(lot))}</small>
+          ${renderItemIcon(lot.item.itemId)}
+          <span><strong>${escapeHtml(displayName)}</strong><small>${escapeHtml(this.formatAuctionLotSubtitle(lot))}</small></span>
         </span>
         <span class="auction-quality-tag">${escapeHtml(mine ? lot.statusLabel : lot.qualityLabel)}</span>
         <span>${this.panel.formatMarketUnitPrice(lot.currentPrice)}</span>
@@ -319,7 +320,7 @@ export class MarketAuctionView {
     const displayName = this.formatAuctionLotDisplayName(lot);
     return `
       <div class="auction-detail-head">
-        <div class="auction-item-icon" aria-hidden="true">${escapeHtml(this.getAuctionItemInitial(lot.itemName))}</div>
+        ${renderItemIcon(lot.item.itemId, 'detail')}
         <div class="auction-detail-title">
           <div class="market-item-title ${listedEntry ? 'market-item-title--interactive' : ''}" ${listedEntry ? `data-market-item-tooltip="${escapeHtmlAttr(lot.itemKey)}"` : ''}>${escapeHtml(displayName)}</div>
           <div class="market-book-subtitle">${escapeHtml(this.formatAuctionLotDetailSubtitle(lot))}</div>
@@ -673,6 +674,7 @@ export class MarketAuctionView {
         aria-pressed="${active ? 'true' : 'false'}"
         type="button"
       >
+        ${renderItemIcon(item.itemId)}
         <span data-auction-consign-item-name>${escapeHtml(itemName)}</span>
         <strong data-auction-consign-item-count>${formatDisplayCountBadge(item.count)}</strong>
       </button>

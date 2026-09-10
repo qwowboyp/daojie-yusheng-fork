@@ -1,0 +1,85 @@
+{
+  "id": "buildings-facilities",
+  "columns": 4,
+  "rows": 3,
+  "items": [
+    {
+      "id": "scripture_platform",
+      "name": "藏經臺",
+      "desc": "low dark wooden scripture stand with a jade slip and ancient book, subtle pale green spiritual focus, for recording one self-created technique",
+      "variant": "icon"
+    },
+    {
+      "id": "scripture_platform",
+      "name": "藏經臺",
+      "desc": "low dark wooden scripture stand with a jade slip and ancient book, subtle pale green spiritual focus, for recording one self-created technique",
+      "variant": "ground"
+    },
+    {
+      "id": "treasure_vault",
+      "name": "寶庫",
+      "desc": "compact reinforced wooden storage chest with bronze fittings, warm gold detail, contains precious items; no house",
+      "variant": "icon"
+    },
+    {
+      "id": "treasure_vault",
+      "name": "寶庫",
+      "desc": "compact reinforced wooden storage chest with bronze fittings, warm gold detail, contains precious items; no house",
+      "variant": "ground"
+    },
+    {
+      "id": "technique_refining_table",
+      "name": "煉法臺",
+      "desc": "small wood desk on stone base with scroll pages, brush and ink dish, restrained purple technique refinement pattern",
+      "variant": "icon"
+    },
+    {
+      "id": "technique_refining_table",
+      "name": "煉法臺",
+      "desc": "small wood desk on stone base with scroll pages, brush and ink dish, restrained purple technique refinement pattern",
+      "variant": "ground"
+    },
+    {
+      "id": "technique_unification_platform",
+      "name": "統法臺",
+      "desc": "wood and stone circular dais with several jade slips and converging teal and water-blue technique lineage currents",
+      "variant": "icon"
+    },
+    {
+      "id": "technique_unification_platform",
+      "name": "統法臺",
+      "desc": "wood and stone circular dais with several jade slips and converging teal and water-blue technique lineage currents",
+      "variant": "ground"
+    },
+    {
+      "id": "time_chamber",
+      "name": "密室",
+      "desc": "compact gray-purple stone portal pedestal, upright small oval violet portal with a violet boundary crystal, an entrance to separate space, no large room",
+      "variant": "icon"
+    },
+    {
+      "id": "time_chamber",
+      "name": "密室",
+      "desc": "compact gray-purple stone portal pedestal, upright small oval violet portal with a violet boundary crystal, an entrance to separate space, no large room",
+      "variant": "ground"
+    },
+    {
+      "id": "meditation_mat",
+      "name": "蒲團",
+      "desc": "low round woven yellow-brown grass and cloth meditation cushion, faint green spiritual glow, no throne",
+      "variant": "icon"
+    },
+    {
+      "id": "meditation_mat",
+      "name": "蒲團",
+      "desc": "low round woven yellow-brown grass and cloth meditation cushion, faint green spiritual glow, no throne",
+      "variant": "ground"
+    }
+  ],
+  "prompt": "Generate ONE production sprite atlas, exactly 4 columns by 3 rows, 12 equal square cells, ideally 1536x1152 pixels. Each cell has one small Chinese fantasy building object, real transparent alpha background. Grid aligns perfectly. Center each object within central 76% of its cell with 12% transparent padding on each side. No frame, no borders, no visible grid, no labels, no text, no letters, no watermark, no outside scenery. Refined hand-painted xianxia game style with crisp silhouettes, visible materials, restrained aura. Each PAIR is the SAME object's two renderings: UI inventory icon three-quarter view, then map ground sprite high-angle orthographic top-down view (NOT isometric), front points downward, occupies a single square map cell. Ground image should be simple, readable, have minimal contact shadow and no floor diamond. All 12 cells must stay separate.\nCELL row 1, column 1: 藏經臺 [scripture_platform] UI ICON three-quarter view: low dark wooden scripture stand with a jade slip and ancient book, subtle pale green spiritual focus, for recording one self-created technique.\nCELL row 1, column 2: 藏經臺 [scripture_platform] GROUND SPRITE orthographic high angle top down: low dark wooden scripture stand with a jade slip and ancient book, subtle pale green spiritual focus, for recording one self-created technique.\nCELL row 1, column 3: 寶庫 [treasure_vault] UI ICON three-quarter view: compact reinforced wooden storage chest with bronze fittings, warm gold detail, contains precious items; no house.\nCELL row 1, column 4: 寶庫 [treasure_vault] GROUND SPRITE orthographic high angle top down: compact reinforced wooden storage chest with bronze fittings, warm gold detail, contains precious items; no house.\nCELL row 2, column 1: 煉法臺 [technique_refining_table] UI ICON three-quarter view: small wood desk on stone base with scroll pages, brush and ink dish, restrained purple technique refinement pattern.\nCELL row 2, column 2: 煉法臺 [technique_refining_table] GROUND SPRITE orthographic high angle top down: small wood desk on stone base with scroll pages, brush and ink dish, restrained purple technique refinement pattern.\nCELL row 2, column 3: 統法臺 [technique_unification_platform] UI ICON three-quarter view: wood and stone circular dais with several jade slips and converging teal and water-blue technique lineage currents.\nCELL row 2, column 4: 統法臺 [technique_unification_platform] GROUND SPRITE orthographic high angle top down: wood and stone circular dais with several jade slips and converging teal and water-blue technique lineage currents.\nCELL row 3, column 1: 密室 [time_chamber] UI ICON three-quarter view: compact gray-purple stone portal pedestal, upright small oval violet portal with a violet boundary crystal, an entrance to separate space, no large room.\nCELL row 3, column 2: 密室 [time_chamber] GROUND SPRITE orthographic high angle top down: compact gray-purple stone portal pedestal, upright small oval violet portal with a violet boundary crystal, an entrance to separate space, no large room.\nCELL row 3, column 3: 蒲團 [meditation_mat] UI ICON three-quarter view: low round woven yellow-brown grass and cloth meditation cushion, faint green spiritual glow, no throne.\nCELL row 3, column 4: 蒲團 [meditation_mat] GROUND SPRITE orthographic high angle top down: low round woven yellow-brown grass and cloth meditation cushion, faint green spiritual glow, no throne.",
+  "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+  "dimensions": [
+    1448,
+    1086
+  ]
+}

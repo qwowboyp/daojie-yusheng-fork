@@ -613,6 +613,7 @@ export class GmWorldViewer {
           terrainType: vt.terrainType,
           surfaceType: vt.surfaceType,
           structureType: vt.structureType,
+          buildingDefId: vt.buildingDefId,
           interactableKinds: vt.interactableKinds,
           compositeFlags: vt.compositeFlags,
           occupiedBy: null,
