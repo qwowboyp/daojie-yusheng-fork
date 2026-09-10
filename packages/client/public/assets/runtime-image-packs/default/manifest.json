@@ -1,5 +1,5 @@
 {
-  "version": 6,
+  "version": 7,
   "defaults": {
     "tile": {
       "cols": 4,
@@ -226,6 +226,16 @@
       "cols": 1,
       "rows": 1,
       "fit": "cover"
+    },
+    "interactable:portal": {
+      "src": "portals/teleport_array.png",
+      "meta": {
+        "zIndex": 400,
+        "dualGrid": false
+      },
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
     }
   },
   "legacyTiles": {
@@ -256,7 +266,8 @@
     "stone": "structure:stone",
     "spirit_ore": "structure:spirit_ore",
     "black_iron_ore": "structure:black_iron_ore",
-    "broken_sword_heap": "structure:broken_sword_heap"
+    "broken_sword_heap": "structure:broken_sword_heap",
+    "portal": "interactable:portal"
   },
   "entities": {
     "npc:npc_bamboo_hermit": {
@@ -1896,6 +1907,15 @@
       "cols": 1,
       "rows": 1,
       "fit": "contain"
+    },
+    "portal:default": {
+      "src": "portals/teleport_array.png",
+      "cols": 1,
+      "rows": 1,
+      "col": 0,
+      "row": 0,
+      "fit": "contain",
+      "insetRatio": 0.02
     }
   }
 }

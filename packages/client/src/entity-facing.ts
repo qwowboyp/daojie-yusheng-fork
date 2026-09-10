@@ -41,6 +41,8 @@ function buildBaseEntitySpriteKeys(entity: SpriteLookupEntity): string[] {
       return [id && `player:${id}`, name && `player:${name}`, 'player:default'].filter(Boolean) as string[];
     case 'building':
       return buildingDefId ? [`building:${buildingDefId}`] : [];
+    case 'portal':
+      return [id && `portal:${id}`, name && `portal:${name}`, char && `portal:${char}`, 'portal:default'].filter(Boolean) as string[];
     default:
       return [];
   }
