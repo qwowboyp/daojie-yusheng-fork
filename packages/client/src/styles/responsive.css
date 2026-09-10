@@ -951,14 +951,14 @@
         letter-spacing: 0;
       }
       .building-mode-material-grid {
-        grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
         gap: 3px;
         overflow-y: auto;
         padding: 2px 3px 3px 2px;
       }
       .building-mode-material-card {
-        min-height: 30px;
-        padding: 4px 16px 4px 5px;
+        min-height: 78px;
+        padding: 5px;
         border-radius: 7px;
       }
       .building-mode-strength-input-wrap {

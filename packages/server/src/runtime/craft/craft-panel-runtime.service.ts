@@ -96,8 +96,12 @@ export class CraftPanelRuntimeService {
     logger = new Logger(CraftPanelRuntimeService.name);
     /** 缓存炼丹目录，供面板快照和任务校验共用。 */
     alchemyCatalog = [];
+    /** 按配方 ID 直接定位煉丹產物，供歷史隊列的唯讀任務投影使用。 */
+    alchemyOutputItemIdByRecipeId = new Map<string, string>();
     /** 缓存炼器目录，复用炼丹制造公式但输出器物。 */
     forgingCatalog = [];
+    /** 按配方 ID 直接定位煉器產物，供歷史隊列的唯讀任務投影使用。 */
+    forgingOutputItemIdByRecipeId = new Map<string, string>();
     /** 缓存强化配置，避免每次操作都重新查表。 */
     enhancementConfigs = new Map();
     /** 已被更高 session 接管的玩家 fence；只抑制相同旧 fence，新的本地会话会自动恢复 tick。 */
@@ -241,6 +245,7 @@ export class CraftPanelRuntimeService {
             player,
             serverTick,
             (itemId) => this.contentTemplateRepository.getItemName(itemId),
+            (kind, recipeId) => this.getAlchemyLikeOutputItemId(kind, recipeId),
         );
     }
     /** 构建统一技艺任务列表运行态 patch。 */
@@ -249,7 +254,14 @@ export class CraftPanelRuntimeService {
             player,
             serverTick,
             (itemId) => this.contentTemplateRepository.getItemName(itemId),
+            (kind, recipeId) => this.getAlchemyLikeOutputItemId(kind, recipeId),
         );
+    }
+    /** 以啟動期建立的配方索引讀取煉製產物，不掃描目錄或觸碰玩家狀態。 */
+    getAlchemyLikeOutputItemId(kind: 'alchemy' | 'forging', recipeId: string): string | undefined {
+        return kind === 'forging'
+            ? this.forgingOutputItemIdByRecipeId.get(recipeId)
+            : this.alchemyOutputItemIdByRecipeId.get(recipeId);
     }
     /** 判断玩家当前是否有炼丹任务在进行。 */
     hasActiveAlchemyJob(player) {
@@ -3377,6 +3389,7 @@ export class CraftPanelRuntimeService {
         if (!existsSync(filePath)) {
             this.logger.warn(`煉丹配方目錄缺失：${filePath}`);
             this.alchemyCatalog = [];
+            this.alchemyOutputItemIdByRecipeId.clear();
             return;
         }
         const raw = JSON.parse(readFileSync(filePath, 'utf-8'));
@@ -3389,6 +3402,9 @@ export class CraftPanelRuntimeService {
             }
             return left.outputItemId.localeCompare(right.outputItemId, 'zh-Hans-CN');
         });
+        this.alchemyOutputItemIdByRecipeId = new Map(
+            this.alchemyCatalog.map((recipe) => [recipe.recipeId, recipe.outputItemId]),
+        );
     }
     /** 读取炼器目录，转换成炼丹同构的制造目录。 */
     loadForgingCatalog() {
@@ -3396,6 +3412,7 @@ export class CraftPanelRuntimeService {
         if (!existsSync(filePath)) {
             this.logger.warn(`煉器配方目錄缺失：${filePath}`);
             this.forgingCatalog = [];
+            this.forgingOutputItemIdByRecipeId.clear();
             return;
         }
         const raw = JSON.parse(readFileSync(filePath, 'utf-8'));
@@ -3408,6 +3425,9 @@ export class CraftPanelRuntimeService {
             }
             return left.outputItemId.localeCompare(right.outputItemId, 'zh-Hans-CN');
         });
+        this.forgingOutputItemIdByRecipeId = new Map(
+            this.forgingCatalog.map((recipe) => [recipe.recipeId, recipe.outputItemId]),
+        );
     }
     /**
  * loadEnhancementConfigs：读取强化配置并返回结果。

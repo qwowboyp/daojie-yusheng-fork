@@ -8,6 +8,7 @@ import type { MailDetailView, MailFilter, MailPageView, MailSummaryView } from '
 import { MAIL_PAGE_SIZE_DEFAULT, renderMailBodyPlain, renderMailTitlePlain } from '@mud/shared';
 import { createPanelStore } from '../../stores/create-panel-store';
 import { getLocalItemTemplate } from '../../../content/local-templates';
+import { getItemIconSources, ITEM_ICON_LIST_SIZES } from '../../../content/item-art';
 import { t } from '../../../ui/i18n';
 
 // ─── Store ───────────────────────────────────────────────────────────────────
@@ -362,9 +363,13 @@ const MailDetailSection = memo(function MailDetailSection({ detail, attachmentPa
             <div className="mail-attachment-list">
               {visibleAttachments.map((attachment, idx) => {
                 const attachmentName = resolveMailAttachmentItemName(attachment.itemId);
+                const icon = getItemIconSources(attachment.itemId);
                 return (
                   <div key={`${attachment.itemId}-${idx}`} className="mail-attachment-item">
-                    <span className="mail-attachment-item-name" title={attachmentName}>{attachmentName}</span>
+                    <span className="mail-attachment-item-name item-art-reference" title={attachmentName}>
+                      {icon && <img className="item-art item-art--list" src={icon.src} srcSet={icon.srcSet} sizes={ITEM_ICON_LIST_SIZES} width={48} height={48} alt="" aria-hidden="true" loading="lazy" decoding="async" draggable={false} />}
+                      <span>{attachmentName}</span>
+                    </span>
                     <strong>x{attachment.count}</strong>
                   </div>
                 );

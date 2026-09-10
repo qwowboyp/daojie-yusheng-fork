@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 
 import { LOCAL_EDITOR_CATALOG } from '../../content/editor-catalog';
 import { getLocalItemTemplate } from '../../content/local-templates';
+import { getItemIconSources, ITEM_ICON_INLINE_SIZES } from '../../content/item-art';
 import { getMonsterLocationEntry, loadMonsterLocationEntry } from '../../content/monster-locations';
 import { getItemTypeLabel } from '../../domain-labels';
 import { t } from '../../ui/i18n';
@@ -177,6 +178,7 @@ function UiInlineReferenceChip({
   reference: UiInlineReference;
 }) {
   const tone = reference.tone ?? (reference.kind === 'monster' ? 'monster' : 'default');
+  const icon = reference.kind === 'item' ? getItemIconSources(reference.id) : null;
 
   const handlePointerMove = (event: React.PointerEvent<HTMLSpanElement>) => {
     const key = `${reference.kind}:${reference.id}`;
@@ -193,14 +195,15 @@ function UiInlineReferenceChip({
 
   return (
     <span
-      className={`inline-item-chip inline-item-chip--${tone}`}
+      className={`inline-item-chip inline-item-chip--${tone}${reference.kind === 'item' ? ' inline-item-chip--art-inline' : ''}`}
       onPointerMove={handlePointerMove}
       onPointerLeave={() => {
         activeReferenceKey = '';
         hideTooltip();
       }}
     >
-      {reference.label}
+      {icon && <img className="item-art item-art--inline" src={icon.src} srcSet={icon.srcSet} sizes={ITEM_ICON_INLINE_SIZES} width={24} height={24} alt="" aria-hidden="true" loading="lazy" decoding="async" draggable={false} />}
+      <span className="inline-item-chip-label">{reference.label}</span>
     </span>
   );
 }

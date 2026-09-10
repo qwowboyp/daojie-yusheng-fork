@@ -3,6 +3,7 @@
  *
  * 维护时优先保持局部更新和原有焦点/滚动状态，不在 UI 层裁定资产、战斗或移动合法性。
  */
+import { renderItemIcon } from '../content/item-art';
 import type {
   AlchemyIngredientSelection,
   AlchemyRecipeCatalogEntry,
@@ -119,6 +120,7 @@ type CraftQueueProgressView = {
   detail: string;
 };
 type CraftQueueDisplayItem = CraftQueueItemView & {
+  itemId?: string;
   isActive?: boolean;
   progress?: CraftQueueProgressView;
   interruptProgress?: CraftQueueProgressView | null;
@@ -1397,7 +1399,7 @@ export class CraftWorkbenchModal {
             ? queue.map((entry, index) => `
               <div class="craft-queue-item ${entry.isActive ? 'active' : ''}" data-craft-queue-entry="${escapeHtmlAttr(entry.queueId)}">
                 <span>${escapeHtml(this.getCraftQueueKindLabel(entry.kind))} · ${escapeHtml(this.getCraftQueueStatusLabel(entry, index))}</span>
-                <strong>${escapeHtml(entry.label)}</strong>
+                <strong class="item-art-reference">${entry.itemId ? renderItemIcon(entry.itemId) : ''}<span>${escapeHtml(entry.label)}</span></strong>
                 ${this.renderCraftQueueItemMeta(entry)}
                 ${this.renderCraftQueueItemProgress(entry)}
                 <button
@@ -1505,6 +1507,7 @@ export class CraftWorkbenchModal {
         entry.queueId,
         entry.kind,
         entry.label,
+        entry.itemId ?? '',
         entry.quantity ?? '',
         entry.isActive ? 'active' : 'idle',
         entry.state ?? '',
@@ -1562,7 +1565,7 @@ export class CraftWorkbenchModal {
         data-floating-job-id="${escapeHtmlAttr(entry.queueId)}"
       >
         <div class="floating-job-main">
-          <span class="floating-job-name">${escapeHtml(entry.label)}</span>
+          <span class="floating-job-name item-art-reference">${entry.itemId ? renderItemIcon(entry.itemId, 'inline') : ''}<span>${escapeHtml(entry.label)}</span></span>
           ${entry.quantity ? `<span class="floating-job-count">x${formatDisplayInteger(entry.quantity)}</span>` : ''}
           <strong class="floating-job-progress" data-floating-job-progress="true">${escapeHtml(progress.label)}</strong>
         </div>
@@ -1679,6 +1682,7 @@ export class CraftWorkbenchModal {
         entry.queueId,
         entry.kind,
         entry.label,
+        entry.itemId ?? '',
         entry.quantity ?? '',
         entry.state ?? '',
         entry.isActive ? 'active' : 'idle',
@@ -1723,7 +1727,7 @@ export class CraftWorkbenchModal {
           ${FORGING_INITIAL_RECIPES.map((recipe) => `
             <div class="craft-queue-item">
               <span>${escapeHtml(recipe.note)}</span>
-              <strong>${escapeHtml(recipe.outputName)}</strong>
+              <strong>${this.renderAlchemyItemReference(recipe.outputItemId, recipe.outputName, 'reward')}</strong>
               <em>未知物品</em>
             </div>
           `).join('')}
@@ -2031,6 +2035,7 @@ export class CraftWorkbenchModal {
       label: displayLabel,
       tone,
       count,
+      iconSize: 'list',
     });
   }
 
@@ -2890,7 +2895,7 @@ export class CraftWorkbenchModal {
           <div class="market-trade-dialog-field">
             <span>${itemLabel}</span>
             <div class="market-price-display">
-              <strong>${escapeHtml(recipe.outputName)}</strong>
+              <strong>${this.renderAlchemyItemReference(recipe.outputItemId, recipe.outputName, 'reward')}</strong>
               <span>${escapeHtml(t('craft.workbench.alchemy.confirm.recipe-summary', {
                 recipeLabel,
                 batchCount: formatDisplayInteger(this.getAlchemyBatchOutputCount(recipe)),

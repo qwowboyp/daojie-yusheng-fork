@@ -791,7 +791,12 @@
     }
 
     .auto-pill-slot.filled {
+      grid-template-rows: auto 1fr auto;
       background: linear-gradient(180deg, rgba(197, 60, 60, 0.06), rgba(255, 251, 244, 0.94));
+    }
+
+    .auto-pill-slot > .item-art {
+      justify-self: center;
     }
 
     .auto-pill-slot.empty {

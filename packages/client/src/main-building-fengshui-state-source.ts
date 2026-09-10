@@ -23,6 +23,7 @@ import { resolveBuildingPreviewSpriteKey } from './entity-facing';
 import type { MapBuildPreviewOverlayState, MapFengShuiOverlayState } from './game-map/types';
 import type { SocketBuildingSender } from './network/socket-send-building';
 import { resolveClientItemBaseName } from './content/item-display-name';
+import { renderItemIcon } from './content/item-art';
 import { getLocalItemTemplate } from './content/local-templates';
 import { detailModalHost } from './ui/detail-modal-host';
 import { FloatingTooltip } from './ui/floating-tooltip';
@@ -1190,6 +1191,7 @@ function patchBuildModeMaterialGrid(
         ownedBadge = document.createElement('span');
         ownedBadge.className = 'building-mode-material-card-badge';
         card.replaceChildren(name, ownedBadge);
+        card.insertAdjacentHTML('afterbegin', renderItemIcon(candidate.itemId));
       }
       name.textContent = candidate.label;
       ownedBadge.textContent = String(candidate.ownedCount);

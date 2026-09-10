@@ -11,6 +11,7 @@ import {
 } from '@mud/shared';
 import { formatDisplayCountBadge, formatDisplayInteger } from '../../utils/number';
 import { detailModalHost } from '../detail-modal-host';
+import { renderItemIcon } from '../../content/item-art';
 import { confirmModalHost } from '../confirm-modal-host';
 import { t } from '../i18n';
 import { renderTradePriceStepControl, renderTradeQuantityControl } from '../trade-control-renderers';
@@ -86,7 +87,7 @@ export class MarketTradeDialog {
       ownerId: 'market-buy-confirm',
       title: t('auction.action.buyout', undefined),
       subtitle: p.getMarketDisplayName(entry.item),
-      bodyHtml: this.renderAuctionBuyoutConfirmBody(lot, currencyItemName, quantity, unitPrice, totalCost, insufficientCurrency),
+      bodyHtml: `${renderItemIcon(entry.item.itemId, 'detail')}${this.renderAuctionBuyoutConfirmBody(lot, currencyItemName, quantity, unitPrice, totalCost, insufficientCurrency)}`,
       confirmLabel: t('auction.action.buyout', undefined),
       confirmDisabled: insufficientCurrency || totalCost === null,
       onConfirm: () => {
@@ -187,7 +188,7 @@ export class MarketTradeDialog {
         <div class="market-trade-dialog-head">
           <div class="market-trade-dialog-title ui-title-block">
             <div class="panel-section-title">${state.title}</div>
-            <div class="market-trade-dialog-item market-trade-dialog-item--interactive ui-title-block-subtitle" data-market-item-tooltip="selected">${escapeHtml(p.getMarketDisplayName(entry.item))}</div>
+            <div class="market-trade-dialog-item market-trade-dialog-item--interactive ui-title-block-subtitle item-art-reference" data-market-item-tooltip="selected">${renderItemIcon(entry.item.itemId)}<span>${escapeHtml(p.getMarketDisplayName(entry.item))}</span></div>
           </div>
           <button class="small-btn ghost" data-market-close-dialog type="button">关闭</button>
         </div>

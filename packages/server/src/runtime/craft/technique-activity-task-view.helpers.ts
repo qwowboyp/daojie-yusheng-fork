@@ -22,6 +22,8 @@ type LegacyTechniqueJob = {
   label?: string;
   recipeName?: string;
   outputItemId?: string;
+  targetItemId?: string;
+  item?: { itemId?: unknown };
   targetItemName?: string;
   resourceNodeName?: string;
   buildingName?: string;
@@ -63,6 +65,10 @@ type TechniqueActivityTaskPlayerView = {
 };
 
 export type TechniqueActivityItemNameResolver = (itemId: string) => string | null | undefined;
+export type TechniqueActivityRecipeOutputItemIdResolver = (
+  kind: 'alchemy' | 'forging',
+  recipeId: string,
+) => string | null | undefined;
 
 const LEGACY_ACTIVE_JOB_SLOTS = [
   ['alchemy', 'alchemyJob'],
@@ -80,6 +86,7 @@ export function buildTechniqueActivityTaskListView(
   player: TechniqueActivityTaskPlayerView | null | undefined,
   serverTick?: number,
   resolveItemName?: TechniqueActivityItemNameResolver,
+  resolveRecipeOutputItemId?: TechniqueActivityRecipeOutputItemIdResolver,
 ): TechniqueActivityTaskListView {
   const tasks: TechniqueActivityTaskView[] = [];
   if (!player || typeof player !== 'object') {
@@ -95,7 +102,7 @@ export function buildTechniqueActivityTaskListView(
   }
 
   for (const item of listLegacyCraftQueueItems(player)) {
-    tasks.push(buildLegacyQueueTaskView(item));
+    tasks.push(buildLegacyQueueTaskView(item, resolveRecipeOutputItemId));
   }
 
   const queue = Array.isArray(player.techniqueActivityQueue) ? player.techniqueActivityQueue : [];
@@ -103,7 +110,7 @@ export function buildTechniqueActivityTaskListView(
     if (!item || typeof item !== 'object') {
       continue;
     }
-    tasks.push(buildTechniqueQueueTaskView(item));
+    tasks.push(buildTechniqueQueueTaskView(item, resolveRecipeOutputItemId));
   }
 
   return serverTick == null ? { tasks } : { tasks, serverTick };
@@ -114,8 +121,14 @@ export function buildTechniqueActivityTaskPatchView(
   player: TechniqueActivityTaskPlayerView | null | undefined,
   serverTick?: number,
   resolveItemName?: TechniqueActivityItemNameResolver,
+  resolveRecipeOutputItemId?: TechniqueActivityRecipeOutputItemIdResolver,
 ): { upsert: TechniqueActivityTaskView[]; serverTick?: number } {
-  const view = buildTechniqueActivityTaskListView(player, serverTick, resolveItemName);
+  const view = buildTechniqueActivityTaskListView(
+    player,
+    serverTick,
+    resolveItemName,
+    resolveRecipeOutputItemId,
+  );
   return view.serverTick == null
     ? { upsert: view.tasks }
     : { upsert: view.tasks, serverTick: view.serverTick };
@@ -146,6 +159,10 @@ function buildActiveJobTaskView(
   if (targetLabel) {
     task.targetLabel = targetLabel;
   }
+  const itemId = resolveJobItemId(kind, job);
+  if (itemId) {
+    task.itemId = itemId;
+  }
   const batchTotalTicks = resolveNonNegativeInteger(job.batchBrewTicks);
   if (batchTotalTicks > 0) {
     task.batchTotalTicks = batchTotalTicks;
@@ -172,10 +189,13 @@ function buildActiveJobTaskView(
   return task;
 }
 
-function buildLegacyQueueTaskView(item: CraftQueueItemView): TechniqueActivityTaskView {
+function buildLegacyQueueTaskView(
+  item: CraftQueueItemView,
+  resolveRecipeOutputItemId?: TechniqueActivityRecipeOutputItemIdResolver,
+): TechniqueActivityTaskView {
   const kind = normalizeKind(item.kind);
   const queueId = normalizeText(item.queueId) || `legacy:${kind}:${normalizeText(item.label) || 'queued'}`;
-  return {
+  const task: TechniqueActivityTaskView = {
     id: `queue:${kind}:${queueId}`,
     kind,
     label: normalizeText(item.label) || resolveKindLabel(kind),
@@ -183,9 +203,17 @@ function buildLegacyQueueTaskView(item: CraftQueueItemView): TechniqueActivityTa
     canCancel: true,
     cancelRef: { kind, queueId },
   };
+  const itemId = resolveQueueItemId(kind, item.payload, resolveRecipeOutputItemId);
+  if (itemId) {
+    task.itemId = itemId;
+  }
+  return task;
 }
 
-function buildTechniqueQueueTaskView(item: TechniqueActivityQueueItem): TechniqueActivityTaskView {
+function buildTechniqueQueueTaskView(
+  item: TechniqueActivityQueueItem,
+  resolveRecipeOutputItemId?: TechniqueActivityRecipeOutputItemIdResolver,
+): TechniqueActivityTaskView {
   const kind = normalizeKind(item.kind);
   const queueId = normalizeText(item.queueId) || `queue:${kind}:${normalizeText(item.label) || 'queued'}`;
   const cancelRef = normalizeCancelRef(item.cancelRef, kind, queueId);
@@ -204,6 +232,10 @@ function buildTechniqueQueueTaskView(item: TechniqueActivityQueueItem): Techniqu
   const sleepReason = normalizeText(item.sleepReason);
   if (sleepReason) {
     task.sleepReason = sleepReason;
+  }
+  const itemId = resolveQueueItemId(kind, item.payload, resolveRecipeOutputItemId);
+  if (itemId) {
+    task.itemId = itemId;
   }
   return task;
 }
@@ -313,6 +345,41 @@ function resolveJobTargetLabel(
   return job.outputItemId
     ? resolvePlayerFacingContentName(job.outputItemId, '未知物品', resolveItemName?.(job.outputItemId))
     : undefined;
+}
+
+function resolveJobItemId(
+  kind: RuntimeTechniqueActivityKind,
+  job: LegacyTechniqueJob,
+): string | undefined {
+  if (kind === 'enhancement') {
+    return normalizeText(job.targetItemId) || normalizeText(job.item?.itemId);
+  }
+  return kind === 'alchemy' || kind === 'forging'
+    ? normalizeText(job.outputItemId)
+    : undefined;
+}
+
+function resolveQueueItemId(
+  kind: RuntimeTechniqueActivityKind,
+  payload: unknown,
+  resolveRecipeOutputItemId?: TechniqueActivityRecipeOutputItemIdResolver,
+): string | undefined {
+  if (!payload || typeof payload !== 'object') {
+    return undefined;
+  }
+  const record = payload as { outputItemId?: unknown; targetItemId?: unknown; recipeId?: unknown };
+  if (kind === 'enhancement') {
+    return normalizeText(record.targetItemId);
+  }
+  if (kind !== 'alchemy' && kind !== 'forging') {
+    return undefined;
+  }
+  const outputItemId = normalizeText(record.outputItemId);
+  if (outputItemId) {
+    return outputItemId;
+  }
+  const recipeId = normalizeText(record.recipeId);
+  return recipeId ? normalizeText(resolveRecipeOutputItemId?.(kind, recipeId)) : undefined;
 }
 
 function normalizeCancelRef(

@@ -25,6 +25,7 @@ import {
 } from '@mud/shared';
 import { formatDisplayInteger, formatDisplayNumber } from '../../utils/number';
 import { t } from '../i18n';
+import { renderItemIcon } from '../../content/item-art';
 
 const FORMATION_SETUP_MIN_RADIUS = 1;
 const FORMATION_SETUP_MAX_RADIUS = 10;
@@ -76,6 +77,7 @@ export class InventoryFormationDialogController {
   renderBody(body: HTMLElement, item: ItemStack): void {
     const diskMultiplier = this.options.resolveDiskMultiplier(item);
     replaceElementHtml(body, `
+      ${renderItemIcon(item.itemId, 'detail')}
       <div class="formation-dialog-layout">
       <div class="formation-config-grid">
         <label class="formation-config-field formation-config-field--select ui-detail-field">

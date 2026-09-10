@@ -33,6 +33,7 @@ import {
 import { formatDisplayInteger, formatDisplaySignedNumber } from '../utils/number';
 import { getLocalItemTemplate } from '../content/local-templates';
 import { resolveClientItemBaseName } from '../content/item-display-name';
+import type { ItemIconSize } from '../content/item-art';
 import { getTechniqueGradeLabel } from '../domain-labels';
 import { confirmModalHost } from './confirm-modal-host';
 import { t } from './i18n';
@@ -845,7 +846,7 @@ export class CraftAlchemyView {
       <div class="alchemy-detail-stack">
         <section class="alchemy-recipe-detail-head">
           <div>
-            <div class="alchemy-detail-title">${this.renderAlchemyItemReference(selectedRecipe.outputItemId, selectedRecipe.outputName, 'reward')}</div>
+            <div class="alchemy-detail-title">${this.renderAlchemyItemReference(selectedRecipe.outputItemId, selectedRecipe.outputName, 'reward', undefined, 'detail')}</div>
           </div>
           <div class="alchemy-detail-meta">
             <span>等級 ${formatDisplayInteger(selectedRecipe.outputLevel)}</span>
@@ -893,9 +894,10 @@ export class CraftAlchemyView {
     label: string,
     tone: 'reward' | 'material',
     count?: number,
+    iconSize: ItemIconSize = 'list',
   ): string {
     const displayLabel = label.trim() && label !== itemId ? label : UNKNOWN_ITEM_NAME;
-    return renderInlineItemChip(itemId, { label: displayLabel, tone, count });
+    return renderInlineItemChip(itemId, { label: displayLabel, tone, count, iconSize });
   }
 
 
@@ -1421,7 +1423,7 @@ export class CraftAlchemyView {
           <div class="market-trade-dialog-field">
             <span>${itemLabel}</span>
             <div class="market-price-display">
-              <strong>${escapeHtml(recipe.outputName)}</strong>
+              <strong>${this.renderAlchemyItemReference(recipe.outputItemId, recipe.outputName, 'reward')}</strong>
               <span>${escapeHtml(t('craft.workbench.alchemy.confirm.recipe-summary', {
                 recipeLabel,
                 batchCount: formatDisplayInteger(this.getAlchemyBatchOutputCount(recipe)),

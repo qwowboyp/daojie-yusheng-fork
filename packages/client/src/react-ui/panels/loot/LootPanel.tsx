@@ -7,6 +7,7 @@ import { memo, useCallback } from 'react';
 import type { LootWindowState } from '@mud/shared';
 import { getItemDisplayName } from '@mud/shared';
 import { getTechniqueGradeLabel } from '../../../domain-labels';
+import { getItemIconSources, ITEM_ICON_LIST_SIZES } from '../../../content/item-art';
 import { formatDisplayCountBadge, formatDisplayInteger } from '../../../utils/number';
 import { createPanelStore } from '../../stores/create-panel-store';
 import { t } from '../../../ui/i18n';
@@ -241,6 +242,7 @@ const LootItemCell = memo(function LootItemCell({ entry, sourceId, sourceKind, i
   harvesting: boolean;
 }) {
   const displayName = getItemDisplayName(entry.item);
+  const icon = getItemIconSources(entry.item.itemId);
   const handleClick = useCallback(() => {
     if (isHerb) {
       callbacks.onStartGather?.(sourceId, entry.itemKey);
@@ -257,8 +259,9 @@ const LootItemCell = memo(function LootItemCell({ entry, sourceId, sourceKind, i
         </span>
         <span className="inventory-cell-count">{formatDisplayCountBadge(entry.item.count)}</span>
       </div>
-      <div className="inventory-cell-name" aria-label={isHerb ? t('loot.herb.start-title') : displayName}>
-        {isHerb ? t('loot.herb.start-hint') : displayName}
+      <div className="inventory-cell-name item-art-reference" aria-label={isHerb ? t('loot.herb.start-title') : displayName}>
+        {icon && <img className="item-art item-art--list" src={icon.src} srcSet={icon.srcSet} sizes={ITEM_ICON_LIST_SIZES} width={48} height={48} alt="" aria-hidden="true" loading="lazy" decoding="async" draggable={false} />}
+        <span>{isHerb ? t('loot.herb.start-hint') : displayName}</span>
       </div>
       <div className="inventory-cell-actions">
         <button

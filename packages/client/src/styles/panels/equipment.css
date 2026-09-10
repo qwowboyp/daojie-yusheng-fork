@@ -78,6 +78,12 @@
       white-space: nowrap;
     }
 
+    .equip-slot-item.item-art-reference {
+      min-height: 48px;
+      white-space: normal;
+      overflow: visible;
+    }
+
     .equip-slot .small-btn {
       flex: 0 0 auto;
       padding: 3px 8px;

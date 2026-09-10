@@ -16,6 +16,7 @@ import type {
 } from '@mud/shared';
 import { createItemStackSignature, getTechniqueMaxLevel, resolvePlayerFacingContentName, TECHNIQUE_GRADE_ORDER } from '@mud/shared';
 import { getItemTypeLabel } from '../../domain-labels';
+import { renderItemIcon } from '../../content/item-art';
 import { INVENTORY_FILTER_TABS, type InventoryFilter } from '../../constants/ui/inventory';
 import { getItemDecorClassName, getItemDisplayMeta, type ItemDisplayMeta } from '../item-display';
 import { formatDisplayCountBadge } from '../../utils/number';
@@ -2150,6 +2151,7 @@ export class TreasureVaultModal {
       ? `<span class="item-card-chip item-card-chip--enhance" data-item-enhance="true">${escapeHtml(itemMeta.enhanceLabel)}</span>`
       : '';
     return `
+      ${renderItemIcon(item.itemId, 'cell')}
       <div class="inventory-cell-head">
         <span class="inventory-cell-type" ${ribbon ? '' : 'hidden'}>${escapeHtml(ribbon?.label ?? '')}</span>
         <span class="inventory-cell-count">${escapeHtml(formatDisplayCountBadge(item.count))}</span>
@@ -2264,6 +2266,7 @@ export class TreasureVaultModal {
         <div class="inventory-detail-actions"><div class="inventory-detail-actions-group inventory-detail-actions-group--right inventory-detail-actions-group--stretch"><button class="small-btn ghost" type="button" data-vault-detail-withdraw="custom">取出指定數量</button><button class="small-btn" type="button" data-vault-detail-withdraw="all">取出全部</button></div></div>`
       : '<div class="empty-hint compact">無權取出該寶庫物品</div>';
     return `
+      <div class="item-art-reference">${renderItemIcon(item.itemId, 'detail')}<span>${escapeHtml(previewItem.name)}</span></div>
       <div class="quest-detail-grid inventory-detail-grid">
         <div class="quest-detail-section"><strong>物品類型</strong><span>${escapeHtml(resolveItemTypeLabel(item as ItemStack))}</span></div>
         <div class="quest-detail-section"><strong>當前數量</strong><span>${escapeHtml(formatDisplayCountBadge(item.count))}</span></div>

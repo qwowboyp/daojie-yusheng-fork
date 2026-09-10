@@ -186,6 +186,8 @@ import {
 import { applyStaticI18n, t } from './ui/i18n';
 import { getCachedMapMeta } from './map-static-cache';
 import { startClientVersionReload } from './version-reload';
+import { renderItemIcon } from './content/item-art';
+import './styles/item-art.css';
 
 const GM_PLAYER_QUICK_RESET_PASSWORD = '123456789';
 
@@ -2050,7 +2052,7 @@ function getMailComposerMarkup(
         <div class="editor-card">
           <div class="editor-card-head">
             <div>
-              <div class="editor-card-title">${escapeHtml(getMailAttachmentTitle(entry.itemId, `附件 ${index + 1}`))}</div>
+              <div class="editor-card-title item-art-reference">${renderItemIcon(entry.itemId)}<span>${escapeHtml(getMailAttachmentTitle(entry.itemId, `附件 ${index + 1}`))}</span></div>
               <div class="editor-card-meta">${escapeHtml(getMailAttachmentRowMeta(entry.itemId))}</div>
             </div>
             <button class="small-btn danger" type="button" data-action="${options.scope === 'direct' ? 'remove-direct-mail-attachment' : 'remove-shortcut-mail-attachment'}" data-mail-attachment-index="${index}">删除附件</button>
@@ -2458,7 +2460,7 @@ function getCompactInventoryItemMarkup(item: ItemStack, index: number): string {
     <div class="editor-card inventory-compact-row" data-inventory-item-row data-index="${index}" data-search="${escapeHtml(searchText)}">
       <div class="editor-card-head">
         <div>
-          <div class="editor-card-title" data-preview="inventory-title" data-index="${index}">${escapeHtml(getInventoryCardTitle(item, index))}</div>
+          <div class="item-art-reference">${renderItemIcon(item.itemId)}<span class="editor-card-title" data-preview="inventory-title" data-index="${index}">${escapeHtml(getInventoryCardTitle(item, index))}</span></div>
           <div class="editor-card-meta" data-preview="inventory-meta" data-index="${index}">${escapeHtml(getInventoryCardMeta(item))}</div>
         </div>
         <button class="small-btn danger" type="button" data-action="remove-inventory-item" data-index="${index}">删除</button>
@@ -5302,7 +5304,7 @@ function renderRedeemPanel(): void {
       <div class="editor-card">
         <div class="editor-card-head">
           <div>
-            <div class="editor-card-title">${escapeHtml(getMailAttachmentTitle(reward.itemId, `奖励 ${index + 1}`))}</div>
+            <div class="editor-card-title item-art-reference">${renderItemIcon(reward.itemId)}<span>${escapeHtml(getMailAttachmentTitle(reward.itemId, `奖励 ${index + 1}`))}</span></div>
             <div class="editor-card-meta">${escapeHtml(getMailAttachmentRowMeta(reward.itemId))}</div>
           </div>
           <button class="small-btn danger" type="button" data-action="remove-redeem-reward" data-reward-index="${index}">删除</button>

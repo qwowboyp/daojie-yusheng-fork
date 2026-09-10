@@ -10,6 +10,7 @@ import { getMonsterLocationEntry, loadMonsterLocationEntry } from '../content/mo
 import { formatMapRecommendedRealmLabel } from '../utils/map-level-display';
 import { buildItemTooltipPayload } from './equipment-tooltip';
 import { FloatingTooltip, prefersPinnedTooltipInteraction } from './floating-tooltip';
+import { renderItemIcon, type ItemIconSize } from '../content/item-art';
 
 /** InlineItemChipTone：内嵌物品徽记色调。 */
 type InlineItemChipTone = 'reward' | 'required' | 'material' | 'monster' | 'default';
@@ -45,6 +46,7 @@ interface RenderInlineItemChipOptions {
  */
 
   tone?: InlineItemChipTone;
+  iconSize?: ItemIconSize;
 }
 
 const INLINE_REFERENCE_SELECTOR = '[data-inline-item-id], [data-inline-monster-id]';
@@ -212,7 +214,8 @@ export function renderInlineItemChip(itemId: string, options?: RenderInlineItemC
   const count = options?.count;
   const countText = Number.isFinite(count) ? ` x${normalizeCount(count)}` : '';
   const tone = options?.tone ?? 'default';
-  return `<span class="inline-item-chip inline-item-chip--${tone}" data-inline-item-id="${escapeHtmlAttr(itemId)}" data-inline-item-name="${escapeHtmlAttr(label)}"${Number.isFinite(count) ? ` data-inline-item-count="${normalizeCount(count)}"` : ''}>${escapeHtml(label)}${countText ? `<span class="inline-item-chip-count">${escapeHtml(countText)}</span>` : ''}</span>`;
+  const iconSize = options?.iconSize ?? 'inline';
+  return `<span class="inline-item-chip inline-item-chip--${tone} inline-item-chip--art-${iconSize}" data-inline-item-id="${escapeHtmlAttr(itemId)}" data-inline-item-name="${escapeHtmlAttr(label)}"${Number.isFinite(count) ? ` data-inline-item-count="${normalizeCount(count)}"` : ''}>${renderItemIcon(itemId, iconSize)}<span class="inline-item-chip-label">${escapeHtml(label)}${countText ? `<span class="inline-item-chip-count">${escapeHtml(countText)}</span>` : ''}</span></span>`;
 }
 
 /** renderInlineMonsterChip：渲染Inline妖兽Chip。 */
@@ -275,6 +278,10 @@ export function bindInlineItemTooltips(root: HTMLElement, signal?: AbortSignal):
     }
     const node = target.closest<HTMLElement>(INLINE_REFERENCE_SELECTOR);
     if (!node) {
+      return;
+    }
+    // 圖示與名稱在選擇按鈕內時，點擊應交給原本的選擇動作；詳情中的標籤仍可點開提示。
+    if (node.closest('button, a[href], [role="button"], label')) {
       return;
     }
     if (inlineItemTooltip.isPinnedTo(node)) {

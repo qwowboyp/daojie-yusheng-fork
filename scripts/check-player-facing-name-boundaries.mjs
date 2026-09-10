@@ -37,7 +37,6 @@ const forbiddenPatterns = [
   ['packages/server/src/network/world-gateway-technique.helper.ts', /name:\s*typeof entry\?\.name[^\n]*entry\?\.techId/, '功法分页不得回退 techId'],
   ['packages/server/src/runtime/player/leaderboard-runtime.service.ts', /summary\?\.name \?\? normalizedMapId/, '排行榜地图名称不得回退 mapId'],
   ['packages/server/src/runtime/world/world-runtime.normalization.helpers.ts', /return quest\.targetMonsterId/, '任务目标不得回退 monsterId'],
-  ['packages/server/src/runtime/craft/technique-activity-task-view.helpers.ts', /normalizeText\(job\.outputItemId\)/, '技艺任务名称不得直接使用 outputItemId'],
   ['packages/server/src/persistence/player-domain-persistence.service.ts', /name:\s*name \?\? techId/, '待参悟功法恢复不得回退 techId'],
 ];
 
@@ -47,6 +46,14 @@ for (const [relativePath, pattern, message] of requiredPatterns) {
 
 for (const [relativePath, pattern, message] of forbiddenPatterns) {
   assert.doesNotMatch(read(relativePath), pattern, message);
+}
+
+// 道具 ID 可供圖片投影使用；玩家名稱的兩個解析入口仍禁止直接回傳內部 ID。
+const taskNameResolvers = read('packages/server/src/runtime/craft/technique-activity-task-view.helpers.ts')
+  .match(/function resolveJob(?:Target)?Label\([\s\S]*?(?=\nfunction |$)/g) ?? [];
+assert.equal(taskNameResolvers.length, 2, '必須檢查兩個技藝任務名稱解析入口');
+for (const source of taskNameResolvers) {
+  assert.doesNotMatch(source, /normalizeText\(job\.outputItemId\)/, '技藝任務名稱不得直接使用 outputItemId');
 }
 
 console.log(JSON.stringify({ ok: true, case: 'player-facing-name-boundaries' }, null, 2));

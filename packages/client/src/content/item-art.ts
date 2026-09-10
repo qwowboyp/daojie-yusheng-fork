@@ -1,7 +1,8 @@
 import { resolveItemTemplateAliasId } from '@mud/shared';
 import icons from '../constants/world/item-art.generated.json';
 
-export type ItemIconSize = 'cell' | 'list' | 'detail';
+export type ItemIconSize = 'inline' | 'cell' | 'list' | 'detail';
+export const ITEM_ICON_INLINE_SIZES = '(max-width: 768px) 20px, (pointer: coarse) and (max-width: 1024px) 20px, 24px';
 export const ITEM_ICON_LIST_SIZES = '(max-width: 768px) 40px, (pointer: coarse) and (max-width: 1024px) 40px, 48px';
 export const ITEM_ICON_DETAIL_SIZES = '(max-width: 768px) 64px, (pointer: coarse) and (max-width: 1024px) 64px, 80px';
 export interface ItemIconSources {
@@ -26,7 +27,7 @@ export function getItemIconSources(itemId: string): ItemIconSources | null {
 export function renderItemIcon(itemId: string, size: ItemIconSize = 'list'): string {
   const sources = getItemIconSources(itemId);
   if (!sources) return '';
-  const pixels = size === 'detail' ? 80 : 48;
-  const sizes = size === 'detail' ? ITEM_ICON_DETAIL_SIZES : ITEM_ICON_LIST_SIZES;
+  const pixels = size === 'detail' ? 80 : size === 'inline' ? 24 : 48;
+  const sizes = size === 'detail' ? ITEM_ICON_DETAIL_SIZES : size === 'inline' ? ITEM_ICON_INLINE_SIZES : ITEM_ICON_LIST_SIZES;
   return `<img class="item-art item-art--${size}" src="${sources.src}" srcset="${sources.srcSet}" sizes="${sizes}" width="${pixels}" height="${pixels}" alt="" aria-hidden="true" loading="lazy" decoding="async" draggable="false">`;
 }

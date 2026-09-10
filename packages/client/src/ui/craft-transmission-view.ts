@@ -42,6 +42,7 @@ import { confirmModalHost } from './confirm-modal-host';
 import { t } from './i18n';
 import { getItemDecorClassName, getItemDisplayMeta } from './item-display';
 import { AccessPolicyResourceEditor } from './access-policy-resource-editor';
+import { renderItemIcon } from '../content/item-art';
 import type { AccessPolicySocketClient } from './access-policy-socket-client';
 
 type TechniqueBookCraftGradeFilter = 'all' | TechniqueGrade;
@@ -1820,6 +1821,7 @@ export class CraftTransmissionView {
     const gradeLine = itemMeta.gradeLabel ?? getItemTypeLabel(item.type);
     return `
       <button class="${getItemDecorClassName(`inventory-cell${selected ? ' active' : ''}`, item)}" type="button" data-craft-action="technique-refining-toggle-book" data-item-instance-id="${escapeHtmlAttr(itemInstanceId)}" aria-label="選擇${escapeHtml(displayName)}">
+        ${renderItemIcon(item.itemId, 'cell')}
         <div class="inventory-cell-head">
           <span class="inventory-cell-type">功法書</span>
           <span class="inventory-cell-count">${escapeHtml(formatDisplayInteger(Math.max(1, Math.floor(Number(item.count) || 1))))}</span>

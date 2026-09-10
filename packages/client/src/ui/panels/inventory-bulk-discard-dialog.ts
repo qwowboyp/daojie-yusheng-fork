@@ -13,6 +13,7 @@ import { formatDisplayInteger } from '../../utils/number';
 import { detailModalHost } from '../detail-modal-host';
 import { t } from '../i18n';
 import { getItemDisplayMeta } from '../item-display';
+import { renderItemIcon } from '../../content/item-art';
 
 type BulkDiscardEntry = {
   item: ItemStack;
@@ -320,7 +321,7 @@ export class InventoryBulkDiscardDialogController {
   private renderRowContent(entry: BulkDiscardEntry): string {
     return `
       <span class="inventory-bulk-discard-info">
-        <span class="inventory-bulk-discard-name">${escapeHtml(entry.name)}</span>
+        <span class="inventory-bulk-discard-name item-art-reference">${renderItemIcon(entry.item.itemId)}<span>${escapeHtml(entry.name)}</span></span>
         <span class="inventory-bulk-discard-meta">
           <span>數量 ${formatDisplayInteger(Math.max(0, Math.floor(Number(entry.item.count) || 0)))}</span>
         </span>

@@ -13,6 +13,7 @@ import { preserveSelection } from '../selection-preserver';
 import { FloatingTooltip, prefersPinnedTooltipInteraction } from '../floating-tooltip';
 import { buildItemTooltipPayload } from '../equipment-tooltip';
 import { getItemDisplayMeta } from '../item-display';
+import { renderItemIcon } from '../../content/item-art';
 import {
   EQUIPMENT_PANEL_TAB_LABEL_KEYS,
   EQUIPMENT_PANEL_TABS,
@@ -426,7 +427,7 @@ export class EquipmentPanel {
       const hasItem = !!item;
       const itemName = item ? getItemDisplayMeta(item).displayItem.name : '';
       const metaText = item ? formatEquipmentSlotCompactMeta(item) : t('equipment.empty.slot-meta', undefined);
-      const signature = this.buildSlotSignature(slot, isVisible, hasItem, itemName, metaText);
+      const signature = this.buildSlotSignature(slot, isVisible, hasItem, item?.itemId ?? '', itemName, metaText);
       if (this.slotSignatures.get(slot) === signature) {
         continue;
       }
@@ -439,7 +440,7 @@ export class EquipmentPanel {
         delete slotView.root.dataset.equipTooltipSlot;
       }
       slotView.name.textContent = getEquipSlotLabel(slot);
-      slotView.item.textContent = itemName;
+      setItemReference(slotView.item, item?.itemId ?? '', itemName);
       slotView.item.hidden = !hasItem;
       slotView.empty.textContent = t('equipment.empty.slot-short', undefined);
       slotView.empty.hidden = hasItem;
@@ -554,7 +555,7 @@ export class EquipmentPanel {
     name.textContent = getEquipSlotLabel(slot);
 
     const item = document.createElement('span');
-    item.className = 'equip-slot-item';
+    item.className = 'equip-slot-item item-art-reference';
     item.hidden = true;
 
     const empty = document.createElement('span');
@@ -591,7 +592,7 @@ export class EquipmentPanel {
     head.className = 'artifact-slot-head';
 
     const name = document.createElement('span');
-    name.className = 'equip-slot-item artifact-slot-title is-empty-title';
+    name.className = 'equip-slot-item artifact-slot-title item-art-reference is-empty-title';
     name.textContent = t('equipment.artifact.locked', undefined);
 
     const stateBadge = document.createElement('span');
@@ -686,7 +687,7 @@ export class EquipmentPanel {
       const shortcutKey = this.artifactShortcutBindings.get(slot) ?? '';
       const shortcutLabel = this.getArtifactShortcutBindLabel(slot);
       const isBindingShortcut = this.bindingArtifactSlot === slot;
-      const signature = this.buildArtifactSlotSignature(slot, unlocked, enabled, hasItem, titleText, metaText, currentQi, maxQi, shortcutKey, isBindingShortcut);
+      const signature = this.buildArtifactSlotSignature(slot, unlocked, enabled, hasItem, item?.itemId ?? '', titleText, metaText, currentQi, maxQi, shortcutKey, isBindingShortcut);
       if (this.artifactSlotSignatures.get(slot) === signature) {
         continue;
       }
@@ -717,7 +718,7 @@ export class EquipmentPanel {
         slotView.root.removeAttribute('tabindex');
         slotView.root.removeAttribute('aria-pressed');
       }
-      slotView.name.textContent = titleText;
+      setItemReference(slotView.name, item?.itemId ?? '', titleText);
       slotView.name.classList.toggle('is-empty-title', !hasItem);
       slotView.name.querySelectorAll('.action-shortcut-tag').forEach((node) => node.remove());
       if (shortcutKey) {
@@ -749,8 +750,8 @@ export class EquipmentPanel {
   }
 
   /** buildSlotSignature：生成槽位当前展示所需的稳定签名。 */
-  private buildSlotSignature(slot: EquipSlot, isVisible: boolean, hasItem: boolean, itemName: string, metaText: string): string {
-    return [slot, isVisible ? 'visible' : 'hidden', hasItem ? 'equipped' : 'empty', itemName, metaText].join('|');
+  private buildSlotSignature(slot: EquipSlot, isVisible: boolean, hasItem: boolean, itemId: string, itemName: string, metaText: string): string {
+    return [slot, isVisible ? 'visible' : 'hidden', hasItem ? 'equipped' : 'empty', itemId, itemName, metaText].join('|');
   }
 
   /** buildArtifactSlotSignature：生成法宝槽展示签名。 */
@@ -759,6 +760,7 @@ export class EquipmentPanel {
     unlocked: boolean,
     enabled: boolean,
     hasItem: boolean,
+    itemId: string,
     titleText: string,
     metaText: string,
     currentQi: number,
@@ -771,6 +773,7 @@ export class EquipmentPanel {
       unlocked ? 'unlocked' : 'locked',
       enabled ? 'enabled' : 'disabled',
       hasItem ? 'equipped' : 'empty',
+      itemId,
       titleText,
       metaText,
       currentQi,
@@ -1013,4 +1016,10 @@ export class EquipmentPanel {
     `;
     document.head.appendChild(style);
   }
+}
+
+function setItemReference(target: HTMLElement, itemId: string, name: string): void {
+  const template = document.createElement('template');
+  template.innerHTML = renderItemIcon(itemId);
+  target.replaceChildren(template.content.cloneNode(true), document.createTextNode(name));
 }

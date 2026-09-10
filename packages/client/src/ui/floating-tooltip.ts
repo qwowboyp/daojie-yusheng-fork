@@ -8,6 +8,7 @@
  * 跟随鼠标显示标题、多行文本及可选的侧栏卡片
  */
 
+import { renderItemIcon } from '../content/item-art';
 import {
   clientToViewportPoint,
   getResponsiveViewportMetrics,
@@ -114,7 +115,8 @@ interface FloatingTooltipShowOptions {
  * asideCards：asideCard相关字段。
  */
 
-  asideCards?: Array<{  
+  asideCards?: Array<{
+    itemId?: string;
   /**
  * mark：mark相关字段。
  */
@@ -260,6 +262,7 @@ export class FloatingTooltip {
             ${card.mark ? `<span class="floating-tooltip-aside-mark">${escapeHtml(card.mark)}</span>` : ''}
             <strong>${escapeHtml(card.title)}</strong>
           </div>
+          ${card.itemId ? renderItemIcon(card.itemId) : ''}
           ${detail ? `<div class="floating-tooltip-aside-detail">${detail}</div>` : ''}
         </div>`;
       }).join('')}</div>`

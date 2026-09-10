@@ -41,6 +41,7 @@ import { describePreviewBonuses } from './stat-preview';
 import { formatDisplayInteger, formatDisplayNumber, formatDisplayPercent } from '../utils/number';
 import { t } from './i18n';
 import { buildTechniqueBookTooltipContent } from './technique-book-detail';
+import { renderItemIcon } from '../content/item-art';
 
 /** escapeHtml：转义 HTML 文本中的危险字符。 */
 function escapeHtml(value: string): string {
@@ -767,6 +768,7 @@ function buildEquipmentComparisonAsideCard(item: ItemStack, playerRealmLv?: numb
   const effectLines = (enhancedPreviewItem.effects ?? []).flatMap((effect) => buildPlainEffectSummary(effect));
   return {
     mark: t('equipment-tooltip.equipped.mark', undefined),
+    itemId: previewItem.itemId,
     title: t('equipment-tooltip.equipped.title', undefined),
     lines: [
       enhancedPreviewItem.name,
@@ -799,6 +801,7 @@ export function buildItemTooltipPayload(item: ItemStack, context?: ItemTooltipCo
       ? describeMaterialValueDetails(previewItem)
       : [];
     const lines = [
+      renderItemIcon(previewItem.itemId),
       ...(previewItem.type === 'skill_book'
         ? []
         : [`<span class="skill-tooltip-desc">${escapeHtml(previewItem.desc ?? '')}</span>`]),
@@ -823,6 +826,7 @@ export function buildItemTooltipPayload(item: ItemStack, context?: ItemTooltipCo
   const attributeBlock = renderEquipmentAttributeBlock(previewItem, context?.playerRealmLv);
   const effectSummaries = (enhancedPreviewItem.effects ?? []).map((effect) => buildEffectSummary(effect));
   const lines: string[] = [
+    renderItemIcon(previewItem.itemId),
     `<span class="skill-tooltip-desc">${escapeHtml(enhancedPreviewItem.desc ?? '')}</span>`,
     renderPlainLine(t('equipment-tooltip.label.type', undefined), getItemTypeLabel(enhancedPreviewItem.type)),
     ...(enhancedPreviewItem.equipSlot ? [renderPlainLine(t('equipment-tooltip.label.slot', undefined), getEquipSlotLabel(enhancedPreviewItem.equipSlot))] : []),

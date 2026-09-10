@@ -12,6 +12,7 @@ import { formatDisplayCountBadge, formatDisplayInteger } from '../utils/number';
 import { detailModalHost } from './detail-modal-host';
 import { confirmModalHost } from './confirm-modal-host';
 import { resolveTechniqueIdFromBookItemId } from '../content/local-templates';
+import { renderItemIcon } from '../content/item-art';
 import { t } from './i18n';
 import { renderTradeQuantityControl } from './trade-control-renderers';
 
@@ -435,7 +436,7 @@ export class NpcShopModal {
     name.dataset.npcShopItemNameWrap = 'true';
 
     const nameText = document.createElement('span');
-    nameText.className = 'market-item-cell-name-text market-item-title--interactive';
+    nameText.className = 'market-item-cell-name-text market-item-title--interactive item-art-reference';
     nameText.dataset.npcShopItemTooltip = '';
 
     const owned = document.createElement('span');
@@ -494,7 +495,7 @@ export class NpcShopModal {
     button.classList.toggle('market-item-cell--status-learned', status?.kind === 'learned');
     button.classList.toggle('market-item-cell--status-unlocked', status?.kind === 'unlocked');
     nameWrap.setAttribute('aria-label', item.item.name);
-    nameText.textContent = item.item.name;
+    nameText.innerHTML = `${renderItemIcon(item.itemId)}<span>${escapeHtml(item.item.name)}</span>`;
     nameText.dataset.npcShopItemTooltip = item.itemId;
     ownedNode.textContent = ownedCount > 0 ? formatDisplayCountBadge(ownedCount) : '';
     ownedNode.classList.toggle('hidden', ownedCount <= 0);
@@ -726,7 +727,7 @@ export class NpcShopModal {
     return `
       <div class="market-book-header">
         <div>
-          <div class="market-item-title market-item-title--interactive" data-npc-shop-item-tooltip="${escapeHtmlAttr(selectedItem.itemId)}">${escapeHtml(selectedItem.item.name)}</div>
+          <div class="market-item-title market-item-title--interactive item-art-reference" data-npc-shop-item-tooltip="${escapeHtmlAttr(selectedItem.itemId)}">${renderItemIcon(selectedItem.itemId, 'detail')}<span>${escapeHtml(selectedItem.item.name)}</span></div>
           <div class="market-book-subtitle">${escapeHtml(getItemTypeLabel(selectedItem.item.type))} · ${escapeHtml(selectedItem.item.desc)}</div>
         </div>
       </div>

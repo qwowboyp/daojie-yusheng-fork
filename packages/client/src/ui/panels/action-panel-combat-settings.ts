@@ -24,6 +24,7 @@ import { detailModalHost } from '../detail-modal-host';
 import { t } from '../i18n';
 import { buildItemTooltipPayload } from '../equipment-tooltip';
 import { getLocalItemTemplate, resolvePreviewItem } from '../../content/local-templates';
+import { renderItemIcon } from '../../content/item-art';
 import { formatDisplayNumber } from '../../utils/number';
 import { escapeHtml, isAutoUseConsumableCandidate, isRecord } from './action-panel-helpers';
 import type { ActionPanel } from './action-panel';
@@ -727,7 +728,7 @@ export class CombatSettingsSubpanel {
             type="button"
           >
             ${slotEntry
-              ? `<span class="auto-pill-slot-name">${escapeHtml(slotEntry.name)}</span>
+              ? `${renderItemIcon(slotEntry.itemId)}<span class="auto-pill-slot-name">${escapeHtml(slotEntry.name)}</span>
                 <span class="auto-pill-slot-count">${slotEntry.count > 0 ? slotEntry.count : '-'}</span>`
               : `<span class="auto-pill-slot-empty">+</span>
                 <span class="auto-pill-slot-label">${t('action.combat-settings.auto-pills.slot.empty', undefined)}</span>`}
@@ -752,7 +753,7 @@ export class CombatSettingsSubpanel {
               data-auto-pill-pick="${escapeHtml(entry.itemId)}"
               type="button"
             >
-              <span class="auto-pill-picker-title">${escapeHtml(entry.name)}</span>
+              <span class="auto-pill-picker-title item-art-reference">${renderItemIcon(entry.itemId)}<span>${escapeHtml(entry.name)}</span></span>
               <span class="auto-pill-picker-count">${entry.count > 0 ? entry.count : '-'}</span>
               <span class="auto-pill-picker-meta">${escapeHtml(this.renderAutoUsePillEffectSummary(entry))}</span>
             </button>
@@ -762,7 +763,7 @@ export class CombatSettingsSubpanel {
       ? `<div class="auto-pill-condition-editor">
           <div class="auto-pill-condition-summary-card">
             <div class="auto-pill-card-title-row">
-              <div class="auto-pill-card-title">${escapeHtml(currentEntry.name)}</div>
+              <div class="auto-pill-card-title item-art-reference">${renderItemIcon(currentEntry.itemId)}<span>${escapeHtml(currentEntry.name)}</span></div>
               <span class="auto-pill-card-count">${currentEntry.count > 0 ? currentEntry.count : '-'}</span>
             </div>
             <div class="auto-pill-card-meta">${escapeHtml(this.renderAutoUsePillEffectSummary(currentEntry))}</div>

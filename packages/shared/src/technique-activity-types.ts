@@ -81,6 +81,8 @@ export interface TechniqueActivityTaskView {
   id: string;
   kind: TechniqueActivityTaskKind;
   label: string;
+  /** 任務目標道具的穩定內容 ID；僅道具型技藝任務提供。 */
+  itemId?: string;
   targetLabel?: string;
   state: TechniqueActivityTaskState;
   workTotalTicks?: number;

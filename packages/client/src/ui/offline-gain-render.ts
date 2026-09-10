@@ -5,6 +5,7 @@
  */
 import { resolvePlayerFacingContentName, type OfflineGainReportView } from '@mud/shared';
 import { formatDisplayInteger } from '../utils/number';
+import { renderItemIcon } from '../content/item-art';
 
 export function renderOfflineGainReports(reports: readonly OfflineGainReportView[]): string {
   return `
@@ -114,7 +115,7 @@ function renderSpiritStoneSection(report: OfflineGainReportView): string {
     '靈石收支',
     [`
       <div class="offline-gain-row">
-        <span>靈石</span>
+        <span class="item-art-reference">${renderItemIcon('spirit_stone')}<span>靈石</span></span>
         <strong>${escapeHtml(formatSignedAmount(spiritStones.gained, spiritStones.lost))}</strong>
       </div>
     `],
@@ -185,7 +186,7 @@ function renderItemSection(report: OfflineGainReportView): string {
     '物品收支',
     report.items.map((entry) => `
       <div class="offline-gain-row">
-        <span>${escapeHtml(resolvePlayerFacingContentName(entry.itemId, '未知物品', entry.name))}</span>
+        <span class="item-art-reference">${renderItemIcon(entry.itemId)}<span>${escapeHtml(resolvePlayerFacingContentName(entry.itemId, '未知物品', entry.name))}</span></span>
         <strong>${escapeHtml(formatSignedAmount(entry.gained ?? 0, entry.lost ?? 0))}</strong>
       </div>
     `),

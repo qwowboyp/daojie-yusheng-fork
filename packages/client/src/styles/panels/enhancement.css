@@ -342,11 +342,18 @@
       padding-right: 2px;
     }
 
-    .enhancement-picker-cell {
+.enhancement-picker-cell {
       min-height: 116px;
       gap: 8px;
       padding-bottom: 12px;
-    }
+}
+
+.enhancement-picker-cell .inventory-cell-name.item-art-reference {
+  display: flex;
+  min-height: 48px;
+  max-height: none;
+  overflow: visible;
+}
 
     .enhancement-picker-cell.active {
       border-color: var(--ink-black);
@@ -989,7 +996,9 @@
       color: rgba(248, 238, 219, 0.92);
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 720px), (pointer: coarse) and (max-width: 1024px) {
+      .craft-workbench-content .enhancement-layout,
+      .craft-workbench-content .enhancement-layout--single-slot,
       .enhancement-layout,
       .enhancement-layout--single-slot,
       .enhancement-workbench-grid,

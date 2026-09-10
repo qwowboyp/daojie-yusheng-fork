@@ -24,11 +24,13 @@ function main(): void {
         kind: 'forging',
         label: '青铜剑',
         createdAt: 1,
+        payload: { recipeId: 'forging.legacy' },
       }],
     },
     enhancementJob: {
       jobRunId: 'job:enhancement:1',
       jobType: 'enhancement',
+      targetItemId: 'weapon.trial-sword',
       targetItemName: '试炼剑',
       phase: 'enhancing',
       totalTicks: 50,
@@ -66,25 +68,56 @@ function main(): void {
         startedAtTick: 125,
       },
     },
-    techniqueActivityQueue: [{
-      queueId: 'queue:formation:1',
-      kind: 'formation',
-      payload: { formationInstanceId: 'formation:1' },
-      label: '维护聚灵阵',
-      targetLabel: '聚灵阵',
-      state: 'sleeping',
-      sleepReason: '不在控制点范围内',
-      createdAt: 2,
-    }],
-  }, 123, (itemId) => itemId === 'pill.qi' ? '聚气丹' : null);
+    techniqueActivityQueue: [
+      {
+        queueId: 'queue:formation:1',
+        kind: 'formation',
+        payload: { formationInstanceId: 'formation:1' },
+        label: '维护聚灵阵',
+        targetLabel: '聚灵阵',
+        state: 'sleeping',
+        sleepReason: '不在控制点范围内',
+        createdAt: 2,
+      },
+      {
+        queueId: 'queue:alchemy:sleeping',
+        kind: 'alchemy',
+        payload: { recipeId: 'alchemy.queued' },
+        label: '待煉聚氣丹',
+        state: 'sleeping',
+        createdAt: 3,
+      },
+      {
+        queueId: 'queue:enhancement:pending',
+        kind: 'enhancement',
+        payload: { targetItemId: 'weapon.queued-sword' },
+        label: '待強化劍',
+        state: 'pending',
+        createdAt: 4,
+      },
+      {
+        queueId: 'queue:forging:legacy-payload',
+        kind: 'forging',
+        payload: { recipeId: 'forging.legacy-without-output-id' },
+        label: '舊煉器任務',
+        state: 'pending',
+        createdAt: 5,
+      },
+    ],
+  }, 123, (itemId) => itemId === 'pill.qi' ? '聚气丹' : null, (kind, recipeId) => {
+    if (kind === 'alchemy' && recipeId === 'alchemy.queued') return 'pill.queued';
+    if (kind === 'forging' && recipeId === 'forging.legacy') return 'weapon.bronze-sword';
+    return undefined;
+  });
 
   assert.equal(view.serverTick, 123);
-  assert.equal(view.tasks.length, 6);
+  assert.equal(view.tasks.length, 9);
 
   const alchemy = view.tasks.find((task) => task.kind === 'alchemy');
   assert.equal(alchemy?.state, 'interrupt_wait');
   assert.equal(alchemy?.label, '聚气丹');
   assert.equal(alchemy?.targetLabel, '聚气丹');
+  assert.equal(alchemy?.itemId, 'pill.qi');
   assert.equal(alchemy?.workRemainingTicks, 70);
   assert.equal(alchemy?.interruptWaitRemainingTicks, 10);
   assert.deepEqual(alchemy?.cancelRef, { kind: 'alchemy', jobRunId: 'job:alchemy:1' });
@@ -92,6 +125,7 @@ function main(): void {
   const enhancement = view.tasks.find((task) => task.kind === 'enhancement');
   assert.equal(enhancement?.state, 'running');
   assert.equal(enhancement?.targetLabel, '试炼剑');
+  assert.equal(enhancement?.itemId, 'weapon.trial-sword');
   assert.equal(enhancement?.workRemainingTicks, 25);
 
   const mining = view.tasks.find((task) => task.kind === 'mining');
@@ -103,11 +137,23 @@ function main(): void {
   const legacyQueue = view.tasks.find((task) => task.cancelRef.queueId === 'legacy-queue:forging:1');
   assert.equal(legacyQueue?.state, 'queued');
   assert.equal(legacyQueue?.label, '青铜剑');
+  assert.equal(legacyQueue?.itemId, 'weapon.bronze-sword');
 
   const formationQueue = view.tasks.find((task) => task.cancelRef.queueId === 'queue:formation:1');
   assert.equal(formationQueue?.state, 'sleeping');
   assert.equal(formationQueue?.targetLabel, '聚灵阵');
   assert.equal(formationQueue?.sleepReason, '不在控制点范围内');
+
+  const sleepingAlchemyQueue = view.tasks.find((task) => task.cancelRef.queueId === 'queue:alchemy:sleeping');
+  assert.equal(sleepingAlchemyQueue?.state, 'sleeping');
+  assert.equal(sleepingAlchemyQueue?.itemId, 'pill.queued');
+
+  const pendingEnhancementQueue = view.tasks.find((task) => task.cancelRef.queueId === 'queue:enhancement:pending');
+  assert.equal(pendingEnhancementQueue?.state, 'queued');
+  assert.equal(pendingEnhancementQueue?.itemId, 'weapon.queued-sword');
+
+  const legacyPayloadQueue = view.tasks.find((task) => task.cancelRef.queueId === 'queue:forging:legacy-payload');
+  assert.equal(legacyPayloadQueue?.itemId, undefined);
 
   const transmission = view.tasks.find((task) => task.kind === 'transmission');
   assert.equal(transmission?.kind, 'transmission');

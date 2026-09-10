@@ -204,6 +204,8 @@ type ResolvedBuffMeta = {
 
 /** SkillTooltipAsideCard：技能提示侧栏卡片。 */
 export interface SkillTooltipAsideCard {
+  /** 道具對照卡使用內容 ID；其他技能、效果卡不提供。 */
+  itemId?: string;
 /**
  * mark：mark相关字段。
  */

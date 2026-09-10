@@ -8,6 +8,7 @@ import { ArtifactSlot, EquipmentSlots, EquipSlot, PlayerState } from '@mud/share
 import { getEquipSlotLabel } from '../../../domain-labels';
 import { buildItemTooltipPayload } from '../../../ui/equipment-tooltip';
 import { getItemDisplayMeta } from '../../../ui/item-display';
+import { getItemIconSources, ITEM_ICON_LIST_SIZES } from '../../../content/item-art';
 import {
   EQUIPMENT_PANEL_TAB_LABEL_KEYS,
   EQUIPMENT_PANEL_TABS,
@@ -271,6 +272,7 @@ const EquipmentSlotRow = memo(function EquipmentSlotRow({
 }) {
   const hasItem = !!item;
   const itemName = item ? getItemDisplayMeta(item).displayItem.name : '';
+  const icon = item ? getItemIconSources(item.itemId) : null;
   const metaText = item ? formatEquipmentSlotCompactMeta(item) : t('equipment.empty.slot-meta');
 
   return (
@@ -280,7 +282,10 @@ const EquipmentSlotRow = memo(function EquipmentSlotRow({
     >
       <div className="equip-copy">
         <span className="equip-slot-name">{getEquipSlotLabel(slot)}</span>
-        {hasItem && <span className="equip-slot-item">{itemName}</span>}
+        {hasItem && <span className="equip-slot-item item-art-reference">
+          {icon && <img className="item-art item-art--list" src={icon.src} srcSet={icon.srcSet} sizes={ITEM_ICON_LIST_SIZES} width={48} height={48} alt="" aria-hidden="true" loading="lazy" decoding="async" draggable={false} />}
+          <span>{itemName}</span>
+        </span>}
         {!hasItem && <span className="equip-slot-empty">{t('equipment.empty.slot-short')}</span>}
         <span className="equip-slot-meta">{metaText}</span>
       </div>
@@ -318,6 +323,7 @@ const ArtifactSlotRow = memo(function ArtifactSlotRow({
 }) {
   const hasItem = !!entry.item;
   const itemName = entry.item ? getItemDisplayMeta(entry.item).displayItem.name : '';
+  const icon = entry.item ? getItemIconSources(entry.item.itemId) : null;
   const currentQi = Math.max(0, Math.floor(Number(entry.qi) || 0));
   const maxQi = Math.max(0, Math.floor(Number(entry.maxQi) || 0));
   const qiText = formatArtifactQiText(currentQi, maxQi);
@@ -377,7 +383,8 @@ const ArtifactSlotRow = memo(function ArtifactSlotRow({
     >
       <div className="equip-copy artifact-copy">
         <div className="artifact-slot-head">
-          <span className={`equip-slot-item artifact-slot-title${hasItem ? '' : ' is-empty-title'}`}>
+          <span className={`equip-slot-item artifact-slot-title${hasItem ? ' item-art-reference' : ' is-empty-title'}`}>
+            {icon && <img className="item-art item-art--list" src={icon.src} srcSet={icon.srcSet} sizes={ITEM_ICON_LIST_SIZES} width={48} height={48} alt="" aria-hidden="true" loading="lazy" decoding="async" draggable={false} />}
             {titleText}
             {shortcutKey && <span className="action-shortcut-tag">{t('action.shortcut.badge', { key: shortcutKey.toUpperCase() })}</span>}
           </span>

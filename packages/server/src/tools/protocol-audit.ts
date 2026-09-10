@@ -2045,7 +2045,7 @@ async function playerControlCase(runtime) {
   var worldDeltaAfter = socket.getEventCount(S2C.WorldDelta);
   socket.emit(C2S.HeavenGateAction, { action: "open" });
   await waitForEventBusNotice(socket, worldDeltaAfter, function (item) {
-    return item?.text === "当前境界不可开天门";
+    return item?.structured?.key === "notice.heaven-gate.realm-invalid";
   }, 10000);
 }
 /**

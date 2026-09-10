@@ -22,6 +22,7 @@ import {
   resolvePlayerFacingContentName,
 } from '@mud/shared';
 import { getLocalItemTemplate } from '../content/local-templates';
+import { renderItemIcon } from '../content/item-art';
 import { getEquipSlotLabel, getItemTypeLabel } from '../domain-labels';
 import { formatDisplayInteger, formatDisplayPercent } from '../utils/number';
 import { confirmModalHost } from './confirm-modal-host';
@@ -638,7 +639,7 @@ export class CraftEnhancementView {
           <button class="enhancement-target-slot" type="button" data-enhancement-open-picker="1">
             ${selectedItem
               ? `
-                <span class="enhancement-target-slot-name">${escapeHtml(selectedItem.name ?? UNKNOWN_ITEM_NAME)}</span>
+                <span class="enhancement-target-slot-name item-art-reference">${renderItemIcon(selectedItem.itemId)}<span>${escapeHtml(selectedItem.name ?? UNKNOWN_ITEM_NAME)}</span></span>
                 <span class="enhancement-target-slot-meta">等級 ${formatDisplayInteger(Number(selectedItem.level) || 1)} · 當前 +${formatDisplayInteger(normalizeEnhanceLevel(selectedItem.enhanceLevel))}</span>
               `
               : `
@@ -668,7 +669,7 @@ export class CraftEnhancementView {
             <button class="enhancement-target-slot" type="button" data-enhancement-open-picker="1">
               ${selectedItem
                 ? `
-                  <span class="enhancement-target-slot-action">點擊更換這個目標</span>
+                  <span class="enhancement-target-slot-action item-art-reference">${renderItemIcon(selectedItem.itemId)}<span>點擊更換這個目標</span></span>
                   <span class="enhancement-target-slot-meta">候選目標會在獨立彈窗中選擇；強化開始後本次目標會鎖定。</span>
                 `
                 : `
@@ -774,7 +775,7 @@ export class CraftEnhancementView {
               return `
                 <label class="enhancement-protection-option">
                   <input type="radio" name="enhancement-protection" value="${escapeHtml(key)}" ${this.parent.selectedEnhancementProtectionKey === key ? 'checked' : ''}>
-                  <span>${escapeHtml(displayName)}</span>
+                  <span class="item-art-reference">${renderItemIcon(entry.item.itemId)}<span>${escapeHtml(displayName)}</span></span>
                   <em>${escapeHtml(sourceLabel)}</em>
                 </label>
               `;
@@ -825,7 +826,7 @@ export class CraftEnhancementView {
           <div class="enhancement-summary-card">
             <div class="enhancement-summary-head">
               <div>
-                <div class="enhancement-summary-title">${escapeHtml(getEnhancementDisplayName(selected.item))}</div>
+                <div class="enhancement-summary-title item-art-reference">${renderItemIcon(selected.item.itemId, 'detail')}<span>${escapeHtml(getEnhancementDisplayName(selected.item))}</span></div>
                 <div class="enhancement-summary-subtitle">當前 +${formatDisplayInteger(selected.currentLevel)} · 最終目標 +${formatDisplayInteger(selectedTargetLevel)}</div>
               </div>
               <div class="enhancement-summary-rate">首階 ${formatEnhancementPercent(selected.successRate)}</div>
@@ -839,14 +840,14 @@ export class CraftEnhancementView {
           <div class="enhancement-requirement-card">
             <div class="enhancement-section-title">強化材料</div>
             <div class="enhancement-material-row">
-              <span>靈石</span>
+              <span class="item-art-reference">${renderItemIcon('spirit_stone')}<span>靈石</span></span>
               <strong>${formatDisplayInteger(selected.spiritStoneCost)}</strong>
               <span class="enhancement-material-owned">持有 ${formatDisplayInteger(this.getAlchemyInventoryCount('spirit_stone'))}</span>
             </div>
             ${selected.materials.length > 0
               ? selected.materials.map((entry) => `
                 <div class="enhancement-material-row">
-                  <span>${escapeHtml(entry.name)}</span>
+                  <span class="item-art-reference">${renderItemIcon(entry.itemId)}<span>${escapeHtml(entry.name)}</span></span>
                   <strong>${formatDisplayInteger(entry.count)}</strong>
                   <span class="enhancement-material-owned">持有 ${formatDisplayInteger(entry.ownedCount)}</span>
                 </div>
@@ -926,7 +927,7 @@ export class CraftEnhancementView {
           <div class="enhancement-summary-card enhancement-summary-card--running">
             <div class="enhancement-summary-head">
               <div>
-                <div class="enhancement-summary-title">${escapeHtml(displayTargetName)}</div>
+                <div class="enhancement-summary-title item-art-reference">${renderItemIcon(job.targetItemId, 'detail')}<span>${escapeHtml(displayTargetName)}</span></div>
                 <div class="enhancement-summary-subtitle">進行中：+${formatDisplayInteger(job.currentLevel)} → +${formatDisplayInteger(job.targetLevel)}${finalTargetLevel > job.targetLevel ? ` · 最終目標 +${formatDisplayInteger(finalTargetLevel)}` : ''}</div>
               </div>
               <div class="enhancement-summary-rate">${formatEnhancementPercent(job.successRate)}</div>
@@ -958,14 +959,14 @@ export class CraftEnhancementView {
           <div class="enhancement-requirement-card">
             <div class="enhancement-section-title">本次已投入</div>
             <div class="enhancement-material-row">
-              <span>靈石</span>
+              <span class="item-art-reference">${renderItemIcon('spirit_stone')}<span>靈石</span></span>
               <strong>${formatDisplayInteger(job.spiritStoneCost)}</strong>
               <span class="enhancement-material-owned">角色強化等級 Lv.${formatDisplayInteger(job.roleEnhancementLevel)} · 總加速 ${formatEnhancementPercent(job.totalSpeedRate)}</span>
             </div>
             ${job.materials.length > 0
               ? job.materials.map((entry) => `
                 <div class="enhancement-material-row">
-                  <span>${escapeHtml(getLocalItemTemplate(entry.itemId)?.name ?? UNKNOWN_ITEM_NAME)}</span>
+                  <span class="item-art-reference">${renderItemIcon(entry.itemId)}<span>${escapeHtml(getLocalItemTemplate(entry.itemId)?.name ?? UNKNOWN_ITEM_NAME)}</span></span>
                   <strong>${formatDisplayInteger(entry.count)}</strong>
                   <span class="enhancement-material-owned">已投入</span>
                 </div>
@@ -1524,7 +1525,7 @@ export class CraftEnhancementView {
                     <span class="inventory-cell-type">${escapeHtml(getItemAffixTypeLabel(itemMeta.displayItem, itemTypeLabel))}</span>
                     <span class="inventory-cell-count">x${formatDisplayInteger(entry.item.count ?? 1)}</span>
                   </div>
-                  <div class="inventory-cell-name ${nameClass}">${escapeHtml(displayName)}</div>
+                  <div class="inventory-cell-name item-art-reference ${nameClass}">${renderItemIcon(entry.item.itemId)}<span>${escapeHtml(displayName)}</span></div>
                   <div class="enhancement-picker-cell-meta">
                     <span>${escapeHtml(sourceLabel)}</span>
                     <span>+${formatDisplayInteger(entry.currentLevel)} → +${formatDisplayInteger(entry.nextLevel)} · ${formatDisplayInteger(entry.durationTicks)} 息</span>
@@ -1604,7 +1605,7 @@ export class CraftEnhancementView {
             const itemName = this.getEnhancementHistoryItemName(record.itemId, record);
             const itemLevel = this.getEnhancementHistoryItemLevel(record.itemId);
             const attemptCount = this.getEnhancementHistoryAttemptCount(record);
-            return `<button class="enhancement-history-entry" type="button" data-enhancement-history-item="${escapeHtml(record.itemId)}"><span class="enhancement-history-entry-title">${escapeHtml(itemName)}</span><span class="enhancement-history-entry-meta">${escapeHtml(t('craft.workbench.enhancement.history.list.entry-meta', { level: formatDisplayInteger(itemLevel), highestLevel: formatDisplayInteger(record.highestLevel), attemptCount: formatDisplayInteger(attemptCount) }))}</span></button>`;
+            return `<button class="enhancement-history-entry" type="button" data-enhancement-history-item="${escapeHtml(record.itemId)}"><span class="enhancement-history-entry-title item-art-reference">${renderItemIcon(record.itemId)}<span>${escapeHtml(itemName)}</span></span><span class="enhancement-history-entry-meta">${escapeHtml(t('craft.workbench.enhancement.history.list.entry-meta', { level: formatDisplayInteger(itemLevel), highestLevel: formatDisplayInteger(record.highestLevel), attemptCount: formatDisplayInteger(attemptCount) }))}</span></button>`;
           }).join('')}</div>`
         : `<div class="enhancement-empty-state enhancement-empty-state--picker">${escapeHtml(t('craft.workbench.enhancement.history.list.empty'))}</div>`,
     });
@@ -1632,7 +1633,7 @@ export class CraftEnhancementView {
       cancelLabel: t('craft.workbench.modal.back'),
       onClose: () => { this.openEnhancementHistoryListModal(); },
       bodyHtml: sessions.length > 0
-        ? `<div class="enhancement-history-list-modal enhancement-history-list-modal--sessions">${sessions.map((record) => {
+        ? `<div class="enhancement-history-list-modal enhancement-history-list-modal--sessions"><div class="item-art-reference">${renderItemIcon(itemId, 'detail')}<span>${escapeHtml(itemName)}</span></div>${sessions.map((record) => {
             const startedAtLabel = t('craft.workbench.enhancement.history.session.started-at', { startedAt: formatHistoryDateTime(record.actionStartedAt) });
             const endedAtLabel = record.actionEndedAt ? t('craft.workbench.enhancement.history.session.ended-at', { endedAt: formatHistoryDateTime(record.actionEndedAt) }) : t('craft.workbench.enhancement.history.session.ended-at-empty');
             const attemptCount = this.getEnhancementHistoryAttemptCount(record);
@@ -1681,6 +1682,7 @@ export class CraftEnhancementView {
       onClose: () => { this.openEnhancementHistorySessionModal(itemId); },
       bodyHtml: `
         <div class="enhancement-history-detail">
+          <div class="item-art-reference">${renderItemIcon(itemId, 'detail')}<span>${escapeHtml(itemName)}</span></div>
           <div class="enhancement-history-detail-note">${escapeHtml(t('craft.workbench.enhancement.history.detail.summary', { sessionSummary: this.getEnhancementHistorySessionTargetSummary(detailRecord), highestLevel: formatDisplayInteger(detailRecord.highestLevel), status: this.getEnhancementHistorySessionStatusLabel(detailRecord), endedAt: endedAtText, protection: protectionText }))}</div>
           <div class="enhancement-history-detail-note">${escapeHtml(t('craft.workbench.enhancement.history.detail.note', { level: formatDisplayInteger(roleEnhancementLevel) }))}</div>
           <div class="enhancement-history-table enhancement-history-table--modal">

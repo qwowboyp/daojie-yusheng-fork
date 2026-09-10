@@ -18,6 +18,7 @@ import {
 } from '../../content/local-templates';
 import { formatDisplayCountBadge, formatDisplayInteger } from '../../utils/number';
 import { detailModalHost } from '../detail-modal-host';
+import { renderItemIcon } from '../../content/item-art';
 import { t } from '../i18n';
 import { getItemDisplayMeta } from '../item-display';
 import {
@@ -145,7 +146,10 @@ export class InventoryItemActionDialogController {
         count: formatDisplayCountBadge(selectedCount),
       }),
       hint: t('common.modal.click-blank-cancel', undefined),
-      renderBody: (body) => this.renderDestroyConfirmBody(body),
+      renderBody: (body) => {
+        this.renderDestroyConfirmBody(body);
+        body.insertAdjacentHTML('afterbegin', renderItemIcon(item.itemId, 'detail'));
+      },
       onClose: () => this.handleHostClose(),
       onAfterRender: (body, signal) => {
         body.querySelector<HTMLElement>('[data-inventory-destroy-back]')?.addEventListener('click', (event) => {
@@ -179,7 +183,10 @@ export class InventoryItemActionDialogController {
         count: formatDisplayCountBadge(1),
       }),
       hint: t('common.modal.click-blank-cancel', undefined),
-      renderBody: (body) => this.renderSpecialUseConfirmBody(body, summary),
+      renderBody: (body) => {
+        this.renderSpecialUseConfirmBody(body, summary);
+        body.insertAdjacentHTML('afterbegin', renderItemIcon(item.itemId, 'detail'));
+      },
       onClose: () => this.handleHostClose(),
       onAfterRender: (body, signal) => {
         body.querySelector<HTMLElement>('[data-inventory-action-cancel]')?.addEventListener('click', (event) => {
@@ -216,7 +223,10 @@ export class InventoryItemActionDialogController {
         count: formatDisplayInteger(maxCount),
       }),
       hint: t('common.modal.click-blank-cancel', undefined),
-      renderBody: (body) => this.renderActionDialogBody(body, labels, dialog.countDraft, halfCount, maxCount),
+      renderBody: (body) => {
+        this.renderActionDialogBody(body, labels, dialog.countDraft, halfCount, maxCount);
+        body.insertAdjacentHTML('afterbegin', renderItemIcon(item.itemId, 'detail'));
+      },
       onClose: () => this.handleHostClose(),
       onAfterRender: (body, signal) => this.bindCountSelectionActions(body, signal, item, dialog.kind),
     });

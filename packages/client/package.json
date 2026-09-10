@@ -52,6 +52,10 @@
     "proof:technique-image-vfx": "node ./scripts/prove-technique-image-vfx.mjs",
     "proof:description-art-assets": "node ./scripts/check-description-art-assets.mjs",
     "proof:item-icon-surfaces": "node ./scripts/prove-item-icon-surfaces.mjs",
+    "proof:craft-item-icons": "node ./scripts/prove-craft-item-icons.mjs",
+    "proof:vault-building-item-icons": "node ./scripts/prove-vault-building-item-icons.mjs",
+    "proof:secondary-item-icons": "node ./scripts/prove-secondary-item-icons.mjs",
+    "proof:item-reference-dialogs": "node ./scripts/prove-item-reference-dialogs.mjs",
     "proof:building-art-contract": "node ./scripts/prove-building-art-contract.mjs",
     "proof:building-art-browser": "node ./scripts/prove-building-art-browser.mjs"
   },

@@ -9,6 +9,7 @@
  */
 import { getItemDisplayName, LootWindowState } from '@mud/shared';
 import { getTechniqueGradeLabel } from '../../domain-labels';
+import { renderItemIcon } from '../../content/item-art';
 import { detailModalHost } from '../detail-modal-host';
 import { formatDisplayCountBadge, formatDisplayInteger } from '../../utils/number';
 import { t } from '../i18n';
@@ -512,7 +513,8 @@ export class LootPanel {
         createElement('span', 'inventory-cell-type', isHerb ? t('loot.item.type.current-stock', undefined) : source.kind === 'ground' ? t('loot.item.type.ground', undefined) : t('loot.item.type.container', undefined)),
         createElement('span', 'inventory-cell-count', formatDisplayCountBadge(entry.item.count)),
       );
-      const name = createElement('div', 'inventory-cell-name', isHerb ? t('loot.herb.start-hint', undefined) : displayName);
+      const name = createElement('div', 'inventory-cell-name item-art-reference');
+      name.innerHTML = `${renderItemIcon(entry.item.itemId)}<span>${escapeHtml(isHerb ? t('loot.herb.start-hint', undefined) : displayName)}</span>`;
       name.setAttribute('aria-label', isHerb ? t('loot.herb.start-title', undefined) : displayName);
       const actions = createElement('div', 'inventory-cell-actions');
       const button = createElement('button', 'small-btn', isHerb ? (harvesting ? t('loot.action.gathering', undefined) : t('loot.action.start-gather', undefined)) : t('loot.action.take', undefined));

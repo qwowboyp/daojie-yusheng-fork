@@ -15,6 +15,7 @@ type CraftQueueProgressView = {
 };
 
 type CraftQueueDisplayItem = CraftQueueItemView & {
+  itemId?: string;
   isActive?: boolean;
   progress?: CraftQueueProgressView;
   interruptProgress?: CraftQueueProgressView | null;
@@ -27,6 +28,15 @@ function escapeHtml(value: string): string {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
+}
+
+function resolveQueuedItemId(entry: CraftQueueItemView): string | undefined {
+  if (!entry.payload || typeof entry.payload !== 'object') return undefined;
+  const payload = entry.payload as Record<string, unknown>;
+  const itemId = entry.kind === 'enhancement'
+    ? payload.targetItemId
+    : entry.kind === 'alchemy' || entry.kind === 'forging' ? payload.outputItemId : undefined;
+  return typeof itemId === 'string' ? itemId : undefined;
 }
 
 function formatTicks(ticks: number | undefined): string {
@@ -53,7 +63,7 @@ function formatProgressRate(rate: number | undefined): string {
 export interface CraftQueueParent {
   readonly activeMode: string | null;
   readonly alchemyPanel: { state?: { job?: { recipeId: string; jobRunId?: string; startedAt: number; outputItemId: string; quantity: number; completedCount: number; outputCount?: number; remainingTicks: number; totalTicks: number; workRemainingTicks?: number; workTotalTicks?: number; batchBrewTicks?: number; currentBatchRemainingTicks?: number; pausedTicks?: number; interruptWaitRemainingTicks?: number; interruptState?: { waitTotalTicks?: number; waitRemainingTicks?: number } | null; phase: string; jobType?: string; queuedJobs?: CraftQueueItemView[] } | null; queue?: CraftQueueItemView[] } | null } | null;
-  readonly enhancementPanel: { state?: { job?: { jobRunId?: string; startedAt: number; targetItemName: string; desiredTargetLevel: number; remainingTicks: number; totalTicks: number; workRemainingTicks?: number; workTotalTicks?: number; pausedTicks?: number; interruptWaitRemainingTicks?: number; interruptState?: { waitTotalTicks?: number; waitRemainingTicks?: number } | null; phase?: string; queuedJobs?: CraftQueueItemView[] } | null; queue?: CraftQueueItemView[] } | null } | null;
+  readonly enhancementPanel: { state?: { job?: { jobRunId?: string; startedAt: number; targetItemId?: string; targetItemName: string; desiredTargetLevel: number; remainingTicks: number; totalTicks: number; workRemainingTicks?: number; workTotalTicks?: number; pausedTicks?: number; interruptWaitRemainingTicks?: number; interruptState?: { waitTotalTicks?: number; waitRemainingTicks?: number } | null; phase?: string; queuedJobs?: CraftQueueItemView[] } | null; queue?: CraftQueueItemView[] } | null } | null;
   readonly alchemyCatalog: Array<{ recipeId: string; outputName: string }>;
   readonly techniqueActivityTasksSynced: boolean;
   readonly techniqueActivityTasks: TechniqueActivityTaskView[];
@@ -197,6 +207,7 @@ export class CraftQueueView {
         queueId: activeAlchemyJob.jobRunId ?? `active:${jobKind}:${activeAlchemyJob.startedAt}`,
         kind: jobKind as CraftQueueItemView['kind'],
         label: recipe?.outputName?.trim() || '未知物品',
+        itemId: activeAlchemyJob.outputItemId,
         quantity: Math.max(1, activeAlchemyJob.quantity - activeAlchemyJob.completedCount),
         createdAt: activeAlchemyJob.startedAt,
         isActive: true,
@@ -220,6 +231,7 @@ export class CraftQueueView {
         queueId: activeEnhancementJob.jobRunId ?? `active:enhancement:${activeEnhancementJob.startedAt}`,
         kind: 'enhancement',
         label: activeEnhancementJob.targetItemName,
+        itemId: activeEnhancementJob.targetItemId,
         quantity: activeEnhancementJob.desiredTargetLevel,
         createdAt: activeEnhancementJob.startedAt,
         isActive: true,
@@ -235,6 +247,7 @@ export class CraftQueueView {
       ...active,
       ...queue.map((entry) => ({
         ...entry,
+        itemId: resolveQueuedItemId(entry),
         isActive: false,
         progress: {
           ratio: 0,
@@ -253,6 +266,7 @@ export class CraftQueueView {
     return {
       queueId: task.cancelRef.jobRunId ?? task.cancelRef.queueId ?? task.id,
       kind: task.kind,
+      itemId: task.itemId,
       label,
       createdAt: 0,
       isActive,

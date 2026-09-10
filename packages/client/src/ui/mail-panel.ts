@@ -17,6 +17,7 @@ import {
 } from '@mud/shared';
 import type { SocketSocialEconomySender } from '../network/socket-send-social-economy';
 import { getLocalItemTemplate } from '../content/local-templates';
+import { renderItemIcon } from '../content/item-art';
 import { detailModalHost } from './detail-modal-host';
 import { t } from './i18n';
 import {
@@ -1079,9 +1080,9 @@ export class MailPanel {
       const item = document.createElement('div');
       item.className = 'mail-attachment-item';
       const name = document.createElement('span');
-      name.className = 'mail-attachment-item-name';
+      name.className = 'mail-attachment-item-name item-art-reference';
       const attachmentName = resolveMailAttachmentItemName(attachment.itemId);
-      name.textContent = attachmentName;
+      name.innerHTML = `${renderItemIcon(attachment.itemId)}<span>${escapeHtml(attachmentName)}</span>`;
       name.title = attachmentName;
       const count = document.createElement('strong');
       count.textContent = `x${attachment.count}`;
@@ -1204,7 +1205,7 @@ export class MailPanel {
               const attachmentName = resolveMailAttachmentItemName(attachment.itemId);
               return `
               <div class="mail-attachment-item">
-                <span class="mail-attachment-item-name" title="${escapeHtmlAttr(attachmentName)}">${escapeHtml(attachmentName)}</span>
+                <span class="mail-attachment-item-name item-art-reference" title="${escapeHtmlAttr(attachmentName)}">${renderItemIcon(attachment.itemId)}<span>${escapeHtml(attachmentName)}</span></span>
                 <strong>x${attachment.count}</strong>
               </div>
             `;

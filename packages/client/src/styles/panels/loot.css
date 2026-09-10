@@ -120,6 +120,13 @@
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
 
+    .detail-modal--loot .inventory-cell-name.item-art-reference {
+      min-height: 48px;
+      max-height: none;
+      white-space: normal;
+      overflow: visible;
+    }
+
     .loot-source-empty {
       padding: 14px 16px;
       border: 1px solid rgba(34, 26, 19, 0.08);

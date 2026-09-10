@@ -517,7 +517,7 @@
 
     .building-mode-material-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
       gap: 4px;
       min-height: 0;
       overflow: auto;
@@ -530,10 +530,10 @@
     .building-mode-material-card {
       display: grid;
       position: relative;
-      grid-template-rows: minmax(0, 1fr);
-      gap: 0;
-      min-height: 34px;
-      padding: 6px 18px 6px 6px;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 4px;
+      min-height: 88px;
+      padding: 6px;
       border: 1px solid color-mix(in srgb, var(--building-material-accent, var(--wash-ink)) 28%, var(--wash-ink));
       border-radius: 10px;
       background:
@@ -569,8 +569,13 @@
       color: var(--building-material-accent, var(--ink-black));
       font-size: var(--font-size-role-body-11);
       font-weight: var(--font-weight-strong);
-      line-height: 1.1;
+      line-height: 1.3;
+      padding-right: 16px;
       word-break: break-all;
+    }
+
+    .building-mode-material-card > .item-art {
+      justify-self: center;
     }
 
     .building-mode-material-card-badge {
