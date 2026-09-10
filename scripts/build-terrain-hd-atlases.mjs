@@ -114,10 +114,15 @@ function buildAtlas(source) {
   const atlas = Buffer.alloc(ATLAS_SIZE * ATLAS_SIZE * 4);
   for (let mask = 0; mask < 16; mask += 1) {
     const [column, row] = ATLAS_COORDS[mask];
+    // mask 15 只會被 cell 對齊的整格 tile square 取用；mask 1..14 只會被以格點為中心
+    // 的 vertex sprite 取用。兩者的世界取樣原點差半格（128 atlas px），因此僅 mask 15
+    // 需要 +128 相位補償；部分 mask 若同樣 +128，vertex sprite 會與 square 內容錯位
+    // 半格，在材質邊界內 0.5 格處形成可見的圖樣重置線（割裂感來源之一）。
+    const wrapOffset = mask === 15 ? CELL_SIZE / 2 : 0;
     for (let y = 0; y < CELL_SIZE; y += 1) {
       for (let x = 0; x < CELL_SIZE; x += 1) {
-        const sourceX = (x + CELL_SIZE / 2) % CELL_SIZE;
-        const sourceY = (y + CELL_SIZE / 2) % CELL_SIZE;
+        const sourceX = (x + wrapOffset) % CELL_SIZE;
+        const sourceY = (y + wrapOffset) % CELL_SIZE;
         const sourceOffset = (sourceY * CELL_SIZE + sourceX) * 4;
         const atlasOffset = ((row * CELL_SIZE + y) * ATLAS_SIZE + column * CELL_SIZE + x) * 4;
         source.copy(atlas, atlasOffset, sourceOffset, sourceOffset + 3);

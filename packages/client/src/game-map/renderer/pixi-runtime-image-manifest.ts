@@ -4,6 +4,7 @@ import { buildEntitySpriteLookupPlan, type EntitySpriteTransform } from '../../e
 import { resolveRuntimeImageOverrideSrc } from '../../renderer/local-runtime-image-overrides';
 import { getServerAvatarSpriteEntries } from '../../renderer/server-avatar-registry';
 import { resolveRuntimeImagePackAssetUrl } from '../../renderer/runtime-image-pack-url';
+import { normalizeDualGridEdgeOptions, type DualGridEdgeOptions } from '../../renderer/dual-grid-edge';
 import type { ObservedMapEntity } from '../types';
 
 export interface PixiTileSpriteRef {
@@ -21,6 +22,8 @@ export interface PixiTileSpriteRef {
   order: number;
   renderOrder: number;
   dualGrid: boolean;
+  /** dualGrid 啟用時的邊緣羽化參數（與 Canvas 版 normalizeDualGridOptions 同語意）。 */
+  dualGridEdge?: DualGridEdgeOptions;
 }
 
 export interface RuntimeEntitySpriteSelection {
@@ -89,6 +92,17 @@ function normalizeTileSpriteDualGrid(value: Record<string, unknown>, defaults: R
   return rawDualGrid === true || (isRecord(rawDualGrid) && rawDualGrid.enabled !== false);
 }
 
+/** 解析 dualGrid tile 的羽化參數；未啟用 dualGrid 時回傳 undefined。 */
+function normalizeTileSpriteDualGridEdge(value: Record<string, unknown>, defaults: Record<string, unknown> | undefined): DualGridEdgeOptions | undefined {
+  const rawDualGrid = readPixiSpriteMetaField(value, defaults, 'dualGrid');
+  const enabled = rawDualGrid === true || (isRecord(rawDualGrid) && rawDualGrid.enabled !== false);
+  if (!enabled) return undefined;
+  const rawEdge = isRecord(rawDualGrid) && isRecord(rawDualGrid.edge)
+    ? rawDualGrid.edge
+    : readPixiSpriteMetaField(value, defaults, 'edge');
+  return normalizeDualGridEdgeOptions(rawEdge);
+}
+
 function normalizeSpriteFit(value: unknown): 'cover' | 'contain' {
   return value === 'contain' ? 'contain' : 'cover';
 }
@@ -119,6 +133,7 @@ function normalizePixiTileSpriteRef(
     order,
     renderOrder: order,
     dualGrid: normalizeTileSpriteDualGrid(value, defaults),
+    dualGridEdge: normalizeTileSpriteDualGridEdge(value, defaults),
   };
 }
 

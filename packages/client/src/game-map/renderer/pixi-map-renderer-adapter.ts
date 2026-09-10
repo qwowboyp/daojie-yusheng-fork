@@ -88,6 +88,8 @@ import {
   type RuntimeEntitySpriteSelection,
   type RuntimeTileSpriteManifest,
 } from './pixi-runtime-image-manifest';
+import { PixiDualGridFeatherCache } from './pixi-dual-grid-feather';
+import { resolveDualGridNoiseVariant } from '../../renderer/dual-grid-edge';
 import {
   buildBuildPreviewSignature,
   buildFengShuiOverlaySignature,
@@ -142,7 +144,8 @@ const PATH_TRAIL_FADE_ALPHA = 0.7;
 const DEFAULT_RUNTIME_IMAGE_PACK_MANIFEST_URL = '/assets/runtime-image-packs/default/manifest.json';
 const TERRAIN_CHUNK_CACHE_OPTIONS = {
   resolution: 1,
-  scaleMode: 'nearest',
+  // 相機世界位置含小數（次像素位移），nearest 會讓整塊 chunk 貼圖 1px 抖動；linear 平滑取樣。
+  scaleMode: 'linear',
 } as const;
 const DUAL_GRID_ATLAS_COORDS: ReadonlyArray<readonly [number, number]> = [
   [0, 3], [3, 3], [0, 0], [3, 2],
@@ -157,6 +160,19 @@ const DUAL_GRID_QUADS = [
   { mask: 8, x: 0.5, y: 0.5 },
 ] as const;
 const DUAL_GRID_QUARTER_SOURCE_OVERLAP_PX = 1;
+
+/**
+ * 材質 atlas 以 256px 格縮到 16~128px 顯示（最深 16:1），Pixi 預設不生成 mipmap，
+ * 縮小取樣只剩 2x2 texel，會產生摩爾紋與閃爍。開啟 mipmap + 各向異性保險後
+ * 由 trilinear 取樣，縮小時乾淨穩定。atlas 16 格皆為同材質，mip 洩色無害。
+ */
+function enableRuntimeAtlasMipmaps(texture: Texture): void {
+  const source = texture.source;
+  if (source.autoGenerateMipmaps) return;
+  source.autoGenerateMipmaps = true;
+  source.maxAnisotropy = 4;
+  source.updateMipmaps();
+}
 
 /**
  * Pixi Assets.load 以 URL 副檔名推斷 parser；無副檔名 URL（如 /api/avatar/<id>?v=N）
@@ -234,6 +250,7 @@ export class PixiMapRendererAdapter {
   private readonly dualGridCellRefsScratch: Array<PixiTileSpriteRef | null> = [];
   private readonly dualGridVertexRefsScratch: Array<PixiTileSpriteRef | null> = [null, null, null, null];
   private readonly dualGridVertexMasksScratch: number[] = [0, 0, 0, 0];
+  private readonly dualGridFeatherCache = new PixiDualGridFeatherCache();
   private runtimeAtlasTextures = new Map<string, Texture>();
   private runtimeTileTextures = new Map<string, Texture>();
   private runtimeTileTextureRequests = new Set<string>();
@@ -726,6 +743,7 @@ export class PixiMapRendererAdapter {
     }
     this.runtimeTileTextures.clear();
     this.runtimeEntityTextures.clear();
+    this.dualGridFeatherCache.clear();
   }
 
   /** 释放已被 manifest 替换的本地 data URL，默认图集继续交给 Pixi 全局 Assets 缓存复用。 */
@@ -761,6 +779,7 @@ export class PixiMapRendererAdapter {
       return false;
     }
     this.runtimeAtlasTextures.set(src, loaded);
+    enableRuntimeAtlasMipmaps(loaded);
     return true;
   }
 
@@ -918,6 +937,46 @@ export class PixiMapRendererAdapter {
     sprite.zIndex = ref.zIndex;
     chunkContainer.addChild(sprite);
     this.profiler.count('runtimeTileSprites');
+  }
+
+  /** 於頂點繪製羽化 halo：在精確形狀之前，讓上層材質以距離 fade + noise 滲入鄰接材質（對齊 Canvas etched 層）。 */
+  private drawDualGridFeatherSprite(
+    chunkContainer: Container,
+    ref: PixiTileSpriteRef,
+    dx: number,
+    dy: number,
+    cellSize: number,
+    sourceMask: number,
+    clipMask: number,
+  ): void {
+    const edge = ref.dualGridEdge;
+    const atlas = this.getRuntimeAtlasTexture(ref.src);
+    const coords = DUAL_GRID_ATLAS_COORDS[sourceMask];
+    if (!edge || !atlas || !coords) return;
+    const resource = atlas.source.resource as CanvasImageSource | null | undefined;
+    if (!resource) return;
+    const cellW = atlas.width / ref.cols;
+    const cellH = atlas.height / ref.rows;
+    const noiseVariant = edge.noise ? resolveDualGridNoiseVariant(dx, dy, cellSize) : 0;
+    const texture = this.dualGridFeatherCache.request({
+      atlasSource: resource,
+      src: ref.src,
+      sx: cellW * (ref.col + coords[0]),
+      sy: cellH * (ref.row + coords[1]),
+      sw: cellW,
+      sh: cellH,
+      edge,
+      noiseVariant,
+      sourceMask,
+      clipMask,
+    });
+    if (!texture) return;
+    const sprite = new Sprite(texture);
+    sprite.position.set(dx, dy);
+    sprite.width = cellSize;
+    sprite.height = cellSize;
+    chunkContainer.addChild(sprite);
+    this.profiler.count('dualGridFeatherSprites');
   }
 
   private drawDualGridSprite(
@@ -1113,6 +1172,10 @@ export class PixiMapRendererAdapter {
           const targetMask = (masks[index] ?? 0) & 15;
           const backgroundMask = occupiedMask & ~targetMask & 15;
           if (targetMask === 15 && backgroundMask === 0) continue;
+          const mergedMask = targetMask | backgroundMask;
+          if (backgroundMask !== 0 && mergedMask !== targetMask) {
+            this.drawDualGridFeatherSprite(chunkContainer, ref, dx, dy, cellSize, targetMask, mergedMask);
+          }
           this.drawDualGridSprite(chunkContainer, ref, dx, dy, cellSize, targetMask, targetMask);
         }
       }
@@ -1490,7 +1553,6 @@ export class PixiMapRendererAdapter {
         if (tile) {
           const bg = parseColor(TILE_VISUAL_BG_COLORS[tile.type], 0x333333);
           baseGraphics.rect(sx, sy, cellSize, cellSize).fill({ color: bg });
-          baseGraphics.rect(sx, sy, cellSize, cellSize).stroke({ color: 0x000000, alpha: 0.1, width: 0.5 });
           this.drawRuntimeTileSprite(chunk.spriteContainer, tile, sx, sy, cellSize);
         }
         const glyph = tile ? TILE_VISUAL_GLYPHS[tile.type] : null;

@@ -38,6 +38,7 @@ export type PixiProfileCounterKey =
   | 'terrainChunkRebuilds'
   | 'runtimeTileSprites'
   | 'dualGridSprites'
+  | 'dualGridFeatherSprites'
   | 'pathCells'
   | 'fadingPathCells'
   | 'groundPiles'
@@ -155,6 +156,7 @@ export const PIXI_PROFILE_COUNTER_KEYS: PixiProfileCounterKey[] = [
   'terrainChunkRebuilds',
   'runtimeTileSprites',
   'dualGridSprites',
+  'dualGridFeatherSprites',
   'pathCells',
   'fadingPathCells',
   'groundPiles',
@@ -189,6 +191,7 @@ const COUNTER_LABELS: Record<PixiProfileCounterKey, string> = {
   terrainChunkRebuilds: 'chunkRebuilds',
   runtimeTileSprites: 'runtimeSprites',
   dualGridSprites: 'dualGridSprites',
+  dualGridFeatherSprites: 'dualGridFeatherSprites',
   pathCells: 'pathCells',
   fadingPathCells: 'fadingPathCells',
   groundPiles: 'groundPiles',
@@ -564,6 +567,7 @@ export class PixiProfilerWindow {
       ['sigs', sample.counters.terrainChunkSignatures],
       ['rebuild', sample.counters.terrainChunkRebuilds],
       ['dual', sample.counters.dualGridSprites],
+      ['feather', sample.counters.dualGridFeatherSprites],
       ['sprites', sample.counters.runtimeTileSprites],
       ['entities', sample.counters.entities],
       ['cached', sample.renderer.cachedTerrainChunks],
