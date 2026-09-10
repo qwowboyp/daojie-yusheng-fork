@@ -163,14 +163,15 @@ const DUAL_GRID_QUARTER_SOURCE_OVERLAP_PX = 1;
 
 /**
  * 材質 atlas 以 256px 格縮到 16~128px 顯示（最深 16:1），Pixi 預設不生成 mipmap，
- * 縮小取樣只剩 2x2 texel，會產生摩爾紋與閃爍。開啟 mipmap + 各向異性保險後
- * 由 trilinear 取樣，縮小時乾淨穩定。atlas 16 格皆為同材質，mip 洩色無害。
+ * 縮小取樣只剩 2x2 texel，會產生摩爾紋與閃爍。開啟 mipmap 後由 trilinear 取樣，
+ * 縮小時乾淨穩定。atlas 16 格皆為同材質，mip 洩色無害。
+ * 不設 maxAnisotropy：俯視 2D 取樣足跡為正方形，各向異性無視覺收益，卻在
+ * 軟體渲染（SwiftShader proof 容器）下讓每次採樣多達 4 倍 tap，拖垮首幀就緒。
  */
 function enableRuntimeAtlasMipmaps(texture: Texture): void {
   const source = texture.source;
   if (source.autoGenerateMipmaps) return;
   source.autoGenerateMipmaps = true;
-  source.maxAnisotropy = 4;
   source.updateMipmaps();
 }
 
