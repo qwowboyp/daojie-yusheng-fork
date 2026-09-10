@@ -1142,9 +1142,32 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assertInsideViewport(shown.dock, shown.viewport, '手機功能入口');
 
   const fixture = await cdp.evaluate(fixtureExpression);
-  // 無 GPU 容器（SwiftShader）已在渲染器偵測軟體光柵化後停用 atlas mipmap，
-  // 首幀就緒應回到秒級；預算 90 秒僅作慢機器餘裕。真機 GPU 環境 1-2 秒內就緒。
-  await waitFor(() => cdp.evaluate(`window.__gameWorkspaceProof.getMapPixels().slice(0,3).some(value=>value>0)`), '正式 Pixi 地圖繪製', 90_000);
+  // 失敗時帶回頁面端診斷（WebGL renderer 字串、地圖像素、canvas 尺寸），
+  // 便於容器環境一次定位「地圖未就緒」的真實原因；真機 GPU 環境 1-2 秒內就緒。
+  try {
+    await waitFor(() => cdp.evaluate(`window.__gameWorkspaceProof.getMapPixels().slice(0,3).some(value=>value>0)`), '正式 Pixi 地圖繪製', 90_000);
+  } catch (waitError) {
+    const diagnostics = await cdp.evaluate(`(() => {
+      const offscreen = document.createElement('canvas');
+      const gl = offscreen.getContext('webgl2') || offscreen.getContext('webgl');
+      let rendererText = 'no-webgl-context';
+      if (gl) {
+        const ext = gl.getExtension('WEBGL_debug_renderer_info');
+        rendererText = ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : String(gl.getParameter(gl.RENDERER));
+      }
+      const canvas = document.getElementById('game-canvas');
+      let pixels = null;
+      try { pixels = window.__gameWorkspaceProof ? Array.from(window.__gameWorkspaceProof.getMapPixels().slice(0, 8)) : null; } catch (error) { pixels = 'error:' + (error && error.message); }
+      return {
+        rendererText,
+        webdriver: navigator.webdriver,
+        canvasSize: canvas ? [canvas.width, canvas.height] : null,
+        pixels,
+        readyState: document.readyState,
+      };
+    })()`);
+    throw new Error(`正式 Pixi 地圖繪製未就緒：${JSON.stringify(diagnostics)}`);
+  }
   assert(fixture.inventoryCells > 0, '正式背包 Panel 未載入非空 fixture');
   assert(fixture.actionTabs > 0, '正式行動 Panel 未載入非空 fixture');
   assert.match(fixture.hpText ?? '', /68萬\s*\/\s*100萬/, '正式 HUD 未顯示長數值 fixture 氣血');

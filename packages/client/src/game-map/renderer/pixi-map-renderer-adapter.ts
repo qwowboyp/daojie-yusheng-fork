@@ -398,7 +398,7 @@ export class PixiMapRendererAdapter {
     const raw = debugInfo
       ? String(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) ?? '')
       : String(gl.getParameter(gl.RENDERER) ?? '');
-    if (/swiftshader|software|llvmpipe|basic render/i.test(raw)) {
+    if (/swiftshader|software|llvmpipe|lavapipe|softpipe|basic render/i.test(raw)) {
       this.runtimeAtlasMipmapsEnabled = false;
     }
   }
