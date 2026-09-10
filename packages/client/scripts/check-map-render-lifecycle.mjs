@@ -165,6 +165,11 @@ const buildStaticSignature = (tile) => buildPixiTerrainChunkStaticSignature(
   1,
 );
 const baseStaticSignature = buildStaticSignature(baseTile);
+assert.notEqual(
+  buildStaticSignature({ ...baseTile, buildingDefId: 'stone_wall' }),
+  baseStaticSignature,
+  '建築完成或拆除時，即使地形欄位相同也必須更新靜態貼圖',
+);
 assert.equal(buildStaticSignature({
   ...baseTile,
   hp: 5,

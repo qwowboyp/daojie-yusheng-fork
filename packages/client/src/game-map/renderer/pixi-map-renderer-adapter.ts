@@ -68,6 +68,7 @@ import {
   type PixiProfileRendererState,
 } from './pixi-profiler-window';
 import { normalizeRuntimeImagePackVersion } from '../../renderer/runtime-image-pack-url';
+import { resolveTileUnderlaySpriteKey } from '../../renderer/runtime-tile-sprite-key';
 import { PixiRenderProfiler } from './pixi-render-profiler';
 import { isPixiEntityInViewport, PixiFrameGridPointSet } from './pixi-frame-spatial-index';
 import { PixiCombatEffectRuntime } from './pixi-combat-effect-runtime';
@@ -896,6 +897,15 @@ export class PixiMapRendererAdapter {
   private drawRuntimeTileSprite(chunkContainer: Container, tile: Tile, sx: number, sy: number, cellSize: number): void {
     const ref = this.resolveRuntimeTileSpriteRef(tile);
     if (!ref) return;
+    if (!ref.dualGrid) {
+      const underlayKey = resolveTileUnderlaySpriteKey(tile, ref.key);
+      const underlay = underlayKey ? this.runtimeTileSpriteRefs.get(underlayKey) : undefined;
+      if (underlay) this.drawRuntimeTileSpriteRef(chunkContainer, underlay, sx, sy, cellSize);
+    }
+    this.drawRuntimeTileSpriteRef(chunkContainer, ref, sx, sy, cellSize);
+  }
+
+  private drawRuntimeTileSpriteRef(chunkContainer: Container, ref: PixiTileSpriteRef, sx: number, sy: number, cellSize: number): void {
     const texture = this.getRuntimeTileTexture(ref);
     if (!texture) {
       this.requestRuntimeTileTexture(ref);

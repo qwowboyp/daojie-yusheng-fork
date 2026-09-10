@@ -12,6 +12,7 @@ import {
 } from './local-runtime-image-overrides';
 import { getServerAvatarSpriteEntries, SERVER_AVATARS_CHANGED_EVENT, startServerAvatarAutoRefresh } from './server-avatar-registry';
 import { normalizeRuntimeImagePackVersion, resolveRuntimeImagePackAssetUrl } from './runtime-image-pack-url';
+import { resolveTileUnderlaySpriteKey, resolveTopTileSpriteKey } from './runtime-tile-sprite-key';
 
 type SpriteFit = 'cover' | 'contain';
 type ManifestState = 'idle' | 'loading' | 'loaded' | 'error';
@@ -335,44 +336,6 @@ function normalizeLegacyTileMap(value: unknown): Map<string, string> {
   return result;
 }
 
-function resolveTopTileSpriteKey(tile: Tile, legacyTileKeys: ReadonlyMap<string, string>): string | null {
-  const buildingDefId = typeof tile.buildingDefId === 'string' && tile.buildingDefId.length > 0
-    ? tile.buildingDefId
-    : null;
-  if (buildingDefId) {
-    return `building:${buildingDefId}`;
-  }
-  const structureType = typeof tile.structureType === 'string' && tile.structureType.length > 0
-    ? tile.structureType
-    : null;
-  if (structureType) {
-    return `structure:${structureType}`;
-  }
-
-  const interactable = Array.isArray(tile.interactableKinds)
-    ? tile.interactableKinds.find((kind) => typeof kind === 'string' && kind.length > 0)
-    : undefined;
-  if (interactable) {
-    return `interactable:${interactable}`;
-  }
-
-  const surfaceType = typeof tile.surfaceType === 'string' && tile.surfaceType.length > 0
-    ? tile.surfaceType
-    : null;
-  if (surfaceType) {
-    return `surface:${surfaceType}`;
-  }
-
-  const terrainType = typeof tile.terrainType === 'string' && tile.terrainType.length > 0
-    ? tile.terrainType
-    : null;
-  if (terrainType) {
-    return `terrain:${terrainType}`;
-  }
-
-  return legacyTileKeys.get(tile.type) ?? null;
-}
-
 function resolveEntitySpriteSelection(
   entity: Pick<RenderEntity, 'id' | 'kind' | 'name' | 'char' | 'facing' | 'monsterId' | 'buildingDefId'>,
   sprites: ReadonlyMap<string, AtlasSpriteRef>,
@@ -599,7 +562,15 @@ export class RuntimeImagePack {
     if (ref?.dualGrid?.enabled === true) {
       return this.drawDualGridAtlasSprite(ctx, ref, dx, dy, dx, dy, size, 15, 15, false);
     }
-    return ref ? this.drawAtlasSprite(ctx, ref, dx, dy, size) : false;
+    if (!ref || !key) return false;
+    const underlayKey = resolveTileUnderlaySpriteKey(tile, key);
+    const underlay = underlayKey ? this.tileSprites.get(underlayKey) : undefined;
+    if (underlay?.dualGrid?.enabled) {
+      this.drawDualGridAtlasSprite(ctx, underlay, dx, dy, dx, dy, size, 15, 15, false);
+    } else if (underlay) {
+      this.drawAtlasSprite(ctx, underlay, dx, dy, size);
+    }
+    return this.drawAtlasSprite(ctx, ref, dx, dy, size);
   }
 
   isTopTileDualGridReady(tile: RuntimeTileVisualSource): boolean {

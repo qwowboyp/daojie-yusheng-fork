@@ -80,6 +80,7 @@ function buildLayeredSpriteKey(tile: Tile, cellSize: number, imagePackRevision: 
     tile.terrainType ?? '',
     tile.surfaceType ?? '',
     tile.structureType ?? '',
+    tile.buildingDefId ?? '',
     Array.isArray(tile.interactableKinds) ? tile.interactableKinds.join('+') : '',
     cellSize,
     imagePackRevision,

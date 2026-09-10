@@ -1,4 +1,4 @@
-# 道具與自建建築美術
+# 地塊、道具與自建建築美術
 
 圖片以內容 ID 對應，不用名稱、價格、字形或道具實例 ID 猜測外觀。
 
@@ -27,7 +27,27 @@
 
 煉丹、煉器、強化的配方、投料、目標選擇、確認、執行中與歷史詳情沿用相同圖片來源。任務獎勵與需求等文字內的道具標籤使用較小圖示；圖片不覆蓋既有數量欄、操作按鈕或道具提示的事件資料。
 
-建築以穩定定義 ID 同步至客戶端；完成後的地圖顯示與放置預覽共用圖包。自建結構使用 `tiles[building:<id>]`，設施使用 `entities[building:<id>]`；通用地形圖保持原樣。圖片不改變佔位、施工、通行、存取權限或資產判定。
+建築以穩定定義 ID 同步至客戶端；完成後的地圖顯示與放置預覽共用圖包。自建結構使用 `tiles[building:<id>]`，設施使用 `entities[building:<id>]`；通用地形使用獨立拼接圖集。圖片不改變佔位、施工、通行、存取權限或資產判定。
+
+## 高清地塊第二版
+
+29 種地形、地表與結構使用逐張生成的俯視手繪材質，原圖為 1254px。正式產物為 **1024×1024 無損 WebP**，每張仍是 4×4 dual-grid，單格來源提高至 256px；保留 Canvas／Pixi 的圖集裁切、最高層優先序與地圖格尺寸。`terrain-hd-v2.json` 保存完整提示詞、原圖雜湊與正式產物雜湊。
+
+原圖位於本機 `assets/generated/terrain-hd-v2/sources/`，被 Git 忽略；發布只使用已提交的 `packages/client/public/assets/runtime-image-packs/default/tiles/`。不把大尺寸原圖、候選圖或瀏覽器截圖放進正式包。
+
+`scripts/build-terrain-hd-atlases.mjs` 只縮放、依既有角位映射裁切材質，不重新繪製美術。空格使用真透明 alpha，相鄰雙角採半平面，單角／缺角採圓弧；所有具相同共用角的水平及垂直接縫必須逐像素吻合，避免半圓邊界造成裂縫。打包用的 `sharp` 可來自本機安裝或 `CODEX_BUNDLED_NODE_MODULES`，不增加客戶端執行期依賴。
+
+```sh
+node scripts/build-terrain-hd-atlases.mjs
+# 預設輸出至 assets/generated/terrain-hd-v2/candidate/tiles；不自動覆寫正式素材。
+node scripts/build-terrain-hd-atlases.mjs --source-dir assets/generated/terrain-hd-v2/sources --output-dir packages/client/public/assets/runtime-image-packs/default/tiles
+```
+
+正式 manifest 快取版本升為 6；10 張自建建築地面圖維持 256px／單格，介面圖示維持原來的 96px／192px，不改建築身份或伺服器資料。
+
+單格透明建築先繪原地表（沒有地表則繪地形），再疊建築，避免透明邊緣露出黑色／單色方塊。Canvas 與 Pixi 共用選圖規則；Canvas 快取鍵與 Pixi 靜態簽名包含 `buildingDefId`，防止建築與同類自然地塊、拆除後的地塊共用錯誤圖片。建造預覽維持純疊圖，地塊拼接遮罩不變。
+
+`pnpm --dir packages/client run proof:terrain-hd` 以 Chrome 解碼全部正式圖集，檢查尺寸、透明拓撲與接縫，並在正式 Canvas／Pixi 路徑產出 32px／64px 及桌面／手機、深淺模式證據。產物在 `packages/client/.codex/terrain-hd-proof/`，屬本機隔離場景，非線上玩家或實體 iPhone／Safari 驗收。
 
 ## 驗證入口
 

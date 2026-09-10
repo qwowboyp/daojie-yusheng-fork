@@ -18,6 +18,7 @@ function buildStaticTileSignature(tile: Tile): string {
     tile.terrainType ?? '',
     tile.surfaceType ?? '',
     tile.structureType ?? '',
+    tile.buildingDefId ?? '',
     Array.isArray(tile.interactableKinds) ? tile.interactableKinds.join('+') : '',
   ].join(':');
 }

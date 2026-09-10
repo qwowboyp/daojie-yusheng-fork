@@ -1,0 +1,608 @@
+{
+  "version": 2,
+  "manifestVersion": 6,
+  "atlas": {
+    "size": 1024,
+    "cellSize": 256,
+    "cols": 4,
+    "rows": 4,
+    "cornerBits": {
+      "topLeft": 1,
+      "bottomLeft": 2,
+      "topRight": 4,
+      "bottomRight": 8
+    },
+    "maskCoordinates": [
+      [
+        0,
+        3
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ]
+    ],
+    "packing": "Full-frame ImageGen materials resized and quadrant-wrapped; quarter circles for single corners, half planes for adjacent pairs, two circles for diagonal pairs, inverse quarter circles for triple corners. Empty mask has true alpha.",
+    "format": "lossless-webp"
+  },
+  "records": [
+    {
+      "id": "grass",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Muted sage and olive-green meadow grass, low soft tufts of fine blades with graceful organic flow, occasional faint dry-earth glimpse, beautifully lush but quiet, no flowers, no stones, no isolated big plant.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/grass.png",
+      "sourceSha256": "2de0779c64a174b0dcbf5267194a1f4a379ade0ca3ed4f1874e5356b78080101",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/grass-dual-grid.webp",
+      "outputSha256": "2560acc5e992415d3ef79783847e2baeb90a3575fead3725636bd9cda229f67c",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 177462
+    },
+    {
+      "id": "water",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Still deep clear jade-teal river water viewed straight down, soft translucent depth, a few elegant broad curved ripples and restrained pale reflections; no shore, no rocks, no foam stripes, no repeated sine-wave rows, no visible bottom objects, no vivid cyan.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/water.png",
+      "sourceSha256": "900f103db3a5197ad318bc69551861465c28c94a7993d1263291edd3afe59b8c",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/water-dual-grid.webp",
+      "outputSha256": "137302cd879a50fd6f730746ba419cc974e0a7c00442a5b1e638a4ab2eededd5",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 141240
+    },
+    {
+      "id": "terrain-floor",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Weathered pale warm gray-brown compacted earth courtyard foundation, nuanced silt and fine mineral texture, gentle irregular muted tonal variation, almost flat open walking surface, very sparse tiny worn pebble marks, no large cracks, no paving blocks.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/terrain-floor.png",
+      "sourceSha256": "5ebfc43c39e3a634c73040218c43975d0d5309abdb8b5f8c6a9c0478ce4f26ae",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/terrain-floor-dual-grid.webp",
+      "outputSha256": "6afbd808532293dac98fd18441dbd9ca0003534073983e1d62d2b976364ffd8d",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 133780
+    },
+    {
+      "id": "hill",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Mossy olive green hillside ground viewed overhead, readable broad low ridges of ochre soil with sparse fine meadow grass, softly contoured uneven terrain, muted earthy colors, no mountains in perspective, no big objects.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/hill.png",
+      "sourceSha256": "a0e913046887313e997e08cf673a958454aaeb20514540ec9e2953bb703121ab",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/hill-dual-grid.webp",
+      "outputSha256": "0430aa043566db216f1150b909c27b2a395e6773263b5df4baabdc56b0ccbbc6",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 169222
+    },
+    {
+      "id": "mud",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Rich damp umber mud, soft irregular patches of wet earth with restrained sheen, shallow worn uneven depressions and low ridges, few subtle footprints-like natural indentations but no actual human footprints, no pebbles or vegetation, completely top-down.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/mud.png",
+      "sourceSha256": "b1cb11e8bcb1cf1325ea9a4dffa68385fcd1f9ad7aa11190fc329512e24052a0",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/mud-dual-grid.webp",
+      "outputSha256": "9c2fefe3e1dfbba1c6ed762154fbff0bd4a9a1651b26c0e7eace28c80aaf7b6c",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 129682
+    },
+    {
+      "id": "swamp",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Dark desaturated moss-green bog, shallow murky water among low flattened reeds and moss patches, pockets of dark still water clearly distinguish this from ordinary grass, broad organic shapes, restrained gray-green reflections, no trees or cattails sticking up.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/swamp.png",
+      "sourceSha256": "2f310fb9bc5b1ee4cafd98a355503cf13def1381ce55a1a7adeb4696a67c663d",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/swamp-dual-grid.webp",
+      "outputSha256": "28b9d90fa41f1050cb38d744771459156111d693d04a444f7214e819c87ad0a7",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 159568
+    },
+    {
+      "id": "cold-bog",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Cold dark blue-green marsh floor with irregular thin pale hoarfrost rims and muted icy pools, a little drowned dark reed texture, distinguish frozen bog from a solid ice skating rink; muted arctic sage and slate with local frosty accents, no bright white full background.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/cold-bog.png",
+      "sourceSha256": "22517c83e292f7e5dfbab7e929784a575815bfb4f130978b31ebadbad2f07e3c",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/cold-bog-dual-grid.webp",
+      "outputSha256": "288ff6fc6594b50ebf8e001c699c0cc2817255c4cc0e0f3490c6457c5dd77c87",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 155724
+    },
+    {
+      "id": "molten-pool",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Dangerous molten rock pool viewed overhead, broad dark charcoal cooling-crust islands covering roughly two thirds of the image, intense but localized amber-red molten fissures between them, richly crafted basalt material, no full orange field, no theatrical glow halos.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/molten-pool.png",
+      "sourceSha256": "722fc166a96ebe15fab2b210611a02d2a9e998c1d5e4bbf974db29674e5a60fd",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/molten-pool-dual-grid.webp",
+      "outputSha256": "6122bcebc56fba8330a687d0e075d33a5b3239aaa94feb98d1d24f8a3af767a5",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 212450
+    },
+    {
+      "id": "cloud-floor",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Solid traversable celestial cloud-stone floor, softly weathered pale blue-white cloudlike mineral texture with faint silver-blue swirls, mostly continuous filled surface, subtle tactile density differentiates from airy clouds, NO cloud silhouette or scalloped edges inside the tile, no empty holes.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/cloud-floor.png",
+      "sourceSha256": "805fb6287d6899328d182ad5430f7a121dd3e32c92c6298bc9259bd0bd4cd182",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/cloud-floor-dual-grid.webp",
+      "outputSha256": "7f4af8e446cdac8367c45ce2e7ba6bf482936c32a70216c5ac9df147a670fb94",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 139560
+    },
+    {
+      "id": "cloud",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Soft luminous layers of pale ivory and cool lavender mist seen directly from above, fine wisps and broad low-contrast vapor variations, airy yet wholly filled seamless fog texture, restrained celestial mood, no sky horizon, no dark background, no border.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/cloud.png",
+      "sourceSha256": "4164c2350de96ec41d2476a4c9d04bae572517d3080aa3a84cc1df1737b8ed8d",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/cloud-dual-grid.webp",
+      "outputSha256": "ada4bf85935fa788403a2d3101c62bbf74204e8f74585c77beb2df41e3867039",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 120206
+    },
+    {
+      "id": "void",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Subtle midnight indigo and nearly black violet spatial abyss, restrained thin ghostly violet nebulous threads and a sparse few faint star-like pinpoints; ominous quiet depth, mostly dark, no bright galaxy spirals, no harsh repeated ornaments.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/void.png",
+      "sourceSha256": "b9f3f26cf4543e8314252fc81d74a7349d8d777f93fb94410a47d1e065522fcb",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/void-dual-grid.webp",
+      "outputSha256": "f636126e4b2ebd457d76312bd821c17f1b0b478758a0213ad4e55221b26b9e18",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 114044
+    },
+    {
+      "id": "cliff",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Dark weathered slate escarpment rock texture viewed overhead, broad jagged split rock plates and deep crevices, desaturated cool gray, strong readable rocky relief, no grass, no earth border, no isometric cliff platform or landscape.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/cliff.png",
+      "sourceSha256": "7eb48735c973c138c5f1836d97c778dc06ceedc172957c0bd5cb95052968a60f",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/cliff-dual-grid.webp",
+      "outputSha256": "3401890c98182dd6a771322b21568a84e856114621c047b70329e9634eee27d6",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 105652
+    },
+    {
+      "id": "floor",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Ancient worn gray stone interior paving, large irregular fitted slate slabs in medium cool gray, thin recessed joints, occasional soft edge chips, subtle worn polish and age, calm walkable surface, no black void gaps, no border, no gridded checker pattern.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/floor.png",
+      "sourceSha256": "ff68159dd2fc3f8c795debb55bbf236717792c7dfb3d1d58fea8b0ed58d48753",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/floor-dual-grid.webp",
+      "outputSha256": "4d4f20b9e947c9fe563acb48060a4d9820f4c4d5c301ae53119420d3a929e72a",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 121486
+    },
+    {
+      "id": "trail",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Worn dusty ochre footpath surface, compacted warm earth with softly embedded tiny gravel and sweeping scuff texture, low contrast, restrained realistic detail, no grass border, no road shaped stripe, full continuous material.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/trail.png",
+      "sourceSha256": "9356adc6928c4276996f2d36c6e6bcbe0db9a520792faef9b41d4ffbe39bac57",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/trail-dual-grid.webp",
+      "outputSha256": "071f1a4d8a5591eafc2f850a09980f7b41d23716e3c64b0f630c6c37bb47a59e",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 179484
+    },
+    {
+      "id": "road",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Old Chinese frontier stone road made from generously sized muted gray-beige worn paving stones, irregular staggered arrangement, subtly chipped edges, tiny moss in narrow joints, subdued diffuse lighting, readable broad stone shapes, no decorative patterns.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/road.png",
+      "sourceSha256": "0cc022328e3f3d6dab8b0f8536c77e63d03c8d18b26e52d0912e97f87dfde01c",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/road-dual-grid.webp",
+      "outputSha256": "9a7e48789c8baf02607dac08a2b79af5c416b16788b69d1b2061d6a4f48a9a4e",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 150600
+    },
+    {
+      "id": "veranda",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Weathered old timber corridor floor, medium warm gray-brown broad planks running horizontally, beautifully subtle grain and a few antique nail heads, soft worn edges, restrained contrast, no railings or furniture, no perspective.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/veranda.png",
+      "sourceSha256": "94c1d798d01f2773b901b2fa2160fd813177df133c3dc21d5b9c2e28a6359152",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/veranda-dual-grid.webp",
+      "outputSha256": "ac207cb2e8d9aaef25f801e609356821dbfa138c656905c63035219e93c2efc4",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 117962
+    },
+    {
+      "id": "stone-stairs",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Clear ancient stone stairs seen from directly overhead: five broad parallel horizontal worn gray stone treads, shallow dark riser lines and softly lighter worn nosings make STEP DEPTH immediately legible at 32px. Every part of the square has actual stair treads, no flat plaza, no ornaments, no railings.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/stone-stairs.png",
+      "sourceSha256": "a57dc0f955d69ab3878517ba698c68fa982b1ffbf402a251d200a6c4c18880a3",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/stone-stairs-dual-grid.webp",
+      "outputSha256": "6f8daf558391c5048d68cf6e11091cb8ba6100155562763f3a4f3b281c8cd6f0",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 140458
+    },
+    {
+      "id": "wall",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Massive ancient gray stone wall top surfaces seen from directly overhead, solid thick muted stone blocks with a clear broad stone coping pattern and subtle coarse granite texture, tightly mortared large irregular slabs, rugged but refined game art, no black holes, no window, no room or perspective wall facade.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/wall.png",
+      "sourceSha256": "906571ccb02d8080b049fa267aa25e1d34d450943506700085096f8e7d640798",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/wall-dual-grid.webp",
+      "outputSha256": "d48ac95ab7aa330275379228c5f333c3237e4d2c419b7b09ea51b2e251d0dccf",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 166324
+    },
+    {
+      "id": "door",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. One old Chinese timber door material filling a square game cell, viewed from very high overhead with minimal depth: heavy warm dark-brown vertical wooden boards, two restrained antique-bronze straps and a simple central ring pull, broad readable door construction, no surrounding doorway or background, no ornate carvings.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/door.png",
+      "sourceSha256": "a6e7f3effde470fe2b81ab06ad15c62e83a3f1f96e2288715ad3ef03197d17cc",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/door-dual-grid.webp",
+      "outputSha256": "dc172524c8f23e7c7cf87326a23c58393a117297ae45995c66c02abcab9ed428",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 144356
+    },
+    {
+      "id": "window",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. One restrained old Chinese wooden lattice window filling a square game cell, overhead-compatible flat icon-like orientation, dark aged wooden simple geometric lattice over dim warm amber rice-paper panes, a few broad openings rather than many tiny checker squares, modest light, no neon yellow, no surrounding wall.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/window.png",
+      "sourceSha256": "cde7836b24bbaa57c403b27c0bc7d244b8c00e9d14bd77d23e32b2ba0e651a76",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/window-dual-grid.webp",
+      "outputSha256": "8e073fe4d6fc415376e0785954c7720c212a3d5168b3c8ded5a7a0473478f8f1",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 140430
+    },
+    {
+      "id": "house-eave",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Old Chinese gray roof tiles seen from directly overhead, broad rows of gently curved desaturated charcoal clay tiles, restrained wear and slightly uneven handcrafted surfaces, soft highlights on tile crowns, no roof ridge, no building silhouette, no strong shadow or perspective.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/house-eave.png",
+      "sourceSha256": "f632094f213ab2370b6cec4a3f4a70bd7bcfe7daefca9b0b3d1dd23fad1475a7",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/house-eave-dual-grid.webp",
+      "outputSha256": "ae0c9acf085512d6bce5344bdca6f82f35670017b571664c13721364d2202cbf",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 118832
+    },
+    {
+      "id": "house-corner",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Ancient Chinese gray tile roof junction viewed directly overhead, a single clearly readable right-angle roof ridge joining two fields of muted charcoal curved tiles, weathered stone ridge caps, disciplined simple structure, no earth patch, no isolated miniature roof rectangles, fills the tile edge to edge.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/house-corner.png",
+      "sourceSha256": "19a34d46481506f8b1f3b89eea3b492d4f7576378377b46273a9e068a1bfb199",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/house-corner-dual-grid.webp",
+      "outputSha256": "12c322824b33bd9052cf33dc58975135cdcb0c28cff1376ae2dafac350f56b51",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 125914
+    },
+    {
+      "id": "screen-wall",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Top-down solid Chinese courtyard screen-wall masonry surface, broad gray-brown weathered stone coping with one shallow restrained geometric scroll relief, heavy solid construction differentiates it from thin paving slabs, no text or calligraphy, no repeated bright square floor tiles.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/screen-wall.png",
+      "sourceSha256": "5589341e0b0db6acc7cd0157fe37405b892a112a871596b5c8461dee077d8378",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/screen-wall-dual-grid.webp",
+      "outputSha256": "2827faeff782fe38532aa6c039d733ab5666d830d39449289599ccd9d692365f",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 134848
+    },
+    {
+      "id": "tree",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Dense mature tree canopy seen directly overhead, several broad overlapping crowns with clearly grouped foliage masses, muted dark olive leaves, subtle warm highlights and cool shadow pockets, beautiful restrained leaf craftsmanship, no ground visible, no trunks, no side-view tree silhouettes.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/tree.png",
+      "sourceSha256": "5a2f662bb80cc333ed00cf1068a428330e601435608912e186bda398c12d62d5",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/tree-dual-grid.webp",
+      "outputSha256": "81677a404eb5f267d44de7214959f1a0efcbac0f545ffc15f34f0a743f317236",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 205594
+    },
+    {
+      "id": "bamboo",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Bamboo grove seen directly overhead, graceful broad clusters of narrow muted jade and olive bamboo leaves over dim slender stalk glimpses, elegant canopy masses with readable negative leaf-group shapes, NOT a front-view fence of upright green rods, no ground border.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/bamboo.png",
+      "sourceSha256": "aa94743352b85330d9a6bf32bef0120eda997fa68953bc6b6f8a189bec59ab69",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/bamboo-dual-grid.webp",
+      "outputSha256": "e31c14047a12a1a329b499d37602c472b196cc442afc09c3b1cee06d12ed0281",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 179908
+    },
+    {
+      "id": "stone",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. A closely packed group of large solid weathered gray boulders viewed directly overhead, clear rounded and faceted rock silhouettes separated by subtle deep narrow seams, large sculptural masses immediately read as rocks, no flat elevated platform, no cliff edge, no ground border.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/stone.png",
+      "sourceSha256": "b1f042cb757216ce715895329efcaa2da4f6c00703f3512313620273c1d54424",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/stone-dual-grid.webp",
+      "outputSha256": "a9e4114701ee5871b7ee4579de85755a7472083928ca9ebfa6507ae81c02a927",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 153392
+    },
+    {
+      "id": "spirit-ore",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Large tangible pale jade and muted turquoise mineral crystal clusters embedded in dark weathered stone matrix, clearly faceted angular crystal points, mostly solid rock with localized soft turquoise luminosity, identifiable mineable ore, no liquid, no water, no smooth cyan pool, no excessive bloom.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/spirit-ore.png",
+      "sourceSha256": "e5f05ebbd915515c68600af38d26977e5a513e0a8bee7e3279ca68aea7181bdd",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/spirit-ore-dual-grid.webp",
+      "outputSha256": "4fbad5d1ff0e014d2a9a71107a9c0aaa1fc5101121c17c9f393aa1e388e3e053",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 183944
+    },
+    {
+      "id": "black-iron-ore",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Broad dark iron ore outcrops viewed overhead, several large chunky charcoal and blue-gray mineral masses with restrained gunmetal facets and sparse oxidized brown veins, readable solid mineable rocks, no spiky tangle, no fine repetitive needles, no bright glitter.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/black-iron-ore.png",
+      "sourceSha256": "f5c35f57dda36d40346f2384fda7f5216d6409ae883795d644f0d3ee7133cf81",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/black-iron-ore-dual-grid.webp",
+      "outputSha256": "63bd24a33b616f16dfda84e078ec88ec2fdcbdfa48bb517581a1e254aac245d3",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 148716
+    },
+    {
+      "id": "broken-sword-heap",
+      "prompt": "Production game art asset. Create ONE exquisitely detailed high-definition seamless square material texture, 1254x1254 or higher. The texture completely fills the canvas edge to edge, no atlas, no panels, no grid, no borders, no vignette, no perspective scene, no text, no watermark, no transparency or checkerboard. Strict orthographic overhead view for a Chinese xianxia frontier RPG, sophisticated hand-painted 2D game art, restrained realistic shapes, delicate material craftsmanship, harmonious muted natural colors, gentle diffuse light. Readable when reduced to a 32px game cell. No excessive noise or tiny scattered ornaments; broad legible forms first. Opposite edges must tile seamlessly without a seam. Old broken sword debris embedded in dusty dark earth, a limited number of clearly recognizable broad chipped steel blades with visible simple crossguards and dark wrapped hilts, weathered gray steel and muted rust-brown, loose overlapping arrangement, no wooden sticks or dense shredded straw-like noise.",
+      "mode": "built-in-imagegen",
+      "sourceLocal": "assets/generated/terrain-hd-v2/sources/broken-sword-heap.png",
+      "sourceSha256": "ef12ba024f04d1f26273b5deead007da4492b74a8017f010d25b8f3efab093ce",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "packages/client/public/assets/runtime-image-packs/default/tiles/broken-sword-heap-dual-grid.webp",
+      "outputSha256": "fd128272d2e3e819a7daeaacba838df0bd2fcaa45a9b0ed542a6839269a4b276",
+      "outputSize": [
+        1024,
+        1024
+      ],
+      "bytes": 161702
+    }
+  ]
+}

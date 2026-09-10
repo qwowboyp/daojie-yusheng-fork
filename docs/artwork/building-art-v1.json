@@ -24,15 +24,24 @@
       "description": "厚重灰色石材砌成的單格直線牆段，形成房間邊界，阻擋移動與視線。天然切石橫向交錯疊砌。",
       "variant": "ground",
       "mode": "built-in-imagegen",
-      "prompt": "Generate ONE IN-WORLD PLACED BUILDING SPRITE for a square top-down grid, overhead orthographic high-angle view, no isometric diamond base, no perspective scenery. Compact single-cell footprint; align front to bottom of image, show upper surfaces. All content including subtle contact shadow fits within central 88% of square; floor tile may fill square edge-to-edge. Static grounded object, not a floating inventory item.\nGame 道劫餘生. Building 石牆 [stone_wall]. Authoritative function and material brief: 厚重灰色石材砌成的單格直線牆段，形成房間邊界，阻擋移動與視線。天然切石橫向交錯疊砌。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
-      "sourceSha256": "5f0c89c49a68decd73d492bea16419b56bcd961039da073fa27c1d52299ec985",
+      "prompt": "Create one exquisite HIGH DEFINITION game building ground sprite for a Chinese xianxia frontier RPG, square 1254x1254 or higher. Strict orthographic OVERHEAD view, looking almost straight down: show top surfaces, minimal front faces, no isometric diamond base, no perspective scene. Sophisticated beautifully hand-painted game art, restrained realistic proportions, muted harmonious colors, crisp readable broad shapes, gently detailed aged stone, wood and antique bronze; soft upper-left light with only a very subtle close contact shadow. The object should fill 84 percent of the canvas, centered, completely uncropped. Background MUST be a perfectly flat pure white #FFFFFF with no texture, no checkerboard, no ground patch, no gradient, no ambient scene; this is a technical extraction matte. No text, calligraphy, labels, watermarks, people or borders. Avoid tiny decorations and excessive glow; remain recognizable at 32px. One straight solid thick low gray stone wall segment spanning left to right. Broad worn gray granite coping stones clearly visible from above, a narrow slightly visible front stone face along the bottom. Massive ancient stone, irregular but tidy construction. The wall segment has squared ends suitable to connect to neighboring wall cells.",
+      "sourceSha256": "d53d74b8eca1563dd6c31f2a9d5091478e4287b1cea2174fd2b2e59e43df8d9b",
       "sourceSize": [
         1254,
         1254
       ],
       "sizes": [
         256
-      ]
+      ],
+      "sourceLocal": "assets/generated/terrain-hd-v2/building-ready/stone_wall.png",
+      "outputSha256": "2179b0e4d7250c997d3d7d4421f5c082f3045506bea89e8fd5c2986ae9079815",
+      "artRevision": "terrain-hd-v2",
+      "encoding": {
+        "format": "webp",
+        "lossless": true,
+        "fit": "contain"
+      },
+      "editPrompt": "Use case: background-extraction. Asset: transparent game ground sprite. Image 1 is the edit target. Remove only its flat white matte background and output a PNG with genuine transparent alpha outside the object.\nConstraints: preserve the stone wall's exact painted form, proportions, overhead camera angle, colors, details, contact shadow, edge placement, and full object extent. Keep every solid stone/wood/material area opaque; do not crop, redraw, simplify, add objects, change lighting, introduce white halos, checkerboard, ground patch, or text. Transparency only replaces the former background."
     },
     {
       "id": "wooden_door",
@@ -74,15 +83,23 @@
       "description": "深棕木製房間開口，讓人與視線通過。厚木門框、簡樸木門板與古銅鉸鏈，門扇半開，清楚保留通道。",
       "variant": "ground",
       "mode": "built-in-imagegen",
-      "prompt": "Generate ONE IN-WORLD PLACED BUILDING SPRITE for a square top-down grid, overhead orthographic high-angle view, no isometric diamond base, no perspective scenery. Compact single-cell footprint; align front to bottom of image, show upper surfaces. All content including subtle contact shadow fits within central 88% of square; floor tile may fill square edge-to-edge. Static grounded object, not a floating inventory item.\nGame 道劫餘生. Building 木門 [wooden_door]. Authoritative function and material brief: 深棕木製房間開口，讓人與視線通過。厚木門框、簡樸木門板與古銅鉸鏈，門扇半開，清楚保留通道。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
-      "sourceSha256": "7effbd2e605bab62c5a8cc10a9e225254ded46902d8feb3e5b434de7861ed353",
+      "prompt": "Create one exquisite HIGH DEFINITION game building ground sprite for a Chinese xianxia frontier RPG, square 1254x1254 or higher. Strict orthographic OVERHEAD view, looking almost straight down: show top surfaces, minimal front faces, no isometric diamond base, no perspective scene. Sophisticated beautifully hand-painted game art, restrained realistic proportions, muted harmonious colors, crisp readable broad shapes, gently detailed aged stone, wood and antique bronze; soft upper-left light with only a very subtle close contact shadow. The object should fill 84 percent of the canvas, centered, completely uncropped. Background MUST be a perfectly flat pure white #FFFFFF with no texture, no checkerboard, no ground patch, no gradient, no ambient scene; this is a technical extraction matte. No text, calligraphy, labels, watermarks, people or borders. Avoid tiny decorations and excessive glow; remain recognizable at 32px. One single-cell wooden doorway seen from directly overhead: a thick old dark-brown timber frame running left to right, minimal visible upright height, a partly open sturdy plank door leaf swings diagonally inward, visibly clear passage opening. Simple antique bronze hinge and small ring. The overhead orientation is essential: NOT a tall frontal standing door portrait.",
+      "sourceSha256": "04c28917c5a817c88b6bb4014c8b5276c6deaf046ebbb7d37aa41b5ef43f53ca",
       "sourceSize": [
         1254,
         1254
       ],
       "sizes": [
         256
-      ]
+      ],
+      "sourceLocal": "assets/generated/terrain-hd-v2/building-ready/wooden_door.png",
+      "outputSha256": "c8398c4cf13d4a0e777433704f091a248a481f6bcbb39ee3e1e544e05f741980",
+      "artRevision": "terrain-hd-v2",
+      "encoding": {
+        "format": "webp",
+        "lossless": true,
+        "fit": "contain"
+      }
     },
     {
       "id": "plain_floor",
@@ -107,15 +124,23 @@
       "description": "平整木地板鋪層，樸素暖灰棕木板，以工整平行長條拼接，單格正方形地面構件。",
       "variant": "ground",
       "mode": "built-in-imagegen",
-      "prompt": "Generate ONE IN-WORLD PLACED BUILDING SPRITE for a square top-down grid, overhead orthographic high-angle view, no isometric diamond base, no perspective scenery. Compact single-cell footprint; align front to bottom of image, show upper surfaces. All content including subtle contact shadow fits within central 88% of square; floor tile may fill square edge-to-edge. Static grounded object, not a floating inventory item.\nGame 道劫餘生. Building 地板 [plain_floor]. Authoritative function and material brief: 平整木地板鋪層，樸素暖灰棕木板，以工整平行長條拼接，單格正方形地面構件。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
-      "sourceSha256": "f078344bf13ff9cdb971815f550bad4982e005389cac10c8c4f0637701edcecd",
+      "prompt": "Use case: stylized-concept\nAsset type: full-coverage building floor tile for a Chinese xianxia frontier RPG\nPrimary request: Create one high-definition game building ground sprite: one square ancient timber floor module viewed exactly overhead, broad weathered gray-brown wood boards and narrow seams, subtle beautifully crafted grain, completely flat and walkable. No raised platform, border rails, objects, metal corners, or perspective.\nScene/backdrop: the timber floor fills the entire square canvas edge-to-edge; it is intentionally full-frame opaque with no transparent area and no white margin\nStyle/medium: sophisticated beautifully hand-painted game art; muted harmonious colors, crisp broad shapes\nComposition/framing: square 1254x1254 or higher, seamless-looking broad board layout suitable for a single ground tile\nLighting/mood: very restrained even soft upper-left light, no cast shadows\nConstraints: no text, calligraphy, labels, watermarks, people, or borders; no checkerboard, no ground patch, no gradient; recognizable texture at 32px",
+      "sourceSha256": "5b01733e55543dfa7223711e36596b1ac97f8d28b9545891c5eef2ea695d5375",
       "sourceSize": [
         1254,
         1254
       ],
       "sizes": [
         256
-      ]
+      ],
+      "sourceLocal": "assets/generated/terrain-hd-v2/building-ready/plain_floor.png",
+      "outputSha256": "13b6ec197a1f15a892f8a7f656a1f97a0342f822c7a15fafc40e54a5f5935e8c",
+      "artRevision": "terrain-hd-v2",
+      "encoding": {
+        "format": "webp",
+        "lossless": true,
+        "fit": "contain"
+      }
     },
     {
       "id": "wooden_window",
@@ -123,15 +148,23 @@
       "description": "木製窗格開口，可透視但不通行。淺棕木框與細緻格柵，只有低矮窗框構件。",
       "variant": "ground",
       "mode": "built-in-imagegen",
-      "prompt": "Generate ONE IN-WORLD PLACED BUILDING SPRITE for a square top-down grid, overhead orthographic high-angle view, no isometric diamond base, no perspective scenery. Compact single-cell footprint; align front to bottom of image, show upper surfaces. All content including subtle contact shadow fits within central 88% of square; floor tile may fill square edge-to-edge. Static grounded object, not a floating inventory item.\nGame 道劫餘生. Building 木窗 [wooden_window]. Authoritative function and material brief: 木製窗格開口，可透視但不通行。淺棕木框與細緻格柵，只有低矮窗框構件。\nRefined hand-painted Chinese fantasy game art, realistic wood/stone/antique-metal material details with simplified readable shapes, muted harmonious palette, crisp dark edge shading on objects for light and dark environments. Consistent soft upper-left light, minimal subtle contact shadows. True transparent alpha outside the isolated object. No terrain patch or scenery beyond the described building, no people, no written words, labels, letters, UI, frame, badge or watermark. Only the specified building, no extra props beyond its function. The ground and inventory views must share the described design.",
-      "sourceSha256": "f84565c133f3581450e3ef7daa4cce79b3aa193212c9ae4cebdb46b3fe22bb2c",
+      "prompt": "Use case: stylized-concept\nAsset type: transparent PNG ground sprite for a Chinese xianxia frontier RPG\nPrimary request: Create one exquisite high-definition game building ground sprite: one single-cell old wooden window set into a low wall segment, strict orthographic overhead view, horizontal compact rectangle, visible thick frame top and restrained recessed warm-paper lattice opening on its near edge. Old gray-brown wood with a few simple broad geometric lattice divisions. Show a low compact structure from above, never a tall frontal window illustration.\nScene/backdrop: genuinely transparent alpha background; no white, no checkerboard, no ground patch, no gradient, no ambient scene\nStyle/medium: sophisticated beautifully hand-painted game art; restrained realistic proportions, muted harmonious colors, crisp readable broad shapes\nComposition/framing: square 1254x1254 or higher; centered, fills 84% of canvas, completely uncropped; top-down with minimal front face\nLighting/mood: soft upper-left light with only a very subtle close contact shadow retained under the object\nMaterials/textures: gently detailed aged stone, gray-brown wood, warm paper\nConstraints: object interior must be opaque; no text, calligraphy, labels, watermarks, people, borders, tiny decorations, excessive glow; recognizable at 32px",
+      "sourceSha256": "5063ae59eadc61427ccef34e1bbd0861b11e01f8c417ed16add11a9e65a8db43",
       "sourceSize": [
         1254,
         1254
       ],
       "sizes": [
         256
-      ]
+      ],
+      "sourceLocal": "assets/generated/terrain-hd-v2/building-ready/wooden_window.png",
+      "outputSha256": "5b7b21e27393833a1d2e1dd0f4e59de2f8f5693e36a97c361ef229c11493013f",
+      "artRevision": "terrain-hd-v2",
+      "encoding": {
+        "format": "webp",
+        "lossless": true,
+        "fit": "contain"
+      }
     },
     {
       "id": "scripture_platform",
@@ -159,7 +192,7 @@
       "name": "藏經臺",
       "description": "low dark wooden scripture stand with a jade slip and ancient book, subtle pale green spiritual focus, for recording one self-created technique",
       "variant": "ground",
-      "mode": "built-in-imagegen-atlas",
+      "mode": "built-in-imagegen",
       "atlas": "atlases/buildings-facilities.webp",
       "cell": {
         "col": 1,
@@ -169,10 +202,26 @@
         "width": 362,
         "height": 362
       },
-      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "sourceSha256": "f90c5251d51d1179864aed432d9bbaabde9d85831ce689a84db9fc0fcaa3e0f3",
       "variants": [
         256
-      ]
+      ],
+      "prompt": "Use case: stylized-concept\nAsset type: transparent PNG ground sprite for a Chinese xianxia frontier RPG\nPrimary request: Create one exquisite high-definition game building ground sprite: one low rectangular scripture reading table viewed directly overhead, weathered dark wood, one opened ancient book with blank faintly aged pages (no readable symbols), a restrained rolled scroll, and a small muted green incense vessel. Broad simple scholarly silhouette, no dangling ornaments. Sacred but modest old frontier library furnishing.\nScene/backdrop: genuinely transparent alpha background; no white, no checkerboard, no ground patch, no gradient, no ambient scene\nStyle/medium: sophisticated beautifully hand-painted game art, restrained realistic proportions, muted harmonious colors, crisp readable broad shapes\nComposition/framing: square 1254x1254 or higher; centered, fills 84% of canvas, completely uncropped; strict orthographic overhead with top surfaces and minimal front faces\nLighting/mood: soft upper-left light with only a very subtle close contact shadow retained under the object\nMaterials/textures: aged dark wood, antique paper, muted green ceramic\nConstraints: object interior must be opaque; no text, calligraphy, labels, watermarks, people, borders, excessive glow; recognizable at 32px",
+      "sourceLocal": "assets/generated/terrain-hd-v2/building-ready/scripture_platform.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        256
+      ],
+      "outputSha256": "9e43f554f8fc9e8383736ad15aa17e4f5bfdf560a97f489c74327c7fd35a9132",
+      "artRevision": "terrain-hd-v2",
+      "encoding": {
+        "format": "webp",
+        "lossless": true,
+        "fit": "contain"
+      }
     },
     {
       "id": "treasure_vault",
@@ -200,7 +249,7 @@
       "name": "寶庫",
       "description": "compact reinforced wooden storage chest with bronze fittings, warm gold detail, contains precious items; no house",
       "variant": "ground",
-      "mode": "built-in-imagegen-atlas",
+      "mode": "built-in-imagegen",
       "atlas": "atlases/buildings-facilities.webp",
       "cell": {
         "col": 3,
@@ -210,10 +259,27 @@
         "width": 362,
         "height": 362
       },
-      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "sourceSha256": "e18fd00dba381fd68ed918169ee9de3a9d7fa3a84e1e7adabc892e785adf5270",
       "variants": [
         256
-      ]
+      ],
+      "prompt": "Create one exquisite HIGH DEFINITION game building ground sprite for a Chinese xianxia frontier RPG, square 1254x1254 or higher. Strict orthographic OVERHEAD view, looking almost straight down: show top surfaces, minimal front faces, no isometric diamond base, no perspective scene. Sophisticated beautifully hand-painted game art, restrained realistic proportions, muted harmonious colors, crisp readable broad shapes, gently detailed aged stone, wood and antique bronze; soft upper-left light with only a very subtle close contact shadow. The object should fill 84 percent of the canvas, centered, completely uncropped. Background MUST be a perfectly flat pure white #FFFFFF with no texture, no checkerboard, no ground patch, no gradient, no ambient scene; this is a technical extraction matte. No text, calligraphy, labels, watermarks, people or borders. Avoid tiny decorations and excessive glow; remain recognizable at 32px. One compact secure treasure storage coffer viewed directly overhead, closed heavy dark wood lid with a few dull antique bronze reinforcing bands and one prominent central latch, modest rectangular silhouette, restrained gray-gold accents, no jewels, no piles of coins, no bright fantasy treasure explosion.",
+      "sourceLocal": "assets/generated/terrain-hd-v2/building-ready/treasure_vault.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        256
+      ],
+      "outputSha256": "aed4801eefdfc402532519bb8fac9da5d57f101196bc50414b9b1a2807384a43",
+      "artRevision": "terrain-hd-v2",
+      "encoding": {
+        "format": "webp",
+        "lossless": true,
+        "fit": "contain"
+      },
+      "editPrompt": "Use case: background-extraction. Asset: transparent game ground sprite. Image 1 is the edit target. Remove only its flat white matte background and output genuine transparent alpha outside the exact treasure coffer. Preserve exact painted object, top-down view, proportions, materials, colors, object size and placement. Keep solid object interiors opaque; preserve subtle contact shadows only where they belong. Do not crop, redraw, add, change lighting, leave white halos, checkerboard, ground patch, or text."
     },
     {
       "id": "technique_refining_table",
@@ -241,7 +307,7 @@
       "name": "煉法臺",
       "description": "small wood desk on stone base with scroll pages, brush and ink dish, restrained purple technique refinement pattern",
       "variant": "ground",
-      "mode": "built-in-imagegen-atlas",
+      "mode": "built-in-imagegen",
       "atlas": "atlases/buildings-facilities.webp",
       "cell": {
         "col": 1,
@@ -251,10 +317,27 @@
         "width": 362,
         "height": 362
       },
-      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "sourceSha256": "93bcb6625b42fd82296d5a07c0d1dbb5aafea6e5e7875c2d780de686e4a33cac",
       "variants": [
         256
-      ]
+      ],
+      "prompt": "Create one exquisite HIGH DEFINITION game building ground sprite for a Chinese xianxia frontier RPG, square 1254x1254 or higher. Strict orthographic OVERHEAD view, looking almost straight down: show top surfaces, minimal front faces, no isometric diamond base, no perspective scene. Sophisticated beautifully hand-painted game art, restrained realistic proportions, muted harmonious colors, crisp readable broad shapes, gently detailed aged stone, wood and antique bronze; soft upper-left light with only a very subtle close contact shadow. The object should fill 84 percent of the canvas, centered, completely uncropped. Background MUST be a perfectly flat pure white #FFFFFF with no texture, no checkerboard, no ground patch, no gradient, no ambient scene; this is a technical extraction matte. No text, calligraphy, labels, watermarks, people or borders. Avoid tiny decorations and excessive glow; remain recognizable at 32px. One compact technique-refinement worktable viewed directly overhead, old dark rectangular wood tabletop with one blank parchment scroll, a dark brush rest, and one small circular restrained lavender rune inlay WITHOUT letters. Modest ancient scholarly craft bench, clearly distinct from a treasure chest, limited number of broad legible objects.",
+      "sourceLocal": "assets/generated/terrain-hd-v2/building-ready/technique_refining_table.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        256
+      ],
+      "outputSha256": "8276aff217b7eed7b1874538cd38efbd1eb3dba15a5059fab7a081a69bd9aad1",
+      "artRevision": "terrain-hd-v2",
+      "encoding": {
+        "format": "webp",
+        "lossless": true,
+        "fit": "contain"
+      },
+      "editPrompt": "Use case: background-extraction. Asset: transparent game ground sprite. Image 1 is the edit target. Remove only its flat white matte background and output genuine transparent alpha outside the exact technique-refinement worktable. Preserve exact painted object, top-down view, proportions, materials, colors, object size and placement. Keep solid object interiors opaque; preserve subtle contact shadows only where they belong. Do not crop, redraw, add, change lighting, leave white halos, checkerboard, ground patch, or text."
     },
     {
       "id": "technique_unification_platform",
@@ -282,7 +365,7 @@
       "name": "統法臺",
       "description": "wood and stone circular dais with several jade slips and converging teal and water-blue technique lineage currents",
       "variant": "ground",
-      "mode": "built-in-imagegen-atlas",
+      "mode": "built-in-imagegen",
       "atlas": "atlases/buildings-facilities.webp",
       "cell": {
         "col": 3,
@@ -292,10 +375,27 @@
         "width": 362,
         "height": 362
       },
-      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "sourceSha256": "5b6d75c30b21f8032f71a835de1f12451608a1c9930a6091b7ed5cac2eec19bb",
       "variants": [
         256
-      ]
+      ],
+      "prompt": "Create one exquisite HIGH DEFINITION game building ground sprite for a Chinese xianxia frontier RPG, square 1254x1254 or higher. Strict orthographic OVERHEAD view, looking almost straight down: show top surfaces, minimal front faces, no isometric diamond base, no perspective scene. Sophisticated beautifully hand-painted game art, restrained realistic proportions, muted harmonious colors, crisp readable broad shapes, gently detailed aged stone, wood and antique bronze; soft upper-left light with only a very subtle close contact shadow. The object should fill 84 percent of the canvas, centered, completely uncropped. Background MUST be a perfectly flat pure white #FFFFFF with no texture, no checkerboard, no ground patch, no gradient, no ambient scene; this is a technical extraction matte. No text, calligraphy, labels, watermarks, people or borders. Avoid tiny decorations and excessive glow; remain recognizable at 32px. One ancient circular technique-unification stone dais viewed directly overhead, weathered desaturated blue-gray stone, four chunky antique bronze cardinal clamps, shallow concentric rings and a modest faint jade-cyan swirl in the center. Low round solid platform, clear circle silhouette, restrained spiritual energy with no outward light rays.",
+      "sourceLocal": "assets/generated/terrain-hd-v2/building-ready/technique_unification_platform.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        256
+      ],
+      "outputSha256": "b31b5e499d7172f3b63faede48a85e971ca9dfd344786a0c6887c99c88b0674d",
+      "artRevision": "terrain-hd-v2",
+      "encoding": {
+        "format": "webp",
+        "lossless": true,
+        "fit": "contain"
+      },
+      "editPrompt": "Use case: background-extraction. Image 1 is the edit target and currently contains an unacceptable visible gray-and-white checkerboard. Remove that checkerboard completely and make every pixel outside the stone dais truly transparent alpha=0. Preserve only the exact circular stone platform and its opaque interior; preserve its shape, top-down view, colors, details, proportions, and placement. Do not add any background pattern, white field, gray field, texture, or shadow beyond the object."
     },
     {
       "id": "time_chamber",
@@ -323,7 +423,7 @@
       "name": "密室",
       "description": "compact gray-purple stone portal pedestal, upright small oval violet portal with a violet boundary crystal, an entrance to separate space, no large room",
       "variant": "ground",
-      "mode": "built-in-imagegen-atlas",
+      "mode": "built-in-imagegen",
       "atlas": "atlases/buildings-facilities.webp",
       "cell": {
         "col": 1,
@@ -333,10 +433,27 @@
         "width": 362,
         "height": 362
       },
-      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "sourceSha256": "9ed7857fd9838b2d9e3478672a4b47f7fbaab168004e861c91a75e6d6fe076a2",
       "variants": [
         256
-      ]
+      ],
+      "prompt": "Create one exquisite HIGH DEFINITION game building ground sprite for a Chinese xianxia frontier RPG, square 1254x1254 or higher. Strict orthographic OVERHEAD view, looking almost straight down: show top surfaces, minimal front faces, no isometric diamond base, no perspective scene. Sophisticated beautifully hand-painted game art, restrained realistic proportions, muted harmonious colors, crisp readable broad shapes, gently detailed aged stone, wood and antique bronze; soft upper-left light with only a very subtle close contact shadow. The object should fill 84 percent of the canvas, centered, completely uncropped. Background MUST be a perfectly flat pure white #FFFFFF with no texture, no checkerboard, no ground patch, no gradient, no ambient scene; this is a technical extraction matte. No text, calligraphy, labels, watermarks, people or borders. Avoid tiny decorations and excessive glow; remain recognizable at 32px. One compact circular time-meditation stone chamber platform viewed directly overhead, layered worn dark gray stone rim, a restrained deep violet central pool-like hourglass swirl enclosed inside the ring, two or three small solid amethyst keystones set in the rim. Intact stone structure, quiet mystical depth, no portal arch, no bright bloom or perspective stairs.",
+      "sourceLocal": "assets/generated/terrain-hd-v2/building-ready/time_chamber.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        256
+      ],
+      "outputSha256": "b31fd95b19f204660a084bbdfde6fb10a85b4b5c878207310426b4b36e561a2b",
+      "artRevision": "terrain-hd-v2",
+      "encoding": {
+        "format": "webp",
+        "lossless": true,
+        "fit": "contain"
+      },
+      "editPrompt": "Use case: background-extraction. Asset: transparent game ground sprite. Image 1 is the edit target. Remove only its flat white matte background and output genuine transparent alpha outside the exact circular time-meditation stone chamber platform. Preserve exact painted object, top-down view, proportions, materials, colors, object size and placement. Keep solid object interiors opaque; preserve subtle contact shadows only where they belong. Do not crop, redraw, add, change lighting, leave white halos, checkerboard, ground patch, or text."
     },
     {
       "id": "meditation_mat",
@@ -364,7 +481,7 @@
       "name": "蒲團",
       "description": "low round woven yellow-brown grass and cloth meditation cushion, faint green spiritual glow, no throne",
       "variant": "ground",
-      "mode": "built-in-imagegen-atlas",
+      "mode": "built-in-imagegen",
       "atlas": "atlases/buildings-facilities.webp",
       "cell": {
         "col": 3,
@@ -374,10 +491,27 @@
         "width": 362,
         "height": 362
       },
-      "sourceSha256": "b86aa37d83ccd8c05fa9bb4909880371bdcbb8f1e03b6e24ad1e90ba911bb028",
+      "sourceSha256": "6c040dc988813f456478322ecbe2387e8f3a4a80361cec90a704d2a113c4f6c8",
       "variants": [
         256
-      ]
+      ],
+      "prompt": "Create one exquisite HIGH DEFINITION game building ground sprite for a Chinese xianxia frontier RPG, square 1254x1254 or higher. Strict orthographic OVERHEAD view, looking almost straight down: show top surfaces, minimal front faces, no isometric diamond base, no perspective scene. Sophisticated beautifully hand-painted game art, restrained realistic proportions, muted harmonious colors, crisp readable broad shapes, gently detailed aged stone, wood and antique bronze; soft upper-left light with only a very subtle close contact shadow. The object should fill 84 percent of the canvas, centered, completely uncropped. Background MUST be a perfectly flat pure white #FFFFFF with no texture, no checkerboard, no ground patch, no gradient, no ambient scene; this is a technical extraction matte. No text, calligraphy, labels, watermarks, people or borders. Avoid tiny decorations and excessive glow; remain recognizable at 32px. One beautiful simple round woven meditation cushion viewed directly overhead, muted golden straw and aged sage-green cloth edging, subtle braided concentric weave with a clear broad center, one very restrained simple stitched spiral motif, no text or occult lettering, no tassels pointing outward, no excessive gold ornament.",
+      "sourceLocal": "assets/generated/terrain-hd-v2/building-ready/meditation_mat.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sizes": [
+        256
+      ],
+      "outputSha256": "51db93e8e1040013f00a4b75d8b66b3a150ba841ea745c62236bb6e89723fac0",
+      "artRevision": "terrain-hd-v2",
+      "encoding": {
+        "format": "webp",
+        "lossless": true,
+        "fit": "contain"
+      },
+      "editPrompt": "Background removal only. Return this same overhead round straw meditation mat as a PNG cutout with a transparent background. Keep every part of the mat, including its olive fabric rim, stitch bands and spiral center, opaque and unchanged. Remove the white surrounding background and shadow completely. The corners and all space outside the circular silhouette must be transparent (alpha 0), not filled with any color or any pattern. Preserve the square canvas and the full uncropped object. This image is a game sprite that will be composited over terrain."
     }
   ]
 }
