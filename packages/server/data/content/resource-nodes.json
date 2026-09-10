@@ -676,6 +676,1370 @@
           }
         ]
       }
+    },
+    {
+      "id": "lg_landmark_lg_golden_core_xinjin_slope_herb_1",
+      "kind": "landmark_container",
+      "name": "燈芯草",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#dd6a45",
+        "drops": [
+          {
+            "itemId": "lg_golden_core_xinjin_slope_resource_1",
+            "name": "燈芯草",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_golden_core_xinjin_slope_herb_2",
+      "kind": "landmark_container",
+      "name": "灰燼藥蕨",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#dd6a45",
+        "drops": [
+          {
+            "itemId": "lg_golden_core_xinjin_slope_resource_5",
+            "name": "灰燼藥蕨",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_golden_core_molten_channel_herb_1",
+      "kind": "landmark_container",
+      "name": "火苔",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#dd6a45",
+        "drops": [
+          {
+            "itemId": "lg_golden_core_molten_channel_resource_3",
+            "name": "火苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_golden_core_molten_channel_herb_2",
+      "kind": "landmark_container",
+      "name": "渣河溫藥",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#dd6a45",
+        "drops": [
+          {
+            "itemId": "lg_golden_core_molten_channel_resource_5",
+            "name": "渣河溫藥",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_golden_core_hanging_lamps_herb_1",
+      "kind": "landmark_container",
+      "name": "峽蘿",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#dd6a45",
+        "drops": [
+          {
+            "itemId": "lg_golden_core_hanging_lamps_resource_1",
+            "name": "峽蘿",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_golden_core_hanging_lamps_herb_2",
+      "kind": "landmark_container",
+      "name": "燈影養魂花",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#dd6a45",
+        "drops": [
+          {
+            "itemId": "lg_golden_core_hanging_lamps_resource_5",
+            "name": "燈影養魂花",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_golden_core_sky_mending_furnace_herb_1",
+      "kind": "landmark_container",
+      "name": "爐心續火草",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#dd6a45",
+        "drops": [
+          {
+            "itemId": "lg_golden_core_sky_mending_furnace_resource_5",
+            "name": "爐心續火草",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_golden_core_sky_mending_furnace_herb_2",
+      "kind": "landmark_container",
+      "name": "天火暖蕨",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#dd6a45",
+        "drops": [
+          {
+            "itemId": "lg_golden_core_sky_mending_furnace_resource_6",
+            "name": "天火暖蕨",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_nascent_soul_m1_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "灘螢藻",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_nascent_soul_m1_entry_resource_3",
+            "name": "灘螢藻",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_nascent_soul_m1_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "灘月凝魂草",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#6caed0",
+        "drops": [
+          {
+            "itemId": "lg_nascent_soul_m1_entry_resource_6",
+            "name": "灘月凝魂草",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_nascent_soul_m2_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "海魂珊",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#6caed0",
+        "drops": [
+          {
+            "itemId": "lg_nascent_soul_m2_entry_resource_2",
+            "name": "海魂珊",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_nascent_soul_m2_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "聲歸藻",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_nascent_soul_m2_entry_resource_3",
+            "name": "聲歸藻",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_nascent_soul_m2_entry_herb_3",
+      "kind": "landmark_container",
+      "name": "潮鎖苔",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 120,
+        "refreshTicksMax": 180,
+        "char": "草",
+        "color": "#6caed0",
+        "drops": [
+          {
+            "itemId": "lg_nascent_soul_m2_entry_resource_4",
+            "name": "潮鎖苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_nascent_soul_m3_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "潮骨藤",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#6caed0",
+        "drops": [
+          {
+            "itemId": "lg_nascent_soul_m3_entry_resource_4",
+            "name": "潮骨藤",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_nascent_soul_m3_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "月帆棉",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#6caed0",
+        "drops": [
+          {
+            "itemId": "lg_nascent_soul_m3_entry_resource_5",
+            "name": "月帆棉",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_nascent_soul_m4_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "深月露",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#6caed0",
+        "drops": [
+          {
+            "itemId": "lg_nascent_soul_m4_entry_resource_2",
+            "name": "深月露",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_nascent_soul_m4_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "回瀾靜魂藻",
+      "container": {
+        "variant": "herb",
+        "grade": "heaven",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#6caed0",
+        "drops": [
+          {
+            "itemId": "lg_nascent_soul_m4_entry_resource_6",
+            "name": "回瀾靜魂藻",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_spirit_transformation_m1_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "登階苔",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+            "name": "登階苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_spirit_transformation_m1_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "懸階藤",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_spirit_transformation_m1_entry_resource_5",
+            "name": "懸階藤",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_spirit_transformation_m2_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "聽雷草",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#d7c27a",
+        "drops": [
+          {
+            "itemId": "lg_spirit_transformation_m2_entry_resource_2",
+            "name": "聽雷草",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_spirit_transformation_m2_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "拍律藤",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_spirit_transformation_m2_entry_resource_3",
+            "name": "拍律藤",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_spirit_transformation_m3_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "星軌蘚",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_spirit_transformation_m3_entry_resource_3",
+            "name": "星軌蘚",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_spirit_transformation_m3_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "眺星藤",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_spirit_transformation_m3_entry_resource_4",
+            "name": "眺星藤",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_spirit_transformation_m4_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "囚風蘚",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_spirit_transformation_m4_entry_resource_4",
+            "name": "囚風蘚",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_spirit_transformation_m4_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "獄底止風花",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_spirit_transformation_m4_entry_resource_5",
+            "name": "獄底止風花",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_void_refinement_m1_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "隙紋蘚",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_void_refinement_m1_entry_resource_3",
+            "name": "隙紋蘚",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_void_refinement_m1_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "界隙定神芽",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#9b7851",
+        "drops": [
+          {
+            "itemId": "lg_void_refinement_m1_entry_resource_6",
+            "name": "界隙定神芽",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_void_refinement_m2_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "虛空藻",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_void_refinement_m2_entry_resource_1",
+            "name": "虛空藻",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_void_refinement_m2_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "隙光藻",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_void_refinement_m2_entry_resource_4",
+            "name": "隙光藻",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_void_refinement_m3_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "骸港苔",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_void_refinement_m3_entry_resource_3",
+            "name": "骸港苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_void_refinement_m3_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "冷星寧神葉",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_void_refinement_m3_entry_resource_6",
+            "name": "冷星寧神葉",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_void_refinement_m4_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "無光露",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#9b7851",
+        "drops": [
+          {
+            "itemId": "lg_void_refinement_m4_entry_resource_1",
+            "name": "無光露",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_void_refinement_m4_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "隙眠苔",
+      "container": {
+        "variant": "herb",
+        "grade": "spirit",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_void_refinement_m4_entry_resource_4",
+            "name": "隙眠苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_body_integration_m1_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "垣階苔",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_body_integration_m1_entry_resource_3",
+            "name": "垣階苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_body_integration_m1_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "舊壘止血花",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_body_integration_m1_entry_resource_6",
+            "name": "舊壘止血花",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_body_integration_m2_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "鏡我蓮",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#9b7851",
+        "drops": [
+          {
+            "itemId": "lg_body_integration_m2_entry_resource_1",
+            "name": "鏡我蓮",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_body_integration_m2_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "照心萍",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#9b7851",
+        "drops": [
+          {
+            "itemId": "lg_body_integration_m2_entry_resource_2",
+            "name": "照心萍",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_body_integration_m2_entry_herb_3",
+      "kind": "landmark_container",
+      "name": "鏡心藕",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 120,
+        "refreshTicksMax": 180,
+        "char": "草",
+        "color": "#9b7851",
+        "drops": [
+          {
+            "itemId": "lg_body_integration_m2_entry_resource_4",
+            "name": "鏡心藕",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_body_integration_m3_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "啞陵草",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_body_integration_m3_entry_resource_2",
+            "name": "啞陵草",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_body_integration_m3_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "無聲定魄花",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_body_integration_m3_entry_resource_6",
+            "name": "無聲定魄花",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_body_integration_m4_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "井心苔",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_body_integration_m4_entry_resource_1",
+            "name": "井心苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_body_integration_m4_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "垣絡藤",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_body_integration_m4_entry_resource_4",
+            "name": "垣絡藤",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_body_integration_m4_entry_herb_3",
+      "kind": "landmark_container",
+      "name": "井壁養脈蘚",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 120,
+        "refreshTicksMax": 180,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_body_integration_m4_entry_resource_6",
+            "name": "井壁養脈蘚",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_great_vehicle_m1_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "劫紋苔",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_great_vehicle_m1_entry_resource_4",
+            "name": "劫紋苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_great_vehicle_m1_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "絞風藤",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_great_vehicle_m1_entry_resource_5",
+            "name": "絞風藤",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_great_vehicle_m2_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "贖罪苔",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_great_vehicle_m2_entry_resource_2",
+            "name": "贖罪苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_great_vehicle_m2_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "碑陰洗雷草",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#d7c27a",
+        "drops": [
+          {
+            "itemId": "lg_great_vehicle_m2_entry_resource_6",
+            "name": "碑陰洗雷草",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_great_vehicle_m3_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "咬痕藤",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_great_vehicle_m3_entry_resource_4",
+            "name": "咬痕藤",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_great_vehicle_m3_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "拾骨花",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_great_vehicle_m3_entry_resource_5",
+            "name": "拾骨花",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_great_vehicle_m4_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "反影草",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_great_vehicle_m4_entry_resource_2",
+            "name": "反影草",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_great_vehicle_m4_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "逆光梢",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#d7c27a",
+        "drops": [
+          {
+            "itemId": "lg_great_vehicle_m4_entry_resource_4",
+            "name": "逆光梢",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_great_vehicle_m4_entry_herb_3",
+      "kind": "landmark_container",
+      "name": "坡陰護脈蕨",
+      "container": {
+        "variant": "herb",
+        "grade": "saint",
+        "refreshTicksMin": 120,
+        "refreshTicksMax": 180,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_great_vehicle_m4_entry_resource_6",
+            "name": "坡陰護脈蕨",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_tribulation_m1_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "劫渡苔",
+      "container": {
+        "variant": "herb",
+        "grade": "emperor",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_tribulation_m1_entry_resource_3",
+            "name": "劫渡苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_tribulation_m1_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "避劫雲芝",
+      "container": {
+        "variant": "herb",
+        "grade": "emperor",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#dd6a45",
+        "drops": [
+          {
+            "itemId": "lg_tribulation_m1_entry_resource_5",
+            "name": "避劫雲芝",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_tribulation_m2_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "雷池藻",
+      "container": {
+        "variant": "herb",
+        "grade": "emperor",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#d7c27a",
+        "drops": [
+          {
+            "itemId": "lg_tribulation_m2_entry_resource_3",
+            "name": "雷池藻",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_tribulation_m2_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "池岸寧雷蓮",
+      "container": {
+        "variant": "herb",
+        "grade": "emperor",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#d7c27a",
+        "drops": [
+          {
+            "itemId": "lg_tribulation_m2_entry_resource_5",
+            "name": "池岸寧雷蓮",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_tribulation_m3_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "心魔藤",
+      "container": {
+        "variant": "herb",
+        "grade": "emperor",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_tribulation_m3_entry_resource_1",
+            "name": "心魔藤",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_tribulation_m3_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "鏡心花",
+      "container": {
+        "variant": "herb",
+        "grade": "emperor",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_tribulation_m3_entry_resource_2",
+            "name": "鏡心花",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_tribulation_m3_entry_herb_3",
+      "kind": "landmark_container",
+      "name": "心執苔",
+      "container": {
+        "variant": "herb",
+        "grade": "emperor",
+        "refreshTicksMin": 120,
+        "refreshTicksMax": 180,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_tribulation_m3_entry_resource_3",
+            "name": "心執苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_tribulation_m4_entry_herb_1",
+      "kind": "landmark_container",
+      "name": "五衰花",
+      "container": {
+        "variant": "herb",
+        "grade": "emperor",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 160,
+        "char": "草",
+        "color": "#77a867",
+        "drops": [
+          {
+            "itemId": "lg_tribulation_m4_entry_resource_1",
+            "name": "五衰花",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_tribulation_m4_entry_herb_2",
+      "kind": "landmark_container",
+      "name": "薪火葉",
+      "container": {
+        "variant": "herb",
+        "grade": "emperor",
+        "refreshTicksMin": 110,
+        "refreshTicksMax": 170,
+        "char": "草",
+        "color": "#dd6a45",
+        "drops": [
+          {
+            "itemId": "lg_tribulation_m4_entry_resource_2",
+            "name": "薪火葉",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lg_landmark_lg_tribulation_m4_entry_herb_3",
+      "kind": "landmark_container",
+      "name": "薪燼苔",
+      "container": {
+        "variant": "herb",
+        "grade": "emperor",
+        "refreshTicksMin": 120,
+        "refreshTicksMax": 180,
+        "char": "草",
+        "color": "#dd6a45",
+        "drops": [
+          {
+            "itemId": "lg_tribulation_m4_entry_resource_4",
+            "name": "薪燼苔",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
     }
   ]
 }

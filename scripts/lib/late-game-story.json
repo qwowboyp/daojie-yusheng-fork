@@ -1,0 +1,4241 @@
+{
+  "realms": [
+    {
+      "key": "golden_core",
+      "name": "金丹期",
+      "startLevel": 43,
+      "source": [
+        "docs/story/後期總綱.md#4.1",
+        "docs/story/金丹/金丹期地圖設計.md"
+      ],
+      "town": {
+        "id": "lg_golden_core_ember_lamp_market",
+        "name": "燼燈坊",
+        "description": "每戶門前掛一盞燈。出遠門的人帶走自己那盞行燈的燈芯，回來才取回；沒回來的，門燈不熄。 坊裡的燈分三種：門燈（家戶）、行燈（出遠門的人帶走）、公燈（坊口與夜路，公家添油）。 街是焦土夯的，走路帶灰；灰沾在燈罩上，誰家的燈多久沒擦，附近的人都知道。",
+        "npcs": [
+          {
+            "id": "lg_golden_core_nie_old_lamp",
+            "name": "坊正·聶老燈",
+            "role": "燼燈坊坊正",
+            "description": "燼燈坊坊正。肚裡記著全坊每一盞燈的名字，卻記不住自己的歲數；問事先問「燈還在不在」。",
+            "dialogue": "燈還在不在？先記下你的名字，回來時記得把牌翻過來。"
+          },
+          {
+            "id": "lg_golden_core_jian_can",
+            "name": "記匠·簡殘",
+            "role": "補天一脈留在坊裡的記匠",
+            "description": "補天一脈留在坊裡的記匠。左手缺了兩指，寫字用右手壓著左手；他記什麼都記一半，因為「後半段要留給後面的人接」。",
+            "dialogue": "前半頁是前人寫的，後半頁得有人接。你看過殘爐，再來找我。"
+          },
+          {
+            "id": "lg_golden_core_liu_lamp",
+            "name": "燈鋪掌櫃·柳燈娘",
+            "role": "燈油、燈芯、藥材鋪",
+            "description": "燈油、燈芯、藥材鋪。愛講價，但從不缺斤兩；她自己也留著一盞行燈，燈主人還沒回來。",
+            "dialogue": "燈油要添，命也要顧。出坊前，把藥和行燈都備上。"
+          },
+          {
+            "id": "lg_golden_core_zhao_sangeng",
+            "name": "委託掮客·趙三更",
+            "role": "掛委託板、抽一成",
+            "description": "掛委託板、抽一成。嘴碎，什麼都聽得見；他不打聽的事，才叫奇怪。",
+            "dialogue": "坡上缺人撿鐵，峽裡缺人尋燈。你想接哪一樁，先掂量根基。"
+          },
+          {
+            "id": "lg_golden_core_huo_dalu",
+            "name": "爐工會首·霍大爐",
+            "role": "管爐籍與鍛造排程",
+            "description": "管爐籍與鍛造排程。只認爐規，人也只講規矩；規矩之外，他其實心軟。",
+            "dialogue": "我的爐只認料，不認大話。劫鐵帶來之前，先看清爐規。"
+          },
+          {
+            "id": "lg_golden_core_ember_lamp_market_npc_6",
+            "name": "餘溫棧東家·溫九",
+            "role": "客棧東家",
+            "description": "客棧東家。記得每一桌客人講過的話，也記得誰沒回來；他的棧錢可以用故事抵。",
+            "dialogue": "住下就說個故事吧。有人把帳留在這兒，三十年沒來結。"
+          },
+          {
+            "id": "lg_golden_core_ya_gu",
+            "name": "守燈人·啞姑",
+            "role": "夜裡巡坊添燈油的人",
+            "description": "夜裡巡坊添燈油的人。不說話，記事用蠟滴；她在，全坊的燈就不會滅一整排。",
+            "dialogue": "……她添好燈油，向你攤開掌心，蠟滴刻成一個「歸」字。"
+          },
+          {
+            "id": "lg_golden_core_ember_lamp_market_npc_8",
+            "name": "藥鋪大夫·祝餘",
+            "role": "治劫火燒傷的大夫",
+            "description": "治劫火燒傷的大夫。只治傷不勸人；他收的診金看傷口形狀，不看人。",
+            "dialogue": "歸藏脈窟後那座洞府，還有一筆舊帳。若見到喚靈真人，替我帶回他的名牌。"
+          }
+        ]
+      },
+      "maps": [
+        {
+          "id": "lg_golden_core_xinjin_slope",
+          "name": "薪盡坡",
+          "startLevel": 43,
+          "description": "焦坡連綿，地表是燒結的暗紅硬殼，踩碎會露出底下仍燙的灰，走路有脆響。 古道兩側插滿熄滅的燈桿，桿頭朝同一方向歪，那個方向是劫火帶深處。 風過灰燼如雪。灰雪會蓋住路與腳印，同一條路走兩次，看不出是同一條。",
+          "theme": "焦坡連綿，地表是燒結的暗紅硬殼，踩碎會露出底下仍燙的灰，走路有脆響",
+          "resources": [
+            {
+              "id": "lg_golden_core_xinjin_slope_resource_1",
+              "name": "燈芯草",
+              "kind": "herb",
+              "description": "莖心一線暗紅，無風自明滅，摘下來得含著才不熄。製引魂燈油、續氣類藥引。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_xinjin_slope_resource_2",
+              "name": "餘燼砂",
+              "kind": "ore",
+              "description": "灰白細砂，翻開仍有餘溫，夜裡冒白線。淬體輔料、低階炙體藥。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_xinjin_slope_resource_3",
+              "name": "琉璃化土",
+              "kind": "ore",
+              "description": "隕擊處燒結的彩色玻璃狀土殼，斷口鋒利如刃。琉璃器皿、低階法器胚料。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_xinjin_slope_resource_4",
+              "name": "殘燈屑",
+              "kind": "exotic",
+              "description": "舊燈桿上剝落的燈罩碎片，摸起來還有一點體溫。引魂香、喚靈儀式耗材。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_xinjin_slope_resource_5",
+              "name": "灰燼藥蕨",
+              "kind": "herb",
+              "description": "生於薪盡坡背風縫隙的灰燼藥蕨，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "fire",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_golden_core_xinjin_slope_mob_1",
+              "name": "焦土小妖",
+              "description": "從燒結土裡鑽出的焦黑小東西，見光就湊，打碎了散成一把灰。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_xinjin_slope_mob_2",
+              "name": "灰燼遊魂",
+              "description": "燒剩的人形灰影，風一吹就散，散了在原地又聚起來。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_xinjin_slope_mob_3",
+              "name": "熄燈鬼火",
+              "description": "熄燈桿下積出的火，會朝亮處撲；目標越亮，它追得越緊。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_xinjin_slope_mob_4",
+              "name": "燼殼灰偶",
+              "description": "灰燼裹成的人形空殼，殼裡是空的，靠灰雪維持形狀。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_xinjin_slope_mob_5",
+              "name": "風掃灰魈",
+              "description": "灰雪最濃處生出的魈，順風換位，逆風時會僵住。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_golden_core_xinjin_lamplighter",
+            "name": "拾燈人",
+            "description": "灰袍老者，身量與常人無異，背卻永遠微微躬著，像常年提燈走路。左手提一盞破了口的舊燈，燈裡沒有火，只有一小團慢慢轉的灰白光。兜帽下看不清臉，只看見下巴與一縷灰鬚。他走過的地方，灰雪會讓開半步。",
+            "skills": [
+              {
+                "name": "收燈式",
+                "description": "收殘燈回復並強化燈中殘魂。"
+              },
+              {
+                "name": "照魂焰",
+                "description": "標記目標並壓低身法與命中。"
+              },
+              {
+                "name": "灰雪掩燈",
+                "description": "灰雪壓低全場視野與命中。"
+              },
+              {
+                "name": "一盞替一命",
+                "description": "放出殘影代擋傷害。"
+              }
+            ],
+            "dropNames": [
+              "燈芯草",
+              "琉璃化土",
+              "殘燈屑",
+              "燈硝護腕"
+            ],
+            "dropDirection": "- 材料：殘燈屑、燈芯草、琉璃化土。\n- 功法殘頁：引魂類功法殘頁（暫名《引魂燈訣》）。\n- 任務物：破燈（喚靈線與主線關鍵物件）、撿鐵人的名牌。\n- 部件：金丹前期護具部件（暫定：燈硝護腕）。\n-",
+            "componentName": "燈硝護腕"
+          },
+          "landmarks": [
+            {
+              "name": "薪盡坡入口",
+              "description": "焦坡連綿，地表是燒結的暗紅硬殼，踩碎會露出底下仍燙的灰，走路有脆響。 古道兩側插滿熄滅的燈桿，桿頭朝同一方向歪，那個方向是劫火帶深處。 風過灰燼如雪。灰雪會蓋住路與腳印，同一條路走兩次，看不出是同一條。"
+            },
+            {
+              "name": "拾燈人駐地",
+              "description": "灰袍老者，身量與常人無異，背卻永遠微微躬著，像常年提燈走路。左手提一盞破了口的舊燈，燈裡沒有火，只有一小團慢慢轉的灰白光。兜帽下看不清臉，只看見下巴與一縷灰鬚。他走過的地方，灰雪會讓開半步。"
+            }
+          ],
+          "source": [
+            "docs/story/金丹/金丹期地圖設計.md"
+          ]
+        },
+        {
+          "id": "lg_golden_core_molten_channel",
+          "name": "熔渠舊坊",
+          "startLevel": 46,
+          "description": "舊坊市半沉入熔渣河，屋頂露在渣面之上，門還鎖著，鎖孔裡塞滿渣。 街道是冷凝的熔渠，渠面平滑如鏡，冬天也不冰，走上去能看見自己的倒影。 爐灶仍在冒煙，卻沒有火。煙是從冷掉的爐裡自己冒出來的，沒有焦味，只有舊灰味。",
+          "theme": "舊坊市半沉入熔渣河，屋頂露在渣面之上，門還鎖著，鎖孔裡塞滿渣",
+          "resources": [
+            {
+              "id": "lg_golden_core_molten_channel_resource_1",
+              "name": "熔心琉璃",
+              "kind": "ore",
+              "description": "爐心冷卻後結成的暗紅琉璃塊，內裡仍有一線流火。金丹中後期法器主材、耐熱器皿。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_molten_channel_resource_2",
+              "name": "劫鐵",
+              "kind": "ore",
+              "description": "天外隕鐵，斷面有星點狀紋路，敲之聲悶不脆。劫鐵兵器與護具主材；補天一脈的信物材。",
+              "element": "metal",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_molten_channel_resource_3",
+              "name": "火苔",
+              "kind": "herb",
+              "description": "貼爐壁生長的絨狀苔，遇水反而更熱，離火不死。煉丹火引、保溫囊。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_molten_channel_resource_4",
+              "name": "熔渠渣核",
+              "kind": "ore",
+              "description": "渣河底凝結的渣核，敲開有火星跳出。粗糙淬料、修爐耗材。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_molten_channel_resource_5",
+              "name": "渣河溫藥",
+              "kind": "herb",
+              "description": "生於熔渠舊坊背風縫隙的渣河溫藥，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "fire",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_golden_core_molten_channel_mob_1",
+              "name": "熔衣傀",
+              "description": "被熔渣裹住的舊匠人，動作還留著打鐵的節奏，渣殼裂處透紅。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_molten_channel_mob_2",
+              "name": "爐蛾",
+              "description": "翼上帶爐紋的灰蛾，成群撲火，翅粉落在皮膚上會燙。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_molten_channel_mob_3",
+              "name": "熔渠淌怪",
+              "description": "沿熔渠流動的半凝渣體，能爬牆，被切開會自己流回去。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_molten_channel_mob_4",
+              "name": "斷鉗匠魂",
+              "description": "死在爐前的舊匠，手還在半空做活；手裡沒了鉗子，就抓別人的。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_molten_channel_mob_5",
+              "name": "殘爐煙鬼",
+              "description": "冷爐裡積了幾十年的煙聚成形，靠近就嗆，嗆久了會咳出灰。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_golden_core_molten_cold_furnace_master",
+            "name": "冷爐坊主",
+            "description": "身材高大，圍裙與袖套都是舊坊市制式，燒出的大洞用金屬片補過。臉的上半覆著一張冷卻後凝住的渣面罩，看不見眼。雙手沒有一處完好的皮膚，指節粗大如鉗。腰間掛一串舊爐鑰，按坊市規矩從大到小排；走路極慢，一步一步都踩在爐規刻的位置上。",
+            "skills": [
+              {
+                "name": "爐規第一條",
+                "description": "犯規標記使每次出手受回震。"
+              },
+              {
+                "name": "熔渠引流",
+                "description": "改道熔渠，劃出灼傷流線。"
+              },
+              {
+                "name": "冷爐封火",
+                "description": "壓制火系增益及回復。"
+              },
+              {
+                "name": "按規開爐",
+                "description": "巨爐餘火爆發並推開全場。"
+              }
+            ],
+            "dropNames": [
+              "熔心琉璃",
+              "劫鐵",
+              "火苔",
+              "舊坊錘胚"
+            ],
+            "dropDirection": "- 材料：熔心琉璃、劫鐵、火苔。\n- 功法殘頁：爐規類殘頁（暫名《冷爐守則》）。\n- 任務物：坊主爐鑰、舊坊爐單、爐牌。\n- 部件：金丹中期武器胚（暫定：舊坊錘胚）、護具部件（暫定：坊規護肩）。\n-",
+            "componentName": "舊坊錘胚"
+          },
+          "landmarks": [
+            {
+              "name": "熔渠舊坊入口",
+              "description": "舊坊市半沉入熔渣河，屋頂露在渣面之上，門還鎖著，鎖孔裡塞滿渣。 街道是冷凝的熔渠，渠面平滑如鏡，冬天也不冰，走上去能看見自己的倒影。 爐灶仍在冒煙，卻沒有火。煙是從冷掉的爐裡自己冒出來的，沒有焦味，只有舊灰味。"
+            },
+            {
+              "name": "冷爐坊主駐地",
+              "description": "身材高大，圍裙與袖套都是舊坊市制式，燒出的大洞用金屬片補過。臉的上半覆著一張冷卻後凝住的渣面罩，看不見眼。雙手沒有一處完好的皮膚，指節粗大如鉗。腰間掛一串舊爐鑰，按坊市規矩從大到小排；走路極慢，一步一步都踩在爐規刻的位置上。"
+            }
+          ],
+          "source": [
+            "docs/story/金丹/金丹期地圖設計.md"
+          ]
+        },
+        {
+          "id": "lg_golden_core_hanging_lamps",
+          "name": "懸燈峽",
+          "startLevel": 49,
+          "description": "兩壁懸滿萬盞引魂燈，燈架一層疊一層，看不到頂。 峽風過處燈聲如訴。不是鈴響，是燈罩互相碰出的低鳴，像很多人同時在低聲說話。 深處的燈火不隨風動，那一帶的燈自己站著，火苗直得像畫上去的。",
+          "theme": "兩壁懸滿萬盞引魂燈，燈架一層疊一層，看不到頂",
+          "resources": [
+            {
+              "id": "lg_golden_core_hanging_lamps_resource_1",
+              "name": "峽蘿",
+              "kind": "herb",
+              "description": "掛燈架而生，葉背有燈影狀斑紋，風大時整片藤輕輕發亮。編燈架、軟甲襯裡。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_hanging_lamps_resource_2",
+              "name": "燈蕊木",
+              "kind": "exotic",
+              "description": "樹心如燈芯的木材，剖開有微光，久放會自己乾成燈芯狀。養神法器柄材、燈座。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_hanging_lamps_resource_3",
+              "name": "引魂燈燭",
+              "kind": "exotic",
+              "description": "峽中沒收回的燈裡剩下的半截燭，燭淚不落。引魂、喚靈儀式主耗材。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_hanging_lamps_resource_4",
+              "name": "燈影琉璃",
+              "kind": "ore",
+              "description": "峽壁燈火烤出的薄琉璃，映出的人影總比本體多一個。幻術類法器材料。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_hanging_lamps_resource_5",
+              "name": "燈影養魂花",
+              "kind": "herb",
+              "description": "生於懸燈峽背風縫隙的燈影養魂花，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "fire",
+              "authored": true
+            },
+            {
+              "id": "lg_golden_core_hanging_lamps_resource_6",
+              "name": "峽壁燈硝",
+              "kind": "ore",
+              "description": "懸燈峽岩層裂隙中凝成的峽壁燈硝，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+              "element": "fire",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_golden_core_hanging_lamps_mob_1",
+              "name": "燈蛾",
+              "description": "翼上帶燈紋的巨蛾，撲燈時燈會暗一瞬；牠記得每一盞燈的位置。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_hanging_lamps_mob_2",
+              "name": "影侍",
+              "description": "從燈影裡走出的人形，替燈主人守著那條沒收回的命；影子被踩到會翻臉。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_hanging_lamps_mob_3",
+              "name": "提燈傀",
+              "description": "峽道上提著自己那盞燈的乾屍，燈亮時不動，燈一滅就撲人。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_hanging_lamps_mob_4",
+              "name": "燈下影童",
+              "description": "燈下沒有身體的小影子，跟著人走，人停下時它貼上腳跟。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_hanging_lamps_mob_5",
+              "name": "峽風燈魅",
+              "description": "順峽風漂的燈魅，會把人的影子認成路，領著人往峽壁上撞。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_golden_core_hanging_lamp_grandmother",
+            "name": "萬燈姥姥",
+            "description": "個子很矮的老婦，背著一個比自己還高的舊燈架，架上插著九盞燈，一盞亮、八盞暗。頭髮全白，用一根燒黑的木簪挽起。手指細長，指腹全是燈油養出的厚皮。她看人時先看人腳下的影子，再看臉。",
+            "skills": [
+              {
+                "name": "一燈一命",
+                "description": "未熄燈給她護體，熄燈才能削層。"
+              },
+              {
+                "name": "萬燈點名",
+                "description": "依名冊點燈疊加壓制。"
+              },
+              {
+                "name": "燈聲如訴",
+                "description": "峽風燈聲持續壓低命中暴擊。"
+              },
+              {
+                "name": "收燈回魂",
+                "description": "收燈回復並喚出影侍。"
+              }
+            ],
+            "dropNames": [
+              "燈蕊木",
+              "引魂燈燭",
+              "燈影琉璃",
+              "守燈指環"
+            ],
+            "dropDirection": "- 材料：燈蕊木、引魂燈燭、燈影琉璃。\n- 功法殘頁：引魂類功法殘頁（暫名《引魂燈訣》）。\n- 任務物：姥姥的燈鑰、名冊殘卷副本、沒收回的燈牌。\n- 部件：金丹中期飾品（暫定：守燈指環）。\n-",
+            "componentName": "守燈指環"
+          },
+          "landmarks": [
+            {
+              "name": "懸燈峽入口",
+              "description": "兩壁懸滿萬盞引魂燈，燈架一層疊一層，看不到頂。 峽風過處燈聲如訴。不是鈴響，是燈罩互相碰出的低鳴，像很多人同時在低聲說話。 深處的燈火不隨風動，那一帶的燈自己站著，火苗直得像畫上去的。"
+            },
+            {
+              "name": "萬燈姥姥駐地",
+              "description": "個子很矮的老婦，背著一個比自己還高的舊燈架，架上插著九盞燈，一盞亮、八盞暗。頭髮全白，用一根燒黑的木簪挽起。手指細長，指腹全是燈油養出的厚皮。她看人時先看人腳下的影子，再看臉。"
+            }
+          ],
+          "source": [
+            "docs/story/金丹/金丹期地圖設計.md"
+          ]
+        },
+        {
+          "id": "lg_golden_core_sky_mending_furnace",
+          "name": "補天殘爐",
+          "startLevel": 52,
+          "description": "半座山被削成爐形。山壁是人工修過的弧形，爐口朝天，線條乾淨得不像自然。 爐膛裡封著一縷未竟的「天火」，不旺不小，幾百年沒動過，光是直的。 四周廢鑄遍地。成千上萬的失敗鑄件擺得很整齊，像有人在等它們冷卻，等了很久。",
+          "theme": "半座山被削成爐形",
+          "resources": [
+            {
+              "id": "lg_golden_core_sky_mending_furnace_resource_1",
+              "name": "補天渣",
+              "kind": "ore",
+              "description": "失敗的補天殘料，五色混雜、脈理斷裂，敲之無聲。匠修研究、殘材封裝外殼。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_sky_mending_furnace_resource_2",
+              "name": "天火芯",
+              "kind": "exotic",
+              "description": "爐膛裡封存的未竟天火，裝在陶管裡仍是熱的。頂階煉器火源、金丹後期鍛體。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_sky_mending_furnace_resource_3",
+              "name": "殘爐琉璃",
+              "kind": "ore",
+              "description": "爐膛內壁燒出的異色琉璃，經得起天火而不裂。高階器皿、封材容器。",
+              "element": "fire",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_sky_mending_furnace_resource_4",
+              "name": "隕紋鐵母",
+              "kind": "ore",
+              "description": "從天外墜物最中心取出的鐵母，紋路如星圖，越夜越涼。劫鐵裝備的最終主材，本境界畢業導向。",
+              "element": "metal",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_sky_mending_furnace_resource_5",
+              "name": "爐心續火草",
+              "kind": "herb",
+              "description": "生於補天殘爐背風縫隙的爐心續火草，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "fire",
+              "authored": true
+            },
+            {
+              "id": "lg_golden_core_sky_mending_furnace_resource_6",
+              "name": "天火暖蕨",
+              "kind": "herb",
+              "description": "生於補天殘爐背風縫隙的天火暖蕨，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "fire",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_golden_core_sky_mending_furnace_mob_1",
+              "name": "爐侍殘念",
+              "description": "還在做事的爐侍殘念，一問三不知，手上的活從沒停過。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_sky_mending_furnace_mob_2",
+              "name": "渣甲衛",
+              "description": "失敗殘料澆成的甲衛，一走一掉渣，渣落地會自己爬回身上。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_sky_mending_furnace_mob_3",
+              "name": "鑄殘傀",
+              "description": "半成品的巨大傀，手腳沒鑄完就想站起來，站起來一次就散一次。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_sky_mending_furnace_mob_4",
+              "name": "天火餘燼",
+              "description": "爐膛邊飄出的一縷灰燼，貼著人燒；燒的不是皮肉，是氣。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            },
+            {
+              "id": "lg_golden_core_sky_mending_furnace_mob_5",
+              "name": "廢渣爬獸",
+              "description": "廢鑄堆裡爬出的獸形渣塊，會學玩家的動作。",
+              "source": "docs/story/金丹/金丹期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_golden_core_furnace_mender_remnant",
+            "name": "補天匠·殘念",
+            "description": "巨人般的身量，半身已經石化，石紋從左肩一路爬到腰際。另半身還是血肉，皮膚被天火烤成深赭。右手握一把沒有柄的錘，錘面缺了一角；左手捧著一片不規則的天裂碎片，碎片邊緣是斷的。他臉上沒有表情，眼窩裡沒有眼珠，只有兩點沒熄的火。每走一步，石化那半邊先落地，聲音很沉。",
+            "skills": [
+              {
+                "name": "一錘定縫",
+                "description": "錘擊留下裂縫並破防。"
+              },
+              {
+                "name": "補天式·第七回",
+                "description": "固定規律多段落火。"
+              },
+              {
+                "name": "天裂映照",
+                "description": "映出劫痕，使目標負重遲滯。"
+              },
+              {
+                "name": "石身鎮爐",
+                "description": "石化守勢，高減傷免位移。"
+              }
+            ],
+            "dropNames": [
+              "補天渣",
+              "天火芯",
+              "隕紋鐵母",
+              "殘爐護心"
+            ],
+            "dropDirection": "- 材料：補天渣、天火芯、隕紋鐵母。\n- 功法殘頁：補天一脈手記殘頁（暫名《補天手記》）。\n- 任務物：第一片補天殘材（交材儀式用，見劇情設計 §7）。\n- 部件：金丹後期護具部件（暫定：殘爐護心）。\n-",
+            "componentName": "殘爐護心"
+          },
+          "landmarks": [
+            {
+              "name": "補天殘爐入口",
+              "description": "半座山被削成爐形。山壁是人工修過的弧形，爐口朝天，線條乾淨得不像自然。 爐膛裡封著一縷未竟的「天火」，不旺不小，幾百年沒動過，光是直的。 四周廢鑄遍地。成千上萬的失敗鑄件擺得很整齊，像有人在等它們冷卻，等了很久。"
+            },
+            {
+              "name": "補天匠·殘念駐地",
+              "description": "巨人般的身量，半身已經石化，石紋從左肩一路爬到腰際。另半身還是血肉，皮膚被天火烤成深赭。右手握一把沒有柄的錘，錘面缺了一角；左手捧著一片不規則的天裂碎片，碎片邊緣是斷的。他臉上沒有表情，眼窩裡沒有眼珠，只有兩點沒熄的火。每走一步，石化那半邊先落地，聲音很沉。"
+            }
+          ],
+          "source": [
+            "docs/story/金丹/金丹期地圖設計.md"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "nascent_soul",
+      "name": "元嬰期",
+      "startLevel": 55,
+      "source": [
+        "docs/story/後期總綱.md#4.2",
+        "docs/story/元嬰/元嬰期地圖設計.md"
+      ],
+      "town": {
+        "id": "lg_nascent_soul_town",
+        "name": "殘響渡",
+        "description": "屋簷低壓，多為補了又補的舊木與沉船板；牆面嵌碎貝、刻聲紋。 每戶門上掛一隻「錄聲貝」，記錄戶主最後一次離家時說的話——沒回來的人，貝還掛著。 街面鋪的不是石板，是壓平的舊船甲板；走上去有空洞的回聲。",
+        "npcs": [
+          {
+            "id": "lg_nascent_soul_npc_1",
+            "name": "聞潮叔·岑老",
+            "role": "聽潮者宿老，錄聲尋源的主持者",
+            "description": "聽潮者宿老，錄聲尋源的主持者。他聽了一輩子潮，只承認自己聽懂過一句半",
+            "dialogue": "先別急著聽清。海裡的聲音，有些只肯讓人聽一半。"
+          },
+          {
+            "id": "lg_nascent_soul_npc_2",
+            "name": "渡頭執事·商引",
+            "role": "殘響渡擺渡調度",
+            "description": "殘響渡擺渡調度。他記得住每一條航線的潮期，卻記不住任何一個乘客的臉",
+            "dialogue": "渡口有渡口的規矩，船回來了，名字才能劃掉。"
+          },
+          {
+            "id": "lg_nascent_soul_npc_3",
+            "name": "聲市掌櫃·檀娘",
+            "role": "聲市主人，收售聲材",
+            "description": "聲市主人，收售聲材。什麼聲音都敢收，唯獨不肯收自己丈夫那段",
+            "dialogue": "聲音裝得進貝，心事可裝不進。挑東西時想清楚要聽什麼。"
+          },
+          {
+            "id": "lg_nascent_soul_npc_4",
+            "name": "修貝匠·蒲老",
+            "role": "修貝巷匠人",
+            "description": "修貝巷匠人。他能從一隻貝的裂縫聽出它最後錄的是哪句話",
+            "dialogue": "貝裂了能修，錄進去的那句話，修不回第二遍。"
+          },
+          {
+            "id": "lg_nascent_soul_npc_5",
+            "name": "靜室守·水伯",
+            "role": "靜室管事，鎮魂人",
+            "description": "靜室管事，鎮魂人。他話極少，因為他說的每句話都像在替別人轉述",
+            "dialogue": "靜室裡少說一句，潮裡便能多聽一句。"
+          },
+          {
+            "id": "lg_nascent_soul_npc_6",
+            "name": "拾聲女·阿螺",
+            "role": "聽潮者學徒，玩家的同輩",
+            "description": "聽潮者學徒，玩家的同輩。她相信只要錄得夠多，總有一天能把海拼回來",
+            "dialogue": "這段聲音像在找人。你若到漏聲灘，替我聽聽它從哪條船來。"
+          },
+          {
+            "id": "lg_nascent_soul_npc_7",
+            "name": "記名僧·石默",
+            "role": "記錄未歸渡者名姓的僧人",
+            "description": "記錄未歸渡者名姓的僧人。他有一本名冊，名冊上最後一頁永遠是空的",
+            "dialogue": "字記得住，人卻未必記得。說名字前，先坐一會兒。"
+          },
+          {
+            "id": "lg_nascent_soul_npc_8",
+            "name": "守默婆·沉姑",
+            "role": "最老的聽潮者，鎮過最多魂",
+            "description": "最老的聽潮者，鎮過最多魂。她三十年沒出過聲，只用手勢與貝說話",
+            "dialogue": "聽潮也要學會收聲。沒有話的時候，別替海把話補上。"
+          }
+        ]
+      },
+      "maps": [
+        {
+          "id": "lg_nascent_soul_m1_entry",
+          "name": "漏聲灘",
+          "startLevel": 55,
+          "description": "潮線即界線：灘分兩層——漲潮時全淹的外灘、退潮才露的內灘。內灘的舊船骸一退潮就「開艙」，一段段循環的話從艙裡漏出來。 會說話的殘艙：每艘船骸的艙裡鎖著一段短話，反覆播放；靠近能聽清幾個字，但永遠聽不完全。 聲紋砂：灘上細砂被潮聲震出同心紋，踩上去會把足音「存」進去，幾息後在別處重播。",
+          "theme": "潮線即界線：灘分兩層——漲潮時全淹的外灘、退潮才露的內灘",
+          "source": [
+            "docs/story/元嬰/元嬰期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_nascent_soul_m1_entry_resource_1",
+              "name": "錄聲貝",
+              "kind": "exotic",
+              "description": "巴掌大、殼面有同心聲紋的灰白貝。錄一段聲、鎮一次魂；本境界核心聲器材料",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m1_entry_resource_2",
+              "name": "潮音石",
+              "kind": "ore",
+              "description": "灰藍色、敲之有迴音的圓石。鎮潮、製聲器底座；素材主料之一",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m1_entry_resource_3",
+              "name": "灘螢藻",
+              "kind": "herb",
+              "description": "退潮凹窪裡會隨聲發光的細藻。消耗品輔料、靜室鎮魂配方",
+              "element": "wood",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m1_entry_resource_4",
+              "name": "聲紋砂",
+              "kind": "ore",
+              "description": "被聲震出同心紋的細砂。記錄類材料、任務交付物",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m1_entry_resource_5",
+              "name": "月落灘鹽",
+              "kind": "ore",
+              "description": "月夜退潮結在灘面的薄鹽。凝神、聽潮調息類消耗品材料",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m1_entry_resource_6",
+              "name": "灘月凝魂草",
+              "kind": "herb",
+              "description": "生於漏聲灘背風縫隙的灘月凝魂草，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "water",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_nascent_soul_m1_entry_mob_1",
+              "name": "潮聲鬼",
+              "description": "由灘上散落的話聚成的半透明形，會用你聽過的聲音喊你",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m1_entry_mob_2",
+              "name": "貝甲沙民",
+              "description": "背著大貝的灘民殘念，動作慢，一齣手是一整片沙",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m1_entry_mob_3",
+              "name": "拾聲童",
+              "description": "由童聲聚成的小妖，會模仿誰喊過的名字引你走",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m1_entry_mob_4",
+              "name": "錄聲水母",
+              "description": "半透明水母，觸手纏著一段循環的話，纏身即靜音",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m1_entry_mob_5",
+              "name": "迴音螺",
+              "description": "只會複述的螺妖，把你的上一擊原樣打回你自己",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_nascent_soul_m1_boss",
+            "name": "螺中客",
+            "description": "一個瘦高的流浪者，赤腳，腰間掛著七八隻小貝。背上一隻巨螺，比他本人還高，螺口用舊布堵著。他走起路來微微側身，像永遠在讓開什麼。他的眼睛是濁的，不看你，只看海。",
+            "skills": [
+              {
+                "name": "螺音喚名",
+                "description": "召出灘上數段舊聲化形為幻影，幻影會用玩家的舊識之聲喊話，幹擾判斷。"
+              },
+              {
+                "name": "回聲疊刃",
+                "description": "把玩家剛打出的一次傷害記下、延遲反打，傷害越高回升越重。"
+              },
+              {
+                "name": "聽海成牢",
+                "description": "以一圈聲場把玩家定在原地數息，需以位移或默聲之法打斷。"
+              },
+              {
+                "name": "名字的重量",
+                "description": "螺中那一個名字落地成壓，範圍內持續承受壓力與減速。"
+              }
+            ],
+            "dropNames": [
+              "錄聲貝",
+              "螺紋聲環"
+            ],
+            "dropDirection": "殘材線指向回瀾淵（本圖不掉殘材）；掉 錄聲貝 群、螺紋聲環 部件（頭部/飾品）、聽潮者功法殘頁。",
+            "componentName": "螺紋聲環"
+          },
+          "landmarks": [
+            {
+              "name": "漏聲灘入口",
+              "description": "潮線即界線：灘分兩層——漲潮時全淹的外灘、退潮才露的內灘。內灘的舊船骸一退潮就「開艙」，一段段循環的話從艙裡漏出來。 會說話的殘艙：每艘船骸的艙裡鎖著一段短話，反覆播放；靠近能聽清幾個字，但永遠聽不完全。 聲紋砂：灘上細砂被潮聲震出同心紋，踩上去會把足音「存」進去，幾息後在別處重播。"
+            },
+            {
+              "name": "螺中客駐地",
+              "description": "一個瘦高的流浪者，赤腳，腰間掛著七八隻小貝。背上一隻巨螺，比他本人還高，螺口用舊布堵著。他走起路來微微側身，像永遠在讓開什麼。他的眼睛是濁的，不看你，只看海。"
+            }
+          ]
+        },
+        {
+          "id": "lg_nascent_soul_m2_entry",
+          "name": "沉鐘澥",
+          "startLevel": 58,
+          "description": "沉鐘之坑：海床中央陷出一個巨大鐘形坑，天鐘半埋其中，鐘口朝下。鐘身的紋繞著鐘身一圈圈，像被誰刻了一輩子還沒刻完。 聾水帶：鐘響過後，水會短暫「失聲」——這片水域聽不到任何聲音，連自己的心跳也聽不見，是本章最壓迫的環境。 銅鏽落雨：鐘身剝落的銅鏽在水中緩緩下沉，觸之如酸；鏽落之處會長出聲歸藻。",
+          "theme": "沉鐘之坑：海床中央陷出一個巨大鐘形坑，天鐘半埋其中，鐘口朝下",
+          "source": [
+            "docs/story/元嬰/元嬰期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_nascent_soul_m2_entry_resource_1",
+              "name": "沉鐘鱗",
+              "kind": "ore",
+              "description": "從鐘身剝落的青銅薄片，邊緣帶聲紋。聲器/防具主料，本圖核心產出",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m2_entry_resource_2",
+              "name": "海魂珊",
+              "kind": "herb",
+              "description": "鐘坑邊生長的暗紅珊瑚，隨鐘響開合。消耗品輔料、魂息類配方",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m2_entry_resource_3",
+              "name": "聲歸藻",
+              "kind": "herb",
+              "description": "銅鏽沉處長出的銅綠色藻。材料，用於鎮聾、洗耳配方",
+              "element": "wood",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m2_entry_resource_4",
+              "name": "潮鎖苔",
+              "kind": "herb",
+              "description": "附在回聲牆上的藍灰苔蘚。材料，用於固定聲場類裝備",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m2_entry_resource_5",
+              "name": "沉月砂",
+              "kind": "ore",
+              "description": "鐘坑底積的月色細砂。凝神類消耗品材料",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_nascent_soul_m2_entry_mob_1",
+              "name": "聾鰩",
+              "description": "鐘聲中唯一不聾的鰩，循聲偷襲，聽得見的反而最兇",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m2_entry_mob_2",
+              "name": "鐘鏽蟹",
+              "description": "由鐘身銅鏽剝落所化的硬甲蟹，周身帶蝕性鏽霧",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m2_entry_mob_3",
+              "name": "撐鐘傀",
+              "description": "沉在鐘下撐鐘的枯骨殘念，鐘一沉就被壓醒",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m2_entry_mob_4",
+              "name": "靜潮僧影",
+              "description": "當年敲鐘誦經者的殘影，不攻擊，只在旁邊跟著數拍",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m2_entry_mob_5",
+              "name": "海魂珊蟲",
+              "description": "寄在海魂珊裡的小蟲，成群時能讓整片水「嗡嗡」作響",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_nascent_soul_m2_boss",
+            "name": "守鐘魃",
+            "description": "一具與天鐘長在一起的人形——他的下半身已經融進鐘身，上半身還保持著敲鐘的姿勢，一隻手永遠舉著。皮膚是銅綠色的，臉上沒有表情，只有一口一合的嘴在數數。鐘身上有一圈凹陷，正是他幾百年來敲出來的。",
+            "skills": [
+              {
+                "name": "一響十里聾",
+                "description": "全場沉默，玩家短期內無法施法、無法聽見提示。"
+              },
+              {
+                "name": "鐘波盪海",
+                "description": "環形聲波擊退並打斷動作，靠牆會被二次震盪。"
+              },
+              {
+                "name": "銅鏽落雨",
+                "description": "鐘身剝鏽，範圍持續腐蝕與降防。"
+              },
+              {
+                "name": "不能停",
+                "description": "每次被強制打停一次，敲鐘間隔就縮短一次，愈打愈快。"
+              }
+            ],
+            "dropNames": [
+              "沉鐘鱗",
+              "鐘耳殘片"
+            ],
+            "dropDirection": "本圖不掉殘材；掉 沉鐘鱗、鐘耳殘片 部件（護符/法器）、聽潮者功法殘頁、鐘身紋拓（任務交付物）。",
+            "componentName": "鐘耳殘片"
+          },
+          "landmarks": [
+            {
+              "name": "沉鐘澥入口",
+              "description": "沉鐘之坑：海床中央陷出一個巨大鐘形坑，天鐘半埋其中，鐘口朝下。鐘身的紋繞著鐘身一圈圈，像被誰刻了一輩子還沒刻完。 聾水帶：鐘響過後，水會短暫「失聲」——這片水域聽不到任何聲音，連自己的心跳也聽不見，是本章最壓迫的環境。 銅鏽落雨：鐘身剝落的銅鏽在水中緩緩下沉，觸之如酸；鏽落之處會長出聲歸藻。"
+            },
+            {
+              "name": "守鐘魃駐地",
+              "description": "一具與天鐘長在一起的人形——他的下半身已經融進鐘身，上半身還保持著敲鐘的姿勢，一隻手永遠舉著。皮膚是銅綠色的，臉上沒有表情，只有一口一合的嘴在數數。鐘身上有一圈凹陷，正是他幾百年來敲出來的。"
+            }
+          ]
+        },
+        {
+          "id": "lg_nascent_soul_m3_entry",
+          "name": "千帆骨場",
+          "startLevel": 61,
+          "description": "桅林：成百上千根桅杆斜插沙中，早已石化成灰白林柱；風過時，柱間發出像帆鼓動的空響。 帆骨：帆布朽盡，只剩白骨的帆架還張著，遠看像一整片不肯落下的帆。 斷舟之街：船骸沿一條早已不存在的航道排成一列，像一支永遠沒開完的船隊。",
+          "theme": "桅林：成百上千根桅杆斜插沙中，早已石化成灰白林柱",
+          "source": [
+            "docs/story/元嬰/元嬰期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_nascent_soul_m3_entry_resource_1",
+              "name": "帆骨木",
+              "kind": "ore",
+              "description": "石化成骨的帆架木，輕而韌。弓/杖類主料，本圖核心產出",
+              "element": "wood",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m3_entry_resource_2",
+              "name": "怨桅鐵",
+              "kind": "exotic",
+              "description": "嵌在桅柱鐵箍裡的舊鐵，帶怨氣。武器/防具部件材料",
+              "element": "metal",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m3_entry_resource_3",
+              "name": "沉舟脂",
+              "kind": "exotic",
+              "description": "從船骸注水孔滲出的深色油膏。消耗品輔料、防腐類配方",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m3_entry_resource_4",
+              "name": "潮骨藤",
+              "kind": "herb",
+              "description": "纏繞桅柱而生的白藤。材料，用於綁縛類聲器",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m3_entry_resource_5",
+              "name": "月帆棉",
+              "kind": "herb",
+              "description": "帆骨間殘留的舊棉絮，月色。消耗品材料，用於修帆、修聲器",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m3_entry_resource_6",
+              "name": "桅根沉銀砂",
+              "kind": "ore",
+              "description": "千帆骨場岩層裂隙中凝成的桅根沉銀砂，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+              "element": "metal",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_nascent_soul_m3_entry_mob_1",
+              "name": "帆骨妖",
+              "description": "骨帆成妖，一張一合之間颳起割骨風",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m3_entry_mob_2",
+              "name": "桅影",
+              "description": "桅柱投下的影子裡走出的人形，只在逆光時可打",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m3_entry_mob_3",
+              "name": "骨浪手",
+              "description": "從沙下骨浪裡伸出的手，成片抓扯",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m3_entry_mob_4",
+              "name": "碎槳魂",
+              "description": "附在斷槳上的殘念，會把你當「要劃的方向」推",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m3_entry_mob_5",
+              "name": "船首啞僕",
+              "description": "船首像的隨從，無聲衝撞，撞上才知痛",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_nascent_soul_m3_boss",
+            "name": "斷桅將軍",
+            "description": "最後一艘船的船首像活了過來。他是一尊半是木、半是骨的人像，斷了一根桅臂，斷口插著一截殘帆。身上披著早已看不出顏色的舊旗。他站姿筆直，面朝前方，無論你從哪個方向來，他都不回頭。他的腳下始終有一小片水——那是他的船，雖然已經不存在了。",
+            "skills": [
+              {
+                "name": "斷桅橫掃",
+                "description": "以斷桅作長兵器橫掃，大範圍擊退並破防。"
+              },
+              {
+                "name": "船首衝角",
+                "description": "循航線直線衝撞，被撞者順航道被推遠。"
+              },
+              {
+                "name": "骨帆蔽日",
+                "description": "張開殘帆遮住天光，召出桅影群協同。"
+              },
+              {
+                "name": "無終航程",
+                "description": "把玩家納入「航程」，持續朝同一方向位移，離開航道才解除。"
+              }
+            ],
+            "dropNames": [
+              "帆骨木",
+              "怨桅鐵",
+              "斷桅旗骨"
+            ],
+            "dropDirection": "本圖不掉殘材；掉 帆骨木、怨桅鐵、斷桅旗骨 部件（飾品/披風）、聽潮者功法殘頁、船隊名冊殘頁（任務交付物）。",
+            "componentName": "斷桅旗骨"
+          },
+          "landmarks": [
+            {
+              "name": "千帆骨場入口",
+              "description": "桅林：成百上千根桅杆斜插沙中，早已石化成灰白林柱；風過時，柱間發出像帆鼓動的空響。 帆骨：帆布朽盡，只剩白骨的帆架還張著，遠看像一整片不肯落下的帆。 斷舟之街：船骸沿一條早已不存在的航道排成一列，像一支永遠沒開完的船隊。"
+            },
+            {
+              "name": "斷桅將軍駐地",
+              "description": "最後一艘船的船首像活了過來。他是一尊半是木、半是骨的人像，斷了一根桅臂，斷口插著一截殘帆。身上披著早已看不出顏色的舊旗。他站姿筆直，面朝前方，無論你從哪個方向來，他都不回頭。他的腳下始終有一小片水——那是他的船，雖然已經不存在了。"
+            }
+          ]
+        },
+        {
+          "id": "lg_nascent_soul_m4_entry",
+          "name": "回瀾淵",
+          "startLevel": 64,
+          "description": "海眼：海中央一個望不到底的漩渦，水一圈圈往下轉；淵底有極淡的光，像是有人在很深的地方點了燈。 潮牆：繞著海眼立起的水牆，由無數層折疊的潮聲疊成，穿牆時會聽見自己一生聽過的所有聲音同時響起。 迴聲廊：中環一圈順著漩渦盤旋的廊道，你說的每一句話都會在幾息後從背後回來，回來的聲音比你自己的更慢、更沉。",
+          "theme": "海眼：海中央一個望不到底的漩渦，水一圈圈往下轉",
+          "source": [
+            "docs/story/元嬰/元嬰期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_nascent_soul_m4_entry_resource_1",
+              "name": "回瀾晶",
+              "kind": "ore",
+              "description": "受海眼旋壓而生的螺旋狀透明晶。本圖核心產出，聲器/法寶類主料",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m4_entry_resource_2",
+              "name": "深月露",
+              "kind": "herb",
+              "description": "淵壁凹處凝的月色水珠。元嬰期高階消耗品主料",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m4_entry_resource_3",
+              "name": "聲底砂",
+              "kind": "ore",
+              "description": "淵底積的極細砂，握之能聽見極遠的聲。任務交付物、聲器輔料",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m4_entry_resource_4",
+              "name": "沉光螺",
+              "kind": "exotic",
+              "description": "吸了淵底光、殼內發亮的螺。材料，用於照明/探測類聲器",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m4_entry_resource_5",
+              "name": "潮心核",
+              "kind": "exotic",
+              "description": "海眼核心凝出的水核，隨潮搏動。高階符/核類材料",
+              "element": "water",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m4_entry_resource_6",
+              "name": "回瀾靜魂藻",
+              "kind": "herb",
+              "description": "生於回瀾淵背風縫隙的回瀾靜魂藻，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "water",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_nascent_soul_m4_entry_mob_1",
+              "name": "迴聲獸",
+              "description": "會把你說過的每一句話變成攻擊打回來的獸",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m4_entry_mob_2",
+              "name": "深壓妖",
+              "description": "生於深水重壓之下，攻擊帶「壓」，越深越強",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m4_entry_mob_3",
+              "name": "無面潮使",
+              "description": "潮裡走出的無面使者，替海眼「傳話」",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m4_entry_mob_4",
+              "name": "捲瀾鰻",
+              "description": "纏著漩渦盤旋的長鰻，把你往下拖",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            },
+            {
+              "id": "lg_nascent_soul_m4_entry_mob_5",
+              "name": "沉光傀",
+              "description": "淵底光屑聚成的傀儡，遇聲則亮、遇靜則隱",
+              "source": "docs/story/元嬰/元嬰期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_nascent_soul_m4_boss",
+            "name": "回瀾真君",
+            "description": "一個看上去不過中年的男子，一身早已泡得發白、卻仍整齊的沉宮舊臣服色。他沒有影子——他的影子在腳下的水裡，與他不同步。他一手攏在袖中，另一手時常虛按在耳邊，像隨時在聽什麼。他說話極慢，每個字都像從很深的地方撈上來。",
+            "skills": [
+              {
+                "name": "回瀾聽潮",
+                "description": "預讀玩家下一個動作，提前位移或格擋。"
+              },
+              {
+                "name": "潮生潮滅",
+                "description": "拉扯玩家的位置，把目標往海眼方向吸。"
+              },
+              {
+                "name": "三百年一語",
+                "description": "延遲數息後落下一記極重一擊，對應他「話說得慢」。"
+              },
+              {
+                "name": "海眼開闔",
+                "description": "使場地可站區域週期性收縮，逼玩家在極窄的落點上取捨。"
+              }
+            ],
+            "dropNames": [
+              "回瀾晶",
+              "深月露",
+              "瀾心舊臣珮"
+            ],
+            "dropDirection": "第二片補天殘材（本境界殘材，於本圖取得）；掉 回瀾晶、深月露、瀾心舊臣珮 部件（核心飾品）、聽潮者功法殘卷。",
+            "componentName": "瀾心舊臣珮"
+          },
+          "landmarks": [
+            {
+              "name": "回瀾淵入口",
+              "description": "海眼：海中央一個望不到底的漩渦，水一圈圈往下轉；淵底有極淡的光，像是有人在很深的地方點了燈。 潮牆：繞著海眼立起的水牆，由無數層折疊的潮聲疊成，穿牆時會聽見自己一生聽過的所有聲音同時響起。 迴聲廊：中環一圈順著漩渦盤旋的廊道，你說的每一句話都會在幾息後從背後回來，回來的聲音比你自己的更慢、更沉。"
+            },
+            {
+              "name": "回瀾真君駐地",
+              "description": "一個看上去不過中年的男子，一身早已泡得發白、卻仍整齊的沉宮舊臣服色。他沒有影子——他的影子在腳下的水裡，與他不同步。他一手攏在袖中，另一手時常虛按在耳邊，像隨時在聽什麼。他說話極慢，每個字都像從很深的地方撈上來。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "spirit_transformation",
+      "name": "化神期",
+      "startLevel": 67,
+      "source": [
+        "docs/story/後期總綱.md#4.3",
+        "docs/story/化神/化神期地圖設計.md"
+      ],
+      "town": {
+        "id": "lg_spirit_transformation_town",
+        "name": "望涯驛",
+        "description": "屋簷全部朝外：所有房屋的屋簷都朝涯的方向伸出，背面直接嵌進崖壁。居民進門之前習慣先看一眼涯，這個動作已經變成日常禮數。 階即是街：城裡沒有平路，全是緩階與平臺；挑夫、驛卒、壘階人一天上下不知多少趟。 編號石：城牆、階沿、門框上到處能看到刻了號碼的石塊，號碼與登崖會的階圖對應。",
+        "npcs": [
+          {
+            "id": "lg_spirit_transformation_npc_1",
+            "name": "驛丞·喬望山",
+            "role": "望涯驛主事",
+            "description": "望涯驛主事。他記得住每一筆帳，唯獨記不住沒回來的人",
+            "dialogue": "在驛裡留個名字。上去之後，記得自己還有回來的路。"
+          },
+          {
+            "id": "lg_spirit_transformation_npc_2",
+            "name": "登崖會執事·韓壘",
+            "role": "壘階人第三代",
+            "description": "壘階人第三代。他講階石像講親人，卻從沒上過石人階以上",
+            "dialogue": "階石不是一天壘起的，路也別想一步走完。"
+          },
+          {
+            "id": "lg_spirit_transformation_npc_3",
+            "name": "老階匠·石有痕",
+            "role": "打階石的老匠人",
+            "description": "打階石的老匠人。每塊階石都有編號，只有他自己沒有",
+            "dialogue": "每塊階石都有編號。你踩的是哪一塊，我一眼就認得。"
+          },
+          {
+            "id": "lg_spirit_transformation_npc_4",
+            "name": "收風人·裴聽風",
+            "role": "崖腳渡市收風的女子",
+            "description": "崖腳渡市收風的女子。她一天只聽三陣風，多聽會耳鳴",
+            "dialogue": "我一天只聽三陣風。第四陣，得留給能往上走的人。"
+          },
+          {
+            "id": "lg_spirit_transformation_npc_5",
+            "name": "退會者·何回頭",
+            "role": "走到半途折返的人",
+            "description": "走到半途折返的人。全城只有他不接「上面」的話題",
+            "dialogue": "別問我上面有什麼。我回得來，已經夠了。"
+          },
+          {
+            "id": "lg_spirit_transformation_npc_6",
+            "name": "醫者·姜緩",
+            "role": "望涯驛的醫修",
+            "description": "望涯驛的醫修。她藥方裡有一味藥叫「別看涯」",
+            "dialogue": "藥方第一味，是別一直盯著涯。心神定下來，再服藥。"
+          },
+          {
+            "id": "lg_spirit_transformation_npc_7",
+            "name": "頂驛守門·封乙",
+            "role": "守關門的人",
+            "description": "守關門的人。他只認東西不認人",
+            "dialogue": "帶來的東西放下，讓我看清楚。關口的規矩不看人情。"
+          },
+          {
+            "id": "lg_spirit_transformation_npc_8",
+            "name": "觀星臺遷居者·葉望星",
+            "role": "守臺瞽者的後輩，抄圖人",
+            "description": "守臺瞽者的後輩，抄圖人。她抄圖不用尺，用手肘量",
+            "dialogue": "星圖不用尺量，用眼和腳。你上過臺，再說哪道線是直的。"
+          }
+        ]
+      },
+      "maps": [
+        {
+          "id": "lg_spirit_transformation_m1_entry",
+          "name": "斷崖階",
+          "startLevel": 67,
+          "description": "石階看不到頂：能看見的階段一段比一段窄，最遠的階段細成一條線，最後沒入白氣裡。 階石有年輪：每一段階石顏色不同，舊階發青、新階發白，壘階的年代一眼可辨。 階沿的編號：階沿偶爾能看到刻著號碼的石塊與半埋的行囊；號碼到某一段就停了。",
+          "theme": "石階看不到頂：能看見的階段一段比一段窄，最遠的階段細成一條線，最後沒入白氣裡",
+          "source": [
+            "docs/story/化神/化神期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_spirit_transformation_m1_entry_resource_1",
+              "name": "崖柏",
+              "kind": "exotic",
+              "description": "貼壁而生、根扎進石縫的柏樹，樹身被風壓得朝崖外傾。樑柱、階欄、焚香",
+              "element": "metal",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m1_entry_resource_2",
+              "name": "登階苔",
+              "kind": "herb",
+              "description": "只長在被踩過的階面上，越往上越厚。續行丹、止血藥",
+              "element": "wood",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m1_entry_resource_3",
+              "name": "階紋石",
+              "kind": "ore",
+              "description": "斷階斷面上有天然橫紋的石，紋路像一層層的帳。築階修階主料，可磨成階紋粉",
+              "element": "metal",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m1_entry_resource_4",
+              "name": "風磨礫",
+              "kind": "ore",
+              "description": "長年被崖風打磨得圓而輕的礫石，握久了手心發熱。打磨材、風囊配重、投擲器",
+              "element": "metal",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m1_entry_resource_5",
+              "name": "懸階藤",
+              "kind": "herb",
+              "description": "從階沿垂下、藤尖卻永遠朝上長的藤。繩索、綁紮、止血",
+              "element": "wood",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_spirit_transformation_m1_entry_mob_1",
+              "name": "石階行者",
+              "description": "還在往上走的乾屍，走十步退一步，從不停下",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m1_entry_mob_2",
+              "name": "背囊傀",
+              "description": "死在半途的行囊成了精，馱著主人的東西繼續爬，誰碰行囊就撲誰",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m1_entry_mob_3",
+              "name": "風剪",
+              "description": "崖風裡成形的剪刀狀風影，不切肉，專切衣角與繩結",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m1_entry_mob_4",
+              "name": "階縫蜈",
+              "description": "住在階縫裡的大蜈蚣，被踩到才竄出來，一齣就是一群",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m1_entry_mob_5",
+              "name": "崖柏魈",
+              "description": "老柏根成了精，用枝幹擋路，不讓人踩壞新苔",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m1_entry_mob_6",
+              "name": "歇腳影",
+              "description": "躲在階上影子裡的東西，玩家一坐下歇息，它才動",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_spirit_transformation_m1_boss",
+            "name": "登崖石人",
+            "description": "一個坐在長階正中的灰白人影，衣袍已經和石面連成一體，褶皺變成岩紋。他的右手還保持著撐膝欲起的姿勢，指節鑿進階面半寸。五官還在，眼睛是兩道沒有風化的淺溝。背上的行囊也石化了，囊口朝天，裡面裝著半囊碎石。",
+            "skills": [
+              {
+                "name": "再走一階",
+                "description": "前傾時階面同時震盪，站著的玩家被推向階沿，跌落回上一段（環境／傷害）"
+              },
+              {
+                "name": "借過",
+                "description": "從階縫與階下喚出石階行者與背囊傀，替他清路（召喚）"
+              },
+              {
+                "name": "歇一歇",
+                "description": "全身石面泛白，短時極難破防，逼停玩家的輸出節奏（自身強化／減傷）"
+              },
+              {
+                "name": "半步",
+                "description": "起身半步，長階範圍內移速與命中大幅下降，階石開始鬆動（控制／場域）"
+              }
+            ],
+            "dropNames": [
+              "登階苔",
+              "階紋石",
+              "風磨礫",
+              "懸階藤",
+              "石人殘石"
+            ],
+            "dropDirection": "- 材料：階紋石（大量）、風磨礫、懸階藤、登階苔。\n- 殘頁：《壘階錄》殘頁（登崖會壘階與樁功的殘篇）。\n- 裝備部件：石人殘石（護腕、腰墜向）。\n- 一般掉落：67-69 裝備部件與驛城通用物資。",
+            "componentName": "石人殘石"
+          },
+          "landmarks": [
+            {
+              "name": "斷崖階入口",
+              "description": "石階看不到頂：能看見的階段一段比一段窄，最遠的階段細成一條線，最後沒入白氣裡。 階石有年輪：每一段階石顏色不同，舊階發青、新階發白，壘階的年代一眼可辨。 階沿的編號：階沿偶爾能看到刻著號碼的石塊與半埋的行囊；號碼到某一段就停了。"
+            },
+            {
+              "name": "登崖石人駐地",
+              "description": "一個坐在長階正中的灰白人影，衣袍已經和石面連成一體，褶皺變成岩紋。他的右手還保持著撐膝欲起的姿勢，指節鑿進階面半寸。五官還在，眼睛是兩道沒有風化的淺溝。背上的行囊也石化了，囊口朝天，裡面裝著半囊碎石。"
+            }
+          ]
+        },
+        {
+          "id": "lg_spirit_transformation_m2_entry",
+          "name": "律動雷原",
+          "startLevel": 70,
+          "description": "雷按韻律落：間隔可以數，像有人在外頭打拍子；落在空處的雷，比落下的更嚇人。 草伏成圈：雷擊處的草向外伏倒成一圈圈同心紋，遠看整片草原像被指節敲過的鼓面。 舊雷擊木上的記號：一格一格的刀刻，全是正字；刻到某處就亂了。",
+          "theme": "雷按韻律落：間隔可以數，像有人在外頭打拍子",
+          "source": [
+            "docs/story/化神/化神期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_spirit_transformation_m2_entry_resource_1",
+              "name": "律雷晶",
+              "kind": "ore",
+              "description": "被雷擊過的土裡結出的晶，晶裡有一段固定的亮滅節奏。雷系丹藥、法器核心、對拍器具",
+              "element": "metal",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m2_entry_resource_2",
+              "name": "聽雷草",
+              "kind": "herb",
+              "description": "貼地生長的草，雷未落先伏倒。預判雷位、定神藥材",
+              "element": "metal",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m2_entry_resource_3",
+              "name": "拍律藤",
+              "kind": "herb",
+              "description": "攀在雷擊木上，一節一節順著雷擊節奏生長的藤。定神與節律丹藥的副料",
+              "element": "wood",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m2_entry_resource_4",
+              "name": "律紋鐵",
+              "kind": "ore",
+              "description": "鐵礦在反覆雷擊下自然形成律紋。鍛造法器、驛城器具",
+              "element": "metal",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_spirit_transformation_m2_entry_mob_1",
+              "name": "司律獸",
+              "description": "會「跟拍」的獸，雷落在第幾拍，牠就在第幾拍動",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m2_entry_mob_2",
+              "name": "雷符鴉",
+              "description": "被雷劈過未死的鴉，羽上有焦痕，叫聲像雷前的悶響",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m2_entry_mob_3",
+              "name": "數拍魈",
+              "description": "蹲在草裡掰著手指數數的小妖，數錯了就發火",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m2_entry_mob_4",
+              "name": "落點蟲",
+              "description": "爬在雷擊點上的蟲，殼硬能導雷",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m2_entry_mob_5",
+              "name": "亂拍影",
+              "description": "不按韻律落雷處的影子，專挑空拍偷襲",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_spirit_transformation_m2_boss",
+            "name": "司律雷君",
+            "description": "一名披著焦邊雷紋長袍的老人，袍角隨著遠近的雷聲起伏。腰間掛著一面拍牌，牌上密密麻麻刻著正字，刻痕深淺不一。左手指節全是舊灼傷，右手始終在膝上輕輕數拍。頭頂懸著一小圈發暗的雷球，隨他的呼吸明滅。腳下踩著一塊被雷擊平的土臺，檯面畫滿間隔刻度。",
+            "skills": [
+              {
+                "name": "一拍·定身",
+                "description": "重拍落下，全場短暫定身（控制）"
+              },
+              {
+                "name": "三拍·連雷",
+                "description": "三段落雷，第三拍最重（傷害）"
+              },
+              {
+                "name": "亂拍·錯節",
+                "description": "打亂玩家的技能與步伐節奏，冷卻錯位（幹擾）"
+              },
+              {
+                "name": "收拍·靜場",
+                "description": "全場雷停一息，接著整片場地同時落下一次總雷（環境／爆發）"
+              }
+            ],
+            "dropNames": [
+              "律雷晶",
+              "聽雷草",
+              "拍律藤",
+              "律紋鐵",
+              "司律袍部件"
+            ],
+            "dropDirection": "- 材料：律雷晶、律紋鐵、拍律藤、聽雷草。\n- 殘頁：《聽雷譜》殘頁（聽雷人一脈的譜法殘篇）。\n- 裝備部件：司律袍部件（法袍、腰帶向）、節律法器部件。\n- 一般掉落：70-72 裝備部件與雷系耗材。",
+            "componentName": "司律袍部件"
+          },
+          "landmarks": [
+            {
+              "name": "律動雷原入口",
+              "description": "雷按韻律落：間隔可以數，像有人在外頭打拍子；落在空處的雷，比落下的更嚇人。 草伏成圈：雷擊處的草向外伏倒成一圈圈同心紋，遠看整片草原像被指節敲過的鼓面。 舊雷擊木上的記號：一格一格的刀刻，全是正字；刻到某處就亂了。"
+            },
+            {
+              "name": "司律雷君駐地",
+              "description": "一名披著焦邊雷紋長袍的老人，袍角隨著遠近的雷聲起伏。腰間掛著一面拍牌，牌上密密麻麻刻著正字，刻痕深淺不一。左手指節全是舊灼傷，右手始終在膝上輕輕數拍。頭頂懸著一小圈發暗的雷球，隨他的呼吸明滅。腳下踩著一塊被雷擊平的土臺，檯面畫滿間隔刻度。"
+            }
+          ]
+        },
+        {
+          "id": "lg_spirit_transformation_m3_entry",
+          "name": "古觀星臺",
+          "startLevel": 73,
+          "description": "欄杆全部朝同一個方向：欄杆一律朝外、朝上；像是在朝著同一片天光守望。 沒刻完的星圖：臺頂刻著一段星圖，刻線到某處歪了、斷了，像一句沒寫完的話。 砂裡有亮點：觀星砂在夜裡自己發亮，像有人把星星篩進了地面。",
+          "theme": "欄杆全部朝同一個方向：欄杆一律朝外、朝上",
+          "source": [
+            "docs/story/化神/化神期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_spirit_transformation_m3_entry_resource_1",
+              "name": "觀星砂",
+              "kind": "ore",
+              "description": "臺頂積了千年的細砂，砂裡混著極小的亮點，夜裡自己會亮。明目藥材、拓圖定影、星砂傀儡材料",
+              "element": "metal",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m3_entry_resource_2",
+              "name": "星紋鐵",
+              "kind": "ore",
+              "description": "觀星器械軸座用的鐵，紋路像星軌，千年不鏽。精密器具、飾品部件",
+              "element": "metal",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m3_entry_resource_3",
+              "name": "星軌蘚",
+              "kind": "herb",
+              "description": "只沿著觀星臺刻線生長的蘚，刻線到哪，蘚長到哪。拓圖輔料、定神藥材",
+              "element": "wood",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m3_entry_resource_4",
+              "name": "眺星藤",
+              "kind": "herb",
+              "description": "爬到欄杆上、藤尖永遠朝著天痕方向的藤。纖維、綁紮、藥引",
+              "element": "wood",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_spirit_transformation_m3_entry_mob_1",
+              "name": "守臺殘影",
+              "description": "舊觀星人的影子還在巡臺，看到有人碰星圖就擋",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m3_entry_mob_2",
+              "name": "星砂傀",
+              "description": "星砂聚成的人形，步伐照著星位走，一步不亂",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m3_entry_mob_3",
+              "name": "夜巡鴟",
+              "description": "臺頂的夜梟，雙眼像兩顆星，盤旋時畫出星軌",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m3_entry_mob_4",
+              "name": "刻痕蟲",
+              "description": "啃食刻線的蟲，啃過的地方星圖就斷",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m3_entry_mob_5",
+              "name": "落星蛾",
+              "description": "順著天痕方向飛的蛾，撞到欄杆就碎成砂",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_spirit_transformation_m3_boss",
+            "name": "守臺瞽者",
+            "description": "一位盲眼老人，眼上覆著一條舊布，布上繡著點點星位。手杖是半截斷掉的窺管，管口朝上。身上披著褪色的觀星官袍，袍角綴著星砂，走動時有微光。腳下的檯面刻著一圈圈星軌，他每一步都踩在刻線上，從不踩空。",
+            "skills": [
+              {
+                "name": "星軌引",
+                "description": "沿刻線牽引玩家，把人從一個星位拖到另一個星位（位移／控制）"
+              },
+              {
+                "name": "數星",
+                "description": "點名場上星位，引落星砂擊打（傷害）"
+              },
+              {
+                "name": "蔽目",
+                "description": "揚起觀星砂，玩家的命中與視野受限（減益）"
+              },
+              {
+                "name": "瞽者的預判",
+                "description": "讀出玩家下一步，短時反傷；看不見的人最懂「下一步」（反制）"
+              }
+            ],
+            "dropNames": [
+              "觀星砂",
+              "星紋鐵",
+              "星軌蘚",
+              "眺星藤",
+              "星紋飾品部件"
+            ],
+            "dropDirection": "- 材料：觀星砂、星紋鐵、星軌蘚、眺星藤。\n- 殘頁：《觀星錄》殘頁（觀星人一脈的記錄殘篇）。\n- 裝備部件：星紋飾品部件（手環、額飾向）。\n- 任務道具：星圖拓本（可收藏，亦為節點三儀式前置的來源之一）。\n- 一般掉落：73-75 裝備部件與星砂耗材。",
+            "componentName": "星紋飾品部件"
+          },
+          "landmarks": [
+            {
+              "name": "古觀星臺入口",
+              "description": "欄杆全部朝同一個方向：欄杆一律朝外、朝上；像是在朝著同一片天光守望。 沒刻完的星圖：臺頂刻著一段星圖，刻線到某處歪了、斷了，像一句沒寫完的話。 砂裡有亮點：觀星砂在夜裡自己發亮，像有人把星星篩進了地面。"
+            },
+            {
+              "name": "守臺瞽者駐地",
+              "description": "一位盲眼老人，眼上覆著一條舊布，布上繡著點點星位。手杖是半截斷掉的窺管，管口朝上。身上披著褪色的觀星官袍，袍角綴著星砂，走動時有微光。腳下的檯面刻著一圈圈星軌，他每一步都踩在刻線上，從不踩空。"
+            }
+          ]
+        },
+        {
+          "id": "lg_spirit_transformation_m4_entry",
+          "name": "涯底風獄",
+          "startLevel": 76,
+          "description": "風是關著的：坑裡的風沿坑壁轉圈，轉到某處會撞上一道看不見的牆，折回來。 坑壁刻滿壓風古陣：陣紋一路刻到人搆不到的高處，刻痕有新有舊。 沒有回聲：在坑裡喊一聲，聲音被風帶走，不回來。",
+          "theme": "風是關著的：坑裡的風沿坑壁轉圈，轉到某處會撞上一道看不見的牆，折回來",
+          "source": [
+            "docs/story/化神/化神期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_spirit_transformation_m4_entry_resource_1",
+              "name": "風髓",
+              "kind": "ore",
+              "description": "風被壓進石頭裡凝成的髓，敲開石頭才見得到。風系法器、風囊核心、鎮縫材料",
+              "element": "metal",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m4_entry_resource_2",
+              "name": "獄柵木",
+              "kind": "exotic",
+              "description": "長在陣縫裡的木，木質紋理永遠逆著風。關風的柵料、陣材",
+              "element": "wood",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m4_entry_resource_3",
+              "name": "鎮風石",
+              "kind": "ore",
+              "description": "古陣基座上的石，摸上去不涼，風繞著它走。陣法材料、風囊配重",
+              "element": "metal",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m4_entry_resource_4",
+              "name": "囚風蘚",
+              "kind": "herb",
+              "description": "只長在無風處的蘚；有它在的地方，風進不來。止血藥、靜室鋪材",
+              "element": "wood",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m4_entry_resource_5",
+              "name": "獄底止風花",
+              "kind": "herb",
+              "description": "生於涯底風獄背風縫隙的獄底止風花，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "wood",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_spirit_transformation_m4_entry_mob_1",
+              "name": "風囚",
+              "description": "被關久了、忘了自己原本是什麼的風影人形，貼著坑壁走",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m4_entry_mob_2",
+              "name": "獄風靈",
+              "description": "陣眼裡生出的小風精，見縫就鑽",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m4_entry_mob_3",
+              "name": "壓壁獸",
+              "description": "四肢撐著坑壁、不肯落地的獸，一落地就被風捲",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m4_entry_mob_4",
+              "name": "拖痕魈",
+              "description": "順著別人留下的風痕爬的小妖，會把東西拖回窩裡",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            },
+            {
+              "id": "lg_spirit_transformation_m4_entry_mob_5",
+              "name": "枷木傀",
+              "description": "獄柵木的斷樁成了精，守著陣眼，不讓人靠近",
+              "source": "docs/story/化神/化神期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_spirit_transformation_m4_boss",
+            "name": "風獄尊者",
+            "description": "一個站在陣眼上的老人，身上綁著幾十個舊繩結，結的大小不一，數不清。手裡沒有兵器，只握著一根從獄柵上鋸下的短木。衣袍朝同一側鼓起，像永遠有風從他背後吹。耳後各壓著一片鎮風石，用繩勒著。他不看人，只看腳下的陣眼。",
+            "skills": [
+              {
+                "name": "壓風式",
+                "description": "以自身為陣眼壓下大範圍風壓，範圍內移動與攻擊遲滯（場域／減速）"
+              },
+              {
+                "name": "解一結",
+                "description": "解開一個繩結，風壓升一階並喚出獄風靈（召喚／階段強化）"
+              },
+              {
+                "name": "風門閉",
+                "description": "短時封住一塊區域的進出與技能施展（控制）"
+              },
+              {
+                "name": "逆風刃",
+                "description": "借風成刃，從玩家背後繞回來（傷害／位移）"
+              }
+            ],
+            "dropNames": [
+              "風髓",
+              "獄柵木",
+              "鎮風石",
+              "囚風蘚",
+              "尊者腰結部件"
+            ],
+            "dropDirection": "- 材料：風髓、獄柵木、鎮風石、囚風蘚。\n- 殘頁：《壓風訣》殘頁（守獄人一脈的壓風法殘篇）。\n- 裝備部件：尊者腰結部件（腰帶、護臂向）。\n- 核心掉落：第三片補天殘材（於陣心取得，需先完成對星壓風儀式；詳見劇情設計 §7）。\n- 一般掉落：76-78 裝備部件與風系耗材。",
+            "componentName": "尊者腰結部件"
+          },
+          "landmarks": [
+            {
+              "name": "涯底風獄入口",
+              "description": "風是關著的：坑裡的風沿坑壁轉圈，轉到某處會撞上一道看不見的牆，折回來。 坑壁刻滿壓風古陣：陣紋一路刻到人搆不到的高處，刻痕有新有舊。 沒有回聲：在坑裡喊一聲，聲音被風帶走，不回來。"
+            },
+            {
+              "name": "風獄尊者駐地",
+              "description": "一個站在陣眼上的老人，身上綁著幾十個舊繩結，結的大小不一，數不清。手裡沒有兵器，只握著一根從獄柵上鋸下的短木。衣袍朝同一側鼓起，像永遠有風從他背後吹。耳後各壓著一片鎮風石，用繩勒著。他不看人，只看腳下的陣眼。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "void_refinement",
+      "name": "煉虛期",
+      "startLevel": 79,
+      "source": [
+        "docs/story/後期總綱.md#4.4",
+        "docs/story/煉虛/煉虛期地圖設計.md"
+      ],
+      "town": {
+        "id": "lg_void_refinement_town",
+        "name": "虛舟市",
+        "description": "城即舟，舟即市：店鋪開在船艙裡，攤位擺在甲板上，街道是連舟的纜橋。纜橋會晃，走慣的人不扶繩，新來的人走兩步就要扶一次。 認舟燈：每一艘支舟的船首掛一盞燈，燈的形制代表這艘舟的來路與行當——圓燈是貨舟，方燈是客舟，三角燈是修舟塢。舟市沒有自然光，燈就是路牌。燈油多半來自星骸舊港的港燈油，冷而不滅。 潮記：纜橋與艙壁上刻著一道道深淺不一的刻痕，是無光之海歷年的漲落記。舟人看潮記決定哪天出航，比看天準。",
+        "npcs": [
+          {
+            "id": "lg_void_refinement_npc_1",
+            "name": "舟盟總棧主·鍾九纜",
+            "role": "舟盟對外掌事，虛舟市主事",
+            "description": "舟盟對外掌事，虛舟市主事。他手邊永遠有一本沒對完的帳，帳上少的那一筆，他記了一輩子",
+            "dialogue": "九根纜少一根，整座市都得換個方向。出航前把貨和命拴好。"
+          },
+          {
+            "id": "lg_void_refinement_npc_2",
+            "name": "引航師·韓引",
+            "role": "界隙領航人",
+            "description": "界隙領航人。他領航一輩子，只信潮記，不信星",
+            "dialogue": "界隙沒有老路，只有上一回還能走的路。"
+          },
+          {
+            "id": "lg_void_refinement_npc_3",
+            "name": "公證人·杜衡",
+            "role": "公證堂主事",
+            "description": "公證堂主事。他蓋的每一枚印都留兩份，一份給貨，一份給沉下去的人",
+            "dialogue": "貨從哪裡來，就在這裡寫清。空白的一行，我不蓋印。"
+          },
+          {
+            "id": "lg_void_refinement_npc_4",
+            "name": "舊貨灘攤主·溫拾",
+            "role": "界隙舊貨攤主",
+            "description": "界隙舊貨攤主。他攤上什麼都賣，就是不賣來歷",
+            "dialogue": "破瓦也有主人。你挑東西，我替它記個來處。"
+          },
+          {
+            "id": "lg_void_refinement_npc_5",
+            "name": "修舟匠·戚釘",
+            "role": "修舟塢匠人",
+            "description": "修舟塢匠人。他補的每一條裂，都能說出是哪一年的航線塌的",
+            "dialogue": "舟骨敲起來聲音不對，就不能出航。省那點料，不值。"
+          },
+          {
+            "id": "lg_void_refinement_npc_6",
+            "name": "僱工頭·邢九",
+            "role": "僱工棚頭目",
+            "description": "僱工棚頭目。他挑人只看手上有沒有纜繩磨出來的痕",
+            "dialogue": "活有輕重，路有遠近。先說你能走多深，再談工錢。"
+          },
+          {
+            "id": "lg_void_refinement_npc_7",
+            "name": "醫修·柳續",
+            "role": "舟上大夫",
+            "description": "舟上大夫。她的藥方裡有一味叫「靠岸」",
+            "dialogue": "傷口在這一界，藥也得配得上。別把界外的東西直接吞了。"
+          },
+          {
+            "id": "lg_void_refinement_npc_8",
+            "name": "引航學徒·喬晚",
+            "role": "望涯驛後人（化神期痕跡）",
+            "description": "望涯驛後人（化神期痕跡）。她從涯上帶下來一雙看遠的眼睛，在這裡卻沒用",
+            "dialogue": "師父說先認燈，再認路。我已能認出三種不會回頭的燈。"
+          }
+        ]
+      },
+      "maps": [
+        {
+          "id": "lg_void_refinement_m1_entry",
+          "name": "碎界灘",
+          "startLevel": 79,
+          "description": "異瓦層：腳下混雜著別處的瓦、別處的木、別處不知名的骨；灘壁的斷面能看到不同世界的土色一層壓著一層，像有人把好幾座城剁碎了鋪在這裡。 界隙潮：灘外是界隙的緩流，退流時露出更多碎片，漲流時又把碎片捲走；拾荒者按潮記上灘，早一步晚一步，撿到的東西就不一樣。 拼屋：拾界人用撿來的碎片拼出一間間不成套的屋子，屋瓦顏色各異，牆上嵌著別人家的門牌，門牌上的字沒有一個認得。",
+          "theme": "異瓦層：腳下混雜著別處的瓦、別處的木、別處不知名的骨",
+          "source": [
+            "docs/story/煉虛/煉虛期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_void_refinement_m1_entry_resource_1",
+              "name": "碎界砂",
+              "kind": "ore",
+              "description": "界隙灘上磨得極細的混色砂，捧起來看不清是什麼顏色。研磨、制基、符料填充",
+              "element": "earth",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m1_entry_resource_2",
+              "name": "異壤",
+              "kind": "ore",
+              "description": "不屬於此界的土，色澤與本地土格格不入，卻養得活東西。栽種、育材、培育界外靈植",
+              "element": "earth",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m1_entry_resource_3",
+              "name": "隙紋蘚",
+              "kind": "herb",
+              "description": "只在界縫光下生長的蘚，葉脈像蛛網一樣的裂紋。符墨、鎮陌、穩住鬆動地形",
+              "element": "wood",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m1_entry_resource_4",
+              "name": "界骸木",
+              "kind": "exotic",
+              "description": "沖來的斷木，木質已半石化卻還留著年輪。舟具、護木、舟骨修補",
+              "element": "wood",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m1_entry_resource_5",
+              "name": "拾光晶",
+              "kind": "ore",
+              "description": "碎片表面凝出的小晶，夜裡能映出別的世界的一小片天。照明、法器芯、舟燈燈芯",
+              "element": "earth",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m1_entry_resource_6",
+              "name": "界隙定神芽",
+              "kind": "herb",
+              "description": "生於碎界灘背風縫隙的界隙定神芽，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "earth",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_void_refinement_m1_entry_mob_1",
+              "name": "界屑蟲",
+              "description": "從碎片縫裡鑽出的蟲，吃瓦礫為生，成群結隊地爬過一地就少一層",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m1_entry_mob_2",
+              "name": "拾荒妖",
+              "description": "撿碎片的人形小妖，會為了你手上那片「像它家的」圍上來",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m1_entry_mob_3",
+              "name": "碎巢蛛",
+              "description": "用碎片結網的蛛，網是碎的，看不出結在哪裡，走過去才知道",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m1_entry_mob_4",
+              "name": "界隙鷗",
+              "description": "在界隙流上盤旋的鳥，專叼閃光的東西，叼走後飛到灘盡頭就不見了",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m1_entry_mob_5",
+              "name": "骸甲役",
+              "description": "披著異界甲片爬行的獸，走起來叮噹作響，越安靜越靠近",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m1_entry_mob_6",
+              "name": "縫間潛影",
+              "description": "從界縫裡伸出的影，永遠只露出身體的一部分，抓一把碎片就縮回去",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_void_refinement_m1_boss",
+            "name": "拾界人",
+            "description": "一個背著比自己還大的麻袋的老人，袋口永遠扎不緊，走一步漏一片。他身上穿的每一件都來自不同的世界：左袖是長袍、右肩是皮甲、腰上繫著別人的腰帶。他從不抬頭看人，只看腳下的碎片。他的臉上沒有一道疤，卻像被拼起來的，五官各是各的。",
+            "skills": [
+              {
+                "name": "拾盡囊",
+                "description": "召喚：抖開麻袋，倒出歷年攢下的碎片化為小怪圍上來"
+              },
+              {
+                "name": "拼骨成家",
+                "description": "環境／召喚：把場上碎片拼成一面不斷重組的短牆，改變走位與視線"
+              },
+              {
+                "name": "落瓦",
+                "description": "傷害：抓一把碎片擲出，單下不重但連綿，逼玩家不停移動"
+              },
+              {
+                "name": "認親",
+                "description": "控制：叫出玩家身上「像他家人的那一片」，短暫讓玩家行動遲滯（機制上為減速與封招，非真控制）"
+              }
+            ],
+            "dropNames": [
+              "碎界砂",
+              "異壤",
+              "拾界袋",
+              "拼瓦甲片",
+              "拾界之囊"
+            ],
+            "dropDirection": "功法殘頁《拾界錄》（步法與辨材向）、腰飾「拾界袋」部件、肩甲「拼瓦甲片」部件、材料碎界砂與異壤；頭目核心為 拾界之囊（袋類飾品主料）。",
+            "componentName": "拾界之囊"
+          },
+          "landmarks": [
+            {
+              "name": "碎界灘入口",
+              "description": "異瓦層：腳下混雜著別處的瓦、別處的木、別處不知名的骨；灘壁的斷面能看到不同世界的土色一層壓著一層，像有人把好幾座城剁碎了鋪在這裡。 界隙潮：灘外是界隙的緩流，退流時露出更多碎片，漲流時又把碎片捲走；拾荒者按潮記上灘，早一步晚一步，撿到的東西就不一樣。 拼屋：拾界人用撿來的碎片拼出一間間不成套的屋子，屋瓦顏色各異，牆上嵌著別人家的門牌，門牌上的字沒有一個認得。"
+            },
+            {
+              "name": "拾界人駐地",
+              "description": "一個背著比自己還大的麻袋的老人，袋口永遠扎不緊，走一步漏一片。他身上穿的每一件都來自不同的世界：左袖是長袍、右肩是皮甲、腰上繫著別人的腰帶。他從不抬頭看人，只看腳下的碎片。他的臉上沒有一道疤，卻像被拼起來的，五官各是各的。"
+            }
+          ]
+        },
+        {
+          "id": "lg_void_refinement_m2_entry",
+          "name": "虛獸巢帶",
+          "startLevel": 82,
+          "description": "啃邊：世界邊緣被虛獸啃得半透明，巢穴邊緣滿是崩落的缺口，碎片間留著虛獸深淺不一的齒痕。 洄游線：成群的虛獸按固定路線遊過，像一條活的河；牠們過處，原本的航線就薄一分——舟盟的航線因此年年改道。 巢帶：由獸的蛻殼與啃剩的界塊堆成環帶，層層如巢；靠近時能聽見極沉的呼吸聲，整條帶隨著呼吸微微起伏。",
+          "theme": "啃邊：世界邊緣被虛獸啃得半透明，走上去腳下會「軟」一下，站久了那一角就沒了",
+          "source": [
+            "docs/story/煉虛/煉虛期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_void_refinement_m2_entry_resource_1",
+              "name": "虛空藻",
+              "kind": "herb",
+              "description": "漂在界隙流上的藻，根不著地，隨流擺盪。制餌、緩蝕、舟底防蝕塗料",
+              "element": "wood",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m2_entry_resource_2",
+              "name": "蝕界涎",
+              "kind": "exotic",
+              "description": "虛獸啃邊時留下的涎，能蝕穿尋常材料。淬毒、蝕刻、開銘",
+              "element": "earth",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m2_entry_resource_3",
+              "name": "巢骸骨",
+              "kind": "exotic",
+              "description": "母獸蛻下的骨環，輕而韌，敲起來有回聲。舟材、護具、骨器",
+              "element": "earth",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m2_entry_resource_4",
+              "name": "隙光藻",
+              "kind": "herb",
+              "description": "吸界隙冷光而生的藻，夜裡泛藍，成片時像水底星空。照明、誘捕、聲標輔材",
+              "element": "wood",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m2_entry_resource_5",
+              "name": "光塵涎",
+              "kind": "exotic",
+              "description": "蝕界涎曝於界隙光後凝成的粉，會自己發出微光。符墨、引航標、夜航照路",
+              "element": "earth",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m2_entry_resource_6",
+              "name": "蝕邊晶",
+              "kind": "ore",
+              "description": "虛獸巢帶岩層裂隙中凝成的蝕邊晶，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+              "element": "earth",
+              "authored": true
+            },
+            {
+              "id": "lg_void_refinement_m2_entry_resource_7",
+              "name": "巢壁空紋礦",
+              "kind": "ore",
+              "description": "虛獸巢帶岩層裂隙中凝成的巢壁空紋礦，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+              "element": "earth",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_void_refinement_m2_entry_mob_1",
+              "name": "蝕界虛獸",
+              "description": "成群洄游的獸，所過之處世界邊緣被啃薄，航線因此改道",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m2_entry_mob_2",
+              "name": "巢衛",
+              "description": "守在巢帶外圈的巨獸，不吃人，只把人撞開，撞完就回到原位",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m2_entry_mob_3",
+              "name": "涎喉獸",
+              "description": "喉裡含著蝕界涎的獸，一噴涎，連甲帶地都蝕出洞",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m2_entry_mob_4",
+              "name": "洄游幼崽",
+              "description": "落單的幼獸，會跟著任何移動的東西走，趕不散也殺不絕",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m2_entry_mob_5",
+              "name": "薄界魘",
+              "description": "活在薄界霧裡的影，只在世界的另一邊露出半身，攻擊它的這一半沒有用",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m2_entry_mob_6",
+              "name": "噬纜蟲",
+              "description": "專啃舟纜的蟲，舟盟最恨；斷纜場的纜多半是牠咬的",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_void_refinement_m2_boss",
+            "name": "虛巢母獸",
+            "description": "像鯨又像島的東西，看不出頭尾，身上覆著歷年蛻下的殼，殼縫裡長著別的世界沖來的小樹。牠不移動——一整條巢帶就是牠的身。牠的呼吸從不間斷，每呼一次身體就脹一次，周圍的世界邊緣便跟著塌一段。牠沒有攻擊的姿態，甚至沒有眼睛，只有一身隨呼吸起伏的殼。",
+            "skills": [
+              {
+                "name": "一次呼吸",
+                "description": "環境／位移：全場地塊隨呼吸起伏，站位被動搖，部分地形暫時塌陷"
+              },
+              {
+                "name": "洄游引潮",
+                "description": "召喚：引來一圈洄游虛獸繞場環遊，形成緩慢移動的傷害帶"
+              },
+              {
+                "name": "蛻殼",
+                "description": "召喚／增益：蛻下一層殼，殼化為巢衛協戰，母獸本體短暫變薄、防禦下降"
+              },
+              {
+                "name": "啃邊",
+                "description": "環境／持續傷害：場地邊緣持續被啃薄，可站立的範圍一圈圈縮小"
+              }
+            ],
+            "dropNames": [
+              "巢骸骨",
+              "光塵涎",
+              "虛巢筋",
+              "巢母之息"
+            ],
+            "dropDirection": "功法殘頁《洄游譜》（御獸與閃避向）、飾品「虛巢筋」部件、巢衛甲片與材料巢骸骨、光塵涎；頭目核心為 巢母之息（飾品與舟底防蝕材料的關鍵）。",
+            "componentName": "巢母之息"
+          },
+          "landmarks": [
+            {
+              "name": "虛獸巢帶入口",
+              "description": "啃邊：世界邊緣被虛獸啃得半透明，巢穴邊緣滿是崩落的缺口，碎片間留著虛獸深淺不一的齒痕。 洄游線：成群的虛獸按固定路線遊過，像一條活的河；牠們過處，原本的航線就薄一分——舟盟的航線因此年年改道。 巢帶：由獸的蛻殼與啃剩的界塊堆成環帶，層層如巢；靠近時能聽見極沉的呼吸聲，整條帶隨著呼吸微微起伏。"
+            },
+            {
+              "name": "虛巢母獸駐地",
+              "description": "像鯨又像島的東西，看不出頭尾，身上覆著歷年蛻下的殼，殼縫裡長著別的世界沖來的小樹。牠不移動——一整條巢帶就是牠的身。牠的呼吸從不間斷，每呼一次身體就脹一次，周圍的世界邊緣便跟著塌一段。牠沒有攻擊的姿態，甚至沒有眼睛，只有一身隨呼吸起伏的殼。"
+            }
+          ]
+        },
+        {
+          "id": "lg_void_refinement_m3_entry",
+          "name": "星骸舊港",
+          "startLevel": 85,
+          "description": "星辰殘骸：一整座發暗的球狀巨物，表面是熄滅的星紋；它不是石頭，敲下去有金屬的悶響。港就建在它被人鑿開的裂口裡。 舊港規：港中處處是三百年前的規矩——貨要過秤、人要報名、單要蓋印；規矩還立在牆上，卻沒人知道是誰定的、為什麼還沒廢。 傀儡檢貨：港守傀儡仍在驗貨，排在牠面前的貨單早已無人遞交；牠驗完一單就換下一單，驗的是空。",
+          "theme": "星辰殘骸：一整座發暗的球狀巨物，表面是熄滅的星紋",
+          "source": [
+            "docs/story/煉虛/煉虛期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_void_refinement_m3_entry_resource_1",
+              "name": "星骸鐵",
+              "kind": "ore",
+              "description": "星辰殘骸裡剝出的金屬，冷而重，表面有熄滅的星紋。鍛兵、舟骨、重甲",
+              "element": "metal",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m3_entry_resource_2",
+              "name": "港燈油",
+              "kind": "exotic",
+              "description": "星骸滲出的油，點燃後不滅，冷光。照明、燈具燃料、無光航行備油",
+              "element": "fire",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m3_entry_resource_3",
+              "name": "骸港苔",
+              "kind": "herb",
+              "description": "長在星骸鐵上的苔，把鐵吃出星圖狀的紋路。符材、蝕刻圖樣",
+              "element": "wood",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m3_entry_resource_4",
+              "name": "隙航墨",
+              "kind": "exotic",
+              "description": "舊港帳房留下的墨，寫下的字經年不褪、入水不化。拓印、公證、舟籍抄錄",
+              "element": "earth",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m3_entry_resource_5",
+              "name": "冷星光屑",
+              "kind": "ore",
+              "description": "星骸表面剝落的光屑，捻開會亮一下，很快又暗。法器芯、照明、傳訊符",
+              "element": "earth",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m3_entry_resource_6",
+              "name": "冷星寧神葉",
+              "kind": "herb",
+              "description": "生於星骸舊港背風縫隙的冷星寧神葉，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "wood",
+              "authored": true
+            },
+            {
+              "id": "lg_void_refinement_m3_entry_resource_7",
+              "name": "港底隕晶",
+              "kind": "ore",
+              "description": "星骸舊港岩層裂隙中凝成的港底隕晶，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+              "element": "earth",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_void_refinement_m3_entry_mob_1",
+              "name": "星骸鼠",
+              "description": "啃星骸鐵的老鼠，牙能咬穿鋼；啃下來的鐵屑當窩",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m3_entry_mob_2",
+              "name": "港守傀儡",
+              "description": "照舊規驗貨的傀儡，港中到處都是，各司一職，彼此不認得",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m3_entry_mob_3",
+              "name": "秤砣魈",
+              "description": "趴在舊貨秤上的小妖，被牠稱過的東西會變輕",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m3_entry_mob_4",
+              "name": "纜鬼",
+              "description": "死在港裡沒回去的舟人的影，還在纜邊等船，等到船也不來",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m3_entry_mob_5",
+              "name": "灰訊鳥",
+              "description": "送舊港信件的機械鳥，信早已無人收，牠還照航線飛",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m3_entry_mob_6",
+              "name": "港底爬骸",
+              "description": "從星骸裂縫爬出的骸骨獸，一動就掉星屑，掉一路亮一路",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_void_refinement_m3_boss",
+            "name": "港守傀儡",
+            "description": "一具比成年人高三尺的青銅傀儡，關節處全是補過的鉚釘。牠胸前掛著一枚早就磨平的港印，右手提著一把驗貨的鉤，左手永遠托著一本帳。牠的眼睛是兩點不滅的港燈油火，火照著帳本，卻照不到自己的腳。牠走路的聲音很規律，一步一響，像在替整座港打卡。",
+            "skills": [
+              {
+                "name": "驗貨",
+                "description": "控制／標記：對玩家「蓋印」，被蓋印者一段時間內被傀儡優先追擊"
+              },
+              {
+                "name": "過秤",
+                "description": "環境／控制：把玩家「稱」在原地，負重越高被壓制越久"
+              },
+              {
+                "name": "補鉚",
+                "description": "召喚／增益：合攏散落的傀儡零件，短暫拼出協戰傀儡"
+              },
+              {
+                "name": "舊規",
+                "description": "傷害／場控：按三百年前港規逐條執法，每一條是一道具名判罰，連續落下"
+              }
+            ],
+            "dropNames": [
+              "星骸鐵",
+              "港燈油",
+              "港守環",
+              "星骸刃",
+              "港印"
+            ],
+            "dropDirection": "功法殘頁《舊港規》（守位與化解向）、飾品「港守環」部件、武器部件「星骸刃」、材料星骸鐵與港燈油；頭目核心為 港印（飾品與舟籍相關功能的關鍵）。",
+            "componentName": "港印"
+          },
+          "landmarks": [
+            {
+              "name": "星骸舊港入口",
+              "description": "星辰殘骸：一整座發暗的球狀巨物，表面是熄滅的星紋；它不是石頭，敲下去有金屬的悶響。港就建在它被人鑿開的裂口裡。 舊港規：港中處處是三百年前的規矩——貨要過秤、人要報名、單要蓋印；規矩還立在牆上，卻沒人知道是誰定的、為什麼還沒廢。 傀儡檢貨：港守傀儡仍在驗貨，排在牠面前的貨單早已無人遞交；牠驗完一單就換下一單，驗的是空。"
+            },
+            {
+              "name": "港守傀儡駐地",
+              "description": "一具比成年人高三尺的青銅傀儡，關節處全是補過的鉚釘。牠胸前掛著一枚早就磨平的港印，右手提著一把驗貨的鉤，左手永遠托著一本帳。牠的眼睛是兩點不滅的港燈油火，火照著帳本，卻照不到自己的腳。牠走路的聲音很規律，一步一響，像在替整座港打卡。"
+            }
+          ]
+        },
+        {
+          "id": "lg_void_refinement_m4_entry",
+          "name": "無光海·裂",
+          "startLevel": 88,
+          "description": "無光：深色暗流吞沒遠方輪廓，古道旁的聲標仍替行旅記著方向；遠處偶爾一點深隙晶的微光，是唯一的座標。 橫裂：界隙最深處一道橫貫的裂，裂的兩邊不同——一邊是這一邊的世界，一邊是別處；貼近裂能感到兩種「邊」貼在一起的涼。 聲標：老舟人沿裂佈下的聲標，是敲響會回聲的樁；聲標連成的線就是唯一的航路，斷一根就要摸黑。",
+          "theme": "無光：沒有光，玩家的視野被壓到最小，只能靠神識與聲音辨位",
+          "source": [
+            "docs/story/煉虛/煉虛期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_void_refinement_m4_entry_resource_1",
+              "name": "無光露",
+              "kind": "herb",
+              "description": "無光處凝出的露，不反光，只在神識裡「看得見」。斂息、匿蹤、無光航行輔材",
+              "element": "earth",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m4_entry_resource_2",
+              "name": "深隙晶",
+              "kind": "ore",
+              "description": "裂壁深處結的晶，內部封著極微的光，捻亮即暗。法器、燈芯、傳訊",
+              "element": "earth",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m4_entry_resource_3",
+              "name": "骸聲木",
+              "kind": "exotic",
+              "description": "裂邊生長的樹，敲一下會替你把聲音傳得極遠。聲標、舟舵、傳聲器",
+              "element": "wood",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m4_entry_resource_4",
+              "name": "隙眠苔",
+              "kind": "herb",
+              "description": "覆在聲標上的苔，能吸收多餘的聲音，讓聲標只回一聲。斂聲、防窺、潛行",
+              "element": "wood",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m4_entry_resource_5",
+              "name": "光引砂",
+              "kind": "ore",
+              "description": "摻入神識可短暫「看見」輪廓的砂，用一次亮一次。引航、應急照明、探路",
+              "element": "earth",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_void_refinement_m4_entry_mob_1",
+              "name": "無光獸",
+              "description": "適應無光的獸，靠聽與觸感獵食，貼身才咬，咬到才現形",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m4_entry_mob_2",
+              "name": "聲吶妖",
+              "description": "用聲音畫出獵物的形，越安靜越難躲；牠一叫，整片裂都在回聲",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m4_entry_mob_3",
+              "name": "裂影",
+              "description": "從裂那邊滲進來的影，只來得及伸出一部分，抓什麼帶什麼",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m4_entry_mob_4",
+              "name": "聽聲蝠",
+              "description": "憑回聲群飛的蝠，撞到你才知道你在；牠撞過的路線會留下聲紋",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m4_entry_mob_5",
+              "name": "眠聲獸",
+              "description": "蹲在聲標上睡覺的獸，被吵醒會把整片航路的聲標一起叫醒",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            },
+            {
+              "id": "lg_void_refinement_m4_entry_mob_6",
+              "name": "裂縫手",
+              "description": "從裂裡伸出的手，五指像從別處借來的，抓一下就把光帶走",
+              "source": "docs/story/煉虛/煉虛期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_void_refinement_m4_boss",
+            "name": "無光老祖",
+            "description": "一個瘦到見骨的老人，坐在裂邊一塊突出的岩上，一動不動。他的眼睛是閉著的，眼皮塌下去，已經沒用了——不是瞎，是他自己不再需要。他的耳朵比臉還大，耳廓張著，像在聽什麼永遠聽不完的東西。他身上的衣料是老的，看不出顏色，因為這裡沒有光。他腳邊擺著一排聲標，哪一根不響了，他就換一根。",
+            "skills": [
+              {
+                "name": "聽裂",
+                "description": "環境／控制：全場陷入無光，玩家被剝奪視野，只能靠招式音效與足音判斷"
+              },
+              {
+                "name": "聲標",
+                "description": "召喚／場控：敲響場上聲標，聲波沿固定路線掃過，未避開者受創並被標記"
+              },
+              {
+                "name": "裂那邊",
+                "description": "傷害／幻象：引來裂那邊的動靜具現成影，傷害不重但會擾亂站位判斷"
+              },
+              {
+                "name": "閉目聽",
+                "description": "反制／增益：老祖閉目，玩家每一次出招都在他腦中留下聲音；重複同一招會被預判"
+              }
+            ],
+            "dropNames": [
+              "無光露",
+              "深隙晶",
+              "聽裂耳",
+              "裂聽之耳"
+            ],
+            "dropDirection": "第四片補天殘材（於主線節點三 B 簇「聽裂交材」取得，非隨機掉落）、飾品「聽裂耳」部件、裂壁部件、材料深隙晶與無光露；頭目核心為 裂聽之耳（具備無光航行與聽聲辨位功能的關鍵部件）。",
+            "componentName": "裂聽之耳"
+          },
+          "landmarks": [
+            {
+              "name": "無光海·裂入口",
+              "description": "無光：深色暗流吞沒遠方輪廓，古道旁的聲標仍替行旅記著方向；遠處偶爾一點深隙晶的微光，是唯一的座標。 橫裂：界隙最深處一道橫貫的裂，裂的兩邊不同——一邊是這一邊的世界，一邊是別處；貼近裂能感到兩種「邊」貼在一起的涼。 聲標：老舟人沿裂佈下的聲標，是敲響會回聲的樁；聲標連成的線就是唯一的航路，斷一根就要摸黑。"
+            },
+            {
+              "name": "無光老祖駐地",
+              "description": "一個瘦到見骨的老人，坐在裂邊一塊突出的岩上，一動不動。他的眼睛是閉著的，眼皮塌下去，已經沒用了——不是瞎，是他自己不再需要。他的耳朵比臉還大，耳廓張著，像在聽什麼永遠聽不完的東西。他身上的衣料是老的，看不出顏色，因為這裡沒有光。他腳邊擺著一排聲標，哪一根不響了，他就換一根。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "body_integration",
+      "name": "合體期",
+      "startLevel": 91,
+      "source": [
+        "docs/story/後期總綱.md#4.5",
+        "docs/story/合體/合體期地圖設計.md"
+      ],
+      "town": {
+        "id": "lg_body_integration_town",
+        "name": "天垣城",
+        "description": "全城的屋頂都朝牆外側斜。當地人的說法是「讓劫風把東西吹走，別往城裡落」。城裡每隔一段路立一根名柱，柱身刻滿未歸者的名字，一面刻滿就換下一面，一根刻滿就換下一根。夜裡關樓會點一盞候名燈，燈亮著，代表今夜還在點名；燈滅了，才輪到城裡的更夫喊「今夜無人未歸」。 城裡沒有大型廣場，最寬的地方是名冊房前的名柱廣場，柱影拉得長，白天總有人站在柱下找自己認識的名字。",
+        "npcs": [
+          {
+            "id": "lg_body_integration_npc_1",
+            "name": "垣衛提點·霍守拙",
+            "role": "垣衛現任提點，掌點名",
+            "description": "垣衛現任提點，掌點名。點了一輩子名，記得住每一個沒應到的人",
+            "dialogue": "守牆不是守自己的名聲，是守牆後還有人過日子。"
+          },
+          {
+            "id": "lg_body_integration_npc_2",
+            "name": "垣門書吏·阮青墨",
+            "role": "名冊房書吏",
+            "description": "名冊房書吏。她抄的每一頁，最後一行都空著，留給下一個未歸的人",
+            "dialogue": "名字念清楚，我才好把這一行記下。"
+          },
+          {
+            "id": "lg_body_integration_npc_3",
+            "name": "門房老卒·常得祿",
+            "role": "城門老卒，守門四十年",
+            "description": "城門老卒，守門四十年。全城只有他記得門關上那天的風向",
+            "dialogue": "點過名再進門。名冊老了，規矩還沒老。"
+          },
+          {
+            "id": "lg_body_integration_npc_4",
+            "name": "折鏡匠·池照",
+            "role": "鏡巷製鏡匠人",
+            "description": "鏡巷製鏡匠人。磨了一輩子鏡子，從不照自己",
+            "dialogue": "鏡子碎了先別丟。照見了什麼，比裂了幾道更要緊。"
+          },
+          {
+            "id": "lg_body_integration_npc_5",
+            "name": "司筆·崔醒",
+            "role": "法骸陵殘卷的抄錄與收存者",
+            "description": "法骸陵殘卷的抄錄與收存者。抄殘卷只抄名字不抄內容，因為「內容會被後人用錯，名字不會」",
+            "dialogue": "醒著寫的話，也可能是在說夢。你見過井壁，再下結論。"
+          },
+          {
+            "id": "lg_body_integration_npc_6",
+            "name": "井市牙人·穆三娘",
+            "role": "井市中間人",
+            "description": "井市中間人。什麼都敢收，就是不收沒名字的東西",
+            "dialogue": "井裡上來的東西先過眼，再談價。不是每樣都能帶回家。"
+          },
+          {
+            "id": "lg_body_integration_npc_7",
+            "name": "醫修·柳無咎",
+            "role": "替垣衛治傷的大夫",
+            "description": "替垣衛治傷的大夫。他的藥方裡有一味藥引，叫「一聲到」",
+            "dialogue": "傷好得慢，就慢慢養。把自己當石頭使，藥也救不了。"
+          },
+          {
+            "id": "lg_body_integration_npc_8",
+            "name": "老兵·關復城",
+            "role": "從外壘被扛回來的老兵，缺一條腿",
+            "description": "從外壘被扛回來的老兵，缺一條腿。他每晚睡前都會自己應一聲「到」，不為誰，只為睡得著",
+            "dialogue": "我還記得那次點名。有人沒答，牆卻一直立著。"
+          }
+        ]
+      },
+      "maps": [
+        {
+          "id": "lg_body_integration_m1_entry",
+          "name": "垣門外壘",
+          "startLevel": 91,
+          "description": "壘臺層疊：七層舊壘一層壓著一層，石料顏色一代比一代深，像把歷年的敗仗砌進了牆裡。 點名石臺：外壘最高處的圓形石臺，檯面被腳步磨得發亮，臺下插著一圈沒拔走的舊旗。 門樓遠影：從壘上任何一段抬頭，都能看見世界之牆上的門樓；門樓沒有旗，也沒有燈。",
+          "theme": "壘臺層疊：七層舊壘一層壓著一層，石料顏色一代比一代深，像把歷年的敗仗砌進了牆裡",
+          "source": [
+            "docs/story/合體/合體期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_body_integration_m1_entry_resource_1",
+              "name": "垣晶",
+              "kind": "ore",
+              "description": "嵌在壘縫裡的淡金晶簇，夜裡泛著牆根的光。合體期防具與陣材主料",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m1_entry_resource_2",
+              "name": "舊壘鐵",
+              "kind": "ore",
+              "description": "不同年代疊壓的壘牆鐵屑，斷口還留著舊符紋。鍛兵與修壘",
+              "element": "metal",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m1_entry_resource_3",
+              "name": "垣階苔",
+              "kind": "herb",
+              "description": "只長在壘階背風處的鐵灰色苔。煉製斂息丹，藏形匿氣",
+              "element": "wood",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m1_entry_resource_4",
+              "name": "垣銘石",
+              "kind": "ore",
+              "description": "被歷代點名聲浸泡過的白色殘石，貼耳能聽見模糊的回名。製傳名符與陣眼",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m1_entry_resource_5",
+              "name": "垣燼砂",
+              "kind": "ore",
+              "description": "舊名冊焚盡後沉積的細砂，混著沒燒透的字畫。書符與殘頁修補",
+              "element": "fire",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m1_entry_resource_6",
+              "name": "舊壘止血花",
+              "kind": "herb",
+              "description": "生於垣門外壘背風縫隙的舊壘止血花，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "wood",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_body_integration_m1_entry_mob_1",
+              "name": "壘衛殘魂",
+              "description": "穿著各代壘甲、仍在沿壘巡邏的半透明殘影",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m1_entry_mob_2",
+              "name": "撞門獸",
+              "description": "撞角已經磨平的巨獸，一生只會朝門的方向頂",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m1_entry_mob_3",
+              "name": "名砂傀",
+              "description": "由垣燼砂與碎甲聚成的人形，誰靠近就朝誰伸手點名",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m1_entry_mob_4",
+              "name": "垣壁行者",
+              "description": "貼著牆面爬行的石化武者，像在修牆，其實在等人",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m1_entry_mob_5",
+              "name": "舊甲蟻",
+              "description": "以舊壘鐵為食的鐵蟻，會把掉落的甲片拖回巢裡補牆",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m1_entry_mob_6",
+              "name": "望門鴉",
+              "description": "不吃不喝的灰鴉，只落在門樓方向，歪著頭看門",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_body_integration_m1_boss",
+            "name": "守垣將",
+            "description": "一身舊甲由七代壘甲的碎片焊成，顏色深淺不一，像地層。右手永遠舉著一卷點名冊，左手按刀不拔。鎧縫裡長出細細的垣晶，像牆縫裡凝出的霜。他的臉被盔影蓋住，只看見下頷一動一動，像在唸字。名冊每翻一頁，四周的殘魂便應聲直起。",
+            "skills": [
+              {
+                "name": "點名",
+                "description": "喊出一串無人應答的名字；被點到者若不站回指定守位，持續受軍令反噬"
+              },
+              {
+                "name": "合冊壓陣",
+                "description": "名冊高舉，歷代守門人的名字化成壘牆虛影壓落，範圍傷害附短暫定身"
+              },
+              {
+                "name": "守位不移",
+                "description": "站在點名石臺時減傷大幅提升；玩家必須把他引離石臺"
+              },
+              {
+                "name": "末列歸營",
+                "description": "低血階段把外壘殘魂全數點回，殘魂歸位時爆開；每少一個殘魂，他的攻勢便漲一分"
+              }
+            ],
+            "dropNames": [
+              "垣晶",
+              "舊壘鐵",
+              "垣燼砂",
+              "守垣甲片"
+            ],
+            "dropDirection": "- 材料：舊壘鐵、垣晶、垣燼砂。\n- 部件：守垣甲片（肩甲位）。\n- 殘頁：《垣門守式》殘頁（守位與化解向功法）。\n- 任務道具：守垣將名冊殘頁（主線必掉）。",
+            "componentName": "守垣甲片"
+          },
+          "landmarks": [
+            {
+              "name": "垣門外壘入口",
+              "description": "壘臺層疊：七層舊壘一層壓著一層，石料顏色一代比一代深，像把歷年的敗仗砌進了牆裡。 點名石臺：外壘最高處的圓形石臺，檯面被腳步磨得發亮，臺下插著一圈沒拔走的舊旗。 門樓遠影：從壘上任何一段抬頭，都能看見世界之牆上的門樓；門樓沒有旗，也沒有燈。"
+            },
+            {
+              "name": "守垣將駐地",
+              "description": "原始設計的本圖頭目。"
+            }
+          ]
+        },
+        {
+          "id": "lg_body_integration_m2_entry",
+          "name": "鏡我之澤",
+          "startLevel": 94,
+          "description": "鏡面淺澤：水面平得不像水，天光、蘆影、人影都照得清清楚楚，唯獨照不出魚。 澤心圓湖：湖心無風，落葉不漂；水面像被人反覆打磨過。 人臉浮萍：照心萍聚成人臉輪廓，風一吹散開，風一停又聚回原樣。",
+          "theme": "鏡面淺澤：水面平得不像水，天光、蘆影、人影都照得清清楚楚，唯獨照不出魚",
+          "source": [
+            "docs/story/合體/合體期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_body_integration_m2_entry_resource_1",
+              "name": "鏡我蓮",
+              "kind": "herb",
+              "description": "水面如鏡的墨色睡蓮，花瓣背面是一種金屬灰。煉心寧丹、驅幻",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m2_entry_resource_2",
+              "name": "照心萍",
+              "kind": "herb",
+              "description": "聚成人臉形狀的浮萍，風吹就散、風停又聚。製鏡與定神陣材",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m2_entry_resource_3",
+              "name": "鏡鱗砂",
+              "kind": "ore",
+              "description": "澤底細砂，每一粒都有一個極小的反光面。打磨法器、書符",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m2_entry_resource_4",
+              "name": "鏡心藕",
+              "kind": "herb",
+              "description": "澤底藕節，切開的斷面像一面鏡子，照出的不是藕紋。合丹、定神",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m2_entry_resource_5",
+              "name": "垣根沉木",
+              "kind": "exotic",
+              "description": "被牆根落石壓進澤底的沉木，木心還是乾的。製沉穩法器與船材",
+              "element": "wood",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m2_entry_resource_6",
+              "name": "澤底照魂晶",
+              "kind": "ore",
+              "description": "鏡我之澤岩層裂隙中凝成的澤底照魂晶，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+              "element": "earth",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_body_integration_m2_entry_mob_1",
+              "name": "鏡影",
+              "description": "澤中映影走上岸的無麵人形，會模仿路過者的步態",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m2_entry_mob_2",
+              "name": "雙生獸",
+              "description": "成對出現的水獸，殺其一，另一隻會變成牠的樣子",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m2_entry_mob_3",
+              "name": "照心妖",
+              "description": "貼在水底的影子，你低頭看水，它也在看你",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m2_entry_mob_4",
+              "name": "拾面客",
+              "description": "撿走溺者面容的舊人，臉上一層層貼著別人的臉",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m2_entry_mob_5",
+              "name": "回聲蛙",
+              "description": "叫聲是你自己的聲音，只是慢半拍",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_body_integration_m2_boss",
+            "name": "鏡我",
+            "description": "它和你一模一樣：衣著、兵器、站姿，全都是你這一世的樣子。只有材質不對，像用澤水塑出來的，動作時邊緣會晃出細波。它的動作比你慢半瞬，像一段記得不夠牢的回憶。細節處總有一點不同：腰間掛飾的形狀、手臂舊傷的位置、眼神落點的方向。它不主動開口；一開口，就是用你的聲音。",
+            "skills": [
+              {
+                "name": "照式",
+                "description": "映照玩家上一輪用過的招式，以同樣的形式回敬"
+              },
+              {
+                "name": "換面",
+                "description": "把玩家身上的增益與減益狀態對調一瞬"
+              },
+              {
+                "name": "澤心問",
+                "description": "澤面升起一圈鏡壁圍住玩家，鏡壁上的「你」同時舉起兵器，逼玩家選一個方向突破"
+              },
+              {
+                "name": "碎鏡",
+                "description": "低血階段，鏡我碎成滿澤碎片，每一片都是一個不同選擇的「你」；只有一個會流血"
+              }
+            ],
+            "dropNames": [
+              "鏡我蓮",
+              "照心萍",
+              "鏡鱗砂",
+              "鏡心藕",
+              "映心鏡"
+            ],
+            "dropDirection": "- 材料：鏡我蓮、照心萍、鏡鱗砂、鏡心藕。\n- 部件：映心鏡（法器位）。\n- 殘頁：《照心式》殘頁（以對手招式照見自己破綻的反制向功法）。",
+            "componentName": "映心鏡"
+          },
+          "landmarks": [
+            {
+              "name": "鏡我之澤入口",
+              "description": "鏡面淺澤：水面平得不像水，天光、蘆影、人影都照得清清楚楚，唯獨照不出魚。 澤心圓湖：湖心無風，落葉不漂；水面像被人反覆打磨過。 人臉浮萍：照心萍聚成人臉輪廓，風一吹散開，風一停又聚回原樣。"
+            },
+            {
+              "name": "鏡我駐地",
+              "description": "原始設計的本圖頭目。"
+            }
+          ]
+        },
+        {
+          "id": "lg_body_integration_m3_entry",
+          "name": "法骸陵",
+          "startLevel": 97,
+          "description": "晶柱成陵：一柱一法，柱身半透，裡頭的光像沒寫完的字。 無聲之地：晶柱深處一片沉寂，風穿過石縫也只留下若有若無的低鳴。 名碑長廊：主廊兩側立著補天者的名碑，碑上只有名字，沒有生平。",
+          "theme": "晶柱成陵：一柱一法，柱身半透，裡頭的光像沒寫完的字",
+          "source": [
+            "docs/story/合體/合體期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_body_integration_m3_entry_resource_1",
+              "name": "法骸晶",
+              "kind": "ore",
+              "description": "死去法則凝成的晶柱碎塊，切面有不完整的「道理」在動。功法參悟與陣基",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m3_entry_resource_2",
+              "name": "啞陵草",
+              "kind": "herb",
+              "description": "只長在無聲處的灰白草，風過不響。斂聲丹、匿蹤",
+              "element": "wood",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m3_entry_resource_3",
+              "name": "葬法砂",
+              "kind": "ore",
+              "description": "埋法時覆上去的黑砂，落在哪，哪就沒有迴音。書符、封禁",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m3_entry_resource_4",
+              "name": "法髓乳",
+              "kind": "ore",
+              "description": "晶柱根部滲出的乳白液，觸手微涼。悟道輔材",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m3_entry_resource_5",
+              "name": "垣痕石",
+              "kind": "ore",
+              "description": "從牆體剝落、滾進陵裡的老石，上頭還帶著沒刻完的名字。製印、刻名",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m3_entry_resource_6",
+              "name": "無聲定魄花",
+              "kind": "herb",
+              "description": "生於法骸陵背風縫隙的無聲定魄花，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "wood",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_body_integration_m3_entry_mob_1",
+              "name": "葬法傀",
+              "description": "替葬法老人抬碑的無聲傀，動作整齊得可怕",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m3_entry_mob_2",
+              "name": "無聲妖",
+              "description": "沒有嘴的生物，攻擊時連風聲都被吸走",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m3_entry_mob_3",
+              "name": "拾法獸",
+              "description": "專撿晶柱碎塊的小獸，塞滿一嘴還想塞",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m3_entry_mob_4",
+              "name": "晶柱衛",
+              "description": "從晶柱裡長出來的守衛，被打碎會慢慢長回來",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m3_entry_mob_5",
+              "name": "覆名蛛",
+              "description": "在名碑上結網的蛛，蛛絲把字遮住，像在替人抹名",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m3_entry_mob_6",
+              "name": "灰誦者",
+              "description": "捧著殘卷、嘴唇在動卻發不出聲的舊修，靠近就會抓住你一起「讀」",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_body_integration_m3_boss",
+            "name": "葬法老人",
+            "description": "腰背駝得很深的老人，穿的是一件由紙灰與碑屑黏成的長袍。手裡提著一盞沒有火的燈，燈籠以「聲音」的碎片糊成。臉褶裡嵌著細細的晶脈，像陵中的柱紋長到了他身上。走路時腳下不揚塵，因為連塵的法則都埋在這兒了。",
+            "skills": [
+              {
+                "name": "覆土",
+                "description": "揚起葬法砂覆住目標，被覆住的招式暫時失效或延遲"
+              },
+              {
+                "name": "立碑",
+                "description": "在場上立起法骸晶柱，封鎖周邊方向的走位與施法"
+              },
+              {
+                "name": "無聲界",
+                "description": "把場地的聲音法則收走，場內提示與吟唱一併變窄"
+              },
+              {
+                "name": "收葬",
+                "description": "低血階段把自己埋進地裡，化成一柱新碑；須先打碎「葬法老人之碑」，他才以殘身再起"
+              }
+            ],
+            "dropNames": [
+              "法骸晶",
+              "啞陵草",
+              "葬法砂",
+              "法髓乳",
+              "無聲甲"
+            ],
+            "dropDirection": "- 材料：法骸晶、啞陵草、葬法砂、法髓乳。\n- 部件：無聲甲（衣甲位）。\n- 殘頁：《葬法錄》殘頁（斂息與封禁向功法）。\n- 任務道具：《補天者名錄》殘卷（主線必得）。",
+            "componentName": "無聲甲"
+          },
+          "landmarks": [
+            {
+              "name": "法骸陵入口",
+              "description": "晶柱成陵：一柱一法，柱身半透，裡頭的光像沒寫完的字。 無聲之地：晶柱深處一片沉寂，風穿過石縫也只留下若有若無的低鳴。 名碑長廊：主廊兩側立著補天者的名碑，碑上只有名字，沒有生平。"
+            },
+            {
+              "name": "葬法老人駐地",
+              "description": "原始設計的本圖頭目。"
+            }
+          ]
+        },
+        {
+          "id": "lg_body_integration_m4_entry",
+          "name": "垣心之井",
+          "startLevel": 100,
+          "description": "豎井通天：井身粗得能塞進一座小山，往上看只有一線亮，越往上越亮。 刻名之壁：井壁每一圈都刻著名字，字體一代與一代不同，越往上刻得越新。 垣髓流金：牆體滲出的乳金色垣髓沿著刻痕往下淌，在井心積成一灘會發光的淺水。",
+          "theme": "豎井通天：井身粗得能塞進一座小山，往上看只有一線亮，越往上越亮",
+          "source": [
+            "docs/story/合體/合體期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_body_integration_m4_entry_resource_1",
+              "name": "井心苔",
+              "kind": "herb",
+              "description": "長在井壁刻名凹痕裡的青白苔，只順著字痕生長。續命丹、護脈",
+              "element": "wood",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m4_entry_resource_2",
+              "name": "垣髓",
+              "kind": "ore",
+              "description": "牆體深處滲出的乳金色髓液，凝後如琥珀。合體期核心淬體材",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m4_entry_resource_3",
+              "name": "垣口砂",
+              "kind": "ore",
+              "description": "從井口被劫風吹落、積在井底的細砂，摸起來是燙的。抗劫符材",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m4_entry_resource_4",
+              "name": "垣絡藤",
+              "kind": "herb",
+              "description": "沿井壁攀生的鐵色老藤，結節如指節。製索、攀具",
+              "element": "wood",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m4_entry_resource_5",
+              "name": "垣名墨",
+              "kind": "exotic",
+              "description": "井底積著歷代刻名落下的石粉，混水成墨。書符、拓印",
+              "element": "earth",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m4_entry_resource_6",
+              "name": "井壁養脈蘚",
+              "kind": "herb",
+              "description": "生於垣心之井背風縫隙的井壁養脈蘚，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "wood",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_body_integration_m4_entry_mob_1",
+              "name": "井守",
+              "description": "貼在井壁上的石甲守衛，一生沒有下過井",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m4_entry_mob_2",
+              "name": "攀壁妖",
+              "description": "背著上一個攀井者遺骸的爬行妖，往上爬一步就往下滑半步",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m4_entry_mob_3",
+              "name": "井底獸",
+              "description": "井底暗處的巨大者，只以井口落下來的東西為食",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m4_entry_mob_4",
+              "name": "名縫蟲",
+              "description": "住進名刻凹痕裡的小蟲，會啃掉筆畫",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m4_entry_mob_5",
+              "name": "落名傀",
+              "description": "由歷代沒刻完的名字聚成的殘影，見人就伸出一隻手要筆",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            },
+            {
+              "id": "lg_body_integration_m4_entry_mob_6",
+              "name": "垣髓蛾",
+              "description": "被垣髓光吸引的灰蛾群，翅粉沾到皮膚會發癢",
+              "source": "docs/story/合體/合體期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_body_integration_m4_boss",
+            "name": "垣心守",
+            "description": "一個蹲坐在井心平臺上的高大身影，全身被厚厚的垣髓結殼包住，像一根立在井心的鐘乳。結殼縫裡透出極細的光，光隨著他的呼吸一明一暗。他的雙眼已經被結殼封死，卻準確地朝著你的方向。手中橫著一根斷了的井繩，繩上還串著幾枚舊名牌。他不站起來。他一站起來，井就要晃。",
+            "skills": [
+              {
+                "name": "垂繩",
+                "description": "斷裂的井繩如蛇散開，纏住玩家的移動軸線，把人拉回井壁"
+              },
+              {
+                "name": "井晃",
+                "description": "他撐起半身，豎井震動，井壁刻名同時亮起壓向場中每一位"
+              },
+              {
+                "name": "點名過井",
+                "description": "念出井壁上的名字，被唸到的補天者殘影出列應戰"
+              },
+              {
+                "name": "封口",
+                "description": "低血階段，他將井口的光收進自己的結殼，全場陷入黑暗，只剩他身上那點一明一暗的光在移動"
+              }
+            ],
+            "dropNames": [
+              "井心苔",
+              "垣髓",
+              "垣口砂",
+              "守井人殘繩"
+            ],
+            "dropDirection": "- 材料：井心苔、垣髓、垣口砂、垣名墨。\n- 部件：守井人殘繩（飾品位）。\n- 殘頁：《守井樁》殘頁（站樁與化解向功法）。\n- 主線交付：第五片補天殘材（完成點名交材儀式後由垣心守放行取得，非隨機掉落）。",
+            "componentName": "守井人殘繩"
+          },
+          "landmarks": [
+            {
+              "name": "垣心之井入口",
+              "description": "豎井通天：井身粗得能塞進一座小山，往上看只有一線亮，越往上越亮。 刻名之壁：井壁每一圈都刻著名字，字體一代與一代不同，越往上刻得越新。 垣髓流金：牆體滲出的乳金色垣髓沿著刻痕往下淌，在井心積成一灘會發光的淺水。"
+            },
+            {
+              "name": "垣心守駐地",
+              "description": "原始設計的本圖頭目。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "great_vehicle",
+      "name": "大乘期",
+      "startLevel": 103,
+      "source": [
+        "docs/story/後期總綱.md#4.6",
+        "docs/story/大乘/大乘期地圖設計.md"
+      ],
+      "town": {
+        "id": "lg_great_vehicle_town",
+        "name": "鎮涯關",
+        "description": "全城的燈籠都罩鐵網。網眼大小是門手藝：太密，光出不去；太疏，劫風裡的火星會鑽進來。罩網的鐵絲每年換一次，換下來的舊網熔了打成補丁，補在別人的網上——所以每一盞燈的網都有別人的一段。 全城的屋頂朝南斜，屋脊壓著石頭。門簾不是布，是鐵片編的；風大的日子全城叮噹作響，本地人叫這個聲音「城在打拍子」。鐵旗巷的旗一個月換一面，舊旗回爐打成新旗，桑槐說這是關上唯一一件「用完還能變回原料」的東西。 孩子學會走路先學會頂風。關城的說法是：不會頂風的孩子，走得再快也出不了南門。",
+        "npcs": [
+          {
+            "id": "lg_great_vehicle_npc_1",
+            "name": "守望令·賀滄",
+            "role": "鎮涯守望現任守望令",
+            "description": "鎮涯守望現任守望令。守關的人不問撐不撐得住，只問今夜誰當班",
+            "dialogue": "風從天痕來，人從關後來。這一道關，還得有人守。"
+          },
+          {
+            "id": "lg_great_vehicle_npc_2",
+            "name": "清冊官·聞攸",
+            "role": "守望衙清冊官",
+            "description": "守望衙清冊官。她記得住每一個名字，記不住任何一個日期",
+            "dialogue": "數清楚，不只是數還有多少料，也是數還有多少人。"
+          },
+          {
+            "id": "lg_great_vehicle_npc_3",
+            "name": "老哨·竇聾",
+            "role": "劫風口老哨兵，耳朵被風刮聾半邊",
+            "description": "劫風口老哨兵，耳朵被風刮聾半邊。聽不見風聲的人，反而聽得見風的拍子",
+            "dialogue": "我聽不清人話，哨聲還聽得清。風向變了，就別往前站。"
+          },
+          {
+            "id": "lg_great_vehicle_npc_4",
+            "name": "補風匠·桑槐",
+            "role": "全城唯一還在打鐵旗的匠人",
+            "description": "全城唯一還在打鐵旗的匠人。一個月打一面旗，打了四十年",
+            "dialogue": "補風的料要織得緊。每鬆一寸，外頭就多漏一夜。"
+          },
+          {
+            "id": "lg_great_vehicle_npc_5",
+            "name": "頂關燈手·蘇盞",
+            "role": "守頂關燈籠的人",
+            "description": "守頂關燈籠的人。她沒見過不罩網的燈",
+            "dialogue": "燈罩壞了就換，燈不能停。有人還看著這盞燈回來。"
+          },
+          {
+            "id": "lg_great_vehicle_npc_6",
+            "name": "拾遺丫頭·小滿",
+            "role": "在舊壘撿劫獸骨換錢的孤女",
+            "description": "在舊壘撿劫獸骨換錢的孤女。她認得每一種骨頭是哪一波潮帶上來的",
+            "dialogue": "壘邊掉的東西我都收著。誰來找，就還給誰。"
+          },
+          {
+            "id": "lg_great_vehicle_npc_7",
+            "name": "觀痕生·邵屏",
+            "role": "望痕臺的觀測修士",
+            "description": "望痕臺的觀測修士。記了十年痕寬，記出一個誰都不想看的趨勢",
+            "dialogue": "天痕不是一條線。站得越久，才越知道自己看見得少。"
+          },
+          {
+            "id": "lg_great_vehicle_npc_8",
+            "name": "退卒·雷五",
+            "role": "從雷罰原被抬回來的人",
+            "description": "從雷罰原被抬回來的人。他被罰過一次，沒死，也沒冤",
+            "dialogue": "退下來不是忘了前頭。我的甲放在這裡，要用時還拿得起。"
+          }
+        ]
+      },
+      "maps": [
+        {
+          "id": "lg_great_vehicle_m1_entry",
+          "name": "劫風口",
+          "startLevel": 103,
+          "description": "隘口成哨：兩壁岩層被風削出一條條長槽，槽紋全部順風；站在槽口，風會被地形切成一股一股的。 風分三層：貼地是滾石層，腰高是扯人層，高處是呼嘯層；站姿不同，受到的風也不同。 鐵旗列：自舊哨道口到隘口深處插了一路鐵旗，旗面被風扯得半捲，舊旗回爐打新旗，一個月一面。",
+          "theme": "隘口成哨：兩壁岩層被風削出一條條長槽，槽紋全部順風",
+          "source": [
+            "docs/story/大乘/大乘期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_great_vehicle_m1_entry_resource_1",
+              "name": "劫風木",
+              "kind": "exotic",
+              "description": "只長在隘口背風窪地、木紋全部扭成螺旋的老木。大乘期防具與陣材主料",
+              "element": "wood",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m1_entry_resource_2",
+              "name": "風蝕鐵",
+              "kind": "ore",
+              "description": "隘口兩壁夾層裡的鐵塊，表面被風蝕出蜂窩般的孔。鍛兵與修哨",
+              "element": "metal",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m1_entry_resource_3",
+              "name": "劫哨砂",
+              "kind": "ore",
+              "description": "風裡懸浮、一落靜地就凝成暗色細砂的砂粒。製哨器與風符",
+              "element": "metal",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m1_entry_resource_4",
+              "name": "劫紋苔",
+              "kind": "herb",
+              "description": "只貼在背風岩面、紋路每逢換季就轉一次向的苔。抗風丹輔材",
+              "element": "wood",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m1_entry_resource_5",
+              "name": "絞風藤",
+              "kind": "herb",
+              "description": "在背風窪地把自己絞成繩狀的藤，扯開會彈回。製索具與護具內襯",
+              "element": "wood",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_great_vehicle_m1_entry_mob_1",
+              "name": "劫風獸",
+              "description": "半透明的鹿形獸，跑動時身體先散後聚，散了就是風、聚了才咬人",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m1_entry_mob_2",
+              "name": "扯旗妖",
+              "description": "抓著鐵旗殘片當殼的妖物，見旗就撲，彷彿在奪回什麼",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m1_entry_mob_3",
+              "name": "吹燈魈",
+              "description": "專往燈火苗上撲的小魈，罩網也擋不住它從網眼裡鑽",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m1_entry_mob_4",
+              "name": "頂風猿",
+              "description": "逆風站著不動的灰猿，誰繞到它下風處，它就發狂",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m1_entry_mob_5",
+              "name": "嚎風鴉",
+              "description": "群飛成旋的鴉，叫聲散碎，聽起來像被風吹散的話",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m1_entry_mob_6",
+              "name": "滾石傀",
+              "description": "被隘口滾石裹住的舊行者殘骸，順風滾、逆風爬，永遠朝著北面",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_great_vehicle_m1_boss",
+            "name": "擋風人",
+            "description": "一個站著的人形，從背後看像插在隘口裡的一根舊樁。斗篷早被風磨成薄殼，貼在身上像第二層皮，看不出原本的顏色。臉朝北——風來的方向，眼睛半闔，睫毛上結著鹽霜似的砂。他腳下有一個深到腳踝的凹坑，那是站出來的。他不轉身迎人，只把耳朵稍微偏過來。",
+            "skills": [
+              {
+                "name": "逆風站位",
+                "description": "他往玩家上風處一挪，場中風向倒轉，玩家位移被吹回原點"
+              },
+              {
+                "name": "三層風",
+                "description": "依玩家站位高度分層打擊：貼地掃、腰高扯、高處壓，同一套路連打三層"
+              },
+              {
+                "name": "風裡的話",
+                "description": "念出半句聽不清的風語，命中者短時聽不見技能提示，只聽見風"
+              },
+              {
+                "name": "站成樁",
+                "description": "低血階段他不再移動，把自身化入隘口風道，引來成群的劫風獸替他擋在身前"
+              }
+            ],
+            "dropNames": [
+              "劫風木",
+              "風蝕鐵",
+              "劫哨砂",
+              "劫紋苔",
+              "擋風斗篷"
+            ],
+            "dropDirection": "- 材料：劫風木、風蝕鐵、劫哨砂、劫紋苔。\n- 部件：擋風斗篷（披風位）。\n- 殘頁：《聽風訣》殘頁（感知與預判向功法）。\n- 清點交付：舊哨樁哨記拓片與風斷碑碑拓（完成兩址清點後由他讓開位置取得，非隨機掉落）。",
+            "componentName": "擋風斗篷"
+          },
+          "landmarks": [
+            {
+              "name": "劫風口入口",
+              "description": "隘口成哨：兩壁岩層被風削出一條條長槽，槽紋全部順風；站在槽口，風會被地形切成一股一股的。 風分三層：貼地是滾石層，腰高是扯人層，高處是呼嘯層；站姿不同，受到的風也不同。 鐵旗列：自舊哨道口到隘口深處插了一路鐵旗，旗面被風扯得半捲，舊旗回爐打新旗，一個月一面。"
+            },
+            {
+              "name": "擋風人駐地",
+              "description": "原始設計的本圖頭目。"
+            }
+          ]
+        },
+        {
+          "id": "lg_great_vehicle_m2_entry",
+          "name": "雷罰原",
+          "startLevel": 106,
+          "description": "落雷按律：雷不亂落，總在碑前停半息再落，像先宣判、再行刑。 碑林記事：每塊碑刻著一個名字和一行「罰由」，字口被雷火燒得焦黑，名字卻留著。 判臺與啞雷窪：原心一座石臺，檯面刻著「罪與罰」三個大字，字口裡填著雷罰鐵；臺西的啞雷窪是另一處清點址，雷落進窪裡就沒了聲，窪底積著歷次罰雷的殘響。",
+          "theme": "落雷按律：雷不亂落，總在碑前停半息再落，像先宣判、再行刑",
+          "source": [
+            "docs/story/大乘/大乘期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_great_vehicle_m2_entry_resource_1",
+              "name": "雷罰鐵",
+              "kind": "ore",
+              "description": "埋在原土裡、被雷火反覆淬過的深青色鐵塊，斷口泛電光。雷系法器與重甲主料",
+              "element": "metal",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m2_entry_resource_2",
+              "name": "贖罪苔",
+              "kind": "herb",
+              "description": "只長在碑影裡的灰白苔，日照到就枯、碑影蓋回去又活。定神丹與鎮魂符",
+              "element": "wood",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m2_entry_resource_3",
+              "name": "罰雷砂",
+              "kind": "ore",
+              "description": "碑座下積的暗紫細砂，遇水會爆響。製雷符與引信",
+              "element": "metal",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m2_entry_resource_4",
+              "name": "焦心木",
+              "kind": "exotic",
+              "description": "被雷劈過卻沒死的樹，木心焦黑、外皮還在長。抗雷法器柄材",
+              "element": "wood",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m2_entry_resource_5",
+              "name": "判痕石",
+              "kind": "ore",
+              "description": "從被判過的碑上敲下的碎石，斷面隱約有字影。刻符與壓勝",
+              "element": "metal",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m2_entry_resource_6",
+              "name": "碑陰洗雷草",
+              "kind": "herb",
+              "description": "生於雷罰原背風縫隙的碑陰洗雷草，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "metal",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_great_vehicle_m2_entry_mob_1",
+              "name": "執罰雷靈",
+              "description": "循著碑上的名字找人的雷靈，找不到人，就罰離石碑最近的那個",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m2_entry_mob_2",
+              "name": "碑下哀聲",
+              "description": "從碑座縫裡滲出來的聲音，聚不成形，只會反覆念自己的名字",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m2_entry_mob_3",
+              "name": "承罰傀",
+              "description": "替碑受雷的舊木傀，身上綁著歷代枷鎖，走一步響一聲",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m2_entry_mob_4",
+              "name": "判罪鴉",
+              "description": "落在碑頂的鴉，誰在碑前停久了，它就開始叫",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m2_entry_mob_5",
+              "name": "引雷犬",
+              "description": "追著雷跑的四足獸，雷落在哪，它撲到哪",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m2_entry_mob_6",
+              "name": "避罰骸",
+              "description": "繞著碑林打轉、永遠不敢踩進碑影裡的舊修士遺骸",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_great_vehicle_m2_boss",
+            "name": "執雷者",
+            "description": "一團人形的雷。輪廓像一個穿甲的人，甲片的形狀清晰可辨，材質全是凝住的雷光。它臉上沒有五官，只有一道豎直的裂，裂裡是更深的光。它走過的地面留下焦黑的腳印，腳印成對、間距精準得不像走路，像丈量。手裡沒有兵刃，兩掌攏著一團不斷收縮又膨脹的雷球。",
+            "skills": [
+              {
+                "name": "宣判",
+                "description": "點名一名玩家，在其頭頂聚雷雲，數息後落雷；期間離開碑影也躲不掉"
+              },
+              {
+                "name": "罰不及眾",
+                "description": "把這一記雷分攤給場上所有人，分擔的人越多、單人越輕——逼玩家決定誰挨"
+              },
+              {
+                "name": "罪碑為證",
+                "description": "召出碑影，碑影內的玩家無法獲得治療與增益"
+              },
+              {
+                "name": "一雷不冤",
+                "description": "低血階段不再閃避，把雷鎖拉回自身；每受一次傷害，下一擊就更重"
+              }
+            ],
+            "dropNames": [
+              "雷罰鐵",
+              "贖罪苔",
+              "罰雷砂",
+              "判痕石",
+              "執罰雷符"
+            ],
+            "dropDirection": "- 材料：雷罰鐵、贖罪苔、罰雷砂、判痕石。\n- 部件：執罰雷符（飾品位）。\n- 殘頁：《承雷式》殘頁（抗雷與反擊向功法）。\n- 清點交付：判臺基罰單拓文與啞雷窪殘響拓文（完成第三、第四址清點後取得，非隨機掉落）。",
+            "componentName": "執罰雷符"
+          },
+          "landmarks": [
+            {
+              "name": "雷罰原入口",
+              "description": "落雷按律：雷不亂落，總在碑前停半息再落，像先宣判、再行刑。 碑林記事：每塊碑刻著一個名字和一行「罰由」，字口被雷火燒得焦黑，名字卻留著。 判臺與啞雷窪：原心一座石臺，檯面刻著「罪與罰」三個大字，字口裡填著雷罰鐵；臺西的啞雷窪是另一處清點址，雷落進窪裡就沒了聲，窪底積著歷次罰雷的殘響。"
+            },
+            {
+              "name": "執雷者駐地",
+              "description": "原始設計的本圖頭目。"
+            }
+          ]
+        },
+        {
+          "id": "lg_great_vehicle_m3_entry",
+          "name": "獸潮舊壘",
+          "startLevel": 109,
+          "description": "壘線如鋸：五道舊壘沿坡線折成鋸齒，每補一次就矮一截，像替這條防線記年齡。 骨堆成灘：壘前緩坡堆滿歷次劫獸潮留下的白骨，踩上去會陷下一個腳印。 燈在壘後：從壘上回頭，能看見鎮涯關的燈——那是全圖唯一不隨風晃的光。",
+          "theme": "壘線如鋸：五道舊壘沿坡線折成鋸齒，每補一次就矮一截，像替這條防線記年齡",
+          "source": [
+            "docs/story/大乘/大乘期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_great_vehicle_m3_entry_resource_1",
+              "name": "壘心木",
+              "kind": "exotic",
+              "description": "從壘牆芯裡長出來的老木，被壓得極密實，鋸開有壘石的紋。製壘料與重甲襯材",
+              "element": "wood",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m3_entry_resource_2",
+              "name": "劫獸骨",
+              "kind": "exotic",
+              "description": "潮裡帶上來的獸骨，比一般獸骨沉，敲起來有金屬聲。製骨器與丹藥引",
+              "element": "metal",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m3_entry_resource_3",
+              "name": "潮壘砂",
+              "kind": "ore",
+              "description": "獸潮踩碎的骨與石混成的砂，永遠帶著潮氣。製壘料與護甲內襯",
+              "element": "water",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m3_entry_resource_4",
+              "name": "咬痕藤",
+              "kind": "herb",
+              "description": "沿壘牆攀生的帶刺藤，刺口一圈一圈像牙印。製陷阱與攔索",
+              "element": "wood",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m3_entry_resource_5",
+              "name": "拾骨花",
+              "kind": "herb",
+              "description": "開在骨灘上的灰白花，摘的時候要連根下的骨一起摘。續命丹主材",
+              "element": "wood",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m3_entry_resource_6",
+              "name": "壘底血紋鐵",
+              "kind": "ore",
+              "description": "獸潮舊壘岩層裂隙中凝成的壘底血紋鐵，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+              "element": "metal",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_great_vehicle_m3_entry_mob_1",
+              "name": "劫獸潮（成群）",
+              "description": "一浪接一浪的小獸群，單獨看很弱，成潮時能把壘啃掉一層",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m3_entry_mob_2",
+              "name": "領潮獸",
+              "description": "走在潮前頭的那幾隻，牠們停，潮就停",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m3_entry_mob_3",
+              "name": "咬壘獸",
+              "description": "一生只咬壘牆的短吻獸，牙磨平了就用骨頭啃",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m3_entry_mob_4",
+              "name": "潛潮獸",
+              "description": "伏在骨灘下等下一個浪頭的獸，浪到才躍起",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m3_entry_mob_5",
+              "name": "落潮崽",
+              "description": "潮退後被留在壘下的幼獸，不咬人；但牠叫一聲，潮會回頭",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m3_entry_mob_6",
+              "name": "啃牌蟲",
+              "description": "專啃壘牆名牌的鐵殼蟲，啃完字還留著印",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_great_vehicle_m3_boss",
+            "name": "獸潮王",
+            "description": "一頭看不出原形的巨獸。身上長滿歷次潮的痕跡：火燒的疤、雷劈的裂、刀砍開又長合的口。牠的頭壓得很低，低到幾乎觸地，像永遠在起跑。四肢比身體短，跑起來是滾的。牠不叫——牠一動，骨灘上千萬塊骨頭一起響，那就是牠的叫聲。",
+            "skills": [
+              {
+                "name": "起浪",
+                "description": "伏地不動，召來一整坡的劫獸潮，浪頭隨牠的方向移動"
+              },
+              {
+                "name": "骨灘翻",
+                "description": "掀翻骨灘，場中陷足、位移被拖慢"
+              },
+              {
+                "name": "撞壘",
+                "description": "定向直撞：撞上壘牆則全場震盪，沒撞上則由玩家替壘牆擋這一下"
+              },
+              {
+                "name": "不退",
+                "description": "低血階段把退路踩平：不再後退，每一次被擊退都轉成下一次衝鋒的蓄勢"
+              }
+            ],
+            "dropNames": [
+              "壘心木",
+              "劫獸骨",
+              "潮壘砂",
+              "咬痕藤",
+              "潮骨護腕"
+            ],
+            "dropDirection": "- 材料：壘心木、劫獸骨、潮壘砂、咬痕藤。\n- 部件：潮骨護腕（腕部位）。\n- 殘頁：《壘戰式》殘頁（群戰與攔阻向功法）。\n- 清點交付：初壘壘銘拓片（完成第五址清點後取得，非隨機掉落）。",
+            "componentName": "潮骨護腕"
+          },
+          "landmarks": [
+            {
+              "name": "獸潮舊壘入口",
+              "description": "壘線如鋸：五道舊壘沿坡線折成鋸齒，每補一次就矮一截，像替這條防線記年齡。 骨堆成灘：壘前緩坡堆滿歷次劫獸潮留下的白骨，踩上去會陷下一個腳印。 燈在壘後：從壘上回頭，能看見鎮涯關的燈——那是全圖唯一不隨風晃的光。"
+            },
+            {
+              "name": "獸潮王駐地",
+              "description": "原始設計的本圖頭目。"
+            }
+          ]
+        },
+        {
+          "id": "lg_great_vehicle_m4_entry",
+          "name": "天痕下坡",
+          "startLevel": 112,
+          "description": "影反向：坡面岩石的長影向南鋪展，古道在層疊暗影間蜿蜒而上。 痕在天頂：抬頭即見天痕，雲從痕裡漏下來；風、雷、獸三個方向的聲音在坡上能同時聽見。 半截碑與坡頂末碑：坡上立著歷代登坡者的半截碑，碑都只刻了一半——立碑的人沒回來刻完；坡頂立著最後一塊碑，是所有半截碑裡唯一刻完了的一塊，碑上只記七個日期，不記名字。",
+          "theme": "影反向：全坡的影子都朝南（背著光的方向）",
+          "source": [
+            "docs/story/大乘/大乘期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_great_vehicle_m4_entry_resource_1",
+              "name": "天痕璃",
+              "kind": "ore",
+              "description": "坡上結出的透明碎晶，對著光看，裂紋的走向和天痕一致。大乘期飾品與陣材主料",
+              "element": "metal",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m4_entry_resource_2",
+              "name": "反影草",
+              "kind": "herb",
+              "description": "葉面朝下、葉背朝上長的草，影子落在自己身上。匿蹤丹與定影符",
+              "element": "wood",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m4_entry_resource_3",
+              "name": "痕路砂",
+              "kind": "ore",
+              "description": "歷代登坡者踩實的坡道細砂，砂裡混著極細的璃屑。製導向符與引路器",
+              "element": "metal",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m4_entry_resource_4",
+              "name": "逆光梢",
+              "kind": "herb",
+              "description": "只往背光方向長枝的細梢灌木。匿蹤與遮蔽",
+              "element": "metal",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m4_entry_resource_5",
+              "name": "溫痕石",
+              "kind": "ore",
+              "description": "坡頂附近溫熱的石頭，貼身能壓住舊傷。護脈丹輔材",
+              "element": "metal",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m4_entry_resource_6",
+              "name": "坡陰護脈蕨",
+              "kind": "herb",
+              "description": "生於天痕下坡背風縫隙的坡陰護脈蕨，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "wood",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_great_vehicle_m4_entry_mob_1",
+              "name": "痕影（劫風系殘影）",
+              "description": "坡上反過來的影子站起來走動，和主人不同步、也不聽主人",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m4_entry_mob_2",
+              "name": "逆光獸（獸潮系異變）",
+              "description": "背光而行的獸；你看不清牠，牠看得清你",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m4_entry_mob_3",
+              "name": "穿痕魈（劫風系）",
+              "description": "沿著痕的方向穿行的小魈，身體中間有一道合不攏的裂",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m4_entry_mob_4",
+              "name": "碎雷奴（雷罰系）",
+              "description": "從雷罰原滾下來的雷靈殘片聚成的小東西，見人就自爆",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m4_entry_mob_5",
+              "name": "爬痕獸（獸潮系）",
+              "description": "沿著坡一路往上爬、爬到死為止的瘦獸",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            },
+            {
+              "id": "lg_great_vehicle_m4_entry_mob_6",
+              "name": "半碑骸（劫風系風乾遺骸）",
+              "description": "靠在半截碑上、再也沒站起來的舊骸，風一過就輕輕點頭",
+              "source": "docs/story/大乘/大乘期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_great_vehicle_m4_boss",
+            "name": "天痕使",
+            "description": "半人半劫。左半身還是人的樣子：舊斗篷、舊甲、一隻看得清的手。右半身是劫——不是燒傷，也不是殘缺，是某種東西從右邊往裡長，長成了他的另一半。長的那半邊一直在輕輕地「漏」：漏光、漏砂、漏聲音，偶爾漏出半句話。他站在坡頂，面朝天痕，像在等一封永遠不來的回信。全坡的影子都是反的，只有他的影子是正的。",
+            "skills": [
+              {
+                "name": "傳話",
+                "description": "把一句聽不全的話傳給玩家：命中者短時分不清敵我提示"
+              },
+              {
+                "name": "漏",
+                "description": "右半身漏出的一瞬，全場玩家身上的增益被漏掉一層"
+              },
+              {
+                "name": "半身",
+                "description": "分離出「上面的一半」與「下面的一半」兩個殘影分頭行動，本體不受傷害"
+              },
+              {
+                "name": "轉述",
+                "description": "低血階段把玩家對他用過的招式「轉述」回去——不是複製，是隔了一層的、失真的版本"
+              }
+            ],
+            "dropNames": [
+              "天痕璃",
+              "反影草",
+              "痕路砂",
+              "溫痕石",
+              "痕使殘環"
+            ],
+            "dropDirection": "- 材料：天痕璃、反影草、痕路砂、溫痕石。\n- 部件：痕使殘環（戒指位）。\n- 殘頁：《傳痕錄》殘頁（感知與轉述向功法）。\n- 清點交付：合鳴窪窪心拓文與坡頂末碑碑拓（完成第六、第七址清點後取得，非隨機掉落）。",
+            "componentName": "痕使殘環"
+          },
+          "landmarks": [
+            {
+              "name": "天痕下坡入口",
+              "description": "影反向：坡面岩石的長影向南鋪展，古道在層疊暗影間蜿蜒而上。 痕在天頂：抬頭即見天痕，雲從痕裡漏下來；風、雷、獸三個方向的聲音在坡上能同時聽見。 半截碑與坡頂末碑：坡上立著歷代登坡者的半截碑，碑都只刻了一半——立碑的人沒回來刻完；坡頂立著最後一塊碑，是所有半截碑裡唯一刻完了的一塊，碑上只記七個日期，不記名字。"
+            },
+            {
+              "name": "天痕使駐地",
+              "description": "原始設計的本圖頭目。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "tribulation",
+      "name": "渡劫期",
+      "startLevel": 115,
+      "source": [
+        "docs/story/後期總綱.md#4.7",
+        "docs/story/渡劫/渡劫期地圖設計.md"
+      ],
+      "town": {
+        "id": "lg_tribulation_town",
+        "name": "薪火城",
+        "description": "城中央一簇不滅薪火，無柴而燃，火色偏暖白。傳說薪火斷則人族絕；全城沒人敢賭這句話是假的。 全城只有一個方向：向上。巷子往上修，階梯往上鑿，連晾衣桿都朝上斜。 城牆不高，牆上嵌滿「登門牌」——每一位登過飛昇臺的先人一面，絕大多數是空的。",
+        "npcs": [
+          {
+            "id": "lg_tribulation_npc_1",
+            "name": "守火人·柏明",
+            "role": "薪火守首席，本境主線交接者",
+            "description": "薪火守首席，本境主線交接者。他一生只做一件事：不讓手裡的火熄，也從不問火從哪來",
+            "dialogue": "薪火還在。把手暖一暖，再談向上走的事。"
+          },
+          {
+            "id": "lg_tribulation_npc_2",
+            "name": "城守·硯翁",
+            "role": "薪火城城守，掌全城秩序",
+            "description": "薪火城城守，掌全城秩序。他管一座都要飛昇的城，卻把每日巡城走得像過日子",
+            "dialogue": "最後一座城，也得有人把門守好。出發前留下你的名字。"
+          },
+          {
+            "id": "lg_tribulation_npc_3",
+            "name": "記劫官·紀冬",
+            "role": "記劫樓執筆，記錄每位登門者的三劫",
+            "description": "記劫樓執筆，記錄每位登門者的三劫。他記每個人的劫，卻從不記誰過沒過——「過的不用記」",
+            "dialogue": "劫來過幾回，我都記著。你這一回，別急著替它寫結尾。"
+          },
+          {
+            "id": "lg_tribulation_npc_4",
+            "name": "造舟匠·魯直",
+            "role": "穿雲舟匠，唯一敢在劫雲裡行舟的人",
+            "description": "穿雲舟匠，唯一敢在劫雲裡行舟的人。他說穿雲舟不是造來贏的，是造來回來的",
+            "dialogue": "舟要承得住雷，也要載得回人。缺的料，一件都不能省。"
+          },
+          {
+            "id": "lg_tribulation_npc_5",
+            "name": "照心人·殷娘",
+            "role": "照心廊主事，引修士入鏡城前照心",
+            "description": "照心廊主事，引修士入鏡城前照心。她照過太多人的心，早就學會不對任何一顆心下判斷",
+            "dialogue": "鏡裡說的未必是謊，卻也不是全部。看清了，再往前走。"
+          },
+          {
+            "id": "lg_tribulation_npc_6",
+            "name": "診衰人·白藥",
+            "role": "天人五衰崖下醫者，陪人看清五衰",
+            "description": "天人五衰崖下醫者，陪人看清五衰。她治不了衰，只能讓人衰得明白一點",
+            "dialogue": "衰相一樣，傷處未必一樣。讓我看看你的脈，再開方。"
+          },
+          {
+            "id": "lg_tribulation_npc_7",
+            "name": "拾薪童·阿薪",
+            "role": "城中孤兒，替薪火臺拾續火之物",
+            "description": "城中孤兒，替薪火臺拾續火之物。整個城都在等飛昇，只有他在等一個願意聽他說話的人",
+            "dialogue": "這片葉子還暖著！我把它留給要上山的人。"
+          },
+          {
+            "id": "lg_tribulation_npc_8",
+            "name": "守望信使·常渡",
+            "role": "大乘鎮涯關派駐薪火城的信使",
+            "description": "大乘鎮涯關派駐薪火城的信使。他認得守望的印，也認得守火人的沉默——兩種都不需要多說",
+            "dialogue": "前頭的信送到了，後頭還有人在等。你若過涯，替我記住回望一眼。"
+          }
+        ]
+      },
+      "maps": [
+        {
+          "id": "lg_tribulation_m1_entry",
+          "name": "劫雲海",
+          "startLevel": 115,
+          "description": "無底雲海在古舟棧道下翻湧，殘船以長索繫在石錨間，構成通向深處的航道。雲中電光不時照亮渡劫者的舊影，船板上滿是雷火燒過的黑痕。沿棧道可到採集支路，越過破損舟骨，深處的頭目場地漸漸露出輪廓。",
+          "theme": "無底的雲海：腳下沒有地，只有翻湧的劫雲",
+          "source": [
+            "docs/story/渡劫/渡劫期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_tribulation_m1_entry_resource_1",
+              "name": "劫雲絮",
+              "kind": "exotic",
+              "description": "從雲層邊緣凝下的絮狀物，觸之微麻。劫材主料、穿雲舟續航",
+              "element": "fire",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m1_entry_resource_2",
+              "name": "避雷梭",
+              "kind": "exotic",
+              "description": "生在航道兩側的梭形輕材，能引雷偏轉。避雷、製舟與護具部件",
+              "element": "metal",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m1_entry_resource_3",
+              "name": "劫渡苔",
+              "kind": "herb",
+              "description": "附在穿雲舟底的灰藍苔蘚，隨劫強弱變色。材料，用於舟體防劫與感應",
+              "element": "wood",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m1_entry_resource_4",
+              "name": "雲雷髓",
+              "kind": "ore",
+              "description": "劫雲深處凝出的雷芯，握之耳鳴。高階消耗品主料、雷系強化",
+              "element": "metal",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m1_entry_resource_5",
+              "name": "避劫雲芝",
+              "kind": "herb",
+              "description": "生於劫雲海背風縫隙的避劫雲芝，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "fire",
+              "authored": true
+            },
+            {
+              "id": "lg_tribulation_m1_entry_resource_6",
+              "name": "雲層凝雷晶",
+              "kind": "ore",
+              "description": "劫雲海岩層裂隙中凝成的雲層凝雷晶，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+              "element": "metal",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_tribulation_m1_entry_mob_1",
+              "name": "劫雲獸",
+              "description": "生於劫雲的獸，身影半透，隨雲流捲人入雲",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m1_entry_mob_2",
+              "name": "雲中人影",
+              "description": "渡劫失敗者的殘影，不主動攻擊，卻會把玩家拉進「重演」",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m1_entry_mob_3",
+              "name": "穿雲鴉",
+              "description": "成群在航道上亂竄的鴉，撞舟即散，散後引雷",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m1_entry_mob_4",
+              "name": "電光鱗",
+              "description": "雲層裡遊動的帶電鱗片，遇舟則聚成電網",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m1_entry_mob_5",
+              "name": "雲噬蠅",
+              "description": "專噬舟帆的細小飛蠅，一群能把一艘舟啃成骨架",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_tribulation_m1_boss",
+            "name": "劫雲君",
+            "description": "劫雲裡最早凝成的那一團。它沒有一具完整的身形——勉強看得出是一個披著舊袍的人形輪廓，由翻湧的劫雲擠成，五官是雲的凹洞。它周身不停有細雷炸開，衣袍下擺一直在淌電。它說話時不張嘴，聲音從整片雲裡同時響起。",
+            "skills": [
+              {
+                "name": "劫雲覆頂",
+                "description": "遮蔽航道，使穿雲舟短時失去方向，玩家在雲中迷航。"
+              },
+              {
+                "name": "重演",
+                "description": "召出一個渡劫失敗者的殘影，重演其最後一擊，逐次累加威力。"
+              },
+              {
+                "name": "細雷成林",
+                "description": "周身細雷落地成柱，布成雷林封路。"
+              },
+              {
+                "name": "記得你",
+                "description": "記下玩家首次使用的主要招式，其後每隔數息以此招反打一次。"
+              }
+            ],
+            "dropNames": [
+              "劫雲絮",
+              "避雷梭",
+              "穿雲舟骨"
+            ],
+            "dropDirection": "本圖不掉殘材；掉 劫雲絮、避雷梭、穿雲舟骨 部件（舟/披風）、劫系功法殘頁。",
+            "componentName": "穿雲舟骨"
+          },
+          "landmarks": [
+            {
+              "name": "劫雲海入口",
+              "description": "無底雲海在古舟棧道下翻湧，殘船以長索繫在石錨間，構成通向深處的航道。雲中電光不時照亮渡劫者的舊影，船板上滿是雷火燒過的黑痕。沿棧道可到採集支路，越過破損舟骨，深處的頭目場地漸漸露出輪廓。"
+            },
+            {
+              "name": "劫雲君駐地",
+              "description": "劫雲裡最早凝成的那一團。它沒有一具完整的身形——勉強看得出是一個披著舊袍的人形輪廓，由翻湧的劫雲擠成，五官是雲的凹洞。它周身不停有細雷炸開，衣袍下擺一直在淌電。它說話時不張嘴，聲音從整片雲裡同時響起。"
+            }
+          ]
+        },
+        {
+          "id": "lg_tribulation_m2_entry",
+          "name": "雷池第九重",
+          "startLevel": 118,
+          "description": "雷液之池：池中的「水」是流動的雷，表面有細密的電紋走動；池畔殘留一道道雷擊熔出的細痕。 八重雷壁：環繞第九重的八重雷池壁，逐重電色加深，壁上刻著歷代渡劫者留下的「到此一重」記號。 池底人影：雷液之下隱約可見人形在走，步伐整齊，像在排隊；他們不看你，只往同一個方向走。",
+          "theme": "雷液之池：池中的「水」是流動的雷，表面有細密的電紋走動",
+          "source": [
+            "docs/story/渡劫/渡劫期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_tribulation_m2_entry_resource_1",
+              "name": "雷髓",
+              "kind": "ore",
+              "description": "雷液沉澱結成的髓狀晶，觸之光冷。本圖核心產出，雷系主料",
+              "element": "metal",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m2_entry_resource_2",
+              "name": "池底砂",
+              "kind": "ore",
+              "description": "雷池底積的細砂，砂粒間仍有電。消耗品輔料、導雷材料",
+              "element": "fire",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m2_entry_resource_3",
+              "name": "雷池藻",
+              "kind": "herb",
+              "description": "生於雷液邊緣的白藻，隨電紋開合。材料，用於抗雷與護脈",
+              "element": "metal",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m2_entry_resource_4",
+              "name": "液雷砂",
+              "kind": "ore",
+              "description": "雷液凝成半固態的砂，能儲雷。高階符/核類材料",
+              "element": "metal",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m2_entry_resource_5",
+              "name": "池岸寧雷蓮",
+              "kind": "herb",
+              "description": "生於雷池第九重背風縫隙的池岸寧雷蓮，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+              "element": "metal",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_tribulation_m2_entry_mob_1",
+              "name": "雷池靈",
+              "description": "由雷液凝成的靈體，動作隨電紋，擊中會短路般亂竄",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m2_entry_mob_2",
+              "name": "液雷獸",
+              "description": "液態巨獸，被斬即散、散後復聚，須以導雷之法斷其根",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m2_entry_mob_3",
+              "name": "雷池鰐",
+              "description": "潛在雷液下的硬甲鰐，一咬即拖人入池",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m2_entry_mob_4",
+              "name": "液雷蛭",
+              "description": "附在池壁吸雷的小蛭，成群時能抽空一片雷液",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m2_entry_mob_5",
+              "name": "第九影",
+              "description": "池底排隊人影裡落單的一個，走近才發現它在等替",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m2_entry_mob_6",
+              "name": "溫雷蛾",
+              "description": "撲向「尚暖之人」的蛾，被撲者體溫漸失",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_tribulation_m2_boss",
+            "name": "雷池守·第九",
+            "description": "一具由雷液撐起的人形，身高逾丈，通體半透，體內的雷紋像血脈般流動。它沒有明顯的臉，只有一處凹陷如口。它站在第九重池心，一動不動時幾乎與雷液一體，只有走近才看得出那是「站著的雷」。它身邊的地面永遠是乾的——雷不敢沾它。",
+            "skills": [
+              {
+                "name": "九重鎖雷",
+                "description": "以雷液鎖住腳步，被困者每動一次，雷鏈緊一分。"
+              },
+              {
+                "name": "液雷覆頂",
+                "description": "整片雷液上湧，將全場變成淺池，逼玩家在導電地面取捨。"
+              },
+              {
+                "name": "問一句",
+                "description": "以問題為法，玩家若不應，威力逐息遞增；若亂應，反噬自己。"
+              },
+              {
+                "name": "當水",
+                "description": "對「答錯者」施加持續下沉，緩慢拖入池底人影之列。"
+              }
+            ],
+            "dropNames": [
+              "雷髓",
+              "液雷砂",
+              "雷池守甲"
+            ],
+            "dropDirection": "本圖不掉殘材；掉 雷髓、液雷砂、雷池守甲 部件（甲/護符）、雷系功法殘頁。",
+            "componentName": "雷池守甲"
+          },
+          "landmarks": [
+            {
+              "name": "雷池第九重入口",
+              "description": "雷液之池：池中的「水」是流動的雷，表面有細密的電紋走動；池畔殘留一道道雷擊熔出的細痕。 八重雷壁：環繞第九重的八重雷池壁，逐重電色加深，壁上刻著歷代渡劫者留下的「到此一重」記號。 池底人影：雷液之下隱約可見人形在走，步伐整齊，像在排隊；他們不看你，只往同一個方向走。"
+            },
+            {
+              "name": "雷池守·第九駐地",
+              "description": "一具由雷液撐起的人形，身高逾丈，通體半透，體內的雷紋像血脈般流動。它沒有明顯的臉，只有一處凹陷如口。它站在第九重池心，一動不動時幾乎與雷液一體，只有走近才看得出那是「站著的雷」。它身邊的地面永遠是乾的——雷不敢沾它。"
+            }
+          ]
+        },
+        {
+          "id": "lg_tribulation_m3_entry",
+          "name": "心魔鏡城",
+          "startLevel": 121,
+          "description": "鏡面牆壁沿廢棄街道伸展，映光在裂縫裡折成重重人影。空屋門前留下模糊題字，牆上的舊畫記著修士難以放下的人與事。城心鏡臺四周布滿碎片，通往回城路的石階仍清晰可辨，照心的異材藏在靜水與荒草之間。",
+          "theme": "鏡城：整座城是鏡面築的，街道兩側的牆映出玩家，但映出的「自己」動作總慢半拍、或先一步",
+          "source": [
+            "docs/story/渡劫/渡劫期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_tribulation_m3_entry_resource_1",
+              "name": "心魔藤",
+              "kind": "herb",
+              "description": "攀滿鏡牆的黑藤，反射心念而生。心繫主料、鏡心相關",
+              "element": "wood",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m3_entry_resource_2",
+              "name": "鏡心花",
+              "kind": "herb",
+              "description": "開在鏡心旁的白色花，花瓣會映人。高階消耗品主料、淨心",
+              "element": "wood",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m3_entry_resource_3",
+              "name": "心執苔",
+              "kind": "herb",
+              "description": "附在舊人殘影足下的暗苔，觸之心緒翻湧。材料，心劫相關配方",
+              "element": "wood",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m3_entry_resource_4",
+              "name": "心鏡砂",
+              "kind": "ore",
+              "description": "鏡心地面磨出的細砂，映得出人影卻照不出臉。任務交付、鏡系輔料",
+              "element": "fire",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m3_entry_resource_5",
+              "name": "鏡壁黑曜石",
+              "kind": "ore",
+              "description": "心魔鏡城岩層裂隙中凝成的鏡壁黑曜石，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+              "element": "fire",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_tribulation_m3_entry_mob_1",
+              "name": "執念形",
+              "description": "由玩家執念聚成的形，會變成你最不想面對的那個人",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m3_entry_mob_2",
+              "name": "心上影",
+              "description": "玩家心魔的碎片，只在你分神時出手",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m3_entry_mob_3",
+              "name": "舊人像",
+              "description": "城裡舊識的殘影，不像敵人，更像當面質問",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m3_entry_mob_4",
+              "name": "憾影",
+              "description": "由「假如當初」聚成的影，會誘你走回過去的路",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m3_entry_mob_5",
+              "name": "鏡中人偶",
+              "description": "鏡牆裡走出的人偶，動作與玩家同步，打它等於打鏡",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m3_entry_mob_6",
+              "name": "悔意蛾",
+              "description": "撲向悔意而生的蛾，纏身時讓人反覆想起同一句話",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_tribulation_m3_boss",
+            "name": "心中我",
+            "description": "與玩家一模一樣的身形，僅有的差別是它的影子在腳下，而玩家的影子在身後。它穿著玩家走這一路以來的行頭——不是現有的，是玩家「本可能成為」的那一套。它說話用玩家的聲音，語氣卻更平靜，像一個早就想通了的自己。",
+            "skills": [
+              {
+                "name": "如你所為",
+                "description": "完全複製玩家最近的打法，並用它反問。"
+              },
+              {
+                "name": "舊人之聲",
+                "description": "招出玩家過往舊識的殘影，殘影重複當年的話，亂其心神。"
+              },
+              {
+                "name": "非此即彼",
+                "description": "把一個兩難擺在玩家面前，逼玩家在兩種「失去」之間選一個；無正確答案。"
+              },
+              {
+                "name": "心魔本相",
+                "description": "當玩家停止攻擊、選擇承認時，它不還手——這一階段不是考輸出，是考「過不過得去自己這關」。"
+              }
+            ],
+            "dropNames": [
+              "心魔藤",
+              "鏡心花",
+              "照心鏡骨"
+            ],
+            "dropDirection": "本圖不掉殘材；掉 心魔藤、鏡心花、照心鏡骨 部件（飾品/法器）、心繫功法殘卷。",
+            "componentName": "照心鏡骨"
+          },
+          "landmarks": [
+            {
+              "name": "心魔鏡城入口",
+              "description": "鏡面牆壁沿廢棄街道伸展，映光在裂縫裡折成重重人影。空屋門前留下模糊題字，牆上的舊畫記著修士難以放下的人與事。城心鏡臺四周布滿碎片，通往回城路的石階仍清晰可辨，照心的異材藏在靜水與荒草之間。"
+            },
+            {
+              "name": "心中我駐地",
+              "description": "與玩家一模一樣的身形，僅有的差別是它的影子在腳下，而玩家的影子在身後。它穿著玩家走這一路以來的行頭——不是現有的，是玩家「本可能成為」的那一套。它說話用玩家的聲音，語氣卻更平靜，像一個早就想通了的自己。"
+            }
+          ]
+        },
+        {
+          "id": "lg_tribulation_m4_entry",
+          "name": "天人五衰崖",
+          "startLevel": 124,
+          "description": "五衰之階：貼崖而上的階梯分五段，各段石壁刻著天人五衰之相，殘刻從衣垢延伸到身光漸滅。 崖頂望門臺：崖頂一片平緩臺地，正上方即是天門舊址的光；站在原地仰望，光的形狀像一道門框。 衣袍自行褪色：崖壁掛著歷代修士留下的褪色衣袍，鏽蝕兵甲嵌在石縫裡。",
+          "theme": "五衰之階：貼崖而上的階梯分五段，每上一段，天人五衰之相依次顯現一次——不是幻覺，是自己身上的實相被照出來",
+          "source": [
+            "docs/story/渡劫/渡劫期地圖設計.md"
+          ],
+          "resources": [
+            {
+              "id": "lg_tribulation_m4_entry_resource_1",
+              "name": "五衰花",
+              "kind": "herb",
+              "description": "開在五衰之階的花，花瓣隨衰相一瓣一瓣落下。衰系主料、抗衰配方",
+              "element": "wood",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m4_entry_resource_2",
+              "name": "薪火葉",
+              "kind": "herb",
+              "description": "生在崖根、被薪火光暖著的葉，是此地唯一不褪色之物。高階消耗品主料、護脈",
+              "element": "fire",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m4_entry_resource_3",
+              "name": "衰筋鐵",
+              "kind": "ore",
+              "description": "五衰之相凝出的鐵，色灰而脆，能定人。材料，用於封衰類器",
+              "element": "metal",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m4_entry_resource_4",
+              "name": "薪燼苔",
+              "kind": "herb",
+              "description": "寄生於薪火葉背的絨苔，觸之回暖。材料，續火與回溫",
+              "element": "fire",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m4_entry_resource_5",
+              "name": "衰崖灰晶",
+              "kind": "ore",
+              "description": "天人五衰崖岩層裂隙中凝成的衰崖灰晶，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+              "element": "fire",
+              "authored": true
+            }
+          ],
+          "monsters": [
+            {
+              "id": "lg_tribulation_m4_entry_mob_1",
+              "name": "衰相妖",
+              "description": "五衰之相凝成的妖，會讓玩家身上顯出對應的衰相",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m4_entry_mob_2",
+              "name": "末路獸",
+              "description": "走到盡頭卻不肯停的獸，攻擊帶著「再往前一步就回不了頭」的勢",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m4_entry_mob_3",
+              "name": "五衰影",
+              "description": "玩家自己的一衰之相，擊敗它只是承認了那一衰，不代表躲過",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m4_entry_mob_4",
+              "name": "衰骨鴉",
+              "description": "啄食褪色之物的鴉，被啄處連同物性一起淡去",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            },
+            {
+              "id": "lg_tribulation_m4_entry_mob_5",
+              "name": "歸墟鹿",
+              "description": "只在崖頂出沒的鹿，安靜不攻擊，像早一步到了的人的坐騎",
+              "source": "docs/story/渡劫/渡劫期地圖設計.md"
+            }
+          ],
+          "boss": {
+            "id": "lg_tribulation_m4_boss",
+            "name": "五衰法身",
+            "description": "五衰之相依次凝聚而成的一具法身，身高隨五衰逐段變化——每顯一衰，身形就薄一分。它不是實體，更像一件被歲月穿舊了的舊衣，撐在一個不肯散的人形上。它的面容始終模糊，越到後段越淡，直到只剩一線輪廓。",
+            "skills": [
+              {
+                "name": "一衰",
+                "description": "顯「衣色褪」，持續削減玩家增益與防護。"
+              },
+              {
+                "name": "二衰",
+                "description": "顯「身力散」，降低移動與攻擊的穩定。"
+              },
+              {
+                "name": "三衰",
+                "description": "顯「神識昏」，幹擾視野與提示。"
+              },
+              {
+                "name": "五衰同現",
+                "description": "五衰齊顯，全場進入「褪色」狀態；此階段不是考硬打，是考玩家是否還記得自己為何而登門。"
+              }
+            ],
+            "dropNames": [
+              "五衰花",
+              "薪火葉",
+              "望門舊衣"
+            ],
+            "dropDirection": "本圖不掉殘材；掉 五衰花、薪火葉、望門舊衣 部件（披風/核心飾品）、薪火系功法殘頁。",
+            "componentName": "望門舊衣"
+          },
+          "landmarks": [
+            {
+              "name": "天人五衰崖入口",
+              "description": "五衰之階：貼崖而上的階梯分五段，各段石壁刻著天人五衰之相，殘刻從衣垢延伸到身光漸滅。 崖頂望門臺：崖頂一片平緩臺地，正上方即是天門舊址的光；站在原地仰望，光的形狀像一道門框。 衣袍自行褪色：崖壁掛著歷代修士留下的褪色衣袍，鏽蝕兵甲嵌在石縫裡。"
+            },
+            {
+              "name": "五衰法身駐地",
+              "description": "五衰之相依次凝聚而成的一具法身，身高隨五衰逐段變化——每顯一衰，身形就薄一分。它不是實體，更像一件被歲月穿舊了的舊衣，撐在一個不肯散的人形上。它的面容始終模糊，越到後段越淡，直到只剩一線輪廓。"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "ascension": {
+    "name": "飛昇終章",
+    "description": "realmLv 127 的一次性儀式：玩家在飛昇臺合璧七片補天殘材，帶薪火跨過作為天門檻的涯；道劫全貌被看見，人間開始修復，門後不作具體回答。",
+    "source": "docs/story/渡劫/飛昇終章.md"
+  }
+}

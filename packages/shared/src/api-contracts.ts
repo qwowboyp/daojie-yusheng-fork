@@ -3528,6 +3528,19 @@ export interface GmMapLayeredCellRecord {
   interactables?: InteractableKind[];
 }
 
+/** 地圖上以既有礦石地塊呈現、但有自訂挖礦產出的礦脈。 */
+export interface GmMapMineralNodeRecord {
+  x: number;
+  y: number;
+  name: string;
+  itemId: string;
+  level: number;
+  /** 每次有效傷害的掉落機率，單位為萬分比。 */
+  damageChanceBps?: number;
+  /** 礦脈被摧毀時必定掉落的數量。 */
+  destroyCount?: number;
+}
+
 /** GM 编辑器里的完整地图文档。 */
 export interface GmMapDocument {
 /**
@@ -3661,6 +3674,8 @@ export interface GmMapDocument {
  */
 
   resources?: GmMapResourceRecord[];
+  /** 地圖礦脈掉落覆寫；僅能設定在既有玄鐵礦地塊。 */
+  mineralNodes?: GmMapMineralNodeRecord[];
   /**
  * safeZones：safeZone相关字段。
  */

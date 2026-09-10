@@ -278,10 +278,12 @@
       "targetX": 2,
       "targetY": 9,
       "kind": "portal",
-      "trigger": "auto",
+      "trigger": "manual",
       "routeDomain": "inherit",
       "allowPlayerOverlap": false,
-      "hidden": true
+      "hidden": false,
+      "observeTitle": "喚靈洞府隙門",
+      "observeDesc": "裂縫通向重傷的喚靈真人舊府，內有金丹餘威。建議境界等級 43，可在燼燈坊向祝餘打聽來歷。"
     },
     {
       "id": "guizang_vein_cavern:60,32",

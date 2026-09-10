@@ -285,7 +285,7 @@ function assertHuanlingZhenrenInitialWoundedBuff(
   const woundedBuff = monster.buffs.find((buff) => buff.buffId === 'buff.huanling_zhenren_wounded');
   assert.equal(woundedBuff?.statMode, 'percent', 'wounded debuff should use percent stat mode');
   for (const key of MONSTER_MAIN_COMBAT_STAT_KEYS) {
-    assert.equal(woundedBuff?.stats?.[key], -4444, `wounded debuff should reduce ${key} by 4444% through main combat stat shortcut`);
+    assert.equal(woundedBuff?.stats?.[key], -120, `formal wounded debuff should apply the configured -120 modifier to ${key}`);
   }
   assert.equal(woundedBuff?.stats?.critDamage, undefined, 'wounded debuff should not reduce non-main critDamage through shortcut');
   assert.equal(woundedBuff?.stats?.hpRegenRate, undefined, 'wounded debuff should not reduce non-main hpRegenRate through shortcut');

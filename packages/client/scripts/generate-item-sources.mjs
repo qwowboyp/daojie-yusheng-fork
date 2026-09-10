@@ -296,6 +296,7 @@ function isMiningLandmark(landmark, resourceNode) {
 }
 
 function resolveResourceNodeGroupSourceKind(group, resourceNode) {
+  if (resourceNode?.container?.variant === 'herb') return 'search';
   const id = typeof group?.resourceNodeId === 'string' ? group.resourceNodeId : '';
   if (id.startsWith('landmark.herb.')) {
     return 'search';
@@ -758,6 +759,13 @@ function main() {
       }
     }
 
+    for (const node of map.mineralNodes ?? []) {
+      pushSource(sourceByItemId, node.itemId, {
+        kind: 'mining', mapId: map.id, mapName: map.name,
+        landmarkId: map.landmarks?.find((entry) => entry.x === node.x && entry.y === node.y)?.id,
+        landmarkName: node.name, mode: 'direct', count: node.destroyCount ?? 1,
+      });
+    }
     for (const group of map.resourceNodeGroups ?? []) {
       const resourceNode = typeof group?.resourceNodeId === 'string'
         ? landmarkNodesById.get(group.resourceNodeId)

@@ -2399,5 +2399,6725 @@
       "fire": 44800,
       "earth": 44800
     }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_xinjin_slope_1",
+    "outputItemId": "lg_equip_lg_golden_core_xinjin_slope_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 45,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 306,
+      "earth": 166
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_xinjin_slope_2",
+    "outputItemId": "lg_equip_lg_golden_core_xinjin_slope_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 45,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 306,
+      "earth": 166
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_xinjin_slope_3",
+    "outputItemId": "lg_equip_lg_golden_core_xinjin_slope_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 45,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 306,
+      "earth": 166
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_xinjin_slope_4",
+    "outputItemId": "lg_equip_lg_golden_core_xinjin_slope_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 45,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 306,
+      "earth": 166
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_xinjin_slope_5",
+    "outputItemId": "lg_equip_lg_golden_core_xinjin_slope_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 45,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 306,
+      "earth": 166
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_xinjin_slope_6",
+    "outputItemId": "lg_equip_lg_golden_core_xinjin_slope_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 45,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_xinjin_slope_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 306,
+      "earth": 166
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_molten_channel_1",
+    "outputItemId": "lg_equip_lg_golden_core_molten_channel_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 48,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 326,
+      "earth": 176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_molten_channel_2",
+    "outputItemId": "lg_equip_lg_golden_core_molten_channel_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 48,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 326,
+      "earth": 176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_molten_channel_3",
+    "outputItemId": "lg_equip_lg_golden_core_molten_channel_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 48,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 326,
+      "earth": 176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_molten_channel_4",
+    "outputItemId": "lg_equip_lg_golden_core_molten_channel_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 48,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 326,
+      "earth": 176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_molten_channel_5",
+    "outputItemId": "lg_equip_lg_golden_core_molten_channel_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 48,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 326,
+      "earth": 176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_molten_channel_6",
+    "outputItemId": "lg_equip_lg_golden_core_molten_channel_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 48,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_molten_channel_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 326,
+      "earth": 176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_hanging_lamps_1",
+    "outputItemId": "lg_equip_lg_golden_core_hanging_lamps_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 51,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 346,
+      "earth": 186
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_hanging_lamps_2",
+    "outputItemId": "lg_equip_lg_golden_core_hanging_lamps_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 51,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_6",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_6",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 346,
+      "earth": 186
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_hanging_lamps_3",
+    "outputItemId": "lg_equip_lg_golden_core_hanging_lamps_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 51,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 346,
+      "earth": 186
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_hanging_lamps_4",
+    "outputItemId": "lg_equip_lg_golden_core_hanging_lamps_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 51,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 346,
+      "earth": 186
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_hanging_lamps_5",
+    "outputItemId": "lg_equip_lg_golden_core_hanging_lamps_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 51,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 346,
+      "earth": 186
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_hanging_lamps_6",
+    "outputItemId": "lg_equip_lg_golden_core_hanging_lamps_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 51,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_6",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_6",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 346,
+      "earth": 186
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_sky_mending_furnace_1",
+    "outputItemId": "lg_equip_lg_golden_core_sky_mending_furnace_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 54,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 366,
+      "earth": 198
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_sky_mending_furnace_2",
+    "outputItemId": "lg_equip_lg_golden_core_sky_mending_furnace_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 54,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 366,
+      "earth": 198
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_sky_mending_furnace_3",
+    "outputItemId": "lg_equip_lg_golden_core_sky_mending_furnace_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 54,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 366,
+      "earth": 198
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_sky_mending_furnace_4",
+    "outputItemId": "lg_equip_lg_golden_core_sky_mending_furnace_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 54,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 366,
+      "earth": 198
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_sky_mending_furnace_5",
+    "outputItemId": "lg_equip_lg_golden_core_sky_mending_furnace_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 54,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 366,
+      "earth": 198
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_golden_core_sky_mending_furnace_6",
+    "outputItemId": "lg_equip_lg_golden_core_sky_mending_furnace_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 54,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_sky_mending_furnace_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 366,
+      "earth": 198
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m1_entry_1",
+    "outputItemId": "lg_equip_lg_nascent_soul_m1_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 57,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 386,
+      "fire": 208
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m1_entry_2",
+    "outputItemId": "lg_equip_lg_nascent_soul_m1_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 57,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 386,
+      "fire": 208
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m1_entry_3",
+    "outputItemId": "lg_equip_lg_nascent_soul_m1_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 57,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 386,
+      "fire": 208
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m1_entry_4",
+    "outputItemId": "lg_equip_lg_nascent_soul_m1_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 57,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 386,
+      "fire": 208
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m1_entry_5",
+    "outputItemId": "lg_equip_lg_nascent_soul_m1_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 57,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 386,
+      "fire": 208
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m1_entry_6",
+    "outputItemId": "lg_equip_lg_nascent_soul_m1_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 57,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 386,
+      "fire": 208
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m2_entry_1",
+    "outputItemId": "lg_equip_lg_nascent_soul_m2_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 60,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 406,
+      "fire": 218
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m2_entry_2",
+    "outputItemId": "lg_equip_lg_nascent_soul_m2_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 60,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 406,
+      "fire": 218
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m2_entry_3",
+    "outputItemId": "lg_equip_lg_nascent_soul_m2_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 60,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 406,
+      "fire": 218
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m2_entry_4",
+    "outputItemId": "lg_equip_lg_nascent_soul_m2_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 60,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 406,
+      "fire": 218
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m2_entry_5",
+    "outputItemId": "lg_equip_lg_nascent_soul_m2_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 60,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 406,
+      "fire": 218
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m2_entry_6",
+    "outputItemId": "lg_equip_lg_nascent_soul_m2_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 60,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m2_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 406,
+      "fire": 218
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m3_entry_1",
+    "outputItemId": "lg_equip_lg_nascent_soul_m3_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 63,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 426,
+      "water": 230
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m3_entry_2",
+    "outputItemId": "lg_equip_lg_nascent_soul_m3_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 63,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_6",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_6",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 426,
+      "water": 230
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m3_entry_3",
+    "outputItemId": "lg_equip_lg_nascent_soul_m3_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 63,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 426,
+      "water": 230
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m3_entry_4",
+    "outputItemId": "lg_equip_lg_nascent_soul_m3_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 63,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 426,
+      "water": 230
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m3_entry_5",
+    "outputItemId": "lg_equip_lg_nascent_soul_m3_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 63,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 426,
+      "water": 230
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m3_entry_6",
+    "outputItemId": "lg_equip_lg_nascent_soul_m3_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 63,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_6",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m3_entry_resource_6",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 426,
+      "water": 230
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m4_entry_1",
+    "outputItemId": "lg_equip_lg_nascent_soul_m4_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 66,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 446,
+      "fire": 240
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m4_entry_2",
+    "outputItemId": "lg_equip_lg_nascent_soul_m4_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 66,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 446,
+      "fire": 240
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m4_entry_3",
+    "outputItemId": "lg_equip_lg_nascent_soul_m4_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 66,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 446,
+      "fire": 240
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m4_entry_4",
+    "outputItemId": "lg_equip_lg_nascent_soul_m4_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 66,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 446,
+      "fire": 240
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m4_entry_5",
+    "outputItemId": "lg_equip_lg_nascent_soul_m4_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 66,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 446,
+      "fire": 240
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_nascent_soul_m4_entry_6",
+    "outputItemId": "lg_equip_lg_nascent_soul_m4_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 66,
+    "grade": "heaven",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 446,
+      "fire": 240
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m1_entry_1",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m1_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 69,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 630,
+      "wood": 338
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m1_entry_2",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m1_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 69,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 630,
+      "wood": 338
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m1_entry_3",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m1_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 69,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 630,
+      "wood": 338
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m1_entry_4",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m1_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 69,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 630,
+      "wood": 338
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m1_entry_5",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m1_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 69,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 630,
+      "wood": 338
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m1_entry_6",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m1_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 69,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 630,
+      "wood": 338
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m2_entry_1",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m2_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 72,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 656,
+      "wood": 354
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m2_entry_2",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m2_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 72,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 656,
+      "wood": 354
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m2_entry_3",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m2_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 72,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 656,
+      "wood": 354
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m2_entry_4",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m2_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 72,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 656,
+      "wood": 354
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m2_entry_5",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m2_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 72,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 656,
+      "wood": 354
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m2_entry_6",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m2_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 72,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m2_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 656,
+      "wood": 354
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m3_entry_1",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m3_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 75,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 682,
+      "wood": 368
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m3_entry_2",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m3_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 75,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 682,
+      "wood": 368
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m3_entry_3",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m3_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 75,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 682,
+      "wood": 368
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m3_entry_4",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m3_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 75,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 682,
+      "wood": 368
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m3_entry_5",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m3_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 75,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 682,
+      "wood": 368
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m3_entry_6",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m3_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 75,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m3_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 682,
+      "wood": 368
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m4_entry_1",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m4_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 78,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 710,
+      "wood": 382
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m4_entry_2",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m4_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 78,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 710,
+      "wood": 382
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m4_entry_3",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m4_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 78,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 710,
+      "wood": 382
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m4_entry_4",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m4_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 78,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 710,
+      "wood": 382
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m4_entry_5",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m4_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 78,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 710,
+      "wood": 382
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_spirit_transformation_m4_entry_6",
+    "outputItemId": "lg_equip_lg_spirit_transformation_m4_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 78,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m4_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 710,
+      "wood": 382
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m1_entry_1",
+    "outputItemId": "lg_equip_lg_void_refinement_m1_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 81,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 396,
+      "earth": 738
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m1_entry_2",
+    "outputItemId": "lg_equip_lg_void_refinement_m1_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 81,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 396,
+      "earth": 738
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m1_entry_3",
+    "outputItemId": "lg_equip_lg_void_refinement_m1_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 81,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 396,
+      "earth": 738
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m1_entry_4",
+    "outputItemId": "lg_equip_lg_void_refinement_m1_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 81,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 396,
+      "earth": 738
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m1_entry_5",
+    "outputItemId": "lg_equip_lg_void_refinement_m1_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 81,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_drop_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_drop_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 396,
+      "earth": 738
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m1_entry_6",
+    "outputItemId": "lg_equip_lg_void_refinement_m1_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 81,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_drop_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_drop_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 396,
+      "earth": 738
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m2_entry_1",
+    "outputItemId": "lg_equip_lg_void_refinement_m2_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 84,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m2_entry_resource_6",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m2_entry_resource_6",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 764,
+      "water": 412
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m2_entry_2",
+    "outputItemId": "lg_equip_lg_void_refinement_m2_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 84,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m2_entry_resource_7",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m2_entry_resource_7",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 764,
+      "water": 412
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m2_entry_3",
+    "outputItemId": "lg_equip_lg_void_refinement_m2_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 84,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m2_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m2_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 764,
+      "water": 412
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m2_entry_4",
+    "outputItemId": "lg_equip_lg_void_refinement_m2_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 84,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m2_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m2_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 764,
+      "water": 412
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m2_entry_5",
+    "outputItemId": "lg_equip_lg_void_refinement_m2_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 84,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m2_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m2_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 764,
+      "water": 412
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m2_entry_6",
+    "outputItemId": "lg_equip_lg_void_refinement_m2_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 84,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_drop_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_drop_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 764,
+      "water": 412
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m3_entry_1",
+    "outputItemId": "lg_equip_lg_void_refinement_m3_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 87,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m3_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m3_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 790,
+      "wood": 426
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m3_entry_2",
+    "outputItemId": "lg_equip_lg_void_refinement_m3_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 87,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m3_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m3_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 790,
+      "wood": 426
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m3_entry_3",
+    "outputItemId": "lg_equip_lg_void_refinement_m3_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 87,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m3_entry_resource_7",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m3_entry_resource_7",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 790,
+      "wood": 426
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m3_entry_4",
+    "outputItemId": "lg_equip_lg_void_refinement_m3_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 87,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m3_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m3_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 790,
+      "wood": 426
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m3_entry_5",
+    "outputItemId": "lg_equip_lg_void_refinement_m3_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 87,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m3_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m3_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 790,
+      "wood": 426
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m3_entry_6",
+    "outputItemId": "lg_equip_lg_void_refinement_m3_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 87,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_drop_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_drop_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 790,
+      "wood": 426
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m4_entry_1",
+    "outputItemId": "lg_equip_lg_void_refinement_m4_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 90,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m4_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m4_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 440,
+      "earth": 818
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m4_entry_2",
+    "outputItemId": "lg_equip_lg_void_refinement_m4_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 90,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m4_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m4_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 440,
+      "earth": 818
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m4_entry_3",
+    "outputItemId": "lg_equip_lg_void_refinement_m4_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 90,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 440,
+      "earth": 818
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m4_entry_4",
+    "outputItemId": "lg_equip_lg_void_refinement_m4_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 90,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_drop_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_drop_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 440,
+      "earth": 818
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m4_entry_5",
+    "outputItemId": "lg_equip_lg_void_refinement_m4_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 90,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m4_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m4_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 440,
+      "earth": 818
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_void_refinement_m4_entry_6",
+    "outputItemId": "lg_equip_lg_void_refinement_m4_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 90,
+    "grade": "spirit",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m4_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m4_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 440,
+      "earth": 818
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m1_entry_1",
+    "outputItemId": "lg_equip_lg_body_integration_m1_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 93,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 614,
+      "earth": 1140
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m1_entry_2",
+    "outputItemId": "lg_equip_lg_body_integration_m1_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 93,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 614,
+      "earth": 1140
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m1_entry_3",
+    "outputItemId": "lg_equip_lg_body_integration_m1_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 93,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 614,
+      "earth": 1140
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m1_entry_4",
+    "outputItemId": "lg_equip_lg_body_integration_m1_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 93,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 614,
+      "earth": 1140
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m1_entry_5",
+    "outputItemId": "lg_equip_lg_body_integration_m1_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 93,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 614,
+      "earth": 1140
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m1_entry_6",
+    "outputItemId": "lg_equip_lg_body_integration_m1_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 93,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 614,
+      "earth": 1140
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m2_entry_1",
+    "outputItemId": "lg_equip_lg_body_integration_m2_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 96,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 634,
+      "earth": 1176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m2_entry_2",
+    "outputItemId": "lg_equip_lg_body_integration_m2_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 96,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_6",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_6",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 634,
+      "earth": 1176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m2_entry_3",
+    "outputItemId": "lg_equip_lg_body_integration_m2_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 96,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 634,
+      "earth": 1176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m2_entry_4",
+    "outputItemId": "lg_equip_lg_body_integration_m2_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 96,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 634,
+      "earth": 1176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m2_entry_5",
+    "outputItemId": "lg_equip_lg_body_integration_m2_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 96,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_6",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_6",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 634,
+      "earth": 1176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m2_entry_6",
+    "outputItemId": "lg_equip_lg_body_integration_m2_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 96,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m2_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 634,
+      "earth": 1176
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m3_entry_1",
+    "outputItemId": "lg_equip_lg_body_integration_m3_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 99,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 654,
+      "earth": 1212
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m3_entry_2",
+    "outputItemId": "lg_equip_lg_body_integration_m3_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 99,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 654,
+      "earth": 1212
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m3_entry_3",
+    "outputItemId": "lg_equip_lg_body_integration_m3_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 99,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 654,
+      "earth": 1212
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m3_entry_4",
+    "outputItemId": "lg_equip_lg_body_integration_m3_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 99,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 654,
+      "earth": 1212
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m3_entry_5",
+    "outputItemId": "lg_equip_lg_body_integration_m3_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 99,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 654,
+      "earth": 1212
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m3_entry_6",
+    "outputItemId": "lg_equip_lg_body_integration_m3_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 99,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m3_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 654,
+      "earth": 1212
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m4_entry_1",
+    "outputItemId": "lg_equip_lg_body_integration_m4_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 102,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1250,
+      "water": 672
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m4_entry_2",
+    "outputItemId": "lg_equip_lg_body_integration_m4_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 102,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1250,
+      "water": 672
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m4_entry_3",
+    "outputItemId": "lg_equip_lg_body_integration_m4_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 102,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1250,
+      "water": 672
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m4_entry_4",
+    "outputItemId": "lg_equip_lg_body_integration_m4_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 102,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1250,
+      "water": 672
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m4_entry_5",
+    "outputItemId": "lg_equip_lg_body_integration_m4_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 102,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1250,
+      "water": 672
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_body_integration_m4_entry_6",
+    "outputItemId": "lg_equip_lg_body_integration_m4_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 102,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m4_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1250,
+      "water": 672
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m1_entry_1",
+    "outputItemId": "lg_equip_lg_great_vehicle_m1_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 105,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1286,
+      "water": 692
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m1_entry_2",
+    "outputItemId": "lg_equip_lg_great_vehicle_m1_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 105,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1286,
+      "water": 692
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m1_entry_3",
+    "outputItemId": "lg_equip_lg_great_vehicle_m1_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 105,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1286,
+      "water": 692
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m1_entry_4",
+    "outputItemId": "lg_equip_lg_great_vehicle_m1_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 105,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1286,
+      "water": 692
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m1_entry_5",
+    "outputItemId": "lg_equip_lg_great_vehicle_m1_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 105,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1286,
+      "water": 692
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m1_entry_6",
+    "outputItemId": "lg_equip_lg_great_vehicle_m1_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 105,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1286,
+      "water": 692
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m2_entry_1",
+    "outputItemId": "lg_equip_lg_great_vehicle_m2_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 108,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1322,
+      "wood": 712
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m2_entry_2",
+    "outputItemId": "lg_equip_lg_great_vehicle_m2_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 108,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1322,
+      "wood": 712
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m2_entry_3",
+    "outputItemId": "lg_equip_lg_great_vehicle_m2_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 108,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1322,
+      "wood": 712
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m2_entry_4",
+    "outputItemId": "lg_equip_lg_great_vehicle_m2_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 108,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1322,
+      "wood": 712
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m2_entry_5",
+    "outputItemId": "lg_equip_lg_great_vehicle_m2_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 108,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1322,
+      "wood": 712
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m2_entry_6",
+    "outputItemId": "lg_equip_lg_great_vehicle_m2_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 108,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m2_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1322,
+      "wood": 712
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m3_entry_1",
+    "outputItemId": "lg_equip_lg_great_vehicle_m3_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 111,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1358,
+      "water": 732
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m3_entry_2",
+    "outputItemId": "lg_equip_lg_great_vehicle_m3_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 111,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_6",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_6",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1358,
+      "water": 732
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m3_entry_3",
+    "outputItemId": "lg_equip_lg_great_vehicle_m3_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 111,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1358,
+      "water": 732
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m3_entry_4",
+    "outputItemId": "lg_equip_lg_great_vehicle_m3_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 111,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1358,
+      "water": 732
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m3_entry_5",
+    "outputItemId": "lg_equip_lg_great_vehicle_m3_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 111,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1358,
+      "water": 732
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m3_entry_6",
+    "outputItemId": "lg_equip_lg_great_vehicle_m3_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 111,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_6",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m3_entry_resource_6",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 1358,
+      "water": 732
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m4_entry_1",
+    "outputItemId": "lg_equip_lg_great_vehicle_m4_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 114,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1394,
+      "wood": 752
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m4_entry_2",
+    "outputItemId": "lg_equip_lg_great_vehicle_m4_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 114,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1394,
+      "wood": 752
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m4_entry_3",
+    "outputItemId": "lg_equip_lg_great_vehicle_m4_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 114,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1394,
+      "wood": 752
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m4_entry_4",
+    "outputItemId": "lg_equip_lg_great_vehicle_m4_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 114,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1394,
+      "wood": 752
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m4_entry_5",
+    "outputItemId": "lg_equip_lg_great_vehicle_m4_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 114,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1394,
+      "wood": 752
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_great_vehicle_m4_entry_6",
+    "outputItemId": "lg_equip_lg_great_vehicle_m4_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 114,
+    "grade": "saint",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m4_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1394,
+      "wood": 752
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m1_entry_1",
+    "outputItemId": "lg_equip_lg_tribulation_m1_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 117,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 1932,
+      "earth": 1040
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m1_entry_2",
+    "outputItemId": "lg_equip_lg_tribulation_m1_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 117,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_6",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_6",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 1932,
+      "earth": 1040
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m1_entry_3",
+    "outputItemId": "lg_equip_lg_tribulation_m1_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 117,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 1932,
+      "earth": 1040
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m1_entry_4",
+    "outputItemId": "lg_equip_lg_tribulation_m1_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 117,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 1932,
+      "earth": 1040
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m1_entry_5",
+    "outputItemId": "lg_equip_lg_tribulation_m1_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 117,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 1932,
+      "earth": 1040
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m1_entry_6",
+    "outputItemId": "lg_equip_lg_tribulation_m1_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 117,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_6",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_6",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 1932,
+      "earth": 1040
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m2_entry_1",
+    "outputItemId": "lg_equip_lg_tribulation_m2_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 120,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1982,
+      "wood": 1066
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m2_entry_2",
+    "outputItemId": "lg_equip_lg_tribulation_m2_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 120,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1982,
+      "wood": 1066
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m2_entry_3",
+    "outputItemId": "lg_equip_lg_tribulation_m2_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 120,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1982,
+      "wood": 1066
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m2_entry_4",
+    "outputItemId": "lg_equip_lg_tribulation_m2_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 120,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_1",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_1",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1982,
+      "wood": 1066
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m2_entry_5",
+    "outputItemId": "lg_equip_lg_tribulation_m2_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 120,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_2",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_2",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1982,
+      "wood": 1066
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m2_entry_6",
+    "outputItemId": "lg_equip_lg_tribulation_m2_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 120,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m2_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1982,
+      "wood": 1066
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m3_entry_1",
+    "outputItemId": "lg_equip_lg_tribulation_m3_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 123,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2030,
+      "water": 1092
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m3_entry_2",
+    "outputItemId": "lg_equip_lg_tribulation_m3_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 123,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2030,
+      "water": 1092
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m3_entry_3",
+    "outputItemId": "lg_equip_lg_tribulation_m3_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 123,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2030,
+      "water": 1092
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m3_entry_4",
+    "outputItemId": "lg_equip_lg_tribulation_m3_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 123,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2030,
+      "water": 1092
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m3_entry_5",
+    "outputItemId": "lg_equip_lg_tribulation_m3_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 123,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_4",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_4",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2030,
+      "water": 1092
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m3_entry_6",
+    "outputItemId": "lg_equip_lg_tribulation_m3_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 123,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m3_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2030,
+      "water": 1092
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m4_entry_1",
+    "outputItemId": "lg_equip_lg_tribulation_m4_entry_war_blade",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 126,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2078,
+      "water": 1120
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m4_entry_2",
+    "outputItemId": "lg_equip_lg_tribulation_m4_entry_spirit_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 52,
+    "level": 126,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2078,
+      "water": 1120
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m4_entry_3",
+    "outputItemId": "lg_equip_lg_tribulation_m4_entry_head",
+    "outputCount": 1,
+    "baseBrewTicks": 56,
+    "level": 126,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2078,
+      "water": 1120
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m4_entry_4",
+    "outputItemId": "lg_equip_lg_tribulation_m4_entry_body",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 126,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2078,
+      "water": 1120
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m4_entry_5",
+    "outputItemId": "lg_equip_lg_tribulation_m4_entry_legs",
+    "outputCount": 1,
+    "baseBrewTicks": 64,
+    "level": 126,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_3",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_3",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2078,
+      "water": 1120
+    }
+  },
+  {
+    "recipeId": "lg_forging_lg_tribulation_m4_entry_6",
+    "outputItemId": "lg_equip_lg_tribulation_m4_entry_accessory",
+    "outputCount": 1,
+    "baseBrewTicks": 68,
+    "level": 126,
+    "grade": "emperor",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_5",
+        "count": 3,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_beast_remnant",
+        "count": 2,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m4_entry_resource_5",
+        "count": 3
+      },
+      {
+        "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 2078,
+      "water": 1120
+    }
   }
 ]

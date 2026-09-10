@@ -11,8 +11,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
-import { DEFAULT_QI_RESOURCE_DESCRIPTOR, assertRuntimeMapDocumentV2, buildQiResourceKey, composeTileTypeFromLayers, doesTileTypeBlockSight, getTileTypeFromMapChar, isTileTypeWalkable, normalizeConfiguredAuraValue, normalizeEditableMapDocument, parseQiResourceKey, resolvePlayerFacingContentName, validateEditableMapPortalReciprocity } from '@mud/shared';
+import { DEFAULT_QI_RESOURCE_DESCRIPTOR, assertRuntimeMapDocumentV2, buildQiResourceKey, composeTileTypeFromLayers, doesTileTypeBlockSight, getTileTypeFromMapChar, isTileTypeWalkable, normalizeConfiguredAuraValue, normalizeEditableMapDocument, parseQiResourceKey, resolvePlayerFacingContentName, validateEditableMapMineralNodes, validateEditableMapPortalReciprocity } from '@mud/shared';
 import { resolveProjectPath } from '../../common/project-path';
+import { ItemTemplateRegistry } from '../../content/registries/item-template.registry';
+import { buildMapMineralNodeIndex, validateMapMineralNodeItemReferences } from './map-mineral-node.helpers';
 import { ContainerTemplateRegistry } from './registries/container-template.registry';
 import { LandmarkTemplateRegistry } from './registries/landmark-template.registry';
 import { NpcTemplateRegistry } from './registries/npc-template.registry';
@@ -28,6 +30,7 @@ export class MapTemplateRepository {
         readonly containerRegistry: ContainerTemplateRegistry = new ContainerTemplateRegistry(),
         readonly landmarkRegistry: LandmarkTemplateRegistry = new LandmarkTemplateRegistry(),
         readonly tileRegistry: TileTemplateRegistry = new TileTemplateRegistry(),
+        readonly itemRegistry: ItemTemplateRegistry = new ItemTemplateRegistry(),
     ) {
         this.npcLocationById = this.npcRegistry.npcLocationById;
         this.questSourceById = this.questRegistry.questSourceById;
@@ -148,6 +151,15 @@ export class MapTemplateRepository {
     /** registerRuntimeMapTemplate：注册运行时生成地图模板。 */
     registerRuntimeMapTemplate(document) {
         const normalized = normalizeEditableMapDocument(document);
+        const validationError = validateEditableMapMineralNodes(normalized);
+        if (validationError) {
+            throw new Error(`運行時地圖校驗失敗: ${validationError}`);
+        }
+        this.ensureItemTemplatesLoaded();
+        const itemReferenceError = validateMapMineralNodeItemReferences(normalized, this.itemRegistry.itemTemplates);
+        if (itemReferenceError) {
+            throw new Error(`運行時地圖校驗失敗: ${itemReferenceError}`);
+        }
         copyRuntimeMapMetadata(document, normalized);
         const template = this.buildTemplate(normalized, new Map(), new Map());
         this.registerTemplateObjectRefs(template);
@@ -229,6 +241,7 @@ export class MapTemplateRepository {
         this.containerRegistry.loadAll();
         this.landmarkRegistry.loadAll();
         this.tileRegistry.loadAll();
+        this.itemRegistry.loadAll();
         const mapsDir = resolveProjectPath('packages', 'server', 'data', 'maps');
         const resourceNodeById = loadLandmarkResourceNodeDefinitions();
         const files = collectJsonFiles(mapsDir);
@@ -236,7 +249,16 @@ export class MapTemplateRepository {
         for (const file of files) {
             const raw = JSON.parse(fs.readFileSync(file, 'utf-8'));
             assertRuntimeMapDocumentV2(raw, file);
-            documents.push(normalizeEditableMapDocument(raw));
+            const document = normalizeEditableMapDocument(raw);
+            const validationError = validateEditableMapMineralNodes(document);
+            if (validationError) {
+                throw new Error(`地圖文件校驗失敗: ${file}: ${validationError}`);
+            }
+            const itemReferenceError = validateMapMineralNodeItemReferences(document, this.itemRegistry.itemTemplates);
+            if (itemReferenceError) {
+                throw new Error(`地圖文件校驗失敗: ${file}: ${itemReferenceError}`);
+            }
+            documents.push(document);
         }
         const portalValidationError = validateEditableMapPortalReciprocity(documents);
         if (portalValidationError) {
@@ -493,9 +515,15 @@ export class MapTemplateRepository {
             qiDrainByTile,
             baseAuraByTile,
             baseTileResourceEntries: Array.from(baseTileResourceEntryByKey.values()).sort((left, right) => left.resourceKey.localeCompare(right.resourceKey, 'zh-Hans-CN') || left.tileIndex - right.tileIndex),
+            mineralNodeByTile: buildMapMineralNodeIndex(document),
             tileRegistry: this.tileRegistry,
             source: document,
         };
+    }
+    ensureItemTemplatesLoaded() {
+        if (this.itemRegistry.itemTemplates.size <= 0) {
+            this.itemRegistry.loadAll();
+        }
     }
 };
 /**

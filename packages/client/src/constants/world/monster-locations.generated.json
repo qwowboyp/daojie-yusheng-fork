@@ -1,4 +1,1460 @@
 {
+  "lg_body_integration_m1_boss": {
+    "monsterId": "lg_body_integration_m1_boss",
+    "monsterName": "守垣將",
+    "mapId": "lg_body_integration_m1_entry",
+    "mapName": "垣門外壘",
+    "mapLv": 91,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m1_entry_mob_1": {
+    "monsterId": "lg_body_integration_m1_entry_mob_1",
+    "monsterName": "壘衛殘魂",
+    "mapId": "lg_body_integration_m1_entry",
+    "mapName": "垣門外壘",
+    "mapLv": 91,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m1_entry_mob_2": {
+    "monsterId": "lg_body_integration_m1_entry_mob_2",
+    "monsterName": "撞門獸",
+    "mapId": "lg_body_integration_m1_entry",
+    "mapName": "垣門外壘",
+    "mapLv": 91,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m1_entry_mob_3": {
+    "monsterId": "lg_body_integration_m1_entry_mob_3",
+    "monsterName": "名砂傀",
+    "mapId": "lg_body_integration_m1_entry",
+    "mapName": "垣門外壘",
+    "mapLv": 91,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m1_entry_mob_4": {
+    "monsterId": "lg_body_integration_m1_entry_mob_4",
+    "monsterName": "垣壁行者",
+    "mapId": "lg_body_integration_m1_entry",
+    "mapName": "垣門外壘",
+    "mapLv": 91,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m1_entry_mob_5": {
+    "monsterId": "lg_body_integration_m1_entry_mob_5",
+    "monsterName": "舊甲蟻",
+    "mapId": "lg_body_integration_m1_entry",
+    "mapName": "垣門外壘",
+    "mapLv": 91,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m1_entry_mob_6": {
+    "monsterId": "lg_body_integration_m1_entry_mob_6",
+    "monsterName": "望門鴉",
+    "mapId": "lg_body_integration_m1_entry",
+    "mapName": "垣門外壘",
+    "mapLv": 91,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m2_boss": {
+    "monsterId": "lg_body_integration_m2_boss",
+    "monsterName": "鏡我",
+    "mapId": "lg_body_integration_m2_entry",
+    "mapName": "鏡我之澤",
+    "mapLv": 94,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m2_entry_mob_1": {
+    "monsterId": "lg_body_integration_m2_entry_mob_1",
+    "monsterName": "鏡影",
+    "mapId": "lg_body_integration_m2_entry",
+    "mapName": "鏡我之澤",
+    "mapLv": 94,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m2_entry_mob_2": {
+    "monsterId": "lg_body_integration_m2_entry_mob_2",
+    "monsterName": "雙生獸",
+    "mapId": "lg_body_integration_m2_entry",
+    "mapName": "鏡我之澤",
+    "mapLv": 94,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m2_entry_mob_3": {
+    "monsterId": "lg_body_integration_m2_entry_mob_3",
+    "monsterName": "照心妖",
+    "mapId": "lg_body_integration_m2_entry",
+    "mapName": "鏡我之澤",
+    "mapLv": 94,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m2_entry_mob_4": {
+    "monsterId": "lg_body_integration_m2_entry_mob_4",
+    "monsterName": "拾面客",
+    "mapId": "lg_body_integration_m2_entry",
+    "mapName": "鏡我之澤",
+    "mapLv": 94,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m2_entry_mob_5": {
+    "monsterId": "lg_body_integration_m2_entry_mob_5",
+    "monsterName": "回聲蛙",
+    "mapId": "lg_body_integration_m2_entry",
+    "mapName": "鏡我之澤",
+    "mapLv": 94,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m3_boss": {
+    "monsterId": "lg_body_integration_m3_boss",
+    "monsterName": "葬法老人",
+    "mapId": "lg_body_integration_m3_entry",
+    "mapName": "法骸陵",
+    "mapLv": 97,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m3_entry_mob_1": {
+    "monsterId": "lg_body_integration_m3_entry_mob_1",
+    "monsterName": "葬法傀",
+    "mapId": "lg_body_integration_m3_entry",
+    "mapName": "法骸陵",
+    "mapLv": 97,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m3_entry_mob_2": {
+    "monsterId": "lg_body_integration_m3_entry_mob_2",
+    "monsterName": "無聲妖",
+    "mapId": "lg_body_integration_m3_entry",
+    "mapName": "法骸陵",
+    "mapLv": 97,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m3_entry_mob_3": {
+    "monsterId": "lg_body_integration_m3_entry_mob_3",
+    "monsterName": "拾法獸",
+    "mapId": "lg_body_integration_m3_entry",
+    "mapName": "法骸陵",
+    "mapLv": 97,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m3_entry_mob_4": {
+    "monsterId": "lg_body_integration_m3_entry_mob_4",
+    "monsterName": "晶柱衛",
+    "mapId": "lg_body_integration_m3_entry",
+    "mapName": "法骸陵",
+    "mapLv": 97,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m3_entry_mob_5": {
+    "monsterId": "lg_body_integration_m3_entry_mob_5",
+    "monsterName": "覆名蛛",
+    "mapId": "lg_body_integration_m3_entry",
+    "mapName": "法骸陵",
+    "mapLv": 97,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m3_entry_mob_6": {
+    "monsterId": "lg_body_integration_m3_entry_mob_6",
+    "monsterName": "灰誦者",
+    "mapId": "lg_body_integration_m3_entry",
+    "mapName": "法骸陵",
+    "mapLv": 97,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m4_boss": {
+    "monsterId": "lg_body_integration_m4_boss",
+    "monsterName": "垣心守",
+    "mapId": "lg_body_integration_m4_entry",
+    "mapName": "垣心之井",
+    "mapLv": 100,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m4_entry_mob_1": {
+    "monsterId": "lg_body_integration_m4_entry_mob_1",
+    "monsterName": "井守",
+    "mapId": "lg_body_integration_m4_entry",
+    "mapName": "垣心之井",
+    "mapLv": 100,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m4_entry_mob_2": {
+    "monsterId": "lg_body_integration_m4_entry_mob_2",
+    "monsterName": "攀壁妖",
+    "mapId": "lg_body_integration_m4_entry",
+    "mapName": "垣心之井",
+    "mapLv": 100,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m4_entry_mob_3": {
+    "monsterId": "lg_body_integration_m4_entry_mob_3",
+    "monsterName": "井底獸",
+    "mapId": "lg_body_integration_m4_entry",
+    "mapName": "垣心之井",
+    "mapLv": 100,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m4_entry_mob_4": {
+    "monsterId": "lg_body_integration_m4_entry_mob_4",
+    "monsterName": "名縫蟲",
+    "mapId": "lg_body_integration_m4_entry",
+    "mapName": "垣心之井",
+    "mapLv": 100,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m4_entry_mob_5": {
+    "monsterId": "lg_body_integration_m4_entry_mob_5",
+    "monsterName": "落名傀",
+    "mapId": "lg_body_integration_m4_entry",
+    "mapName": "垣心之井",
+    "mapLv": 100,
+    "totalMaps": 1
+  },
+  "lg_body_integration_m4_entry_mob_6": {
+    "monsterId": "lg_body_integration_m4_entry_mob_6",
+    "monsterName": "垣髓蛾",
+    "mapId": "lg_body_integration_m4_entry",
+    "mapName": "垣心之井",
+    "mapLv": 100,
+    "totalMaps": 1
+  },
+  "lg_golden_core_furnace_mender_remnant": {
+    "monsterId": "lg_golden_core_furnace_mender_remnant",
+    "monsterName": "補天匠·殘念",
+    "mapId": "lg_golden_core_sky_mending_furnace",
+    "mapName": "補天殘爐",
+    "mapLv": 52,
+    "totalMaps": 1
+  },
+  "lg_golden_core_hanging_lamp_grandmother": {
+    "monsterId": "lg_golden_core_hanging_lamp_grandmother",
+    "monsterName": "萬燈姥姥",
+    "mapId": "lg_golden_core_hanging_lamps",
+    "mapName": "懸燈峽",
+    "mapLv": 49,
+    "totalMaps": 1
+  },
+  "lg_golden_core_hanging_lamps_mob_1": {
+    "monsterId": "lg_golden_core_hanging_lamps_mob_1",
+    "monsterName": "燈蛾",
+    "mapId": "lg_golden_core_hanging_lamps",
+    "mapName": "懸燈峽",
+    "mapLv": 49,
+    "totalMaps": 1
+  },
+  "lg_golden_core_hanging_lamps_mob_2": {
+    "monsterId": "lg_golden_core_hanging_lamps_mob_2",
+    "monsterName": "影侍",
+    "mapId": "lg_golden_core_hanging_lamps",
+    "mapName": "懸燈峽",
+    "mapLv": 49,
+    "totalMaps": 1
+  },
+  "lg_golden_core_hanging_lamps_mob_3": {
+    "monsterId": "lg_golden_core_hanging_lamps_mob_3",
+    "monsterName": "提燈傀",
+    "mapId": "lg_golden_core_hanging_lamps",
+    "mapName": "懸燈峽",
+    "mapLv": 49,
+    "totalMaps": 1
+  },
+  "lg_golden_core_hanging_lamps_mob_4": {
+    "monsterId": "lg_golden_core_hanging_lamps_mob_4",
+    "monsterName": "燈下影童",
+    "mapId": "lg_golden_core_hanging_lamps",
+    "mapName": "懸燈峽",
+    "mapLv": 49,
+    "totalMaps": 1
+  },
+  "lg_golden_core_hanging_lamps_mob_5": {
+    "monsterId": "lg_golden_core_hanging_lamps_mob_5",
+    "monsterName": "峽風燈魅",
+    "mapId": "lg_golden_core_hanging_lamps",
+    "mapName": "懸燈峽",
+    "mapLv": 49,
+    "totalMaps": 1
+  },
+  "lg_golden_core_molten_channel_mob_1": {
+    "monsterId": "lg_golden_core_molten_channel_mob_1",
+    "monsterName": "熔衣傀",
+    "mapId": "lg_golden_core_molten_channel",
+    "mapName": "熔渠舊坊",
+    "mapLv": 46,
+    "totalMaps": 1
+  },
+  "lg_golden_core_molten_channel_mob_2": {
+    "monsterId": "lg_golden_core_molten_channel_mob_2",
+    "monsterName": "爐蛾",
+    "mapId": "lg_golden_core_molten_channel",
+    "mapName": "熔渠舊坊",
+    "mapLv": 46,
+    "totalMaps": 1
+  },
+  "lg_golden_core_molten_channel_mob_3": {
+    "monsterId": "lg_golden_core_molten_channel_mob_3",
+    "monsterName": "熔渠淌怪",
+    "mapId": "lg_golden_core_molten_channel",
+    "mapName": "熔渠舊坊",
+    "mapLv": 46,
+    "totalMaps": 1
+  },
+  "lg_golden_core_molten_channel_mob_4": {
+    "monsterId": "lg_golden_core_molten_channel_mob_4",
+    "monsterName": "斷鉗匠魂",
+    "mapId": "lg_golden_core_molten_channel",
+    "mapName": "熔渠舊坊",
+    "mapLv": 46,
+    "totalMaps": 1
+  },
+  "lg_golden_core_molten_channel_mob_5": {
+    "monsterId": "lg_golden_core_molten_channel_mob_5",
+    "monsterName": "殘爐煙鬼",
+    "mapId": "lg_golden_core_molten_channel",
+    "mapName": "熔渠舊坊",
+    "mapLv": 46,
+    "totalMaps": 1
+  },
+  "lg_golden_core_molten_cold_furnace_master": {
+    "monsterId": "lg_golden_core_molten_cold_furnace_master",
+    "monsterName": "冷爐坊主",
+    "mapId": "lg_golden_core_molten_channel",
+    "mapName": "熔渠舊坊",
+    "mapLv": 46,
+    "totalMaps": 1
+  },
+  "lg_golden_core_sky_mending_furnace_mob_1": {
+    "monsterId": "lg_golden_core_sky_mending_furnace_mob_1",
+    "monsterName": "爐侍殘念",
+    "mapId": "lg_golden_core_sky_mending_furnace",
+    "mapName": "補天殘爐",
+    "mapLv": 52,
+    "totalMaps": 1
+  },
+  "lg_golden_core_sky_mending_furnace_mob_2": {
+    "monsterId": "lg_golden_core_sky_mending_furnace_mob_2",
+    "monsterName": "渣甲衛",
+    "mapId": "lg_golden_core_sky_mending_furnace",
+    "mapName": "補天殘爐",
+    "mapLv": 52,
+    "totalMaps": 1
+  },
+  "lg_golden_core_sky_mending_furnace_mob_3": {
+    "monsterId": "lg_golden_core_sky_mending_furnace_mob_3",
+    "monsterName": "鑄殘傀",
+    "mapId": "lg_golden_core_sky_mending_furnace",
+    "mapName": "補天殘爐",
+    "mapLv": 52,
+    "totalMaps": 1
+  },
+  "lg_golden_core_sky_mending_furnace_mob_4": {
+    "monsterId": "lg_golden_core_sky_mending_furnace_mob_4",
+    "monsterName": "天火餘燼",
+    "mapId": "lg_golden_core_sky_mending_furnace",
+    "mapName": "補天殘爐",
+    "mapLv": 52,
+    "totalMaps": 1
+  },
+  "lg_golden_core_sky_mending_furnace_mob_5": {
+    "monsterId": "lg_golden_core_sky_mending_furnace_mob_5",
+    "monsterName": "廢渣爬獸",
+    "mapId": "lg_golden_core_sky_mending_furnace",
+    "mapName": "補天殘爐",
+    "mapLv": 52,
+    "totalMaps": 1
+  },
+  "lg_golden_core_xinjin_lamplighter": {
+    "monsterId": "lg_golden_core_xinjin_lamplighter",
+    "monsterName": "拾燈人",
+    "mapId": "lg_golden_core_xinjin_slope",
+    "mapName": "薪盡坡",
+    "mapLv": 43,
+    "totalMaps": 1
+  },
+  "lg_golden_core_xinjin_slope_mob_1": {
+    "monsterId": "lg_golden_core_xinjin_slope_mob_1",
+    "monsterName": "焦土小妖",
+    "mapId": "lg_golden_core_xinjin_slope",
+    "mapName": "薪盡坡",
+    "mapLv": 43,
+    "totalMaps": 1
+  },
+  "lg_golden_core_xinjin_slope_mob_2": {
+    "monsterId": "lg_golden_core_xinjin_slope_mob_2",
+    "monsterName": "灰燼遊魂",
+    "mapId": "lg_golden_core_xinjin_slope",
+    "mapName": "薪盡坡",
+    "mapLv": 43,
+    "totalMaps": 1
+  },
+  "lg_golden_core_xinjin_slope_mob_3": {
+    "monsterId": "lg_golden_core_xinjin_slope_mob_3",
+    "monsterName": "熄燈鬼火",
+    "mapId": "lg_golden_core_xinjin_slope",
+    "mapName": "薪盡坡",
+    "mapLv": 43,
+    "totalMaps": 1
+  },
+  "lg_golden_core_xinjin_slope_mob_4": {
+    "monsterId": "lg_golden_core_xinjin_slope_mob_4",
+    "monsterName": "燼殼灰偶",
+    "mapId": "lg_golden_core_xinjin_slope",
+    "mapName": "薪盡坡",
+    "mapLv": 43,
+    "totalMaps": 1
+  },
+  "lg_golden_core_xinjin_slope_mob_5": {
+    "monsterId": "lg_golden_core_xinjin_slope_mob_5",
+    "monsterName": "風掃灰魈",
+    "mapId": "lg_golden_core_xinjin_slope",
+    "mapName": "薪盡坡",
+    "mapLv": 43,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m1_boss": {
+    "monsterId": "lg_great_vehicle_m1_boss",
+    "monsterName": "擋風人",
+    "mapId": "lg_great_vehicle_m1_entry",
+    "mapName": "劫風口",
+    "mapLv": 103,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m1_entry_mob_1": {
+    "monsterId": "lg_great_vehicle_m1_entry_mob_1",
+    "monsterName": "劫風獸",
+    "mapId": "lg_great_vehicle_m1_entry",
+    "mapName": "劫風口",
+    "mapLv": 103,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m1_entry_mob_2": {
+    "monsterId": "lg_great_vehicle_m1_entry_mob_2",
+    "monsterName": "扯旗妖",
+    "mapId": "lg_great_vehicle_m1_entry",
+    "mapName": "劫風口",
+    "mapLv": 103,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m1_entry_mob_3": {
+    "monsterId": "lg_great_vehicle_m1_entry_mob_3",
+    "monsterName": "吹燈魈",
+    "mapId": "lg_great_vehicle_m1_entry",
+    "mapName": "劫風口",
+    "mapLv": 103,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m1_entry_mob_4": {
+    "monsterId": "lg_great_vehicle_m1_entry_mob_4",
+    "monsterName": "頂風猿",
+    "mapId": "lg_great_vehicle_m1_entry",
+    "mapName": "劫風口",
+    "mapLv": 103,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m1_entry_mob_5": {
+    "monsterId": "lg_great_vehicle_m1_entry_mob_5",
+    "monsterName": "嚎風鴉",
+    "mapId": "lg_great_vehicle_m1_entry",
+    "mapName": "劫風口",
+    "mapLv": 103,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m1_entry_mob_6": {
+    "monsterId": "lg_great_vehicle_m1_entry_mob_6",
+    "monsterName": "滾石傀",
+    "mapId": "lg_great_vehicle_m1_entry",
+    "mapName": "劫風口",
+    "mapLv": 103,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m2_boss": {
+    "monsterId": "lg_great_vehicle_m2_boss",
+    "monsterName": "執雷者",
+    "mapId": "lg_great_vehicle_m2_entry",
+    "mapName": "雷罰原",
+    "mapLv": 106,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m2_entry_mob_1": {
+    "monsterId": "lg_great_vehicle_m2_entry_mob_1",
+    "monsterName": "執罰雷靈",
+    "mapId": "lg_great_vehicle_m2_entry",
+    "mapName": "雷罰原",
+    "mapLv": 106,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m2_entry_mob_2": {
+    "monsterId": "lg_great_vehicle_m2_entry_mob_2",
+    "monsterName": "碑下哀聲",
+    "mapId": "lg_great_vehicle_m2_entry",
+    "mapName": "雷罰原",
+    "mapLv": 106,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m2_entry_mob_3": {
+    "monsterId": "lg_great_vehicle_m2_entry_mob_3",
+    "monsterName": "承罰傀",
+    "mapId": "lg_great_vehicle_m2_entry",
+    "mapName": "雷罰原",
+    "mapLv": 106,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m2_entry_mob_4": {
+    "monsterId": "lg_great_vehicle_m2_entry_mob_4",
+    "monsterName": "判罪鴉",
+    "mapId": "lg_great_vehicle_m2_entry",
+    "mapName": "雷罰原",
+    "mapLv": 106,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m2_entry_mob_5": {
+    "monsterId": "lg_great_vehicle_m2_entry_mob_5",
+    "monsterName": "引雷犬",
+    "mapId": "lg_great_vehicle_m2_entry",
+    "mapName": "雷罰原",
+    "mapLv": 106,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m2_entry_mob_6": {
+    "monsterId": "lg_great_vehicle_m2_entry_mob_6",
+    "monsterName": "避罰骸",
+    "mapId": "lg_great_vehicle_m2_entry",
+    "mapName": "雷罰原",
+    "mapLv": 106,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m3_boss": {
+    "monsterId": "lg_great_vehicle_m3_boss",
+    "monsterName": "獸潮王",
+    "mapId": "lg_great_vehicle_m3_entry",
+    "mapName": "獸潮舊壘",
+    "mapLv": 109,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m3_entry_mob_1": {
+    "monsterId": "lg_great_vehicle_m3_entry_mob_1",
+    "monsterName": "劫獸潮（成群）",
+    "mapId": "lg_great_vehicle_m3_entry",
+    "mapName": "獸潮舊壘",
+    "mapLv": 109,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m3_entry_mob_2": {
+    "monsterId": "lg_great_vehicle_m3_entry_mob_2",
+    "monsterName": "領潮獸",
+    "mapId": "lg_great_vehicle_m3_entry",
+    "mapName": "獸潮舊壘",
+    "mapLv": 109,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m3_entry_mob_3": {
+    "monsterId": "lg_great_vehicle_m3_entry_mob_3",
+    "monsterName": "咬壘獸",
+    "mapId": "lg_great_vehicle_m3_entry",
+    "mapName": "獸潮舊壘",
+    "mapLv": 109,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m3_entry_mob_4": {
+    "monsterId": "lg_great_vehicle_m3_entry_mob_4",
+    "monsterName": "潛潮獸",
+    "mapId": "lg_great_vehicle_m3_entry",
+    "mapName": "獸潮舊壘",
+    "mapLv": 109,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m3_entry_mob_5": {
+    "monsterId": "lg_great_vehicle_m3_entry_mob_5",
+    "monsterName": "落潮崽",
+    "mapId": "lg_great_vehicle_m3_entry",
+    "mapName": "獸潮舊壘",
+    "mapLv": 109,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m3_entry_mob_6": {
+    "monsterId": "lg_great_vehicle_m3_entry_mob_6",
+    "monsterName": "啃牌蟲",
+    "mapId": "lg_great_vehicle_m3_entry",
+    "mapName": "獸潮舊壘",
+    "mapLv": 109,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m4_boss": {
+    "monsterId": "lg_great_vehicle_m4_boss",
+    "monsterName": "天痕使",
+    "mapId": "lg_great_vehicle_m4_entry",
+    "mapName": "天痕下坡",
+    "mapLv": 112,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m4_entry_mob_1": {
+    "monsterId": "lg_great_vehicle_m4_entry_mob_1",
+    "monsterName": "痕影（劫風系殘影）",
+    "mapId": "lg_great_vehicle_m4_entry",
+    "mapName": "天痕下坡",
+    "mapLv": 112,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m4_entry_mob_2": {
+    "monsterId": "lg_great_vehicle_m4_entry_mob_2",
+    "monsterName": "逆光獸（獸潮系異變）",
+    "mapId": "lg_great_vehicle_m4_entry",
+    "mapName": "天痕下坡",
+    "mapLv": 112,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m4_entry_mob_3": {
+    "monsterId": "lg_great_vehicle_m4_entry_mob_3",
+    "monsterName": "穿痕魈（劫風系）",
+    "mapId": "lg_great_vehicle_m4_entry",
+    "mapName": "天痕下坡",
+    "mapLv": 112,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m4_entry_mob_4": {
+    "monsterId": "lg_great_vehicle_m4_entry_mob_4",
+    "monsterName": "碎雷奴（雷罰系）",
+    "mapId": "lg_great_vehicle_m4_entry",
+    "mapName": "天痕下坡",
+    "mapLv": 112,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m4_entry_mob_5": {
+    "monsterId": "lg_great_vehicle_m4_entry_mob_5",
+    "monsterName": "爬痕獸（獸潮系）",
+    "mapId": "lg_great_vehicle_m4_entry",
+    "mapName": "天痕下坡",
+    "mapLv": 112,
+    "totalMaps": 1
+  },
+  "lg_great_vehicle_m4_entry_mob_6": {
+    "monsterId": "lg_great_vehicle_m4_entry_mob_6",
+    "monsterName": "半碑骸（劫風系風乾遺骸）",
+    "mapId": "lg_great_vehicle_m4_entry",
+    "mapName": "天痕下坡",
+    "mapLv": 112,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m1_boss": {
+    "monsterId": "lg_nascent_soul_m1_boss",
+    "monsterName": "螺中客",
+    "mapId": "lg_nascent_soul_m1_entry",
+    "mapName": "漏聲灘",
+    "mapLv": 55,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m1_entry_mob_1": {
+    "monsterId": "lg_nascent_soul_m1_entry_mob_1",
+    "monsterName": "潮聲鬼",
+    "mapId": "lg_nascent_soul_m1_entry",
+    "mapName": "漏聲灘",
+    "mapLv": 55,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m1_entry_mob_2": {
+    "monsterId": "lg_nascent_soul_m1_entry_mob_2",
+    "monsterName": "貝甲沙民",
+    "mapId": "lg_nascent_soul_m1_entry",
+    "mapName": "漏聲灘",
+    "mapLv": 55,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m1_entry_mob_3": {
+    "monsterId": "lg_nascent_soul_m1_entry_mob_3",
+    "monsterName": "拾聲童",
+    "mapId": "lg_nascent_soul_m1_entry",
+    "mapName": "漏聲灘",
+    "mapLv": 55,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m1_entry_mob_4": {
+    "monsterId": "lg_nascent_soul_m1_entry_mob_4",
+    "monsterName": "錄聲水母",
+    "mapId": "lg_nascent_soul_m1_entry",
+    "mapName": "漏聲灘",
+    "mapLv": 55,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m1_entry_mob_5": {
+    "monsterId": "lg_nascent_soul_m1_entry_mob_5",
+    "monsterName": "迴音螺",
+    "mapId": "lg_nascent_soul_m1_entry",
+    "mapName": "漏聲灘",
+    "mapLv": 55,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m2_boss": {
+    "monsterId": "lg_nascent_soul_m2_boss",
+    "monsterName": "守鐘魃",
+    "mapId": "lg_nascent_soul_m2_entry",
+    "mapName": "沉鐘澥",
+    "mapLv": 58,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m2_entry_mob_1": {
+    "monsterId": "lg_nascent_soul_m2_entry_mob_1",
+    "monsterName": "聾鰩",
+    "mapId": "lg_nascent_soul_m2_entry",
+    "mapName": "沉鐘澥",
+    "mapLv": 58,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m2_entry_mob_2": {
+    "monsterId": "lg_nascent_soul_m2_entry_mob_2",
+    "monsterName": "鐘鏽蟹",
+    "mapId": "lg_nascent_soul_m2_entry",
+    "mapName": "沉鐘澥",
+    "mapLv": 58,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m2_entry_mob_3": {
+    "monsterId": "lg_nascent_soul_m2_entry_mob_3",
+    "monsterName": "撐鐘傀",
+    "mapId": "lg_nascent_soul_m2_entry",
+    "mapName": "沉鐘澥",
+    "mapLv": 58,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m2_entry_mob_4": {
+    "monsterId": "lg_nascent_soul_m2_entry_mob_4",
+    "monsterName": "靜潮僧影",
+    "mapId": "lg_nascent_soul_m2_entry",
+    "mapName": "沉鐘澥",
+    "mapLv": 58,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m2_entry_mob_5": {
+    "monsterId": "lg_nascent_soul_m2_entry_mob_5",
+    "monsterName": "海魂珊蟲",
+    "mapId": "lg_nascent_soul_m2_entry",
+    "mapName": "沉鐘澥",
+    "mapLv": 58,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m3_boss": {
+    "monsterId": "lg_nascent_soul_m3_boss",
+    "monsterName": "斷桅將軍",
+    "mapId": "lg_nascent_soul_m3_entry",
+    "mapName": "千帆骨場",
+    "mapLv": 61,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m3_entry_mob_1": {
+    "monsterId": "lg_nascent_soul_m3_entry_mob_1",
+    "monsterName": "帆骨妖",
+    "mapId": "lg_nascent_soul_m3_entry",
+    "mapName": "千帆骨場",
+    "mapLv": 61,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m3_entry_mob_2": {
+    "monsterId": "lg_nascent_soul_m3_entry_mob_2",
+    "monsterName": "桅影",
+    "mapId": "lg_nascent_soul_m3_entry",
+    "mapName": "千帆骨場",
+    "mapLv": 61,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m3_entry_mob_3": {
+    "monsterId": "lg_nascent_soul_m3_entry_mob_3",
+    "monsterName": "骨浪手",
+    "mapId": "lg_nascent_soul_m3_entry",
+    "mapName": "千帆骨場",
+    "mapLv": 61,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m3_entry_mob_4": {
+    "monsterId": "lg_nascent_soul_m3_entry_mob_4",
+    "monsterName": "碎槳魂",
+    "mapId": "lg_nascent_soul_m3_entry",
+    "mapName": "千帆骨場",
+    "mapLv": 61,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m3_entry_mob_5": {
+    "monsterId": "lg_nascent_soul_m3_entry_mob_5",
+    "monsterName": "船首啞僕",
+    "mapId": "lg_nascent_soul_m3_entry",
+    "mapName": "千帆骨場",
+    "mapLv": 61,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m4_boss": {
+    "monsterId": "lg_nascent_soul_m4_boss",
+    "monsterName": "回瀾真君",
+    "mapId": "lg_nascent_soul_m4_entry",
+    "mapName": "回瀾淵",
+    "mapLv": 64,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m4_entry_mob_1": {
+    "monsterId": "lg_nascent_soul_m4_entry_mob_1",
+    "monsterName": "迴聲獸",
+    "mapId": "lg_nascent_soul_m4_entry",
+    "mapName": "回瀾淵",
+    "mapLv": 64,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m4_entry_mob_2": {
+    "monsterId": "lg_nascent_soul_m4_entry_mob_2",
+    "monsterName": "深壓妖",
+    "mapId": "lg_nascent_soul_m4_entry",
+    "mapName": "回瀾淵",
+    "mapLv": 64,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m4_entry_mob_3": {
+    "monsterId": "lg_nascent_soul_m4_entry_mob_3",
+    "monsterName": "無面潮使",
+    "mapId": "lg_nascent_soul_m4_entry",
+    "mapName": "回瀾淵",
+    "mapLv": 64,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m4_entry_mob_4": {
+    "monsterId": "lg_nascent_soul_m4_entry_mob_4",
+    "monsterName": "捲瀾鰻",
+    "mapId": "lg_nascent_soul_m4_entry",
+    "mapName": "回瀾淵",
+    "mapLv": 64,
+    "totalMaps": 1
+  },
+  "lg_nascent_soul_m4_entry_mob_5": {
+    "monsterId": "lg_nascent_soul_m4_entry_mob_5",
+    "monsterName": "沉光傀",
+    "mapId": "lg_nascent_soul_m4_entry",
+    "mapName": "回瀾淵",
+    "mapLv": 64,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m1_boss": {
+    "monsterId": "lg_spirit_transformation_m1_boss",
+    "monsterName": "登崖石人",
+    "mapId": "lg_spirit_transformation_m1_entry",
+    "mapName": "斷崖階",
+    "mapLv": 67,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m1_entry_mob_1": {
+    "monsterId": "lg_spirit_transformation_m1_entry_mob_1",
+    "monsterName": "石階行者",
+    "mapId": "lg_spirit_transformation_m1_entry",
+    "mapName": "斷崖階",
+    "mapLv": 67,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m1_entry_mob_2": {
+    "monsterId": "lg_spirit_transformation_m1_entry_mob_2",
+    "monsterName": "背囊傀",
+    "mapId": "lg_spirit_transformation_m1_entry",
+    "mapName": "斷崖階",
+    "mapLv": 67,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m1_entry_mob_3": {
+    "monsterId": "lg_spirit_transformation_m1_entry_mob_3",
+    "monsterName": "風剪",
+    "mapId": "lg_spirit_transformation_m1_entry",
+    "mapName": "斷崖階",
+    "mapLv": 67,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m1_entry_mob_4": {
+    "monsterId": "lg_spirit_transformation_m1_entry_mob_4",
+    "monsterName": "階縫蜈",
+    "mapId": "lg_spirit_transformation_m1_entry",
+    "mapName": "斷崖階",
+    "mapLv": 67,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m1_entry_mob_5": {
+    "monsterId": "lg_spirit_transformation_m1_entry_mob_5",
+    "monsterName": "崖柏魈",
+    "mapId": "lg_spirit_transformation_m1_entry",
+    "mapName": "斷崖階",
+    "mapLv": 67,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m1_entry_mob_6": {
+    "monsterId": "lg_spirit_transformation_m1_entry_mob_6",
+    "monsterName": "歇腳影",
+    "mapId": "lg_spirit_transformation_m1_entry",
+    "mapName": "斷崖階",
+    "mapLv": 67,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m2_boss": {
+    "monsterId": "lg_spirit_transformation_m2_boss",
+    "monsterName": "司律雷君",
+    "mapId": "lg_spirit_transformation_m2_entry",
+    "mapName": "律動雷原",
+    "mapLv": 70,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m2_entry_mob_1": {
+    "monsterId": "lg_spirit_transformation_m2_entry_mob_1",
+    "monsterName": "司律獸",
+    "mapId": "lg_spirit_transformation_m2_entry",
+    "mapName": "律動雷原",
+    "mapLv": 70,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m2_entry_mob_2": {
+    "monsterId": "lg_spirit_transformation_m2_entry_mob_2",
+    "monsterName": "雷符鴉",
+    "mapId": "lg_spirit_transformation_m2_entry",
+    "mapName": "律動雷原",
+    "mapLv": 70,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m2_entry_mob_3": {
+    "monsterId": "lg_spirit_transformation_m2_entry_mob_3",
+    "monsterName": "數拍魈",
+    "mapId": "lg_spirit_transformation_m2_entry",
+    "mapName": "律動雷原",
+    "mapLv": 70,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m2_entry_mob_4": {
+    "monsterId": "lg_spirit_transformation_m2_entry_mob_4",
+    "monsterName": "落點蟲",
+    "mapId": "lg_spirit_transformation_m2_entry",
+    "mapName": "律動雷原",
+    "mapLv": 70,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m2_entry_mob_5": {
+    "monsterId": "lg_spirit_transformation_m2_entry_mob_5",
+    "monsterName": "亂拍影",
+    "mapId": "lg_spirit_transformation_m2_entry",
+    "mapName": "律動雷原",
+    "mapLv": 70,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m3_boss": {
+    "monsterId": "lg_spirit_transformation_m3_boss",
+    "monsterName": "守臺瞽者",
+    "mapId": "lg_spirit_transformation_m3_entry",
+    "mapName": "古觀星臺",
+    "mapLv": 73,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m3_entry_mob_1": {
+    "monsterId": "lg_spirit_transformation_m3_entry_mob_1",
+    "monsterName": "守臺殘影",
+    "mapId": "lg_spirit_transformation_m3_entry",
+    "mapName": "古觀星臺",
+    "mapLv": 73,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m3_entry_mob_2": {
+    "monsterId": "lg_spirit_transformation_m3_entry_mob_2",
+    "monsterName": "星砂傀",
+    "mapId": "lg_spirit_transformation_m3_entry",
+    "mapName": "古觀星臺",
+    "mapLv": 73,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m3_entry_mob_3": {
+    "monsterId": "lg_spirit_transformation_m3_entry_mob_3",
+    "monsterName": "夜巡鴟",
+    "mapId": "lg_spirit_transformation_m3_entry",
+    "mapName": "古觀星臺",
+    "mapLv": 73,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m3_entry_mob_4": {
+    "monsterId": "lg_spirit_transformation_m3_entry_mob_4",
+    "monsterName": "刻痕蟲",
+    "mapId": "lg_spirit_transformation_m3_entry",
+    "mapName": "古觀星臺",
+    "mapLv": 73,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m3_entry_mob_5": {
+    "monsterId": "lg_spirit_transformation_m3_entry_mob_5",
+    "monsterName": "落星蛾",
+    "mapId": "lg_spirit_transformation_m3_entry",
+    "mapName": "古觀星臺",
+    "mapLv": 73,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m4_boss": {
+    "monsterId": "lg_spirit_transformation_m4_boss",
+    "monsterName": "風獄尊者",
+    "mapId": "lg_spirit_transformation_m4_entry",
+    "mapName": "涯底風獄",
+    "mapLv": 76,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m4_entry_mob_1": {
+    "monsterId": "lg_spirit_transformation_m4_entry_mob_1",
+    "monsterName": "風囚",
+    "mapId": "lg_spirit_transformation_m4_entry",
+    "mapName": "涯底風獄",
+    "mapLv": 76,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m4_entry_mob_2": {
+    "monsterId": "lg_spirit_transformation_m4_entry_mob_2",
+    "monsterName": "獄風靈",
+    "mapId": "lg_spirit_transformation_m4_entry",
+    "mapName": "涯底風獄",
+    "mapLv": 76,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m4_entry_mob_3": {
+    "monsterId": "lg_spirit_transformation_m4_entry_mob_3",
+    "monsterName": "壓壁獸",
+    "mapId": "lg_spirit_transformation_m4_entry",
+    "mapName": "涯底風獄",
+    "mapLv": 76,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m4_entry_mob_4": {
+    "monsterId": "lg_spirit_transformation_m4_entry_mob_4",
+    "monsterName": "拖痕魈",
+    "mapId": "lg_spirit_transformation_m4_entry",
+    "mapName": "涯底風獄",
+    "mapLv": 76,
+    "totalMaps": 1
+  },
+  "lg_spirit_transformation_m4_entry_mob_5": {
+    "monsterId": "lg_spirit_transformation_m4_entry_mob_5",
+    "monsterName": "枷木傀",
+    "mapId": "lg_spirit_transformation_m4_entry",
+    "mapName": "涯底風獄",
+    "mapLv": 76,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m1_boss": {
+    "monsterId": "lg_tribulation_m1_boss",
+    "monsterName": "劫雲君",
+    "mapId": "lg_tribulation_m1_entry",
+    "mapName": "劫雲海",
+    "mapLv": 115,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m1_entry_mob_1": {
+    "monsterId": "lg_tribulation_m1_entry_mob_1",
+    "monsterName": "劫雲獸",
+    "mapId": "lg_tribulation_m1_entry",
+    "mapName": "劫雲海",
+    "mapLv": 115,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m1_entry_mob_2": {
+    "monsterId": "lg_tribulation_m1_entry_mob_2",
+    "monsterName": "雲中人影",
+    "mapId": "lg_tribulation_m1_entry",
+    "mapName": "劫雲海",
+    "mapLv": 115,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m1_entry_mob_3": {
+    "monsterId": "lg_tribulation_m1_entry_mob_3",
+    "monsterName": "穿雲鴉",
+    "mapId": "lg_tribulation_m1_entry",
+    "mapName": "劫雲海",
+    "mapLv": 115,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m1_entry_mob_4": {
+    "monsterId": "lg_tribulation_m1_entry_mob_4",
+    "monsterName": "電光鱗",
+    "mapId": "lg_tribulation_m1_entry",
+    "mapName": "劫雲海",
+    "mapLv": 115,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m1_entry_mob_5": {
+    "monsterId": "lg_tribulation_m1_entry_mob_5",
+    "monsterName": "雲噬蠅",
+    "mapId": "lg_tribulation_m1_entry",
+    "mapName": "劫雲海",
+    "mapLv": 115,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m2_boss": {
+    "monsterId": "lg_tribulation_m2_boss",
+    "monsterName": "雷池守·第九",
+    "mapId": "lg_tribulation_m2_entry",
+    "mapName": "雷池第九重",
+    "mapLv": 118,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m2_entry_mob_1": {
+    "monsterId": "lg_tribulation_m2_entry_mob_1",
+    "monsterName": "雷池靈",
+    "mapId": "lg_tribulation_m2_entry",
+    "mapName": "雷池第九重",
+    "mapLv": 118,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m2_entry_mob_2": {
+    "monsterId": "lg_tribulation_m2_entry_mob_2",
+    "monsterName": "液雷獸",
+    "mapId": "lg_tribulation_m2_entry",
+    "mapName": "雷池第九重",
+    "mapLv": 118,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m2_entry_mob_3": {
+    "monsterId": "lg_tribulation_m2_entry_mob_3",
+    "monsterName": "雷池鰐",
+    "mapId": "lg_tribulation_m2_entry",
+    "mapName": "雷池第九重",
+    "mapLv": 118,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m2_entry_mob_4": {
+    "monsterId": "lg_tribulation_m2_entry_mob_4",
+    "monsterName": "液雷蛭",
+    "mapId": "lg_tribulation_m2_entry",
+    "mapName": "雷池第九重",
+    "mapLv": 118,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m2_entry_mob_5": {
+    "monsterId": "lg_tribulation_m2_entry_mob_5",
+    "monsterName": "第九影",
+    "mapId": "lg_tribulation_m2_entry",
+    "mapName": "雷池第九重",
+    "mapLv": 118,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m2_entry_mob_6": {
+    "monsterId": "lg_tribulation_m2_entry_mob_6",
+    "monsterName": "溫雷蛾",
+    "mapId": "lg_tribulation_m2_entry",
+    "mapName": "雷池第九重",
+    "mapLv": 118,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m3_boss": {
+    "monsterId": "lg_tribulation_m3_boss",
+    "monsterName": "心中我",
+    "mapId": "lg_tribulation_m3_entry",
+    "mapName": "心魔鏡城",
+    "mapLv": 121,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m3_entry_mob_1": {
+    "monsterId": "lg_tribulation_m3_entry_mob_1",
+    "monsterName": "執念形",
+    "mapId": "lg_tribulation_m3_entry",
+    "mapName": "心魔鏡城",
+    "mapLv": 121,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m3_entry_mob_2": {
+    "monsterId": "lg_tribulation_m3_entry_mob_2",
+    "monsterName": "心上影",
+    "mapId": "lg_tribulation_m3_entry",
+    "mapName": "心魔鏡城",
+    "mapLv": 121,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m3_entry_mob_3": {
+    "monsterId": "lg_tribulation_m3_entry_mob_3",
+    "monsterName": "舊人像",
+    "mapId": "lg_tribulation_m3_entry",
+    "mapName": "心魔鏡城",
+    "mapLv": 121,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m3_entry_mob_4": {
+    "monsterId": "lg_tribulation_m3_entry_mob_4",
+    "monsterName": "憾影",
+    "mapId": "lg_tribulation_m3_entry",
+    "mapName": "心魔鏡城",
+    "mapLv": 121,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m3_entry_mob_5": {
+    "monsterId": "lg_tribulation_m3_entry_mob_5",
+    "monsterName": "鏡中人偶",
+    "mapId": "lg_tribulation_m3_entry",
+    "mapName": "心魔鏡城",
+    "mapLv": 121,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m3_entry_mob_6": {
+    "monsterId": "lg_tribulation_m3_entry_mob_6",
+    "monsterName": "悔意蛾",
+    "mapId": "lg_tribulation_m3_entry",
+    "mapName": "心魔鏡城",
+    "mapLv": 121,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m4_boss": {
+    "monsterId": "lg_tribulation_m4_boss",
+    "monsterName": "五衰法身",
+    "mapId": "lg_tribulation_m4_entry",
+    "mapName": "天人五衰崖",
+    "mapLv": 124,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m4_entry_mob_1": {
+    "monsterId": "lg_tribulation_m4_entry_mob_1",
+    "monsterName": "衰相妖",
+    "mapId": "lg_tribulation_m4_entry",
+    "mapName": "天人五衰崖",
+    "mapLv": 124,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m4_entry_mob_2": {
+    "monsterId": "lg_tribulation_m4_entry_mob_2",
+    "monsterName": "末路獸",
+    "mapId": "lg_tribulation_m4_entry",
+    "mapName": "天人五衰崖",
+    "mapLv": 124,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m4_entry_mob_3": {
+    "monsterId": "lg_tribulation_m4_entry_mob_3",
+    "monsterName": "五衰影",
+    "mapId": "lg_tribulation_m4_entry",
+    "mapName": "天人五衰崖",
+    "mapLv": 124,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m4_entry_mob_4": {
+    "monsterId": "lg_tribulation_m4_entry_mob_4",
+    "monsterName": "衰骨鴉",
+    "mapId": "lg_tribulation_m4_entry",
+    "mapName": "天人五衰崖",
+    "mapLv": 124,
+    "totalMaps": 1
+  },
+  "lg_tribulation_m4_entry_mob_5": {
+    "monsterId": "lg_tribulation_m4_entry_mob_5",
+    "monsterName": "歸墟鹿",
+    "mapId": "lg_tribulation_m4_entry",
+    "mapName": "天人五衰崖",
+    "mapLv": 124,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m1_boss": {
+    "monsterId": "lg_void_refinement_m1_boss",
+    "monsterName": "拾界人",
+    "mapId": "lg_void_refinement_m1_entry",
+    "mapName": "碎界灘",
+    "mapLv": 79,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m1_entry_mob_1": {
+    "monsterId": "lg_void_refinement_m1_entry_mob_1",
+    "monsterName": "界屑蟲",
+    "mapId": "lg_void_refinement_m1_entry",
+    "mapName": "碎界灘",
+    "mapLv": 79,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m1_entry_mob_2": {
+    "monsterId": "lg_void_refinement_m1_entry_mob_2",
+    "monsterName": "拾荒妖",
+    "mapId": "lg_void_refinement_m1_entry",
+    "mapName": "碎界灘",
+    "mapLv": 79,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m1_entry_mob_3": {
+    "monsterId": "lg_void_refinement_m1_entry_mob_3",
+    "monsterName": "碎巢蛛",
+    "mapId": "lg_void_refinement_m1_entry",
+    "mapName": "碎界灘",
+    "mapLv": 79,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m1_entry_mob_4": {
+    "monsterId": "lg_void_refinement_m1_entry_mob_4",
+    "monsterName": "界隙鷗",
+    "mapId": "lg_void_refinement_m1_entry",
+    "mapName": "碎界灘",
+    "mapLv": 79,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m1_entry_mob_5": {
+    "monsterId": "lg_void_refinement_m1_entry_mob_5",
+    "monsterName": "骸甲役",
+    "mapId": "lg_void_refinement_m1_entry",
+    "mapName": "碎界灘",
+    "mapLv": 79,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m1_entry_mob_6": {
+    "monsterId": "lg_void_refinement_m1_entry_mob_6",
+    "monsterName": "縫間潛影",
+    "mapId": "lg_void_refinement_m1_entry",
+    "mapName": "碎界灘",
+    "mapLv": 79,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m2_boss": {
+    "monsterId": "lg_void_refinement_m2_boss",
+    "monsterName": "虛巢母獸",
+    "mapId": "lg_void_refinement_m2_entry",
+    "mapName": "虛獸巢帶",
+    "mapLv": 82,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m2_entry_mob_1": {
+    "monsterId": "lg_void_refinement_m2_entry_mob_1",
+    "monsterName": "蝕界虛獸",
+    "mapId": "lg_void_refinement_m2_entry",
+    "mapName": "虛獸巢帶",
+    "mapLv": 82,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m2_entry_mob_2": {
+    "monsterId": "lg_void_refinement_m2_entry_mob_2",
+    "monsterName": "巢衛",
+    "mapId": "lg_void_refinement_m2_entry",
+    "mapName": "虛獸巢帶",
+    "mapLv": 82,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m2_entry_mob_3": {
+    "monsterId": "lg_void_refinement_m2_entry_mob_3",
+    "monsterName": "涎喉獸",
+    "mapId": "lg_void_refinement_m2_entry",
+    "mapName": "虛獸巢帶",
+    "mapLv": 82,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m2_entry_mob_4": {
+    "monsterId": "lg_void_refinement_m2_entry_mob_4",
+    "monsterName": "洄游幼崽",
+    "mapId": "lg_void_refinement_m2_entry",
+    "mapName": "虛獸巢帶",
+    "mapLv": 82,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m2_entry_mob_5": {
+    "monsterId": "lg_void_refinement_m2_entry_mob_5",
+    "monsterName": "薄界魘",
+    "mapId": "lg_void_refinement_m2_entry",
+    "mapName": "虛獸巢帶",
+    "mapLv": 82,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m2_entry_mob_6": {
+    "monsterId": "lg_void_refinement_m2_entry_mob_6",
+    "monsterName": "噬纜蟲",
+    "mapId": "lg_void_refinement_m2_entry",
+    "mapName": "虛獸巢帶",
+    "mapLv": 82,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m3_boss": {
+    "monsterId": "lg_void_refinement_m3_boss",
+    "monsterName": "港守傀儡",
+    "mapId": "lg_void_refinement_m3_entry",
+    "mapName": "星骸舊港",
+    "mapLv": 85,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m3_entry_mob_1": {
+    "monsterId": "lg_void_refinement_m3_entry_mob_1",
+    "monsterName": "星骸鼠",
+    "mapId": "lg_void_refinement_m3_entry",
+    "mapName": "星骸舊港",
+    "mapLv": 85,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m3_entry_mob_2": {
+    "monsterId": "lg_void_refinement_m3_entry_mob_2",
+    "monsterName": "港守傀儡",
+    "mapId": "lg_void_refinement_m3_entry",
+    "mapName": "星骸舊港",
+    "mapLv": 85,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m3_entry_mob_3": {
+    "monsterId": "lg_void_refinement_m3_entry_mob_3",
+    "monsterName": "秤砣魈",
+    "mapId": "lg_void_refinement_m3_entry",
+    "mapName": "星骸舊港",
+    "mapLv": 85,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m3_entry_mob_4": {
+    "monsterId": "lg_void_refinement_m3_entry_mob_4",
+    "monsterName": "纜鬼",
+    "mapId": "lg_void_refinement_m3_entry",
+    "mapName": "星骸舊港",
+    "mapLv": 85,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m3_entry_mob_5": {
+    "monsterId": "lg_void_refinement_m3_entry_mob_5",
+    "monsterName": "灰訊鳥",
+    "mapId": "lg_void_refinement_m3_entry",
+    "mapName": "星骸舊港",
+    "mapLv": 85,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m3_entry_mob_6": {
+    "monsterId": "lg_void_refinement_m3_entry_mob_6",
+    "monsterName": "港底爬骸",
+    "mapId": "lg_void_refinement_m3_entry",
+    "mapName": "星骸舊港",
+    "mapLv": 85,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m4_boss": {
+    "monsterId": "lg_void_refinement_m4_boss",
+    "monsterName": "無光老祖",
+    "mapId": "lg_void_refinement_m4_entry",
+    "mapName": "無光海·裂",
+    "mapLv": 88,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m4_entry_mob_1": {
+    "monsterId": "lg_void_refinement_m4_entry_mob_1",
+    "monsterName": "無光獸",
+    "mapId": "lg_void_refinement_m4_entry",
+    "mapName": "無光海·裂",
+    "mapLv": 88,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m4_entry_mob_2": {
+    "monsterId": "lg_void_refinement_m4_entry_mob_2",
+    "monsterName": "聲吶妖",
+    "mapId": "lg_void_refinement_m4_entry",
+    "mapName": "無光海·裂",
+    "mapLv": 88,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m4_entry_mob_3": {
+    "monsterId": "lg_void_refinement_m4_entry_mob_3",
+    "monsterName": "裂影",
+    "mapId": "lg_void_refinement_m4_entry",
+    "mapName": "無光海·裂",
+    "mapLv": 88,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m4_entry_mob_4": {
+    "monsterId": "lg_void_refinement_m4_entry_mob_4",
+    "monsterName": "聽聲蝠",
+    "mapId": "lg_void_refinement_m4_entry",
+    "mapName": "無光海·裂",
+    "mapLv": 88,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m4_entry_mob_5": {
+    "monsterId": "lg_void_refinement_m4_entry_mob_5",
+    "monsterName": "眠聲獸",
+    "mapId": "lg_void_refinement_m4_entry",
+    "mapName": "無光海·裂",
+    "mapLv": 88,
+    "totalMaps": 1
+  },
+  "lg_void_refinement_m4_entry_mob_6": {
+    "monsterId": "lg_void_refinement_m4_entry_mob_6",
+    "monsterName": "裂縫手",
+    "mapId": "lg_void_refinement_m4_entry",
+    "mapName": "無光海·裂",
+    "mapLv": 88,
+    "totalMaps": 1
+  },
   "m_bamboo_mantis": {
     "monsterId": "m_bamboo_mantis",
     "monsterName": "刃竹螳精英",

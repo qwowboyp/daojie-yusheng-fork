@@ -5,6 +5,8 @@
  */
 // @ts-nocheck
 
+import { pathToFileURL } from 'node:url';
+
 const fs = require("node:fs");
 const path = require("node:path");
 const { ELEMENT_KEYS, MERIT_ETERNAL_USE_BEHAVIOR, MERIT_MONTH_CARD_USE_BEHAVIOR, NUMERIC_STATS_KEYS, SECT_ENTRANCE_RELOCATION_USE_BEHAVIOR, resolveMapGroupInfo } = require("@mud/shared");
@@ -475,8 +477,22 @@ function validateResourceNodeRefs(errors, itemIds) {
   }
 }
 
+/** 校驗地圖礦脈掉落物品引用，避免內容發布後才在挖礦結算失敗。 */
+function validateMapMineralNodeRefs(errors, itemIds) {
+  for (const filePath of walkJsonFiles(mapsRoot)) {
+    const map = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    const mapId = typeof map?.id === "string" ? map.id : path.relative(packageRoot, filePath);
+    for (let index = 0; index < (map?.mineralNodes?.length ?? 0); index += 1) {
+      const node = map.mineralNodes[index];
+      if (typeof node?.itemId !== "string" || !itemIds.has(node.itemId)) {
+        errors.push(`${mapId}: mineralNodes[${index}] itemId 不存在 -> ${String(node?.itemId ?? "")}`);
+      }
+    }
+  }
+}
+
 async function validateRuntimeTileDropRefs(errors, itemIds) {
-  const { loadRuntimeTileDropSources } = await import(runtimeTileSourcePath);
+  const { loadRuntimeTileDropSources } = await import(pathToFileURL(runtimeTileSourcePath).href);
   for (const source of loadRuntimeTileDropSources()) {
     for (const drop of [...(source.damageDrops ?? []), ...(source.destroyDrops ?? [])]) {
       if (typeof drop?.itemId === "string" && !itemIds.has(drop.itemId)) {
@@ -769,6 +785,7 @@ async function main() {
   });
   validateBreakthroughRefs(errors, itemIds);
   validateResourceNodeRefs(errors, itemIds);
+  validateMapMineralNodeRefs(errors, itemIds);
   await validateRuntimeTileDropRefs(errors, itemIds);
   validateAlchemyRefs(errors, itemIds);
   validateEnhancementRefs(errors, itemIds, itemById);

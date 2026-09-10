@@ -88,7 +88,9 @@ export class MiningStrategy implements TechniqueActivityStrategy<PlayerMiningJob
         targetX: target.x,
         targetY: target.y,
         tileType,
-        tileName: resolveTileName(tileType),
+        tileName: typeof tileState.targetName === 'string' && tileState.targetName.trim()
+          ? tileState.targetName.trim()
+          : resolveTileName(tileType),
         currentHp,
         baseDamagePerTick: resolveMiningBaseDamage(player),
       },

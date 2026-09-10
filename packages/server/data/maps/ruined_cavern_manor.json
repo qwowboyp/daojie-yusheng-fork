@@ -11,7 +11,7 @@
   "routeDomain": "system",
   "mapLv": 43,
   "spaceVisionMode": "isolated",
-  "description": "歸藏陣核旁裂開的暗縫後面，藏著一座早就塌空的舊洞府。洞裡沒有陳設，只剩幾塊被壓裂的殘石和一口還未完全散盡的金丹餘威。",
+  "description": "喚靈真人早年誤入劫火帶，被殘火反噬後退回舊府。倒塌書架間留著焦黑診簿，丹室殘陣至今引來遊離魂火。此地是金丹期喚靈支線的舊址，燼燈坊大夫祝餘仍記著那筆未結的診帳。",
   "terrain": [
     "草草草草草草草草草草草草草草草草草草",
     "草草草草草草草草草草草草草草草草草草",
@@ -72,10 +72,11 @@
       "targetX": 21,
       "targetY": 21,
       "kind": "portal",
-      "trigger": "auto",
+      "trigger": "manual",
       "routeDomain": "inherit",
       "allowPlayerOverlap": false,
-      "hidden": true
+      "hidden": false,
+      "observeTitle": "返回歸藏脈窟"
     }
   ],
   "spawnPoint": {
@@ -90,5 +91,28 @@
       "timeInfluence": 100
     },
     "palette": {}
-  }
+  },
+  "landmarks": [
+    {
+      "id": "lg_huanling_medical_ledger",
+      "name": "焦邊診簿",
+      "x": 4,
+      "y": 8,
+      "desc": "殘頁寫著燼燈坊與祝餘的名字，末筆停在「劫火入脈」。若想知道此地主人的來歷，可帶著他的名牌去問祝餘。"
+    },
+    {
+      "id": "lg_huanling_broken_formation",
+      "name": "裂丹殘陣",
+      "x": 12,
+      "y": 4,
+      "desc": "裂開的陣盤對著舊丹室。喚靈真人仍會施展環形、直線與定點法術，進退時留意地上的預警。"
+    }
+  ],
+  "safeZones": [
+    {
+      "x": 3,
+      "y": 9,
+      "radius": 1
+    }
+  ]
 }

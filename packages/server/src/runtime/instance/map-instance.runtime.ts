@@ -4117,6 +4117,7 @@ class MapInstanceRuntime {
         }
 
         const current = this.tileDamageByTile.get(tileIndex);
+        const mineralNode = this.template.mineralNodeByTile?.get(tileIndex) ?? null;
         return {
             tileType,
             terrainType: layerState?.terrain ?? null,
@@ -4125,7 +4126,9 @@ class MapInstanceRuntime {
             maxHp,
             modifiedAt: current?.modifiedAt ?? null,
             respawnLeft: current?.destroyed === true ? Math.max(0, Math.trunc(Number(current?.respawnLeft) || 0)) : 0,
-
+            targetName: mineralNode?.name ?? undefined,
+            miningLevel: mineralNode?.level ?? undefined,
+            mineralNode,
             destroyed: current?.destroyed === true,
         };
     }
@@ -7067,7 +7070,13 @@ class MapInstanceRuntime {
     }
     /** rollTileDrops：按 structure/terrain 分层耐久配置结算本次伤害和拆除掉落。 */
     rollTileDrops(tileState, appliedDamage, destroyed, options: TileDropRollOptions = {}) {
-        const config = resolveTileDurabilityProfile(tileState?.tileType, tileState);
+        const mineralNode = tileState?.mineralNode;
+        const config = mineralNode
+            ? {
+                damageDrops: [{ itemId: mineralNode.itemId, count: 1, chanceBps: mineralNode.damageChanceBps }],
+                destroyDrops: [{ itemId: mineralNode.itemId, count: mineralNode.destroyCount }],
+            }
+            : resolveTileDurabilityProfile(tileState?.tileType, tileState);
         if (!config) {
             return [];
         }

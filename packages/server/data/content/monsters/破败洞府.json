@@ -7,24 +7,24 @@
     "grade": "spirit",
     "tier": "demon_king",
     "level": 43,
-    "expMultiplier": 10,
+    "expMultiplier": 100,
     "count": 1,
     "maxAlive": 1,
     "radius": 2,
-    "aggroRange": 10,
-    "respawnSec": 120,
+    "aggroRange": 4,
+    "respawnSec": 300,
     "initialBuffs": [
       {
         "buffId": "buff.huanling_zhenren_wounded",
         "name": "重傷",
-        "desc": "舊傷未愈，戰鬥屬性被極度壓制。",
+        "desc": "劫火舊傷未癒，主要戰鬥屬性受壓；殘存金丹仍能驅使喚靈法術。",
         "category": "debuff",
         "visibility": "public",
         "duration": 999999,
         "infiniteDuration": true,
         "stacks": 1,
         "maxStacks": 1,
-        "mainCombatStatsPercent": -4444,
+        "mainCombatStatsPercent": -120,
         "statMode": "percent",
         "shortMark": "傷",
         "color": "#b85c5c"
@@ -43,10 +43,17 @@
     ],
     "drops": [
       {
+        "itemId": "mat.lg_huanling_nameplate",
+        "name": "喚靈真人名牌",
+        "type": "material",
+        "count": 1
+      },
+      {
         "itemId": "pill.ningxiang",
         "name": "凝相丹",
         "type": "consumable",
-        "count": 1
+        "count": 1,
+        "chance": 0.15
       },
       {
         "itemId": "book.xuesha_huanling_jue",
@@ -54,146 +61,6 @@
         "type": "skill_book",
         "count": 1,
         "chance": 0.02
-      },
-      {
-        "itemId": "mat.moondew_grass",
-        "name": "月露草",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.red_flame_leaf",
-        "name": "赤火葉",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.green_spirit_stem",
-        "name": "青靈莖",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.frost_lotus_petal",
-        "name": "寒蓮瓣",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.clear_mind_flower",
-        "name": "明心花",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.bloodbud_fruit",
-        "name": "赤芽果",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.breakarray_shard",
-        "name": "破紋砂",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.swiftwind_reed",
-        "name": "疾風葦",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.bitterheart_vine",
-        "name": "苦心藤",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.sunmelt_seed",
-        "name": "融陽子",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.longvein_vine",
-        "name": "長脈藤",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.returnspring_leaf",
-        "name": "回春葉",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.coldmarrow_reed",
-        "name": "寒髓葦",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.moonwell_stamen",
-        "name": "月井蕊",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.scorchheart_petal",
-        "name": "灼心瓣",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.flamegrain_spike",
-        "name": "炎穗芒",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.bearingroot_ginseng",
-        "name": "承脈參",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.stonecore_lingzhi",
-        "name": "巖髓芝",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.goldthread_briar",
-        "name": "金芒棘",
-        "type": "material",
-        "count": 50,
-        "chance": 1
-      },
-      {
-        "itemId": "mat.ironvein_caltrop",
-        "name": "鐵脈蒺",
-        "type": "material",
-        "count": 50,
-        "chance": 1
       }
     ],
     "aggroMode": "always",
@@ -204,6 +71,44 @@
       "talent": 100,
       "strength": 30,
       "meridians": 100
+    },
+    "valueStats": {
+      "maxHp": 21544,
+      "maxQi": 19129,
+      "physAtk": 67314,
+      "spellAtk": 64621,
+      "physDef": 153,
+      "spellDef": 147,
+      "hit": 6776,
+      "dodge": 6220,
+      "crit": 2222,
+      "antiCrit": 8886,
+      "breakPower": 4999,
+      "resolvePower": 4999,
+      "maxQiOutputPerTick": 6942,
+      "qiRegenRate": 18670,
+      "hpRegenRate": 253,
+      "cooldownSpeed": 2,
+      "moveSpeed": 1
+    },
+    "statPercents": {
+      "maxHp": 99.99696631,
+      "maxQi": 99.99697584,
+      "physAtk": 99.9988234,
+      "spellAtk": 99.99951454,
+      "physDef": 99.42912732,
+      "spellDef": 99.35121357,
+      "hit": 99.98959349,
+      "dodge": 99.99933777,
+      "crit": 99.97343313,
+      "antiCrit": 99.99579578,
+      "breakPower": 99.98334092,
+      "resolvePower": 99.98334092,
+      "maxQiOutputPerTick": 99.99846919,
+      "qiRegenRate": 99.98572585,
+      "hpRegenRate": 100.07053998,
+      "cooldownSpeed": 90.90909091,
+      "moveSpeed": 180.90909091
     }
   }
 ]

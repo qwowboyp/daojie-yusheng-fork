@@ -1,0 +1,6692 @@
+[
+  {
+    "itemId": "lg_golden_core_xinjin_slope_resource_1",
+    "name": "燈芯草",
+    "type": "material",
+    "grade": "heaven",
+    "level": 43,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "fire": 147
+      }
+    },
+    "desc": "莖心一線暗紅，無風自明滅，摘下來得含著才不熄。製引魂燈油、續氣類藥引。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_xinjin_slope_resource_2",
+    "name": "餘燼砂",
+    "type": "material",
+    "grade": "heaven",
+    "level": 43,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 199
+      }
+    },
+    "desc": "灰白細砂，翻開仍有餘溫，夜裡冒白線。淬體輔料、低階炙體藥。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_xinjin_slope_resource_3",
+    "name": "琉璃化土",
+    "type": "material",
+    "grade": "heaven",
+    "level": 43,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 199
+      }
+    },
+    "desc": "隕擊處燒結的彩色玻璃狀土殼，斷口鋒利如刃。琉璃器皿、低階法器胚料。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_xinjin_slope_resource_4",
+    "name": "殘燈屑",
+    "type": "material",
+    "grade": "heaven",
+    "level": 43,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 177,
+        "earth": 59
+      }
+    },
+    "desc": "舊燈桿上剝落的燈罩碎片，摸起來還有一點體溫。引魂香、喚靈儀式耗材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_xinjin_slope_resource_5",
+    "name": "灰燼藥蕨",
+    "type": "material",
+    "grade": "heaven",
+    "level": 43,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "fire": 147
+      }
+    },
+    "desc": "生於薪盡坡背風縫隙的灰燼藥蕨，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_golden_core_xinjin_slope_beast_remnant",
+    "name": "薪盡坡妖獸遺材",
+    "type": "material",
+    "grade": "heaven",
+    "level": 43,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 153,
+        "earth": 83
+      }
+    },
+    "desc": "薪盡坡妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+    "name": "燈硝護腕",
+    "type": "material",
+    "grade": "heaven",
+    "level": 45,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 160,
+        "earth": 86
+      }
+    },
+    "desc": "拾燈人掉落的定向部件，是薪盡坡六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_xinjin_slope_war_blade",
+    "name": "薪盡坡火煞戰刃",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 45,
+    "desc": "以薪盡坡礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_xinjin_slope_spirit_staff",
+    "name": "薪盡坡火紋法杖",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 45,
+    "desc": "杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_xinjin_slope_head",
+    "name": "薪盡坡火紋冠",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 45,
+    "equipSlot": "head",
+    "desc": "以薪盡坡礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_xinjin_slope_body",
+    "name": "薪盡坡火紋衣",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 45,
+    "equipSlot": "body",
+    "desc": "以薪盡坡礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_xinjin_slope_legs",
+    "name": "薪盡坡火紋履",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 45,
+    "equipSlot": "legs",
+    "desc": "以薪盡坡礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_xinjin_slope_accessory",
+    "name": "薪盡坡火紋佩",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 45,
+    "equipSlot": "accessory",
+    "desc": "以薪盡坡礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_golden_core_xinjin_slope_recovery",
+    "name": "薪盡坡回元丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 43,
+    "desc": "服用後按 43 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_golden_core_molten_channel_resource_1",
+    "name": "熔心琉璃",
+    "type": "material",
+    "grade": "heaven",
+    "level": 46,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 212
+      }
+    },
+    "desc": "爐心冷卻後結成的暗紅琉璃塊，內裡仍有一線流火。金丹中後期法器主材、耐熱器皿。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_molten_channel_resource_2",
+    "name": "劫鐵",
+    "type": "material",
+    "grade": "heaven",
+    "level": 46,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 212
+      }
+    },
+    "desc": "天外隕鐵，斷面有星點狀紋路，敲之聲悶不脆。劫鐵兵器與護具主材；補天一脈的信物材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_molten_channel_resource_3",
+    "name": "火苔",
+    "type": "material",
+    "grade": "heaven",
+    "level": 46,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "fire": 157
+      }
+    },
+    "desc": "貼爐壁生長的絨狀苔，遇水反而更熱，離火不死。煉丹火引、保溫囊。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_molten_channel_resource_4",
+    "name": "熔渠渣核",
+    "type": "material",
+    "grade": "heaven",
+    "level": 46,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 212
+      }
+    },
+    "desc": "渣河底凝結的渣核，敲開有火星跳出。粗糙淬料、修爐耗材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_molten_channel_resource_5",
+    "name": "渣河溫藥",
+    "type": "material",
+    "grade": "heaven",
+    "level": 46,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "fire": 157
+      }
+    },
+    "desc": "生於熔渠舊坊背風縫隙的渣河溫藥，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_golden_core_molten_channel_beast_remnant",
+    "name": "熔渠舊坊妖獸遺材",
+    "type": "material",
+    "grade": "heaven",
+    "level": 46,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 163,
+        "earth": 88
+      }
+    },
+    "desc": "熔渠舊坊妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+    "name": "舊坊錘胚",
+    "type": "material",
+    "grade": "heaven",
+    "level": 48,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 170,
+        "earth": 91
+      }
+    },
+    "desc": "冷爐坊主掉落的定向部件，是熔渠舊坊六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_molten_channel_war_blade",
+    "name": "熔渠舊坊火煞戰刃",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 48,
+    "desc": "以熔渠舊坊礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_molten_channel_spirit_staff",
+    "name": "熔渠舊坊火紋法杖",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 48,
+    "desc": "杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_molten_channel_head",
+    "name": "熔渠舊坊火紋冠",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 48,
+    "equipSlot": "head",
+    "desc": "以熔渠舊坊礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_molten_channel_body",
+    "name": "熔渠舊坊火紋衣",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 48,
+    "equipSlot": "body",
+    "desc": "以熔渠舊坊礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_molten_channel_legs",
+    "name": "熔渠舊坊火紋履",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 48,
+    "equipSlot": "legs",
+    "desc": "以熔渠舊坊礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_molten_channel_accessory",
+    "name": "熔渠舊坊火紋佩",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 48,
+    "equipSlot": "accessory",
+    "desc": "以熔渠舊坊礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_golden_core_molten_channel_recovery",
+    "name": "熔渠舊坊回元丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 46,
+    "desc": "服用後按 46 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_golden_core_hanging_lamps_resource_1",
+    "name": "峽蘿",
+    "type": "material",
+    "grade": "heaven",
+    "level": 49,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "fire": 166
+      }
+    },
+    "desc": "掛燈架而生，葉背有燈影狀斑紋，風大時整片藤輕輕發亮。編燈架、軟甲襯裡。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_hanging_lamps_resource_2",
+    "name": "燈蕊木",
+    "type": "material",
+    "grade": "heaven",
+    "level": 49,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 199,
+        "earth": 67
+      }
+    },
+    "desc": "樹心如燈芯的木材，剖開有微光，久放會自己乾成燈芯狀。養神法器柄材、燈座。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_hanging_lamps_resource_3",
+    "name": "引魂燈燭",
+    "type": "material",
+    "grade": "heaven",
+    "level": 49,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 199,
+        "earth": 67
+      }
+    },
+    "desc": "峽中沒收回的燈裡剩下的半截燭，燭淚不落。引魂、喚靈儀式主耗材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_hanging_lamps_resource_4",
+    "name": "燈影琉璃",
+    "type": "material",
+    "grade": "heaven",
+    "level": 49,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 225
+      }
+    },
+    "desc": "峽壁燈火烤出的薄琉璃，映出的人影總比本體多一個。幻術類法器材料。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_hanging_lamps_resource_5",
+    "name": "燈影養魂花",
+    "type": "material",
+    "grade": "heaven",
+    "level": 49,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "fire": 166
+      }
+    },
+    "desc": "生於懸燈峽背風縫隙的燈影養魂花，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_hanging_lamps_resource_6",
+    "name": "峽壁燈硝",
+    "type": "material",
+    "grade": "heaven",
+    "level": 49,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 225
+      }
+    },
+    "desc": "懸燈峽岩層裂隙中凝成的峽壁燈硝，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_golden_core_hanging_lamps_beast_remnant",
+    "name": "懸燈峽妖獸遺材",
+    "type": "material",
+    "grade": "heaven",
+    "level": 49,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 173,
+        "earth": 93
+      }
+    },
+    "desc": "懸燈峽妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+    "name": "守燈指環",
+    "type": "material",
+    "grade": "heaven",
+    "level": 51,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 179,
+        "earth": 97
+      }
+    },
+    "desc": "萬燈姥姥掉落的定向部件，是懸燈峽六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_hanging_lamps_war_blade",
+    "name": "懸燈峽火煞戰刃",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 51,
+    "desc": "以懸燈峽礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_hanging_lamps_spirit_staff",
+    "name": "懸燈峽火紋法杖",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 51,
+    "desc": "杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_hanging_lamps_head",
+    "name": "懸燈峽火紋冠",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 51,
+    "equipSlot": "head",
+    "desc": "以懸燈峽礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_hanging_lamps_body",
+    "name": "懸燈峽火紋衣",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 51,
+    "equipSlot": "body",
+    "desc": "以懸燈峽礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_hanging_lamps_legs",
+    "name": "懸燈峽火紋履",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 51,
+    "equipSlot": "legs",
+    "desc": "以懸燈峽礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_hanging_lamps_accessory",
+    "name": "懸燈峽火紋佩",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 51,
+    "equipSlot": "accessory",
+    "desc": "以懸燈峽礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_golden_core_hanging_lamps_recovery",
+    "name": "懸燈峽回元丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 49,
+    "desc": "服用後按 49 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_golden_core_sky_mending_furnace_resource_1",
+    "name": "補天渣",
+    "type": "material",
+    "grade": "heaven",
+    "level": 52,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 238
+      }
+    },
+    "desc": "失敗的補天殘料，五色混雜、脈理斷裂，敲之無聲。匠修研究、殘材封裝外殼。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_sky_mending_furnace_resource_2",
+    "name": "天火芯",
+    "type": "material",
+    "grade": "heaven",
+    "level": 52,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 211,
+        "earth": 71
+      }
+    },
+    "desc": "爐膛裡封存的未竟天火，裝在陶管裡仍是熱的。頂階煉器火源、金丹後期鍛體。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_sky_mending_furnace_resource_3",
+    "name": "殘爐琉璃",
+    "type": "material",
+    "grade": "heaven",
+    "level": 52,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 238
+      }
+    },
+    "desc": "爐膛內壁燒出的異色琉璃，經得起天火而不裂。高階器皿、封材容器。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_sky_mending_furnace_resource_4",
+    "name": "隕紋鐵母",
+    "type": "material",
+    "grade": "heaven",
+    "level": 52,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 238
+      }
+    },
+    "desc": "從天外墜物最中心取出的鐵母，紋路如星圖，越夜越涼。劫鐵裝備的最終主材，本境界畢業導向。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_sky_mending_furnace_resource_5",
+    "name": "爐心續火草",
+    "type": "material",
+    "grade": "heaven",
+    "level": 52,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "fire": 176
+      }
+    },
+    "desc": "生於補天殘爐背風縫隙的爐心續火草，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_golden_core_sky_mending_furnace_resource_6",
+    "name": "天火暖蕨",
+    "type": "material",
+    "grade": "heaven",
+    "level": 52,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "fire": 176
+      }
+    },
+    "desc": "生於補天殘爐背風縫隙的天火暖蕨，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_beast_remnant",
+    "name": "補天殘爐妖獸遺材",
+    "type": "material",
+    "grade": "heaven",
+    "level": 52,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 183,
+        "earth": 99
+      }
+    },
+    "desc": "補天殘爐妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+    "name": "殘爐護心",
+    "type": "material",
+    "grade": "heaven",
+    "level": 54,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 190,
+        "earth": 102
+      }
+    },
+    "desc": "補天匠·殘念掉落的定向部件，是補天殘爐六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_war_blade",
+    "name": "補天殘爐火煞戰刃",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 54,
+    "desc": "以補天殘爐礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_spirit_staff",
+    "name": "補天殘爐火紋法杖",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 54,
+    "desc": "杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_head",
+    "name": "補天殘爐火紋冠",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 54,
+    "equipSlot": "head",
+    "desc": "以補天殘爐礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_body",
+    "name": "補天殘爐火紋衣",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 54,
+    "equipSlot": "body",
+    "desc": "以補天殘爐礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_legs",
+    "name": "補天殘爐火紋履",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 54,
+    "equipSlot": "legs",
+    "desc": "以補天殘爐礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_accessory",
+    "name": "補天殘爐火紋佩",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 54,
+    "equipSlot": "accessory",
+    "desc": "以補天殘爐礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_golden_core_sky_mending_furnace_recovery",
+    "name": "補天殘爐回元丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 52,
+    "desc": "服用後按 52 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_nascent_soul_m1_entry_resource_1",
+    "name": "錄聲貝",
+    "type": "material",
+    "grade": "heaven",
+    "level": 55,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 223,
+        "fire": 74
+      }
+    },
+    "desc": "巴掌大、殼面有同心聲紋的灰白貝。錄一段聲、鎮一次魂；本境界核心聲器材料",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m1_entry_resource_2",
+    "name": "潮音石",
+    "type": "material",
+    "grade": "heaven",
+    "level": 55,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "water": 251
+      }
+    },
+    "desc": "灰藍色、敲之有迴音的圓石。鎮潮、製聲器底座；素材主料之一",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m1_entry_resource_3",
+    "name": "灘螢藻",
+    "type": "material",
+    "grade": "heaven",
+    "level": 55,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 186
+      }
+    },
+    "desc": "退潮凹窪裡會隨聲發光的細藻。消耗品輔料、靜室鎮魂配方",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m1_entry_resource_4",
+    "name": "聲紋砂",
+    "type": "material",
+    "grade": "heaven",
+    "level": 55,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "water": 251
+      }
+    },
+    "desc": "被聲震出同心紋的細砂。記錄類材料、任務交付物",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m1_entry_resource_5",
+    "name": "月落灘鹽",
+    "type": "material",
+    "grade": "heaven",
+    "level": 55,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "water": 251
+      }
+    },
+    "desc": "月夜退潮結在灘面的薄鹽。凝神、聽潮調息類消耗品材料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m1_entry_resource_6",
+    "name": "灘月凝魂草",
+    "type": "material",
+    "grade": "heaven",
+    "level": 55,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "water": 186
+      }
+    },
+    "desc": "生於漏聲灘背風縫隙的灘月凝魂草，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_nascent_soul_m1_entry_beast_remnant",
+    "name": "漏聲灘妖獸遺材",
+    "type": "material",
+    "grade": "heaven",
+    "level": 55,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 193,
+        "fire": 104
+      }
+    },
+    "desc": "漏聲灘妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+    "name": "螺紋聲環",
+    "type": "material",
+    "grade": "heaven",
+    "level": 57,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 200,
+        "fire": 107
+      }
+    },
+    "desc": "螺中客掉落的定向部件，是漏聲灘六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m1_entry_war_blade",
+    "name": "漏聲灘水煞戰刃",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 57,
+    "desc": "以漏聲灘礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m1_entry_spirit_staff",
+    "name": "漏聲灘水紋法杖",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 57,
+    "desc": "杖芯刻入水行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m1_entry_head",
+    "name": "漏聲灘水紋冠",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 57,
+    "equipSlot": "head",
+    "desc": "以漏聲灘礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m1_entry_body",
+    "name": "漏聲灘水紋衣",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 57,
+    "equipSlot": "body",
+    "desc": "以漏聲灘礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m1_entry_legs",
+    "name": "漏聲灘水紋履",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 57,
+    "equipSlot": "legs",
+    "desc": "以漏聲灘礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m1_entry_accessory",
+    "name": "漏聲灘水紋佩",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 57,
+    "equipSlot": "accessory",
+    "desc": "以漏聲灘礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_nascent_soul_m1_entry_recovery",
+    "name": "漏聲灘回元丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 55,
+    "desc": "服用後按 55 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_nascent_soul_m2_entry_resource_1",
+    "name": "沉鐘鱗",
+    "type": "material",
+    "grade": "heaven",
+    "level": 58,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "water": 264
+      }
+    },
+    "desc": "從鐘身剝落的青銅薄片，邊緣帶聲紋。聲器/防具主料，本圖核心產出",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m2_entry_resource_2",
+    "name": "海魂珊",
+    "type": "material",
+    "grade": "heaven",
+    "level": 58,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "water": 195
+      }
+    },
+    "desc": "鐘坑邊生長的暗紅珊瑚，隨鐘響開合。消耗品輔料、魂息類配方",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m2_entry_resource_3",
+    "name": "聲歸藻",
+    "type": "material",
+    "grade": "heaven",
+    "level": 58,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 195
+      }
+    },
+    "desc": "銅鏽沉處長出的銅綠色藻。材料，用於鎮聾、洗耳配方",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m2_entry_resource_4",
+    "name": "潮鎖苔",
+    "type": "material",
+    "grade": "heaven",
+    "level": 58,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "water": 195
+      }
+    },
+    "desc": "附在回聲牆上的藍灰苔蘚。材料，用於固定聲場類裝備",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m2_entry_resource_5",
+    "name": "沉月砂",
+    "type": "material",
+    "grade": "heaven",
+    "level": 58,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "water": 264
+      }
+    },
+    "desc": "鐘坑底積的月色細砂。凝神類消耗品材料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_nascent_soul_m2_entry_beast_remnant",
+    "name": "沉鐘澥妖獸遺材",
+    "type": "material",
+    "grade": "heaven",
+    "level": 58,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 203,
+        "fire": 109
+      }
+    },
+    "desc": "沉鐘澥妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+    "name": "鐘耳殘片",
+    "type": "material",
+    "grade": "heaven",
+    "level": 60,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 210,
+        "fire": 113
+      }
+    },
+    "desc": "守鐘魃掉落的定向部件，是沉鐘澥六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m2_entry_war_blade",
+    "name": "沉鐘澥水煞戰刃",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 60,
+    "desc": "以沉鐘澥礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m2_entry_spirit_staff",
+    "name": "沉鐘澥水紋法杖",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 60,
+    "desc": "杖芯刻入水行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m2_entry_head",
+    "name": "沉鐘澥水紋冠",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 60,
+    "equipSlot": "head",
+    "desc": "以沉鐘澥礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m2_entry_body",
+    "name": "沉鐘澥水紋衣",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 60,
+    "equipSlot": "body",
+    "desc": "以沉鐘澥礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m2_entry_legs",
+    "name": "沉鐘澥水紋履",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 60,
+    "equipSlot": "legs",
+    "desc": "以沉鐘澥礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m2_entry_accessory",
+    "name": "沉鐘澥水紋佩",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 60,
+    "equipSlot": "accessory",
+    "desc": "以沉鐘澥礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_nascent_soul_m2_entry_recovery",
+    "name": "沉鐘澥回元丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 58,
+    "desc": "服用後按 58 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_nascent_soul_m3_entry_resource_1",
+    "name": "帆骨木",
+    "type": "material",
+    "grade": "heaven",
+    "level": 61,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "wood": 276
+      }
+    },
+    "desc": "石化成骨的帆架木，輕而韌。弓/杖類主料，本圖核心產出",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m3_entry_resource_2",
+    "name": "怨桅鐵",
+    "type": "material",
+    "grade": "heaven",
+    "level": 61,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 246,
+        "wood": 82
+      }
+    },
+    "desc": "嵌在桅柱鐵箍裡的舊鐵，帶怨氣。武器/防具部件材料",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m3_entry_resource_3",
+    "name": "沉舟脂",
+    "type": "material",
+    "grade": "heaven",
+    "level": 61,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 246,
+        "fire": 82
+      }
+    },
+    "desc": "從船骸注水孔滲出的深色油膏。消耗品輔料、防腐類配方",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m3_entry_resource_4",
+    "name": "潮骨藤",
+    "type": "material",
+    "grade": "heaven",
+    "level": 61,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "water": 205
+      }
+    },
+    "desc": "纏繞桅柱而生的白藤。材料，用於綁縛類聲器",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m3_entry_resource_5",
+    "name": "月帆棉",
+    "type": "material",
+    "grade": "heaven",
+    "level": 61,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "water": 205
+      }
+    },
+    "desc": "帆骨間殘留的舊棉絮，月色。消耗品材料，用於修帆、修聲器",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m3_entry_resource_6",
+    "name": "桅根沉銀砂",
+    "type": "material",
+    "grade": "heaven",
+    "level": 61,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 276
+      }
+    },
+    "desc": "千帆骨場岩層裂隙中凝成的桅根沉銀砂，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_nascent_soul_m3_entry_beast_remnant",
+    "name": "千帆骨場妖獸遺材",
+    "type": "material",
+    "grade": "heaven",
+    "level": 61,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 213,
+        "water": 115
+      }
+    },
+    "desc": "千帆骨場妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+    "name": "斷桅旗骨",
+    "type": "material",
+    "grade": "heaven",
+    "level": 63,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 220,
+        "water": 118
+      }
+    },
+    "desc": "斷桅將軍掉落的定向部件，是千帆骨場六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m3_entry_war_blade",
+    "name": "千帆骨場木煞戰刃",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 63,
+    "desc": "以千帆骨場礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m3_entry_spirit_staff",
+    "name": "千帆骨場木紋法杖",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 63,
+    "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m3_entry_head",
+    "name": "千帆骨場木紋冠",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 63,
+    "equipSlot": "head",
+    "desc": "以千帆骨場礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m3_entry_body",
+    "name": "千帆骨場木紋衣",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 63,
+    "equipSlot": "body",
+    "desc": "以千帆骨場礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m3_entry_legs",
+    "name": "千帆骨場木紋履",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 63,
+    "equipSlot": "legs",
+    "desc": "以千帆骨場礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m3_entry_accessory",
+    "name": "千帆骨場木紋佩",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 63,
+    "equipSlot": "accessory",
+    "desc": "以千帆骨場礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_nascent_soul_m3_entry_recovery",
+    "name": "千帆骨場回元丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 61,
+    "desc": "服用後按 61 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_nascent_soul_m4_entry_resource_1",
+    "name": "回瀾晶",
+    "type": "material",
+    "grade": "heaven",
+    "level": 64,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "water": 289
+      }
+    },
+    "desc": "受海眼旋壓而生的螺旋狀透明晶。本圖核心產出，聲器/法寶類主料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m4_entry_resource_2",
+    "name": "深月露",
+    "type": "material",
+    "grade": "heaven",
+    "level": 64,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "water": 214
+      }
+    },
+    "desc": "淵壁凹處凝的月色水珠。元嬰期高階消耗品主料",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m4_entry_resource_3",
+    "name": "聲底砂",
+    "type": "material",
+    "grade": "heaven",
+    "level": 64,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "water": 289
+      }
+    },
+    "desc": "淵底積的極細砂，握之能聽見極遠的聲。任務交付物、聲器輔料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m4_entry_resource_4",
+    "name": "沉光螺",
+    "type": "material",
+    "grade": "heaven",
+    "level": 64,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 257,
+        "fire": 86
+      }
+    },
+    "desc": "吸了淵底光、殼內發亮的螺。材料，用於照明/探測類聲器",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m4_entry_resource_5",
+    "name": "潮心核",
+    "type": "material",
+    "grade": "heaven",
+    "level": 64,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 257,
+        "fire": 86
+      }
+    },
+    "desc": "海眼核心凝出的水核，隨潮搏動。高階符/核類材料",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_nascent_soul_m4_entry_resource_6",
+    "name": "回瀾靜魂藻",
+    "type": "material",
+    "grade": "heaven",
+    "level": 64,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "water": 214
+      }
+    },
+    "desc": "生於回瀾淵背風縫隙的回瀾靜魂藻，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_nascent_soul_m4_entry_beast_remnant",
+    "name": "回瀾淵妖獸遺材",
+    "type": "material",
+    "grade": "heaven",
+    "level": 64,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 223,
+        "fire": 120
+      }
+    },
+    "desc": "回瀾淵妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+    "name": "瀾心舊臣珮",
+    "type": "material",
+    "grade": "heaven",
+    "level": 66,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 229,
+        "fire": 124
+      }
+    },
+    "desc": "回瀾真君掉落的定向部件，是回瀾淵六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m4_entry_war_blade",
+    "name": "回瀾淵水煞戰刃",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 66,
+    "desc": "以回瀾淵礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m4_entry_spirit_staff",
+    "name": "回瀾淵水紋法杖",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 66,
+    "desc": "杖芯刻入水行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m4_entry_head",
+    "name": "回瀾淵水紋冠",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 66,
+    "equipSlot": "head",
+    "desc": "以回瀾淵礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m4_entry_body",
+    "name": "回瀾淵水紋衣",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 66,
+    "equipSlot": "body",
+    "desc": "以回瀾淵礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m4_entry_legs",
+    "name": "回瀾淵水紋履",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 66,
+    "equipSlot": "legs",
+    "desc": "以回瀾淵礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_nascent_soul_m4_entry_accessory",
+    "name": "回瀾淵水紋佩",
+    "type": "equipment",
+    "grade": "heaven",
+    "level": 66,
+    "equipSlot": "accessory",
+    "desc": "以回瀾淵礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_nascent_soul_m4_entry_recovery",
+    "name": "回瀾淵回元丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 64,
+    "desc": "服用後按 64 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_spirit_transformation_m1_entry_resource_1",
+    "name": "崖柏",
+    "type": "material",
+    "grade": "spirit",
+    "level": 67,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 363,
+        "wood": 121
+      }
+    },
+    "desc": "貼壁而生、根扎進石縫的柏樹，樹身被風壓得朝崖外傾。樑柱、階欄、焚香",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+    "name": "登階苔",
+    "type": "material",
+    "grade": "spirit",
+    "level": 67,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 302
+      }
+    },
+    "desc": "只長在被踩過的階面上，越往上越厚。續行丹、止血藥",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+    "name": "階紋石",
+    "type": "material",
+    "grade": "spirit",
+    "level": 67,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 408
+      }
+    },
+    "desc": "斷階斷面上有天然橫紋的石，紋路像一層層的帳。築階修階主料，可磨成階紋粉",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m1_entry_resource_4",
+    "name": "風磨礫",
+    "type": "material",
+    "grade": "spirit",
+    "level": 67,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 408
+      }
+    },
+    "desc": "長年被崖風打磨得圓而輕的礫石，握久了手心發熱。打磨材、風囊配重、投擲器",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m1_entry_resource_5",
+    "name": "懸階藤",
+    "type": "material",
+    "grade": "spirit",
+    "level": 67,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 302
+      }
+    },
+    "desc": "從階沿垂下、藤尖卻永遠朝上長的藤。繩索、綁紮、止血",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_spirit_transformation_m1_entry_beast_remnant",
+    "name": "斷崖階妖獸遺材",
+    "type": "material",
+    "grade": "spirit",
+    "level": 67,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 315,
+        "wood": 169
+      }
+    },
+    "desc": "斷崖階妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+    "name": "石人殘石",
+    "type": "material",
+    "grade": "spirit",
+    "level": 69,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 324,
+        "wood": 174
+      }
+    },
+    "desc": "登崖石人掉落的定向部件，是斷崖階六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m1_entry_war_blade",
+    "name": "斷崖階金煞戰刃",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 69,
+    "desc": "以斷崖階礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m1_entry_spirit_staff",
+    "name": "斷崖階金紋法杖",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 69,
+    "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m1_entry_head",
+    "name": "斷崖階金紋冠",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 69,
+    "equipSlot": "head",
+    "desc": "以斷崖階礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m1_entry_body",
+    "name": "斷崖階金紋衣",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 69,
+    "equipSlot": "body",
+    "desc": "以斷崖階礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m1_entry_legs",
+    "name": "斷崖階金紋履",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 69,
+    "equipSlot": "legs",
+    "desc": "以斷崖階礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m1_entry_accessory",
+    "name": "斷崖階金紋佩",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 69,
+    "equipSlot": "accessory",
+    "desc": "以斷崖階礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_spirit_transformation_m1_entry_recovery",
+    "name": "斷崖階回元丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 67,
+    "desc": "服用後按 67 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_spirit_transformation_m2_entry_resource_1",
+    "name": "律雷晶",
+    "type": "material",
+    "grade": "spirit",
+    "level": 70,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 426
+      }
+    },
+    "desc": "被雷擊過的土裡結出的晶，晶裡有一段固定的亮滅節奏。雷系丹藥、法器核心、對拍器具",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m2_entry_resource_2",
+    "name": "聽雷草",
+    "type": "material",
+    "grade": "spirit",
+    "level": 70,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "metal": 315
+      }
+    },
+    "desc": "貼地生長的草，雷未落先伏倒。預判雷位、定神藥材",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m2_entry_resource_3",
+    "name": "拍律藤",
+    "type": "material",
+    "grade": "spirit",
+    "level": 70,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 315
+      }
+    },
+    "desc": "攀在雷擊木上，一節一節順著雷擊節奏生長的藤。定神與節律丹藥的副料",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m2_entry_resource_4",
+    "name": "律紋鐵",
+    "type": "material",
+    "grade": "spirit",
+    "level": 70,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 426
+      }
+    },
+    "desc": "鐵礦在反覆雷擊下自然形成律紋。鍛造法器、驛城器具",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_spirit_transformation_m2_entry_beast_remnant",
+    "name": "律動雷原妖獸遺材",
+    "type": "material",
+    "grade": "spirit",
+    "level": 70,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 328,
+        "wood": 177
+      }
+    },
+    "desc": "律動雷原妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+    "name": "司律袍部件",
+    "type": "material",
+    "grade": "spirit",
+    "level": 72,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 337,
+        "wood": 181
+      }
+    },
+    "desc": "司律雷君掉落的定向部件，是律動雷原六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m2_entry_war_blade",
+    "name": "律動雷原金煞戰刃",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 72,
+    "desc": "以律動雷原礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m2_entry_spirit_staff",
+    "name": "律動雷原金紋法杖",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 72,
+    "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m2_entry_head",
+    "name": "律動雷原金紋冠",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 72,
+    "equipSlot": "head",
+    "desc": "以律動雷原礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m2_entry_body",
+    "name": "律動雷原金紋衣",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 72,
+    "equipSlot": "body",
+    "desc": "以律動雷原礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m2_entry_legs",
+    "name": "律動雷原金紋履",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 72,
+    "equipSlot": "legs",
+    "desc": "以律動雷原礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m2_entry_accessory",
+    "name": "律動雷原金紋佩",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 72,
+    "equipSlot": "accessory",
+    "desc": "以律動雷原礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_spirit_transformation_m2_entry_recovery",
+    "name": "律動雷原回元丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 70,
+    "desc": "服用後按 70 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_spirit_transformation_m3_entry_resource_1",
+    "name": "觀星砂",
+    "type": "material",
+    "grade": "spirit",
+    "level": 73,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 443
+      }
+    },
+    "desc": "臺頂積了千年的細砂，砂裡混著極小的亮點，夜裡自己會亮。明目藥材、拓圖定影、星砂傀儡材料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m3_entry_resource_2",
+    "name": "星紋鐵",
+    "type": "material",
+    "grade": "spirit",
+    "level": 73,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 443
+      }
+    },
+    "desc": "觀星器械軸座用的鐵，紋路像星軌，千年不鏽。精密器具、飾品部件",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m3_entry_resource_3",
+    "name": "星軌蘚",
+    "type": "material",
+    "grade": "spirit",
+    "level": 73,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 328
+      }
+    },
+    "desc": "只沿著觀星臺刻線生長的蘚，刻線到哪，蘚長到哪。拓圖輔料、定神藥材",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m3_entry_resource_4",
+    "name": "眺星藤",
+    "type": "material",
+    "grade": "spirit",
+    "level": 73,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 328
+      }
+    },
+    "desc": "爬到欄杆上、藤尖永遠朝著天痕方向的藤。纖維、綁紮、藥引",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_spirit_transformation_m3_entry_beast_remnant",
+    "name": "古觀星臺妖獸遺材",
+    "type": "material",
+    "grade": "spirit",
+    "level": 73,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 341,
+        "wood": 184
+      }
+    },
+    "desc": "古觀星臺妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+    "name": "星紋飾品部件",
+    "type": "material",
+    "grade": "spirit",
+    "level": 75,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 350,
+        "wood": 189
+      }
+    },
+    "desc": "守臺瞽者掉落的定向部件，是古觀星臺六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m3_entry_war_blade",
+    "name": "古觀星臺金煞戰刃",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 75,
+    "desc": "以古觀星臺礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m3_entry_spirit_staff",
+    "name": "古觀星臺金紋法杖",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 75,
+    "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m3_entry_head",
+    "name": "古觀星臺金紋冠",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 75,
+    "equipSlot": "head",
+    "desc": "以古觀星臺礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m3_entry_body",
+    "name": "古觀星臺金紋衣",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 75,
+    "equipSlot": "body",
+    "desc": "以古觀星臺礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m3_entry_legs",
+    "name": "古觀星臺金紋履",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 75,
+    "equipSlot": "legs",
+    "desc": "以古觀星臺礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m3_entry_accessory",
+    "name": "古觀星臺金紋佩",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 75,
+    "equipSlot": "accessory",
+    "desc": "以古觀星臺礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_spirit_transformation_m3_entry_recovery",
+    "name": "古觀星臺回元丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 73,
+    "desc": "服用後按 73 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_spirit_transformation_m4_entry_resource_1",
+    "name": "風髓",
+    "type": "material",
+    "grade": "spirit",
+    "level": 76,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 461
+      }
+    },
+    "desc": "風被壓進石頭裡凝成的髓，敲開石頭才見得到。風系法器、風囊核心、鎮縫材料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m4_entry_resource_2",
+    "name": "獄柵木",
+    "type": "material",
+    "grade": "spirit",
+    "level": 76,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 409,
+        "water": 137
+      }
+    },
+    "desc": "長在陣縫裡的木，木質紋理永遠逆著風。關風的柵料、陣材",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m4_entry_resource_3",
+    "name": "鎮風石",
+    "type": "material",
+    "grade": "spirit",
+    "level": 76,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 461
+      }
+    },
+    "desc": "古陣基座上的石，摸上去不涼，風繞著它走。陣法材料、風囊配重",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m4_entry_resource_4",
+    "name": "囚風蘚",
+    "type": "material",
+    "grade": "spirit",
+    "level": 76,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 341
+      }
+    },
+    "desc": "只長在無風處的蘚；有它在的地方，風進不來。止血藥、靜室鋪材",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_spirit_transformation_m4_entry_resource_5",
+    "name": "獄底止風花",
+    "type": "material",
+    "grade": "spirit",
+    "level": 76,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 341
+      }
+    },
+    "desc": "生於涯底風獄背風縫隙的獄底止風花，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_spirit_transformation_m4_entry_beast_remnant",
+    "name": "涯底風獄妖獸遺材",
+    "type": "material",
+    "grade": "spirit",
+    "level": 76,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 355,
+        "wood": 191
+      }
+    },
+    "desc": "涯底風獄妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+    "name": "尊者腰結部件",
+    "type": "material",
+    "grade": "spirit",
+    "level": 78,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 364,
+        "wood": 196
+      }
+    },
+    "desc": "風獄尊者掉落的定向部件，是涯底風獄六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m4_entry_war_blade",
+    "name": "涯底風獄金煞戰刃",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 78,
+    "desc": "以涯底風獄礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m4_entry_spirit_staff",
+    "name": "涯底風獄金紋法杖",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 78,
+    "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m4_entry_head",
+    "name": "涯底風獄金紋冠",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 78,
+    "equipSlot": "head",
+    "desc": "以涯底風獄礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m4_entry_body",
+    "name": "涯底風獄金紋衣",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 78,
+    "equipSlot": "body",
+    "desc": "以涯底風獄礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m4_entry_legs",
+    "name": "涯底風獄金紋履",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 78,
+    "equipSlot": "legs",
+    "desc": "以涯底風獄礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_spirit_transformation_m4_entry_accessory",
+    "name": "涯底風獄金紋佩",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 78,
+    "equipSlot": "accessory",
+    "desc": "以涯底風獄礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_spirit_transformation_m4_entry_recovery",
+    "name": "涯底風獄回元丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 76,
+    "desc": "服用後按 76 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_void_refinement_m1_entry_resource_1",
+    "name": "碎界砂",
+    "type": "material",
+    "grade": "spirit",
+    "level": 79,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 478
+      }
+    },
+    "desc": "界隙灘上磨得極細的混色砂，捧起來看不清是什麼顏色。研磨、制基、符料填充",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m1_entry_resource_2",
+    "name": "異壤",
+    "type": "material",
+    "grade": "spirit",
+    "level": 79,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 478
+      }
+    },
+    "desc": "不屬於此界的土，色澤與本地土格格不入，卻養得活東西。栽種、育材、培育界外靈植",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m1_entry_resource_3",
+    "name": "隙紋蘚",
+    "type": "material",
+    "grade": "spirit",
+    "level": 79,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 354
+      }
+    },
+    "desc": "只在界縫光下生長的蘚，葉脈像蛛網一樣的裂紋。符墨、鎮陌、穩住鬆動地形",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m1_entry_resource_4",
+    "name": "界骸木",
+    "type": "material",
+    "grade": "spirit",
+    "level": 79,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 425,
+        "water": 142
+      }
+    },
+    "desc": "沖來的斷木，木質已半石化卻還留著年輪。舟具、護木、舟骨修補",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m1_entry_resource_5",
+    "name": "拾光晶",
+    "type": "material",
+    "grade": "spirit",
+    "level": 79,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 478
+      }
+    },
+    "desc": "碎片表面凝出的小晶，夜裡能映出別的世界的一小片天。照明、法器芯、舟燈燈芯",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m1_entry_resource_6",
+    "name": "界隙定神芽",
+    "type": "material",
+    "grade": "spirit",
+    "level": 79,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "earth": 354
+      }
+    },
+    "desc": "生於碎界灘背風縫隙的界隙定神芽，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m1_entry_beast_remnant",
+    "name": "碎界灘妖獸遺材",
+    "type": "material",
+    "grade": "spirit",
+    "level": 79,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 369,
+        "metal": 198
+      }
+    },
+    "desc": "碎界灘妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+    "name": "拾界之囊",
+    "type": "material",
+    "grade": "spirit",
+    "level": 81,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 378,
+        "metal": 203
+      }
+    },
+    "desc": "拾界人掉落的定向部件，是碎界灘六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_drop_3",
+    "name": "拾界袋",
+    "type": "material",
+    "grade": "spirit",
+    "level": 81,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 378,
+        "metal": 203
+      }
+    },
+    "desc": "拾界人掉落的定向異材，可供碎界灘裝備鍛造。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_drop_4",
+    "name": "拼瓦甲片",
+    "type": "material",
+    "grade": "spirit",
+    "level": 81,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 378,
+        "metal": 203
+      }
+    },
+    "desc": "拾界人掉落的定向異材，可供碎界灘裝備鍛造。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m1_entry_war_blade",
+    "name": "碎界灘土煞戰刃",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 81,
+    "desc": "以碎界灘礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m1_entry_spirit_staff",
+    "name": "碎界灘土紋法杖",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 81,
+    "desc": "杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m1_entry_head",
+    "name": "碎界灘土紋冠",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 81,
+    "equipSlot": "head",
+    "desc": "以碎界灘礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m1_entry_body",
+    "name": "碎界灘土紋衣",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 81,
+    "equipSlot": "body",
+    "desc": "以碎界灘礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m1_entry_legs",
+    "name": "碎界灘土紋履",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 81,
+    "equipSlot": "legs",
+    "desc": "以碎界灘礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m1_entry_accessory",
+    "name": "碎界灘土紋佩",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 81,
+    "equipSlot": "accessory",
+    "desc": "以碎界灘礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_void_refinement_m1_entry_recovery",
+    "name": "碎界灘回元丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 79,
+    "desc": "服用後按 79 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_void_refinement_m2_entry_resource_1",
+    "name": "虛空藻",
+    "type": "material",
+    "grade": "spirit",
+    "level": 82,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 367
+      }
+    },
+    "desc": "漂在界隙流上的藻，根不著地，隨流擺盪。制餌、緩蝕、舟底防蝕塗料",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m2_entry_resource_2",
+    "name": "蝕界涎",
+    "type": "material",
+    "grade": "spirit",
+    "level": 82,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 441,
+        "metal": 147
+      }
+    },
+    "desc": "虛獸啃邊時留下的涎，能蝕穿尋常材料。淬毒、蝕刻、開銘",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m2_entry_resource_3",
+    "name": "巢骸骨",
+    "type": "material",
+    "grade": "spirit",
+    "level": 82,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 441,
+        "metal": 147
+      }
+    },
+    "desc": "母獸蛻下的骨環，輕而韌，敲起來有回聲。舟材、護具、骨器",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m2_entry_resource_4",
+    "name": "隙光藻",
+    "type": "material",
+    "grade": "spirit",
+    "level": 82,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 367
+      }
+    },
+    "desc": "吸界隙冷光而生的藻，夜裡泛藍，成片時像水底星空。照明、誘捕、聲標輔材",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m2_entry_resource_5",
+    "name": "光塵涎",
+    "type": "material",
+    "grade": "spirit",
+    "level": 82,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 441,
+        "metal": 147
+      }
+    },
+    "desc": "蝕界涎曝於界隙光後凝成的粉，會自己發出微光。符墨、引航標、夜航照路",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m2_entry_resource_6",
+    "name": "蝕邊晶",
+    "type": "material",
+    "grade": "spirit",
+    "level": 82,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 496
+      }
+    },
+    "desc": "虛獸巢帶岩層裂隙中凝成的蝕邊晶，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m2_entry_resource_7",
+    "name": "巢壁空紋礦",
+    "type": "material",
+    "grade": "spirit",
+    "level": 82,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 496
+      }
+    },
+    "desc": "虛獸巢帶岩層裂隙中凝成的巢壁空紋礦，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m2_entry_beast_remnant",
+    "name": "虛獸巢帶妖獸遺材",
+    "type": "material",
+    "grade": "spirit",
+    "level": 82,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 382,
+        "water": 206
+      }
+    },
+    "desc": "虛獸巢帶妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+    "name": "巢母之息",
+    "type": "material",
+    "grade": "spirit",
+    "level": 84,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 391,
+        "water": 210
+      }
+    },
+    "desc": "虛巢母獸掉落的定向部件，是虛獸巢帶六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_drop_3",
+    "name": "虛巢筋",
+    "type": "material",
+    "grade": "spirit",
+    "level": 84,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 391,
+        "water": 210
+      }
+    },
+    "desc": "虛巢母獸掉落的定向異材，可供虛獸巢帶裝備鍛造。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m2_entry_war_blade",
+    "name": "虛獸巢帶木煞戰刃",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 84,
+    "desc": "以虛獸巢帶礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m2_entry_spirit_staff",
+    "name": "虛獸巢帶木紋法杖",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 84,
+    "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m2_entry_head",
+    "name": "虛獸巢帶木紋冠",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 84,
+    "equipSlot": "head",
+    "desc": "以虛獸巢帶礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m2_entry_body",
+    "name": "虛獸巢帶木紋衣",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 84,
+    "equipSlot": "body",
+    "desc": "以虛獸巢帶礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m2_entry_legs",
+    "name": "虛獸巢帶木紋履",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 84,
+    "equipSlot": "legs",
+    "desc": "以虛獸巢帶礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m2_entry_accessory",
+    "name": "虛獸巢帶木紋佩",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 84,
+    "equipSlot": "accessory",
+    "desc": "以虛獸巢帶礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_void_refinement_m2_entry_recovery",
+    "name": "虛獸巢帶回元丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 82,
+    "desc": "服用後按 82 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_void_refinement_m3_entry_resource_1",
+    "name": "星骸鐵",
+    "type": "material",
+    "grade": "spirit",
+    "level": 85,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 513
+      }
+    },
+    "desc": "星辰殘骸裡剝出的金屬，冷而重，表面有熄滅的星紋。鍛兵、舟骨、重甲",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m3_entry_resource_2",
+    "name": "港燈油",
+    "type": "material",
+    "grade": "spirit",
+    "level": 85,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 456,
+        "earth": 152
+      }
+    },
+    "desc": "星骸滲出的油，點燃後不滅，冷光。照明、燈具燃料、無光航行備油",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m3_entry_resource_3",
+    "name": "骸港苔",
+    "type": "material",
+    "grade": "spirit",
+    "level": 85,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 380
+      }
+    },
+    "desc": "長在星骸鐵上的苔，把鐵吃出星圖狀的紋路。符材、蝕刻圖樣",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m3_entry_resource_4",
+    "name": "隙航墨",
+    "type": "material",
+    "grade": "spirit",
+    "level": 85,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 456,
+        "metal": 152
+      }
+    },
+    "desc": "舊港帳房留下的墨，寫下的字經年不褪、入水不化。拓印、公證、舟籍抄錄",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m3_entry_resource_5",
+    "name": "冷星光屑",
+    "type": "material",
+    "grade": "spirit",
+    "level": 85,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 513
+      }
+    },
+    "desc": "星骸表面剝落的光屑，捻開會亮一下，很快又暗。法器芯、照明、傳訊符",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m3_entry_resource_6",
+    "name": "冷星寧神葉",
+    "type": "material",
+    "grade": "spirit",
+    "level": 85,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 380
+      }
+    },
+    "desc": "生於星骸舊港背風縫隙的冷星寧神葉，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m3_entry_resource_7",
+    "name": "港底隕晶",
+    "type": "material",
+    "grade": "spirit",
+    "level": 85,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 513
+      }
+    },
+    "desc": "星骸舊港岩層裂隙中凝成的港底隕晶，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m3_entry_beast_remnant",
+    "name": "星骸舊港妖獸遺材",
+    "type": "material",
+    "grade": "spirit",
+    "level": 85,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 395,
+        "wood": 213
+      }
+    },
+    "desc": "星骸舊港妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+    "name": "港印",
+    "type": "material",
+    "grade": "spirit",
+    "level": 87,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 404,
+        "wood": 218
+      }
+    },
+    "desc": "港守傀儡掉落的定向部件，是星骸舊港六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_drop_3",
+    "name": "港守環",
+    "type": "material",
+    "grade": "spirit",
+    "level": 87,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 404,
+        "wood": 218
+      }
+    },
+    "desc": "港守傀儡掉落的定向異材，可供星骸舊港裝備鍛造。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_drop_4",
+    "name": "星骸刃",
+    "type": "material",
+    "grade": "spirit",
+    "level": 87,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 404,
+        "wood": 218
+      }
+    },
+    "desc": "港守傀儡掉落的定向異材，可供星骸舊港裝備鍛造。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m3_entry_war_blade",
+    "name": "星骸舊港金煞戰刃",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 87,
+    "desc": "以星骸舊港礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m3_entry_spirit_staff",
+    "name": "星骸舊港金紋法杖",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 87,
+    "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m3_entry_head",
+    "name": "星骸舊港金紋冠",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 87,
+    "equipSlot": "head",
+    "desc": "以星骸舊港礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m3_entry_body",
+    "name": "星骸舊港金紋衣",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 87,
+    "equipSlot": "body",
+    "desc": "以星骸舊港礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m3_entry_legs",
+    "name": "星骸舊港金紋履",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 87,
+    "equipSlot": "legs",
+    "desc": "以星骸舊港礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m3_entry_accessory",
+    "name": "星骸舊港金紋佩",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 87,
+    "equipSlot": "accessory",
+    "desc": "以星骸舊港礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_void_refinement_m3_entry_recovery",
+    "name": "星骸舊港回元丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 85,
+    "desc": "服用後按 85 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_void_refinement_m4_entry_resource_1",
+    "name": "無光露",
+    "type": "material",
+    "grade": "spirit",
+    "level": 88,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "earth": 393
+      }
+    },
+    "desc": "無光處凝出的露，不反光，只在神識裡「看得見」。斂息、匿蹤、無光航行輔材",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m4_entry_resource_2",
+    "name": "深隙晶",
+    "type": "material",
+    "grade": "spirit",
+    "level": 88,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 531
+      }
+    },
+    "desc": "裂壁深處結的晶，內部封著極微的光，捻亮即暗。法器、燈芯、傳訊",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m4_entry_resource_3",
+    "name": "骸聲木",
+    "type": "material",
+    "grade": "spirit",
+    "level": 88,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 472,
+        "water": 157
+      }
+    },
+    "desc": "裂邊生長的樹，敲一下會替你把聲音傳得極遠。聲標、舟舵、傳聲器",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m4_entry_resource_4",
+    "name": "隙眠苔",
+    "type": "material",
+    "grade": "spirit",
+    "level": 88,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 393
+      }
+    },
+    "desc": "覆在聲標上的苔，能吸收多餘的聲音，讓聲標只回一聲。斂聲、防窺、潛行",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_void_refinement_m4_entry_resource_5",
+    "name": "光引砂",
+    "type": "material",
+    "grade": "spirit",
+    "level": 88,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 531
+      }
+    },
+    "desc": "摻入神識可短暫「看見」輪廓的砂，用一次亮一次。引航、應急照明、探路",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m4_entry_beast_remnant",
+    "name": "無光海·裂妖獸遺材",
+    "type": "material",
+    "grade": "spirit",
+    "level": 88,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 409,
+        "metal": 220
+      }
+    },
+    "desc": "無光海·裂妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+    "name": "裂聽之耳",
+    "type": "material",
+    "grade": "spirit",
+    "level": 90,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 418,
+        "metal": 225
+      }
+    },
+    "desc": "無光老祖掉落的定向部件，是無光海·裂六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_drop_3",
+    "name": "聽裂耳",
+    "type": "material",
+    "grade": "spirit",
+    "level": 90,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 418,
+        "metal": 225
+      }
+    },
+    "desc": "無光老祖掉落的定向異材，可供無光海·裂裝備鍛造。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m4_entry_war_blade",
+    "name": "無光海·裂土煞戰刃",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 90,
+    "desc": "以無光海·裂礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m4_entry_spirit_staff",
+    "name": "無光海·裂土紋法杖",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 90,
+    "desc": "杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m4_entry_head",
+    "name": "無光海·裂土紋冠",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 90,
+    "equipSlot": "head",
+    "desc": "以無光海·裂礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m4_entry_body",
+    "name": "無光海·裂土紋衣",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 90,
+    "equipSlot": "body",
+    "desc": "以無光海·裂礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m4_entry_legs",
+    "name": "無光海·裂土紋履",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 90,
+    "equipSlot": "legs",
+    "desc": "以無光海·裂礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_void_refinement_m4_entry_accessory",
+    "name": "無光海·裂土紋佩",
+    "type": "equipment",
+    "grade": "spirit",
+    "level": 90,
+    "equipSlot": "accessory",
+    "desc": "以無光海·裂礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_void_refinement_m4_entry_recovery",
+    "name": "無光海·裂回元丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 88,
+    "desc": "服用後按 88 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_body_integration_m1_entry_resource_1",
+    "name": "垣晶",
+    "type": "material",
+    "grade": "saint",
+    "level": 91,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 740
+      }
+    },
+    "desc": "嵌在壘縫裡的淡金晶簇，夜裡泛著牆根的光。合體期防具與陣材主料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m1_entry_resource_2",
+    "name": "舊壘鐵",
+    "type": "material",
+    "grade": "saint",
+    "level": 91,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 740
+      }
+    },
+    "desc": "不同年代疊壓的壘牆鐵屑，斷口還留著舊符紋。鍛兵與修壘",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m1_entry_resource_3",
+    "name": "垣階苔",
+    "type": "material",
+    "grade": "saint",
+    "level": 91,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 548
+      }
+    },
+    "desc": "只長在壘階背風處的鐵灰色苔。煉製斂息丹，藏形匿氣",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m1_entry_resource_4",
+    "name": "垣銘石",
+    "type": "material",
+    "grade": "saint",
+    "level": 91,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 740
+      }
+    },
+    "desc": "被歷代點名聲浸泡過的白色殘石，貼耳能聽見模糊的回名。製傳名符與陣眼",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m1_entry_resource_5",
+    "name": "垣燼砂",
+    "type": "material",
+    "grade": "saint",
+    "level": 91,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 740
+      }
+    },
+    "desc": "舊名冊焚盡後沉積的細砂，混著沒燒透的字畫。書符與殘頁修補",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m1_entry_resource_6",
+    "name": "舊壘止血花",
+    "type": "material",
+    "grade": "saint",
+    "level": 91,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 548
+      }
+    },
+    "desc": "生於垣門外壘背風縫隙的舊壘止血花，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_body_integration_m1_entry_beast_remnant",
+    "name": "垣門外壘妖獸遺材",
+    "type": "material",
+    "grade": "saint",
+    "level": 91,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 570,
+        "metal": 307
+      }
+    },
+    "desc": "垣門外壘妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+    "name": "守垣甲片",
+    "type": "material",
+    "grade": "saint",
+    "level": 93,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 582,
+        "metal": 313
+      }
+    },
+    "desc": "守垣將掉落的定向部件，是垣門外壘六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m1_entry_war_blade",
+    "name": "垣門外壘土煞戰刃",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 93,
+    "desc": "以垣門外壘礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m1_entry_spirit_staff",
+    "name": "垣門外壘土紋法杖",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 93,
+    "desc": "杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m1_entry_head",
+    "name": "垣門外壘土紋冠",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 93,
+    "equipSlot": "head",
+    "desc": "以垣門外壘礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m1_entry_body",
+    "name": "垣門外壘土紋衣",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 93,
+    "equipSlot": "body",
+    "desc": "以垣門外壘礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m1_entry_legs",
+    "name": "垣門外壘土紋履",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 93,
+    "equipSlot": "legs",
+    "desc": "以垣門外壘礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m1_entry_accessory",
+    "name": "垣門外壘土紋佩",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 93,
+    "equipSlot": "accessory",
+    "desc": "以垣門外壘礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_body_integration_m1_entry_recovery",
+    "name": "垣門外壘回元丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 91,
+    "desc": "服用後按 91 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_body_integration_m2_entry_resource_1",
+    "name": "鏡我蓮",
+    "type": "material",
+    "grade": "saint",
+    "level": 94,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "earth": 566
+      }
+    },
+    "desc": "水面如鏡的墨色睡蓮，花瓣背面是一種金屬灰。煉心寧丹、驅幻",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m2_entry_resource_2",
+    "name": "照心萍",
+    "type": "material",
+    "grade": "saint",
+    "level": 94,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "earth": 566
+      }
+    },
+    "desc": "聚成人臉形狀的浮萍，風吹就散、風停又聚。製鏡與定神陣材",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m2_entry_resource_3",
+    "name": "鏡鱗砂",
+    "type": "material",
+    "grade": "saint",
+    "level": 94,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 763
+      }
+    },
+    "desc": "澤底細砂，每一粒都有一個極小的反光面。打磨法器、書符",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m2_entry_resource_4",
+    "name": "鏡心藕",
+    "type": "material",
+    "grade": "saint",
+    "level": 94,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "earth": 566
+      }
+    },
+    "desc": "澤底藕節，切開的斷面像一面鏡子，照出的不是藕紋。合丹、定神",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m2_entry_resource_5",
+    "name": "垣根沉木",
+    "type": "material",
+    "grade": "saint",
+    "level": 94,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 679,
+        "water": 226
+      }
+    },
+    "desc": "被牆根落石壓進澤底的沉木，木心還是乾的。製沉穩法器與船材",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m2_entry_resource_6",
+    "name": "澤底照魂晶",
+    "type": "material",
+    "grade": "saint",
+    "level": 94,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 763
+      }
+    },
+    "desc": "鏡我之澤岩層裂隙中凝成的澤底照魂晶，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_body_integration_m2_entry_beast_remnant",
+    "name": "鏡我之澤妖獸遺材",
+    "type": "material",
+    "grade": "saint",
+    "level": 94,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 588,
+        "metal": 317
+      }
+    },
+    "desc": "鏡我之澤妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+    "name": "映心鏡",
+    "type": "material",
+    "grade": "saint",
+    "level": 96,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 600,
+        "metal": 323
+      }
+    },
+    "desc": "鏡我掉落的定向部件，是鏡我之澤六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m2_entry_war_blade",
+    "name": "鏡我之澤土煞戰刃",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 96,
+    "desc": "以鏡我之澤礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m2_entry_spirit_staff",
+    "name": "鏡我之澤土紋法杖",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 96,
+    "desc": "杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m2_entry_head",
+    "name": "鏡我之澤土紋冠",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 96,
+    "equipSlot": "head",
+    "desc": "以鏡我之澤礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m2_entry_body",
+    "name": "鏡我之澤土紋衣",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 96,
+    "equipSlot": "body",
+    "desc": "以鏡我之澤礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m2_entry_legs",
+    "name": "鏡我之澤土紋履",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 96,
+    "equipSlot": "legs",
+    "desc": "以鏡我之澤礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m2_entry_accessory",
+    "name": "鏡我之澤土紋佩",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 96,
+    "equipSlot": "accessory",
+    "desc": "以鏡我之澤礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_body_integration_m2_entry_recovery",
+    "name": "鏡我之澤回元丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 94,
+    "desc": "服用後按 94 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_body_integration_m3_entry_resource_1",
+    "name": "法骸晶",
+    "type": "material",
+    "grade": "saint",
+    "level": 97,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 787
+      }
+    },
+    "desc": "死去法則凝成的晶柱碎塊，切面有不完整的「道理」在動。功法參悟與陣基",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m3_entry_resource_2",
+    "name": "啞陵草",
+    "type": "material",
+    "grade": "saint",
+    "level": 97,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 583
+      }
+    },
+    "desc": "只長在無聲處的灰白草，風過不響。斂聲丹、匿蹤",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m3_entry_resource_3",
+    "name": "葬法砂",
+    "type": "material",
+    "grade": "saint",
+    "level": 97,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 787
+      }
+    },
+    "desc": "埋法時覆上去的黑砂，落在哪，哪就沒有迴音。書符、封禁",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m3_entry_resource_4",
+    "name": "法髓乳",
+    "type": "material",
+    "grade": "saint",
+    "level": 97,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 787
+      }
+    },
+    "desc": "晶柱根部滲出的乳白液，觸手微涼。悟道輔材",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m3_entry_resource_5",
+    "name": "垣痕石",
+    "type": "material",
+    "grade": "saint",
+    "level": 97,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 787
+      }
+    },
+    "desc": "從牆體剝落、滾進陵裡的老石，上頭還帶著沒刻完的名字。製印、刻名",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m3_entry_resource_6",
+    "name": "無聲定魄花",
+    "type": "material",
+    "grade": "saint",
+    "level": 97,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 583
+      }
+    },
+    "desc": "生於法骸陵背風縫隙的無聲定魄花，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_body_integration_m3_entry_beast_remnant",
+    "name": "法骸陵妖獸遺材",
+    "type": "material",
+    "grade": "saint",
+    "level": 97,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 606,
+        "metal": 327
+      }
+    },
+    "desc": "法骸陵妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+    "name": "無聲甲",
+    "type": "material",
+    "grade": "saint",
+    "level": 99,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 618,
+        "metal": 333
+      }
+    },
+    "desc": "葬法老人掉落的定向部件，是法骸陵六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m3_entry_war_blade",
+    "name": "法骸陵土煞戰刃",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 99,
+    "desc": "以法骸陵礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m3_entry_spirit_staff",
+    "name": "法骸陵土紋法杖",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 99,
+    "desc": "杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m3_entry_head",
+    "name": "法骸陵土紋冠",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 99,
+    "equipSlot": "head",
+    "desc": "以法骸陵礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m3_entry_body",
+    "name": "法骸陵土紋衣",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 99,
+    "equipSlot": "body",
+    "desc": "以法骸陵礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m3_entry_legs",
+    "name": "法骸陵土紋履",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 99,
+    "equipSlot": "legs",
+    "desc": "以法骸陵礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m3_entry_accessory",
+    "name": "法骸陵土紋佩",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 99,
+    "equipSlot": "accessory",
+    "desc": "以法骸陵礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_body_integration_m3_entry_recovery",
+    "name": "法骸陵回元丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 97,
+    "desc": "服用後按 97 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_body_integration_m4_entry_resource_1",
+    "name": "井心苔",
+    "type": "material",
+    "grade": "saint",
+    "level": 100,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 600
+      }
+    },
+    "desc": "長在井壁刻名凹痕裡的青白苔，只順著字痕生長。續命丹、護脈",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m4_entry_resource_2",
+    "name": "垣髓",
+    "type": "material",
+    "grade": "saint",
+    "level": 100,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 811
+      }
+    },
+    "desc": "牆體深處滲出的乳金色髓液，凝後如琥珀。合體期核心淬體材",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m4_entry_resource_3",
+    "name": "垣口砂",
+    "type": "material",
+    "grade": "saint",
+    "level": 100,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "earth": 811
+      }
+    },
+    "desc": "從井口被劫風吹落、積在井底的細砂，摸起來是燙的。抗劫符材",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m4_entry_resource_4",
+    "name": "垣絡藤",
+    "type": "material",
+    "grade": "saint",
+    "level": 100,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 600
+      }
+    },
+    "desc": "沿井壁攀生的鐵色老藤，結節如指節。製索、攀具",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m4_entry_resource_5",
+    "name": "垣名墨",
+    "type": "material",
+    "grade": "saint",
+    "level": 100,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 721,
+        "metal": 240
+      }
+    },
+    "desc": "井底積著歷代刻名落下的石粉，混水成墨。書符、拓印",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_body_integration_m4_entry_resource_6",
+    "name": "井壁養脈蘚",
+    "type": "material",
+    "grade": "saint",
+    "level": 100,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 600
+      }
+    },
+    "desc": "生於垣心之井背風縫隙的井壁養脈蘚，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_body_integration_m4_entry_beast_remnant",
+    "name": "垣心之井妖獸遺材",
+    "type": "material",
+    "grade": "saint",
+    "level": 100,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 625,
+        "water": 336
+      }
+    },
+    "desc": "垣心之井妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+    "name": "守井人殘繩",
+    "type": "material",
+    "grade": "saint",
+    "level": 102,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 636,
+        "water": 343
+      }
+    },
+    "desc": "垣心守掉落的定向部件，是垣心之井六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m4_entry_war_blade",
+    "name": "垣心之井木煞戰刃",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 102,
+    "desc": "以垣心之井礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m4_entry_spirit_staff",
+    "name": "垣心之井木紋法杖",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 102,
+    "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m4_entry_head",
+    "name": "垣心之井木紋冠",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 102,
+    "equipSlot": "head",
+    "desc": "以垣心之井礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m4_entry_body",
+    "name": "垣心之井木紋衣",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 102,
+    "equipSlot": "body",
+    "desc": "以垣心之井礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m4_entry_legs",
+    "name": "垣心之井木紋履",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 102,
+    "equipSlot": "legs",
+    "desc": "以垣心之井礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_body_integration_m4_entry_accessory",
+    "name": "垣心之井木紋佩",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 102,
+    "equipSlot": "accessory",
+    "desc": "以垣心之井礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_body_integration_m4_entry_recovery",
+    "name": "垣心之井回元丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 100,
+    "desc": "服用後按 100 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_great_vehicle_m1_entry_resource_1",
+    "name": "劫風木",
+    "type": "material",
+    "grade": "saint",
+    "level": 103,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 742,
+        "water": 247
+      }
+    },
+    "desc": "只長在隘口背風窪地、木紋全部扭成螺旋的老木。大乘期防具與陣材主料",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m1_entry_resource_2",
+    "name": "風蝕鐵",
+    "type": "material",
+    "grade": "saint",
+    "level": 103,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 834
+      }
+    },
+    "desc": "隘口兩壁夾層裡的鐵塊，表面被風蝕出蜂窩般的孔。鍛兵與修哨",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m1_entry_resource_3",
+    "name": "劫哨砂",
+    "type": "material",
+    "grade": "saint",
+    "level": 103,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 834
+      }
+    },
+    "desc": "風裡懸浮、一落靜地就凝成暗色細砂的砂粒。製哨器與風符",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m1_entry_resource_4",
+    "name": "劫紋苔",
+    "type": "material",
+    "grade": "saint",
+    "level": 103,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 618
+      }
+    },
+    "desc": "只貼在背風岩面、紋路每逢換季就轉一次向的苔。抗風丹輔材",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m1_entry_resource_5",
+    "name": "絞風藤",
+    "type": "material",
+    "grade": "saint",
+    "level": 103,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 618
+      }
+    },
+    "desc": "在背風窪地把自己絞成繩狀的藤，扯開會彈回。製索具與護具內襯",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_great_vehicle_m1_entry_beast_remnant",
+    "name": "劫風口妖獸遺材",
+    "type": "material",
+    "grade": "saint",
+    "level": 103,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 643,
+        "water": 346
+      }
+    },
+    "desc": "劫風口妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+    "name": "擋風斗篷",
+    "type": "material",
+    "grade": "saint",
+    "level": 105,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 655,
+        "water": 352
+      }
+    },
+    "desc": "擋風人掉落的定向部件，是劫風口六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m1_entry_war_blade",
+    "name": "劫風口木煞戰刃",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 105,
+    "desc": "以劫風口礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m1_entry_spirit_staff",
+    "name": "劫風口木紋法杖",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 105,
+    "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m1_entry_head",
+    "name": "劫風口木紋冠",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 105,
+    "equipSlot": "head",
+    "desc": "以劫風口礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m1_entry_body",
+    "name": "劫風口木紋衣",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 105,
+    "equipSlot": "body",
+    "desc": "以劫風口礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m1_entry_legs",
+    "name": "劫風口木紋履",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 105,
+    "equipSlot": "legs",
+    "desc": "以劫風口礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m1_entry_accessory",
+    "name": "劫風口木紋佩",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 105,
+    "equipSlot": "accessory",
+    "desc": "以劫風口礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_great_vehicle_m1_entry_recovery",
+    "name": "劫風口回元丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 103,
+    "desc": "服用後按 103 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_great_vehicle_m2_entry_resource_1",
+    "name": "雷罰鐵",
+    "type": "material",
+    "grade": "saint",
+    "level": 106,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 858
+      }
+    },
+    "desc": "埋在原土裡、被雷火反覆淬過的深青色鐵塊，斷口泛電光。雷系法器與重甲主料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m2_entry_resource_2",
+    "name": "贖罪苔",
+    "type": "material",
+    "grade": "saint",
+    "level": 106,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 635
+      }
+    },
+    "desc": "只長在碑影裡的灰白苔，日照到就枯、碑影蓋回去又活。定神丹與鎮魂符",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m2_entry_resource_3",
+    "name": "罰雷砂",
+    "type": "material",
+    "grade": "saint",
+    "level": 106,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 858
+      }
+    },
+    "desc": "碑座下積的暗紫細砂，遇水會爆響。製雷符與引信",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m2_entry_resource_4",
+    "name": "焦心木",
+    "type": "material",
+    "grade": "saint",
+    "level": 106,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 763,
+        "water": 254
+      }
+    },
+    "desc": "被雷劈過卻沒死的樹，木心焦黑、外皮還在長。抗雷法器柄材",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m2_entry_resource_5",
+    "name": "判痕石",
+    "type": "material",
+    "grade": "saint",
+    "level": 106,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 858
+      }
+    },
+    "desc": "從被判過的碑上敲下的碎石，斷面隱約有字影。刻符與壓勝",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m2_entry_resource_6",
+    "name": "碑陰洗雷草",
+    "type": "material",
+    "grade": "saint",
+    "level": 106,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "metal": 635
+      }
+    },
+    "desc": "生於雷罰原背風縫隙的碑陰洗雷草，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_great_vehicle_m2_entry_beast_remnant",
+    "name": "雷罰原妖獸遺材",
+    "type": "material",
+    "grade": "saint",
+    "level": 106,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 661,
+        "wood": 356
+      }
+    },
+    "desc": "雷罰原妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+    "name": "執罰雷符",
+    "type": "material",
+    "grade": "saint",
+    "level": 108,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 673,
+        "wood": 362
+      }
+    },
+    "desc": "執雷者掉落的定向部件，是雷罰原六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m2_entry_war_blade",
+    "name": "雷罰原金煞戰刃",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 108,
+    "desc": "以雷罰原礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m2_entry_spirit_staff",
+    "name": "雷罰原金紋法杖",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 108,
+    "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m2_entry_head",
+    "name": "雷罰原金紋冠",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 108,
+    "equipSlot": "head",
+    "desc": "以雷罰原礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m2_entry_body",
+    "name": "雷罰原金紋衣",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 108,
+    "equipSlot": "body",
+    "desc": "以雷罰原礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m2_entry_legs",
+    "name": "雷罰原金紋履",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 108,
+    "equipSlot": "legs",
+    "desc": "以雷罰原礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m2_entry_accessory",
+    "name": "雷罰原金紋佩",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 108,
+    "equipSlot": "accessory",
+    "desc": "以雷罰原礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_great_vehicle_m2_entry_recovery",
+    "name": "雷罰原回元丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 106,
+    "desc": "服用後按 106 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_great_vehicle_m3_entry_resource_1",
+    "name": "壘心木",
+    "type": "material",
+    "grade": "saint",
+    "level": 109,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 784,
+        "water": 261
+      }
+    },
+    "desc": "從壘牆芯裡長出來的老木，被壓得極密實，鋸開有壘石的紋。製壘料與重甲襯材",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m3_entry_resource_2",
+    "name": "劫獸骨",
+    "type": "material",
+    "grade": "saint",
+    "level": 109,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 784,
+        "wood": 261
+      }
+    },
+    "desc": "潮裡帶上來的獸骨，比一般獸骨沉，敲起來有金屬聲。製骨器與丹藥引",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m3_entry_resource_3",
+    "name": "潮壘砂",
+    "type": "material",
+    "grade": "saint",
+    "level": 109,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "water": 881
+      }
+    },
+    "desc": "獸潮踩碎的骨與石混成的砂，永遠帶著潮氣。製壘料與護甲內襯",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m3_entry_resource_4",
+    "name": "咬痕藤",
+    "type": "material",
+    "grade": "saint",
+    "level": 109,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 653
+      }
+    },
+    "desc": "沿壘牆攀生的帶刺藤，刺口一圈一圈像牙印。製陷阱與攔索",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m3_entry_resource_5",
+    "name": "拾骨花",
+    "type": "material",
+    "grade": "saint",
+    "level": 109,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 653
+      }
+    },
+    "desc": "開在骨灘上的灰白花，摘的時候要連根下的骨一起摘。續命丹主材",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m3_entry_resource_6",
+    "name": "壘底血紋鐵",
+    "type": "material",
+    "grade": "saint",
+    "level": 109,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 881
+      }
+    },
+    "desc": "獸潮舊壘岩層裂隙中凝成的壘底血紋鐵，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_great_vehicle_m3_entry_beast_remnant",
+    "name": "獸潮舊壘妖獸遺材",
+    "type": "material",
+    "grade": "saint",
+    "level": 109,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 679,
+        "water": 366
+      }
+    },
+    "desc": "獸潮舊壘妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+    "name": "潮骨護腕",
+    "type": "material",
+    "grade": "saint",
+    "level": 111,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 691,
+        "water": 372
+      }
+    },
+    "desc": "獸潮王掉落的定向部件，是獸潮舊壘六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m3_entry_war_blade",
+    "name": "獸潮舊壘木煞戰刃",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 111,
+    "desc": "以獸潮舊壘礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m3_entry_spirit_staff",
+    "name": "獸潮舊壘木紋法杖",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 111,
+    "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m3_entry_head",
+    "name": "獸潮舊壘木紋冠",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 111,
+    "equipSlot": "head",
+    "desc": "以獸潮舊壘礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m3_entry_body",
+    "name": "獸潮舊壘木紋衣",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 111,
+    "equipSlot": "body",
+    "desc": "以獸潮舊壘礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m3_entry_legs",
+    "name": "獸潮舊壘木紋履",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 111,
+    "equipSlot": "legs",
+    "desc": "以獸潮舊壘礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m3_entry_accessory",
+    "name": "獸潮舊壘木紋佩",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 111,
+    "equipSlot": "accessory",
+    "desc": "以獸潮舊壘礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_great_vehicle_m3_entry_recovery",
+    "name": "獸潮舊壘回元丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 109,
+    "desc": "服用後按 109 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_great_vehicle_m4_entry_resource_1",
+    "name": "天痕璃",
+    "type": "material",
+    "grade": "saint",
+    "level": 112,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 905
+      }
+    },
+    "desc": "坡上結出的透明碎晶，對著光看，裂紋的走向和天痕一致。大乘期飾品與陣材主料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m4_entry_resource_2",
+    "name": "反影草",
+    "type": "material",
+    "grade": "saint",
+    "level": 112,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 670
+      }
+    },
+    "desc": "葉面朝下、葉背朝上長的草，影子落在自己身上。匿蹤丹與定影符",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m4_entry_resource_3",
+    "name": "痕路砂",
+    "type": "material",
+    "grade": "saint",
+    "level": 112,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 905
+      }
+    },
+    "desc": "歷代登坡者踩實的坡道細砂，砂裡混著極細的璃屑。製導向符與引路器",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m4_entry_resource_4",
+    "name": "逆光梢",
+    "type": "material",
+    "grade": "saint",
+    "level": 112,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "metal": 670
+      }
+    },
+    "desc": "只往背光方向長枝的細梢灌木。匿蹤與遮蔽",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m4_entry_resource_5",
+    "name": "溫痕石",
+    "type": "material",
+    "grade": "saint",
+    "level": 112,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 905
+      }
+    },
+    "desc": "坡頂附近溫熱的石頭，貼身能壓住舊傷。護脈丹輔材",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_great_vehicle_m4_entry_resource_6",
+    "name": "坡陰護脈蕨",
+    "type": "material",
+    "grade": "saint",
+    "level": 112,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 670
+      }
+    },
+    "desc": "生於天痕下坡背風縫隙的坡陰護脈蕨，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_great_vehicle_m4_entry_beast_remnant",
+    "name": "天痕下坡妖獸遺材",
+    "type": "material",
+    "grade": "saint",
+    "level": 112,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 697,
+        "wood": 376
+      }
+    },
+    "desc": "天痕下坡妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+    "name": "痕使殘環",
+    "type": "material",
+    "grade": "saint",
+    "level": 114,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 709,
+        "wood": 382
+      }
+    },
+    "desc": "天痕使掉落的定向部件，是天痕下坡六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m4_entry_war_blade",
+    "name": "天痕下坡金煞戰刃",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 114,
+    "desc": "以天痕下坡礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m4_entry_spirit_staff",
+    "name": "天痕下坡金紋法杖",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 114,
+    "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m4_entry_head",
+    "name": "天痕下坡金紋冠",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 114,
+    "equipSlot": "head",
+    "desc": "以天痕下坡礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m4_entry_body",
+    "name": "天痕下坡金紋衣",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 114,
+    "equipSlot": "body",
+    "desc": "以天痕下坡礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m4_entry_legs",
+    "name": "天痕下坡金紋履",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 114,
+    "equipSlot": "legs",
+    "desc": "以天痕下坡礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_great_vehicle_m4_entry_accessory",
+    "name": "天痕下坡金紋佩",
+    "type": "equipment",
+    "grade": "saint",
+    "level": 114,
+    "equipSlot": "accessory",
+    "desc": "以天痕下坡礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_great_vehicle_m4_entry_recovery",
+    "name": "天痕下坡回元丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 112,
+    "desc": "服用後按 112 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_tribulation_m1_entry_resource_1",
+    "name": "劫雲絮",
+    "type": "material",
+    "grade": "emperor",
+    "level": 115,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 1114,
+        "earth": 372
+      }
+    },
+    "desc": "從雲層邊緣凝下的絮狀物，觸之微麻。劫材主料、穿雲舟續航",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m1_entry_resource_2",
+    "name": "避雷梭",
+    "type": "material",
+    "grade": "emperor",
+    "level": 115,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 1114,
+        "wood": 372
+      }
+    },
+    "desc": "生在航道兩側的梭形輕材，能引雷偏轉。避雷、製舟與護具部件",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m1_entry_resource_3",
+    "name": "劫渡苔",
+    "type": "material",
+    "grade": "emperor",
+    "level": 115,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 929
+      }
+    },
+    "desc": "附在穿雲舟底的灰藍苔蘚，隨劫強弱變色。材料，用於舟體防劫與感應",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m1_entry_resource_4",
+    "name": "雲雷髓",
+    "type": "material",
+    "grade": "emperor",
+    "level": 115,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 1254
+      }
+    },
+    "desc": "劫雲深處凝出的雷芯，握之耳鳴。高階消耗品主料、雷系強化",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m1_entry_resource_5",
+    "name": "避劫雲芝",
+    "type": "material",
+    "grade": "emperor",
+    "level": 115,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "fire": 929
+      }
+    },
+    "desc": "生於劫雲海背風縫隙的避劫雲芝，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m1_entry_resource_6",
+    "name": "雲層凝雷晶",
+    "type": "material",
+    "grade": "emperor",
+    "level": 115,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 1254
+      }
+    },
+    "desc": "劫雲海岩層裂隙中凝成的雲層凝雷晶，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_tribulation_m1_entry_beast_remnant",
+    "name": "劫雲海妖獸遺材",
+    "type": "material",
+    "grade": "emperor",
+    "level": 115,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 966,
+        "earth": 520
+      }
+    },
+    "desc": "劫雲海妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+    "name": "穿雲舟骨",
+    "type": "material",
+    "grade": "emperor",
+    "level": 117,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 982,
+        "earth": 529
+      }
+    },
+    "desc": "劫雲君掉落的定向部件，是劫雲海六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m1_entry_war_blade",
+    "name": "劫雲海火煞戰刃",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 117,
+    "desc": "以劫雲海礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m1_entry_spirit_staff",
+    "name": "劫雲海火紋法杖",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 117,
+    "desc": "杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m1_entry_head",
+    "name": "劫雲海火紋冠",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 117,
+    "equipSlot": "head",
+    "desc": "以劫雲海礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m1_entry_body",
+    "name": "劫雲海火紋衣",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 117,
+    "equipSlot": "body",
+    "desc": "以劫雲海礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m1_entry_legs",
+    "name": "劫雲海火紋履",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 117,
+    "equipSlot": "legs",
+    "desc": "以劫雲海礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m1_entry_accessory",
+    "name": "劫雲海火紋佩",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 117,
+    "equipSlot": "accessory",
+    "desc": "以劫雲海礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_tribulation_m1_entry_recovery",
+    "name": "劫雲海回元丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 115,
+    "desc": "服用後按 115 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_tribulation_m2_entry_resource_1",
+    "name": "雷髓",
+    "type": "material",
+    "grade": "emperor",
+    "level": 118,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 1286
+      }
+    },
+    "desc": "雷液沉澱結成的髓狀晶，觸之光冷。本圖核心產出，雷系主料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m2_entry_resource_2",
+    "name": "池底砂",
+    "type": "material",
+    "grade": "emperor",
+    "level": 118,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 1286
+      }
+    },
+    "desc": "雷池底積的細砂，砂粒間仍有電。消耗品輔料、導雷材料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m2_entry_resource_3",
+    "name": "雷池藻",
+    "type": "material",
+    "grade": "emperor",
+    "level": 118,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "metal": 952
+      }
+    },
+    "desc": "生於雷液邊緣的白藻，隨電紋開合。材料，用於抗雷與護脈",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m2_entry_resource_4",
+    "name": "液雷砂",
+    "type": "material",
+    "grade": "emperor",
+    "level": 118,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 1286
+      }
+    },
+    "desc": "雷液凝成半固態的砂，能儲雷。高階符/核類材料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m2_entry_resource_5",
+    "name": "池岸寧雷蓮",
+    "type": "material",
+    "grade": "emperor",
+    "level": 118,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "metal": 952
+      }
+    },
+    "desc": "生於雷池第九重背風縫隙的池岸寧雷蓮，根鬚吸收地脈靈息，葉脈帶著淡光。可作同境回復丹藥的主藥。",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_tribulation_m2_entry_beast_remnant",
+    "name": "雷池第九重妖獸遺材",
+    "type": "material",
+    "grade": "emperor",
+    "level": 118,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 991,
+        "wood": 533
+      }
+    },
+    "desc": "雷池第九重妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+    "name": "雷池守甲",
+    "type": "material",
+    "grade": "emperor",
+    "level": 120,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "metal": 1007,
+        "wood": 542
+      }
+    },
+    "desc": "雷池守·第九掉落的定向部件，是雷池第九重六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m2_entry_war_blade",
+    "name": "雷池第九重金煞戰刃",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 120,
+    "desc": "以雷池第九重礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m2_entry_spirit_staff",
+    "name": "雷池第九重金紋法杖",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 120,
+    "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m2_entry_head",
+    "name": "雷池第九重金紋冠",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 120,
+    "equipSlot": "head",
+    "desc": "以雷池第九重礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m2_entry_body",
+    "name": "雷池第九重金紋衣",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 120,
+    "equipSlot": "body",
+    "desc": "以雷池第九重礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m2_entry_legs",
+    "name": "雷池第九重金紋履",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 120,
+    "equipSlot": "legs",
+    "desc": "以雷池第九重礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m2_entry_accessory",
+    "name": "雷池第九重金紋佩",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 120,
+    "equipSlot": "accessory",
+    "desc": "以雷池第九重礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_tribulation_m2_entry_recovery",
+    "name": "雷池第九重回元丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 118,
+    "desc": "服用後按 118 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_tribulation_m3_entry_resource_1",
+    "name": "心魔藤",
+    "type": "material",
+    "grade": "emperor",
+    "level": 121,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 976
+      }
+    },
+    "desc": "攀滿鏡牆的黑藤，反射心念而生。心繫主料、鏡心相關",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m3_entry_resource_2",
+    "name": "鏡心花",
+    "type": "material",
+    "grade": "emperor",
+    "level": 121,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 976
+      }
+    },
+    "desc": "開在鏡心旁的白色花，花瓣會映人。高階消耗品主料、淨心",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m3_entry_resource_3",
+    "name": "心執苔",
+    "type": "material",
+    "grade": "emperor",
+    "level": 121,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 976
+      }
+    },
+    "desc": "附在舊人殘影足下的暗苔，觸之心緒翻湧。材料，心劫相關配方",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m3_entry_resource_4",
+    "name": "心鏡砂",
+    "type": "material",
+    "grade": "emperor",
+    "level": 121,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 1317
+      }
+    },
+    "desc": "鏡心地面磨出的細砂，映得出人影卻照不出臉。任務交付、鏡系輔料",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m3_entry_resource_5",
+    "name": "鏡壁黑曜石",
+    "type": "material",
+    "grade": "emperor",
+    "level": 121,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 1317
+      }
+    },
+    "desc": "心魔鏡城岩層裂隙中凝成的鏡壁黑曜石，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_tribulation_m3_entry_beast_remnant",
+    "name": "心魔鏡城妖獸遺材",
+    "type": "material",
+    "grade": "emperor",
+    "level": 121,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 1015,
+        "water": 546
+      }
+    },
+    "desc": "心魔鏡城妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+    "name": "照心鏡骨",
+    "type": "material",
+    "grade": "emperor",
+    "level": 123,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 1032,
+        "water": 555
+      }
+    },
+    "desc": "心中我掉落的定向部件，是心魔鏡城六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m3_entry_war_blade",
+    "name": "心魔鏡城木煞戰刃",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 123,
+    "desc": "以心魔鏡城礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m3_entry_spirit_staff",
+    "name": "心魔鏡城木紋法杖",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 123,
+    "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m3_entry_head",
+    "name": "心魔鏡城木紋冠",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 123,
+    "equipSlot": "head",
+    "desc": "以心魔鏡城礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m3_entry_body",
+    "name": "心魔鏡城木紋衣",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 123,
+    "equipSlot": "body",
+    "desc": "以心魔鏡城礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m3_entry_legs",
+    "name": "心魔鏡城木紋履",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 123,
+    "equipSlot": "legs",
+    "desc": "以心魔鏡城礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m3_entry_accessory",
+    "name": "心魔鏡城木紋佩",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 123,
+    "equipSlot": "accessory",
+    "desc": "以心魔鏡城礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_tribulation_m3_entry_recovery",
+    "name": "心魔鏡城回元丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 121,
+    "desc": "服用後按 121 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "lg_tribulation_m4_entry_resource_1",
+    "name": "五衰花",
+    "type": "material",
+    "grade": "emperor",
+    "level": 124,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 999
+      }
+    },
+    "desc": "開在五衰之階的花，花瓣隨衰相一瓣一瓣落下。衰系主料、抗衰配方",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m4_entry_resource_2",
+    "name": "薪火葉",
+    "type": "material",
+    "grade": "emperor",
+    "level": 124,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "fire": 999
+      }
+    },
+    "desc": "生在崖根、被薪火光暖著的葉，是此地唯一不褪色之物。高階消耗品主料、護脈",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m4_entry_resource_3",
+    "name": "衰筋鐵",
+    "type": "material",
+    "grade": "emperor",
+    "level": 124,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 1349
+      }
+    },
+    "desc": "五衰之相凝出的鐵，色灰而脆，能定人。材料，用於封衰類器",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m4_entry_resource_4",
+    "name": "薪燼苔",
+    "type": "material",
+    "grade": "emperor",
+    "level": 124,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "fire": 999
+      }
+    },
+    "desc": "寄生於薪火葉背的絨苔，觸之回暖。材料，續火與回溫",
+    "tags": [
+      "藥材",
+      "靈植"
+    ]
+  },
+  {
+    "itemId": "lg_tribulation_m4_entry_resource_5",
+    "name": "衰崖灰晶",
+    "type": "material",
+    "grade": "emperor",
+    "level": 124,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "fire": 1349
+      }
+    },
+    "desc": "天人五衰崖岩層裂隙中凝成的衰崖灰晶，表面留著此地靈氣侵蝕的細紋。可作同境兵甲的煉器主材。",
+    "tags": [
+      "礦石",
+      "礦材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_tribulation_m4_entry_beast_remnant",
+    "name": "天人五衰崖妖獸遺材",
+    "type": "material",
+    "grade": "emperor",
+    "level": 124,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 1039,
+        "water": 560
+      }
+    },
+    "desc": "天人五衰崖妖獸身上取得的通用異材，可作同地圖丹器配方的輔材。",
+    "tags": [
+      "異材",
+      "妖材"
+    ]
+  },
+  {
+    "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+    "name": "望門舊衣",
+    "type": "material",
+    "grade": "emperor",
+    "level": 126,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "wood": 1056,
+        "water": 568
+      }
+    },
+    "desc": "五衰法身掉落的定向部件，是天人五衰崖六件裝備的核心主材。",
+    "tags": [
+      "首領素材",
+      "異材"
+    ]
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m4_entry_war_blade",
+    "name": "天人五衰崖木煞戰刃",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 126,
+    "desc": "以天人五衰崖礦材鑄成，強化物理攻擊、命中與破招。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 45,
+      "breakPower": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m4_entry_spirit_staff",
+    "name": "天人五衰崖木紋法杖",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 126,
+    "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 40,
+      "maxQiOutputPerTick": 45
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m4_entry_head",
+    "name": "天人五衰崖木紋冠",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 126,
+    "equipSlot": "head",
+    "desc": "以天人五衰崖礦材與首領部件鍛成的冠位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 42,
+      "physDef": 72,
+      "antiCrit": 30
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m4_entry_body",
+    "name": "天人五衰崖木紋衣",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 126,
+    "equipSlot": "body",
+    "desc": "以天人五衰崖礦材與首領部件鍛成的衣位護具。",
+    "equipBaselinePercents": {
+      "maxHp": 58,
+      "physDef": 62,
+      "spellDef": 62
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m4_entry_legs",
+    "name": "天人五衰崖木紋履",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 126,
+    "equipSlot": "legs",
+    "desc": "以天人五衰崖礦材與首領部件鍛成的履位護具。",
+    "equipBaselinePercents": {
+      "spellDef": 70,
+      "dodge": 20,
+      "moveSpeed": 12
+    }
+  },
+  {
+    "itemId": "lg_equip_lg_tribulation_m4_entry_accessory",
+    "name": "天人五衰崖木紋佩",
+    "type": "equipment",
+    "grade": "emperor",
+    "level": 126,
+    "equipSlot": "accessory",
+    "desc": "以天人五衰崖礦材與首領部件鍛成的佩位護具。",
+    "equipBaselinePercents": {
+      "maxQi": 45,
+      "spellDef": 50,
+      "resolvePower": 42
+    }
+  },
+  {
+    "itemId": "lg_pill_lg_tribulation_m4_entry_recovery",
+    "name": "天人五衰崖回元丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 124,
+    "desc": "服用後按 124 級標準基線回復 60% 氣血與 40% 靈力，冷卻 60 息。",
+    "cooldown": 60,
+    "baselineHealPercent": 0.6,
+    "baselineQiPercent": 0.4
+  },
+  {
+    "itemId": "mat.lg_huanling_nameplate",
+    "name": "喚靈真人名牌",
+    "type": "material",
+    "grade": "heaven",
+    "level": 43,
+    "desc": "劫火燒黑的舊名牌，背面刻著祝餘的診記。可交回燼燈坊了卻舊帳，也可作火行煉製輔材。",
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "fire": 80,
+        "earth": 40
+      }
+    },
+    "tags": [
+      "異材"
+    ]
+  }
+]

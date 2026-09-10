@@ -1,0 +1,33 @@
+{
+  "quests": [
+    {
+      "id": "q_lg_huanling_old_debt",
+      "title": "喚靈舊帳",
+      "line": "side",
+      "chapter": "金丹·喚靈",
+      "story": "祝餘的舊診簿上，有一筆三十年沒畫掉的帳。病人已退入歸藏脈窟後的洞府，殘火與魂聲卻仍不肯散。",
+      "desc": "循歸藏脈窟隙門進入破敗洞府，擊敗喚靈真人，將名牌交回燼燈坊祝餘。",
+      "objectiveType": "kill",
+      "objectiveText": "擊敗喚靈真人並取回名牌",
+      "targetMonsterId": "m_huanling_zhenren",
+      "targetMapId": "ruined_cavern_manor",
+      "targetName": "重傷的喚靈真人",
+      "targetCount": 1,
+      "required": 1,
+      "requiredItemId": "mat.lg_huanling_nameplate",
+      "requiredItemCount": 1,
+      "giverMapId": "lg_golden_core_ember_lamp_market",
+      "giverNpcId": "lg_golden_core_ember_lamp_market_npc_8",
+      "submitMapId": "lg_golden_core_ember_lamp_market",
+      "submitNpcId": "lg_golden_core_ember_lamp_market_npc_8",
+      "reward": [
+        {
+          "itemId": "pill.ningxiang",
+          "name": "凝相丹",
+          "type": "consumable",
+          "count": 2
+        }
+      ]
+    }
+  ]
+}

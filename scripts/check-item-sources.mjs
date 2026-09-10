@@ -40,6 +40,7 @@ const mapsDir = path.join(repoRoot, 'packages/server/data/maps');
  * 记录炼丹配方路径。
  */
 const alchemyRecipesPath = path.join(repoRoot, 'packages/server/data/content/alchemy/recipes.json');
+const forgingRecipesPath = path.join(repoRoot, 'packages/server/data/content/forging/recipes.json');
 /**
  * 记录starterinventory路径。
  */
@@ -291,6 +292,7 @@ function isMiningLandmark(landmark, resourceNode) {
 }
 
 function resolveResourceNodeGroupSourceKind(group, resourceNode) {
+  if (resourceNode?.container?.variant === 'herb') return 'search';
   const id = typeof group?.resourceNodeId === 'string' ? group.resourceNodeId : '';
   if (id.startsWith('landmark.herb.')) {
     return 'search';
@@ -353,7 +355,7 @@ function buildMonsterMapRefs(maps) {/**
   const mapRefsByMonsterId = new Map();
   for (const map of maps) {
     for (const spawn of map.monsterSpawns ?? []) {
-      const monsterId = typeof spawn?.templateId === 'string'
+      const monsterId = Array.isArray(spawn) ? spawn[2] : typeof spawn?.templateId === 'string'
         ? spawn.templateId
         : (typeof spawn?.id === 'string' ? spawn.id : null);
       if (!monsterId) {
@@ -502,6 +504,8 @@ function formatInvalidRef(entry) {
       return `- ${entry.itemId} <- 初始携带`;
     case 'alchemy':
       return `- ${entry.itemId} <- 炼丹 ${entry.recipeId}`;
+    case 'forging':
+      return `- ${entry.itemId} <- 煉器 ${entry.recipeId}`;
     case 'runtime_pvp_reward':
       return `- ${entry.itemId} <- 玩家战斗奖励`;
     default:
@@ -952,6 +956,7 @@ function main() {
  * 记录炼丹配方。
  */
   const alchemyRecipes = readJson(alchemyRecipesPath);
+  const forgingRecipes = readJson(forgingRecipesPath);
 /**
  * 记录starterinventory。
  */
@@ -1111,6 +1116,13 @@ function main() {
       }
     }
 
+    for (const node of map.mineralNodes ?? []) {
+      pushKnownSource(sourceByItemId, invalidRefs, node.itemId, {
+        kind: 'mining', mapId: map.id, mapName: map.name,
+        landmarkId: map.landmarks?.find((entry) => entry.x === node.x && entry.y === node.y)?.id,
+        landmarkName: node.name, mode: 'direct', count: node.destroyCount ?? 1,
+      });
+    }
     for (const group of map.resourceNodeGroups ?? []) {
       const resourceNode = typeof group?.resourceNodeId === 'string'
         ? landmarkNodesById.get(group.resourceNodeId)
@@ -1203,6 +1215,12 @@ function main() {
       mapId: 'crafting',
       mapName: '炼丹',
       recipeId: recipe?.recipeId,
+    });
+  }
+
+  for (const recipe of Array.isArray(forgingRecipes) ? forgingRecipes : []) {
+    pushKnownSource(sourceByItemId, invalidRefs, recipe?.outputItemId, {
+      kind: 'forging', mapId: 'crafting', mapName: '煉器', recipeId: recipe?.recipeId,
     });
   }
 

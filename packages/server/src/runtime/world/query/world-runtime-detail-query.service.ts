@@ -415,6 +415,10 @@ export class WorldRuntimeDetailQueryService {
                 const auraLevel = buildTileRuntimeAuraLevel(resources, aura, viewer);
                 return auraLevel > 0 ? auraLevel : undefined;
             })(),
+            targetName: tileCombat?.targetName,
+            miningLevel: Number.isFinite(tileCombat?.miningLevel)
+                ? Math.max(1, Math.floor(tileCombat.miningLevel))
+                : undefined,
             hp: tileCombat && tileCombat.destroyed !== true ? tileCombat.hp : undefined,
             maxHp: tileCombat && tileCombat.destroyed !== true ? tileCombat.maxHp : undefined,
             resources: resources.length > 0 ? resources : undefined,

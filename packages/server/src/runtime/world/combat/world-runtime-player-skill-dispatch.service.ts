@@ -2185,6 +2185,7 @@ export class WorldRuntimePlayerSkillDispatchService {
                     state: tileState,
                     tileState,
                     tileType: tileState.tileType,
+                    miningLevel: tileState.miningLevel,
                     effectiveTileDamage,
                     appliedDamage: 0,
                 });
@@ -2259,6 +2260,7 @@ export class WorldRuntimePlayerSkillDispatchService {
             const miningExpResult = applyMiningExpForTileDamage({
                 attacker,
                 tileType: tileState.tileType,
+                miningLevel: tileState.miningLevel,
                 appliedDamage,
                 playerRuntimeService: this.playerRuntimeService,
             });

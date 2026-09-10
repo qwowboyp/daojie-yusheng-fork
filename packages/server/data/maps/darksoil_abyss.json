@@ -257,6 +257,23 @@
       "hidden": false,
       "observeTitle": "焚木荒臺通道",
       "observeDesc": "向上攀援的土壁階梯通往焚木荒臺焚心臺東壁的塌陷裂縫。"
+    },
+    {
+      "id": "darksoil_abyss:28,50",
+      "x": 28,
+      "y": 50,
+      "targetMapId": "lg_golden_core_xinjin_slope",
+      "targetX": 4,
+      "targetY": 24,
+      "targetPortalId": "lg_golden_core_xinjin_slope:4,24",
+      "direction": "two_way",
+      "kind": "portal",
+      "trigger": "manual",
+      "routeDomain": "inherit",
+      "hidden": false,
+      "allowPlayerOverlap": false,
+      "observeTitle": "劫火帶入口",
+      "observeDesc": "深裂口的封緘已退，殘階通往薪盡坡。前方為金丹期地域，建議境界等級 43。"
     }
   ],
   "spawnPoint": {
@@ -333,7 +350,7 @@
       "name": "深淵裂縫",
       "x": 28,
       "y": 50,
-      "desc": "整張地圖最深處的小空間，地面有一道被封緘的裂縫向下延伸。隱約可見更深層的封印痕跡。（金丹期入口預留，當前僅作描述。）"
+      "desc": "封緘已退的深淵裂縫，熱風捲著灰燼從殘階下方湧出。沿階可抵金丹期薪盡坡，也可循殘階攀返。建議境界等級 43，先到燼燈坊補給再向劫火帶深入。"
     }
   ],
   "npcs": [
@@ -344,7 +361,7 @@
       "y": 7,
       "char": "猎",
       "color": "#9a8060",
-      "dialogue": "這裡是築基期的盡頭了。入口廳往西南能繞進礦脈廳，往東北是泥沼蘑菇洞，兩邊最後都匯到中央大廳。再往下，西南是地脈泉那條地龍的窩，東南是封印石室，正南還有一道被封死的深裂口。根基不夠硬就別硬碰 Boss，強行突破只會走火入魔。",
+      "dialogue": "礦脈廳與蘑菇洞通向中央大廳，地龍與噬脈獸守在下方。正南的深淵裂縫已經開了，殘階下是金丹修士走的薪盡坡。若根基已穩，就循燈火去燼燈坊；別把那邊的灰影當成這裡的小妖。",
       "role": "warning",
       "shopItems": [],
       "quests": []

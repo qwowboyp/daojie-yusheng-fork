@@ -67,6 +67,7 @@ export function resolveMiningDropRateBonus(attacker: any): number {
 export function applyMiningExpForTileDamage(input: {
   attacker: any;
   tileType: unknown;
+  miningLevel?: unknown;
   appliedDamage: unknown;
   playerRuntimeService: any;
 }): { gained: number; changed: boolean } {
@@ -82,7 +83,9 @@ export function applyMiningExpForTileDamage(input: {
     return { gained: 0, changed: false };
   }
 
-  const oreTileLevel = getOreMiningLevel(input.tileType as string | undefined) ?? 1;
+  const oreTileLevel = Math.max(1, Math.floor(Number(input.miningLevel)
+    || getOreMiningLevel(input.tileType as string | undefined)
+    || 1));
   const miningLevel = Math.max(1, Math.floor(Number(skill.level) || 1));
   const baseGain = computeCraftSkillExpGain({
     playerRealmLevel: resolvePlayerCraftRealmLevel(input.attacker),
@@ -124,7 +127,7 @@ export function applyMiningExpForTileDamage(input: {
  */
 export function applyMiningExpForTileDamageBatch(input: {
   attacker: any;
-  entries: ReadonlyArray<{ tileType: unknown; appliedDamage: unknown }>;
+  entries: ReadonlyArray<{ tileType: unknown; miningLevel?: unknown; appliedDamage: unknown }>;
   playerRuntimeService: any;
 }): { gained: number; changed: boolean; hitCount: number } {
   const skill = input.attacker?.miningSkill;
@@ -149,7 +152,9 @@ export function applyMiningExpForTileDamageBatch(input: {
     if (damage <= 0) {
       continue;
     }
-    const oreTileLevel = getOreMiningLevel(entry.tileType as string | undefined) ?? 1;
+    const oreTileLevel = Math.max(1, Math.floor(Number(entry.miningLevel)
+      || getOreMiningLevel(entry.tileType as string | undefined)
+      || 1));
     let gainByTargetLevel = gainBySkillLevel.get(miningLevel);
     if (!gainByTargetLevel) {
       gainByTargetLevel = new Map<number, number>();

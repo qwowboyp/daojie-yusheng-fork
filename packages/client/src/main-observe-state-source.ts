@@ -1205,13 +1205,18 @@ export function createMainObserveStateSource(options: MainObserveStateSourceOpti
     const groundInteractableEntities = sortedEntities.filter((entity) => isGroundInteractableObserveEntityKind(entity.kind));
     const groundInteractableNames = getObserveEntityNames(groundInteractableEntities);
     const baseStructureLabel = getStructureTypeLabel(observedTile.structureType, '');
+    const primaryTileLabel = observedTileDetail?.targetName?.trim()
+      || getObservedTilePrimaryTypeLabel(observedTile);
     const terrainRows = [
-      { label: t('observe.tile.label.type', undefined), value: getObservedTilePrimaryTypeLabel(observedTile) },
-      { label: t('observe.tile.label.terrain', undefined), value: getTerrainTypeLabel(observedTile.terrainType, getObservedTilePrimaryTypeLabel(observedTile)) },
+      { label: t('observe.tile.label.type', undefined), value: primaryTileLabel },
+      { label: t('observe.tile.label.terrain', undefined), value: getTerrainTypeLabel(observedTile.terrainType, primaryTileLabel) },
       { label: t('observe.tile.label.surface', undefined), value: getSurfaceTypeLabel(observedTile.surfaceType, t('observe.value.none', undefined)) },
       { label: t('observe.tile.label.structure', undefined), value: baseStructureLabel || t('observe.value.none', undefined) },
       { label: t('observe.tile.label.traversal-cost', undefined), value: formatMovementPointCost(observedTile) },
     ];
+    if (Number.isFinite(observedTileDetail?.miningLevel)) {
+      terrainRows.push({ label: '採礦等級', value: formatDisplayInteger(Math.max(1, Math.floor(observedTileDetail!.miningLevel!))) });
+    }
     if (!observedTile.walkable) {
       terrainRows.push({ label: t('observe.tile.label.access', undefined), value: t('observe.tile.traversal.blocked', undefined) });
     }

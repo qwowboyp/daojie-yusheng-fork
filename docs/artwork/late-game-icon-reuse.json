@@ -1,0 +1,4570 @@
+{
+  "description": "後期內容沿用既有同類美術；本清單記錄來源，不宣稱為各物品獨立新繪。",
+  "records": [
+    {
+      "itemId": "lg_golden_core_xinjin_slope_resource_1",
+      "name": "燈芯草",
+      "sourceItemId": "mat.bloodbud_fruit",
+      "sourceName": "赤芽果",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_xinjin_slope_resource_2",
+      "name": "餘燼砂",
+      "sourceItemId": "ember_sand",
+      "sourceName": "隕火砂",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_xinjin_slope_resource_3",
+      "name": "琉璃化土",
+      "sourceItemId": "furnace_red_crystal",
+      "sourceName": "爐心赤晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_xinjin_slope_resource_4",
+      "name": "殘燈屑",
+      "sourceItemId": "mat.blazewood_king_ember",
+      "sourceName": "焚王餘燼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_xinjin_slope_resource_5",
+      "name": "灰燼藥蕨",
+      "sourceItemId": "mat.red_flame_leaf",
+      "sourceName": "赤火葉",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_golden_core_xinjin_slope_beast_remnant",
+      "name": "薪盡坡妖獸遺材",
+      "sourceItemId": "mat.blazewood_king_ember",
+      "sourceName": "焚王餘燼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_golden_core_xinjin_slope_boss_component",
+      "name": "燈硝護腕",
+      "sourceItemId": "mat.blazewood_king_ember",
+      "sourceName": "焚王餘燼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_xinjin_slope_war_blade",
+      "name": "薪盡坡火煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_xinjin_slope_spirit_staff",
+      "name": "薪盡坡火紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_xinjin_slope_head",
+      "name": "薪盡坡火紋冠",
+      "sourceItemId": "equip.soot_lamp_hood",
+      "sourceName": "熄火礦燈冠",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_xinjin_slope_body",
+      "name": "薪盡坡火紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_xinjin_slope_legs",
+      "name": "薪盡坡火紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_xinjin_slope_accessory",
+      "name": "薪盡坡火紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_golden_core_xinjin_slope_recovery",
+      "name": "薪盡坡回元丹",
+      "sourceItemId": "pill.wangsheng",
+      "sourceName": "往生丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_molten_channel_resource_1",
+      "name": "熔心琉璃",
+      "sourceItemId": "mat.molten_core_shard",
+      "sourceName": "熔核碎片",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_molten_channel_resource_2",
+      "name": "劫鐵",
+      "sourceItemId": "mat.deep_iron_essence",
+      "sourceName": "深淵鐵精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_molten_channel_resource_3",
+      "name": "火苔",
+      "sourceItemId": "mat.flamegrain_spike",
+      "sourceName": "炎穗芒",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_molten_channel_resource_4",
+      "name": "熔渠渣核",
+      "sourceItemId": "mat.molten_core_shard",
+      "sourceName": "熔核碎片",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_molten_channel_resource_5",
+      "name": "渣河溫藥",
+      "sourceItemId": "mat.bloodbud_fruit",
+      "sourceName": "赤芽果",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_golden_core_molten_channel_beast_remnant",
+      "name": "熔渠舊坊妖獸遺材",
+      "sourceItemId": "mat.blazewood_king_ember",
+      "sourceName": "焚王餘燼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_golden_core_molten_channel_boss_component",
+      "name": "舊坊錘胚",
+      "sourceItemId": "mat.blazewood_king_ember",
+      "sourceName": "焚王餘燼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_molten_channel_war_blade",
+      "name": "熔渠舊坊火煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_molten_channel_spirit_staff",
+      "name": "熔渠舊坊火紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_molten_channel_head",
+      "name": "熔渠舊坊火紋冠",
+      "sourceItemId": "equip.soot_lamp_hood",
+      "sourceName": "熄火礦燈冠",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_molten_channel_body",
+      "name": "熔渠舊坊火紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_molten_channel_legs",
+      "name": "熔渠舊坊火紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_molten_channel_accessory",
+      "name": "熔渠舊坊火紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_golden_core_molten_channel_recovery",
+      "name": "熔渠舊坊回元丹",
+      "sourceItemId": "pill.wangsheng",
+      "sourceName": "往生丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_hanging_lamps_resource_1",
+      "name": "峽蘿",
+      "sourceItemId": "mat.bloodbud_fruit",
+      "sourceName": "赤芽果",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_hanging_lamps_resource_2",
+      "name": "燈蕊木",
+      "sourceItemId": "mat.blazewood_king_ember",
+      "sourceName": "焚王餘燼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_hanging_lamps_resource_3",
+      "name": "引魂燈燭",
+      "sourceItemId": "mat.blazewood_king_ember",
+      "sourceName": "焚王餘燼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_hanging_lamps_resource_4",
+      "name": "燈影琉璃",
+      "sourceItemId": "furnace_red_crystal",
+      "sourceName": "爐心赤晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_hanging_lamps_resource_5",
+      "name": "燈影養魂花",
+      "sourceItemId": "mat.scorchheart_petal",
+      "sourceName": "灼心瓣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_hanging_lamps_resource_6",
+      "name": "峽壁燈硝",
+      "sourceItemId": "mat.molten_core_shard",
+      "sourceName": "熔核碎片",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_golden_core_hanging_lamps_beast_remnant",
+      "name": "懸燈峽妖獸遺材",
+      "sourceItemId": "mat.blazewood_king_ember",
+      "sourceName": "焚王餘燼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_golden_core_hanging_lamps_boss_component",
+      "name": "守燈指環",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_hanging_lamps_war_blade",
+      "name": "懸燈峽火煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_hanging_lamps_spirit_staff",
+      "name": "懸燈峽火紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_hanging_lamps_head",
+      "name": "懸燈峽火紋冠",
+      "sourceItemId": "equip.soot_lamp_hood",
+      "sourceName": "熄火礦燈冠",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_hanging_lamps_body",
+      "name": "懸燈峽火紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_hanging_lamps_legs",
+      "name": "懸燈峽火紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_hanging_lamps_accessory",
+      "name": "懸燈峽火紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_golden_core_hanging_lamps_recovery",
+      "name": "懸燈峽回元丹",
+      "sourceItemId": "pill.wangsheng",
+      "sourceName": "往生丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_sky_mending_furnace_resource_1",
+      "name": "補天渣",
+      "sourceItemId": "mat.molten_core_shard",
+      "sourceName": "熔核碎片",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_sky_mending_furnace_resource_2",
+      "name": "天火芯",
+      "sourceItemId": "mat.blazewood_king_ember",
+      "sourceName": "焚王餘燼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_sky_mending_furnace_resource_3",
+      "name": "殘爐琉璃",
+      "sourceItemId": "furnace_red_crystal",
+      "sourceName": "爐心赤晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_sky_mending_furnace_resource_4",
+      "name": "隕紋鐵母",
+      "sourceItemId": "mat.deep_iron_essence",
+      "sourceName": "深淵鐵精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_sky_mending_furnace_resource_5",
+      "name": "爐心續火草",
+      "sourceItemId": "mat.red_flame_leaf",
+      "sourceName": "赤火葉",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_golden_core_sky_mending_furnace_resource_6",
+      "name": "天火暖蕨",
+      "sourceItemId": "mat.red_flame_leaf",
+      "sourceName": "赤火葉",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_beast_remnant",
+      "name": "補天殘爐妖獸遺材",
+      "sourceItemId": "mat.blazewood_king_ember",
+      "sourceName": "焚王餘燼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_golden_core_sky_mending_furnace_boss_component",
+      "name": "殘爐護心",
+      "sourceItemId": "mat.blazewood_king_ember",
+      "sourceName": "焚王餘燼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_war_blade",
+      "name": "補天殘爐火煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_spirit_staff",
+      "name": "補天殘爐火紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_head",
+      "name": "補天殘爐火紋冠",
+      "sourceItemId": "equip.soot_lamp_hood",
+      "sourceName": "熄火礦燈冠",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_body",
+      "name": "補天殘爐火紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_legs",
+      "name": "補天殘爐火紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_golden_core_sky_mending_furnace_accessory",
+      "name": "補天殘爐火紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_golden_core_sky_mending_furnace_recovery",
+      "name": "補天殘爐回元丹",
+      "sourceItemId": "pill.wangsheng",
+      "sourceName": "往生丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m1_entry_resource_1",
+      "name": "錄聲貝",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m1_entry_resource_2",
+      "name": "潮音石",
+      "sourceItemId": "mat.frost_crystal",
+      "sourceName": "霜刃晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m1_entry_resource_3",
+      "name": "灘螢藻",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m1_entry_resource_4",
+      "name": "聲紋砂",
+      "sourceItemId": "moonwell_frost_sand",
+      "sourceName": "月井冰砂",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m1_entry_resource_5",
+      "name": "月落灘鹽",
+      "sourceItemId": "mat.frost_crystal",
+      "sourceName": "霜刃晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m1_entry_resource_6",
+      "name": "灘月凝魂草",
+      "sourceItemId": "mat.coldmarrow_reed",
+      "sourceName": "寒髓葦",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_nascent_soul_m1_entry_beast_remnant",
+      "name": "漏聲灘妖獸遺材",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_nascent_soul_m1_entry_boss_component",
+      "name": "螺紋聲環",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m1_entry_war_blade",
+      "name": "漏聲灘水煞戰刃",
+      "sourceItemId": "equip.foundation_frostsplit_crit_blade",
+      "sourceName": "霜裂爆鋒",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m1_entry_spirit_staff",
+      "name": "漏聲灘水紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m1_entry_head",
+      "name": "漏聲灘水紋冠",
+      "sourceItemId": "equip.foundation_iceheart_spell_crown",
+      "sourceName": "冰心法冠",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m1_entry_body",
+      "name": "漏聲灘水紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m1_entry_legs",
+      "name": "漏聲灘水紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m1_entry_accessory",
+      "name": "漏聲灘水紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_nascent_soul_m1_entry_recovery",
+      "name": "漏聲灘回元丹",
+      "sourceItemId": "pill.wangsheng",
+      "sourceName": "往生丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m2_entry_resource_1",
+      "name": "沉鐘鱗",
+      "sourceItemId": "mat.cold_iron_carapace",
+      "sourceName": "寒鐵甲殼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m2_entry_resource_2",
+      "name": "海魂珊",
+      "sourceItemId": "mat.deepwater_moss",
+      "sourceName": "淵水苔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m2_entry_resource_3",
+      "name": "聲歸藻",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m2_entry_resource_4",
+      "name": "潮鎖苔",
+      "sourceItemId": "mat.deepwater_moss",
+      "sourceName": "淵水苔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m2_entry_resource_5",
+      "name": "沉月砂",
+      "sourceItemId": "moonwell_frost_sand",
+      "sourceName": "月井冰砂",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_nascent_soul_m2_entry_beast_remnant",
+      "name": "沉鐘澥妖獸遺材",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_nascent_soul_m2_entry_boss_component",
+      "name": "鐘耳殘片",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m2_entry_war_blade",
+      "name": "沉鐘澥水煞戰刃",
+      "sourceItemId": "equip.foundation_frostsplit_crit_blade",
+      "sourceName": "霜裂爆鋒",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m2_entry_spirit_staff",
+      "name": "沉鐘澥水紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m2_entry_head",
+      "name": "沉鐘澥水紋冠",
+      "sourceItemId": "equip.foundation_iceheart_spell_crown",
+      "sourceName": "冰心法冠",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m2_entry_body",
+      "name": "沉鐘澥水紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m2_entry_legs",
+      "name": "沉鐘澥水紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m2_entry_accessory",
+      "name": "沉鐘澥水紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_nascent_soul_m2_entry_recovery",
+      "name": "沉鐘澥回元丹",
+      "sourceItemId": "pill.wangsheng",
+      "sourceName": "往生丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m3_entry_resource_1",
+      "name": "帆骨木",
+      "sourceItemId": "mat.dragon_spine_bone",
+      "sourceName": "地龍脊骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m3_entry_resource_2",
+      "name": "怨桅鐵",
+      "sourceItemId": "mat.devourer_beast_core",
+      "sourceName": "噬脈獸核",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m3_entry_resource_3",
+      "name": "沉舟脂",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m3_entry_resource_4",
+      "name": "潮骨藤",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m3_entry_resource_5",
+      "name": "月帆棉",
+      "sourceItemId": "mat.coldmarrow_reed",
+      "sourceName": "寒髓葦",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m3_entry_resource_6",
+      "name": "桅根沉銀砂",
+      "sourceItemId": "crystal_dust",
+      "sourceName": "晶塵",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_nascent_soul_m3_entry_beast_remnant",
+      "name": "千帆骨場妖獸遺材",
+      "sourceItemId": "mat.beast_bone",
+      "sourceName": "妖獸骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_nascent_soul_m3_entry_boss_component",
+      "name": "斷桅旗骨",
+      "sourceItemId": "mat.beast_bone",
+      "sourceName": "妖獸骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m3_entry_war_blade",
+      "name": "千帆骨場木煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m3_entry_spirit_staff",
+      "name": "千帆骨場木紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m3_entry_head",
+      "name": "千帆骨場木紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m3_entry_body",
+      "name": "千帆骨場木紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m3_entry_legs",
+      "name": "千帆骨場木紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m3_entry_accessory",
+      "name": "千帆骨場木紋佩",
+      "sourceItemId": "equip.soul_devour_token",
+      "sourceName": "噬元骨牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_nascent_soul_m3_entry_recovery",
+      "name": "千帆骨場回元丹",
+      "sourceItemId": "pill.wangsheng",
+      "sourceName": "往生丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m4_entry_resource_1",
+      "name": "回瀾晶",
+      "sourceItemId": "mat.frost_crystal",
+      "sourceName": "霜刃晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m4_entry_resource_2",
+      "name": "深月露",
+      "sourceItemId": "mat.coldmarrow_reed",
+      "sourceName": "寒髓葦",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m4_entry_resource_3",
+      "name": "聲底砂",
+      "sourceItemId": "moonwell_frost_sand",
+      "sourceName": "月井冰砂",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m4_entry_resource_4",
+      "name": "沉光螺",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m4_entry_resource_5",
+      "name": "潮心核",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_nascent_soul_m4_entry_resource_6",
+      "name": "回瀾靜魂藻",
+      "sourceItemId": "mat.coldmarrow_reed",
+      "sourceName": "寒髓葦",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_nascent_soul_m4_entry_beast_remnant",
+      "name": "回瀾淵妖獸遺材",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_nascent_soul_m4_entry_boss_component",
+      "name": "瀾心舊臣珮",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m4_entry_war_blade",
+      "name": "回瀾淵水煞戰刃",
+      "sourceItemId": "equip.foundation_frostsplit_crit_blade",
+      "sourceName": "霜裂爆鋒",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m4_entry_spirit_staff",
+      "name": "回瀾淵水紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m4_entry_head",
+      "name": "回瀾淵水紋冠",
+      "sourceItemId": "equip.foundation_iceheart_spell_crown",
+      "sourceName": "冰心法冠",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m4_entry_body",
+      "name": "回瀾淵水紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m4_entry_legs",
+      "name": "回瀾淵水紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_nascent_soul_m4_entry_accessory",
+      "name": "回瀾淵水紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_nascent_soul_m4_entry_recovery",
+      "name": "回瀾淵回元丹",
+      "sourceItemId": "pill.foundation_frostspring_qi",
+      "sourceName": "霜泉還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m1_entry_resource_1",
+      "name": "崖柏",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+      "name": "登階苔",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+      "name": "階紋石",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m1_entry_resource_4",
+      "name": "風磨礫",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m1_entry_resource_5",
+      "name": "懸階藤",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_spirit_transformation_m1_entry_beast_remnant",
+      "name": "斷崖階妖獸遺材",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_spirit_transformation_m1_entry_boss_component",
+      "name": "石人殘石",
+      "sourceItemId": "mat.stone_toad_skin",
+      "sourceName": "石蟾皮",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m1_entry_war_blade",
+      "name": "斷崖階金煞戰刃",
+      "sourceItemId": "equip.foundation_iron_soul_blade",
+      "sourceName": "鐵魄斷山刃",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m1_entry_spirit_staff",
+      "name": "斷崖階金紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m1_entry_head",
+      "name": "斷崖階金紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m1_entry_body",
+      "name": "斷崖階金紋衣",
+      "sourceItemId": "equip.foundation_ironshell_plate",
+      "sourceName": "鐵甲玄胄",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m1_entry_legs",
+      "name": "斷崖階金紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m1_entry_accessory",
+      "name": "斷崖階金紋佩",
+      "sourceItemId": "equip.returnbreath_copper_pendant",
+      "sourceName": "歸息銅佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_spirit_transformation_m1_entry_recovery",
+      "name": "斷崖階回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m2_entry_resource_1",
+      "name": "律雷晶",
+      "sourceItemId": "blade_pattern_crystal",
+      "sourceName": "鋒紋殘晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m2_entry_resource_2",
+      "name": "聽雷草",
+      "sourceItemId": "mat.bloodbud_fruit",
+      "sourceName": "赤芽果",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m2_entry_resource_3",
+      "name": "拍律藤",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m2_entry_resource_4",
+      "name": "律紋鐵",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_spirit_transformation_m2_entry_beast_remnant",
+      "name": "律動雷原妖獸遺材",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
+      "name": "司律袍部件",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m2_entry_war_blade",
+      "name": "律動雷原金煞戰刃",
+      "sourceItemId": "equip.foundation_iron_soul_blade",
+      "sourceName": "鐵魄斷山刃",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m2_entry_spirit_staff",
+      "name": "律動雷原金紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m2_entry_head",
+      "name": "律動雷原金紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m2_entry_body",
+      "name": "律動雷原金紋衣",
+      "sourceItemId": "equip.foundation_ironshell_plate",
+      "sourceName": "鐵甲玄胄",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m2_entry_legs",
+      "name": "律動雷原金紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m2_entry_accessory",
+      "name": "律動雷原金紋佩",
+      "sourceItemId": "equip.returnbreath_copper_pendant",
+      "sourceName": "歸息銅佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_spirit_transformation_m2_entry_recovery",
+      "name": "律動雷原回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m3_entry_resource_1",
+      "name": "觀星砂",
+      "sourceItemId": "crystal_dust",
+      "sourceName": "晶塵",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m3_entry_resource_2",
+      "name": "星紋鐵",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m3_entry_resource_3",
+      "name": "星軌蘚",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m3_entry_resource_4",
+      "name": "眺星藤",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_spirit_transformation_m3_entry_beast_remnant",
+      "name": "古觀星臺妖獸遺材",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_spirit_transformation_m3_entry_boss_component",
+      "name": "星紋飾品部件",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m3_entry_war_blade",
+      "name": "古觀星臺金煞戰刃",
+      "sourceItemId": "equip.foundation_iron_soul_blade",
+      "sourceName": "鐵魄斷山刃",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m3_entry_spirit_staff",
+      "name": "古觀星臺金紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m3_entry_head",
+      "name": "古觀星臺金紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m3_entry_body",
+      "name": "古觀星臺金紋衣",
+      "sourceItemId": "equip.foundation_ironshell_plate",
+      "sourceName": "鐵甲玄胄",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m3_entry_legs",
+      "name": "古觀星臺金紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m3_entry_accessory",
+      "name": "古觀星臺金紋佩",
+      "sourceItemId": "equip.returnbreath_copper_pendant",
+      "sourceName": "歸息銅佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_spirit_transformation_m3_entry_recovery",
+      "name": "古觀星臺回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m4_entry_resource_1",
+      "name": "風髓",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m4_entry_resource_2",
+      "name": "獄柵木",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m4_entry_resource_3",
+      "name": "鎮風石",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m4_entry_resource_4",
+      "name": "囚風蘚",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_spirit_transformation_m4_entry_resource_5",
+      "name": "獄底止風花",
+      "sourceItemId": "mat.clear_mind_flower",
+      "sourceName": "明心花",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_spirit_transformation_m4_entry_beast_remnant",
+      "name": "涯底風獄妖獸遺材",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_spirit_transformation_m4_entry_boss_component",
+      "name": "尊者腰結部件",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m4_entry_war_blade",
+      "name": "涯底風獄金煞戰刃",
+      "sourceItemId": "equip.foundation_iron_soul_blade",
+      "sourceName": "鐵魄斷山刃",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m4_entry_spirit_staff",
+      "name": "涯底風獄金紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m4_entry_head",
+      "name": "涯底風獄金紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m4_entry_body",
+      "name": "涯底風獄金紋衣",
+      "sourceItemId": "equip.foundation_ironshell_plate",
+      "sourceName": "鐵甲玄胄",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m4_entry_legs",
+      "name": "涯底風獄金紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_spirit_transformation_m4_entry_accessory",
+      "name": "涯底風獄金紋佩",
+      "sourceItemId": "equip.returnbreath_copper_pendant",
+      "sourceName": "歸息銅佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_spirit_transformation_m4_entry_recovery",
+      "name": "涯底風獄回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m1_entry_resource_1",
+      "name": "碎界砂",
+      "sourceItemId": "crystal_dust",
+      "sourceName": "晶塵",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m1_entry_resource_2",
+      "name": "異壤",
+      "sourceItemId": "earthbearing_stone",
+      "sourceName": "承脈石",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m1_entry_resource_3",
+      "name": "隙紋蘚",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m1_entry_resource_4",
+      "name": "界骸木",
+      "sourceItemId": "mat.beast_bone",
+      "sourceName": "妖獸骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m1_entry_resource_5",
+      "name": "拾光晶",
+      "sourceItemId": "blade_pattern_crystal",
+      "sourceName": "鋒紋殘晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m1_entry_resource_6",
+      "name": "界隙定神芽",
+      "sourceItemId": "mat.bloodbud_fruit",
+      "sourceName": "赤芽果",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m1_entry_beast_remnant",
+      "name": "碎界灘妖獸遺材",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_component",
+      "name": "拾界之囊",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_drop_3",
+      "name": "拾界袋",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m1_entry_boss_drop_4",
+      "name": "拼瓦甲片",
+      "sourceItemId": "mat.earth_centipede_segment",
+      "sourceName": "蜈蚣節甲",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m1_entry_war_blade",
+      "name": "碎界灘土煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m1_entry_spirit_staff",
+      "name": "碎界灘土紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m1_entry_head",
+      "name": "碎界灘土紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m1_entry_body",
+      "name": "碎界灘土紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m1_entry_legs",
+      "name": "碎界灘土紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m1_entry_accessory",
+      "name": "碎界灘土紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_void_refinement_m1_entry_recovery",
+      "name": "碎界灘回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m2_entry_resource_1",
+      "name": "虛空藻",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m2_entry_resource_2",
+      "name": "蝕界涎",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m2_entry_resource_3",
+      "name": "巢骸骨",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m2_entry_resource_4",
+      "name": "隙光藻",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m2_entry_resource_5",
+      "name": "光塵涎",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m2_entry_resource_6",
+      "name": "蝕邊晶",
+      "sourceItemId": "blade_pattern_crystal",
+      "sourceName": "鋒紋殘晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m2_entry_resource_7",
+      "name": "巢壁空紋礦",
+      "sourceItemId": "earthbearing_stone",
+      "sourceName": "承脈石",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m2_entry_beast_remnant",
+      "name": "虛獸巢帶妖獸遺材",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_component",
+      "name": "巢母之息",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m2_entry_boss_drop_3",
+      "name": "虛巢筋",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m2_entry_war_blade",
+      "name": "虛獸巢帶木煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m2_entry_spirit_staff",
+      "name": "虛獸巢帶木紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m2_entry_head",
+      "name": "虛獸巢帶木紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m2_entry_body",
+      "name": "虛獸巢帶木紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m2_entry_legs",
+      "name": "虛獸巢帶木紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m2_entry_accessory",
+      "name": "虛獸巢帶木紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_void_refinement_m2_entry_recovery",
+      "name": "虛獸巢帶回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m3_entry_resource_1",
+      "name": "星骸鐵",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m3_entry_resource_2",
+      "name": "港燈油",
+      "sourceItemId": "blood_feather",
+      "sourceName": "血羽",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m3_entry_resource_3",
+      "name": "骸港苔",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m3_entry_resource_4",
+      "name": "隙航墨",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m3_entry_resource_5",
+      "name": "冷星光屑",
+      "sourceItemId": "crystal_dust",
+      "sourceName": "晶塵",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m3_entry_resource_6",
+      "name": "冷星寧神葉",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m3_entry_resource_7",
+      "name": "港底隕晶",
+      "sourceItemId": "blade_pattern_crystal",
+      "sourceName": "鋒紋殘晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m3_entry_beast_remnant",
+      "name": "星骸舊港妖獸遺材",
+      "sourceItemId": "boar_tusk",
+      "sourceName": "彘牙",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_component",
+      "name": "港印",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_drop_3",
+      "name": "港守環",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m3_entry_boss_drop_4",
+      "name": "星骸刃",
+      "sourceItemId": "boar_tusk",
+      "sourceName": "彘牙",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m3_entry_war_blade",
+      "name": "星骸舊港金煞戰刃",
+      "sourceItemId": "equip.foundation_iron_soul_blade",
+      "sourceName": "鐵魄斷山刃",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m3_entry_spirit_staff",
+      "name": "星骸舊港金紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m3_entry_head",
+      "name": "星骸舊港金紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m3_entry_body",
+      "name": "星骸舊港金紋衣",
+      "sourceItemId": "equip.foundation_ironshell_plate",
+      "sourceName": "鐵甲玄胄",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m3_entry_legs",
+      "name": "星骸舊港金紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m3_entry_accessory",
+      "name": "星骸舊港金紋佩",
+      "sourceItemId": "equip.returnbreath_copper_pendant",
+      "sourceName": "歸息銅佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_void_refinement_m3_entry_recovery",
+      "name": "星骸舊港回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m4_entry_resource_1",
+      "name": "無光露",
+      "sourceItemId": "mat.bearingroot_ginseng",
+      "sourceName": "承脈參",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m4_entry_resource_2",
+      "name": "深隙晶",
+      "sourceItemId": "blade_pattern_crystal",
+      "sourceName": "鋒紋殘晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m4_entry_resource_3",
+      "name": "骸聲木",
+      "sourceItemId": "mat.beast_bone",
+      "sourceName": "妖獸骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m4_entry_resource_4",
+      "name": "隙眠苔",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_void_refinement_m4_entry_resource_5",
+      "name": "光引砂",
+      "sourceItemId": "crystal_dust",
+      "sourceName": "晶塵",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m4_entry_beast_remnant",
+      "name": "無光海·裂妖獸遺材",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_component",
+      "name": "裂聽之耳",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_void_refinement_m4_entry_boss_drop_3",
+      "name": "聽裂耳",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m4_entry_war_blade",
+      "name": "無光海·裂土煞戰刃",
+      "sourceItemId": "equip.foundation_frostsplit_crit_blade",
+      "sourceName": "霜裂爆鋒",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m4_entry_spirit_staff",
+      "name": "無光海·裂土紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m4_entry_head",
+      "name": "無光海·裂土紋冠",
+      "sourceItemId": "equip.foundation_iceheart_spell_crown",
+      "sourceName": "冰心法冠",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m4_entry_body",
+      "name": "無光海·裂土紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m4_entry_legs",
+      "name": "無光海·裂土紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_void_refinement_m4_entry_accessory",
+      "name": "無光海·裂土紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_void_refinement_m4_entry_recovery",
+      "name": "無光海·裂回元丹",
+      "sourceItemId": "pill.foundation_frostspring_qi",
+      "sourceName": "霜泉還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m1_entry_resource_1",
+      "name": "垣晶",
+      "sourceItemId": "blade_pattern_crystal",
+      "sourceName": "鋒紋殘晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m1_entry_resource_2",
+      "name": "舊壘鐵",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m1_entry_resource_3",
+      "name": "垣階苔",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m1_entry_resource_4",
+      "name": "垣銘石",
+      "sourceItemId": "earthbearing_stone",
+      "sourceName": "承脈石",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m1_entry_resource_5",
+      "name": "垣燼砂",
+      "sourceItemId": "ember_sand",
+      "sourceName": "隕火砂",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m1_entry_resource_6",
+      "name": "舊壘止血花",
+      "sourceItemId": "mat.clear_mind_flower",
+      "sourceName": "明心花",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_body_integration_m1_entry_beast_remnant",
+      "name": "垣門外壘妖獸遺材",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_body_integration_m1_entry_boss_component",
+      "name": "守垣甲片",
+      "sourceItemId": "mat.earth_centipede_segment",
+      "sourceName": "蜈蚣節甲",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m1_entry_war_blade",
+      "name": "垣門外壘土煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m1_entry_spirit_staff",
+      "name": "垣門外壘土紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m1_entry_head",
+      "name": "垣門外壘土紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m1_entry_body",
+      "name": "垣門外壘土紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m1_entry_legs",
+      "name": "垣門外壘土紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m1_entry_accessory",
+      "name": "垣門外壘土紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_body_integration_m1_entry_recovery",
+      "name": "垣門外壘回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m2_entry_resource_1",
+      "name": "鏡我蓮",
+      "sourceItemId": "mat.clear_mind_flower",
+      "sourceName": "明心花",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m2_entry_resource_2",
+      "name": "照心萍",
+      "sourceItemId": "mat.bearingroot_ginseng",
+      "sourceName": "承脈參",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m2_entry_resource_3",
+      "name": "鏡鱗砂",
+      "sourceItemId": "mat.darksoil_carapace",
+      "sourceName": "玄土甲殼",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m2_entry_resource_4",
+      "name": "鏡心藕",
+      "sourceItemId": "mat.bearingroot_ginseng",
+      "sourceName": "承脈參",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m2_entry_resource_5",
+      "name": "垣根沉木",
+      "sourceItemId": "mat.vine_serpent_tendon",
+      "sourceName": "藤蟒筋",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m2_entry_resource_6",
+      "name": "澤底照魂晶",
+      "sourceItemId": "blade_pattern_crystal",
+      "sourceName": "鋒紋殘晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_body_integration_m2_entry_beast_remnant",
+      "name": "鏡我之澤妖獸遺材",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_body_integration_m2_entry_boss_component",
+      "name": "映心鏡",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m2_entry_war_blade",
+      "name": "鏡我之澤土煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m2_entry_spirit_staff",
+      "name": "鏡我之澤土紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m2_entry_head",
+      "name": "鏡我之澤土紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m2_entry_body",
+      "name": "鏡我之澤土紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m2_entry_legs",
+      "name": "鏡我之澤土紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m2_entry_accessory",
+      "name": "鏡我之澤土紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_body_integration_m2_entry_recovery",
+      "name": "鏡我之澤回元丹",
+      "sourceItemId": "pill.breakmirror_pellet",
+      "sourceName": "破鏡丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m3_entry_resource_1",
+      "name": "法骸晶",
+      "sourceItemId": "mat.dragon_spine_bone",
+      "sourceName": "地龍脊骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m3_entry_resource_2",
+      "name": "啞陵草",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m3_entry_resource_3",
+      "name": "葬法砂",
+      "sourceItemId": "crystal_dust",
+      "sourceName": "晶塵",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m3_entry_resource_4",
+      "name": "法髓乳",
+      "sourceItemId": "earthbearing_stone",
+      "sourceName": "承脈石",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m3_entry_resource_5",
+      "name": "垣痕石",
+      "sourceItemId": "earthbearing_stone",
+      "sourceName": "承脈石",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m3_entry_resource_6",
+      "name": "無聲定魄花",
+      "sourceItemId": "mat.clear_mind_flower",
+      "sourceName": "明心花",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_body_integration_m3_entry_beast_remnant",
+      "name": "法骸陵妖獸遺材",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_body_integration_m3_entry_boss_component",
+      "name": "無聲甲",
+      "sourceItemId": "mat.earth_centipede_segment",
+      "sourceName": "蜈蚣節甲",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m3_entry_war_blade",
+      "name": "法骸陵土煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m3_entry_spirit_staff",
+      "name": "法骸陵土紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m3_entry_head",
+      "name": "法骸陵土紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m3_entry_body",
+      "name": "法骸陵土紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m3_entry_legs",
+      "name": "法骸陵土紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m3_entry_accessory",
+      "name": "法骸陵土紋佩",
+      "sourceItemId": "equip.soul_devour_token",
+      "sourceName": "噬元骨牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_body_integration_m3_entry_recovery",
+      "name": "法骸陵回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m4_entry_resource_1",
+      "name": "井心苔",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m4_entry_resource_2",
+      "name": "垣髓",
+      "sourceItemId": "earthbearing_stone",
+      "sourceName": "承脈石",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m4_entry_resource_3",
+      "name": "垣口砂",
+      "sourceItemId": "crystal_dust",
+      "sourceName": "晶塵",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m4_entry_resource_4",
+      "name": "垣絡藤",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m4_entry_resource_5",
+      "name": "垣名墨",
+      "sourceItemId": "demon_wolf_bone",
+      "sourceName": "妖狼骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_body_integration_m4_entry_resource_6",
+      "name": "井壁養脈蘚",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_body_integration_m4_entry_beast_remnant",
+      "name": "垣心之井妖獸遺材",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_body_integration_m4_entry_boss_component",
+      "name": "守井人殘繩",
+      "sourceItemId": "mat.ice_crystal_silk",
+      "sourceName": "冰晶絲",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m4_entry_war_blade",
+      "name": "垣心之井木煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m4_entry_spirit_staff",
+      "name": "垣心之井木紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m4_entry_head",
+      "name": "垣心之井木紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m4_entry_body",
+      "name": "垣心之井木紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m4_entry_legs",
+      "name": "垣心之井木紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_body_integration_m4_entry_accessory",
+      "name": "垣心之井木紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_body_integration_m4_entry_recovery",
+      "name": "垣心之井回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m1_entry_resource_1",
+      "name": "劫風木",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m1_entry_resource_2",
+      "name": "風蝕鐵",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m1_entry_resource_3",
+      "name": "劫哨砂",
+      "sourceItemId": "crystal_dust",
+      "sourceName": "晶塵",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m1_entry_resource_4",
+      "name": "劫紋苔",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m1_entry_resource_5",
+      "name": "絞風藤",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_great_vehicle_m1_entry_beast_remnant",
+      "name": "劫風口妖獸遺材",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_great_vehicle_m1_entry_boss_component",
+      "name": "擋風斗篷",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m1_entry_war_blade",
+      "name": "劫風口木煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m1_entry_spirit_staff",
+      "name": "劫風口木紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m1_entry_head",
+      "name": "劫風口木紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m1_entry_body",
+      "name": "劫風口木紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m1_entry_legs",
+      "name": "劫風口木紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m1_entry_accessory",
+      "name": "劫風口木紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_great_vehicle_m1_entry_recovery",
+      "name": "劫風口回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m2_entry_resource_1",
+      "name": "雷罰鐵",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m2_entry_resource_2",
+      "name": "贖罪苔",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m2_entry_resource_3",
+      "name": "罰雷砂",
+      "sourceItemId": "crystal_dust",
+      "sourceName": "晶塵",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m2_entry_resource_4",
+      "name": "焦心木",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m2_entry_resource_5",
+      "name": "判痕石",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m2_entry_resource_6",
+      "name": "碑陰洗雷草",
+      "sourceItemId": "mat.bloodbud_fruit",
+      "sourceName": "赤芽果",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_great_vehicle_m2_entry_beast_remnant",
+      "name": "雷罰原妖獸遺材",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_great_vehicle_m2_entry_boss_component",
+      "name": "執罰雷符",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m2_entry_war_blade",
+      "name": "雷罰原金煞戰刃",
+      "sourceItemId": "equip.foundation_iron_soul_blade",
+      "sourceName": "鐵魄斷山刃",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m2_entry_spirit_staff",
+      "name": "雷罰原金紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m2_entry_head",
+      "name": "雷罰原金紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m2_entry_body",
+      "name": "雷罰原金紋衣",
+      "sourceItemId": "equip.foundation_ironshell_plate",
+      "sourceName": "鐵甲玄胄",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m2_entry_legs",
+      "name": "雷罰原金紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m2_entry_accessory",
+      "name": "雷罰原金紋佩",
+      "sourceItemId": "equip.returnbreath_copper_pendant",
+      "sourceName": "歸息銅佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_great_vehicle_m2_entry_recovery",
+      "name": "雷罰原回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m3_entry_resource_1",
+      "name": "壘心木",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m3_entry_resource_2",
+      "name": "劫獸骨",
+      "sourceItemId": "boar_tusk",
+      "sourceName": "彘牙",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m3_entry_resource_3",
+      "name": "潮壘砂",
+      "sourceItemId": "moonwell_frost_sand",
+      "sourceName": "月井冰砂",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m3_entry_resource_4",
+      "name": "咬痕藤",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m3_entry_resource_5",
+      "name": "拾骨花",
+      "sourceItemId": "mat.clear_mind_flower",
+      "sourceName": "明心花",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m3_entry_resource_6",
+      "name": "壘底血紋鐵",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_great_vehicle_m3_entry_beast_remnant",
+      "name": "獸潮舊壘妖獸遺材",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_great_vehicle_m3_entry_boss_component",
+      "name": "潮骨護腕",
+      "sourceItemId": "mat.beast_bone",
+      "sourceName": "妖獸骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m3_entry_war_blade",
+      "name": "獸潮舊壘木煞戰刃",
+      "sourceItemId": "equip.foundation_frostsplit_crit_blade",
+      "sourceName": "霜裂爆鋒",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m3_entry_spirit_staff",
+      "name": "獸潮舊壘木紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m3_entry_head",
+      "name": "獸潮舊壘木紋冠",
+      "sourceItemId": "equip.foundation_iceheart_spell_crown",
+      "sourceName": "冰心法冠",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m3_entry_body",
+      "name": "獸潮舊壘木紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m3_entry_legs",
+      "name": "獸潮舊壘木紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m3_entry_accessory",
+      "name": "獸潮舊壘木紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_great_vehicle_m3_entry_recovery",
+      "name": "獸潮舊壘回元丹",
+      "sourceItemId": "pill.foundation_frostspring_qi",
+      "sourceName": "霜泉還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m4_entry_resource_1",
+      "name": "天痕璃",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m4_entry_resource_2",
+      "name": "反影草",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m4_entry_resource_3",
+      "name": "痕路砂",
+      "sourceItemId": "crystal_dust",
+      "sourceName": "晶塵",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m4_entry_resource_4",
+      "name": "逆光梢",
+      "sourceItemId": "mat.goldthread_briar",
+      "sourceName": "金芒棘",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m4_entry_resource_5",
+      "name": "溫痕石",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_great_vehicle_m4_entry_resource_6",
+      "name": "坡陰護脈蕨",
+      "sourceItemId": "mat.green_spirit_stem",
+      "sourceName": "青靈莖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_great_vehicle_m4_entry_beast_remnant",
+      "name": "天痕下坡妖獸遺材",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_great_vehicle_m4_entry_boss_component",
+      "name": "痕使殘環",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m4_entry_war_blade",
+      "name": "天痕下坡金煞戰刃",
+      "sourceItemId": "equip.foundation_iron_soul_blade",
+      "sourceName": "鐵魄斷山刃",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m4_entry_spirit_staff",
+      "name": "天痕下坡金紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m4_entry_head",
+      "name": "天痕下坡金紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m4_entry_body",
+      "name": "天痕下坡金紋衣",
+      "sourceItemId": "equip.foundation_ironshell_plate",
+      "sourceName": "鐵甲玄胄",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m4_entry_legs",
+      "name": "天痕下坡金紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_great_vehicle_m4_entry_accessory",
+      "name": "天痕下坡金紋佩",
+      "sourceItemId": "equip.returnbreath_copper_pendant",
+      "sourceName": "歸息銅佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_great_vehicle_m4_entry_recovery",
+      "name": "天痕下坡回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m1_entry_resource_1",
+      "name": "劫雲絮",
+      "sourceItemId": "blood_feather",
+      "sourceName": "血羽",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m1_entry_resource_2",
+      "name": "避雷梭",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m1_entry_resource_3",
+      "name": "劫渡苔",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m1_entry_resource_4",
+      "name": "雲雷髓",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m1_entry_resource_5",
+      "name": "避劫雲芝",
+      "sourceItemId": "mat.stonecore_lingzhi",
+      "sourceName": "巖髓芝",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m1_entry_resource_6",
+      "name": "雲層凝雷晶",
+      "sourceItemId": "blade_pattern_crystal",
+      "sourceName": "鋒紋殘晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_tribulation_m1_entry_beast_remnant",
+      "name": "劫雲海妖獸遺材",
+      "sourceItemId": "cleantide_essence",
+      "sourceName": "淨潮水精",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_tribulation_m1_entry_boss_component",
+      "name": "穿雲舟骨",
+      "sourceItemId": "boar_tusk",
+      "sourceName": "彘牙",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m1_entry_war_blade",
+      "name": "劫雲海火煞戰刃",
+      "sourceItemId": "equip.foundation_frostsplit_crit_blade",
+      "sourceName": "霜裂爆鋒",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m1_entry_spirit_staff",
+      "name": "劫雲海火紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m1_entry_head",
+      "name": "劫雲海火紋冠",
+      "sourceItemId": "equip.foundation_iceheart_spell_crown",
+      "sourceName": "冰心法冠",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m1_entry_body",
+      "name": "劫雲海火紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m1_entry_legs",
+      "name": "劫雲海火紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m1_entry_accessory",
+      "name": "劫雲海火紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_tribulation_m1_entry_recovery",
+      "name": "劫雲海回元丹",
+      "sourceItemId": "pill.foundation_frostspring_qi",
+      "sourceName": "霜泉還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m2_entry_resource_1",
+      "name": "雷髓",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m2_entry_resource_2",
+      "name": "池底砂",
+      "sourceItemId": "ember_sand",
+      "sourceName": "隕火砂",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m2_entry_resource_3",
+      "name": "雷池藻",
+      "sourceItemId": "mat.bloodbud_fruit",
+      "sourceName": "赤芽果",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m2_entry_resource_4",
+      "name": "液雷砂",
+      "sourceItemId": "crystal_dust",
+      "sourceName": "晶塵",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m2_entry_resource_5",
+      "name": "池岸寧雷蓮",
+      "sourceItemId": "mat.clear_mind_flower",
+      "sourceName": "明心花",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_tribulation_m2_entry_beast_remnant",
+      "name": "雷池第九重妖獸遺材",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_tribulation_m2_entry_boss_component",
+      "name": "雷池守甲",
+      "sourceItemId": "lizard_scale",
+      "sourceName": "澤鱗",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m2_entry_war_blade",
+      "name": "雷池第九重金煞戰刃",
+      "sourceItemId": "equip.foundation_iron_soul_blade",
+      "sourceName": "鐵魄斷山刃",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m2_entry_spirit_staff",
+      "name": "雷池第九重金紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m2_entry_head",
+      "name": "雷池第九重金紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m2_entry_body",
+      "name": "雷池第九重金紋衣",
+      "sourceItemId": "equip.foundation_ironshell_plate",
+      "sourceName": "鐵甲玄胄",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m2_entry_legs",
+      "name": "雷池第九重金紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m2_entry_accessory",
+      "name": "雷池第九重金紋佩",
+      "sourceItemId": "equip.returnbreath_copper_pendant",
+      "sourceName": "歸息銅佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_tribulation_m2_entry_recovery",
+      "name": "雷池第九重回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m3_entry_resource_1",
+      "name": "心魔藤",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m3_entry_resource_2",
+      "name": "鏡心花",
+      "sourceItemId": "mat.clear_mind_flower",
+      "sourceName": "明心花",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m3_entry_resource_3",
+      "name": "心執苔",
+      "sourceItemId": "mat.bitterheart_vine",
+      "sourceName": "苦心藤",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m3_entry_resource_4",
+      "name": "心鏡砂",
+      "sourceItemId": "ember_sand",
+      "sourceName": "隕火砂",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m3_entry_resource_5",
+      "name": "鏡壁黑曜石",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_tribulation_m3_entry_beast_remnant",
+      "name": "心魔鏡城妖獸遺材",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_tribulation_m3_entry_boss_component",
+      "name": "照心鏡骨",
+      "sourceItemId": "mat.beast_bone",
+      "sourceName": "妖獸骨",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m3_entry_war_blade",
+      "name": "心魔鏡城木煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m3_entry_spirit_staff",
+      "name": "心魔鏡城木紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m3_entry_head",
+      "name": "心魔鏡城木紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m3_entry_body",
+      "name": "心魔鏡城木紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m3_entry_legs",
+      "name": "心魔鏡城木紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m3_entry_accessory",
+      "name": "心魔鏡城木紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_tribulation_m3_entry_recovery",
+      "name": "心魔鏡城回元丹",
+      "sourceItemId": "pill.breakmirror_pellet",
+      "sourceName": "破鏡丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m4_entry_resource_1",
+      "name": "五衰花",
+      "sourceItemId": "mat.clear_mind_flower",
+      "sourceName": "明心花",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m4_entry_resource_2",
+      "name": "薪火葉",
+      "sourceItemId": "mat.red_flame_leaf",
+      "sourceName": "赤火葉",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m4_entry_resource_3",
+      "name": "衰筋鐵",
+      "sourceItemId": "black_iron_chunk",
+      "sourceName": "玄鐵礦塊",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m4_entry_resource_4",
+      "name": "薪燼苔",
+      "sourceItemId": "mat.flamegrain_spike",
+      "sourceName": "炎穗芒",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_tribulation_m4_entry_resource_5",
+      "name": "衰崖灰晶",
+      "sourceItemId": "furnace_red_crystal",
+      "sourceName": "爐心赤晶",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_tribulation_m4_entry_beast_remnant",
+      "name": "天人五衰崖妖獸遺材",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_mat_lg_tribulation_m4_entry_boss_component",
+      "name": "望門舊衣",
+      "sourceItemId": "bamboo_heart",
+      "sourceName": "翠竹心",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m4_entry_war_blade",
+      "name": "天人五衰崖木煞戰刃",
+      "sourceItemId": "equip.broken_rune_blade",
+      "sourceName": "斷碑紋劍",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m4_entry_spirit_staff",
+      "name": "天人五衰崖木紋法杖",
+      "sourceItemId": "equip.foundation_returnbreath_cooldown_staff",
+      "sourceName": "歸息玄杖",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m4_entry_head",
+      "name": "天人五衰崖木紋冠",
+      "sourceItemId": "equip.foundation_coldiron_heavy_helm",
+      "sourceName": "寒鐵重盔",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m4_entry_body",
+      "name": "天人五衰崖木紋衣",
+      "sourceItemId": "equip.cleantide_robe",
+      "sourceName": "淨潮法衣",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m4_entry_legs",
+      "name": "天人五衰崖木紋履",
+      "sourceItemId": "equip.chasing_edge_boots",
+      "sourceName": "逐鋒履",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_equip_lg_tribulation_m4_entry_accessory",
+      "name": "天人五衰崖木紋佩",
+      "sourceItemId": "equip.foundation_flameheart_charm",
+      "sourceName": "焚心法佩",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "lg_pill_lg_tribulation_m4_entry_recovery",
+      "name": "天人五衰崖回元丹",
+      "sourceItemId": "major_qi_pill",
+      "sourceName": "大還靈丹",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "mat.lg_huanling_nameplate",
+      "name": "喚靈真人名牌",
+      "sourceItemId": "bandit_insignia",
+      "sourceName": "匪徒腰牌",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    }
+  ]
+}

@@ -15,6 +15,7 @@ import {
   GmMapLandmarkRecord,
   GmMapLayeredCellRecord,
   GmMapListRes,
+  GmMapMineralNodeRecord,
   GmMapMonsterSpawnRecord,
   GmMapNpcRecord,
   GmMapNpcShopItemRecord,
@@ -63,7 +64,7 @@ import { QuestLine, QuestObjectiveType } from './quest-types';
 import { TechniqueGrade } from './cultivation-types';
 
 /** 允许出现在地图文档里的地块字符全集。 */
-const SUPPORTED_MAP_TILE_CHARS = new Set(['#', '.', '=', ':', 'P', 'S', '+', 'W', 'B', ',', '^', '崖', ';', '%', '~', '云', '霞', '空', 'T', '竹', 'o', 'L', '铁', '刃', '梯', ...HOUSE_DECOR_TILE_MAP_CHARS]);
+const SUPPORTED_MAP_TILE_CHARS = new Set(['#', '.', '=', ':', 'P', 'S', '+', 'W', 'B', ',', '^', '崖', ';', '%', '寒', '熔', '~', '云', '霞', '空', 'T', '竹', 'o', 'L', '铁', '刃', '梯', '阵', ...HOUSE_DECOR_TILE_MAP_CHARS]);
 
 /** 深拷贝地图文档，供编辑器本地草稿保存或回滚使用。 */
 function clone<T>(value: T): T {
@@ -752,6 +753,20 @@ export function cloneMapDocument(document: GmMapDocument): GmMapDocument {
   return clone(document);
 }
 
+/** 將地圖礦脈設定歸一，保留非法值交由文件校驗回報。 */
+function normalizeEditableMineralNodeRecord(raw: unknown): GmMapMineralNodeRecord {
+  const node = raw as Partial<GmMapMineralNodeRecord> | null | undefined;
+  return {
+    x: Number(node?.x ?? 0),
+    y: Number(node?.y ?? 0),
+    name: typeof node?.name === 'string' ? node.name.trim() : '',
+    itemId: typeof node?.itemId === 'string' ? node.itemId.trim() : '',
+    level: Number(node?.level ?? 0),
+    damageChanceBps: node?.damageChanceBps === undefined ? 50 : Number(node.damageChanceBps),
+    destroyCount: node?.destroyCount === undefined ? 1 : Number(node.destroyCount),
+  };
+}
+
 /** 将编辑器原始 JSON 归一成标准地图文档，并顺手做边界修正。 */
 export function normalizeEditableMapDocument(raw: unknown): GmMapDocument {
   const source = preprocessFormatV2(raw) as Partial<GmMapDocument>;
@@ -773,6 +788,9 @@ export function normalizeEditableMapDocument(raw: unknown): GmMapDocument {
  * resources：resource相关字段。
  */
  resources: unknown[] }).resources
+    : [];
+  const mineralNodes = Array.isArray((source as { mineralNodes?: unknown[] }).mineralNodes)
+    ? (source as { mineralNodes: unknown[] }).mineralNodes
     : [];
   const safeZones = Array.isArray((source as {
   /**
@@ -923,6 +941,7 @@ export function normalizeEditableMapDocument(raw: unknown): GmMapDocument {
         : '',
       value: Number((point as GmMapResourceRecord).value ?? 0),
     })),
+    mineralNodes: mineralNodes.map((node) => normalizeEditableMineralNodeRecord(node)),
     safeZones: safeZones.map((zone) => ({
       x: Number((zone as GmMapSafeZoneRecord).x ?? 0),
       y: Number((zone as GmMapSafeZoneRecord).y ?? 0),
@@ -1209,6 +1228,9 @@ export function validateEditableMapDocument(document: GmMapDocument): string | n
     }
     resourcePointKeys.add(pointKey);
   }
+
+  const mineralNodeValidationError = validateEditableMapMineralNodes(document);
+  if (mineralNodeValidationError) return mineralNodeValidationError;
 
   for (let index = 0; index < (document.safeZones?.length ?? 0); index += 1) {
     const zone = document.safeZones![index]!;
@@ -1499,6 +1521,35 @@ export function validateEditableMapDocument(document: GmMapDocument): string | n
   return null;
 }
 
+/** 僅校驗資料驅動礦脈；供服務端啟動期不擴大既有地圖容忍範圍。 */
+export function validateEditableMapMineralNodes(document: GmMapDocument): string | null {
+  const mineralNodeTileIndexes = new Set<number>();
+  for (let index = 0; index < (document.mineralNodes?.length ?? 0); index += 1) {
+    const node = document.mineralNodes![index]!;
+    const label = `礦脈 ${index + 1}`;
+    if (!Number.isInteger(node.x) || !Number.isInteger(node.y)) return `${label} 座標必須為整數`;
+    if (node.x < 0 || node.x >= document.width || node.y < 0 || node.y >= document.height) {
+      return `${label} 越界: (${node.x}, ${node.y})`;
+    }
+    if (getComposedTileTypeAt(document, node.x, node.y) !== TileType.BlackIronOre) {
+      return `${label} 必須位於玄鐵礦地塊`;
+    }
+    const tileIndex = node.y * document.width + node.x;
+    if (mineralNodeTileIndexes.has(tileIndex)) return `${label} 與其他礦脈座標重複`;
+    mineralNodeTileIndexes.add(tileIndex);
+    if (!node.name.trim()) return `${label} 的名稱不能為空`;
+    if (!node.itemId.trim()) return `${label} 的物品 ID 不能為空`;
+    if (!Number.isInteger(node.level) || node.level <= 0) return `${label} 的採礦等級必須為正整數`;
+    if (!Number.isInteger(node.damageChanceBps) || node.damageChanceBps! < 0 || node.damageChanceBps! > 10_000) {
+      return `${label} 的傷害掉落機率必須介於 0 到 10000`;
+    }
+    if (!Number.isInteger(node.destroyCount) || node.destroyCount! <= 0) {
+      return `${label} 的摧毀掉落數量必須為正整數`;
+    }
+  }
+  return null;
+}
+
 /** 对整批地图执行跨图传送点校验：双向按 ID 严格回指，单向只校验目标落点。 */
 export function validateEditableMapPortalReciprocity(documents: readonly GmMapDocument[]): string | null {
   const documentById = new Map<string, GmMapDocument>();
@@ -1665,6 +1716,8 @@ export function serializeEditableMapDocumentToFormatV2(document: GmMapDocument):
   if (normalized.time) output.time = normalized.time;
   const resources = normalized.resources ?? [];
   if (resources.length > 0) output.resources = resources;
+  const mineralNodes = normalized.mineralNodes ?? [];
+  if (mineralNodes.length > 0) output.mineralNodes = mineralNodes;
   const safeZones = normalized.safeZones ?? [];
   if (safeZones.length > 0) output.safeZones = safeZones;
   const landmarks = normalized.landmarks ?? [];

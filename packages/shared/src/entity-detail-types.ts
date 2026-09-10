@@ -420,6 +420,16 @@ export interface TileDetailView {
 
   aura?: number;  
   /**
+ * targetName：資料驅動地圖礦脈的顯示名稱。
+ */
+
+  targetName?: string;
+  /**
+ * miningLevel：資料驅動地圖礦脈的採礦等級。
+ */
+
+  miningLevel?: number;
+  /**
  * hp：地块剩余生命值。
  */
 
