@@ -25,6 +25,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_2",
+        "name": "《燼燈點火訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -92,6 +99,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_1",
+        "name": "《餘燼守爐經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -159,6 +173,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_2",
+        "name": "《燼燈點火訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -226,6 +247,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_1",
+        "name": "《餘燼守爐經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -293,6 +321,20 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_1",
+        "name": "《餘燼守爐經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_2",
+        "name": "《燼燈點火訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
       }
     ],
     "valueStats": {
@@ -390,6 +432,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_1",
+        "name": "《餘燼守爐經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_2",
+        "name": "《燼燈點火訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
       }
     ],
     "valueStats": {
@@ -510,6 +566,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_3",
+        "name": "《懸燈照脈篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -630,6 +693,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_3",
+        "name": "《懸燈照脈篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -690,6 +760,20 @@
         "type": "material",
         "count": 1,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_3",
+        "name": "《懸燈照脈篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_4",
+        "name": "《薪途識火錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -787,6 +871,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_3",
+        "name": "《懸燈照脈篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_4",
+        "name": "《薪途識火錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
       }
     ],
     "valueStats": {
@@ -1122,6 +1220,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_5",
+        "name": "《熔渠斷流式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -1219,6 +1324,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_5",
+        "name": "《熔渠斷流式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_6",
+        "name": "《百燈護命章》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -1554,6 +1673,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_7",
+        "name": "《殘爐養息法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -1651,6 +1777,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_7",
+        "name": "《殘爐養息法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_golden_core_8",
+        "name": "《補天一炬》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -1718,6 +1858,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_2",
+        "name": "《回瀾分潮訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -1785,6 +1932,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_1",
+        "name": "《沉鐘定魄經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -1852,6 +2006,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_2",
+        "name": "《回瀾分潮訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -1919,6 +2080,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_1",
+        "name": "《沉鐘定魄經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -1986,6 +2154,20 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_1",
+        "name": "《沉鐘定魄經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_2",
+        "name": "《回瀾分潮訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
       }
     ],
     "valueStats": {
@@ -2069,6 +2251,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_1",
+        "name": "《沉鐘定魄經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_2",
+        "name": "《回瀾分潮訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
       }
     ],
     "valueStats": {
@@ -2189,6 +2385,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_3",
+        "name": "《千帆寄神篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -2309,6 +2512,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_3",
+        "name": "《千帆寄神篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -2369,6 +2579,20 @@
         "type": "material",
         "count": 1,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_3",
+        "name": "《千帆寄神篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_4",
+        "name": "《漏聲辨潮錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -2452,6 +2676,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_3",
+        "name": "《千帆寄神篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_4",
+        "name": "《漏聲辨潮錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
       }
     ],
     "valueStats": {
@@ -2787,6 +3025,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_5",
+        "name": "《骨帆歸汐式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -2877,6 +3122,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_5",
+        "name": "《骨帆歸汐式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_6",
+        "name": "《鎮海安魂章》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -3212,6 +3471,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_7",
+        "name": "《聽潮澄心法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -3302,6 +3568,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_7",
+        "name": "《聽潮澄心法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_nascent_soul_8",
+        "name": "《萬帆鎮淵》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -3369,6 +3649,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_2",
+        "name": "《雷原穿雲訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -3436,6 +3723,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_1",
+        "name": "《望涯凝神經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -3503,6 +3797,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_2",
+        "name": "《雷原穿雲訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -3570,6 +3871,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_1",
+        "name": "《望涯凝神經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -3637,6 +3945,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_2",
+        "name": "《雷原穿雲訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -3704,6 +4019,20 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_1",
+        "name": "《望涯凝神經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_2",
+        "name": "《雷原穿雲訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
       }
     ],
     "valueStats": {
@@ -3808,6 +4137,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_1",
+        "name": "《望涯凝神經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_2",
+        "name": "《雷原穿雲訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
       }
     ],
     "valueStats": {
@@ -3928,6 +4271,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_3",
+        "name": "《古曜洗髓篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -4048,6 +4398,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_3",
+        "name": "《古曜洗髓篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -4108,6 +4465,20 @@
         "type": "material",
         "count": 1,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_3",
+        "name": "《古曜洗髓篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_4",
+        "name": "《星臺觀路錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -4212,6 +4583,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_3",
+        "name": "《古曜洗髓篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_4",
+        "name": "《星臺觀路錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
       }
     ],
     "valueStats": {
@@ -4512,6 +4897,13 @@
         "type": "material",
         "count": 1,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_5",
+        "name": "《斷崖截風式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -4616,6 +5008,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_5",
+        "name": "《斷崖截風式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_6",
+        "name": "《定星護魂章》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -4951,6 +5357,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_7",
+        "name": "《引雷歸竅法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -5055,6 +5468,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_7",
+        "name": "《引雷歸竅法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_spirit_transformation_8",
+        "name": "《九曜墜涯》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -5122,6 +5549,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_2",
+        "name": "《虛舟穿隙訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -5189,6 +5623,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_1",
+        "name": "《碎界固身經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -5256,6 +5697,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_2",
+        "name": "《虛舟穿隙訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -5323,6 +5771,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_1",
+        "name": "《碎界固身經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -5390,6 +5845,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_2",
+        "name": "《虛舟穿隙訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -5457,6 +5919,20 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_1",
+        "name": "《碎界固身經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_2",
+        "name": "《虛舟穿隙訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
       }
     ],
     "valueStats": {
@@ -5561,6 +6037,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_1",
+        "name": "《碎界固身經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_2",
+        "name": "《虛舟穿隙訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
       }
     ],
     "valueStats": {
@@ -5695,6 +6185,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_3",
+        "name": "《星骸藏息篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -5829,6 +6326,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_3",
+        "name": "《星骸藏息篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -5963,6 +6467,20 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_3",
+        "name": "《星骸藏息篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_4",
+        "name": "《無光引航錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -6060,6 +6578,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_3",
+        "name": "《星骸藏息篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_4",
+        "name": "《無光引航錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
       }
     ],
     "valueStats": {
@@ -6462,6 +6994,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_5",
+        "name": "《空巢迴刃式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -6566,6 +7105,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_5",
+        "name": "《空巢迴刃式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_6",
+        "name": "《界舟固錨章》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -6968,6 +7521,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_7",
+        "name": "《虛海寂照法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -7065,6 +7625,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_7",
+        "name": "《虛海寂照法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_void_refinement_8",
+        "name": "《星港沉界》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -7125,6 +7699,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_2",
+        "name": "《法骸鎮門訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -7185,6 +7766,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_1",
+        "name": "《天垣合身經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -7245,6 +7833,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_2",
+        "name": "《法骸鎮門訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -7305,6 +7900,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_1",
+        "name": "《天垣合身經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -7365,6 +7967,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_2",
+        "name": "《法骸鎮門訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -7425,6 +8034,20 @@
         "type": "material",
         "count": 1,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_1",
+        "name": "《天垣合身經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_2",
+        "name": "《法骸鎮門訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
       }
     ],
     "valueStats": {
@@ -7522,6 +8145,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_1",
+        "name": "《天垣合身經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_2",
+        "name": "《法骸鎮門訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
       }
     ],
     "valueStats": {
@@ -7656,6 +8293,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_3",
+        "name": "《鏡我返真篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -7790,6 +8434,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_3",
+        "name": "《鏡我返真篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -7857,6 +8508,20 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_3",
+        "name": "《鏡我返真篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_4",
+        "name": "《垣井辨影錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -7961,6 +8626,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_3",
+        "name": "《鏡我返真篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_4",
+        "name": "《垣井辨影錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
       }
     ],
     "valueStats": {
@@ -8321,6 +9000,13 @@
         "type": "material",
         "count": 1,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_5",
+        "name": "《澤鏡返照式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -8425,6 +9111,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_5",
+        "name": "《澤鏡返照式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_6",
+        "name": "《萬垣護生章》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -8827,6 +9527,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_7",
+        "name": "《法骸調息法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -8924,6 +9631,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_7",
+        "name": "《法骸調息法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_body_integration_8",
+        "name": "《一身撐天》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -8991,6 +9712,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_2",
+        "name": "《劫風破陣訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -9058,6 +9786,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_1",
+        "name": "《鎮涯負嶽經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -9125,6 +9860,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_2",
+        "name": "《劫風破陣訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -9192,6 +9934,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_1",
+        "name": "《鎮涯負嶽經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -9259,6 +10008,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_2",
+        "name": "《劫風破陣訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -9326,6 +10082,20 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_1",
+        "name": "《鎮涯負嶽經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_2",
+        "name": "《劫風破陣訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
       }
     ],
     "valueStats": {
@@ -9430,6 +10200,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_1",
+        "name": "《鎮涯負嶽經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_2",
+        "name": "《劫風破陣訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
       }
     ],
     "valueStats": {
@@ -9564,6 +10348,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_3",
+        "name": "《天痕納海篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -9698,6 +10489,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_3",
+        "name": "《天痕納海篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -9832,6 +10630,20 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_3",
+        "name": "《天痕納海篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_4",
+        "name": "《雷原尋隙錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -9936,6 +10748,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_3",
+        "name": "《天痕納海篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_4",
+        "name": "《雷原尋隙錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
       }
     ],
     "valueStats": {
@@ -10338,6 +11164,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_5",
+        "name": "《舊壘迴鋒式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -10442,6 +11275,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_5",
+        "name": "《舊壘迴鋒式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_6",
+        "name": "《鎮關承劫章》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -10802,6 +11649,13 @@
         "type": "material",
         "count": 1,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_7",
+        "name": "《風劫定念法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -10906,6 +11760,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_7",
+        "name": "《風劫定念法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_great_vehicle_8",
+        "name": "《萬壘斷劫》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -10973,6 +11841,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_2",
+        "name": "《劫雲引霆訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -11040,6 +11915,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_1",
+        "name": "《薪火不滅經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -11107,6 +11989,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_2",
+        "name": "《劫雲引霆訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -11174,6 +12063,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.2
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_1",
+        "name": "《薪火不滅經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -11241,6 +12137,20 @@
         "type": "material",
         "count": 1,
         "chance": 0.45
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_1",
+        "name": "《薪火不滅經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_2",
+        "name": "《劫雲引霆訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
       }
     ],
     "valueStats": {
@@ -11331,6 +12241,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_1",
+        "name": "《薪火不滅經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_2",
+        "name": "《劫雲引霆訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
       }
     ],
     "valueStats": {
@@ -11451,6 +12375,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_3",
+        "name": "《五衰歸真篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -11571,6 +12502,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.72
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_3",
+        "name": "《五衰歸真篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "valueStats": {
@@ -11691,6 +12629,20 @@
         "type": "material",
         "count": 1,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_3",
+        "name": "《五衰歸真篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.045
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_4",
+        "name": "《心鏡照途錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -11781,6 +12733,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_3",
+        "name": "《五衰歸真篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.12
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_4",
+        "name": "《心鏡照途錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
       }
     ],
     "valueStats": {
@@ -12141,6 +13107,13 @@
         "type": "material",
         "count": 1,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_5",
+        "name": "《衰崖截命式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -12231,6 +13204,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_5",
+        "name": "《衰崖截命式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_6",
+        "name": "《薪城留命章》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {
@@ -12531,6 +13518,13 @@
         "type": "material",
         "count": 1,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_7",
+        "name": "《九重息雷法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "valueStats": {
@@ -12621,6 +13615,20 @@
         "type": "material",
         "count": 2,
         "chance": 1
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_7",
+        "name": "《九重息雷法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.lg_manual_tribulation_8",
+        "name": "《天人續燈》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
       }
     ],
     "valueStats": {

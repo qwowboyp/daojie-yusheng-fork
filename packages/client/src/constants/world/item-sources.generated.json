@@ -828,6 +828,1414 @@
       "count": 1
     }
   ],
+  "book.lg_manual_body_integration_1": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m1_entry",
+      "mapName": "垣門外壘",
+      "monsterId": "lg_body_integration_m1_boss",
+      "monsterName": "守垣將",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m1_entry",
+      "mapName": "垣門外壘",
+      "monsterId": "lg_body_integration_m1_entry_mob_6",
+      "monsterName": "望門鴉",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m1_entry",
+      "mapName": "垣門外壘",
+      "monsterId": "lg_body_integration_m1_entry_mob_2",
+      "monsterName": "撞門獸",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m1_entry",
+      "mapName": "垣門外壘",
+      "monsterId": "lg_body_integration_m1_entry_mob_4",
+      "monsterName": "垣壁行者",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_body_integration_2": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m1_entry",
+      "mapName": "垣門外壘",
+      "monsterId": "lg_body_integration_m1_boss",
+      "monsterName": "守垣將",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m1_entry",
+      "mapName": "垣門外壘",
+      "monsterId": "lg_body_integration_m1_entry_mob_6",
+      "monsterName": "望門鴉",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m1_entry",
+      "mapName": "垣門外壘",
+      "monsterId": "lg_body_integration_m1_entry_mob_1",
+      "monsterName": "壘衛殘魂",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m1_entry",
+      "mapName": "垣門外壘",
+      "monsterId": "lg_body_integration_m1_entry_mob_3",
+      "monsterName": "名砂傀",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m1_entry",
+      "mapName": "垣門外壘",
+      "monsterId": "lg_body_integration_m1_entry_mob_5",
+      "monsterName": "舊甲蟻",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_body_integration_3": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m2_entry",
+      "mapName": "鏡我之澤",
+      "monsterId": "lg_body_integration_m2_boss",
+      "monsterName": "鏡我",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m2_entry",
+      "mapName": "鏡我之澤",
+      "monsterId": "lg_body_integration_m2_entry_mob_5",
+      "monsterName": "回聲蛙",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m2_entry",
+      "mapName": "鏡我之澤",
+      "monsterId": "lg_body_integration_m2_entry_mob_2",
+      "monsterName": "雙生獸",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m2_entry",
+      "mapName": "鏡我之澤",
+      "monsterId": "lg_body_integration_m2_entry_mob_4",
+      "monsterName": "拾面客",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_body_integration_4": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m2_entry",
+      "mapName": "鏡我之澤",
+      "monsterId": "lg_body_integration_m2_boss",
+      "monsterName": "鏡我",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m2_entry",
+      "mapName": "鏡我之澤",
+      "monsterId": "lg_body_integration_m2_entry_mob_5",
+      "monsterName": "回聲蛙",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_body_integration_5": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m3_entry",
+      "mapName": "法骸陵",
+      "monsterId": "lg_body_integration_m3_boss",
+      "monsterName": "葬法老人",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m3_entry",
+      "mapName": "法骸陵",
+      "monsterId": "lg_body_integration_m3_entry_mob_6",
+      "monsterName": "灰誦者",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_body_integration_6": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m3_entry",
+      "mapName": "法骸陵",
+      "monsterId": "lg_body_integration_m3_boss",
+      "monsterName": "葬法老人",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_body_integration_7": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m4_entry",
+      "mapName": "垣心之井",
+      "monsterId": "lg_body_integration_m4_boss",
+      "monsterName": "垣心守",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m4_entry",
+      "mapName": "垣心之井",
+      "monsterId": "lg_body_integration_m4_entry_mob_6",
+      "monsterName": "垣髓蛾",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_body_integration_8": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_body_integration_m4_entry",
+      "mapName": "垣心之井",
+      "monsterId": "lg_body_integration_m4_boss",
+      "monsterName": "垣心守",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_golden_core_1": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_xinjin_slope",
+      "mapName": "薪盡坡",
+      "monsterId": "lg_golden_core_xinjin_lamplighter",
+      "monsterName": "拾燈人",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_xinjin_slope",
+      "mapName": "薪盡坡",
+      "monsterId": "lg_golden_core_xinjin_slope_mob_5",
+      "monsterName": "風掃灰魈",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_xinjin_slope",
+      "mapName": "薪盡坡",
+      "monsterId": "lg_golden_core_xinjin_slope_mob_2",
+      "monsterName": "灰燼遊魂",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_xinjin_slope",
+      "mapName": "薪盡坡",
+      "monsterId": "lg_golden_core_xinjin_slope_mob_4",
+      "monsterName": "燼殼灰偶",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_golden_core_2": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_xinjin_slope",
+      "mapName": "薪盡坡",
+      "monsterId": "lg_golden_core_xinjin_lamplighter",
+      "monsterName": "拾燈人",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_xinjin_slope",
+      "mapName": "薪盡坡",
+      "monsterId": "lg_golden_core_xinjin_slope_mob_5",
+      "monsterName": "風掃灰魈",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_xinjin_slope",
+      "mapName": "薪盡坡",
+      "monsterId": "lg_golden_core_xinjin_slope_mob_1",
+      "monsterName": "焦土小妖",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_xinjin_slope",
+      "mapName": "薪盡坡",
+      "monsterId": "lg_golden_core_xinjin_slope_mob_3",
+      "monsterName": "熄燈鬼火",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_golden_core_3": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_molten_channel",
+      "mapName": "熔渠舊坊",
+      "monsterId": "lg_golden_core_molten_cold_furnace_master",
+      "monsterName": "冷爐坊主",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_molten_channel",
+      "mapName": "熔渠舊坊",
+      "monsterId": "lg_golden_core_molten_channel_mob_5",
+      "monsterName": "殘爐煙鬼",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_molten_channel",
+      "mapName": "熔渠舊坊",
+      "monsterId": "lg_golden_core_molten_channel_mob_2",
+      "monsterName": "爐蛾",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_molten_channel",
+      "mapName": "熔渠舊坊",
+      "monsterId": "lg_golden_core_molten_channel_mob_4",
+      "monsterName": "斷鉗匠魂",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_golden_core_4": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_molten_channel",
+      "mapName": "熔渠舊坊",
+      "monsterId": "lg_golden_core_molten_cold_furnace_master",
+      "monsterName": "冷爐坊主",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_molten_channel",
+      "mapName": "熔渠舊坊",
+      "monsterId": "lg_golden_core_molten_channel_mob_5",
+      "monsterName": "殘爐煙鬼",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_golden_core_5": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_hanging_lamps",
+      "mapName": "懸燈峽",
+      "monsterId": "lg_golden_core_hanging_lamp_grandmother",
+      "monsterName": "萬燈姥姥",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_hanging_lamps",
+      "mapName": "懸燈峽",
+      "monsterId": "lg_golden_core_hanging_lamps_mob_5",
+      "monsterName": "峽風燈魅",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_golden_core_6": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_hanging_lamps",
+      "mapName": "懸燈峽",
+      "monsterId": "lg_golden_core_hanging_lamp_grandmother",
+      "monsterName": "萬燈姥姥",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_golden_core_7": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_sky_mending_furnace",
+      "mapName": "補天殘爐",
+      "monsterId": "lg_golden_core_furnace_mender_remnant",
+      "monsterName": "補天匠·殘念",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_sky_mending_furnace",
+      "mapName": "補天殘爐",
+      "monsterId": "lg_golden_core_sky_mending_furnace_mob_5",
+      "monsterName": "廢渣爬獸",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_golden_core_8": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_golden_core_sky_mending_furnace",
+      "mapName": "補天殘爐",
+      "monsterId": "lg_golden_core_furnace_mender_remnant",
+      "monsterName": "補天匠·殘念",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_great_vehicle_1": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m1_entry",
+      "mapName": "劫風口",
+      "monsterId": "lg_great_vehicle_m1_boss",
+      "monsterName": "擋風人",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m1_entry",
+      "mapName": "劫風口",
+      "monsterId": "lg_great_vehicle_m1_entry_mob_6",
+      "monsterName": "滾石傀",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m1_entry",
+      "mapName": "劫風口",
+      "monsterId": "lg_great_vehicle_m1_entry_mob_2",
+      "monsterName": "扯旗妖",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m1_entry",
+      "mapName": "劫風口",
+      "monsterId": "lg_great_vehicle_m1_entry_mob_4",
+      "monsterName": "頂風猿",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_great_vehicle_2": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m1_entry",
+      "mapName": "劫風口",
+      "monsterId": "lg_great_vehicle_m1_boss",
+      "monsterName": "擋風人",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m1_entry",
+      "mapName": "劫風口",
+      "monsterId": "lg_great_vehicle_m1_entry_mob_6",
+      "monsterName": "滾石傀",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m1_entry",
+      "mapName": "劫風口",
+      "monsterId": "lg_great_vehicle_m1_entry_mob_1",
+      "monsterName": "劫風獸",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m1_entry",
+      "mapName": "劫風口",
+      "monsterId": "lg_great_vehicle_m1_entry_mob_3",
+      "monsterName": "吹燈魈",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m1_entry",
+      "mapName": "劫風口",
+      "monsterId": "lg_great_vehicle_m1_entry_mob_5",
+      "monsterName": "嚎風鴉",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_great_vehicle_3": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m2_entry",
+      "mapName": "雷罰原",
+      "monsterId": "lg_great_vehicle_m2_boss",
+      "monsterName": "執雷者",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m2_entry",
+      "mapName": "雷罰原",
+      "monsterId": "lg_great_vehicle_m2_entry_mob_6",
+      "monsterName": "避罰骸",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m2_entry",
+      "mapName": "雷罰原",
+      "monsterId": "lg_great_vehicle_m2_entry_mob_2",
+      "monsterName": "碑下哀聲",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m2_entry",
+      "mapName": "雷罰原",
+      "monsterId": "lg_great_vehicle_m2_entry_mob_4",
+      "monsterName": "判罪鴉",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_great_vehicle_4": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m2_entry",
+      "mapName": "雷罰原",
+      "monsterId": "lg_great_vehicle_m2_boss",
+      "monsterName": "執雷者",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m2_entry",
+      "mapName": "雷罰原",
+      "monsterId": "lg_great_vehicle_m2_entry_mob_6",
+      "monsterName": "避罰骸",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_great_vehicle_5": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m3_entry",
+      "mapName": "獸潮舊壘",
+      "monsterId": "lg_great_vehicle_m3_boss",
+      "monsterName": "獸潮王",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m3_entry",
+      "mapName": "獸潮舊壘",
+      "monsterId": "lg_great_vehicle_m3_entry_mob_6",
+      "monsterName": "啃牌蟲",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_great_vehicle_6": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m3_entry",
+      "mapName": "獸潮舊壘",
+      "monsterId": "lg_great_vehicle_m3_boss",
+      "monsterName": "獸潮王",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_great_vehicle_7": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m4_entry",
+      "mapName": "天痕下坡",
+      "monsterId": "lg_great_vehicle_m4_boss",
+      "monsterName": "天痕使",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m4_entry",
+      "mapName": "天痕下坡",
+      "monsterId": "lg_great_vehicle_m4_entry_mob_6",
+      "monsterName": "半碑骸（劫風系風乾遺骸）",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_great_vehicle_8": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_great_vehicle_m4_entry",
+      "mapName": "天痕下坡",
+      "monsterId": "lg_great_vehicle_m4_boss",
+      "monsterName": "天痕使",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_nascent_soul_1": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m1_entry",
+      "mapName": "漏聲灘",
+      "monsterId": "lg_nascent_soul_m1_boss",
+      "monsterName": "螺中客",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m1_entry",
+      "mapName": "漏聲灘",
+      "monsterId": "lg_nascent_soul_m1_entry_mob_5",
+      "monsterName": "迴音螺",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m1_entry",
+      "mapName": "漏聲灘",
+      "monsterId": "lg_nascent_soul_m1_entry_mob_2",
+      "monsterName": "貝甲沙民",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m1_entry",
+      "mapName": "漏聲灘",
+      "monsterId": "lg_nascent_soul_m1_entry_mob_4",
+      "monsterName": "錄聲水母",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_nascent_soul_2": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m1_entry",
+      "mapName": "漏聲灘",
+      "monsterId": "lg_nascent_soul_m1_boss",
+      "monsterName": "螺中客",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m1_entry",
+      "mapName": "漏聲灘",
+      "monsterId": "lg_nascent_soul_m1_entry_mob_5",
+      "monsterName": "迴音螺",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m1_entry",
+      "mapName": "漏聲灘",
+      "monsterId": "lg_nascent_soul_m1_entry_mob_1",
+      "monsterName": "潮聲鬼",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m1_entry",
+      "mapName": "漏聲灘",
+      "monsterId": "lg_nascent_soul_m1_entry_mob_3",
+      "monsterName": "拾聲童",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_nascent_soul_3": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m2_entry",
+      "mapName": "沉鐘澥",
+      "monsterId": "lg_nascent_soul_m2_boss",
+      "monsterName": "守鐘魃",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m2_entry",
+      "mapName": "沉鐘澥",
+      "monsterId": "lg_nascent_soul_m2_entry_mob_5",
+      "monsterName": "海魂珊蟲",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m2_entry",
+      "mapName": "沉鐘澥",
+      "monsterId": "lg_nascent_soul_m2_entry_mob_2",
+      "monsterName": "鐘鏽蟹",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m2_entry",
+      "mapName": "沉鐘澥",
+      "monsterId": "lg_nascent_soul_m2_entry_mob_4",
+      "monsterName": "靜潮僧影",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_nascent_soul_4": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m2_entry",
+      "mapName": "沉鐘澥",
+      "monsterId": "lg_nascent_soul_m2_boss",
+      "monsterName": "守鐘魃",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m2_entry",
+      "mapName": "沉鐘澥",
+      "monsterId": "lg_nascent_soul_m2_entry_mob_5",
+      "monsterName": "海魂珊蟲",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_nascent_soul_5": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m3_entry",
+      "mapName": "千帆骨場",
+      "monsterId": "lg_nascent_soul_m3_boss",
+      "monsterName": "斷桅將軍",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m3_entry",
+      "mapName": "千帆骨場",
+      "monsterId": "lg_nascent_soul_m3_entry_mob_5",
+      "monsterName": "船首啞僕",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_nascent_soul_6": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m3_entry",
+      "mapName": "千帆骨場",
+      "monsterId": "lg_nascent_soul_m3_boss",
+      "monsterName": "斷桅將軍",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_nascent_soul_7": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m4_entry",
+      "mapName": "回瀾淵",
+      "monsterId": "lg_nascent_soul_m4_boss",
+      "monsterName": "回瀾真君",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m4_entry",
+      "mapName": "回瀾淵",
+      "monsterId": "lg_nascent_soul_m4_entry_mob_5",
+      "monsterName": "沉光傀",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_nascent_soul_8": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_nascent_soul_m4_entry",
+      "mapName": "回瀾淵",
+      "monsterId": "lg_nascent_soul_m4_boss",
+      "monsterName": "回瀾真君",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_spirit_transformation_1": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m1_entry",
+      "mapName": "斷崖階",
+      "monsterId": "lg_spirit_transformation_m1_boss",
+      "monsterName": "登崖石人",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m1_entry",
+      "mapName": "斷崖階",
+      "monsterId": "lg_spirit_transformation_m1_entry_mob_6",
+      "monsterName": "歇腳影",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m1_entry",
+      "mapName": "斷崖階",
+      "monsterId": "lg_spirit_transformation_m1_entry_mob_2",
+      "monsterName": "背囊傀",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m1_entry",
+      "mapName": "斷崖階",
+      "monsterId": "lg_spirit_transformation_m1_entry_mob_4",
+      "monsterName": "階縫蜈",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_spirit_transformation_2": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m1_entry",
+      "mapName": "斷崖階",
+      "monsterId": "lg_spirit_transformation_m1_boss",
+      "monsterName": "登崖石人",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m1_entry",
+      "mapName": "斷崖階",
+      "monsterId": "lg_spirit_transformation_m1_entry_mob_6",
+      "monsterName": "歇腳影",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m1_entry",
+      "mapName": "斷崖階",
+      "monsterId": "lg_spirit_transformation_m1_entry_mob_1",
+      "monsterName": "石階行者",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m1_entry",
+      "mapName": "斷崖階",
+      "monsterId": "lg_spirit_transformation_m1_entry_mob_3",
+      "monsterName": "風剪",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m1_entry",
+      "mapName": "斷崖階",
+      "monsterId": "lg_spirit_transformation_m1_entry_mob_5",
+      "monsterName": "崖柏魈",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_spirit_transformation_3": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m2_entry",
+      "mapName": "律動雷原",
+      "monsterId": "lg_spirit_transformation_m2_boss",
+      "monsterName": "司律雷君",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m2_entry",
+      "mapName": "律動雷原",
+      "monsterId": "lg_spirit_transformation_m2_entry_mob_5",
+      "monsterName": "亂拍影",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m2_entry",
+      "mapName": "律動雷原",
+      "monsterId": "lg_spirit_transformation_m2_entry_mob_2",
+      "monsterName": "雷符鴉",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m2_entry",
+      "mapName": "律動雷原",
+      "monsterId": "lg_spirit_transformation_m2_entry_mob_4",
+      "monsterName": "落點蟲",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_spirit_transformation_4": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m2_entry",
+      "mapName": "律動雷原",
+      "monsterId": "lg_spirit_transformation_m2_boss",
+      "monsterName": "司律雷君",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m2_entry",
+      "mapName": "律動雷原",
+      "monsterId": "lg_spirit_transformation_m2_entry_mob_5",
+      "monsterName": "亂拍影",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_spirit_transformation_5": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m3_entry",
+      "mapName": "古觀星臺",
+      "monsterId": "lg_spirit_transformation_m3_boss",
+      "monsterName": "守臺瞽者",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m3_entry",
+      "mapName": "古觀星臺",
+      "monsterId": "lg_spirit_transformation_m3_entry_mob_5",
+      "monsterName": "落星蛾",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_spirit_transformation_6": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m3_entry",
+      "mapName": "古觀星臺",
+      "monsterId": "lg_spirit_transformation_m3_boss",
+      "monsterName": "守臺瞽者",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_spirit_transformation_7": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m4_entry",
+      "mapName": "涯底風獄",
+      "monsterId": "lg_spirit_transformation_m4_boss",
+      "monsterName": "風獄尊者",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m4_entry",
+      "mapName": "涯底風獄",
+      "monsterId": "lg_spirit_transformation_m4_entry_mob_5",
+      "monsterName": "枷木傀",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_spirit_transformation_8": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_spirit_transformation_m4_entry",
+      "mapName": "涯底風獄",
+      "monsterId": "lg_spirit_transformation_m4_boss",
+      "monsterName": "風獄尊者",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_tribulation_1": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m1_entry",
+      "mapName": "劫雲海",
+      "monsterId": "lg_tribulation_m1_boss",
+      "monsterName": "劫雲君",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m1_entry",
+      "mapName": "劫雲海",
+      "monsterId": "lg_tribulation_m1_entry_mob_5",
+      "monsterName": "雲噬蠅",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m1_entry",
+      "mapName": "劫雲海",
+      "monsterId": "lg_tribulation_m1_entry_mob_2",
+      "monsterName": "雲中人影",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m1_entry",
+      "mapName": "劫雲海",
+      "monsterId": "lg_tribulation_m1_entry_mob_4",
+      "monsterName": "電光鱗",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_tribulation_2": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m1_entry",
+      "mapName": "劫雲海",
+      "monsterId": "lg_tribulation_m1_boss",
+      "monsterName": "劫雲君",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m1_entry",
+      "mapName": "劫雲海",
+      "monsterId": "lg_tribulation_m1_entry_mob_5",
+      "monsterName": "雲噬蠅",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m1_entry",
+      "mapName": "劫雲海",
+      "monsterId": "lg_tribulation_m1_entry_mob_1",
+      "monsterName": "劫雲獸",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m1_entry",
+      "mapName": "劫雲海",
+      "monsterId": "lg_tribulation_m1_entry_mob_3",
+      "monsterName": "穿雲鴉",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_tribulation_3": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m2_entry",
+      "mapName": "雷池第九重",
+      "monsterId": "lg_tribulation_m2_boss",
+      "monsterName": "雷池守·第九",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m2_entry",
+      "mapName": "雷池第九重",
+      "monsterId": "lg_tribulation_m2_entry_mob_6",
+      "monsterName": "溫雷蛾",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m2_entry",
+      "mapName": "雷池第九重",
+      "monsterId": "lg_tribulation_m2_entry_mob_2",
+      "monsterName": "液雷獸",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m2_entry",
+      "mapName": "雷池第九重",
+      "monsterId": "lg_tribulation_m2_entry_mob_4",
+      "monsterName": "液雷蛭",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_tribulation_4": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m2_entry",
+      "mapName": "雷池第九重",
+      "monsterId": "lg_tribulation_m2_boss",
+      "monsterName": "雷池守·第九",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m2_entry",
+      "mapName": "雷池第九重",
+      "monsterId": "lg_tribulation_m2_entry_mob_6",
+      "monsterName": "溫雷蛾",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_tribulation_5": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m3_entry",
+      "mapName": "心魔鏡城",
+      "monsterId": "lg_tribulation_m3_boss",
+      "monsterName": "心中我",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m3_entry",
+      "mapName": "心魔鏡城",
+      "monsterId": "lg_tribulation_m3_entry_mob_6",
+      "monsterName": "悔意蛾",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_tribulation_6": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m3_entry",
+      "mapName": "心魔鏡城",
+      "monsterId": "lg_tribulation_m3_boss",
+      "monsterName": "心中我",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_tribulation_7": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m4_entry",
+      "mapName": "天人五衰崖",
+      "monsterId": "lg_tribulation_m4_boss",
+      "monsterName": "五衰法身",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m4_entry",
+      "mapName": "天人五衰崖",
+      "monsterId": "lg_tribulation_m4_entry_mob_5",
+      "monsterName": "歸墟鹿",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_tribulation_8": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_tribulation_m4_entry",
+      "mapName": "天人五衰崖",
+      "monsterId": "lg_tribulation_m4_boss",
+      "monsterName": "五衰法身",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_void_refinement_1": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m1_entry",
+      "mapName": "碎界灘",
+      "monsterId": "lg_void_refinement_m1_boss",
+      "monsterName": "拾界人",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m1_entry",
+      "mapName": "碎界灘",
+      "monsterId": "lg_void_refinement_m1_entry_mob_6",
+      "monsterName": "縫間潛影",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m1_entry",
+      "mapName": "碎界灘",
+      "monsterId": "lg_void_refinement_m1_entry_mob_2",
+      "monsterName": "拾荒妖",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m1_entry",
+      "mapName": "碎界灘",
+      "monsterId": "lg_void_refinement_m1_entry_mob_4",
+      "monsterName": "界隙鷗",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_void_refinement_2": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m1_entry",
+      "mapName": "碎界灘",
+      "monsterId": "lg_void_refinement_m1_boss",
+      "monsterName": "拾界人",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m1_entry",
+      "mapName": "碎界灘",
+      "monsterId": "lg_void_refinement_m1_entry_mob_6",
+      "monsterName": "縫間潛影",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m1_entry",
+      "mapName": "碎界灘",
+      "monsterId": "lg_void_refinement_m1_entry_mob_1",
+      "monsterName": "界屑蟲",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m1_entry",
+      "mapName": "碎界灘",
+      "monsterId": "lg_void_refinement_m1_entry_mob_3",
+      "monsterName": "碎巢蛛",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m1_entry",
+      "mapName": "碎界灘",
+      "monsterId": "lg_void_refinement_m1_entry_mob_5",
+      "monsterName": "骸甲役",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_void_refinement_3": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m2_entry",
+      "mapName": "虛獸巢帶",
+      "monsterId": "lg_void_refinement_m2_boss",
+      "monsterName": "虛巢母獸",
+      "chance": 0.12,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m2_entry",
+      "mapName": "虛獸巢帶",
+      "monsterId": "lg_void_refinement_m2_entry_mob_6",
+      "monsterName": "噬纜蟲",
+      "chance": 0.045,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m2_entry",
+      "mapName": "虛獸巢帶",
+      "monsterId": "lg_void_refinement_m2_entry_mob_2",
+      "monsterName": "巢衛",
+      "chance": 0.008,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m2_entry",
+      "mapName": "虛獸巢帶",
+      "monsterId": "lg_void_refinement_m2_entry_mob_4",
+      "monsterName": "洄游幼崽",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_void_refinement_4": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m2_entry",
+      "mapName": "虛獸巢帶",
+      "monsterId": "lg_void_refinement_m2_boss",
+      "monsterName": "虛巢母獸",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m2_entry",
+      "mapName": "虛獸巢帶",
+      "monsterId": "lg_void_refinement_m2_entry_mob_6",
+      "monsterName": "噬纜蟲",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_void_refinement_5": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m3_entry",
+      "mapName": "星骸舊港",
+      "monsterId": "lg_void_refinement_m3_boss",
+      "monsterName": "港守傀儡",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m3_entry",
+      "mapName": "星骸舊港",
+      "monsterId": "lg_void_refinement_m3_entry_mob_6",
+      "monsterName": "港底爬骸",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_void_refinement_6": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m3_entry",
+      "mapName": "星骸舊港",
+      "monsterId": "lg_void_refinement_m3_boss",
+      "monsterName": "港守傀儡",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_void_refinement_7": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m4_entry",
+      "mapName": "無光海·裂",
+      "monsterId": "lg_void_refinement_m4_boss",
+      "monsterName": "無光老祖",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m4_entry",
+      "mapName": "無光海·裂",
+      "monsterId": "lg_void_refinement_m4_entry_mob_6",
+      "monsterName": "裂縫手",
+      "chance": 0.03,
+      "count": 1
+    }
+  ],
+  "book.lg_manual_void_refinement_8": [
+    {
+      "kind": "monster_drop",
+      "mapId": "lg_void_refinement_m4_entry",
+      "mapName": "無光海·裂",
+      "monsterId": "lg_void_refinement_m4_boss",
+      "monsterName": "無光老祖",
+      "chance": 0.08,
+      "count": 1
+    }
+  ],
   "book.lightshadow_art": [
     {
       "kind": "monster_drop",

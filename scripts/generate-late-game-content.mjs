@@ -6,6 +6,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { buildLateGameMaps } from './lib/late-game-maps.mjs';
 import { buildLateGameEncounters } from './lib/late-game-encounters.mjs';
+import { buildLateGameTechniques } from './lib/late-game-techniques.mjs';
 import { convertJsonValue, loadExcludeFields } from './convert-to-traditional.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -18,6 +19,7 @@ if (catalog.realms.length !== 7 || catalog.realms.some((r) => r.maps.length !== 
   throw new Error('後期故事目錄必須包含七境、每境四圖，禁止發布不完整批次。');
 }
 const encounters = buildLateGameEncounters(catalog, shared);
+const manuals = buildLateGameTechniques(catalog, encounters, shared);
 const layout = buildLateGameMaps(catalog, encounters);
 const output = new Map();
 const excludedFields = loadExcludeFields();
@@ -27,6 +29,43 @@ for (const map of layout.finalize()) put(`${data}/maps/${map.id}.json`, map);
 put(`${data}/content/items/後期七境/內容.json`, encounters.items);
 put(`${data}/content/monsters/後期七境.json`, encounters.monsters);
 put(`${data}/content/techniques/妖兽专用/後期七境.json`, encounters.techniques);
+put(`${data}/content/techniques/後期七境/玩家功法.json`, manuals.techniques);
+put(`${data}/content/items/後期七境/功法書.json`, manuals.books);
+put('docs/design/balance/late-game-technique-acquisition.json', manuals.acquisition);
+const categoryNames = { internal: '內功', arts: '法術', divine: '神通', secret: '秘術' };
+const gradeNames = { earth: '地階', heaven: '天階', spirit: '靈階', saint: '聖階', emperor: '帝階' };
+const pct = (chance) => `${Number((chance * 100).toFixed(4))}%`;
+const manifestLines = [
+  '# 後期七境功法與掉落目錄', '',
+  '由 `scripts/generate-late-game-content.mjs` 依正式功法和怪物配置生成，請修改 `scripts/lib/late-game-techniques.mjs` 後重新產出。', '',
+  '共 56 部全卷，七境各含兩部內功、法術、神通、秘術。主動招式依功法修煉層數解鎖；書籍可先行領悟，沿用現有越階領悟、修煉及靈力輸出超限懲罰，不另新增硬性境界門禁。', '',
+  '## 掉落機率與取得節奏', '',
+  '| 來源與卷類 | 基礎機率 | 現世零加成機率 | 基礎平均擊殺數 | 基礎累積九成取得所需擊殺數 |',
+  '|---|---:|---:|---:|---:|',
+  ...[['普通怪／入門卷', .008], ['精英／入門卷', .045], ['頭目／入門卷', .12],
+    ['精英／進階法術與秘術', .03], ['頭目／進階法術與秘術', .1], ['頭目／神通', .08]]
+    .map(([label, p]) => `| ${label} | ${pct(p)} | ${pct(1 - (1 - p) ** 2)} | ${(1 / p).toFixed(2)} | ${Math.ceil(Math.log(.1) / Math.log(1 - p))} |`), '',
+  '每一條掉落獨立抽取，不是整張掉落表分配權重。上表為指定一本書、零掉落加成的計算；現世依既有規則把等效擊殺次數加倍，虛境及非現世場景按其原有規則。一般掉落加成會改變等效擊殺次數，本批基礎機率均大於 0.1%，不觸發稀有掉落加成。隊伍只擲一份戰利品，再依既有方式分配。', '',
+  '平均次數不是保底；累積九成仍有一成機會未取得。未新增保底、碎片兌換或商店直購。取得時間還取決於實戰耗時、刷新、路程與競爭，不以單一擊殺時間冒充完整遊玩時數。', '',
+  '## 完整目錄', '',
+  '| 功法 | 類型／品階 | 境界／滿層 | 地圖 | 指定怪物與基礎掉率 |',
+  '|---|---|---:|---|---|',
+  ...manuals.acquisition.map((entry) => `| ${entry.name} | ${categoryNames[entry.category]}／${gradeNames[entry.grade]} | ${entry.realmLv}／${entry.maxLayer} | ${entry.mapName} | ${entry.sources.map(s => `${s.monsterName} ${pct(s.chance)}`).join('；')} |`), '',
+  '## 功法用途與招式', '',
+  ...manuals.techniques.flatMap(t => [
+    `### ${t.name}`, '', t.desc, '',
+    ...(t.skills ?? []).map(s => `- ${s.name}：${s.desc} 冷卻 ${s.cooldown} 息，${s.unlockLevel} 層解鎖${s.playerCast ? `，蓄勢 ${s.playerCast.windupTicks} 息` : ''}。`), '',
+  ]),
+  '## 平衡邊界', '',
+  '- 內功使用共用六維預算與修煉曲線，每部總量為同境同階基準的九成或十成；不同內功仍按既有規則累積，沒有新增裝備槽或互斥主修規則。',
+  '- 法術以單體效率、距離、物理／法術取向、有限範圍、自療或短時削防作交換；公式的距離、防禦轉傷及斬殺加成都設有上限。',
+  '- 神通保留蓄勢、解鎖層數與長冷卻，不使用目標最大生命百分比傷害，不新增無敵或永久控制。不同功法的冷卻沿用既有獨立技能模型。',
+  '- 秘術提供有限時間的視野、移動、靈力輸出或功法經驗加成；不加入永久幸運、爆率或產出倍率。內功以外的本批功法沒有永久六維加成。',
+  '- 同類增益共用 buffId 且最多一層，最後施放的同類效果覆蓋前一個；例如移動與視野兩種引路秘術需擇一。技能增益沿用既有入口，未附功法境界衰減值；不宣稱靠境界衰減阻止疊加。',
+  '- 技能耗靈依現有境界靈力輸出基準校準，仍走實際輸出超限懲罰；不以品階指數直接放大到無法施放。',
+  '- 圖示按四類沿用既有功法書美術，補齊手機與桌面尺寸；本批未產生新的獨立插畫或音樂。', '',
+];
+output.set('docs/design/balance/後期七境功法與掉落.md', `${manifestLines.join('\n').trimEnd()}\n`);
 for (const kind of ['forging', 'alchemy']) {
   const relative = `${data}/content/${kind}/recipes.json`;
   const original = read(relative).filter((entry) => !/(^|[.])lg_/.test(entry.recipeId));
@@ -104,5 +143,6 @@ for (const [relative, content] of output) {
   if (writing) { fs.mkdirSync(path.dirname(filename), { recursive: true }); fs.writeFileSync(filename, content); }
 }
 console.log(JSON.stringify({ ok: writing || changed.length === 0, mode: writing ? 'write' : 'check', maps: layout.maps.length,
-  items: encounters.items.length, monsters: encounters.monsters.length, techniques: encounters.techniques.length, changed }, null, 2));
+  items: encounters.items.length, books: manuals.books.length, monsters: encounters.monsters.length,
+  monsterTechniques: encounters.techniques.length, playerTechniques: manuals.techniques.length, changed }, null, 2));
 if (!writing && changed.length) process.exitCode = 1;

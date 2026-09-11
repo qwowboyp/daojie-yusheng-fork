@@ -156,6 +156,74 @@
       ]
     },
     {
+      "id": "lg_manual_golden_core_6",
+      "name": "百燈護命章",
+      "desc": "燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+      "grade": "earth",
+      "category": "divine",
+      "realmLv": 50,
+      "maxLayer": 18,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_golden_core_6.guard",
+          "name": "百燈護命",
+          "desc": "回復自身生命，並短暫提升雙防；同類護持不疊加。",
+          "cooldown": 300,
+          "costMultiplier": 1.639942,
+          "cost": 3254426,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "heal",
+              "target": "self",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.maxHp",
+                    "scale": 0.09
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.025
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.divine_guard",
+              "name": "七境護持",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 12,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "physDef": 18,
+                "spellDef": 18
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 6,
+          "playerCast": {
+            "windupTicks": 1,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
       "id": "lg_arts_lg_golden_core_furnace_mender_remnant",
       "name": "補天匠·殘念妖術",
       "desc": "補天匠·殘念實際使用的火行術式。",
@@ -332,6 +400,64 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_golden_core_8",
+      "name": "補天一炬",
+      "desc": "燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+      "grade": "earth",
+      "category": "divine",
+      "realmLv": 53,
+      "maxLayer": 18,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_golden_core_8.manifest",
+          "name": "補天一炬",
+          "desc": "蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+          "cooldown": 600,
+          "costMultiplier": 2.186589,
+          "cost": 7958962,
+          "range": 5,
+          "targeting": {
+            "shape": "area",
+            "radius": 2,
+            "maxTargets": 5
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "fire",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 6
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.025
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 12,
+          "playerCast": {
+            "windupTicks": 3,
+            "warningColor": "#c7a56c"
+          }
         }
       ]
     },
@@ -1215,6 +1341,46 @@
       ]
     },
     {
+      "id": "lg_manual_golden_core_7",
+      "name": "殘爐養息法",
+      "desc": "燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。二十息內靈力輸出提高 10%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+      "grade": "earth",
+      "category": "secret",
+      "realmLv": 52,
+      "maxLayer": 18,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_golden_core_7.invoke",
+          "name": "殘爐養息",
+          "desc": "二十息內靈力輸出提高 10%，同類調息狀態不疊加；適合短暫施法窗口。",
+          "cooldown": 180,
+          "costMultiplier": 0.728863,
+          "cost": 2225034,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.breath",
+              "name": "七境調息",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 20,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "maxQiOutputPerTick": 10
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 6
+        }
+      ]
+    },
+    {
       "id": "hidden_fortune_record",
       "name": "藏運錄",
       "desc": "黃階秘術預留位，名稱偏運勢、掉落或資源流轉。",
@@ -1228,6 +1394,21 @@
           "luck": 2
         }
       }
+    },
+    {
+      "id": "lg_manual_nascent_soul_1",
+      "name": "沉鐘定魄經",
+      "desc": "殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。側重神識、體魄、經脈，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "heaven",
+      "category": "internal",
+      "realmLv": 55,
+      "attrRatio": {
+        "spirit": 4,
+        "constitution": 3,
+        "meridians": 3
+      },
+      "maxLayer": 20,
+      "expDifficulty": 1
     },
     {
       "id": "chiqi_ranqiao",
@@ -1786,6 +1967,52 @@
       ]
     },
     {
+      "id": "lg_manual_spirit_transformation_6",
+      "name": "定星護魂章",
+      "desc": "望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+      "grade": "spirit",
+      "category": "divine",
+      "realmLv": 74,
+      "maxLayer": 22,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_spirit_transformation_6.guard",
+          "name": "定星護魂",
+          "desc": "短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+          "cooldown": 300,
+          "costMultiplier": 0.836705,
+          "cost": 307957376,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.divine_guard",
+              "name": "七境護持",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 12,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "physDef": 18,
+                "spellDef": 18,
+                "antiCrit": 15
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 8,
+          "playerCast": {
+            "windupTicks": 1,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
       "id": "body_tempering_formula",
       "name": "鍛體決",
       "desc": "千錘百煉，以身為鐵、以氣為錘，終成金剛不壞。",
@@ -2008,6 +2235,171 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_spirit_transformation_5",
+      "name": "斷崖截風式",
+      "desc": "望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。沿直線掃過至多四名目標，單體威力低於專精點殺。",
+      "grade": "spirit",
+      "category": "arts",
+      "realmLv": 73,
+      "maxLayer": 22,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_spirit_transformation_5.cast",
+          "name": "斷崖截風",
+          "desc": "沿直線掃過至多四名目標，單體威力低於專精點殺。",
+          "cooldown": 16,
+          "costMultiplier": 0.790221,
+          "cost": 249176389,
+          "range": 4,
+          "targeting": {
+            "shape": "line",
+            "range": 4,
+            "maxTargets": 4
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "metal",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 2.2
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.020454545454545454
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_body_integration_7",
+      "name": "法骸調息法",
+      "desc": "天垣城修士藉法骸與鏡我之試，校準肉身和神識。二十息內靈力輸出提高 14%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+      "grade": "saint",
+      "category": "secret",
+      "realmLv": 100,
+      "maxLayer": 26,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_body_integration_7.invoke",
+          "name": "法骸調息",
+          "desc": "二十息內靈力輸出提高 14%，同類調息狀態不疊加；適合短暫施法窗口。",
+          "cooldown": 180,
+          "costMultiplier": 0.265621,
+          "cost": 2213863644,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.breath",
+              "name": "七境調息",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 20,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "maxQiOutputPerTick": 14
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 9
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_body_integration_2",
+      "name": "法骸鎮門訣",
+      "desc": "天垣城修士藉法骸與鏡我之試，校準肉身和神識。近距物理打擊，以自身物防補充威力；防禦轉傷最多為物攻的七成。",
+      "grade": "spirit",
+      "category": "arts",
+      "realmLv": 92,
+      "maxLayer": 26,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_body_integration_2.cast",
+          "name": "法骸鎮門",
+          "desc": "近距物理打擊，以自身物防補充威力；防禦轉傷最多為物攻的七成。",
+          "cooldown": 8,
+          "costMultiplier": 0.464836,
+          "cost": 1290977578,
+          "range": 2,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "earth",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "var": "caster.stat.physAtk",
+                        "scale": 2.7
+                      },
+                      {
+                        "op": "min",
+                        "args": [
+                          {
+                            "var": "caster.stat.physDef",
+                            "scale": 0.7
+                          },
+                          {
+                            "var": "caster.stat.physAtk",
+                            "scale": 0.7
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.01730769230769231
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
         }
       ]
     },
@@ -2918,6 +3310,46 @@
       ]
     },
     {
+      "id": "lg_manual_great_vehicle_7",
+      "name": "風劫定念法",
+      "desc": "鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。六十息內功法經驗加成增加 7.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。",
+      "grade": "saint",
+      "category": "secret",
+      "realmLv": 112,
+      "maxLayer": 28,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_great_vehicle_7.invoke",
+          "name": "風劫定念",
+          "desc": "六十息內功法經驗加成增加 7.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。",
+          "cooldown": 240,
+          "costMultiplier": 0.199215,
+          "cost": 5211019743,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.contemplation",
+              "name": "七境澄心",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 60,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "techniqueExpRate": 750
+              },
+              "statMode": "flat"
+            }
+          ],
+          "unlockLevel": 10
+        }
+      ]
+    },
+    {
       "id": "lg_arts_lg_spirit_transformation_m4_boss",
       "name": "風獄尊者妖術",
       "desc": "風獄尊者實際使用的金行術式。",
@@ -3366,6 +3798,76 @@
       ]
     },
     {
+      "id": "lg_manual_spirit_transformation_3",
+      "name": "古曜洗髓篇",
+      "desc": "望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。側重力道、經脈、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "spirit",
+      "category": "internal",
+      "realmLv": 70,
+      "attrRatio": {
+        "strength": 4,
+        "meridians": 4,
+        "talent": 2
+      },
+      "maxLayer": 22,
+      "expDifficulty": 1
+    },
+    {
+      "id": "lg_manual_nascent_soul_5",
+      "name": "骨帆歸汐式",
+      "desc": "殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。以自身為中心的潮環打擊至多五名目標，中央與貼身內圈不受攻擊。",
+      "grade": "heaven",
+      "category": "arts",
+      "realmLv": 61,
+      "maxLayer": 20,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_nascent_soul_5.cast",
+          "name": "骨帆歸汐",
+          "desc": "以自身為中心的潮環打擊至多五名目標，中央與貼身內圈不受攻擊。",
+          "cooldown": 16,
+          "costMultiplier": 1.10631,
+          "cost": 25197359,
+          "range": 0,
+          "targeting": {
+            "shape": "ring",
+            "radius": 2,
+            "innerRadius": 1,
+            "maxTargets": 5
+          },
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 1.8
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.0225
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
       "id": "golden_lock_body",
       "name": "固元功",
       "desc": "封關鎖竅，使元氣不洩、根基不搖。",
@@ -3757,6 +4259,82 @@
       ]
     },
     {
+      "id": "lg_manual_nascent_soul_2",
+      "name": "回瀾分潮訣",
+      "desc": "殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。單體水行攻擊，並回復自身少量生命；以較低傷害換取續戰。",
+      "grade": "heaven",
+      "category": "arts",
+      "realmLv": 56,
+      "maxLayer": 20,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_nascent_soul_2.cast",
+          "name": "回瀾分潮",
+          "desc": "單體水行攻擊，並回復自身少量生命；以較低傷害換取續戰。",
+          "cooldown": 10,
+          "costMultiplier": 0.846002,
+          "cost": 7796077,
+          "range": 4,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 2.8
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.0225
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "heal",
+              "target": "self",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.maxHp",
+                    "scale": 0.025
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.0225
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
       "id": "lg_arts_lg_nascent_soul_m4_boss",
       "name": "回瀾真君妖術",
       "desc": "回瀾真君實際使用的水行術式。",
@@ -3938,6 +4516,59 @@
       "expDifficulty": 1
     },
     {
+      "id": "lg_manual_great_vehicle_2",
+      "name": "劫風破陣訣",
+      "desc": "鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。對單一目標作穩定物理破陣攻擊，適合近戰持續輸出。",
+      "grade": "saint",
+      "category": "arts",
+      "realmLv": 104,
+      "maxLayer": 28,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_great_vehicle_2.cast",
+          "name": "劫風破陣",
+          "desc": "對單一目標作穩定物理破陣攻擊，適合近戰持續輸出。",
+          "cooldown": 7,
+          "costMultiplier": 0.332026,
+          "cost": 4051644150,
+          "range": 3,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "earth",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.physAtk",
+                    "scale": 3.4
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.016071428571428573
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
       "id": "lg_arts_lg_tribulation_m1_boss",
       "name": "劫雲君妖術",
       "desc": "劫雲君實際使用的火行術式。",
@@ -4104,6 +4735,114 @@
       ]
     },
     {
+      "id": "lg_manual_tribulation_2",
+      "name": "劫雲引霆訣",
+      "desc": "薪火城倖存者將五衰之中保住一息的經驗編成法卷。單體火行法術，威力各取物攻與法攻的一部分，適合雙修。",
+      "grade": "saint",
+      "category": "arts",
+      "realmLv": 116,
+      "maxLayer": 30,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_tribulation_2.cast",
+          "name": "劫雲引霆",
+          "desc": "單體火行法術，威力各取物攻與法攻的一部分，適合雙修。",
+          "cooldown": 7,
+          "costMultiplier": 0.332026,
+          "cost": 12715794974,
+          "range": 4,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "fire",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "var": "caster.stat.spellAtk",
+                        "scale": 1.7
+                      },
+                      {
+                        "var": "caster.stat.physAtk",
+                        "scale": 1.7
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.015000000000000001
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_void_refinement_6",
+      "name": "界舟固錨章",
+      "desc": "虛舟市領航人將界隙的張合寫成可反覆演練的法式。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+      "grade": "spirit",
+      "category": "divine",
+      "realmLv": 86,
+      "maxLayer": 24,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_void_refinement_6.guard",
+          "name": "界舟固錨",
+          "desc": "短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+          "cooldown": 300,
+          "costMultiplier": 0.836705,
+          "cost": 1311702050,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.divine_guard",
+              "name": "七境護持",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 12,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "physDef": 18,
+                "spellDef": 18,
+                "antiCrit": 15
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 8,
+          "playerCast": {
+            "windupTicks": 1,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
       "id": "jinluo_lifeng",
       "name": "金絡礪鋒功",
       "desc": "金炁走絡如刀鋒過石，越磨越利。",
@@ -4118,6 +4857,59 @@
       "attrFloat": -0.0289,
       "maxLayer": 12,
       "expDifficulty": 1
+    },
+    {
+      "id": "lg_manual_golden_core_2",
+      "name": "燼燈點火訣",
+      "desc": "燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。集中靈力打擊單一目標，低耗靈、短冷卻，適合持續作戰。",
+      "grade": "earth",
+      "category": "arts",
+      "realmLv": 44,
+      "maxLayer": 18,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_golden_core_2.cast",
+          "name": "燼燈點火",
+          "desc": "集中靈力打擊單一目標，低耗靈、短冷卻，適合持續作戰。",
+          "cooldown": 7,
+          "costMultiplier": 0.911078,
+          "cost": 559795,
+          "range": 4,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "fire",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 3.4
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.025
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
     },
     {
       "id": "thunder_palm",
@@ -4194,6 +4986,21 @@
           "unlockLevel": 1
         }
       ]
+    },
+    {
+      "id": "lg_manual_body_integration_3",
+      "name": "鏡我返真篇",
+      "desc": "天垣城修士藉法骸與鏡我之試，校準肉身和神識。側重神識、身法、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "spirit",
+      "category": "internal",
+      "realmLv": 94,
+      "attrRatio": {
+        "spirit": 4,
+        "perception": 4,
+        "talent": 2
+      },
+      "maxLayer": 26,
+      "expDifficulty": 1
     },
     {
       "id": "lg_arts_lg_body_integration_m2_boss",
@@ -4348,6 +5155,212 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_spirit_transformation_8",
+      "name": "九曜墜涯",
+      "desc": "望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+      "grade": "spirit",
+      "category": "divine",
+      "realmLv": 77,
+      "maxLayer": 22,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_spirit_transformation_8.manifest",
+          "name": "九曜墜涯",
+          "desc": "蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+          "cooldown": 600,
+          "costMultiplier": 1.115607,
+          "cost": 702390621,
+          "range": 5,
+          "targeting": {
+            "shape": "area",
+            "radius": 2,
+            "maxTargets": 5
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "metal",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 6
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.020454545454545454
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 15,
+          "playerCast": {
+            "windupTicks": 3,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_tribulation_7",
+      "name": "九重息雷法",
+      "desc": "薪火城倖存者將五衰之中保住一息的經驗編成法卷。二十息內靈力輸出提高 16%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+      "grade": "emperor",
+      "category": "secret",
+      "realmLv": 124,
+      "maxLayer": 30,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_tribulation_7.invoke",
+          "name": "九重息雷",
+          "desc": "二十息內靈力輸出提高 16%，同類調息狀態不疊加；適合短暫施法窗口。",
+          "cooldown": 180,
+          "costMultiplier": 0.189729,
+          "cost": 21805932234,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.breath",
+              "name": "七境調息",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 20,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "maxQiOutputPerTick": 16
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 10
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_great_vehicle_5",
+      "name": "舊壘迴鋒式",
+      "desc": "鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。沿直線掃過至多四名目標，單體威力低於專精點殺。",
+      "grade": "saint",
+      "category": "arts",
+      "realmLv": 109,
+      "maxLayer": 28,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_great_vehicle_5.cast",
+          "name": "舊壘迴鋒",
+          "desc": "沿直線掃過至多四名目標，單體威力低於專精點殺。",
+          "cooldown": 16,
+          "costMultiplier": 0.564444,
+          "cost": 11092858885,
+          "range": 4,
+          "targeting": {
+            "shape": "line",
+            "range": 4,
+            "maxTargets": 4
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "earth",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.physAtk",
+                    "scale": 2.2
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.016071428571428573
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_void_refinement_5",
+      "name": "空巢迴刃式",
+      "desc": "虛舟市領航人將界隙的張合寫成可反覆演練的法式。在落點附近迴旋斬擊至多三名目標，適合小群敵人。",
+      "grade": "spirit",
+      "category": "arts",
+      "realmLv": 85,
+      "maxLayer": 24,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_void_refinement_5.cast",
+          "name": "空巢迴刃",
+          "desc": "在落點附近迴旋斬擊至多三名目標，適合小群敵人。",
+          "cooldown": 16,
+          "costMultiplier": 0.790221,
+          "cost": 1126208277,
+          "range": 3,
+          "targeting": {
+            "shape": "area",
+            "radius": 1,
+            "maxTargets": 3
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "metal",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.physAtk",
+                    "scale": 2.1
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.01875
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
         }
       ]
     },
@@ -4771,6 +5784,99 @@
       ]
     },
     {
+      "id": "lg_manual_spirit_transformation_2",
+      "name": "雷原穿雲訣",
+      "desc": "望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。遠距離金行穿雲一擊，以略低傷害換取射程。",
+      "grade": "spirit",
+      "category": "arts",
+      "realmLv": 68,
+      "maxLayer": 22,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_spirit_transformation_2.cast",
+          "name": "雷原穿雲",
+          "desc": "遠距離金行穿雲一擊，以略低傷害換取射程。",
+          "cooldown": 8,
+          "costMultiplier": 0.464836,
+          "cost": 61278416,
+          "range": 6,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "metal",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 3.1
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.020454545454545454
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_great_vehicle_4",
+      "name": "雷原尋隙錄",
+      "desc": "鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。四十五息內移動速度增加 3，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "grade": "saint",
+      "category": "secret",
+      "realmLv": 107,
+      "maxLayer": 28,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_great_vehicle_4.invoke",
+          "name": "雷原尋隙",
+          "desc": "四十五息內移動速度增加 3，同類引路狀態不疊加。",
+          "cooldown": 120,
+          "costMultiplier": 0.166013,
+          "cost": 2696369182,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.wayfinding",
+              "name": "七境引路",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 45,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "moveSpeed": 3
+              },
+              "statMode": "flat"
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
       "id": "lg_arts_lg_golden_core_molten_cold_furnace_master",
       "name": "冷爐坊主妖術",
       "desc": "冷爐坊主實際使用的火行術式。",
@@ -5093,6 +6199,46 @@
                   }
                 ]
               }
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_nascent_soul_4",
+      "name": "漏聲辨潮錄",
+      "desc": "殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。四十五息內移動速度增加 1，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "grade": "heaven",
+      "category": "secret",
+      "realmLv": 59,
+      "maxLayer": 20,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_nascent_soul_4.invoke",
+          "name": "漏聲辨潮",
+          "desc": "四十五息內移動速度增加 1，同類引路狀態不疊加。",
+          "cooldown": 120,
+          "costMultiplier": 0.325385,
+          "cost": 5340199,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.wayfinding",
+              "name": "七境引路",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 45,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "moveSpeed": 1
+              },
+              "statMode": "flat"
             }
           ],
           "unlockLevel": 1
@@ -5485,6 +6631,21 @@
       ]
     },
     {
+      "id": "lg_manual_nascent_soul_3",
+      "name": "千帆寄神篇",
+      "desc": "殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。側重身法、神識、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "heaven",
+      "category": "internal",
+      "realmLv": 58,
+      "attrRatio": {
+        "perception": 5,
+        "spirit": 3,
+        "talent": 2
+      },
+      "maxLayer": 20,
+      "expDifficulty": 1
+    },
+    {
       "id": "qingmu_sword",
       "name": "青木劍訣",
       "desc": "青木劍氣凝作一線，專取單體破敵。",
@@ -5782,6 +6943,60 @@
             }
           ],
           "unlockLevel": 4
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_golden_core_5",
+      "name": "熔渠斷流式",
+      "desc": "燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。沿直線掃過至多四名目標，單體威力低於專精點殺。",
+      "grade": "earth",
+      "category": "arts",
+      "realmLv": 49,
+      "maxLayer": 18,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_golden_core_5.cast",
+          "name": "熔渠斷流",
+          "desc": "沿直線掃過至多四名目標，單體威力低於專精點殺。",
+          "cooldown": 16,
+          "costMultiplier": 1.548834,
+          "cost": 2572241,
+          "range": 4,
+          "targeting": {
+            "shape": "line",
+            "range": 4,
+            "maxTargets": 4
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "fire",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 2.2
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.025
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
         }
       ]
     },
@@ -6947,6 +8162,107 @@
       ]
     },
     {
+      "id": "lg_manual_tribulation_5",
+      "name": "衰崖截命式",
+      "desc": "薪火城倖存者將五衰之中保住一息的經驗編成法卷。單體法術截擊，目標失去的生命比例提高威力，加成上限四成。",
+      "grade": "saint",
+      "category": "arts",
+      "realmLv": 121,
+      "maxLayer": 30,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_tribulation_5.cast",
+          "name": "衰崖截命",
+          "desc": "單體法術截擊，目標失去的生命比例提高威力，加成上限四成。",
+          "cooldown": 15,
+          "costMultiplier": 0.564444,
+          "cost": 34814143102,
+          "range": 4,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "fire",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "var": "caster.stat.spellAtk",
+                        "scale": 2.8
+                      },
+                      {
+                        "op": "add",
+                        "args": [
+                          1,
+                          {
+                            "op": "mul",
+                            "args": [
+                              0.4,
+                              {
+                                "op": "max",
+                                "args": [
+                                  0,
+                                  {
+                                    "op": "sub",
+                                    "args": [
+                                      1,
+                                      {
+                                        "op": "div",
+                                        "args": [
+                                          {
+                                            "var": "target.hp",
+                                            "scale": 1
+                                          },
+                                          {
+                                            "op": "max",
+                                            "args": [
+                                              1,
+                                              {
+                                                "var": "target.maxHp",
+                                                "scale": 1
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.015000000000000001
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
       "id": "monster_frostblade_abyss_arts",
       "name": "霜刃妖術",
       "desc": "霜刃淵妖獸的寒冰與鐵甲術式。",
@@ -7641,6 +8957,21 @@
       ]
     },
     {
+      "id": "lg_manual_void_refinement_1",
+      "name": "碎界固身經",
+      "desc": "虛舟市領航人將界隙的張合寫成可反覆演練的法式。側重體魄、力道、身法，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "spirit",
+      "category": "internal",
+      "realmLv": 79,
+      "attrRatio": {
+        "constitution": 4,
+        "strength": 4,
+        "perception": 2
+      },
+      "maxLayer": 24,
+      "expDifficulty": 1
+    },
+    {
       "id": "wind_step",
       "name": "踏風步",
       "desc": "借風提身，輕靈遊走。",
@@ -8042,6 +9373,21 @@
       ]
     },
     {
+      "id": "lg_manual_great_vehicle_3",
+      "name": "天痕納海篇",
+      "desc": "鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。側重經脈、神識、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "saint",
+      "category": "internal",
+      "realmLv": 106,
+      "attrRatio": {
+        "meridians": 4,
+        "spirit": 4,
+        "talent": 2
+      },
+      "maxLayer": 28,
+      "expDifficulty": 1
+    },
+    {
       "id": "lg_arts_lg_great_vehicle_m4_boss",
       "name": "天痕使妖術",
       "desc": "天痕使實際使用的金行術式。",
@@ -8204,6 +9550,78 @@
       ]
     },
     {
+      "id": "lg_manual_tribulation_8",
+      "name": "天人續燈",
+      "desc": "薪火城倖存者將五衰之中保住一息的經驗編成法卷。蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+      "grade": "emperor",
+      "category": "divine",
+      "realmLv": 125,
+      "maxLayer": 30,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_tribulation_8.manifest",
+          "name": "天人續燈",
+          "desc": "蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+          "cooldown": 600,
+          "costMultiplier": 0.569187,
+          "cost": 71959576373,
+          "range": 5,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "fire",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 12
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.015000000000000001
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 20,
+          "playerCast": {
+            "windupTicks": 3,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_body_integration_1",
+      "name": "天垣合身經",
+      "desc": "天垣城修士藉法骸與鏡我之試，校準肉身和神識。側重體魄、力道、經脈，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "spirit",
+      "category": "internal",
+      "realmLv": 91,
+      "attrRatio": {
+        "constitution": 4,
+        "strength": 3,
+        "meridians": 3
+      },
+      "maxLayer": 26,
+      "expDifficulty": 1
+    },
+    {
       "id": "iron_bone_art",
       "name": "鐵骨功",
       "desc": "鐵息貫骨，護體續命。",
@@ -8244,6 +9662,46 @@
           ],
           "unlockLevel": 1,
           "requiresTarget": false
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_nascent_soul_7",
+      "name": "聽潮澄心法",
+      "desc": "殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。六十息內功法經驗加成增加 5.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。",
+      "grade": "spirit",
+      "category": "secret",
+      "realmLv": 64,
+      "maxLayer": 20,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_nascent_soul_7.invoke",
+          "name": "聽潮澄心",
+          "desc": "六十息內功法經驗加成增加 5.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。",
+          "cooldown": 240,
+          "costMultiplier": 0.278902,
+          "cost": 17162231,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.contemplation",
+              "name": "七境澄心",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 60,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "techniqueExpRate": 550
+              },
+              "statMode": "flat"
+            }
+          ],
+          "unlockLevel": 7
         }
       ]
     },
@@ -8499,6 +9957,189 @@
       ]
     },
     {
+      "id": "lg_manual_nascent_soul_8",
+      "name": "萬帆鎮淵",
+      "desc": "殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+      "grade": "spirit",
+      "category": "divine",
+      "realmLv": 65,
+      "maxLayer": 20,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_nascent_soul_8.manifest",
+          "name": "萬帆鎮淵",
+          "desc": "蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+          "cooldown": 600,
+          "costMultiplier": 1.115607,
+          "cost": 81735786,
+          "range": 5,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 12
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.0225
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 14,
+          "playerCast": {
+            "windupTicks": 3,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_great_vehicle_8",
+      "name": "萬壘斷劫",
+      "desc": "鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+      "grade": "saint",
+      "category": "divine",
+      "realmLv": 113,
+      "maxLayer": 28,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_great_vehicle_8.manifest",
+          "name": "萬壘斷劫",
+          "desc": "蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+          "cooldown": 600,
+          "costMultiplier": 0.796862,
+          "cost": 22928544416,
+          "range": 5,
+          "targeting": {
+            "shape": "area",
+            "radius": 2,
+            "maxTargets": 5
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "earth",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.physAtk",
+                    "scale": 6
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.016071428571428573
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 19,
+          "playerCast": {
+            "windupTicks": 3,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_body_integration_6",
+      "name": "萬垣護生章",
+      "desc": "天垣城修士藉法骸與鏡我之試，校準肉身和神識。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+      "grade": "saint",
+      "category": "divine",
+      "realmLv": 98,
+      "maxLayer": 26,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_body_integration_6.guard",
+          "name": "萬垣護生",
+          "desc": "回復自身生命，並短暫提升雙防；同類護持不疊加。",
+          "cooldown": 300,
+          "costMultiplier": 0.597646,
+          "cost": 4116679984,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "heal",
+              "target": "self",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.maxHp",
+                    "scale": 0.09
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.01730769230769231
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.divine_guard",
+              "name": "七境護持",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 12,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "physDef": 18,
+                "spellDef": 18
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 9,
+          "playerCast": {
+            "windupTicks": 1,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
       "id": "wanzhi_huichun",
       "name": "萬枝回春卷",
       "desc": "木意鎖魂，直壓單敵。",
@@ -8551,6 +10192,21 @@
           "unlockLevel": 1
         }
       ]
+    },
+    {
+      "id": "lg_manual_spirit_transformation_1",
+      "name": "望涯凝神經",
+      "desc": "望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。側重身法、神識、體魄，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "spirit",
+      "category": "internal",
+      "realmLv": 67,
+      "attrRatio": {
+        "perception": 4,
+        "spirit": 4,
+        "constitution": 2
+      },
+      "maxLayer": 22,
+      "expDifficulty": 1
     },
     {
       "id": "lg_arts_lg_void_refinement_m4_boss",
@@ -8747,6 +10403,46 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_void_refinement_4",
+      "name": "無光引航錄",
+      "desc": "虛舟市領航人將界隙的張合寫成可反覆演練的法式。四十五息內移動速度增加 2，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "grade": "spirit",
+      "category": "secret",
+      "realmLv": 83,
+      "maxLayer": 24,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_void_refinement_4.invoke",
+          "name": "無光引航",
+          "desc": "四十五息內移動速度增加 2，同類引路狀態不疊加。",
+          "cooldown": 120,
+          "costMultiplier": 0.232418,
+          "cost": 273750258,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.wayfinding",
+              "name": "七境引路",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 45,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "moveSpeed": 2
+              },
+              "statMode": "flat"
+            }
+          ],
+          "unlockLevel": 1
         }
       ]
     },
@@ -8953,6 +10649,61 @@
       ]
     },
     {
+      "id": "lg_manual_tribulation_3",
+      "name": "五衰歸真篇",
+      "desc": "薪火城倖存者將五衰之中保住一息的經驗編成法卷。側重身法、根骨、神識，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "saint",
+      "category": "internal",
+      "realmLv": 118,
+      "attrRatio": {
+        "perception": 4,
+        "talent": 3,
+        "spirit": 3
+      },
+      "maxLayer": 30,
+      "expDifficulty": 1
+    },
+    {
+      "id": "lg_manual_tribulation_4",
+      "name": "心鏡照途錄",
+      "desc": "薪火城倖存者將五衰之中保住一息的經驗編成法卷。四十五息內視野增加 3 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "grade": "saint",
+      "category": "secret",
+      "realmLv": 119,
+      "maxLayer": 30,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_tribulation_4.invoke",
+          "name": "心鏡照途",
+          "desc": "四十五息內視野增加 3 格，同類引路狀態不疊加。",
+          "cooldown": 120,
+          "costMultiplier": 0.166013,
+          "cost": 8462361555,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.wayfinding",
+              "name": "七境引路",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 45,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "viewRange": 3
+              },
+              "statMode": "flat"
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
       "id": "lg_arts_lg_tribulation_m3_boss",
       "name": "心中我妖術",
       "desc": "心中我實際使用的木行術式。",
@@ -9123,6 +10874,241 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_tribulation_6",
+      "name": "薪城留命章",
+      "desc": "薪火城倖存者將五衰之中保住一息的經驗編成法卷。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+      "grade": "emperor",
+      "category": "divine",
+      "realmLv": 122,
+      "maxLayer": 30,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_tribulation_6.guard",
+          "name": "薪城留命",
+          "desc": "回復自身生命，並短暫提升雙防；同類護持不疊加。",
+          "cooldown": 300,
+          "costMultiplier": 0.42689,
+          "cost": 40548197351,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "heal",
+              "target": "self",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.maxHp",
+                    "scale": 0.09
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.015000000000000001
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.divine_guard",
+              "name": "七境護持",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 12,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "physDef": 18,
+                "spellDef": 18
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 10,
+          "playerCast": {
+            "windupTicks": 1,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_tribulation_1",
+      "name": "薪火不滅經",
+      "desc": "薪火城倖存者將五衰之中保住一息的經驗編成法卷。側重體魄、經脈、神識，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "saint",
+      "category": "internal",
+      "realmLv": 115,
+      "attrRatio": {
+        "constitution": 4,
+        "meridians": 4,
+        "spirit": 2
+      },
+      "maxLayer": 30,
+      "expDifficulty": 1
+    },
+    {
+      "id": "lg_manual_golden_core_4",
+      "name": "薪途識火錄",
+      "desc": "燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。四十五息內視野增加 1 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "grade": "earth",
+      "category": "secret",
+      "realmLv": 47,
+      "maxLayer": 18,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_golden_core_4.invoke",
+          "name": "薪途識火",
+          "desc": "四十五息內視野增加 1 格，同類引路狀態不疊加。",
+          "cooldown": 120,
+          "costMultiplier": 0.455539,
+          "cost": 527968,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.wayfinding",
+              "name": "七境引路",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 45,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "viewRange": 1
+              },
+              "statMode": "flat"
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_void_refinement_8",
+      "name": "星港沉界",
+      "desc": "虛舟市領航人將界隙的張合寫成可反覆演練的法式。蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+      "grade": "spirit",
+      "category": "divine",
+      "realmLv": 89,
+      "maxLayer": 24,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_void_refinement_8.manifest",
+          "name": "星港沉界",
+          "desc": "蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+          "cooldown": 600,
+          "costMultiplier": 1.115607,
+          "cost": 2327834600,
+          "range": 5,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "metal",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.physAtk",
+                    "scale": 12
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.01875
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 16,
+          "playerCast": {
+            "windupTicks": 3,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_void_refinement_3",
+      "name": "星骸藏息篇",
+      "desc": "虛舟市領航人將界隙的張合寫成可反覆演練的法式。側重經脈、神識、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "spirit",
+      "category": "internal",
+      "realmLv": 82,
+      "attrRatio": {
+        "meridians": 5,
+        "spirit": 3,
+        "talent": 2
+      },
+      "maxLayer": 24,
+      "expDifficulty": 1
+    },
+    {
+      "id": "lg_manual_spirit_transformation_4",
+      "name": "星臺觀路錄",
+      "desc": "望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。四十五息內視野增加 1 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "grade": "spirit",
+      "category": "secret",
+      "realmLv": 71,
+      "maxLayer": 22,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_spirit_transformation_4.invoke",
+          "name": "星臺觀路",
+          "desc": "四十五息內視野增加 1 格，同類引路狀態不疊加。",
+          "cooldown": 120,
+          "costMultiplier": 0.232418,
+          "cost": 53607615,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.wayfinding",
+              "name": "七境引路",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 45,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "viewRange": 1
+              },
+              "statMode": "flat"
+            }
+          ],
+          "unlockLevel": 1
         }
       ]
     },
@@ -9305,6 +11291,126 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_void_refinement_7",
+      "name": "虛海寂照法",
+      "desc": "虛舟市領航人將界隙的張合寫成可反覆演練的法式。六十息內功法經驗加成增加 6.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。",
+      "grade": "spirit",
+      "category": "secret",
+      "realmLv": 88,
+      "maxLayer": 24,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_void_refinement_7.invoke",
+          "name": "虛海寂照",
+          "desc": "六十息內功法經驗加成增加 6.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。",
+          "cooldown": 240,
+          "costMultiplier": 0.278902,
+          "cost": 529053793,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.contemplation",
+              "name": "七境澄心",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 60,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "techniqueExpRate": 650
+              },
+              "statMode": "flat"
+            }
+          ],
+          "unlockLevel": 8
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_void_refinement_2",
+      "name": "虛舟穿隙訣",
+      "desc": "虛舟市領航人將界隙的張合寫成可反覆演練的法式。瞄準界隙作遠距物理一擊，距離加成最多計五格。",
+      "grade": "spirit",
+      "category": "arts",
+      "realmLv": 80,
+      "maxLayer": 24,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_void_refinement_2.cast",
+          "name": "虛舟穿隙",
+          "desc": "瞄準界隙作遠距物理一擊，距離加成最多計五格。",
+          "cooldown": 9,
+          "costMultiplier": 0.464836,
+          "cost": 411345241,
+          "range": 6,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "metal",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "var": "caster.stat.physAtk",
+                        "scale": 2.7
+                      },
+                      {
+                        "op": "add",
+                        "args": [
+                          1,
+                          {
+                            "op": "mul",
+                            "args": [
+                              0.05,
+                              {
+                                "op": "min",
+                                "args": [
+                                  5,
+                                  {
+                                    "var": "target.distance",
+                                    "scale": 1
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.01875
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 1
         }
       ]
     },
@@ -10308,6 +12414,21 @@
       }
     },
     {
+      "id": "lg_manual_golden_core_3",
+      "name": "懸燈照脈篇",
+      "desc": "燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。側重神識、身法、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "earth",
+      "category": "internal",
+      "realmLv": 46,
+      "attrRatio": {
+        "spirit": 5,
+        "perception": 3,
+        "talent": 2
+      },
+      "maxLayer": 18,
+      "expDifficulty": 1
+    },
+    {
       "id": "xuesha_huanling_jue",
       "name": "血煞喚靈決",
       "desc": "更高境界天階秘術預留位，名稱偏血煞召喚或代價型召靈。",
@@ -10915,6 +13036,64 @@
       "expDifficulty": 1
     },
     {
+      "id": "lg_manual_body_integration_8",
+      "name": "一身撐天",
+      "desc": "天垣城修士藉法骸與鏡我之試，校準肉身和神識。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+      "grade": "saint",
+      "category": "divine",
+      "realmLv": 101,
+      "maxLayer": 26,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_body_integration_8.manifest",
+          "name": "一身撐天",
+          "desc": "蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+          "cooldown": 600,
+          "costMultiplier": 0.796862,
+          "cost": 7305740857,
+          "range": 5,
+          "targeting": {
+            "shape": "area",
+            "radius": 2,
+            "maxTargets": 5
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "earth",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.physAtk",
+                    "scale": 6
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.01730769230769231
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 18,
+          "playerCast": {
+            "windupTicks": 3,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
       "id": "yi_kunlun",
       "name": "移崑崙",
       "desc": "叩定地脈，搬山成嶽，改變戰場地形。",
@@ -11262,6 +13441,101 @@
             }
           ],
           "unlockLevel": 6
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_spirit_transformation_7",
+      "name": "引雷歸竅法",
+      "desc": "望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。二十息內靈力輸出提高 12%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+      "grade": "spirit",
+      "category": "secret",
+      "realmLv": 76,
+      "maxLayer": 22,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_spirit_transformation_7.invoke",
+          "name": "引雷歸竅",
+          "desc": "二十息內靈力輸出提高 12%，同類調息狀態不疊加；適合短暫施法窗口。",
+          "cooldown": 180,
+          "costMultiplier": 0.371869,
+          "cost": 201385738,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.breath",
+              "name": "七境調息",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 20,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "maxQiOutputPerTick": 12
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 8
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_golden_core_1",
+      "name": "餘燼守爐經",
+      "desc": "燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。側重體魄、經脈、力道，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "earth",
+      "category": "internal",
+      "realmLv": 43,
+      "attrRatio": {
+        "constitution": 5,
+        "meridians": 3,
+        "strength": 2
+      },
+      "maxLayer": 18,
+      "expDifficulty": 1
+    },
+    {
+      "id": "lg_manual_body_integration_4",
+      "name": "垣井辨影錄",
+      "desc": "天垣城修士藉法骸與鏡我之試，校準肉身和神識。四十五息內視野增加 2 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "grade": "spirit",
+      "category": "secret",
+      "realmLv": 95,
+      "maxLayer": 26,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.lg_manual_body_integration_4.invoke",
+          "name": "垣井辨影",
+          "desc": "四十五息內視野增加 2 格，同類引路狀態不疊加。",
+          "cooldown": 120,
+          "costMultiplier": 0.232418,
+          "cost": 859145578,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.wayfinding",
+              "name": "七境引路",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 45,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "viewRange": 2
+              },
+              "statMode": "flat"
+            }
+          ],
+          "unlockLevel": 1
         }
       ]
     },
@@ -11685,6 +13959,75 @@
       ]
     },
     {
+      "id": "lg_manual_body_integration_5",
+      "name": "澤鏡返照式",
+      "desc": "天垣城修士藉法骸與鏡我之試，校準肉身和神識。單體法術攻擊，並短暫削弱目標雙防；同類破綻不疊加。",
+      "grade": "spirit",
+      "category": "arts",
+      "realmLv": 97,
+      "maxLayer": 26,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.lg_manual_body_integration_5.cast",
+          "name": "澤鏡返照",
+          "desc": "單體法術攻擊，並短暫削弱目標雙防；同類破綻不疊加。",
+          "cooldown": 18,
+          "costMultiplier": 0.790221,
+          "cost": 3534524013,
+          "range": 4,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "earth",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 2.4
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.01730769230769231
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "buff",
+              "target": "target",
+              "buffId": "lg.manual.fracture",
+              "name": "照影破綻",
+              "category": "debuff",
+              "visibility": "public",
+              "duration": 5,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "physDef": -8,
+                "spellDef": -8
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
       "id": "standing_stake_art",
       "name": "站樁功",
       "desc": "紮根基、穩下盤，凡人錘鍊體魄之始。",
@@ -11810,6 +14153,120 @@
       "expDifficulty": 1
     },
     {
+      "id": "lg_manual_great_vehicle_6",
+      "name": "鎮關承劫章",
+      "desc": "鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+      "grade": "saint",
+      "category": "divine",
+      "realmLv": 110,
+      "maxLayer": 28,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_great_vehicle_6.guard",
+          "name": "鎮關承劫",
+          "desc": "短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+          "cooldown": 300,
+          "costMultiplier": 0.597646,
+          "cost": 12919905278,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.divine_guard",
+              "name": "七境護持",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 12,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "physDef": 18,
+                "spellDef": 18,
+                "antiCrit": 15
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 10,
+          "playerCast": {
+            "windupTicks": 1,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lg_manual_nascent_soul_6",
+      "name": "鎮海安魂章",
+      "desc": "殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+      "grade": "heaven",
+      "category": "divine",
+      "realmLv": 62,
+      "maxLayer": 20,
+      "expDifficulty": 1.15,
+      "skills": [
+        {
+          "id": "skill.lg_manual_nascent_soul_6.guard",
+          "name": "鎮海安魂",
+          "desc": "回復自身生命，並短暫提升雙防；同類護持不疊加。",
+          "cooldown": 300,
+          "costMultiplier": 1.171387,
+          "cost": 31389037,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "heal",
+              "target": "self",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.maxHp",
+                    "scale": 0.09
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.55,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.0225
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.divine_guard",
+              "name": "七境護持",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 12,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "physDef": 18,
+                "spellDef": 18
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 7,
+          "playerCast": {
+            "windupTicks": 1,
+            "warningColor": "#c7a56c"
+          }
+        }
+      ]
+    },
+    {
       "id": "spirit_anchor",
       "name": "鎮靈篇",
       "desc": "鎮靈真意鋪開，封鎮大片氣機。",
@@ -11886,6 +14343,21 @@
           "requiresTarget": false
         }
       ]
+    },
+    {
+      "id": "lg_manual_great_vehicle_1",
+      "name": "鎮涯負嶽經",
+      "desc": "鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。側重體魄、力道、身法，滿層總量遵循同品階、同境界內功基準。",
+      "grade": "saint",
+      "category": "internal",
+      "realmLv": 103,
+      "attrRatio": {
+        "constitution": 5,
+        "strength": 3,
+        "perception": 2
+      },
+      "maxLayer": 28,
+      "expDifficulty": 1
     },
     {
       "id": "zhenyue_huyuan",
@@ -12367,11 +14839,71 @@
       "learnTechniqueId": "baihong_duanyue"
     },
     {
+      "itemId": "book.lg_manual_golden_core_6",
+      "name": "《百燈護命章》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 50,
+      "learnTechniqueId": "lg_manual_golden_core_6",
+      "learnTechniqueMaxLevel": 18,
+      "desc": "神通全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+      "tags": [
+        "功法書",
+        "神通",
+        "金丹期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_8",
+      "name": "《補天一炬》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 53,
+      "learnTechniqueId": "lg_manual_golden_core_8",
+      "learnTechniqueMaxLevel": 18,
+      "desc": "神通全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+      "tags": [
+        "功法書",
+        "神通",
+        "金丹期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_7",
+      "name": "《殘爐養息法》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 52,
+      "learnTechniqueId": "lg_manual_golden_core_7",
+      "learnTechniqueMaxLevel": 18,
+      "desc": "秘術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。二十息內靈力輸出提高 10%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "金丹期"
+      ]
+    },
+    {
       "itemId": "book.hidden_fortune_record",
       "name": "《藏運錄》",
       "type": "skill_book",
       "desc": "專記斂鋒藏運的小術，修久了總會多撞上幾分偏門福氣。",
       "learnTechniqueId": "hidden_fortune_record"
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_1",
+      "name": "《沉鐘定魄經》",
+      "type": "skill_book",
+      "grade": "heaven",
+      "level": 55,
+      "learnTechniqueId": "lg_manual_nascent_soul_1",
+      "learnTechniqueMaxLevel": 20,
+      "desc": "內功全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。側重神識、體魄、經脈，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "元嬰期"
+      ]
     },
     {
       "itemId": "book.chiqi_ranqiao",
@@ -12409,6 +14941,21 @@
       "learnTechniqueId": "dimai_fumai"
     },
     {
+      "itemId": "book.lg_manual_spirit_transformation_6",
+      "name": "《定星護魂章》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 74,
+      "learnTechniqueId": "lg_manual_spirit_transformation_6",
+      "learnTechniqueMaxLevel": 22,
+      "desc": "神通全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+      "tags": [
+        "功法書",
+        "神通",
+        "化神期"
+      ]
+    },
+    {
       "itemId": "book.body_tempering_formula",
       "name": "《鍛體決》",
       "type": "skill_book",
@@ -12423,6 +14970,51 @@
       "learnTechniqueId": "duanjin_zhuixing"
     },
     {
+      "itemId": "book.lg_manual_spirit_transformation_5",
+      "name": "《斷崖截風式》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 73,
+      "learnTechniqueId": "lg_manual_spirit_transformation_5",
+      "learnTechniqueMaxLevel": 22,
+      "desc": "法術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。沿直線掃過至多四名目標，單體威力低於專精點殺。",
+      "tags": [
+        "功法書",
+        "法術",
+        "化神期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_7",
+      "name": "《法骸調息法》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 100,
+      "learnTechniqueId": "lg_manual_body_integration_7",
+      "learnTechniqueMaxLevel": 26,
+      "desc": "秘術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。二十息內靈力輸出提高 14%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "合體期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_2",
+      "name": "《法骸鎮門訣》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 92,
+      "learnTechniqueId": "lg_manual_body_integration_2",
+      "learnTechniqueMaxLevel": 26,
+      "desc": "法術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。近距物理打擊，以自身物防補充威力；防禦轉傷最多為物攻的七成。",
+      "tags": [
+        "功法書",
+        "法術",
+        "合體期"
+      ]
+    },
+    {
       "itemId": "book.cloudchase_steps",
       "name": "《分光步》",
       "type": "skill_book",
@@ -12430,11 +15022,56 @@
       "learnTechniqueId": "cloudchase_steps"
     },
     {
+      "itemId": "book.lg_manual_great_vehicle_7",
+      "name": "《風劫定念法》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 112,
+      "learnTechniqueId": "lg_manual_great_vehicle_7",
+      "learnTechniqueMaxLevel": 28,
+      "desc": "秘術全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。六十息內功法經驗加成增加 7.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "大乘期"
+      ]
+    },
+    {
       "itemId": "book.genghua_ningfeng",
       "name": "《庚華凝鋒訣》",
       "type": "skill_book",
       "desc": "記載庚華凝鋒訣的修行法門，使用後學會庚華凝鋒訣。",
       "learnTechniqueId": "genghua_ningfeng"
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_3",
+      "name": "《古曜洗髓篇》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 70,
+      "learnTechniqueId": "lg_manual_spirit_transformation_3",
+      "learnTechniqueMaxLevel": 22,
+      "desc": "內功全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。側重力道、經脈、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "化神期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_5",
+      "name": "《骨帆歸汐式》",
+      "type": "skill_book",
+      "grade": "heaven",
+      "level": 61,
+      "learnTechniqueId": "lg_manual_nascent_soul_5",
+      "learnTechniqueMaxLevel": 20,
+      "desc": "法術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。以自身為中心的潮環打擊至多五名目標，中央與貼身內圈不受攻擊。",
+      "tags": [
+        "功法書",
+        "法術",
+        "元嬰期"
+      ]
     },
     {
       "itemId": "book.golden_lock_body",
@@ -12479,11 +15116,71 @@
       "learnTechniqueId": "huangting_zaishan"
     },
     {
+      "itemId": "book.lg_manual_nascent_soul_2",
+      "name": "《回瀾分潮訣》",
+      "type": "skill_book",
+      "grade": "heaven",
+      "level": 56,
+      "learnTechniqueId": "lg_manual_nascent_soul_2",
+      "learnTechniqueMaxLevel": 20,
+      "desc": "法術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。單體水行攻擊，並回復自身少量生命；以較低傷害換取續戰。",
+      "tags": [
+        "功法書",
+        "法術",
+        "元嬰期"
+      ]
+    },
+    {
       "itemId": "book.hunyuan_zaimai",
       "name": "《混元載脈圖》",
       "type": "skill_book",
       "desc": "記載混元載脈圖的修行法門，使用後學會混元載脈圖。",
       "learnTechniqueId": "hunyuan_zaimai"
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_2",
+      "name": "《劫風破陣訣》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 104,
+      "learnTechniqueId": "lg_manual_great_vehicle_2",
+      "learnTechniqueMaxLevel": 28,
+      "desc": "法術全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。對單一目標作穩定物理破陣攻擊，適合近戰持續輸出。",
+      "tags": [
+        "功法書",
+        "法術",
+        "大乘期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_2",
+      "name": "《劫雲引霆訣》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 116,
+      "learnTechniqueId": "lg_manual_tribulation_2",
+      "learnTechniqueMaxLevel": 30,
+      "desc": "法術全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。單體火行法術，威力各取物攻與法攻的一部分，適合雙修。",
+      "tags": [
+        "功法書",
+        "法術",
+        "渡劫期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_6",
+      "name": "《界舟固錨章》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 86,
+      "learnTechniqueId": "lg_manual_void_refinement_6",
+      "learnTechniqueMaxLevel": 24,
+      "desc": "神通全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+      "tags": [
+        "功法書",
+        "神通",
+        "煉虛期"
+      ]
     },
     {
       "itemId": "book.jinluo_lifeng",
@@ -12493,6 +15190,21 @@
       "learnTechniqueId": "jinluo_lifeng"
     },
     {
+      "itemId": "book.lg_manual_golden_core_2",
+      "name": "《燼燈點火訣》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 44,
+      "learnTechniqueId": "lg_manual_golden_core_2",
+      "learnTechniqueMaxLevel": 18,
+      "desc": "法術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。集中靈力打擊單一目標，低耗靈、短冷卻，適合持續作戰。",
+      "tags": [
+        "功法書",
+        "法術",
+        "金丹期"
+      ]
+    },
+    {
       "itemId": "book_thunder_palm",
       "name": "《驚雷掌》殘卷",
       "type": "skill_book",
@@ -12500,11 +15212,116 @@
       "learnTechniqueId": "thunder_palm"
     },
     {
+      "itemId": "book.lg_manual_body_integration_3",
+      "name": "《鏡我返真篇》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 94,
+      "learnTechniqueId": "lg_manual_body_integration_3",
+      "learnTechniqueMaxLevel": 26,
+      "desc": "內功全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。側重神識、身法、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "合體期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_8",
+      "name": "《九曜墜涯》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 77,
+      "learnTechniqueId": "lg_manual_spirit_transformation_8",
+      "learnTechniqueMaxLevel": 22,
+      "desc": "神通全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+      "tags": [
+        "功法書",
+        "神通",
+        "化神期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_7",
+      "name": "《九重息雷法》",
+      "type": "skill_book",
+      "grade": "emperor",
+      "level": 124,
+      "learnTechniqueId": "lg_manual_tribulation_7",
+      "learnTechniqueMaxLevel": 30,
+      "desc": "秘術全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。二十息內靈力輸出提高 16%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "渡劫期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_5",
+      "name": "《舊壘迴鋒式》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 109,
+      "learnTechniqueId": "lg_manual_great_vehicle_5",
+      "learnTechniqueMaxLevel": 28,
+      "desc": "法術全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。沿直線掃過至多四名目標，單體威力低於專精點殺。",
+      "tags": [
+        "功法書",
+        "法術",
+        "大乘期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_5",
+      "name": "《空巢迴刃式》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 85,
+      "learnTechniqueId": "lg_manual_void_refinement_5",
+      "learnTechniqueMaxLevel": 24,
+      "desc": "法術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。在落點附近迴旋斬擊至多三名目標，適合小群敵人。",
+      "tags": [
+        "功法書",
+        "法術",
+        "煉虛期"
+      ]
+    },
+    {
       "itemId": "book.kunyue_zhenhai",
       "name": "《坤嶽鎮海篇》",
       "type": "skill_book",
       "desc": "記載坤嶽鎮海篇的修行法門，使用後學會坤嶽鎮海篇。",
       "learnTechniqueId": "kunyue_zhenhai"
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_2",
+      "name": "《雷原穿雲訣》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 68,
+      "learnTechniqueId": "lg_manual_spirit_transformation_2",
+      "learnTechniqueMaxLevel": 22,
+      "desc": "法術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。遠距離金行穿雲一擊，以略低傷害換取射程。",
+      "tags": [
+        "功法書",
+        "法術",
+        "化神期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_4",
+      "name": "《雷原尋隙錄》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 107,
+      "learnTechniqueId": "lg_manual_great_vehicle_4",
+      "learnTechniqueMaxLevel": 28,
+      "desc": "秘術全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。四十五息內移動速度增加 3，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "大乘期"
+      ]
     },
     {
       "itemId": "book.liyan_duanxi",
@@ -12519,6 +15336,21 @@
       "type": "skill_book",
       "desc": "從江湖刀法演化而來的靈動刀譜。",
       "learnTechniqueId": "cloud_blade"
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_4",
+      "name": "《漏聲辨潮錄》",
+      "type": "skill_book",
+      "grade": "heaven",
+      "level": 59,
+      "learnTechniqueId": "lg_manual_nascent_soul_4",
+      "learnTechniqueMaxLevel": 20,
+      "desc": "秘術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。四十五息內移動速度增加 1，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "元嬰期"
+      ]
     },
     {
       "itemId": "book.manzhi_jiaoluo",
@@ -12549,6 +15381,21 @@
       "learnTechniqueId": "ningqi_chengji"
     },
     {
+      "itemId": "book.lg_manual_nascent_soul_3",
+      "name": "《千帆寄神篇》",
+      "type": "skill_book",
+      "grade": "heaven",
+      "level": 58,
+      "learnTechniqueId": "lg_manual_nascent_soul_3",
+      "learnTechniqueMaxLevel": 20,
+      "desc": "內功全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。側重身法、神識、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "元嬰期"
+      ]
+    },
+    {
       "itemId": "book.qingmu_sword",
       "name": "《青木劍訣》",
       "type": "skill_book",
@@ -12568,6 +15415,51 @@
       "type": "skill_book",
       "desc": "記載青藤回息訣的修行法門，使用後學會青藤回息訣。",
       "learnTechniqueId": "qingteng_huixi"
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_5",
+      "name": "《熔渠斷流式》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 49,
+      "learnTechniqueId": "lg_manual_golden_core_5",
+      "learnTechniqueMaxLevel": 18,
+      "desc": "法術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。沿直線掃過至多四名目標，單體威力低於專精點殺。",
+      "tags": [
+        "功法書",
+        "法術",
+        "金丹期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_5",
+      "name": "《衰崖截命式》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 121,
+      "learnTechniqueId": "lg_manual_tribulation_5",
+      "learnTechniqueMaxLevel": 30,
+      "desc": "法術全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。單體法術截擊，目標失去的生命比例提高威力，加成上限四成。",
+      "tags": [
+        "功法書",
+        "法術",
+        "渡劫期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_1",
+      "name": "《碎界固身經》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 79,
+      "learnTechniqueId": "lg_manual_void_refinement_1",
+      "learnTechniqueMaxLevel": 24,
+      "desc": "內功全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。側重體魄、力道、身法，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "煉虛期"
+      ]
     },
     {
       "itemId": "book_wind_step",
@@ -12605,11 +15497,71 @@
       "learnTechniqueId": "taiyin_guichao"
     },
     {
+      "itemId": "book.lg_manual_great_vehicle_3",
+      "name": "《天痕納海篇》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 106,
+      "learnTechniqueId": "lg_manual_great_vehicle_3",
+      "learnTechniqueMaxLevel": 28,
+      "desc": "內功全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。側重經脈、神識、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "大乘期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_8",
+      "name": "《天人續燈》",
+      "type": "skill_book",
+      "grade": "emperor",
+      "level": 125,
+      "learnTechniqueId": "lg_manual_tribulation_8",
+      "learnTechniqueMaxLevel": 30,
+      "desc": "神通全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+      "tags": [
+        "功法書",
+        "神通",
+        "渡劫期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_1",
+      "name": "《天垣合身經》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 91,
+      "learnTechniqueId": "lg_manual_body_integration_1",
+      "learnTechniqueMaxLevel": 26,
+      "desc": "內功全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。側重體魄、力道、經脈，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "合體期"
+      ]
+    },
+    {
       "itemId": "book.iron_bone_art",
       "name": "《鐵骨功》",
       "type": "skill_book",
       "desc": "武者鍛體法門，強調硬橋硬馬之道。",
       "learnTechniqueId": "iron_bone_art"
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_7",
+      "name": "《聽潮澄心法》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 64,
+      "learnTechniqueId": "lg_manual_nascent_soul_7",
+      "learnTechniqueMaxLevel": 20,
+      "desc": "秘術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。六十息內功法經驗加成增加 5.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "元嬰期"
+      ]
     },
     {
       "itemId": "book.tingmai_dingxi",
@@ -12619,6 +15571,51 @@
       "learnTechniqueId": "tingmai_dingxi"
     },
     {
+      "itemId": "book.lg_manual_nascent_soul_8",
+      "name": "《萬帆鎮淵》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 65,
+      "learnTechniqueId": "lg_manual_nascent_soul_8",
+      "learnTechniqueMaxLevel": 20,
+      "desc": "神通全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+      "tags": [
+        "功法書",
+        "神通",
+        "元嬰期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_8",
+      "name": "《萬壘斷劫》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 113,
+      "learnTechniqueId": "lg_manual_great_vehicle_8",
+      "learnTechniqueMaxLevel": 28,
+      "desc": "神通全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+      "tags": [
+        "功法書",
+        "神通",
+        "大乘期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_6",
+      "name": "《萬垣護生章》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 98,
+      "learnTechniqueId": "lg_manual_body_integration_6",
+      "learnTechniqueMaxLevel": 26,
+      "desc": "神通全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+      "tags": [
+        "功法書",
+        "神通",
+        "合體期"
+      ]
+    },
+    {
       "itemId": "book.wanzhi_huichun",
       "name": "《萬枝回春卷》",
       "type": "skill_book",
@@ -12626,11 +15623,191 @@
       "learnTechniqueId": "wanzhi_huichun"
     },
     {
+      "itemId": "book.lg_manual_spirit_transformation_1",
+      "name": "《望涯凝神經》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 67,
+      "learnTechniqueId": "lg_manual_spirit_transformation_1",
+      "learnTechniqueMaxLevel": 22,
+      "desc": "內功全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。側重身法、神識、體魄，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "化神期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_4",
+      "name": "《無光引航錄》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 83,
+      "learnTechniqueId": "lg_manual_void_refinement_4",
+      "learnTechniqueMaxLevel": 24,
+      "desc": "秘術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。四十五息內移動速度增加 2，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "煉虛期"
+      ]
+    },
+    {
       "itemId": "book.wuqi_guiliu",
       "name": "《五炁歸流篇》",
       "type": "skill_book",
       "desc": "記載五炁歸流篇的修行法門，使用後學會五炁歸流篇。",
       "learnTechniqueId": "wuqi_guiliu"
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_3",
+      "name": "《五衰歸真篇》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 118,
+      "learnTechniqueId": "lg_manual_tribulation_3",
+      "learnTechniqueMaxLevel": 30,
+      "desc": "內功全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。側重身法、根骨、神識，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "渡劫期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_4",
+      "name": "《心鏡照途錄》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 119,
+      "learnTechniqueId": "lg_manual_tribulation_4",
+      "learnTechniqueMaxLevel": 30,
+      "desc": "秘術全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。四十五息內視野增加 3 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "渡劫期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_6",
+      "name": "《薪城留命章》",
+      "type": "skill_book",
+      "grade": "emperor",
+      "level": 122,
+      "learnTechniqueId": "lg_manual_tribulation_6",
+      "learnTechniqueMaxLevel": 30,
+      "desc": "神通全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+      "tags": [
+        "功法書",
+        "神通",
+        "渡劫期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_1",
+      "name": "《薪火不滅經》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 115,
+      "learnTechniqueId": "lg_manual_tribulation_1",
+      "learnTechniqueMaxLevel": 30,
+      "desc": "內功全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。側重體魄、經脈、神識，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "渡劫期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_4",
+      "name": "《薪途識火錄》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 47,
+      "learnTechniqueId": "lg_manual_golden_core_4",
+      "learnTechniqueMaxLevel": 18,
+      "desc": "秘術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。四十五息內視野增加 1 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "金丹期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_8",
+      "name": "《星港沉界》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 89,
+      "learnTechniqueId": "lg_manual_void_refinement_8",
+      "learnTechniqueMaxLevel": 24,
+      "desc": "神通全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+      "tags": [
+        "功法書",
+        "神通",
+        "煉虛期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_3",
+      "name": "《星骸藏息篇》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 82,
+      "learnTechniqueId": "lg_manual_void_refinement_3",
+      "learnTechniqueMaxLevel": 24,
+      "desc": "內功全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。側重經脈、神識、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "煉虛期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_4",
+      "name": "《星臺觀路錄》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 71,
+      "learnTechniqueId": "lg_manual_spirit_transformation_4",
+      "learnTechniqueMaxLevel": 22,
+      "desc": "秘術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。四十五息內視野增加 1 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "化神期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_7",
+      "name": "《虛海寂照法》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 88,
+      "learnTechniqueId": "lg_manual_void_refinement_7",
+      "learnTechniqueMaxLevel": 24,
+      "desc": "秘術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。六十息內功法經驗加成增加 6.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "煉虛期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_2",
+      "name": "《虛舟穿隙訣》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 80,
+      "learnTechniqueId": "lg_manual_void_refinement_2",
+      "learnTechniqueMaxLevel": 24,
+      "desc": "法術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。瞄準界隙作遠距物理一擊，距離加成最多計五格。",
+      "tags": [
+        "功法書",
+        "法術",
+        "煉虛期"
+      ]
     },
     {
       "itemId": "book.xuanjin_huilan",
@@ -12654,6 +15831,21 @@
       "learnTechniqueId": "mountain_insight_chart"
     },
     {
+      "itemId": "book.lg_manual_golden_core_3",
+      "name": "《懸燈照脈篇》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 46,
+      "learnTechniqueId": "lg_manual_golden_core_3",
+      "learnTechniqueMaxLevel": 18,
+      "desc": "內功全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。側重神識、身法、根骨，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "金丹期"
+      ]
+    },
+    {
       "itemId": "book.xuesha_huanling_jue",
       "name": "《血煞喚靈決》",
       "type": "skill_book",
@@ -12675,6 +15867,21 @@
       "learnTechniqueId": "yaohuo_liebo"
     },
     {
+      "itemId": "book.lg_manual_body_integration_8",
+      "name": "《一身撐天》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 101,
+      "learnTechniqueId": "lg_manual_body_integration_8",
+      "learnTechniqueMaxLevel": 26,
+      "desc": "神通全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+      "tags": [
+        "功法書",
+        "神通",
+        "合體期"
+      ]
+    },
+    {
       "itemId": "book.yi_kunlun",
       "name": "《移崑崙》",
       "type": "skill_book",
@@ -12682,11 +15889,71 @@
       "learnTechniqueId": "yi_kunlun"
     },
     {
+      "itemId": "book.lg_manual_spirit_transformation_7",
+      "name": "《引雷歸竅法》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 76,
+      "learnTechniqueId": "lg_manual_spirit_transformation_7",
+      "learnTechniqueMaxLevel": 22,
+      "desc": "秘術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。二十息內靈力輸出提高 12%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "化神期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_1",
+      "name": "《餘燼守爐經》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 43,
+      "learnTechniqueId": "lg_manual_golden_core_1",
+      "learnTechniqueMaxLevel": 18,
+      "desc": "內功全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。側重體魄、經脈、力道，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "金丹期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_4",
+      "name": "《垣井辨影錄》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 95,
+      "learnTechniqueId": "lg_manual_body_integration_4",
+      "learnTechniqueMaxLevel": 26,
+      "desc": "秘術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。四十五息內視野增加 2 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "合體期"
+      ]
+    },
+    {
       "itemId": "book.starfall_spear",
       "name": "《隕星槍訣》",
       "type": "skill_book",
       "desc": "殘破星紋玉簡中記載的高階槍訣。",
       "learnTechniqueId": "starfall_spear"
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_5",
+      "name": "《澤鏡返照式》",
+      "type": "skill_book",
+      "grade": "spirit",
+      "level": 97,
+      "learnTechniqueId": "lg_manual_body_integration_5",
+      "learnTechniqueMaxLevel": 26,
+      "desc": "法術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。單體法術攻擊，並短暫削弱目標雙防；同類破綻不疊加。",
+      "tags": [
+        "功法書",
+        "法術",
+        "合體期"
+      ]
     },
     {
       "itemId": "book.standing_stake_art",
@@ -12717,11 +15984,56 @@
       "learnTechniqueId": "dragon_elephant_bone"
     },
     {
+      "itemId": "book.lg_manual_great_vehicle_6",
+      "name": "《鎮關承劫章》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 110,
+      "learnTechniqueId": "lg_manual_great_vehicle_6",
+      "learnTechniqueMaxLevel": 28,
+      "desc": "神通全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+      "tags": [
+        "功法書",
+        "神通",
+        "大乘期"
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_6",
+      "name": "《鎮海安魂章》",
+      "type": "skill_book",
+      "grade": "heaven",
+      "level": 62,
+      "learnTechniqueId": "lg_manual_nascent_soul_6",
+      "learnTechniqueMaxLevel": 20,
+      "desc": "神通全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+      "tags": [
+        "功法書",
+        "神通",
+        "元嬰期"
+      ]
+    },
+    {
       "itemId": "book.spirit_anchor",
       "name": "《鎮靈篇》",
       "type": "skill_book",
       "desc": "古修遺留的御神法門，可壓制異獸靈識。",
       "learnTechniqueId": "spirit_anchor"
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_1",
+      "name": "《鎮涯負嶽經》",
+      "type": "skill_book",
+      "grade": "saint",
+      "level": 103,
+      "learnTechniqueId": "lg_manual_great_vehicle_1",
+      "learnTechniqueMaxLevel": 28,
+      "desc": "內功全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。側重體魄、力道、身法，滿層總量遵循同品階、同境界內功基準。",
+      "tags": [
+        "功法書",
+        "內功",
+        "大乘期"
+      ]
     },
     {
       "itemId": "book.zhenyue_huyuan",
@@ -26466,6 +29778,79 @@
       "statMode": "percent"
     },
     {
+      "buffId": "lg.manual.contemplation",
+      "name": "七境澄心",
+      "shortMark": "七",
+      "category": "buff",
+      "visibility": "public",
+      "remainingTicks": 60,
+      "duration": 60,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.lg_manual_great_vehicle_7.invoke",
+      "sourceSkillName": "風劫定念",
+      "realmLv": 1,
+      "stats": {
+        "techniqueExpRate": 750
+      },
+      "statMode": "flat"
+    },
+    {
+      "buffId": "lg.manual.breath",
+      "name": "七境調息",
+      "shortMark": "七",
+      "category": "buff",
+      "visibility": "public",
+      "remainingTicks": 20,
+      "duration": 20,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.lg_manual_golden_core_7.invoke",
+      "sourceSkillName": "殘爐養息",
+      "realmLv": 1,
+      "stats": {
+        "maxQiOutputPerTick": 10
+      },
+      "statMode": "percent"
+    },
+    {
+      "buffId": "lg.manual.divine_guard",
+      "name": "七境護持",
+      "shortMark": "七",
+      "category": "buff",
+      "visibility": "public",
+      "remainingTicks": 12,
+      "duration": 12,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.lg_manual_golden_core_6.guard",
+      "sourceSkillName": "百燈護命",
+      "realmLv": 1,
+      "stats": {
+        "physDef": 18,
+        "spellDef": 18
+      },
+      "statMode": "percent"
+    },
+    {
+      "buffId": "lg.manual.wayfinding",
+      "name": "七境引路",
+      "shortMark": "七",
+      "category": "buff",
+      "visibility": "public",
+      "remainingTicks": 45,
+      "duration": 45,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.lg_manual_great_vehicle_4.invoke",
+      "sourceSkillName": "雷原尋隙",
+      "realmLv": 1,
+      "stats": {
+        "moveSpeed": 3
+      },
+      "statMode": "flat"
+    },
+    {
       "buffId": "buff.monster_bamboo_bind",
       "name": "青纏",
       "desc": "草木靈氣纏身，閃避和法抗一併走低。",
@@ -27241,6 +30626,25 @@
       "sourceSkillName": "照魂焰",
       "realmLv": 1,
       "color": "#dd6a45",
+      "statMode": "percent"
+    },
+    {
+      "buffId": "lg.manual.fracture",
+      "name": "照影破綻",
+      "shortMark": "照",
+      "category": "debuff",
+      "visibility": "public",
+      "remainingTicks": 5,
+      "duration": 5,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.lg_manual_body_integration_5.cast",
+      "sourceSkillName": "澤鏡返照",
+      "realmLv": 1,
+      "stats": {
+        "physDef": -8,
+        "spellDef": -8
+      },
       "statMode": "percent"
     },
     {

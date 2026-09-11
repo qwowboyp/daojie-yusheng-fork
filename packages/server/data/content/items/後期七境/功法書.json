@@ -1,0 +1,842 @@
+[
+  {
+    "itemId": "book.lg_manual_golden_core_1",
+    "name": "《餘燼守爐經》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 43,
+    "learnTechniqueId": "lg_manual_golden_core_1",
+    "learnTechniqueMaxLevel": 18,
+    "desc": "內功全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。側重體魄、經脈、力道，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "金丹期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_golden_core_2",
+    "name": "《燼燈點火訣》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 44,
+    "learnTechniqueId": "lg_manual_golden_core_2",
+    "learnTechniqueMaxLevel": 18,
+    "desc": "法術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。集中靈力打擊單一目標，低耗靈、短冷卻，適合持續作戰。",
+    "tags": [
+      "功法書",
+      "法術",
+      "金丹期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_golden_core_3",
+    "name": "《懸燈照脈篇》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 46,
+    "learnTechniqueId": "lg_manual_golden_core_3",
+    "learnTechniqueMaxLevel": 18,
+    "desc": "內功全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。側重神識、身法、根骨，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "金丹期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_golden_core_4",
+    "name": "《薪途識火錄》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 47,
+    "learnTechniqueId": "lg_manual_golden_core_4",
+    "learnTechniqueMaxLevel": 18,
+    "desc": "秘術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。四十五息內視野增加 1 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "金丹期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_golden_core_5",
+    "name": "《熔渠斷流式》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 49,
+    "learnTechniqueId": "lg_manual_golden_core_5",
+    "learnTechniqueMaxLevel": 18,
+    "desc": "法術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。沿直線掃過至多四名目標，單體威力低於專精點殺。",
+    "tags": [
+      "功法書",
+      "法術",
+      "金丹期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_golden_core_6",
+    "name": "《百燈護命章》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 50,
+    "learnTechniqueId": "lg_manual_golden_core_6",
+    "learnTechniqueMaxLevel": 18,
+    "desc": "神通全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+    "tags": [
+      "功法書",
+      "神通",
+      "金丹期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_golden_core_7",
+    "name": "《殘爐養息法》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 52,
+    "learnTechniqueId": "lg_manual_golden_core_7",
+    "learnTechniqueMaxLevel": 18,
+    "desc": "秘術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。二十息內靈力輸出提高 10%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "金丹期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_golden_core_8",
+    "name": "《補天一炬》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 53,
+    "learnTechniqueId": "lg_manual_golden_core_8",
+    "learnTechniqueMaxLevel": 18,
+    "desc": "神通全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+    "tags": [
+      "功法書",
+      "神通",
+      "金丹期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_nascent_soul_1",
+    "name": "《沉鐘定魄經》",
+    "type": "skill_book",
+    "grade": "heaven",
+    "level": 55,
+    "learnTechniqueId": "lg_manual_nascent_soul_1",
+    "learnTechniqueMaxLevel": 20,
+    "desc": "內功全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。側重神識、體魄、經脈，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "元嬰期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_nascent_soul_2",
+    "name": "《回瀾分潮訣》",
+    "type": "skill_book",
+    "grade": "heaven",
+    "level": 56,
+    "learnTechniqueId": "lg_manual_nascent_soul_2",
+    "learnTechniqueMaxLevel": 20,
+    "desc": "法術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。單體水行攻擊，並回復自身少量生命；以較低傷害換取續戰。",
+    "tags": [
+      "功法書",
+      "法術",
+      "元嬰期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_nascent_soul_3",
+    "name": "《千帆寄神篇》",
+    "type": "skill_book",
+    "grade": "heaven",
+    "level": 58,
+    "learnTechniqueId": "lg_manual_nascent_soul_3",
+    "learnTechniqueMaxLevel": 20,
+    "desc": "內功全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。側重身法、神識、根骨，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "元嬰期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_nascent_soul_4",
+    "name": "《漏聲辨潮錄》",
+    "type": "skill_book",
+    "grade": "heaven",
+    "level": 59,
+    "learnTechniqueId": "lg_manual_nascent_soul_4",
+    "learnTechniqueMaxLevel": 20,
+    "desc": "秘術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。四十五息內移動速度增加 1，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "元嬰期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_nascent_soul_5",
+    "name": "《骨帆歸汐式》",
+    "type": "skill_book",
+    "grade": "heaven",
+    "level": 61,
+    "learnTechniqueId": "lg_manual_nascent_soul_5",
+    "learnTechniqueMaxLevel": 20,
+    "desc": "法術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。以自身為中心的潮環打擊至多五名目標，中央與貼身內圈不受攻擊。",
+    "tags": [
+      "功法書",
+      "法術",
+      "元嬰期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_nascent_soul_6",
+    "name": "《鎮海安魂章》",
+    "type": "skill_book",
+    "grade": "heaven",
+    "level": 62,
+    "learnTechniqueId": "lg_manual_nascent_soul_6",
+    "learnTechniqueMaxLevel": 20,
+    "desc": "神通全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+    "tags": [
+      "功法書",
+      "神通",
+      "元嬰期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_nascent_soul_7",
+    "name": "《聽潮澄心法》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 64,
+    "learnTechniqueId": "lg_manual_nascent_soul_7",
+    "learnTechniqueMaxLevel": 20,
+    "desc": "秘術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。六十息內功法經驗加成增加 5.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "元嬰期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_nascent_soul_8",
+    "name": "《萬帆鎮淵》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 65,
+    "learnTechniqueId": "lg_manual_nascent_soul_8",
+    "learnTechniqueMaxLevel": 20,
+    "desc": "神通全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+    "tags": [
+      "功法書",
+      "神通",
+      "元嬰期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_spirit_transformation_1",
+    "name": "《望涯凝神經》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 67,
+    "learnTechniqueId": "lg_manual_spirit_transformation_1",
+    "learnTechniqueMaxLevel": 22,
+    "desc": "內功全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。側重身法、神識、體魄，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "化神期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_spirit_transformation_2",
+    "name": "《雷原穿雲訣》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 68,
+    "learnTechniqueId": "lg_manual_spirit_transformation_2",
+    "learnTechniqueMaxLevel": 22,
+    "desc": "法術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。遠距離金行穿雲一擊，以略低傷害換取射程。",
+    "tags": [
+      "功法書",
+      "法術",
+      "化神期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_spirit_transformation_3",
+    "name": "《古曜洗髓篇》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 70,
+    "learnTechniqueId": "lg_manual_spirit_transformation_3",
+    "learnTechniqueMaxLevel": 22,
+    "desc": "內功全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。側重力道、經脈、根骨，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "化神期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_spirit_transformation_4",
+    "name": "《星臺觀路錄》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 71,
+    "learnTechniqueId": "lg_manual_spirit_transformation_4",
+    "learnTechniqueMaxLevel": 22,
+    "desc": "秘術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。四十五息內視野增加 1 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "化神期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_spirit_transformation_5",
+    "name": "《斷崖截風式》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 73,
+    "learnTechniqueId": "lg_manual_spirit_transformation_5",
+    "learnTechniqueMaxLevel": 22,
+    "desc": "法術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。沿直線掃過至多四名目標，單體威力低於專精點殺。",
+    "tags": [
+      "功法書",
+      "法術",
+      "化神期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_spirit_transformation_6",
+    "name": "《定星護魂章》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 74,
+    "learnTechniqueId": "lg_manual_spirit_transformation_6",
+    "learnTechniqueMaxLevel": 22,
+    "desc": "神通全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+    "tags": [
+      "功法書",
+      "神通",
+      "化神期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_spirit_transformation_7",
+    "name": "《引雷歸竅法》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 76,
+    "learnTechniqueId": "lg_manual_spirit_transformation_7",
+    "learnTechniqueMaxLevel": 22,
+    "desc": "秘術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。二十息內靈力輸出提高 12%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "化神期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_spirit_transformation_8",
+    "name": "《九曜墜涯》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 77,
+    "learnTechniqueId": "lg_manual_spirit_transformation_8",
+    "learnTechniqueMaxLevel": 22,
+    "desc": "神通全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+    "tags": [
+      "功法書",
+      "神通",
+      "化神期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_void_refinement_1",
+    "name": "《碎界固身經》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 79,
+    "learnTechniqueId": "lg_manual_void_refinement_1",
+    "learnTechniqueMaxLevel": 24,
+    "desc": "內功全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。側重體魄、力道、身法，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "煉虛期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_void_refinement_2",
+    "name": "《虛舟穿隙訣》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 80,
+    "learnTechniqueId": "lg_manual_void_refinement_2",
+    "learnTechniqueMaxLevel": 24,
+    "desc": "法術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。瞄準界隙作遠距物理一擊，距離加成最多計五格。",
+    "tags": [
+      "功法書",
+      "法術",
+      "煉虛期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_void_refinement_3",
+    "name": "《星骸藏息篇》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 82,
+    "learnTechniqueId": "lg_manual_void_refinement_3",
+    "learnTechniqueMaxLevel": 24,
+    "desc": "內功全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。側重經脈、神識、根骨，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "煉虛期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_void_refinement_4",
+    "name": "《無光引航錄》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 83,
+    "learnTechniqueId": "lg_manual_void_refinement_4",
+    "learnTechniqueMaxLevel": 24,
+    "desc": "秘術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。四十五息內移動速度增加 2，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "煉虛期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_void_refinement_5",
+    "name": "《空巢迴刃式》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 85,
+    "learnTechniqueId": "lg_manual_void_refinement_5",
+    "learnTechniqueMaxLevel": 24,
+    "desc": "法術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。在落點附近迴旋斬擊至多三名目標，適合小群敵人。",
+    "tags": [
+      "功法書",
+      "法術",
+      "煉虛期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_void_refinement_6",
+    "name": "《界舟固錨章》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 86,
+    "learnTechniqueId": "lg_manual_void_refinement_6",
+    "learnTechniqueMaxLevel": 24,
+    "desc": "神通全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+    "tags": [
+      "功法書",
+      "神通",
+      "煉虛期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_void_refinement_7",
+    "name": "《虛海寂照法》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 88,
+    "learnTechniqueId": "lg_manual_void_refinement_7",
+    "learnTechniqueMaxLevel": 24,
+    "desc": "秘術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。六十息內功法經驗加成增加 6.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "煉虛期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_void_refinement_8",
+    "name": "《星港沉界》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 89,
+    "learnTechniqueId": "lg_manual_void_refinement_8",
+    "learnTechniqueMaxLevel": 24,
+    "desc": "神通全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+    "tags": [
+      "功法書",
+      "神通",
+      "煉虛期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_body_integration_1",
+    "name": "《天垣合身經》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 91,
+    "learnTechniqueId": "lg_manual_body_integration_1",
+    "learnTechniqueMaxLevel": 26,
+    "desc": "內功全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。側重體魄、力道、經脈，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "合體期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_body_integration_2",
+    "name": "《法骸鎮門訣》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 92,
+    "learnTechniqueId": "lg_manual_body_integration_2",
+    "learnTechniqueMaxLevel": 26,
+    "desc": "法術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。近距物理打擊，以自身物防補充威力；防禦轉傷最多為物攻的七成。",
+    "tags": [
+      "功法書",
+      "法術",
+      "合體期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_body_integration_3",
+    "name": "《鏡我返真篇》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 94,
+    "learnTechniqueId": "lg_manual_body_integration_3",
+    "learnTechniqueMaxLevel": 26,
+    "desc": "內功全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。側重神識、身法、根骨，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "合體期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_body_integration_4",
+    "name": "《垣井辨影錄》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 95,
+    "learnTechniqueId": "lg_manual_body_integration_4",
+    "learnTechniqueMaxLevel": 26,
+    "desc": "秘術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。四十五息內視野增加 2 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "合體期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_body_integration_5",
+    "name": "《澤鏡返照式》",
+    "type": "skill_book",
+    "grade": "spirit",
+    "level": 97,
+    "learnTechniqueId": "lg_manual_body_integration_5",
+    "learnTechniqueMaxLevel": 26,
+    "desc": "法術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。單體法術攻擊，並短暫削弱目標雙防；同類破綻不疊加。",
+    "tags": [
+      "功法書",
+      "法術",
+      "合體期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_body_integration_6",
+    "name": "《萬垣護生章》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 98,
+    "learnTechniqueId": "lg_manual_body_integration_6",
+    "learnTechniqueMaxLevel": 26,
+    "desc": "神通全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+    "tags": [
+      "功法書",
+      "神通",
+      "合體期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_body_integration_7",
+    "name": "《法骸調息法》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 100,
+    "learnTechniqueId": "lg_manual_body_integration_7",
+    "learnTechniqueMaxLevel": 26,
+    "desc": "秘術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。二十息內靈力輸出提高 14%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "合體期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_body_integration_8",
+    "name": "《一身撐天》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 101,
+    "learnTechniqueId": "lg_manual_body_integration_8",
+    "learnTechniqueMaxLevel": 26,
+    "desc": "神通全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+    "tags": [
+      "功法書",
+      "神通",
+      "合體期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_great_vehicle_1",
+    "name": "《鎮涯負嶽經》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 103,
+    "learnTechniqueId": "lg_manual_great_vehicle_1",
+    "learnTechniqueMaxLevel": 28,
+    "desc": "內功全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。側重體魄、力道、身法，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "大乘期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_great_vehicle_2",
+    "name": "《劫風破陣訣》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 104,
+    "learnTechniqueId": "lg_manual_great_vehicle_2",
+    "learnTechniqueMaxLevel": 28,
+    "desc": "法術全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。對單一目標作穩定物理破陣攻擊，適合近戰持續輸出。",
+    "tags": [
+      "功法書",
+      "法術",
+      "大乘期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_great_vehicle_3",
+    "name": "《天痕納海篇》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 106,
+    "learnTechniqueId": "lg_manual_great_vehicle_3",
+    "learnTechniqueMaxLevel": 28,
+    "desc": "內功全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。側重經脈、神識、根骨，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "大乘期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_great_vehicle_4",
+    "name": "《雷原尋隙錄》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 107,
+    "learnTechniqueId": "lg_manual_great_vehicle_4",
+    "learnTechniqueMaxLevel": 28,
+    "desc": "秘術全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。四十五息內移動速度增加 3，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "大乘期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_great_vehicle_5",
+    "name": "《舊壘迴鋒式》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 109,
+    "learnTechniqueId": "lg_manual_great_vehicle_5",
+    "learnTechniqueMaxLevel": 28,
+    "desc": "法術全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。沿直線掃過至多四名目標，單體威力低於專精點殺。",
+    "tags": [
+      "功法書",
+      "法術",
+      "大乘期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_great_vehicle_6",
+    "name": "《鎮關承劫章》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 110,
+    "learnTechniqueId": "lg_manual_great_vehicle_6",
+    "learnTechniqueMaxLevel": 28,
+    "desc": "神通全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。",
+    "tags": [
+      "功法書",
+      "神通",
+      "大乘期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_great_vehicle_7",
+    "name": "《風劫定念法》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 112,
+    "learnTechniqueId": "lg_manual_great_vehicle_7",
+    "learnTechniqueMaxLevel": 28,
+    "desc": "秘術全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。六十息內功法經驗加成增加 7.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "大乘期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_great_vehicle_8",
+    "name": "《萬壘斷劫》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 113,
+    "learnTechniqueId": "lg_manual_great_vehicle_8",
+    "learnTechniqueMaxLevel": 28,
+    "desc": "神通全卷，可修至28層。鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。",
+    "tags": [
+      "功法書",
+      "神通",
+      "大乘期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_tribulation_1",
+    "name": "《薪火不滅經》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 115,
+    "learnTechniqueId": "lg_manual_tribulation_1",
+    "learnTechniqueMaxLevel": 30,
+    "desc": "內功全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。側重體魄、經脈、神識，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "渡劫期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_tribulation_2",
+    "name": "《劫雲引霆訣》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 116,
+    "learnTechniqueId": "lg_manual_tribulation_2",
+    "learnTechniqueMaxLevel": 30,
+    "desc": "法術全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。單體火行法術，威力各取物攻與法攻的一部分，適合雙修。",
+    "tags": [
+      "功法書",
+      "法術",
+      "渡劫期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_tribulation_3",
+    "name": "《五衰歸真篇》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 118,
+    "learnTechniqueId": "lg_manual_tribulation_3",
+    "learnTechniqueMaxLevel": 30,
+    "desc": "內功全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。側重身法、根骨、神識，滿層總量遵循同品階、同境界內功基準。",
+    "tags": [
+      "功法書",
+      "內功",
+      "渡劫期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_tribulation_4",
+    "name": "《心鏡照途錄》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 119,
+    "learnTechniqueId": "lg_manual_tribulation_4",
+    "learnTechniqueMaxLevel": 30,
+    "desc": "秘術全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。四十五息內視野增加 3 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "渡劫期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_tribulation_5",
+    "name": "《衰崖截命式》",
+    "type": "skill_book",
+    "grade": "saint",
+    "level": 121,
+    "learnTechniqueId": "lg_manual_tribulation_5",
+    "learnTechniqueMaxLevel": 30,
+    "desc": "法術全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。單體法術截擊，目標失去的生命比例提高威力，加成上限四成。",
+    "tags": [
+      "功法書",
+      "法術",
+      "渡劫期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_tribulation_6",
+    "name": "《薪城留命章》",
+    "type": "skill_book",
+    "grade": "emperor",
+    "level": 122,
+    "learnTechniqueId": "lg_manual_tribulation_6",
+    "learnTechniqueMaxLevel": 30,
+    "desc": "神通全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。回復自身生命，並短暫提升雙防；同類護持不疊加。",
+    "tags": [
+      "功法書",
+      "神通",
+      "渡劫期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_tribulation_7",
+    "name": "《九重息雷法》",
+    "type": "skill_book",
+    "grade": "emperor",
+    "level": 124,
+    "learnTechniqueId": "lg_manual_tribulation_7",
+    "learnTechniqueMaxLevel": 30,
+    "desc": "秘術全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。二十息內靈力輸出提高 16%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "渡劫期"
+    ]
+  },
+  {
+    "itemId": "book.lg_manual_tribulation_8",
+    "name": "《天人續燈》",
+    "type": "skill_book",
+    "grade": "emperor",
+    "level": 125,
+    "learnTechniqueId": "lg_manual_tribulation_8",
+    "learnTechniqueMaxLevel": 30,
+    "desc": "神通全卷，可修至30層。薪火城倖存者將五衰之中保住一息的經驗編成法卷。蓄勢三息後重擊單一目標；長冷卻的決戰招式。",
+    "tags": [
+      "功法書",
+      "神通",
+      "渡劫期"
+    ]
+  }
+]

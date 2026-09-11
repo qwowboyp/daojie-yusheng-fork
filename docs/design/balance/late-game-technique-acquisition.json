@@ -1,0 +1,1738 @@
+[
+  {
+    "techniqueId": "lg_manual_golden_core_1",
+    "bookId": "book.lg_manual_golden_core_1",
+    "name": "餘燼守爐經",
+    "category": "internal",
+    "grade": "earth",
+    "realmLv": 43,
+    "maxLayer": 18,
+    "mapId": "lg_golden_core_xinjin_slope",
+    "mapName": "薪盡坡",
+    "sources": [
+      {
+        "monsterId": "lg_golden_core_xinjin_slope_mob_2",
+        "monsterName": "灰燼遊魂",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_golden_core_xinjin_slope_mob_4",
+        "monsterName": "燼殼灰偶",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_golden_core_xinjin_slope_mob_5",
+        "monsterName": "風掃灰魈",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_golden_core_xinjin_lamplighter",
+        "monsterName": "拾燈人",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_golden_core_2",
+    "bookId": "book.lg_manual_golden_core_2",
+    "name": "燼燈點火訣",
+    "category": "arts",
+    "grade": "earth",
+    "realmLv": 44,
+    "maxLayer": 18,
+    "mapId": "lg_golden_core_xinjin_slope",
+    "mapName": "薪盡坡",
+    "sources": [
+      {
+        "monsterId": "lg_golden_core_xinjin_slope_mob_1",
+        "monsterName": "焦土小妖",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_golden_core_xinjin_slope_mob_3",
+        "monsterName": "熄燈鬼火",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_golden_core_xinjin_slope_mob_5",
+        "monsterName": "風掃灰魈",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_golden_core_xinjin_lamplighter",
+        "monsterName": "拾燈人",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_golden_core_3",
+    "bookId": "book.lg_manual_golden_core_3",
+    "name": "懸燈照脈篇",
+    "category": "internal",
+    "grade": "earth",
+    "realmLv": 46,
+    "maxLayer": 18,
+    "mapId": "lg_golden_core_molten_channel",
+    "mapName": "熔渠舊坊",
+    "sources": [
+      {
+        "monsterId": "lg_golden_core_molten_channel_mob_2",
+        "monsterName": "爐蛾",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_golden_core_molten_channel_mob_4",
+        "monsterName": "斷鉗匠魂",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_golden_core_molten_channel_mob_5",
+        "monsterName": "殘爐煙鬼",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_golden_core_molten_cold_furnace_master",
+        "monsterName": "冷爐坊主",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_golden_core_4",
+    "bookId": "book.lg_manual_golden_core_4",
+    "name": "薪途識火錄",
+    "category": "secret",
+    "grade": "earth",
+    "realmLv": 47,
+    "maxLayer": 18,
+    "mapId": "lg_golden_core_molten_channel",
+    "mapName": "熔渠舊坊",
+    "sources": [
+      {
+        "monsterId": "lg_golden_core_molten_channel_mob_5",
+        "monsterName": "殘爐煙鬼",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_golden_core_molten_cold_furnace_master",
+        "monsterName": "冷爐坊主",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_golden_core_5",
+    "bookId": "book.lg_manual_golden_core_5",
+    "name": "熔渠斷流式",
+    "category": "arts",
+    "grade": "earth",
+    "realmLv": 49,
+    "maxLayer": 18,
+    "mapId": "lg_golden_core_hanging_lamps",
+    "mapName": "懸燈峽",
+    "sources": [
+      {
+        "monsterId": "lg_golden_core_hanging_lamps_mob_5",
+        "monsterName": "峽風燈魅",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_golden_core_hanging_lamp_grandmother",
+        "monsterName": "萬燈姥姥",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_golden_core_6",
+    "bookId": "book.lg_manual_golden_core_6",
+    "name": "百燈護命章",
+    "category": "divine",
+    "grade": "earth",
+    "realmLv": 50,
+    "maxLayer": 18,
+    "mapId": "lg_golden_core_hanging_lamps",
+    "mapName": "懸燈峽",
+    "sources": [
+      {
+        "monsterId": "lg_golden_core_hanging_lamp_grandmother",
+        "monsterName": "萬燈姥姥",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_golden_core_7",
+    "bookId": "book.lg_manual_golden_core_7",
+    "name": "殘爐養息法",
+    "category": "secret",
+    "grade": "earth",
+    "realmLv": 52,
+    "maxLayer": 18,
+    "mapId": "lg_golden_core_sky_mending_furnace",
+    "mapName": "補天殘爐",
+    "sources": [
+      {
+        "monsterId": "lg_golden_core_sky_mending_furnace_mob_5",
+        "monsterName": "廢渣爬獸",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_golden_core_furnace_mender_remnant",
+        "monsterName": "補天匠·殘念",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_golden_core_8",
+    "bookId": "book.lg_manual_golden_core_8",
+    "name": "補天一炬",
+    "category": "divine",
+    "grade": "earth",
+    "realmLv": 53,
+    "maxLayer": 18,
+    "mapId": "lg_golden_core_sky_mending_furnace",
+    "mapName": "補天殘爐",
+    "sources": [
+      {
+        "monsterId": "lg_golden_core_furnace_mender_remnant",
+        "monsterName": "補天匠·殘念",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_nascent_soul_1",
+    "bookId": "book.lg_manual_nascent_soul_1",
+    "name": "沉鐘定魄經",
+    "category": "internal",
+    "grade": "heaven",
+    "realmLv": 55,
+    "maxLayer": 20,
+    "mapId": "lg_nascent_soul_m1_entry",
+    "mapName": "漏聲灘",
+    "sources": [
+      {
+        "monsterId": "lg_nascent_soul_m1_entry_mob_2",
+        "monsterName": "貝甲沙民",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_nascent_soul_m1_entry_mob_4",
+        "monsterName": "錄聲水母",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_nascent_soul_m1_entry_mob_5",
+        "monsterName": "迴音螺",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_nascent_soul_m1_boss",
+        "monsterName": "螺中客",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_nascent_soul_2",
+    "bookId": "book.lg_manual_nascent_soul_2",
+    "name": "回瀾分潮訣",
+    "category": "arts",
+    "grade": "heaven",
+    "realmLv": 56,
+    "maxLayer": 20,
+    "mapId": "lg_nascent_soul_m1_entry",
+    "mapName": "漏聲灘",
+    "sources": [
+      {
+        "monsterId": "lg_nascent_soul_m1_entry_mob_1",
+        "monsterName": "潮聲鬼",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_nascent_soul_m1_entry_mob_3",
+        "monsterName": "拾聲童",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_nascent_soul_m1_entry_mob_5",
+        "monsterName": "迴音螺",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_nascent_soul_m1_boss",
+        "monsterName": "螺中客",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_nascent_soul_3",
+    "bookId": "book.lg_manual_nascent_soul_3",
+    "name": "千帆寄神篇",
+    "category": "internal",
+    "grade": "heaven",
+    "realmLv": 58,
+    "maxLayer": 20,
+    "mapId": "lg_nascent_soul_m2_entry",
+    "mapName": "沉鐘澥",
+    "sources": [
+      {
+        "monsterId": "lg_nascent_soul_m2_entry_mob_2",
+        "monsterName": "鐘鏽蟹",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_nascent_soul_m2_entry_mob_4",
+        "monsterName": "靜潮僧影",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_nascent_soul_m2_entry_mob_5",
+        "monsterName": "海魂珊蟲",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_nascent_soul_m2_boss",
+        "monsterName": "守鐘魃",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_nascent_soul_4",
+    "bookId": "book.lg_manual_nascent_soul_4",
+    "name": "漏聲辨潮錄",
+    "category": "secret",
+    "grade": "heaven",
+    "realmLv": 59,
+    "maxLayer": 20,
+    "mapId": "lg_nascent_soul_m2_entry",
+    "mapName": "沉鐘澥",
+    "sources": [
+      {
+        "monsterId": "lg_nascent_soul_m2_entry_mob_5",
+        "monsterName": "海魂珊蟲",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_nascent_soul_m2_boss",
+        "monsterName": "守鐘魃",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_nascent_soul_5",
+    "bookId": "book.lg_manual_nascent_soul_5",
+    "name": "骨帆歸汐式",
+    "category": "arts",
+    "grade": "heaven",
+    "realmLv": 61,
+    "maxLayer": 20,
+    "mapId": "lg_nascent_soul_m3_entry",
+    "mapName": "千帆骨場",
+    "sources": [
+      {
+        "monsterId": "lg_nascent_soul_m3_entry_mob_5",
+        "monsterName": "船首啞僕",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_nascent_soul_m3_boss",
+        "monsterName": "斷桅將軍",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_nascent_soul_6",
+    "bookId": "book.lg_manual_nascent_soul_6",
+    "name": "鎮海安魂章",
+    "category": "divine",
+    "grade": "heaven",
+    "realmLv": 62,
+    "maxLayer": 20,
+    "mapId": "lg_nascent_soul_m3_entry",
+    "mapName": "千帆骨場",
+    "sources": [
+      {
+        "monsterId": "lg_nascent_soul_m3_boss",
+        "monsterName": "斷桅將軍",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_nascent_soul_7",
+    "bookId": "book.lg_manual_nascent_soul_7",
+    "name": "聽潮澄心法",
+    "category": "secret",
+    "grade": "spirit",
+    "realmLv": 64,
+    "maxLayer": 20,
+    "mapId": "lg_nascent_soul_m4_entry",
+    "mapName": "回瀾淵",
+    "sources": [
+      {
+        "monsterId": "lg_nascent_soul_m4_entry_mob_5",
+        "monsterName": "沉光傀",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_nascent_soul_m4_boss",
+        "monsterName": "回瀾真君",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_nascent_soul_8",
+    "bookId": "book.lg_manual_nascent_soul_8",
+    "name": "萬帆鎮淵",
+    "category": "divine",
+    "grade": "spirit",
+    "realmLv": 65,
+    "maxLayer": 20,
+    "mapId": "lg_nascent_soul_m4_entry",
+    "mapName": "回瀾淵",
+    "sources": [
+      {
+        "monsterId": "lg_nascent_soul_m4_boss",
+        "monsterName": "回瀾真君",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_spirit_transformation_1",
+    "bookId": "book.lg_manual_spirit_transformation_1",
+    "name": "望涯凝神經",
+    "category": "internal",
+    "grade": "spirit",
+    "realmLv": 67,
+    "maxLayer": 22,
+    "mapId": "lg_spirit_transformation_m1_entry",
+    "mapName": "斷崖階",
+    "sources": [
+      {
+        "monsterId": "lg_spirit_transformation_m1_entry_mob_2",
+        "monsterName": "背囊傀",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m1_entry_mob_4",
+        "monsterName": "階縫蜈",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m1_entry_mob_6",
+        "monsterName": "歇腳影",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m1_boss",
+        "monsterName": "登崖石人",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_spirit_transformation_2",
+    "bookId": "book.lg_manual_spirit_transformation_2",
+    "name": "雷原穿雲訣",
+    "category": "arts",
+    "grade": "spirit",
+    "realmLv": 68,
+    "maxLayer": 22,
+    "mapId": "lg_spirit_transformation_m1_entry",
+    "mapName": "斷崖階",
+    "sources": [
+      {
+        "monsterId": "lg_spirit_transformation_m1_entry_mob_1",
+        "monsterName": "石階行者",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m1_entry_mob_3",
+        "monsterName": "風剪",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m1_entry_mob_5",
+        "monsterName": "崖柏魈",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m1_entry_mob_6",
+        "monsterName": "歇腳影",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m1_boss",
+        "monsterName": "登崖石人",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_spirit_transformation_3",
+    "bookId": "book.lg_manual_spirit_transformation_3",
+    "name": "古曜洗髓篇",
+    "category": "internal",
+    "grade": "spirit",
+    "realmLv": 70,
+    "maxLayer": 22,
+    "mapId": "lg_spirit_transformation_m2_entry",
+    "mapName": "律動雷原",
+    "sources": [
+      {
+        "monsterId": "lg_spirit_transformation_m2_entry_mob_2",
+        "monsterName": "雷符鴉",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m2_entry_mob_4",
+        "monsterName": "落點蟲",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m2_entry_mob_5",
+        "monsterName": "亂拍影",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m2_boss",
+        "monsterName": "司律雷君",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_spirit_transformation_4",
+    "bookId": "book.lg_manual_spirit_transformation_4",
+    "name": "星臺觀路錄",
+    "category": "secret",
+    "grade": "spirit",
+    "realmLv": 71,
+    "maxLayer": 22,
+    "mapId": "lg_spirit_transformation_m2_entry",
+    "mapName": "律動雷原",
+    "sources": [
+      {
+        "monsterId": "lg_spirit_transformation_m2_entry_mob_5",
+        "monsterName": "亂拍影",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m2_boss",
+        "monsterName": "司律雷君",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_spirit_transformation_5",
+    "bookId": "book.lg_manual_spirit_transformation_5",
+    "name": "斷崖截風式",
+    "category": "arts",
+    "grade": "spirit",
+    "realmLv": 73,
+    "maxLayer": 22,
+    "mapId": "lg_spirit_transformation_m3_entry",
+    "mapName": "古觀星臺",
+    "sources": [
+      {
+        "monsterId": "lg_spirit_transformation_m3_entry_mob_5",
+        "monsterName": "落星蛾",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m3_boss",
+        "monsterName": "守臺瞽者",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_spirit_transformation_6",
+    "bookId": "book.lg_manual_spirit_transformation_6",
+    "name": "定星護魂章",
+    "category": "divine",
+    "grade": "spirit",
+    "realmLv": 74,
+    "maxLayer": 22,
+    "mapId": "lg_spirit_transformation_m3_entry",
+    "mapName": "古觀星臺",
+    "sources": [
+      {
+        "monsterId": "lg_spirit_transformation_m3_boss",
+        "monsterName": "守臺瞽者",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_spirit_transformation_7",
+    "bookId": "book.lg_manual_spirit_transformation_7",
+    "name": "引雷歸竅法",
+    "category": "secret",
+    "grade": "spirit",
+    "realmLv": 76,
+    "maxLayer": 22,
+    "mapId": "lg_spirit_transformation_m4_entry",
+    "mapName": "涯底風獄",
+    "sources": [
+      {
+        "monsterId": "lg_spirit_transformation_m4_entry_mob_5",
+        "monsterName": "枷木傀",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_spirit_transformation_m4_boss",
+        "monsterName": "風獄尊者",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_spirit_transformation_8",
+    "bookId": "book.lg_manual_spirit_transformation_8",
+    "name": "九曜墜涯",
+    "category": "divine",
+    "grade": "spirit",
+    "realmLv": 77,
+    "maxLayer": 22,
+    "mapId": "lg_spirit_transformation_m4_entry",
+    "mapName": "涯底風獄",
+    "sources": [
+      {
+        "monsterId": "lg_spirit_transformation_m4_boss",
+        "monsterName": "風獄尊者",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_void_refinement_1",
+    "bookId": "book.lg_manual_void_refinement_1",
+    "name": "碎界固身經",
+    "category": "internal",
+    "grade": "spirit",
+    "realmLv": 79,
+    "maxLayer": 24,
+    "mapId": "lg_void_refinement_m1_entry",
+    "mapName": "碎界灘",
+    "sources": [
+      {
+        "monsterId": "lg_void_refinement_m1_entry_mob_2",
+        "monsterName": "拾荒妖",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_void_refinement_m1_entry_mob_4",
+        "monsterName": "界隙鷗",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_void_refinement_m1_entry_mob_6",
+        "monsterName": "縫間潛影",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_void_refinement_m1_boss",
+        "monsterName": "拾界人",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_void_refinement_2",
+    "bookId": "book.lg_manual_void_refinement_2",
+    "name": "虛舟穿隙訣",
+    "category": "arts",
+    "grade": "spirit",
+    "realmLv": 80,
+    "maxLayer": 24,
+    "mapId": "lg_void_refinement_m1_entry",
+    "mapName": "碎界灘",
+    "sources": [
+      {
+        "monsterId": "lg_void_refinement_m1_entry_mob_1",
+        "monsterName": "界屑蟲",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_void_refinement_m1_entry_mob_3",
+        "monsterName": "碎巢蛛",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_void_refinement_m1_entry_mob_5",
+        "monsterName": "骸甲役",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_void_refinement_m1_entry_mob_6",
+        "monsterName": "縫間潛影",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_void_refinement_m1_boss",
+        "monsterName": "拾界人",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_void_refinement_3",
+    "bookId": "book.lg_manual_void_refinement_3",
+    "name": "星骸藏息篇",
+    "category": "internal",
+    "grade": "spirit",
+    "realmLv": 82,
+    "maxLayer": 24,
+    "mapId": "lg_void_refinement_m2_entry",
+    "mapName": "虛獸巢帶",
+    "sources": [
+      {
+        "monsterId": "lg_void_refinement_m2_entry_mob_2",
+        "monsterName": "巢衛",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_void_refinement_m2_entry_mob_4",
+        "monsterName": "洄游幼崽",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_void_refinement_m2_entry_mob_6",
+        "monsterName": "噬纜蟲",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_void_refinement_m2_boss",
+        "monsterName": "虛巢母獸",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_void_refinement_4",
+    "bookId": "book.lg_manual_void_refinement_4",
+    "name": "無光引航錄",
+    "category": "secret",
+    "grade": "spirit",
+    "realmLv": 83,
+    "maxLayer": 24,
+    "mapId": "lg_void_refinement_m2_entry",
+    "mapName": "虛獸巢帶",
+    "sources": [
+      {
+        "monsterId": "lg_void_refinement_m2_entry_mob_6",
+        "monsterName": "噬纜蟲",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_void_refinement_m2_boss",
+        "monsterName": "虛巢母獸",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_void_refinement_5",
+    "bookId": "book.lg_manual_void_refinement_5",
+    "name": "空巢迴刃式",
+    "category": "arts",
+    "grade": "spirit",
+    "realmLv": 85,
+    "maxLayer": 24,
+    "mapId": "lg_void_refinement_m3_entry",
+    "mapName": "星骸舊港",
+    "sources": [
+      {
+        "monsterId": "lg_void_refinement_m3_entry_mob_6",
+        "monsterName": "港底爬骸",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_void_refinement_m3_boss",
+        "monsterName": "港守傀儡",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_void_refinement_6",
+    "bookId": "book.lg_manual_void_refinement_6",
+    "name": "界舟固錨章",
+    "category": "divine",
+    "grade": "spirit",
+    "realmLv": 86,
+    "maxLayer": 24,
+    "mapId": "lg_void_refinement_m3_entry",
+    "mapName": "星骸舊港",
+    "sources": [
+      {
+        "monsterId": "lg_void_refinement_m3_boss",
+        "monsterName": "港守傀儡",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_void_refinement_7",
+    "bookId": "book.lg_manual_void_refinement_7",
+    "name": "虛海寂照法",
+    "category": "secret",
+    "grade": "spirit",
+    "realmLv": 88,
+    "maxLayer": 24,
+    "mapId": "lg_void_refinement_m4_entry",
+    "mapName": "無光海·裂",
+    "sources": [
+      {
+        "monsterId": "lg_void_refinement_m4_entry_mob_6",
+        "monsterName": "裂縫手",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_void_refinement_m4_boss",
+        "monsterName": "無光老祖",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_void_refinement_8",
+    "bookId": "book.lg_manual_void_refinement_8",
+    "name": "星港沉界",
+    "category": "divine",
+    "grade": "spirit",
+    "realmLv": 89,
+    "maxLayer": 24,
+    "mapId": "lg_void_refinement_m4_entry",
+    "mapName": "無光海·裂",
+    "sources": [
+      {
+        "monsterId": "lg_void_refinement_m4_boss",
+        "monsterName": "無光老祖",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_body_integration_1",
+    "bookId": "book.lg_manual_body_integration_1",
+    "name": "天垣合身經",
+    "category": "internal",
+    "grade": "spirit",
+    "realmLv": 91,
+    "maxLayer": 26,
+    "mapId": "lg_body_integration_m1_entry",
+    "mapName": "垣門外壘",
+    "sources": [
+      {
+        "monsterId": "lg_body_integration_m1_entry_mob_2",
+        "monsterName": "撞門獸",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_body_integration_m1_entry_mob_4",
+        "monsterName": "垣壁行者",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_body_integration_m1_entry_mob_6",
+        "monsterName": "望門鴉",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_body_integration_m1_boss",
+        "monsterName": "守垣將",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_body_integration_2",
+    "bookId": "book.lg_manual_body_integration_2",
+    "name": "法骸鎮門訣",
+    "category": "arts",
+    "grade": "spirit",
+    "realmLv": 92,
+    "maxLayer": 26,
+    "mapId": "lg_body_integration_m1_entry",
+    "mapName": "垣門外壘",
+    "sources": [
+      {
+        "monsterId": "lg_body_integration_m1_entry_mob_1",
+        "monsterName": "壘衛殘魂",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_body_integration_m1_entry_mob_3",
+        "monsterName": "名砂傀",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_body_integration_m1_entry_mob_5",
+        "monsterName": "舊甲蟻",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_body_integration_m1_entry_mob_6",
+        "monsterName": "望門鴉",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_body_integration_m1_boss",
+        "monsterName": "守垣將",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_body_integration_3",
+    "bookId": "book.lg_manual_body_integration_3",
+    "name": "鏡我返真篇",
+    "category": "internal",
+    "grade": "spirit",
+    "realmLv": 94,
+    "maxLayer": 26,
+    "mapId": "lg_body_integration_m2_entry",
+    "mapName": "鏡我之澤",
+    "sources": [
+      {
+        "monsterId": "lg_body_integration_m2_entry_mob_2",
+        "monsterName": "雙生獸",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_body_integration_m2_entry_mob_4",
+        "monsterName": "拾面客",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_body_integration_m2_entry_mob_5",
+        "monsterName": "回聲蛙",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_body_integration_m2_boss",
+        "monsterName": "鏡我",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_body_integration_4",
+    "bookId": "book.lg_manual_body_integration_4",
+    "name": "垣井辨影錄",
+    "category": "secret",
+    "grade": "spirit",
+    "realmLv": 95,
+    "maxLayer": 26,
+    "mapId": "lg_body_integration_m2_entry",
+    "mapName": "鏡我之澤",
+    "sources": [
+      {
+        "monsterId": "lg_body_integration_m2_entry_mob_5",
+        "monsterName": "回聲蛙",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_body_integration_m2_boss",
+        "monsterName": "鏡我",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_body_integration_5",
+    "bookId": "book.lg_manual_body_integration_5",
+    "name": "澤鏡返照式",
+    "category": "arts",
+    "grade": "spirit",
+    "realmLv": 97,
+    "maxLayer": 26,
+    "mapId": "lg_body_integration_m3_entry",
+    "mapName": "法骸陵",
+    "sources": [
+      {
+        "monsterId": "lg_body_integration_m3_entry_mob_6",
+        "monsterName": "灰誦者",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_body_integration_m3_boss",
+        "monsterName": "葬法老人",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_body_integration_6",
+    "bookId": "book.lg_manual_body_integration_6",
+    "name": "萬垣護生章",
+    "category": "divine",
+    "grade": "saint",
+    "realmLv": 98,
+    "maxLayer": 26,
+    "mapId": "lg_body_integration_m3_entry",
+    "mapName": "法骸陵",
+    "sources": [
+      {
+        "monsterId": "lg_body_integration_m3_boss",
+        "monsterName": "葬法老人",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_body_integration_7",
+    "bookId": "book.lg_manual_body_integration_7",
+    "name": "法骸調息法",
+    "category": "secret",
+    "grade": "saint",
+    "realmLv": 100,
+    "maxLayer": 26,
+    "mapId": "lg_body_integration_m4_entry",
+    "mapName": "垣心之井",
+    "sources": [
+      {
+        "monsterId": "lg_body_integration_m4_entry_mob_6",
+        "monsterName": "垣髓蛾",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_body_integration_m4_boss",
+        "monsterName": "垣心守",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_body_integration_8",
+    "bookId": "book.lg_manual_body_integration_8",
+    "name": "一身撐天",
+    "category": "divine",
+    "grade": "saint",
+    "realmLv": 101,
+    "maxLayer": 26,
+    "mapId": "lg_body_integration_m4_entry",
+    "mapName": "垣心之井",
+    "sources": [
+      {
+        "monsterId": "lg_body_integration_m4_boss",
+        "monsterName": "垣心守",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_great_vehicle_1",
+    "bookId": "book.lg_manual_great_vehicle_1",
+    "name": "鎮涯負嶽經",
+    "category": "internal",
+    "grade": "saint",
+    "realmLv": 103,
+    "maxLayer": 28,
+    "mapId": "lg_great_vehicle_m1_entry",
+    "mapName": "劫風口",
+    "sources": [
+      {
+        "monsterId": "lg_great_vehicle_m1_entry_mob_2",
+        "monsterName": "扯旗妖",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_great_vehicle_m1_entry_mob_4",
+        "monsterName": "頂風猿",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_great_vehicle_m1_entry_mob_6",
+        "monsterName": "滾石傀",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_great_vehicle_m1_boss",
+        "monsterName": "擋風人",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_great_vehicle_2",
+    "bookId": "book.lg_manual_great_vehicle_2",
+    "name": "劫風破陣訣",
+    "category": "arts",
+    "grade": "saint",
+    "realmLv": 104,
+    "maxLayer": 28,
+    "mapId": "lg_great_vehicle_m1_entry",
+    "mapName": "劫風口",
+    "sources": [
+      {
+        "monsterId": "lg_great_vehicle_m1_entry_mob_1",
+        "monsterName": "劫風獸",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_great_vehicle_m1_entry_mob_3",
+        "monsterName": "吹燈魈",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_great_vehicle_m1_entry_mob_5",
+        "monsterName": "嚎風鴉",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_great_vehicle_m1_entry_mob_6",
+        "monsterName": "滾石傀",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_great_vehicle_m1_boss",
+        "monsterName": "擋風人",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_great_vehicle_3",
+    "bookId": "book.lg_manual_great_vehicle_3",
+    "name": "天痕納海篇",
+    "category": "internal",
+    "grade": "saint",
+    "realmLv": 106,
+    "maxLayer": 28,
+    "mapId": "lg_great_vehicle_m2_entry",
+    "mapName": "雷罰原",
+    "sources": [
+      {
+        "monsterId": "lg_great_vehicle_m2_entry_mob_2",
+        "monsterName": "碑下哀聲",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_great_vehicle_m2_entry_mob_4",
+        "monsterName": "判罪鴉",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_great_vehicle_m2_entry_mob_6",
+        "monsterName": "避罰骸",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_great_vehicle_m2_boss",
+        "monsterName": "執雷者",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_great_vehicle_4",
+    "bookId": "book.lg_manual_great_vehicle_4",
+    "name": "雷原尋隙錄",
+    "category": "secret",
+    "grade": "saint",
+    "realmLv": 107,
+    "maxLayer": 28,
+    "mapId": "lg_great_vehicle_m2_entry",
+    "mapName": "雷罰原",
+    "sources": [
+      {
+        "monsterId": "lg_great_vehicle_m2_entry_mob_6",
+        "monsterName": "避罰骸",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_great_vehicle_m2_boss",
+        "monsterName": "執雷者",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_great_vehicle_5",
+    "bookId": "book.lg_manual_great_vehicle_5",
+    "name": "舊壘迴鋒式",
+    "category": "arts",
+    "grade": "saint",
+    "realmLv": 109,
+    "maxLayer": 28,
+    "mapId": "lg_great_vehicle_m3_entry",
+    "mapName": "獸潮舊壘",
+    "sources": [
+      {
+        "monsterId": "lg_great_vehicle_m3_entry_mob_6",
+        "monsterName": "啃牌蟲",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_great_vehicle_m3_boss",
+        "monsterName": "獸潮王",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_great_vehicle_6",
+    "bookId": "book.lg_manual_great_vehicle_6",
+    "name": "鎮關承劫章",
+    "category": "divine",
+    "grade": "saint",
+    "realmLv": 110,
+    "maxLayer": 28,
+    "mapId": "lg_great_vehicle_m3_entry",
+    "mapName": "獸潮舊壘",
+    "sources": [
+      {
+        "monsterId": "lg_great_vehicle_m3_boss",
+        "monsterName": "獸潮王",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_great_vehicle_7",
+    "bookId": "book.lg_manual_great_vehicle_7",
+    "name": "風劫定念法",
+    "category": "secret",
+    "grade": "saint",
+    "realmLv": 112,
+    "maxLayer": 28,
+    "mapId": "lg_great_vehicle_m4_entry",
+    "mapName": "天痕下坡",
+    "sources": [
+      {
+        "monsterId": "lg_great_vehicle_m4_entry_mob_6",
+        "monsterName": "半碑骸（劫風系風乾遺骸）",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_great_vehicle_m4_boss",
+        "monsterName": "天痕使",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_great_vehicle_8",
+    "bookId": "book.lg_manual_great_vehicle_8",
+    "name": "萬壘斷劫",
+    "category": "divine",
+    "grade": "saint",
+    "realmLv": 113,
+    "maxLayer": 28,
+    "mapId": "lg_great_vehicle_m4_entry",
+    "mapName": "天痕下坡",
+    "sources": [
+      {
+        "monsterId": "lg_great_vehicle_m4_boss",
+        "monsterName": "天痕使",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_tribulation_1",
+    "bookId": "book.lg_manual_tribulation_1",
+    "name": "薪火不滅經",
+    "category": "internal",
+    "grade": "saint",
+    "realmLv": 115,
+    "maxLayer": 30,
+    "mapId": "lg_tribulation_m1_entry",
+    "mapName": "劫雲海",
+    "sources": [
+      {
+        "monsterId": "lg_tribulation_m1_entry_mob_2",
+        "monsterName": "雲中人影",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_tribulation_m1_entry_mob_4",
+        "monsterName": "電光鱗",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_tribulation_m1_entry_mob_5",
+        "monsterName": "雲噬蠅",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_tribulation_m1_boss",
+        "monsterName": "劫雲君",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_tribulation_2",
+    "bookId": "book.lg_manual_tribulation_2",
+    "name": "劫雲引霆訣",
+    "category": "arts",
+    "grade": "saint",
+    "realmLv": 116,
+    "maxLayer": 30,
+    "mapId": "lg_tribulation_m1_entry",
+    "mapName": "劫雲海",
+    "sources": [
+      {
+        "monsterId": "lg_tribulation_m1_entry_mob_1",
+        "monsterName": "劫雲獸",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_tribulation_m1_entry_mob_3",
+        "monsterName": "穿雲鴉",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_tribulation_m1_entry_mob_5",
+        "monsterName": "雲噬蠅",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_tribulation_m1_boss",
+        "monsterName": "劫雲君",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_tribulation_3",
+    "bookId": "book.lg_manual_tribulation_3",
+    "name": "五衰歸真篇",
+    "category": "internal",
+    "grade": "saint",
+    "realmLv": 118,
+    "maxLayer": 30,
+    "mapId": "lg_tribulation_m2_entry",
+    "mapName": "雷池第九重",
+    "sources": [
+      {
+        "monsterId": "lg_tribulation_m2_entry_mob_2",
+        "monsterName": "液雷獸",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_tribulation_m2_entry_mob_4",
+        "monsterName": "液雷蛭",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 20
+      },
+      {
+        "monsterId": "lg_tribulation_m2_entry_mob_6",
+        "monsterName": "溫雷蛾",
+        "role": "elite",
+        "chance": 0.045,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_tribulation_m2_boss",
+        "monsterName": "雷池守·第九",
+        "role": "boss",
+        "chance": 0.12,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_tribulation_4",
+    "bookId": "book.lg_manual_tribulation_4",
+    "name": "心鏡照途錄",
+    "category": "secret",
+    "grade": "saint",
+    "realmLv": 119,
+    "maxLayer": 30,
+    "mapId": "lg_tribulation_m2_entry",
+    "mapName": "雷池第九重",
+    "sources": [
+      {
+        "monsterId": "lg_tribulation_m2_entry_mob_6",
+        "monsterName": "溫雷蛾",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_tribulation_m2_boss",
+        "monsterName": "雷池守·第九",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_tribulation_5",
+    "bookId": "book.lg_manual_tribulation_5",
+    "name": "衰崖截命式",
+    "category": "arts",
+    "grade": "saint",
+    "realmLv": 121,
+    "maxLayer": 30,
+    "mapId": "lg_tribulation_m3_entry",
+    "mapName": "心魔鏡城",
+    "sources": [
+      {
+        "monsterId": "lg_tribulation_m3_entry_mob_6",
+        "monsterName": "悔意蛾",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_tribulation_m3_boss",
+        "monsterName": "心中我",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_tribulation_6",
+    "bookId": "book.lg_manual_tribulation_6",
+    "name": "薪城留命章",
+    "category": "divine",
+    "grade": "emperor",
+    "realmLv": 122,
+    "maxLayer": 30,
+    "mapId": "lg_tribulation_m3_entry",
+    "mapName": "心魔鏡城",
+    "sources": [
+      {
+        "monsterId": "lg_tribulation_m3_boss",
+        "monsterName": "心中我",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_tribulation_7",
+    "bookId": "book.lg_manual_tribulation_7",
+    "name": "九重息雷法",
+    "category": "secret",
+    "grade": "emperor",
+    "realmLv": 124,
+    "maxLayer": 30,
+    "mapId": "lg_tribulation_m4_entry",
+    "mapName": "天人五衰崖",
+    "sources": [
+      {
+        "monsterId": "lg_tribulation_m4_entry_mob_5",
+        "monsterName": "歸墟鹿",
+        "role": "elite",
+        "chance": 0.03,
+        "respawnSec": 30
+      },
+      {
+        "monsterId": "lg_tribulation_m4_boss",
+        "monsterName": "五衰法身",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "lg_manual_tribulation_8",
+    "bookId": "book.lg_manual_tribulation_8",
+    "name": "天人續燈",
+    "category": "divine",
+    "grade": "emperor",
+    "realmLv": 125,
+    "maxLayer": 30,
+    "mapId": "lg_tribulation_m4_entry",
+    "mapName": "天人五衰崖",
+    "sources": [
+      {
+        "monsterId": "lg_tribulation_m4_boss",
+        "monsterName": "五衰法身",
+        "role": "boss",
+        "chance": 0.08,
+        "respawnSec": 120
+      }
+    ]
+  }
+]

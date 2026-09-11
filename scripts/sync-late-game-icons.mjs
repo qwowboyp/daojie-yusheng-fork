@@ -13,7 +13,10 @@ function collect(directory) {
     .flatMap((entry) => entry.isDirectory() ? collect(path.join(directory, entry.name))
       : entry.name.endsWith('.json') ? JSON.parse(fs.readFileSync(path.join(directory, entry.name), 'utf8')) : []);
 }
-const current = read('packages/server/data/content/items/後期七境/內容.json');
+const current = [...read('packages/server/data/content/items/後期七境/內容.json'),
+  ...read('packages/server/data/content/items/後期七境/功法書.json')];
+const bookArtSources = { '內功': 'book.ningqi_chengji', '法術': 'book.frost_sutra',
+  '神通': 'book.wildsunder_chart', '秘術': 'book.mountain_insight_chart' };
 const newIds = new Set(current.map((item) => item.itemId));
 const originals = collect(itemRoot).filter((item) => !newIds.has(item.itemId) && !/測試/.test(item.name));
 const iconFile = 'packages/client/src/constants/world/item-art.generated.json';
@@ -44,7 +47,9 @@ for (const item of current) {
     && (item.type !== 'material' || candidate.materialCategory === item.materialCategory)
     && (item.type !== 'consumable' || /丹$/.test(candidate.name)));
   candidates.sort((a, b) => score(item, b) - score(item, a) || a.itemId.localeCompare(b.itemId, 'en'));
-  const source = candidates[0];
+  const bookSourceId = item.type === 'skill_book'
+    ? bookArtSources[item.tags.find((tag) => bookArtSources[tag])] : undefined;
+  const source = bookSourceId ? originals.find((candidate) => candidate.itemId === bookSourceId) : candidates[0];
   assert.ok(source, `缺少合適的既有圖片 ${item.itemId}`);
   const stem = `/assets/item-icons/v1/${item.itemId}`;
   for (const size of [96, 192]) {

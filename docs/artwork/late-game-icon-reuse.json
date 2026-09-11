@@ -4565,6 +4565,622 @@
         96,
         192
       ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_1",
+      "name": "《餘燼守爐經》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_2",
+      "name": "《燼燈點火訣》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_3",
+      "name": "《懸燈照脈篇》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_4",
+      "name": "《薪途識火錄》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_5",
+      "name": "《熔渠斷流式》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_6",
+      "name": "《百燈護命章》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_7",
+      "name": "《殘爐養息法》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_golden_core_8",
+      "name": "《補天一炬》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_1",
+      "name": "《沉鐘定魄經》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_2",
+      "name": "《回瀾分潮訣》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_3",
+      "name": "《千帆寄神篇》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_4",
+      "name": "《漏聲辨潮錄》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_5",
+      "name": "《骨帆歸汐式》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_6",
+      "name": "《鎮海安魂章》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_7",
+      "name": "《聽潮澄心法》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_nascent_soul_8",
+      "name": "《萬帆鎮淵》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_1",
+      "name": "《望涯凝神經》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_2",
+      "name": "《雷原穿雲訣》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_3",
+      "name": "《古曜洗髓篇》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_4",
+      "name": "《星臺觀路錄》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_5",
+      "name": "《斷崖截風式》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_6",
+      "name": "《定星護魂章》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_7",
+      "name": "《引雷歸竅法》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_spirit_transformation_8",
+      "name": "《九曜墜涯》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_1",
+      "name": "《碎界固身經》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_2",
+      "name": "《虛舟穿隙訣》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_3",
+      "name": "《星骸藏息篇》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_4",
+      "name": "《無光引航錄》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_5",
+      "name": "《空巢迴刃式》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_6",
+      "name": "《界舟固錨章》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_7",
+      "name": "《虛海寂照法》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_void_refinement_8",
+      "name": "《星港沉界》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_1",
+      "name": "《天垣合身經》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_2",
+      "name": "《法骸鎮門訣》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_3",
+      "name": "《鏡我返真篇》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_4",
+      "name": "《垣井辨影錄》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_5",
+      "name": "《澤鏡返照式》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_6",
+      "name": "《萬垣護生章》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_7",
+      "name": "《法骸調息法》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_body_integration_8",
+      "name": "《一身撐天》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_1",
+      "name": "《鎮涯負嶽經》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_2",
+      "name": "《劫風破陣訣》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_3",
+      "name": "《天痕納海篇》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_4",
+      "name": "《雷原尋隙錄》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_5",
+      "name": "《舊壘迴鋒式》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_6",
+      "name": "《鎮關承劫章》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_7",
+      "name": "《風劫定念法》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_great_vehicle_8",
+      "name": "《萬壘斷劫》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_1",
+      "name": "《薪火不滅經》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_2",
+      "name": "《劫雲引霆訣》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_3",
+      "name": "《五衰歸真篇》",
+      "sourceItemId": "book.ningqi_chengji",
+      "sourceName": "《凝氣成基法》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_4",
+      "name": "《心鏡照途錄》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_5",
+      "name": "《衰崖截命式》",
+      "sourceItemId": "book.frost_sutra",
+      "sourceName": "《寒魄經》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_6",
+      "name": "《薪城留命章》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_7",
+      "name": "《九重息雷法》",
+      "sourceItemId": "book.mountain_insight_chart",
+      "sourceName": "《玄照圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
+    },
+    {
+      "itemId": "book.lg_manual_tribulation_8",
+      "name": "《天人續燈》",
+      "sourceItemId": "book.wildsunder_chart",
+      "sourceName": "《八荒裂嶽圖》",
+      "mode": "existing-art-reuse",
+      "variants": [
+        96,
+        192
+      ]
     }
   ]
 }
