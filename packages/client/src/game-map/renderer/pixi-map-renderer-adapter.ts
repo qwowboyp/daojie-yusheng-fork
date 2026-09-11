@@ -591,7 +591,7 @@ export class PixiMapRendererAdapter {
     this.updateTerrainChunks(scene, camera);
     this.profiler.end('terrainChunks', terrainStartedAt);
     const entityViewsStartedAt = this.profiler.start();
-    this.updateEntityViews(camera, progress, player.id, player.x, player.y, player.char);
+    this.updateEntityViews(camera, progress, player.id, player.x, player.y, player.char, frameAtMs);
     this.profiler.end('entityViews', entityViewsStartedAt);
     const threatArrowsStartedAt = this.profiler.start();
     this.renderThreatArrows(player.id);
@@ -2464,7 +2464,7 @@ export class PixiMapRendererAdapter {
     container.addChild(graphics, text);
   }
 
-  private updateEntityViews(camera: CameraState, progress: number, localPlayerId: string, localPlayerX: number, localPlayerY: number, localPlayerChar: string): void {
+  private updateEntityViews(camera: CameraState, progress: number, localPlayerId: string, localPlayerX: number, localPlayerY: number, localPlayerChar: string, frameNow: number): void {
     const cellSize = getCellSize();
     this.profiler.setCounter('entities', this.entities.size);
     const motionProgress = clamp01(progress);
@@ -2473,7 +2473,6 @@ export class PixiMapRendererAdapter {
     const viewportTop = camera.y - this.height / 2 - cellSize * 2;
     const viewportRight = camera.x + this.width / 2 + cellSize * 2;
     const viewportBottom = camera.y + this.height / 2 + cellSize * 2;
-    const frameNow = performance.now();
     const crowdedTileKeys = this.crowdedTileKeysScratch;
     crowdedTileKeys.reset();
     let localPlayerInRenderedEntities = false;
