@@ -2,10 +2,15 @@
  * 背包卡片元数据分区与手机端功法星图纵向可达性 proof。
  */
 import assert from 'node:assert/strict';
+import os from 'node:os';
+import path from 'node:path';
+import { writeFile } from 'node:fs/promises';
 import { delay, withClientBrowserProof } from './browser-proof-runtime.mjs';
 
 const MOBILE_VIEWPORT = { width: 360, height: 640 };
+const MOBILE_LANDSCAPE_VIEWPORT = { width: 640, height: 360 };
 const DESKTOP_VIEWPORT = { width: 1280, height: 900 };
+const MOBILE_DARK_SCREENSHOT_PATH = path.join(os.tmpdir(), 'daojie-item-card-constellation-mobile-dark.png');
 
 const mountItemCardFixtureExpression = String.raw`
   (() => {
@@ -200,6 +205,68 @@ function assertItemCardLayout(layout, label) {
   assert.equal(layout.countText, 'x136萬', `${label}数量文本缺失`);
 }
 
+async function verifyLearnedBadge(cdp) {
+  for (const viewport of [MOBILE_VIEWPORT, MOBILE_LANDSCAPE_VIEWPORT, DESKTOP_VIEWPORT]) {
+    await cdp.send('Emulation.setDeviceMetricsOverride', {
+      ...viewport, deviceScaleFactor: 1, mobile: viewport !== DESKTOP_VIEWPORT,
+    });
+    for (const mode of ['light', 'dark']) {
+      await cdp.evaluate(`(() => {
+        document.documentElement.dataset.colorMode = '${mode}';
+        document.getElementById('learned-badge-proof')?.remove();
+        const host = document.createElement('section');
+        host.id = 'learned-badge-proof';
+        host.className = 'inventory-panel';
+        host.style.cssText = 'position:fixed;inset:8px auto auto 8px;width:${viewport.width - 16}px;padding:12px;background:var(--paper-light);z-index:10000';
+        host.innerHTML = '<div class="inventory-grid">' + [true, false].map((learned) =>
+          '<div class="inventory-cell inventory-cell--grade inventory-cell--grade-mystic">'
+          + (learned ? '<img class="item-art item-art--cell" src="/assets/item-icons/v1/book.custom_technique-96.webp" width="48" height="48" alt="" />' : '')
+          + '<div class="inventory-cell-head"><span class="inventory-cell-count" data-quantity="8">×8</span></div>'
+          + '<span class="inventory-cell-learned-ribbon"' + (learned ? '' : ' hidden') + '>已學</span>'
+          + '<div class="inventory-cell-name">' + (learned ? '《太初抱元章》' : '《尚未學習的功法書》') + '</div></div>'
+        ).join('') + '</div>';
+        document.body.appendChild(host);
+      })()`);
+      await cdp.evaluate(`Promise.all([...document.querySelectorAll('#learned-badge-proof img')].map((img) => img.decode()))`);
+      await delay(50);
+      for (const learned of [true, false, true]) {
+        const result = await cdp.evaluate(`(() => {
+          const cells = [...document.querySelectorAll('#learned-badge-proof .inventory-cell')];
+          const badge = cells[0].querySelector('.inventory-cell-learned-ribbon');
+          badge.hidden = ${!learned};
+          const rect = badge.getBoundingClientRect();
+          const cell = cells[0].getBoundingClientRect();
+          const text = document.createRange();
+          text.selectNodeContents(badge);
+          const tr = text.getBoundingClientRect();
+          const inside = tr.left >= cell.left && tr.right <= cell.right && tr.top >= cell.top && tr.bottom <= cell.bottom;
+          const overlaps = [...cells[0].querySelectorAll('.inventory-cell-name,.inventory-cell-count,img')].some((node) => {
+            const other = node.getBoundingClientRect();
+            return tr.left < other.right && tr.right > other.left && tr.top < other.bottom && tr.bottom > other.top;
+          });
+          return {
+            visible: rect.width > 0 && rect.height > 0,
+            inside, overlaps,
+            unknownHidden: cells[1].querySelector('.inventory-cell-learned-ribbon').getBoundingClientRect().width === 0,
+          };
+        })()`);
+        const label = `${viewport.width}x${viewport.height} ${mode} learned=${learned}`;
+        assert.equal(result.visible, learned, `${label}: 標記可見性錯誤`);
+        assert.equal(result.unknownHidden, true, `${label}: 未學功法不應顯示已學`);
+        if (learned) {
+          assert.equal(result.inside, true, `${label}: 已學文字超出卡片`);
+          if (viewport !== DESKTOP_VIEWPORT) assert.equal(result.overlaps, false, `${label}: 已學文字遮擋卡片內容`);
+        }
+      }
+      if (viewport === MOBILE_VIEWPORT && mode === 'dark') {
+        const screenshot = await cdp.send('Page.captureScreenshot', { format: 'png' });
+        await writeFile(MOBILE_DARK_SCREENSHOT_PATH, Buffer.from(screenshot.data, 'base64'));
+      }
+    }
+  }
+  await cdp.evaluate(`document.getElementById('learned-badge-proof')?.remove()`);
+}
+
 await withClientBrowserProof({ viewport: MOBILE_VIEWPORT, profilePrefix: 'item-card-constellation-proof-' }, async (cdp) => {
   assert.equal(await cdp.evaluate(mountItemCardFixtureExpression), true, '未建立背包卡片布局 fixture');
   assertItemCardLayout(await cdp.evaluate(measureItemCardExpression), '手机浅色背包卡片');
@@ -272,7 +339,10 @@ await withClientBrowserProof({ viewport: MOBILE_VIEWPORT, profilePrefix: 'item-c
   `);
   assert.equal(await cdp.evaluate(mountItemCardFixtureExpression), true, '未建立桌面背包卡片 fixture');
   assertItemCardLayout(await cdp.evaluate(measureItemCardExpression), '桌面浅色背包卡片');
+  await cdp.evaluate(`document.getElementById('item-card-layout-proof')?.remove()`);
+  await verifyLearnedBadge(cdp);
 });
 
 console.log('REPAIR_PROOF:ISSUE-000058:PASS');
 console.log('REPAIR_PROOF:ISSUE-000063:PASS');
+console.log('REPAIR_PROOF:INVENTORY_LEARNED_BADGE:PASS');
