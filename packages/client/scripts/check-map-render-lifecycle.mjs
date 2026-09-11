@@ -296,7 +296,11 @@ assert.match(pixiRenderer, /from '\.\/pixi-render-primitives'/);
 assert.match(pixiRenderer, /this\.renderThreatArrows\(player\.id\)/, '威胁箭头必须以本地玩家身份区分自有与他人关系');
 assert.match(pixiRenderer, /const self = arrow\.ownerId === localPlayerId/, '不能把所有玩家发起的威胁关系都渲染为自己的颜色');
 assert.match(pixiRenderer, /if \(!from\?\.root\.visible \|\| !to\?\.root\.visible\) continue/, '离开当前视口的实体不得继续绘制穿屏威胁箭头');
-assert.match(pixiRenderer, /this\.patchEntityMotion\(view, motionProgress, frameNow\)/, '同一帧的实体动画必须复用统一时钟');
+assert.match(
+  pixiRenderer,
+  /const frameNow = performance\.now\(\);[\s\S]*?\(frameNow - anim\.motionStartedAt\) \/ anim\.motionDurationMs[\s\S]*?this\.patchEntityMotion\(view, entityProgress, frameNow\)/,
+  '同一帧的实体动画必须以同一个 frameNow 推进各自的权威时间轴',
+);
 assert.match(pixiRenderer, /return this\.entities\.get\(id\);/, '威胁实体必须直接复用权威实体索引');
 assert.doesNotMatch(pixiRenderer, /view\.root\.visible && anim\.kind === 'crowd'/, '拥挤判定不得读取上一帧可见性');
 assert.doesNotMatch(pixiRenderer, /\[\.\.\.this\.entities\.values\(\)\]\.find/, '每帧威胁箭头不得退化为实体数组分配与线性查找');

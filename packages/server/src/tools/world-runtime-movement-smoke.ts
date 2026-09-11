@@ -355,6 +355,7 @@ function testMoveToQueuesInitialInstanceMoveImmediately() {
         },
         enqueuePendingCommand(playerId, command) {
             log.push(['enqueuePendingCommand', playerId, command]);
+            instance.enqueueMove({ playerId, ...command });
         },
         getPlayerViewOrThrow(playerId) {
             assert.equal(playerId, runtimePlayer.playerId);
@@ -372,9 +373,9 @@ function testMoveToQueuesInitialInstanceMoveImmediately() {
     });
     assert.equal(service.hasNavigationIntent(runtimePlayer.playerId), true);
     assert.equal(service.navigationIntents.get(runtimePlayer.playerId)?.mapId, 'move_to_initial_step_smoke');
-    assert.equal(log.some((entry) => entry[0] === 'enqueuePendingCommand'), false);
-    assert.deepEqual(log.filter((entry) => entry[0] === 'dispatchInstanceCommand'), [
-        ['dispatchInstanceCommand', runtimePlayer.playerId, {
+    assert.equal(log.some((entry) => entry[0] === 'dispatchInstanceCommand'), false);
+    assert.deepEqual(log.filter((entry) => entry[0] === 'enqueuePendingCommand'), [
+        ['enqueuePendingCommand', runtimePlayer.playerId, {
             kind: 'move',
             direction: Direction.East,
             continuous: true,
@@ -631,6 +632,7 @@ function testPlayerPlansThroughMonsterTileAndArrives() {
         },
         enqueuePendingCommand(playerId, command) {
             log.push(['enqueuePendingCommand', playerId, command]);
+            instance.enqueueMove({ playerId, ...command });
         },
         getPlayerViewOrThrow() {
             return {};
@@ -646,8 +648,8 @@ function testPlayerPlansThroughMonsterTileAndArrives() {
     service.enqueueMoveTo(runtimePlayer.playerId, 5, 0, false, null, null, null, null, moveToDeps);
 
     // 规划层必须给出穿过妖兽格 (3,0) 的直线路径
-    const moveEntry = log.find((entry) => entry[0] === 'dispatchInstanceCommand');
-    assert.ok(moveEntry, 'enqueueMoveTo 未派发实例移动命令');
+    const moveEntry = log.find((entry) => entry[0] === 'enqueuePendingCommand');
+    assert.ok(moveEntry, 'enqueueMoveTo 未排入权威移动队列');
     assert.deepEqual(moveEntry[2].path, [
         { x: 1, y: 0 },
         { x: 2, y: 0 },
@@ -704,6 +706,7 @@ function testPlayerStopsAdjacentWhenDestinationOccupiedByMonster() {
         },
         enqueuePendingCommand(playerId, command) {
             log.push(['enqueuePendingCommand', playerId, command]);
+            instance.enqueueMove({ playerId, ...command });
         },
         getPlayerViewOrThrow() {
             return {};
@@ -717,8 +720,8 @@ function testPlayerStopsAdjacentWhenDestinationOccupiedByMonster() {
         logger: null,
     });
     // 规划层允许把被妖兽占据的目标格作为终点（保留 allowOccupiedGoals 语义）
-    const moveEntry = log.find((entry) => entry[0] === 'dispatchInstanceCommand');
-    assert.ok(moveEntry, 'enqueueMoveTo 未派发实例移动命令');
+    const moveEntry = log.find((entry) => entry[0] === 'enqueuePendingCommand');
+    assert.ok(moveEntry, 'enqueueMoveTo 未排入权威移动队列');
     assert.equal(moveEntry[2].path[moveEntry[2].path.length - 1].x, 2);
 
     instance.tickOnce(null, { sleepMonsterAi: true });

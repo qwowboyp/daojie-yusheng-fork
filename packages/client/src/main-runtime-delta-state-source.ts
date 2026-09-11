@@ -6,6 +6,7 @@
 import {
   type ActionDef,
   type GroundItemPilePatch,
+  type MovementFrameMetadata,
   type S2C_AttrUpdate,
   type S2C_PanelDelta,
   type S2C_SelfDelta,
@@ -157,7 +158,9 @@ type MainRuntimeDeltaStateSourceOptions = {
  * tickDurationMs：tickDurationM相关字段。
  */
 
-    tickDurationMs?: number;    
+    tickDurationMs?: number;
+    motion?: MovementFrameMetadata;
+    entityMotionDurations?: ReadonlyMap<string, number>;
     /**
  * time：时间相关字段。
  */
@@ -262,6 +265,7 @@ type MainRuntimeDeltaStateSourceOptions = {
  */
 
     maxQi?: number;
+    motion?: MovementFrameMetadata;
     /**
  * playerPatch：玩家Patch相关字段。
  */
@@ -466,6 +470,37 @@ export type MainRuntimeDeltaStateSource = ReturnType<typeof createMainRuntimeDel
 
 
 export function createMainRuntimeDeltaStateSource(options: MainRuntimeDeltaStateSourceOptions) {
+  type MovementCursor = { e: number; q: number };
+  let knownMovementEpoch: number | null = null;
+  let worldMovementCursor: MovementCursor | null = null;
+  let selfMovementCursor: MovementCursor | null = null;
+
+  function resetMovementFrames(): void {
+    knownMovementEpoch = null;
+    worldMovementCursor = null;
+    selfMovementCursor = null;
+  }
+
+  function acceptMovementFrame(
+    frame: MovementFrameMetadata | undefined,
+    channel: 'world' | 'self',
+    establishesContext: boolean,
+  ): boolean {
+    if (!frame) return true;
+    if (!Number.isSafeInteger(frame.e) || !Number.isSafeInteger(frame.q) || frame.e < 0 || frame.q < 0) return false;
+    if (knownMovementEpoch !== null && frame.e < knownMovementEpoch) return false;
+    if ((knownMovementEpoch === null || frame.e > knownMovementEpoch) && !establishesContext) return false;
+    if (knownMovementEpoch === null || frame.e > knownMovementEpoch) {
+      knownMovementEpoch = frame.e;
+      worldMovementCursor = null;
+      selfMovementCursor = null;
+    }
+    const cursor = channel === 'world' ? worldMovementCursor : selfMovementCursor;
+    if (cursor && cursor.e === frame.e && frame.q <= cursor.q) return false;
+    if (channel === 'world') worldMovementCursor = { e: frame.e, q: frame.q };
+    else selfMovementCursor = { e: frame.e, q: frame.q };
+    return true;
+  }
 /**
  * buildPlayerTickEntity：构建并返回目标对象。
  * @param patch NonNullable<S2C_WorldDelta['p']>[number] 参数说明。
@@ -681,6 +716,7 @@ export function createMainRuntimeDeltaStateSource(options: MainRuntimeDeltaState
     const ignorePreviousEntities = Boolean(mapIdHint || instanceIdHint || isFullSnapshot);
     const playerPatches: TickRenderEntity[] = [];
     const entityPatches: TickRenderEntity[] = [];
+    const entityMotionDurations = new Map<string, number>();
     const removedEntityIds: string[] = [];
     const groundPatches: GroundItemPilePatch[] = [];
 
@@ -690,6 +726,9 @@ export function createMainRuntimeDeltaStateSource(options: MainRuntimeDeltaState
         continue;
       }
       playerPatches.push(buildPlayerTickEntity(patch, ignorePreviousEntities));
+      if ((typeof patch.x === 'number' || typeof patch.y === 'number') && typeof patch.md === 'number') {
+        entityMotionDurations.set(patch.id, patch.md);
+      }
     }
 
     for (const patch of data.m ?? []) {
@@ -773,6 +812,8 @@ export function createMainRuntimeDeltaStateSource(options: MainRuntimeDeltaState
       threatArrowRemoves: data.threatArrowRemoves ? data.threatArrowRemoves.map((entry) => [entry[0], entry[1]] as [string, string]) : undefined,
       pathCells: data.path ? data.path.map(([x, y]) => ({ x, y })) : undefined,
       tickDurationMs: typeof data.dt === 'number' ? data.dt : undefined,
+      motion: data.mv ? { ...data.mv } : undefined,
+      entityMotionDurations: entityMotionDurations.size > 0 ? entityMotionDurations : undefined,
       time: data.time ?? undefined,
       visibleTiles: data.v,
       visibleTilePatches: data.tp,
@@ -958,7 +999,8 @@ export function createMainRuntimeDeltaStateSource(options: MainRuntimeDeltaState
     return Array.from(next.values()).sort((left, right) => left.buffId.localeCompare(right.buffId, 'zh-Hans-CN'));
   }
 
-  return {  
+  return {
+    resetMovementFrames,
   /**
  * handleWorldDelta：处理世界增量并更新相关状态。
  * @param data S2C_WorldDelta 原始数据。
@@ -970,6 +1012,9 @@ export function createMainRuntimeDeltaStateSource(options: MainRuntimeDeltaState
 
       const startedAt = startRuntimeProfileMetric();
       try {
+        if (!acceptMovementFrame(data.mv, 'world', data.full === 1 || data.reset === 1 || Boolean(mapIdHint || instanceIdHint))) {
+          return;
+        }
         const player = options.getPlayer();
         if (!player) {
           return;
@@ -1070,6 +1115,9 @@ export function createMainRuntimeDeltaStateSource(options: MainRuntimeDeltaState
 
       const startedAt = startRuntimeProfileMetric();
       try {
+        if (!acceptMovementFrame(data.mv, 'self', Boolean(data.mid || data.iid))) {
+          return;
+        }
         const player = options.getPlayer();
         if (!player) {
           return;
@@ -1120,6 +1168,7 @@ export function createMainRuntimeDeltaStateSource(options: MainRuntimeDeltaState
             maxHp: data.maxHp,
             qi: data.qi,
             maxQi: data.maxQi,
+            motion: data.mv ? { ...data.mv } : undefined,
             playerPatch,
           });
         } finally {

@@ -546,6 +546,31 @@ function testAuxBreakdownCountsStableNoop() {
   assert.equal(breakdown.auxThreatChangedCount, 0);
 }
 
+function testMovementSubstepKeepsSpatialUpdatesAndDefersEconomy(): void {
+  const log: unknown[] = [];
+  const { service, setLootWindow, setTickIntervalMs } = createService(log);
+  const socket = { id: 'socket:movement', emit() {} };
+  service.emitAuxInitialSync('player:movement', socket, createView(10), createPlayer('炼气', 10));
+  log.length = 0;
+  setLootWindow({ tileX: 4, tileY: 5, title: '待發送拾取', sources: [] });
+  setTickIntervalMs(500);
+  service.emitAuxDeltaSync('player:movement', socket, createView(10), createPlayer('筑基', 20), { movementOnly: true });
+  const names = log.filter(Array.isArray).map((entry) => entry[0]);
+  assert.ok(names.includes('sendWorldDelta'), '移動後立即更新可見地塊');
+  assert.equal(names.includes('sendRealm'), false);
+  assert.equal(names.includes('sendLootWindow'), false);
+  assert.equal(names.includes('emitDeltaThreatSync'), false);
+  const spatial = log.find((entry) => Array.isArray(entry) && entry[0] === 'sendWorldDelta') as unknown[];
+  assert.equal(spatial[5], null, '移動同步不改玩法 dt');
+  assert.equal(spatial[6], false);
+  log.length = 0;
+  service.emitAuxDeltaSync('player:movement', socket, createView(11), createPlayer('筑基', 20));
+  assert.ok(log.some((entry) => Array.isArray(entry) && entry[0] === 'sendRealm'));
+  assert.ok(log.some((entry) => Array.isArray(entry) && entry[0] === 'sendLootWindow'));
+  assert.ok(log.some((entry) => Array.isArray(entry) && entry[0] === 'sendWorldDelta' && entry[5] === 500));
+}
+
+testMovementSubstepKeepsSpatialUpdatesAndDefersEconomy();
 testAuxStateSync();
 testMapChangeDoesNotAutoUnlockCurrentMap();
 testInitialSyncSendsCurrentUnlockedMinimap();

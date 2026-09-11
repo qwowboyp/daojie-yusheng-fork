@@ -669,7 +669,11 @@ export class WorldRuntimeInstanceTickOrchestrationService {
                     instanceTick: instance.tick,
                     worldTick: deps.tick,
                 }, () => {
-                    result = instance.tickOnce(instanceIntents, { sleepMonsterAi: sleepMonsterAi === true }) ?? result;
+                    result = instance.tickOnce(instanceIntents, {
+                        sleepMonsterAi: sleepMonsterAi === true,
+                        // 玩家移动由同一 WorldTickService writer 的 100ms 子步提前推进，逻辑息不得重复补给或执行。
+                        skipPlayerMovement: true,
+                    }) ?? result;
                 });
                 addMeasuredTickSection(sectionDurations, 'instance.coreTickMs', coreTickStartedAt);
                 if (!coreTickCompleted) {

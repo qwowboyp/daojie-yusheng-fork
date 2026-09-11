@@ -591,6 +591,9 @@ export class WorldRuntimeService {
 
     enqueuePendingCommand(playerId, command) {
         this.worldRuntimeStateFacadeService.enqueuePendingCommand(playerId, command, this);
+        if (command?.kind === 'move' || command?.kind === 'portal') {
+            this.worldRuntimeMovementService.activatePlayer(playerId);
+        }
     }
 
     getPendingCommand(playerId) {
@@ -603,6 +606,14 @@ export class WorldRuntimeService {
 
     clearPendingCommand(playerId) {
         this.worldRuntimeStateFacadeService.clearPendingCommand(playerId, this);
+    }
+
+    hasPendingInstanceCommand(playerId) {
+        const location = this.getPlayerLocation(playerId);
+        if (!location) {
+            return false;
+        }
+        return this.getInstanceRuntime(location.instanceId)?.hasPendingCommand?.(playerId) === true;
     }
 
     getPendingCommandCount() {
@@ -889,6 +900,18 @@ export class WorldRuntimeService {
     }
         async advanceFrame(frameDurationMs = 1000, getInstanceTickSpeed = null, scheduledPlans = null) {
         return this.worldRuntimeStateFacadeService.advanceFrame(frameDurationMs, getInstanceTickSpeed, scheduledPlans, this);
+    }
+        async advanceMovementFrame(nowMs = performance.now()) {
+        return this.worldRuntimeMovementService.advanceMovementFrame(nowMs, this);
+    }
+        resolveNextMovementDelayMs(nowMs = performance.now()) {
+        return this.worldRuntimeMovementService.resolveNextMovementDelayMs(nowMs);
+    }
+        setMovementScheduleChangedListener(listener) {
+        this.worldRuntimeMovementService.setScheduleChangedListener(listener);
+    }
+        getPlayerMovementMetadata(playerId) {
+        return this.worldRuntimeMovementService.getPlayerMovementMetadata(playerId, this);
     }
         recordSyncFlushDuration(durationMs) {
         this.worldRuntimeStateFacadeService.recordSyncFlushDuration(durationMs, this);

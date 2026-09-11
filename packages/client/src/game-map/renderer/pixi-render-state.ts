@@ -51,6 +51,8 @@ export interface AnimEntity extends ObservedMapEntity {
   oldWY: number;
   targetWX: number;
   targetWY: number;
+  motionStartedAt?: number;
+  motionDurationMs?: number;
 }
 
 export type EntityNameplateBadge = NonNullable<ObservedMapEntity['badge']>;

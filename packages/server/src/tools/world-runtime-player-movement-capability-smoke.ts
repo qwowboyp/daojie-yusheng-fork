@@ -207,6 +207,7 @@ function createNavigationDeps(instance: MapInstanceRuntime) {
 
 function createFullMovementChainDeps(instance: MapInstanceRuntime, runtimePlayer: any) {
   const movementService = new WorldRuntimeMovementService();
+  let pendingMovementCommand: any = null;
   const playerRuntimeService = {
     getPlayer(playerId: string) {
       assert.equal(playerId, runtimePlayer.playerId);
@@ -241,6 +242,15 @@ function createFullMovementChainDeps(instance: MapInstanceRuntime, runtimePlayer
     },
     dispatchInstanceCommand(playerId: string, command: any) {
       movementService.dispatchInstanceCommand(playerId, command, deps);
+    },
+    enqueuePendingCommand(playerId: string, command: any) {
+      assert.equal(playerId, runtimePlayer.playerId);
+      pendingMovementCommand = command;
+    },
+    dispatchPendingMovementCommand() {
+      assert.ok(pendingMovementCommand);
+      movementService.dispatchInstanceCommand(runtimePlayer.playerId, pendingMovementCommand, deps);
+      pendingMovementCommand = null;
     },
     worldRuntimeCraftInterruptService: {
       interruptCraftForReason() {},
@@ -705,8 +715,11 @@ function testMoveToSyncsRuntimeMovementCapabilityIntoInstancePlayer(): void {
     deps,
   );
 
+  assert.equal(instancePlayer.movementCapabilities?.staticObstacleIgnore, false, 'socket intake 只排入移动意图');
+  deps.dispatchPendingMovementCommand();
   assert.equal(instancePlayer.movementCapabilities?.staticObstacleIgnore, true);
-  instance.tickOnce();
+  instancePlayer.movePoints = 100;
+  instance.advancePlayerMovement(runtimePlayer.playerId, performance.now(), 1);
 
   assert.deepEqual(instance.getPlayerPosition(runtimePlayer.playerId), { x: 1, y: 0 });
 }

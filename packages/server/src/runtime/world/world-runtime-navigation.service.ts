@@ -305,10 +305,10 @@ export class WorldRuntimeNavigationService {
             return;
         }
         if (initialStep.kind === 'portal') {
-            deps.dispatchInstanceCommand(playerId, { kind: 'portal' });
+            deps.enqueuePendingCommand(playerId, { kind: 'portal' });
             return;
         }
-        deps.dispatchInstanceCommand(playerId, {
+        deps.enqueuePendingCommand(playerId, {
             kind: 'move',
             direction: initialStep.direction,
             continuous: true,
@@ -328,7 +328,7 @@ export class WorldRuntimeNavigationService {
         deps.getPlayerLocationOrThrow(playerId);
         this.clearNavigationIntent(playerId);
         this.interruptManualNavigation(playerId, deps);
-        deps.dispatchInstanceCommand(playerId, { kind: 'portal' });
+        deps.enqueuePendingCommand(playerId, { kind: 'portal' });
         return deps.getPlayerViewOrThrow(playerId);
     }
     /**
@@ -350,6 +350,7 @@ export class WorldRuntimeNavigationService {
         }
         const intent = { kind: 'quest', questId };
         this.navigationIntents.set(playerId, intent);
+        deps.worldRuntimeMovementService?.activatePlayer?.(playerId);
         const initialStep = this.resolveNavigationStep(playerId, intent, deps);
         const path = initialStep.kind === 'move' && Array.isArray(initialStep.path)
             ? initialStep.path.map((entry) => [entry.x, entry.y])
@@ -473,12 +474,16 @@ export class WorldRuntimeNavigationService {
     async materializeNavigationCommandsForInstance(instanceId, deps) {
         await this.materializeNavigationCommandBatch(instanceId, deps);
     }
+    /** 100ms 移动帧只物化活动索引中的玩家，避免遍历全部导航或实例居民。 */
+    async materializeNavigationCommandsForPlayerIds(playerIds, deps) {
+        await this.materializeNavigationCommandBatch(null, deps, playerIds);
+    }
 
     /**
      * 同一帧先快照候选玩家，再并发提交寻路任务，最后按稳定候选顺序物化命令。
      * 结果回收时会复核 intent 对象与 pending 状态，避免 worker 等待期间的新输入被旧结果覆盖。
      */
-    async materializeNavigationCommandBatch(instanceId, deps) {
+    async materializeNavigationCommandBatch(instanceId, deps, explicitPlayerIds = null) {
         if (this.navigationIntents.size === 0) {
             return;
         }
@@ -489,7 +494,13 @@ export class WorldRuntimeNavigationService {
                 ? scopedInstance.listPlayerIds()
                 : deps.worldSessionService?.listInstancePlayerIds?.(instanceId) ?? [])
             : null;
-        const intentEntries = scopedPlayerIds
+        const explicitIntentPlayerIds = explicitPlayerIds ? Array.from(explicitPlayerIds) : null;
+        const intentEntries = explicitIntentPlayerIds
+            ? explicitIntentPlayerIds.flatMap((playerId) => {
+                const intent = this.navigationIntents.get(playerId);
+                return intent ? [[playerId, intent]] : [];
+            })
+            : scopedPlayerIds
             ? scopedPlayerIds.flatMap((playerId) => {
                 const intent = this.navigationIntents.get(playerId);
                 return intent ? [[playerId, intent]] : [];
@@ -505,7 +516,7 @@ export class WorldRuntimeNavigationService {
             const entryIndex = (startIndex + offset) % intentEntries.length;
             nextCursor = (entryIndex + 1) % intentEntries.length;
             const [playerId, intent] = intentEntries[entryIndex];
-            if (deps.hasPendingCommand(playerId)) {
+            if (deps.hasPendingCommand(playerId) || deps.hasPendingInstanceCommand?.(playerId) === true) {
                 continue;
             }
             const player = this.playerRuntimeService.getPlayer(playerId);
@@ -562,7 +573,7 @@ export class WorldRuntimeNavigationService {
                 deps.queuePlayerNotice(playerId, notice.text, notice.kind, undefined, undefined, notice.structured);
                 continue;
             }
-            if (!step || deps.hasPendingCommand(playerId)) {
+            if (!step || deps.hasPendingCommand(playerId) || deps.hasPendingInstanceCommand?.(playerId) === true) {
                 continue;
             }
             const currentPlayer = this.playerRuntimeService.getPlayer(playerId);

@@ -136,7 +136,7 @@ export class WorldProjectorService {
     }
 
     /** 为已在线玩家构造增量 envelope：对比前帧缓存，仅包含变化的 world/self/panel patch。 */
-    createDeltaEnvelope(view: any, player: any, breakdown?: SyncFlushBreakdownSample) {
+    createDeltaEnvelope(view: any, player: any, breakdown?: SyncFlushBreakdownSample, movementOnly = false) {
         const identityStartedAt = performance.now();
         const identityView = this.withAccountIdentityProjection(view);
         addSyncFlushDuration(breakdown, 'projectorIdentityMs', identityStartedAt);
@@ -217,7 +217,11 @@ export class WorldProjectorService {
         addSyncFlushDuration(breakdown, 'projectorSelfMs', selfStartedAt);
         incrementSyncFlushCount(breakdown, 'projectorSelfCount');
         const panelStartedAt = performance.now();
-        const panelUpdate = buildPanelUpdate(previous, player, breakdown);
+        // 移動子步沿用上一個已發送的面板基線，讓下一息仍能投影全部未發送變更。
+        const panelUpdate = movementOnly
+            ? { delta: null, attrPanel: previous.attrPanel, actionPanel: previous.actionPanel,
+                techniquePanel: previous.techniquePanel, panelCursor: previous.panelCursor }
+            : buildPanelUpdate(previous, player, breakdown);
         addSyncFlushDuration(breakdown, 'projectorPanelMs', panelStartedAt);
         incrementSyncFlushCount(breakdown, 'projectorPanelCount');
         const panelDelta = panelUpdate.delta;

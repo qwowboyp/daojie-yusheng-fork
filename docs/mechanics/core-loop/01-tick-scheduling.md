@@ -46,6 +46,21 @@ runTickOnce():
 
 ## 实例级 Tick 编排
 
+### 玩家移動子步（2026-09）
+
+「一息」仍是 `1000ms`，玩家移動額外使用目標 `100ms` 的調度子步。兩者共用 `WorldTickService` 的 `tickInFlight` 寫入管線，不建立第二條可並行改位置的定時器。
+
+1. 輸入排入既有命令／導航佇列，同時把玩家加入活動移動索引，喚醒下一個受控子步。
+2. 子步只處理活動玩家；位置、生命、暫停與實例寫入租約通過檢查後，才物化導航並派發佇列頭的移動命令。資產及戰鬥命令仍依原 FIFO 和邏輯息執行。
+3. `advancePlayerMovement` 以單調時鐘的經過毫秒補充移動點數，驗證地形與占位後更新位置。世界錨點仍經 `syncWorldAnchorFromInstanceTick` 標脏，交由既有持久化 flush 處理。
+4. 只同步移動前後 AOI 涉及的玩家；點數不足且位置不變時不製造移動封包。沒有活動移動時回到既有實例 deadline 調度。
+5. 未到邏輯息的子步不呼叫 `advanceFrame`，不重置戰鬥事件、不推進怪物、Buff、技藝或經濟結算。經過時間累積到下一個邏輯幀，世界時間仍每秒推進一息。
+6. 到期的邏輯幀以 `skipPlayerMovement` 避免再次補給／消費移動；同步集合包含本批移動及邏輯幀前後的玩家，保留跨圖刷新。
+
+`100ms` 是調度目標，並非每次輸入都保證在 `100ms` 內完成；尋路、前置命令及伺服器負載仍會影響延遲。移動計算與網路封包頻率、瀏覽器逐幀插值彼此分離，`WorldDelta.dt` 繼續表達實例邏輯息長度。
+
+驗證入口：`world-runtime-movement-substeps-smoke`、`world-tick-smoke`、`world-sync-movement-smoke`；客户端 `proof:movement-substeps` 與 `proof:movement-bootstrap` 覆蓋逐幀表現、首包與重連。
+
 源文件: `packages/server/src/runtime/instance/`
 
 ### 阶段划分（advanceFrame）

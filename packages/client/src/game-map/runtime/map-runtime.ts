@@ -411,7 +411,7 @@ export class MapRuntime implements MapRuntimeApi {
     this.renderer.syncScene(
       this.currentScene,
       snapshot.entityTransition,
-      snapshot.tickTiming.startedAt,
+      snapshot.entityTransition?.motionSyncToken,
       snapshot.tickTiming.durationMs,
     );
     this.minimap.update(snapshot);
@@ -428,6 +428,19 @@ export class MapRuntime implements MapRuntimeApi {
       return;
     }
     this.syncSceneFromStore();
+  }
+
+  /** 让镜头跟随已绘制的位置；没有表现层实体时保留最近的权威回退目标。 */
+  private syncCameraToPresentedPlayer(): void {
+    const snapshot = this.store.getSnapshot();
+    const player = snapshot.player;
+    if (!player) {
+      return;
+    }
+    const center = this.renderer.getRenderedEntityCenter(player.id);
+    if (center) {
+      this.camera.followWorldPosition(center.x, center.y);
+    }
   }
 
   /** 启动浏览器 rAF 帧循环并驱动插值渲染。 */
@@ -464,6 +477,7 @@ export class MapRuntime implements MapRuntimeApi {
       this.skippedRafCallbacksSinceRender = 0;
       this.nextFrameAt = advanceFrameDeadlineAfterRender(this.nextFrameAt, now, minFrameIntervalMs);
       this.flushPendingSceneSync();
+      this.syncCameraToPresentedPlayer();
       this.camera.update(dt);
       const timing = this.store.getTickTiming();
       const progress = timing.durationMs > 0

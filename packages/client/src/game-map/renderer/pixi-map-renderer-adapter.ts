@@ -233,7 +233,7 @@ export class PixiMapRendererAdapter {
   private height = 1;
   private chunkFrame = 0;
   private lastVisibleTileRevision = -1;
-  private lastEntityMotionToken?: number;
+  private lastEntityMotionToken?: string;
   private formationRangeSignature = '';
   private terrainOverlaySignature = '';
   private groundPileSignature = '';
@@ -438,7 +438,7 @@ export class PixiMapRendererAdapter {
   syncScene(
     scene: MapSceneSnapshot,
     transition: MapEntityTransition | null,
-    motionSyncToken?: number,
+    motionSyncToken?: string,
     pathFadeDurationMs = DEFAULT_PATH_TRAIL_FADE_MS,
   ): void {
     this.profiler.refresh();
@@ -475,6 +475,14 @@ export class PixiMapRendererAdapter {
     this.rebuildSenseQiHoverLayer(scene);
     this.profiler.end('worldOverlays', worldOverlaysStartedAt);
     this.profiler.end('syncScene', startedAt);
+  }
+
+  /** 读取上一实际绘制帧中的实体中心，供镜头跟随表现层位置。 */
+  getRenderedEntityCenter(id: string): { x: number; y: number } | null {
+    const view = this.entities.get(id);
+    if (!view) return null;
+    const halfCell = getCellSize() / 2;
+    return { x: view.root.position.x + halfCell, y: view.root.position.y + halfCell };
   }
 
   enqueueEffect(effect: CombatEffect): void {
@@ -1982,7 +1990,7 @@ export class PixiMapRendererAdapter {
     }
   }
 
-  private syncEntities(list: readonly ObservedMapEntity[], transition: MapEntityTransition | null, motionSyncToken?: number): void {
+  private syncEntities(list: readonly ObservedMapEntity[], transition: MapEntityTransition | null, motionSyncToken?: string): void {
     const seen = new Set<string>();
     const cellSize = getCellSize();
     const sameMotionSync = motionSyncToken !== undefined && motionSyncToken === this.lastEntityMotionToken;
@@ -1998,17 +2006,39 @@ export class PixiMapRendererAdapter {
       } else {
         const anim = view.anim;
         const sameGrid = anim.gridX === entity.wx && anim.gridY === entity.wy;
-        if (entity.id === transition?.movedId) {
+        const motion = transition?.motions?.get(entity.id);
+        if (transition?.snapCamera) {
+          anim.oldWX = targetWX;
+          anim.oldWY = targetWY;
+          anim.motionStartedAt = undefined;
+          anim.motionDurationMs = undefined;
+        } else if (motion && sameGrid && anim.motionStartedAt === motion.startedAt && anim.motionDurationMs === motion.durationMs) {
+          // 视口、选取或同一帧 world/self 重新同步时，完全相同的段不能以新的 now 重算起点。
+        } else if (motion) {
+          const previousProgress = anim.motionStartedAt !== undefined && anim.motionDurationMs
+            ? clamp01((performance.now() - anim.motionStartedAt) / anim.motionDurationMs)
+            : 1;
+          anim.oldWX = anim.oldWX + (anim.targetWX - anim.oldWX) * previousProgress;
+          anim.oldWY = anim.oldWY + (anim.targetWY - anim.oldWY) * previousProgress;
+          anim.motionStartedAt = motion.startedAt;
+          anim.motionDurationMs = motion.durationMs;
+        } else if (entity.id === transition?.movedId) {
           anim.oldWX = (entity.wx - (transition.shiftX ?? 0)) * cellSize;
           anim.oldWY = (entity.wy - (transition.shiftY ?? 0)) * cellSize;
-        } else if (sameGrid && sameMotionSync) {
-          // 保留同 tick 插值状态。
+          anim.motionStartedAt = undefined;
+          anim.motionDurationMs = undefined;
+        } else if (sameGrid && (sameMotionSync || anim.motionStartedAt !== undefined)) {
+          // 非移动 UI 同步或另一实体的新帧不能结束本实体仍在进行的 md 过渡。
         } else if (!sameGrid) {
           anim.oldWX = anim.targetWX;
           anim.oldWY = anim.targetWY;
+          anim.motionStartedAt = undefined;
+          anim.motionDurationMs = undefined;
         } else {
           anim.oldWX = targetWX;
           anim.oldWY = targetWY;
+          anim.motionStartedAt = undefined;
+          anim.motionDurationMs = undefined;
         }
         Object.assign(anim, entity, { gridX: entity.wx, gridY: entity.wy, targetWX, targetWY });
       }
@@ -2450,8 +2480,12 @@ export class PixiMapRendererAdapter {
     for (const [id, view] of this.entities) {
       const anim = view.anim;
       if (anim.kind === 'crowd') {
-        const worldX = anim.oldWX + (anim.targetWX - anim.oldWX) * t;
-        const worldY = anim.oldWY + (anim.targetWY - anim.oldWY) * t;
+        const entityProgress = anim.motionStartedAt !== undefined && anim.motionDurationMs
+          ? clamp01((frameNow - anim.motionStartedAt) / anim.motionDurationMs)
+          : motionProgress;
+        const entityT = anim.motionStartedAt !== undefined ? entityProgress : t;
+        const worldX = anim.oldWX + (anim.targetWX - anim.oldWX) * entityT;
+        const worldY = anim.oldWY + (anim.targetWY - anim.oldWY) * entityT;
         if (isPixiEntityInViewport(worldX, worldY, cellSize, viewportLeft, viewportTop, viewportRight, viewportBottom)) {
           crowdedTileKeys.add(anim.gridX, anim.gridY);
         }
@@ -2464,13 +2498,17 @@ export class PixiMapRendererAdapter {
         view.root.visible = false;
         continue;
       }
-      const wx = anim.oldWX + (anim.targetWX - anim.oldWX) * t;
-      const wy = anim.oldWY + (anim.targetWY - anim.oldWY) * t;
+      const entityProgress = anim.motionStartedAt !== undefined && anim.motionDurationMs
+        ? clamp01((frameNow - anim.motionStartedAt) / anim.motionDurationMs)
+        : motionProgress;
+      const entityT = anim.motionStartedAt !== undefined ? entityProgress : t;
+      const wx = anim.oldWX + (anim.targetWX - anim.oldWX) * entityT;
+      const wy = anim.oldWY + (anim.targetWY - anim.oldWY) * entityT;
       view.root.position.set(wx, wy);
       const inViewport = isPixiEntityInViewport(wx, wy, cellSize, viewportLeft, viewportTop, viewportRight, viewportBottom);
       const hiddenByCrowd = anim.kind === 'player' && crowdedTileKeys.has(anim.gridX, anim.gridY);
       view.root.visible = inViewport && !hiddenByCrowd;
-      if (view.root.visible) this.patchEntityMotion(view, motionProgress, frameNow);
+      if (view.root.visible) this.patchEntityMotion(view, entityProgress, frameNow);
     }
     this.ensureLocalPlayerFallback(localPlayerId, localPlayerX, localPlayerY, localPlayerChar, localPlayerInRenderedEntities);
   }

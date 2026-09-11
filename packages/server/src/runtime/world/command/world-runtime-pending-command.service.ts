@@ -940,6 +940,12 @@ export class WorldRuntimePendingCommandService {
     hasPendingCommand(playerId) {
         return this.pendingCommands.has(playerId);
     }
+    /** 100ms 移动调度索引只关心尚未消费的移动/传送命令。 */
+    hasPendingMovementCommand(playerId) {
+        return this.pendingCommands.get(playerId)?.some((entry) => (
+            entry?.command?.kind === 'move' || entry?.command?.kind === 'portal'
+        )) === true;
+    }
     /**
  * clearPendingCommand：执行clear待处理Command相关逻辑。
  * @param playerId 玩家 ID。
@@ -967,7 +973,12 @@ export class WorldRuntimePendingCommandService {
  * @returns 无返回值，直接更新PendingCommand相关状态。
  */
 
-    async dispatchPendingCommands(deps, recordTickSectionDuration = null, scopedPlayerIds: Iterable<string> | null = null) {
+    async dispatchPendingCommands(
+        deps,
+        recordTickSectionDuration = null,
+        scopedPlayerIds: Iterable<string> | null = null,
+        movementOnly = false,
+    ) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
         // 加速实例通常传入玩家 ID 子集；一次遍历直接取队首，避免 sourceEntries/map/filter 的短命数组。
@@ -975,7 +986,7 @@ export class WorldRuntimePendingCommandService {
         if (scopedPlayerIds) {
             for (const playerId of scopedPlayerIds) {
                 const pendingEntry = this.pendingCommands.get(playerId)?.[0];
-                if (pendingEntry) {
+                if (pendingEntry && (!movementOnly || isMovementCommand(pendingEntry.command))) {
                     pendingEntries.push([playerId, pendingEntry]);
                 }
             }
@@ -983,7 +994,7 @@ export class WorldRuntimePendingCommandService {
         else {
             for (const [playerId, queue] of this.pendingCommands) {
                 const pendingEntry = queue?.[0];
-                if (pendingEntry) {
+                if (pendingEntry && (!movementOnly || isMovementCommand(pendingEntry.command))) {
                     pendingEntries.push([playerId, pendingEntry]);
                 }
             }
@@ -1103,6 +1114,10 @@ export class WorldRuntimePendingCommandService {
             }
         }
     }
+    /** 只派发队首的移动/传送命令，不让 100ms 帧越过 FIFO 执行资产或战斗写入。 */
+    async dispatchPendingMovementCommands(deps, scopedPlayerIds: Iterable<string>): Promise<void> {
+        await this.dispatchPendingCommands(deps, null, scopedPlayerIds, true);
+    }
     /**
  * resetState：执行reset状态相关逻辑。
  * @returns 无返回值，直接更新reset状态相关状态。
@@ -1112,6 +1127,10 @@ export class WorldRuntimePendingCommandService {
         this.pendingCommands.clear();
     }
 };
+
+function isMovementCommand(command): boolean {
+    return command?.kind === 'move' || command?.kind === 'portal';
+}
 
 function resolveTimeChamberTransferNotice(reason: string): { key: string; text: string } {
     switch (reason) {

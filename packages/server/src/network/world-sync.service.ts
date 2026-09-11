@@ -63,6 +63,27 @@ export class WorldSyncService {
         return this.flushBindings(this.worldSessionService.listBindingsForPlayerIds(playerIds));
     }
 
+    /** 移動子步只刷新受影響的接收者，面板、任務與統計保留原本的低頻出口。 */
+    async flushMovementPlayerIds(playerIds: Iterable<string>): Promise<void> {
+        for (const binding of this.worldSessionService.listBindingsForPlayerIds(playerIds)) {
+            if (this.isOfflineGainBlocking(binding.playerId)) continue;
+            const socket = this.worldSessionService.getSocketByPlayerId(binding.playerId);
+            if (!socket) continue;
+            const view = this.worldRuntimeService.getPlayerView(binding.playerId);
+            if (!view) continue;
+            this.syncPlayerInstanceRoom(binding.playerId, view);
+            const player = this.playerRuntimeService.syncFromWorldView(binding.playerId, binding.sessionId, view);
+            const envelope = this.worldSyncEnvelopeService.createMovementEnvelope(binding.playerId, view, player);
+            // 視野揭露必須隨站位更新，不能等到下一息才補新地塊。
+            const auxSynced = this.emitAuxDeltaSync(binding.playerId, socket, view, player,
+                { movementOnly: true, deferMapChanged: true });
+            if (envelope) this.emitEnvelope(socket, envelope);
+            if (auxSynced === false) {
+                this.emitAuxDeltaSync(binding.playerId, socket, view, player, { movementOnly: true });
+            }
+        }
+    }
+
     private async flushBindings(bindings: any[]) {
         const breakdown = createSyncFlushBreakdownSample();
         try {

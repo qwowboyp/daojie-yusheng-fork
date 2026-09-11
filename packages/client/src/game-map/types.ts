@@ -460,6 +460,24 @@ export interface MapEntityTransition {
  */
 
   settleMotion?: boolean;
+  /** 本帧实际发生位置变化的实体运动时间轴；未列出的实体不得重启动画。 */
+  motions?: ReadonlyMap<string, MapEntityMotion>;
+  /** 同一服务端移动帧的稳定标识，用来合并 world/self 两路同步。 */
+  motionSyncToken?: string;
+}
+
+/** 单一实体的一段权威位置过渡，仅用于客户端表现。 */
+export interface MapEntityMotion {
+  startedAt: number;
+  durationMs: number;
+}
+
+/** 服务端移动帧元数据；dt 是网络移动节奏，绝不是世界玩法 tick。 */
+export interface MapMotionFrameMetadata {
+  e: number;
+  q: number;
+  at: number;
+  dt: number;
 }
 
 /** tick 流逝与插值时长。 */
@@ -771,6 +789,10 @@ export interface MapWorldDeltaInput {
  */
 
   tickDurationMs?: number;  
+  /** 高频移动帧元数据，与 WorldDelta.mv 一一对应。 */
+  motion?: MapMotionFrameMetadata;
+  /** WorldPlayerPatchView.md 映射后的每实体移动段时长。 */
+  entityMotionDurations?: ReadonlyMap<string, number>;
   /**
  * time：时间相关字段。
  */
@@ -866,6 +888,8 @@ export interface MapSelfDeltaInput {
  */
 
   maxQi?: number;
+  /** 高频移动帧元数据，与 SelfDelta.mv 一一对应。 */
+  motion?: MapMotionFrameMetadata;
   /**
  * playerPatch：玩家Patch相关字段。
  */

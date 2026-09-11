@@ -103,6 +103,9 @@ function createService(log: LogEntry[] = [], options: DeltaOrderSmokeOptions = {
             listBindings() {
                 return [binding];
             },
+            listBindingsForPlayerIds(playerIds: Iterable<string>) {
+                return Array.from(playerIds).includes(binding.playerId) ? [binding] : [];
+            },
             consumePurgedPlayerIds() {
                 return [];
             },
@@ -139,6 +142,10 @@ function createService(log: LogEntry[] = [], options: DeltaOrderSmokeOptions = {
             clearPlayerCache() {},
         },
         {
+            createMovementEnvelope(playerId: string, inputView: typeof view) {
+                log.push(['createMovementEnvelope', playerId]);
+                return { worldDelta: { t: inputView.tick, p: [{ id: playerId, x: inputView.self.x }] } };
+            },
             createDeltaEnvelope(playerId: string, inputView: typeof view, inputPlayer: unknown) {
                 log.push(['createDeltaEnvelope', playerId, inputView === view, inputPlayer === player]);
                 if ('deltaEnvelope' in options) {
@@ -401,6 +408,22 @@ function testOfflineGainBlockingSkipsWorldSync() {
     assert.equal(records[0].skippedPlayerCount, 1);
 }
 
+async function testMovementFlushUsesSpatialPathOnly(): Promise<void> {
+    const log: LogEntry[] = [];
+    const { service } = createService(log);
+    await service.flushMovementPlayerIds(new Set(['player:1']));
+    const names = log.map((entry) => entry[0]);
+    assert.ok(names.includes('createMovementEnvelope'));
+    assert.ok(names.indexOf('emitAuxDeltaSync') < names.indexOf('sendEnvelope'));
+    assert.equal(names.includes('refreshPlayerContextActions'), false);
+    assert.equal(names.includes('emitQuestSyncIfChanged'), false);
+    assert.equal(names.includes('createDeltaEnvelope'), false);
+    log.length = 0;
+    await service.flushMovementPlayerIds(new Set(['other-player']));
+    assert.equal(log.length, 0);
+}
+
+void testMovementFlushUsesSpatialPathOnly().catch((error: unknown) => { console.error(error); process.exitCode = 1; });
 testAuxDeltaIsSentBeforeMovementEnvelope();
 testMapChangedAuxDeltaStaysAfterMovementEnvelope();
 testFlushConnectedPlayersRecordsBreakdownAndSyncsRoomOnce();

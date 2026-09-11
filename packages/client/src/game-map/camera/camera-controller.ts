@@ -77,6 +77,12 @@ export class CameraController {
     this.state.targetY = (y + 0.5) * this.cellSize;
   }
 
+  /** 以当前渲染出的世界像素位置作为跟随目标，避免权威子步终点提前拉走镜头。 */
+  followWorldPosition(x: number, y: number): void {
+    this.state.targetX = x;
+    this.state.targetY = y;
+  }
+
   /** 立即对齐到目标位置（不做平滑过渡）。 */
   snap(x: number, y: number): void {
     this.follow(x, y);

@@ -331,6 +331,7 @@ export function createMainRuntimeOwnerContext(options: CreateMainRuntimeOwnerCon
       panelDeltaStateSource.seedFromPlayer(player);
       rootRuntimeSource.syncObservedSnapshot();
     },
+    resetMovementFrames: () => runtimeDeltaStateSource.resetMovementFrames(),
     clearCurrentPath: () => mapRuntimeBridgeSource.clearCurrentPath(),
     showSidePanel: () => panelContext.panelDeps.sidePanel.show(),
     setChatPersistenceScope: (scope) => panelContext.panelDeps.chatUI.setPersistenceScope(scope),

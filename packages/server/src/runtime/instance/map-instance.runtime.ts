@@ -95,6 +95,28 @@ const INSTANCE_PERSISTENCE_DOMAIN_MUTATION_CONTEXT = new AsyncLocalStorage<Insta
 const DEFAULT_VIEW_RADIUS = 10;
 /** 玩家空间索引 chunk 边长；覆盖默认视野并避免大图同实例全量扫。 */
 const PLAYER_SPATIAL_CHUNK_SIZE = 16;
+/** 玩家权威移动子步间隔；逻辑 tick 仍保持实例原有频率。 */
+const PLAYER_MOVEMENT_FRAME_INTERVAL_MS = 100;
+/** 单个玩家每实例秒移动的地块硬上限；加速实例按 tickSpeed 等比换算到现实时间。 */
+const PLAYER_MOVEMENT_MAX_STEPS_PER_SECOND = 20;
+/** 慢帧只补最近一秒，避免恢复后一次追赶长时间历史移动债务。 */
+const PLAYER_MOVEMENT_MAX_CATCH_UP_MS = 1000;
+/** 表现层单段插值上限；更慢的高代价格仍由后续权威坐标校正。 */
+const PLAYER_MOVEMENT_MAX_PRESENTATION_DURATION_MS = 1000;
+
+function buildResolvedPlayerMovementSegment(steps, legalStepCounts) {
+    const lastLegalStepCount = legalStepCounts[legalStepCounts.length - 1] ?? 0;
+    const committedSteps = steps.slice(0, lastLegalStepCount);
+    let totalCost = 0;
+    for (const step of committedSteps) {
+        totalCost += step.cost;
+    }
+    return {
+        steps: committedSteps,
+        legalStepCounts: legalStepCounts.filter((count) => count <= lastLegalStepCount),
+        totalCost,
+    };
+}
 
 /** MONSTER_LOST_SIGHT_CHASE_TICKS：妖兽丢失视野后只追击最后目击点的短暂记忆窗口。 */
 const MONSTER_LOST_SIGHT_CHASE_TICKS = 3;
@@ -339,6 +361,10 @@ class MapInstanceRuntime {
  */
 
     pendingCommands = new Map();    
+    /** 最近提交的玩家移动段；仅供高频同步投影，不进入持久化。 */
+    playerMovementMetadataByPlayerId = new Map();
+    /** 移动段单调序号；让同步层辨别重复 flush，不随逻辑 tick 推进。 */
+    playerMovementSequence = 0;
     /**
  * freeHandles：freeHandle相关字段。
  */
@@ -809,6 +835,12 @@ class MapInstanceRuntime {
             moveSpeed: 0,
             movePoints: 0,
             lastMoveBudgetTick: this.tick,
+            movementBudgetUpdatedAtMs: performance.now(),
+            movementWindowStartedAtMs: performance.now(),
+            movementStepsInWindow: 0,
+            lastMovementFrameAtMs: 0,
+            movementTickSpeed: this.tickSpeed,
+            movementSuspended: false,
             movementCapabilities: { staticObstacleIgnore: false },
             selfRevision: 1,
         };
@@ -898,6 +930,7 @@ class MapInstanceRuntime {
         this.playersById.delete(playerId);
         this.playersByHandle.delete(player.handle);
         this.pendingCommands.delete(playerId);
+        this.playerMovementMetadataByPlayerId.delete(playerId);
         this.playerViewCacheByPlayerId.delete(playerId);
         this.autoCombatViewCacheByPlayerId.delete(playerId);
         this.autoCombatTileVisibilityCacheByPlayerId.delete(playerId);
@@ -1182,6 +1215,14 @@ class MapInstanceRuntime {
             y: player.y,
         };
     }
+    /** getPlayerMovementMetadata：读取最近一次已提交的权威移动段。 */
+    getPlayerMovementMetadata(playerId) {
+        return this.playerMovementMetadataByPlayerId.get(playerId) ?? null;
+    }
+    /** hasPendingCommand：判断实例侧是否仍有待执行的移动或传送命令。 */
+    hasPendingCommand(playerId) {
+        return this.pendingCommands.has(playerId);
+    }
     /** getPlayerPosition：读取玩家当前位置。 */
     getPlayerPosition(playerId) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
@@ -1215,6 +1256,7 @@ class MapInstanceRuntime {
                 : undefined,
 
             resetBudget: command.resetBudget === true,
+            remainingSteps: Number.isFinite(command.maxSteps) ? Math.max(1, Math.min(20, Math.trunc(command.maxSteps))) : 20,
         });
         return true;
     }
@@ -3448,6 +3490,11 @@ class MapInstanceRuntime {
         }
 
         const normalized = Number.isFinite(moveSpeed) ? Math.max(0, Math.round(moveSpeed)) : 0;
+        if (player.moveSpeed !== normalized) {
+            const nowMs = performance.now();
+            player.movementBudgetUpdatedAtMs = nowMs;
+            player.lastMovementFrameAtMs = nowMs;
+        }
         player.moveSpeed = normalized;
         return true;
     }
@@ -3621,28 +3668,30 @@ class MapInstanceRuntime {
         const transfers = [];
 
         const monsterActions = [];
-        for (const [playerId, command] of this.pendingCommands) {
-            const player = this.playersById.get(playerId);
-            if (!player) {
-                continue;
-            }
-            if (command.kind === 'move') {
-                if (command.resetBudget === true) {
-                    player.movePoints = 0;
-                    player.lastMoveBudgetTick = Math.max(0, this.tick - 1);
+        if (options?.skipPlayerMovement !== true) {
+            for (const [playerId, command] of this.pendingCommands) {
+                const player = this.playersById.get(playerId);
+                if (!player) {
+                    continue;
                 }
-                this.applyMove(player, command.direction, transfers, command.continuous === true, command.maxSteps, command.path);
-            }
-            else if (command.kind === 'portal') {
+                if (command.kind === 'move') {
+                    if (command.resetBudget === true) {
+                        player.movePoints = 0;
+                        player.lastMoveBudgetTick = Math.max(0, this.tick - 1);
+                    }
+                    this.applyMove(player, command.direction, transfers, command.continuous === true, command.maxSteps, command.path);
+                }
+                else if (command.kind === 'portal') {
 
-                const transfer = this.tryPortalTransfer(playerId, 'manual_portal');
-                if (transfer) {
-                    transfers.push(transfer);
+                    const transfer = this.tryPortalTransfer(playerId, 'manual_portal');
+                    if (transfer) {
+                        transfers.push(transfer);
+                    }
                 }
+                player.lastResolvedTick = this.tick;
             }
-            player.lastResolvedTick = this.tick;
+            this.pendingCommands.clear();
         }
-        this.pendingCommands.clear();
         const completedBuildings = this.advanceBuildingConstruction();
         this.advanceMonsters(monsterActions, precomputedMonsterIntents, {
             sleepActiveAi: options?.sleepMonsterAi === true,
@@ -7136,6 +7185,312 @@ class MapInstanceRuntime {
         this.worldRevision += 1;
         return toInventoryItemFromGroundItem(entry.item);
     }
+    /**
+     * advancePlayerMovement：只推进单个活动玩家的 100ms 移动子步。
+     * 该路径不推进 instance.tick、怪物 AI、buff、地块或经济逻辑。
+     */
+    advancePlayerMovement(playerId, nowMs, tickSpeed = 1) {
+        const player = this.playersById.get(playerId);
+        const command = this.pendingCommands.get(playerId);
+        if (!player || !command) {
+            return { moved: false, transfer: null, affectedPlayerIds: new Set(), commandPending: false };
+        }
+        if (command.kind === 'portal') {
+            this.pendingCommands.delete(playerId);
+            return {
+                moved: false,
+                transfer: this.tryPortalTransfer(playerId, 'manual_portal'),
+                affectedPlayerIds: new Set([playerId]),
+                commandPending: false,
+            };
+        }
+
+        const normalizedNowMs = Number.isFinite(Number(nowMs)) ? Number(nowMs) : performance.now();
+        const normalizedTickSpeed = this.paused === true
+            ? 0
+            : (Number.isFinite(Number(tickSpeed)) && Number(tickSpeed) > 0 ? Number(tickSpeed) : 1);
+        if (normalizedTickSpeed <= 0) {
+            this.suspendPlayerMovement(playerId, normalizedNowMs);
+            return { moved: false, transfer: null, affectedPlayerIds: new Set(), commandPending: true };
+        }
+        if (player.movementSuspended === true || Number(player.movementTickSpeed) !== normalizedTickSpeed) {
+            player.movementBudgetUpdatedAtMs = normalizedNowMs;
+            player.lastMovementFrameAtMs = normalizedNowMs;
+            player.movementTickSpeed = normalizedTickSpeed;
+            player.movementSuspended = false;
+        }
+        if (command.resetBudget === true) {
+            player.movePoints = 0;
+            player.movementBudgetUpdatedAtMs = normalizedNowMs;
+            command.resetBudget = false;
+        }
+
+        const currentWindowStartedAtMs = Number.isFinite(Number(player.movementWindowStartedAtMs))
+            ? Number(player.movementWindowStartedAtMs)
+            : normalizedNowMs;
+        if (normalizedNowMs - currentWindowStartedAtMs >= 1000 || normalizedNowMs < currentWindowStartedAtMs) {
+            player.movementWindowStartedAtMs = normalizedNowMs;
+            player.movementStepsInWindow = 0;
+        }
+        const previousMovementFrameAtMs = Number.isFinite(Number(player.lastMovementFrameAtMs))
+            ? Number(player.lastMovementFrameAtMs)
+            : 0;
+        const frameElapsedMs = previousMovementFrameAtMs > 0
+            ? Math.min(PLAYER_MOVEMENT_MAX_CATCH_UP_MS, Math.max(0, normalizedNowMs - previousMovementFrameAtMs))
+            : PLAYER_MOVEMENT_FRAME_INTERVAL_MS;
+        player.lastMovementFrameAtMs = normalizedNowMs;
+        const catchUpSegmentAllowance = command.continuous === true ? Math.max(
+            1,
+            Math.min(
+                Math.max(1, Math.round(PLAYER_MOVEMENT_MAX_STEPS_PER_SECOND * normalizedTickSpeed)),
+                Math.floor((frameElapsedMs * PLAYER_MOVEMENT_MAX_STEPS_PER_SECOND * normalizedTickSpeed) / 1000),
+            ),
+        ) : 1;
+        const movementWindowStepLimit = Math.max(
+            1,
+            Math.round(PLAYER_MOVEMENT_MAX_STEPS_PER_SECOND * normalizedTickSpeed),
+        );
+        const remainingWindowAllowance = Math.max(
+            0,
+            movementWindowStepLimit - Math.max(0, Math.trunc(Number(player.movementStepsInWindow) || 0)),
+        );
+        if (remainingWindowAllowance <= 0) {
+            return { moved: false, transfer: null, affectedPlayerIds: new Set(), commandPending: true };
+        }
+        const segment = this.resolvePlayerMovementSegment(
+            player,
+            command,
+            catchUpSegmentAllowance,
+            remainingWindowAllowance,
+        );
+        if (!segment || segment.steps.length === 0) {
+            this.pendingCommands.delete(playerId);
+            return { moved: false, transfer: null, affectedPlayerIds: new Set([playerId]), commandPending: false };
+        }
+
+        const pointsPerSecond = getMovePointsPerTick(player.moveSpeed) * normalizedTickSpeed;
+        const previousBudgetAtMs = Number.isFinite(Number(player.movementBudgetUpdatedAtMs))
+            ? Number(player.movementBudgetUpdatedAtMs)
+            : normalizedNowMs;
+        const elapsedBudgetMs = Math.min(
+            PLAYER_MOVEMENT_MAX_CATCH_UP_MS,
+            Math.max(0, normalizedNowMs - previousBudgetAtMs),
+        );
+        const firstLegalStepCount = segment.legalStepCounts[0] ?? segment.steps.length;
+        let firstLegalCost = 0;
+        for (let index = 0; index < firstLegalStepCount; index += 1) {
+            firstLegalCost += segment.steps[index].cost;
+        }
+        const continuouslyActive = previousMovementFrameAtMs > 0
+            && normalizedNowMs - previousMovementFrameAtMs <= PLAYER_MOVEMENT_MAX_CATCH_UP_MS;
+        const effectiveBudgetElapsedMs = continuouslyActive
+            ? elapsedBudgetMs
+            : Math.min(PLAYER_MOVEMENT_FRAME_INTERVAL_MS, elapsedBudgetMs);
+        const priorMovePoints = continuouslyActive
+            ? Math.max(0, Number(player.movePoints) || 0)
+            : Math.min(firstLegalCost, Math.max(0, Number(player.movePoints) || 0));
+        // 新激活玩家只带入一个合法停靠段的旧点数，再加本次真实 100ms；持续活动才保留有界慢帧追赶。
+        const maxStoredMovePoints = Math.max(
+            MOVE_POINT_UNIT,
+            continuouslyActive
+                ? segment.totalCost
+                : firstLegalCost + (pointsPerSecond * effectiveBudgetElapsedMs) / 1000,
+        );
+        player.movePoints = Math.min(
+            maxStoredMovePoints,
+            priorMovePoints + (pointsPerSecond * effectiveBudgetElapsedMs) / 1000,
+        );
+        player.movementBudgetUpdatedAtMs = normalizedNowMs;
+
+        let committedStepCount = 0;
+        let committedCost = 0;
+        let runningCost = 0;
+        let nextLegalStopIndex = 0;
+        for (let index = 0; index < segment.steps.length; index += 1) {
+            runningCost += segment.steps[index].cost;
+            if (segment.legalStepCounts[nextLegalStopIndex] !== index + 1) {
+                continue;
+            }
+            if (runningCost > player.movePoints + Number.EPSILON) {
+                break;
+            }
+            committedStepCount = index + 1;
+            committedCost = runningCost;
+            nextLegalStopIndex += 1;
+        }
+        if (committedStepCount <= 0) {
+            return { moved: false, transfer: null, affectedPlayerIds: new Set(), commandPending: true };
+        }
+        const committedSteps = segment.steps.slice(0, committedStepCount);
+
+        const fromX = player.x;
+        const fromY = player.y;
+        for (const step of committedSteps) {
+            const previousX = player.x;
+            const previousY = player.y;
+            this.setOccupied(previousX, previousY, INVALID_OCCUPANCY);
+            this.removePlayerFromTileIndex(player.playerId, previousX, previousY);
+            player.x = step.x;
+            player.y = step.y;
+            player.facing = step.direction;
+            this.addPlayerToTileIndex(player);
+            this.setOccupied(player.x, player.y, player.handle);
+            this.markAoiViewMoved(previousX, previousY, player.x, player.y);
+        }
+        player.movePoints = Math.max(0, player.movePoints - committedCost);
+        player.movementStepsInWindow = Math.max(0, Math.trunc(Number(player.movementStepsInWindow) || 0)) + committedSteps.length;
+        player.selfRevision += 1;
+        this.worldRevision += 1;
+        if (Array.isArray(command.path)) {
+            command.path.splice(0, committedSteps.length);
+        }
+        command.remainingSteps = Math.max(0, Math.trunc(Number(command.remainingSteps) || 0) - committedSteps.length);
+
+        const sequence = this.playerMovementSequence >= Number.MAX_SAFE_INTEGER - 1
+            ? 1
+            : this.playerMovementSequence + 1;
+        this.playerMovementSequence = sequence;
+        const durationMs = Math.max(
+            PLAYER_MOVEMENT_FRAME_INTERVAL_MS,
+            Math.min(
+                PLAYER_MOVEMENT_MAX_PRESENTATION_DURATION_MS,
+                Math.round((committedCost / Math.max(1, pointsPerSecond)) * 1000),
+            ),
+        );
+        this.playerMovementMetadataByPlayerId.set(playerId, {
+            sequence,
+            startedAtMs: normalizedNowMs,
+            durationMs,
+            fromX,
+            fromY,
+            toX: player.x,
+            toY: player.y,
+        });
+
+        const affectedPlayerIds = this.collectMovementObserverPlayerIds(fromX, fromY, player.x, player.y);
+        affectedPlayerIds.add(playerId);
+        const portal = this.getPortalAt(player.x, player.y);
+        const transfer = portal?.trigger === 'auto'
+            ? this.buildTransfer(player, portal, 'auto_portal')
+            : null;
+        const commandPending = transfer === null
+            && Array.isArray(command.path)
+            && command.path.length > 0
+            && command.remainingSteps > 0;
+        if (!commandPending) {
+            this.pendingCommands.delete(playerId);
+        }
+        return { moved: true, transfer, affectedPlayerIds, commandPending, facing: player.facing };
+    }
+
+    /** 暂停或倍率切换前封住活动玩家的移动时钟，恢复后不以新倍率回算旧区间。 */
+    suspendPlayerMovement(playerId, nowMs = performance.now()) {
+        const player = this.playersById.get(playerId);
+        if (!player) {
+            return false;
+        }
+        const normalizedNowMs = Number.isFinite(Number(nowMs)) ? Number(nowMs) : performance.now();
+        player.movementBudgetUpdatedAtMs = normalizedNowMs;
+        player.lastMovementFrameAtMs = normalizedNowMs;
+        player.movementSuspended = true;
+        return true;
+    }
+
+    /** 先验证完整「妖兽格...合法停靠格」段，再由调用方一次提交占位变化与预算。 */
+    resolvePlayerMovementSegment(player, command, maxSegments = 1, maxTileSteps = PLAYER_MOVEMENT_MAX_STEPS_PER_SECOND) {
+        const offset = DIRECTION_OFFSET[command.direction];
+        if (!offset) {
+            return null;
+        }
+        const steps = [];
+        const legalStepCounts = [];
+        let currentX = player.x;
+        let currentY = player.y;
+        const remainingSteps = Math.max(0, Math.min(20, Math.trunc(Number(command.remainingSteps) || 0)));
+        const normalizedSegmentLimit = Math.max(1, Math.trunc(Number(maxSegments) || 1));
+        const normalizedTileLimit = Math.max(0, Math.min(
+            remainingSteps,
+            Math.trunc(Number(maxTileSteps) || 0),
+        ));
+        while (legalStepCounts.length < normalizedSegmentLimit && steps.length < normalizedTileLimit) {
+            let reachedLegalStop = false;
+            while (steps.length < remainingSteps && steps.length < normalizedTileLimit) {
+                if (Array.isArray(command.path) && steps.length >= command.path.length) {
+                    break;
+                }
+                const pathStep = Array.isArray(command.path) ? command.path[steps.length] : null;
+                const nextX = pathStep ? pathStep.x : currentX + offset.x;
+                const nextY = pathStep ? pathStep.y : currentY + offset.y;
+                if (Math.abs(nextX - currentX) + Math.abs(nextY - currentY) !== 1
+                    || !this.isInBounds(nextX, nextY)
+                    || this.isDynamicallyBlockedTile(nextX, nextY, player.playerId)) {
+                    return legalStepCounts.length > 0
+                        ? buildResolvedPlayerMovementSegment(steps, legalStepCounts)
+                        : null;
+                }
+                const nextTileIndex = this.toTileIndex(nextX, nextY);
+                const staticWalkable = this.isCellIndexWalkable(nextTileIndex);
+                const ignoresStaticObstacle = !staticWalkable && this.canPlayerIgnoreStaticObstacle(player, this.tick);
+                if ((!staticWalkable && !ignoresStaticObstacle) || this.npcIdByTile.has(nextTileIndex)) {
+                    return legalStepCounts.length > 0
+                        ? buildResolvedPlayerMovementSegment(steps, legalStepCounts)
+                        : null;
+                }
+                const nextOccupancy = this.occupancy[nextTileIndex];
+                if (nextOccupancy !== INVALID_OCCUPANCY && !this.isPlayerOverlapTile(nextX, nextY)) {
+                    return legalStepCounts.length > 0
+                        ? buildResolvedPlayerMovementSegment(steps, legalStepCounts)
+                        : null;
+                }
+                const cost = staticWalkable
+                    ? this.getTileTraversalCost(nextX, nextY, player.playerId)
+                    : this.getStaticObstacleTraversalCost(nextTileIndex);
+                if (!Number.isFinite(cost) || cost <= 0) {
+                    return legalStepCounts.length > 0
+                        ? buildResolvedPlayerMovementSegment(steps, legalStepCounts)
+                        : null;
+                }
+                const direction = horizontalFacingFromTo(currentX, currentY, nextX, nextY, player.facing);
+                const monsterOccupied = this.monsterRuntimeIdByTile.has(nextTileIndex);
+                if (monsterOccupied && command.continuous !== true) {
+                    return legalStepCounts.length > 0
+                        ? buildResolvedPlayerMovementSegment(steps, legalStepCounts)
+                        : null;
+                }
+                steps.push({ x: nextX, y: nextY, cost, direction, monsterOccupied });
+                currentX = nextX;
+                currentY = nextY;
+                if (!monsterOccupied) {
+                    legalStepCounts.push(steps.length);
+                    reachedLegalStop = true;
+                    if (this.getPortalAt(nextX, nextY)?.trigger === 'auto') {
+                        return buildResolvedPlayerMovementSegment(steps, legalStepCounts);
+                    }
+                    break;
+                }
+            }
+            if (!reachedLegalStop) {
+                break;
+            }
+        }
+        // 尾端若落在妖兽格，丢弃该未完成原子段；此前完整合法段仍可提交。
+        return legalStepCounts.length > 0
+            ? buildResolvedPlayerMovementSegment(steps, legalStepCounts)
+            : null;
+    }
+
+    /** 以移动前后 AOI chunk 收集需高频刷新的观察者，不扫描全实例玩家。 */
+    collectMovementObserverPlayerIds(fromX, fromY, toX, toY) {
+        const playerIds = new Set();
+        for (const player of this.collectPlayersByChunkRange(fromX, fromY, DEFAULT_VIEW_RADIUS)) {
+            playerIds.add(player.playerId);
+        }
+        for (const player of this.collectPlayersByChunkRange(toX, toY, DEFAULT_VIEW_RADIUS)) {
+            playerIds.add(player.playerId);
+        }
+        return playerIds;
+    }
+
     /** applyMove：应用一次玩家移动。 */
     applyMove(player, direction, transfers, continuous = false, maxSteps = undefined, path = undefined) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。

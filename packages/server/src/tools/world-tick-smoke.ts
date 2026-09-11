@@ -411,6 +411,105 @@ function testDeadlineWaitRemainderIsNotReportedAsSkippedFrame(): void {
   );
 }
 
+async function testMovementOnlyFramesAccumulateWithoutLogicalDoubleTick(): Promise<void> {
+  const log: TickLogEntry[] = [];
+  const logicalFrameDurations: number[] = [];
+  const service = new WorldTickService(
+    {
+      flushTick(): void { log.push('flushEventBus'); },
+      flushInstance(): void { log.push('flushInstance'); },
+    },
+    { isRuntimeMaintenanceActive(): boolean { return false; } },
+    { getMapTickSpeed(): number { return 1; }, isMapPaused(): boolean { return false; } },
+    {
+      advanceMovementFrame(): Set<string> {
+        log.push('advanceMovementFrame');
+        return new Set(['player:moving']);
+      },
+      advanceFrame(elapsedMs: number): void {
+        logicalFrameDurations.push(elapsedMs);
+        log.push('advanceFrame');
+      },
+      recordSyncFlushDuration(): void {},
+      getInstanceRuntime(): null { return null; },
+    },
+    {
+      flushConnectedPlayers(): void { log.push('flushConnectedPlayers'); },
+      flushMovementPlayerIds(playerIds: Iterable<string>): void {
+        log.push(['flushMovementPlayerIds', Array.from(playerIds).join(',')]);
+      },
+    },
+    undefined,
+    undefined,
+    {
+      collectDue(): [] { return []; },
+      resolveNextDelayMs(): number { return 1000; },
+      getDroppedLogicalStepCount(): number { return 0; },
+    } as never,
+  );
+  const internals = service as unknown as { lastTickStartedAt: number };
+
+  for (let index = 0; index < 9; index += 1) {
+    internals.lastTickStartedAt = performance.now() - 101;
+    await runTickOnce(service);
+  }
+  assert.equal(logicalFrameDurations.length, 0, '前九个 100ms movement-only 唤醒不得推进逻辑帧');
+  assert.equal(log.filter((entry) => entry === 'flushEventBus').length, 0, 'movement-only 不得清空逻辑事件');
+  assert.equal(log.filter((entry) => Array.isArray(entry) && entry[0] === 'flushMovementPlayerIds').length, 9);
+
+  internals.lastTickStartedAt = performance.now() - 101;
+  await runTickOnce(service);
+  assert.equal(logicalFrameDurations.length, 1, '累积一秒只推进一次逻辑帧');
+  assert.ok(logicalFrameDurations[0] >= 1000 && logicalFrameDurations[0] < 1100);
+  assert.equal(log.filter((entry) => entry === 'flushEventBus').length, 1);
+}
+
+async function testLogicalPlanSyncUnionsBeforeAfterAndMovementPlayers(): Promise<void> {
+  const instance = {
+    meta: { instanceId: 'instance:sync-union', runtimeStatus: 'running', status: 'active' },
+    tickSpeed: 10,
+    paused: false,
+  };
+  const plan = { instanceId: instance.meta.instanceId, instance, steps: 1, speed: 10, droppedSteps: 0 };
+  let playerLookupCount = 0;
+  let flushedPlayerIds: string[] = [];
+  const service = new WorldTickService(
+    { flushTick(): void {}, flushInstance(): void {} },
+    { isRuntimeMaintenanceActive(): boolean { return false; } },
+    { getMapTickSpeed(): number { return 1; }, isMapPaused(): boolean { return false; } },
+    {
+      advanceMovementFrame(): Set<string> { return new Set(['player:movement']); },
+      advanceFrame(): void {},
+      recordSyncFlushDuration(): void {},
+      getInstanceRuntime(): typeof instance { return instance; },
+    },
+    {
+      flushConnectedPlayers(): void {},
+      flushPlayerIds(playerIds: Iterable<string>): void {
+        flushedPlayerIds = Array.from(playerIds).sort();
+      },
+    },
+    undefined,
+    undefined,
+    {
+      collectDue(): typeof plan[] { return [plan]; },
+      resolveNextDelayMs(): number { return 100; },
+      getDroppedLogicalStepCount(): number { return 0; },
+    } as never,
+    {
+      listInstancePlayerIds(): string[] {
+        playerLookupCount += 1;
+        return playerLookupCount === 1 ? ['player:before'] : ['player:after'];
+      },
+    },
+  );
+  const internals = service as unknown as { lastTickStartedAt: number; lastFullSyncStartedAt: number };
+  internals.lastTickStartedAt = performance.now() - 100;
+  internals.lastFullSyncStartedAt = performance.now();
+  await runTickOnce(service);
+  assert.deepEqual(flushedPlayerIds, ['player:after', 'player:before', 'player:movement']);
+}
+
 Promise.resolve()
   .then(() => testAwaitsAdvanceFrameBeforeSyncFlush())
   .then(() => testTickInFlightPreventsReentry())
@@ -420,6 +519,8 @@ Promise.resolve()
   .then(() => testScheduleChangeImmediatelyReordersWakeTimer())
   .then(() => testDispatcherStartRateIsBoundedByMaxInstanceSpeed())
   .then(() => testDeadlineWaitRemainderIsNotReportedAsSkippedFrame())
+  .then(() => testMovementOnlyFramesAccumulateWithoutLogicalDoubleTick())
+  .then(() => testLogicalPlanSyncUnionsBeforeAfterAndMovementPlayers())
   .then(() => {
     console.log(JSON.stringify({ ok: true, case: 'world-tick' }, null, 2));
   });

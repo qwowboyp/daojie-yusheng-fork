@@ -208,6 +208,8 @@ const smokeCases = [
   { name: 'world-projector-full-context', scriptFile: 'world-projector-full-context-smoke.js', standalone: true },
   { name: 'world-runtime-aoi-cache-locality', scriptFile: 'world-runtime-aoi-cache-locality-smoke.js', standalone: true },
   { name: 'world-sync-delta-order', scriptFile: 'world-sync-delta-order-smoke.js', standalone: true },
+  { name: 'world-sync-movement', scriptFile: 'world-sync-movement-smoke.js', standalone: true },
+  { name: 'world-runtime-movement-substeps', scriptFile: 'world-runtime-movement-substeps-smoke.js', standalone: true },
   { name: 'world-sync-player-state', scriptFile: 'world-sync-player-state-smoke.js', standalone: true },
   { name: 'world-session-instance-room', scriptFile: 'world-session-instance-room-smoke.js', standalone: true },
   { name: 'chat-runtime-sync', scriptFile: 'chat-runtime-sync-smoke.js', standalone: true },
@@ -329,6 +331,8 @@ const SMOKE_CASE_GROUPS = Object.freeze({
   'world-sync': [
     'world-sync-envelope',
     'world-sync-delta-order',
+    'world-sync-movement',
+    'world-runtime-movement-substeps',
     'world-sync-player-state',
     'world-sync-aux-state',
     'world-sync-map-static-aux',

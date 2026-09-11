@@ -141,6 +141,7 @@ interface WorldDeltaMapPatchSyncOptions {
 
 interface EmitAuxDeltaSyncOptions {
   deferMapChanged?: boolean;
+  movementOnly?: boolean;
   breakdown?: SyncFlushBreakdownSample;
 }
 
@@ -286,7 +287,7 @@ export class WorldSyncAuxStateService {
     const visibleTiles = mapStaticPlan.visibleTiles;
     const currentVisibleMinimapMarkers = mapStaticPlan.visibleMinimapMarkers;
     const mapChanged = mapStaticPlan.mapChanged;
-    const currentTimeSyncState = this.buildTimeSyncState(
+    const currentTimeSyncState = options.movementOnly && !mapChanged ? previous.time : this.buildTimeSyncState(
       view,
       this.worldSyncMapSnapshotService.buildGameTimeState(template, view, player),
     );
@@ -345,6 +346,12 @@ export class WorldSyncAuxStateService {
               : undefined,
         }),
       );
+    }
+
+    // 子步只提交空間基線；境界、拾取與時間的未發送變更留給下一次正常同步。
+    if (options.movementOnly && !mapChanged) {
+      this.worldSyncMapStaticAuxService.commitPlayerCache(playerId, mapStaticPlan.cacheState);
+      return true;
     }
 
     const currentRealm = player.realm ?? null;

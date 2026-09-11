@@ -52,6 +52,9 @@ interface WorldRuntimePort {
     scheduledPlans?: InstanceTickSchedulePlan[] | null,
   ): Promise<unknown> | unknown;
   recordSyncFlushDuration(durationMs: number): void;
+  advanceMovementFrame?(nowMs: number): Promise<Set<string>> | Set<string>;
+  resolveNextMovementDelayMs?(nowMs: number): number | null;
+  setMovementScheduleChangedListener?(listener: (() => void) | null): void;
   listInstanceEntries?(): Iterable<[string, SchedulableInstanceRuntime]>;
   getInstanceRuntime?(instanceId: string): SchedulableInstanceRuntime | null;
   isInstanceLeaseWritable?(instance: SchedulableInstanceRuntime): boolean;
@@ -65,6 +68,7 @@ interface WorldSessionIndexPort {
 interface WorldSyncPort {
   flushConnectedPlayers(): Promise<void> | void;
   flushPlayerIds?(playerIds: Iterable<string>): Promise<void> | void;
+  flushMovementPlayerIds?(playerIds: Iterable<string>): Promise<void> | void;
 }
 
 /** 调度间隔下限（ms），防止极端倍速导致 CPU 过载。 */
@@ -100,6 +104,8 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
   private lastTickStartedAt = 0;
   /** 最近一次 1Hz 全量同步的单调时钟时间；加速帧之间只同步到期实例。 */
   private lastFullSyncStartedAt = 0;
+  /** movement-only 唤醒之间累计的真实时间；只在实例逻辑帧实际执行时交给 world clock。 */
+  private pendingWorldFrameElapsedMs = 0;
   private lastTickDurationMs = 0;
   private lastIntervalMs = BASE_TICK_INTERVAL_MS;
   private totalTicks = 0;
@@ -191,24 +197,57 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
         return;
       }
 
-      const scheduledPlans = this.collectDueInstancePlans(startedAt);
+      this.pendingWorldFrameElapsedMs += actualElapsedMs;
+      const movementAffectedPlayerIds = typeof this.worldRuntimeService.advanceMovementFrame === 'function'
+        ? await this.worldRuntimeService.advanceMovementFrame(startedAt)
+        : new Set<string>();
+
+      // 寻路 worker 可能 await；使用回收后的当前时间判断实例 deadline，避免漏掉本轮已到期计划。
+      const framePlanObservedAtMs = performance.now();
+      const scheduledPlans = this.collectDueInstancePlans(framePlanObservedAtMs);
+      const shouldAdvanceWorldFrame = scheduledPlans === null
+        || scheduledPlans.length > 0
+        || this.pendingWorldFrameElapsedMs >= BASE_TICK_INTERVAL_MS;
       const affectedPlayerIds = scheduledPlans
         ? this.collectPlanPlayerIds(scheduledPlans)
         : null;
-      await this.worldRuntimeService.advanceFrame(
-        actualElapsedMs,
-        null,
-        scheduledPlans,
-      );
+      if (shouldAdvanceWorldFrame) {
+        await this.worldRuntimeService.advanceFrame(
+          this.pendingWorldFrameElapsedMs,
+          null,
+          scheduledPlans,
+        );
+        this.pendingWorldFrameElapsedMs = 0;
+        if (scheduledPlans) {
+          for (const playerId of this.collectPlanPlayerIds(scheduledPlans)) {
+            affectedPlayerIds?.add(playerId);
+          }
+        }
+      }
+
+      if (!shouldAdvanceWorldFrame) {
+        if (movementAffectedPlayerIds.size > 0) {
+          const movementSyncStartedAt = performance.now();
+          if (typeof this.worldSyncService.flushMovementPlayerIds === 'function') {
+            await this.worldSyncService.flushMovementPlayerIds(movementAffectedPlayerIds);
+          } else if (typeof this.worldSyncService.flushPlayerIds === 'function') {
+            await this.worldSyncService.flushPlayerIds(movementAffectedPlayerIds);
+          }
+          this.worldRuntimeService.recordSyncFlushDuration(performance.now() - movementSyncStartedAt);
+        }
+        this.consecutiveTickFailures = 0;
+        return;
+      }
+
+      for (const playerId of movementAffectedPlayerIds) {
+        affectedPlayerIds?.add(playerId);
+      }
 
       const fullSyncDue = scheduledPlans === null
         || this.lastFullSyncStartedAt === 0
         || startedAt - this.lastFullSyncStartedAt >= BASE_TICK_INTERVAL_MS;
       const syncStartedAt = performance.now();
       if (!fullSyncDue && scheduledPlans && typeof this.worldSyncService.flushPlayerIds === 'function') {
-        for (const playerId of this.collectPlanPlayerIds(scheduledPlans)) {
-          affectedPlayerIds?.add(playerId);
-        }
         await this.worldSyncService.flushPlayerIds(affectedPlayerIds ?? []);
       } else {
         await this.worldSyncService.flushConnectedPlayers();
@@ -246,8 +285,12 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
     // deadline 是绝对单调时间，不能再减上一帧耗时，否则会重复补偿并提前唤醒。
     const nowMs = performance.now();
     const deadlineDelay = this.instanceScheduleService?.resolveNextDelayMs(nowMs);
-    const requestedDelay = deadlineDelay
-      ?? Math.max(0, this.resolveEffectiveTickIntervalMs() - this.lastTickDurationMs);
+    const movementDelay = this.worldRuntimeService.resolveNextMovementDelayMs?.(nowMs) ?? null;
+    const fallbackDelay = Math.max(0, this.resolveEffectiveTickIntervalMs() - this.lastTickDurationMs);
+    const requestedDelay = Math.min(
+      deadlineDelay ?? fallbackDelay,
+      movementDelay ?? Number.POSITIVE_INFINITY,
+    );
     const delay = this.resolveNextWakeDelayMs(nowMs, requestedDelay);
     this.currentWakeDelayMs = delay;
     this.timer = setTimeout(() => {
@@ -366,12 +409,14 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
     this.shuttingDown = false;
     this.lastTickStartedAt = 0;
     this.lastFullSyncStartedAt = 0;
+    this.pendingWorldFrameElapsedMs = 0;
     this.currentWakeDelayMs = BASE_TICK_INTERVAL_MS;
     if (this.instanceScheduleService && typeof this.worldRuntimeService.listInstanceEntries === 'function') {
       this.instanceScheduleService.rebuild(this.worldRuntimeService.listInstanceEntries(), performance.now());
       // 重建期间不安装监听器，避免 rebuild 通知提前创建首个 timer，随后启动路径再创建第二个。
       this.instanceScheduleService.setScheduleChangedListener(this.handleInstanceScheduleChanged);
     }
+    this.worldRuntimeService.setMovementScheduleChangedListener?.(this.handleInstanceScheduleChanged);
     this.schedulerManagerService?.registerTask({
       id: WORLD_TICK_SCHEDULER_TASK_ID,
       kind: 'tick',
@@ -420,6 +465,7 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
   onModuleDestroy(): void {
     this.lifecycleStarted = false;
     this.instanceScheduleService?.setScheduleChangedListener(null);
+    this.worldRuntimeService.setMovementScheduleChangedListener?.(null);
     this.schedulerManagerService?.setPaused(WORLD_TICK_SCHEDULER_TASK_ID, true);
     this.stopTimer();
   }
@@ -428,6 +474,7 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
     this.lifecycleStarted = false;
     this.shuttingDown = true;
     this.instanceScheduleService?.setScheduleChangedListener(null);
+    this.worldRuntimeService.setMovementScheduleChangedListener?.(null);
     this.schedulerManagerService?.setPaused(WORLD_TICK_SCHEDULER_TASK_ID, true);
     this.stopTimer();
     const deadline = Date.now() + 5000;

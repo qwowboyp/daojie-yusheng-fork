@@ -15,6 +15,7 @@ import { MapTemplateRepository } from '../runtime/map/map-template.repository';
 import { WorldRuntimeService } from '../runtime/world/world-runtime.service';
 import { WorldProjectorService } from './world-projector.service';
 import { WorldSyncMapSnapshotService } from './world-sync-map-snapshot.service';
+import { WorldSyncMovementFrames } from './world-sync-movement-frames';
 import {
     addSyncFlushDuration,
     incrementSyncFlushCount,
@@ -26,6 +27,7 @@ const containerRespawnProjectionCache = new WeakMap<object, Map<number, unknown>
 /** world envelope 服务：承接 envelope 生成、战斗特效附加与移动调试日志。 */
 @Injectable()
 export class WorldSyncEnvelopeService {
+    private readonly movementFrames = new WorldSyncMovementFrames();
 /**
  * worldProjectorService：世界Projector服务引用。
  */
@@ -97,7 +99,7 @@ export class WorldSyncEnvelopeService {
             { drainPlayer: false },
         );
         this.logMovementEnvelope(playerId, 'initial', envelope);
-        return envelope;
+        return this.stampMovementEnvelope(playerId, view, envelope, true);
     }
     /**
  * createDeltaEnvelope：构建并返回目标对象。
@@ -127,7 +129,20 @@ export class WorldSyncEnvelopeService {
         addSyncFlushDuration(breakdown, 'envelopeEventBusMs', eventBusStartedAt);
         incrementSyncFlushCount(breakdown, 'envelopeEventBusCount');
         this.logMovementEnvelope(playerId, 'delta', envelope);
-        return envelope;
+        return this.stampMovementEnvelope(playerId, view, envelope, false);
+    }
+
+    /** 子步只投影空間與自身差量，不重播上一息的戰鬥特效或刷新面板。 */
+    createMovementEnvelope(playerId: string, view: any, player: any) {
+        const envelope = this.worldProjectorService.createDeltaEnvelope(
+            this.withContainerRespawnProjection(view), player, undefined, true,
+        );
+        return this.stampMovementEnvelope(playerId, view, envelope, false);
+    }
+
+    private stampMovementEnvelope(playerId: string, view: any, envelope: any, initial: boolean) {
+        return this.movementFrames.stamp(playerId, view.instance.instanceId, envelope, initial,
+            (movedPlayerId) => this.worldRuntimeService.getPlayerMovementMetadata?.(movedPlayerId));
     }
     /**
  * clearPlayerCache：执行clear玩家缓存相关逻辑。
@@ -136,6 +151,7 @@ export class WorldSyncEnvelopeService {
  */
 
     clearPlayerCache(playerId) {
+        this.movementFrames.clear(playerId);
         this.worldProjectorService.clear(playerId);
         this.runtimeEventBusService?.discardPlayer?.(playerId);
     }

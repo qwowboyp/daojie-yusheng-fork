@@ -158,6 +158,8 @@ type MainRuntimeStateSourceOptions = {
  */
 
   resetObservedBaselinesFromPlayer: (player: PlayerState) => void;
+  /** 新連線會話開始時清除移動游標；同會話的 bootstrap 不可重置已接收的基線。 */
+  resetMovementFrames: () => void;
   /**
  * clearCurrentPath：clearCurrent路径相关字段。
  */
@@ -462,9 +464,14 @@ function optionsResolvePreviewTechniquesSafe(techniques: PlayerState['techniques
 export function createMainRuntimeStateSource(options: MainRuntimeStateSourceOptions) {
   let latestInitSession: S2C_InitSession | null = null;
   let latestMapEnter: S2C_MapEnter | null = null;
-  let pendingWorldDelta: S2C_WorldDelta | null = null;
-  let pendingSelfDelta: S2C_SelfDelta | null = null;
-  let pendingPanelDelta: S2C_PanelDelta | null = null;
+  let awaitingBootstrap = false;
+  // InitSession → 首個完整 envelope → Bootstrap 必須保留原始接收順序。
+  // 只存啟動期間的封包，重連／清理時整批釋放，不覆蓋建立 mv epoch 的完整基線。
+  const pendingBootstrapDeltas: Array<
+    | { type: 'world'; data: S2C_WorldDelta }
+    | { type: 'self'; data: S2C_SelfDelta }
+    | { type: 'panel'; data: S2C_PanelDelta }
+  > = [];
   let pendingMapStatic: S2C_MapStatic | null = null;
   let deferredSideEffectsScheduled = false;
   let deferredSideEffectsRaf: number | null = null;
@@ -608,23 +615,18 @@ export function createMainRuntimeStateSource(options: MainRuntimeStateSourceOpti
     if (!options.getPlayer()) {
       return;
     }
-    if (pendingWorldDelta) {
-      const pending = pendingWorldDelta;
-      pendingWorldDelta = null;
-      const hints = resolveMapEnterHints(options.getPlayer());
-      options.applyWorldDelta(pending, hints.mapIdHint, hints.instanceIdHint);
-      deferEventBusPayload(pending);
+    for (const pending of pendingBootstrapDeltas) {
+      if (pending.type === 'world') {
+        const hints = resolveMapEnterHints(options.getPlayer());
+        options.applyWorldDelta(pending.data, hints.mapIdHint, hints.instanceIdHint);
+        deferEventBusPayload(pending.data);
+      } else if (pending.type === 'self') {
+        options.applySelfDelta(pending.data);
+      } else {
+        deferPanelDelta(pending.data);
+      }
     }
-    if (pendingSelfDelta) {
-      const pending = pendingSelfDelta;
-      pendingSelfDelta = null;
-      options.applySelfDelta(pending);
-    }
-    if (pendingPanelDelta) {
-      const pending = pendingPanelDelta;
-      pendingPanelDelta = null;
-      deferPanelDelta(pending);
-    }
+    pendingBootstrapDeltas.length = 0;
     flushPendingMapStaticForCurrentMap();
   };
 
@@ -647,9 +649,9 @@ export function createMainRuntimeStateSource(options: MainRuntimeStateSourceOpti
     clear(): void {
       latestInitSession = null;
       latestMapEnter = null;
-      pendingWorldDelta = null;
-      pendingSelfDelta = null;
-      pendingPanelDelta = null;
+      awaitingBootstrap = false;
+      pendingBootstrapDeltas.length = 0;
+      options.resetMovementFrames();
       pendingMapStatic = null;
       clearDeferredRuntimeSideEffects();
     },
@@ -666,6 +668,10 @@ export function createMainRuntimeStateSource(options: MainRuntimeStateSourceOpti
 
 
     handleInitSession(data: S2C_InitSession): void {
+      options.resetMovementFrames();
+      pendingBootstrapDeltas.length = 0;
+      clearDeferredRuntimeSideEffects();
+      awaitingBootstrap = true;
       latestInitSession = data;
     },
     /**
@@ -690,8 +696,8 @@ export function createMainRuntimeStateSource(options: MainRuntimeStateSourceOpti
 
       const startedAt = startRuntimeProfileMetric();
       try {
-        if (!options.getPlayer()) {
-          pendingWorldDelta = data;
+        if (awaitingBootstrap || !options.getPlayer()) {
+          pendingBootstrapDeltas.push({ type: 'world', data });
           return;
         }
         const player = options.getPlayer();
@@ -724,8 +730,8 @@ export function createMainRuntimeStateSource(options: MainRuntimeStateSourceOpti
 
       const startedAt = startRuntimeProfileMetric();
       try {
-        if (!options.getPlayer()) {
-          pendingSelfDelta = data;
+        if (awaitingBootstrap || !options.getPlayer()) {
+          pendingBootstrapDeltas.push({ type: 'self', data });
           return;
         }
         options.applySelfDelta(data);
@@ -746,8 +752,8 @@ export function createMainRuntimeStateSource(options: MainRuntimeStateSourceOpti
 
       const startedAt = startRuntimeProfileMetric();
       try {
-        if (!options.getPlayer()) {
-          pendingPanelDelta = data;
+        if (awaitingBootstrap || !options.getPlayer()) {
+          pendingBootstrapDeltas.push({ type: 'panel', data });
           return;
         }
         deferPanelDelta(data);
@@ -904,6 +910,7 @@ export function createMainRuntimeStateSource(options: MainRuntimeStateSourceOpti
       options.initActivityState();
       options.initSocialState();
       options.initPartyState?.();
+      awaitingBootstrap = false;
       flushPendingBootstrapEnvelope();
     },
   };

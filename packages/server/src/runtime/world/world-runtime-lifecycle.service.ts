@@ -403,6 +403,7 @@ export class WorldRuntimeLifecycleService {
         deps.worldRuntimePendingCommandService.resetState();
         deps.worldRuntimeGmQueueService.resetState();
         deps.worldRuntimeNavigationService.reset();
+        deps.worldRuntimeMovementService?.reset?.();
         deps.worldRuntimeTickProgressService.resetState();
         deps.worldRuntimeLootContainerService.reset();
         deps.worldRuntimeCombatEffectsService.resetAll();

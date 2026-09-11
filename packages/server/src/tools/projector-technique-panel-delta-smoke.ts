@@ -5,6 +5,7 @@ installSmokeTimeout(__filename);
 import assert from 'node:assert/strict';
 
 import { WorldProjectorService } from '../network/world-projector.service';
+import { WorldSyncEnvelopeService } from '../network/world-sync-envelope.service';
 import { createSyncFlushBreakdownSample } from '../network/world-sync-flush-breakdown';
 import { TECHNIQUE_MAX_ATTR_PERCENT_BONUS_SOURCE } from '@mud/shared';
 
@@ -29,6 +30,8 @@ function byteLength(value: unknown): number {
 }
 
 function main(): void {
+  proveMovementEnvelopeKeepsOwnPlayerAndColdBaseline();
+  proveMovementSubstepPreservesPendingPanelDelta();
   const noCacheFullProof = proveNoCacheFullPanelKeepsTechniqueStaticDetails();
   const learnedTechniqueProof = proveLearnedTechniquePatchKeepsStaticDetails();
   const expDeltaProof = proveTechniqueExpDeltaAvoidsStaticDetails();
@@ -59,6 +62,46 @@ function main(): void {
     answers:
       '功法面板首个全量包和新增功法仍可携带静态 skills/layers；每秒经验/等级动态变化只发字段级 patch，不再带 full/skills/layers/name 等模板详情，并复用未变化的功法条目；属性面板常驻 bonuses 使用投影后的功法加成，包含万法归元与凝气法灵脉投影；属性面板大范围数值变化仍发字段 patch，不回退 full；行动面板会下发技能 cooldownReadyTick 的设置与清除差量，并省略未变化的稳定开关。',
   }, null, 2));
+}
+
+function proveMovementEnvelopeKeepsOwnPlayerAndColdBaseline(): void {
+  const player = createProjectorPlayer();
+  const view = createProjectorView();
+  const envelopes = new WorldSyncEnvelopeService(createProjector(), {
+    getPlayerMovementMetadata: () => ({ durationMs: 500, toX: 2, toY: 1 }),
+  }, null, null, null);
+  const initial = envelopes.createMovementEnvelope(player.playerId, view, player);
+  assert.equal(initial?.worldDelta?.full, 1, '子步遇到空 cache 必須建立完整基線');
+  assert.equal(initial?.worldDelta?.mv?.q, 1);
+  assert.equal(initial?.worldDelta?.p?.find((patch) => patch.id === player.playerId)?.md, undefined);
+  player.x = 2;
+  player.selfRevision += 1;
+  const movedView = { ...view, self: { ...view.self, x: 2 }, worldRevision: 2, selfRevision: 2 };
+  const movement = envelopes.createMovementEnvelope(player.playerId, movedView, player);
+  const ownPatch = movement?.worldDelta?.p?.find((patch) => patch.id === player.playerId);
+  assert.equal(ownPatch?.x, 2, '本人也必須收到世界座標 patch');
+  assert.equal(ownPatch?.md, 500, '本人插值時長由同一 world p.md 真源投影');
+  assert.equal(movement?.selfDelta?.x, undefined, '本人座標只在 world patch 傳送，self 不重複欄位');
+  assert.equal(movement?.worldDelta?.mv?.q, 2);
+  assert.deepEqual(movement?.worldDelta?.mv, movement?.selfDelta?.mv);
+  assert.equal(movement?.panelDelta, undefined);
+  const unchanged = envelopes.createMovementEnvelope(player.playerId, movedView, player);
+  assert.equal(unchanged, null, '無狀態變更時不得製造空移動包');
+}
+
+function proveMovementSubstepPreservesPendingPanelDelta(): void {
+  const service = createProjector();
+  const player = createPlayerWithTechnique('tech_movement', 0);
+  service.createInitialEnvelope({ playerId: player.playerId, sessionId: 'projector_session' }, createProjectorView(), player);
+  player.techniques.techniques[0].exp = 7;
+  player.techniques.revision += 1;
+  player.hp = 9;
+  player.selfRevision += 1;
+  const movement = service.createDeltaEnvelope(createProjectorView(), player, undefined, true);
+  assert.equal(movement?.panelDelta, undefined, '移動子步不投影技藝面板');
+  assert.equal(movement?.selfDelta?.hp, 9);
+  const normal = service.createDeltaEnvelope(createProjectorView(), player);
+  assert.equal(normal?.panelDelta?.tech?.techniques?.[0]?.exp, 7, '子步不能吃掉下一息的面板差量基線');
 }
 
 function proveBuffCountdownKeepsAttrBonusCache(): {

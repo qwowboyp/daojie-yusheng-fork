@@ -243,6 +243,8 @@ export interface VisibleTilePatchView {
 
 /** 世界增量中的玩家实体补丁。 */
 export interface WorldPlayerPatchView {
+  /** 本次權威移動段的顯示時長（毫秒）；僅隨座標變化發送，不改變玩法的一息。 */
+  md?: number;
 /**
  * id：ID标识。
  */
@@ -668,7 +670,20 @@ export interface WorldFormationPatchView {
 }
 
 /** 世界增量主体视图。 */
+/** 同一連線內的位置同步時序；world/self 共用序號，但各自消費。 */
+export interface MovementFrameMetadata {
+  /** 初始同步或跨實例時遞增的上下文代際。 */
+  e: number;
+  /** 此代際內遞增的 envelope 序號，與邏輯 tick 無關。 */
+  q: number;
+  /** 伺服器單調時鐘毫秒；只供顯示排序，不作持久化時間。 */
+  at: number;
+  /** 活動移動的同步節奏（毫秒），不取代 WorldDelta.dt。 */
+  dt: number;
+}
+
 export interface WorldDeltaView {
+  mv?: MovementFrameMetadata;
 /**
  * t：t相关字段。
  */
@@ -807,6 +822,7 @@ export interface WorldDeltaView {
 
 /** 自身状态增量视图。 */
 export interface SelfDeltaView {
+  mv?: MovementFrameMetadata;
 /**
  * sr：sr相关字段。
  */

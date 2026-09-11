@@ -60,6 +60,7 @@ import type {
   MapSelfDeltaInput,
   MapWorldDeltaInput,
   MapKnownTileBounds,
+  MapEntityMotion,
   MapSenseQiOverlayState,
   MapStoreSnapshot,
   MapTargetingOverlayState,
@@ -71,6 +72,8 @@ const DEFAULT_MOTION_DURATION_MS = 320;
 const MIN_MOTION_DURATION_MS = 180;
 const MAX_MOTION_DURATION_MS = 420;
 const TICK_MOTION_DURATION_RATIO = 0.34;
+const MIN_NETWORK_MOTION_DURATION_MS = 40;
+const MAX_NETWORK_MOTION_DURATION_MS = 1000;
 const TERRAIN_RENDER_CHUNK_SIZE = 16;
 
 /** 获取最近一次刷新后的可见实体快照，供 UI 和交互层读取。 */
@@ -94,6 +97,20 @@ function normalizeMotionDurationMs(durationMs: number): number {
   }
   const scaled = Math.round(durationMs * TICK_MOTION_DURATION_RATIO);
   return Math.max(MIN_MOTION_DURATION_MS, Math.min(MAX_MOTION_DURATION_MS, scaled));
+}
+
+function normalizeNetworkMotionDurationMs(durationMs: number | undefined): number {
+  if (!Number.isFinite(durationMs) || (durationMs ?? 0) <= 0) {
+    return DEFAULT_MOTION_DURATION_MS;
+  }
+  return Math.max(MIN_NETWORK_MOTION_DURATION_MS, Math.min(MAX_NETWORK_MOTION_DURATION_MS, Math.round(durationMs as number)));
+}
+
+function getMotionSyncToken(motion: { e: number; q: number } | undefined): string | undefined {
+  if (!motion || !Number.isSafeInteger(motion.e) || !Number.isSafeInteger(motion.q)) {
+    return undefined;
+  }
+  return `${motion.e}:${motion.q}`;
 }
 
 /** 按值优先级处理补丁：null 表示清空，undefined 表示不更新。 */
@@ -735,6 +752,7 @@ export class MapStore {
 
     const oldX = this.player.x;
     const oldY = this.player.y;
+    const previousEntities = this.entityMap;
     const selfPatch = data.playerPatches.find((patch) => patch.id === this.player?.id);
     if (selfPatch) {
       if (selfPatch.name) {
@@ -807,13 +825,41 @@ export class MapStore {
       || data.playerPatches.some((patch) => hasSpatialTickEntityDelta(patch))
       || data.entityPatches.some((patch) => hasSpatialTickEntityDelta(patch));
     if (hasSpatialEntityDelta) {
-      this.entityTransition = moved
-        ? {
-            movedId: this.player.id,
-            shiftX: this.player.x - oldX,
-            shiftY: this.player.y - oldY,
+      const motions = new Map<string, MapEntityMotion>();
+      const shouldSnap = shouldResetEntities || preloadingDifferentMap || instanceChanged;
+      if (!shouldSnap) {
+        for (const patch of [...data.playerPatches, ...data.entityPatches]) {
+          if (!data.entityMotionDurations?.has(patch.id)) {
+            continue;
           }
-        : { settleMotion: true };
+          const previous = previousEntities.get(patch.id);
+          const current = this.entityMap.get(patch.id);
+          if (!previous || !current || (previous.wx === current.wx && previous.wy === current.wy)) {
+            continue;
+          }
+          motions.set(patch.id, {
+            startedAt: transitionStartedAt,
+            // mv.dt 只是本次网络帧率；没有玩家 md 时不得把怪物等 1Hz 目标缩成 100ms。
+            durationMs: normalizeNetworkMotionDurationMs(data.entityMotionDurations?.get(patch.id)),
+          });
+        }
+      }
+      const motionSyncToken = getMotionSyncToken(data.motion);
+      if (!shouldSnap && motions.size === 0 && motionSyncToken && this.entityTransition?.motionSyncToken === motionSyncToken) {
+        // Socket 事件顺序在不同类型之间不作为表现契约；同帧的后到 world patch 不得覆盖 self 已开始的过渡。
+        return;
+      }
+      this.entityTransition = shouldSnap
+        ? { snapCamera: true }
+        : {
+            ...(moved ? {
+              movedId: this.player.id,
+              shiftX: this.player.x - oldX,
+              shiftY: this.player.y - oldY,
+            } : {}),
+            ...(motions.size > 0 ? { motions } : {}),
+            motionSyncToken,
+          };
       this.tickTiming.startedAt = transitionStartedAt;
     }
   }
@@ -924,8 +970,13 @@ export class MapStore {
         movedId: this.player.id,
         shiftX: this.player.x - oldX,
         shiftY: this.player.y - oldY,
+        motionSyncToken: getMotionSyncToken(data.motion),
       };
       this.tickTiming.startedAt = performance.now();
+      return;
+    }
+    if (this.entityTransition?.motionSyncToken && this.entityTransition.motionSyncToken === getMotionSyncToken(data.motion)) {
+      // world/self 属同一服务端 envelope；self 的生命或朝向 patch 不能撤销刚建立的位置过渡。
       return;
     }
     this.entityTransition = null;
