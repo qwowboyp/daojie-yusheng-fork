@@ -4,7 +4,8 @@
   "packageManager": "pnpm@10.29.1",
   "scripts": {
     "generate:late-game": "node scripts/generate-late-game-content.mjs --write && node scripts/sync-late-game-icons.mjs && node packages/client/scripts/generate-item-sources.mjs && node scripts/generate-editor-catalog.mjs --client=client --shared=shared",
-    "proof:late-game": "node scripts/generate-late-game-content.mjs && node scripts/prove-late-game-content.mjs && node scripts/lib/late-game-balance-proof.mjs && node scripts/prove-late-game-techniques.mjs",
+    "proof:late-game": "node scripts/generate-late-game-content.mjs && node scripts/prove-late-game-content.mjs && node scripts/lib/late-game-balance-proof.mjs && node scripts/prove-late-game-techniques.mjs && node scripts/prove-late-game-market.mjs",
+    "proof:late-game-market": "node scripts/prove-late-game-market.mjs",
     "build": "pnpm run build:packages && pnpm run proof:release-gates",
     "build:packages": "pnpm run build:client && pnpm run build:server && pnpm run build:config-editor",
     "build:config-editor": "pnpm --filter @mud/config-editor build",
