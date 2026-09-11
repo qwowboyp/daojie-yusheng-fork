@@ -25,7 +25,11 @@ COPY packages/server/src/tools/protocol-audit.ts packages/server/src/tools/proto
 COPY packages/server/src/runtime/instance/map-instance.runtime.ts packages/server/src/runtime/instance/map-instance.runtime.ts
 ARG BUILD_CACHEBUST=local
 RUN printf '%s\n' "$BUILD_CACHEBUST" >/dev/null
-RUN NODE_OPTIONS=--experimental-websocket xvfb-run -a pnpm build:client
+# 保留父 shell：BuildKit 單命令 RUN 會讓 xvfb-run 成為 PID 1，
+# Xvfb 不向 PID 1 發送就緒 SIGUSR1，導致建置命令永遠不會啟動。
+# 顯式保存退出碼也確保 proof 失敗會阻擋映像建置。
+RUN NODE_OPTIONS=--experimental-websocket xvfb-run -a -e /dev/stderr pnpm build:client; \
+    result=$?; exit "$result"
 
 FROM nginx:alpine
 ENV NGINX_WORKER_PROCESSES=auto

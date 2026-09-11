@@ -2,7 +2,7 @@
  * ISSUE-000016：通过正式营造工具栏验证合法背包材料不会被偏好项隐藏，并随 revision 刷新。
  */
 import assert from 'node:assert/strict';
-import { delay, withClientBrowserProof } from './browser-proof-runtime.mjs';
+import { delay, waitFor, withClientBrowserProof } from './browser-proof-runtime.mjs';
 
 const MARKER = 'REPAIR_PROOF:ISSUE-000016:PASS';
 const MOBILE_COMPACT_MARKER = 'PROOF:BUILDING_MOBILE_COMPACT:PASS';
@@ -206,8 +206,13 @@ await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'building-mate
       };
     })()
   `);
-  await delay(100);
-  const refreshed = await cdp.evaluate(measureExpression);
+  const refreshed = await waitFor(async () => {
+    const measured = await cdp.evaluate(measureExpression);
+    return measured.cards.map((card) => card.itemId).join(',')
+      === 'black_iron_chunk,earthbearing_stone,cleft_iron_fragment'
+      ? measured
+      : null;
+  }, '背包 revision 的营造材料投影');
   assert.deepEqual(
     refreshed.cards.map((card) => card.itemId),
     ['black_iron_chunk', 'earthbearing_stone', 'cleft_iron_fragment'],

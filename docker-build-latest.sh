@@ -83,7 +83,7 @@ build_image() {
   local dockerfile="packages/${target}/Dockerfile"
 
   log_info "构建 ${target} 镜像: $(get_image_name "$target")"
-  docker build \
+  DOCKER_BUILDKIT=1 docker build \
     --build-arg "BUILD_CACHEBUST=${BUILD_CACHEBUST}" \
     --build-arg "NPM_CONFIG_REGISTRY=${NPM_CONFIG_REGISTRY}" \
     --build-arg "PNPM_VERSION=${PNPM_VERSION}" \

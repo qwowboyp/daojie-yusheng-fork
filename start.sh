@@ -915,7 +915,7 @@ services:
       GM_PASSWORD: '$(escape_yaml_single_quoted "$GM_PASSWORD")'
 EOF
 
-    docker compose -p "$MAINLINE_COMPOSE_PROJECT" -f "$MAINLINE_COMPOSE_FILE" -f "$docker_override_file" up --build
+    DOCKER_BUILDKIT=1 docker compose -p "$MAINLINE_COMPOSE_PROJECT" -f "$MAINLINE_COMPOSE_FILE" -f "$docker_override_file" up --build
     rm -f "$docker_override_file"
     ;;
   *)

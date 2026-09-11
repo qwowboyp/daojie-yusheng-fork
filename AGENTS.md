@@ -116,8 +116,8 @@
 1. 本機 `git archive --format=tar.gz -o daojie-src.tar.gz HEAD`（乾淨樹，不含未追蹤檔案）
 2. 傳輸至 LXC（直連 scp 或經 PVE `pct push 105`），解包到 `/opt/daojie/src`
 3. LXC 內 build 本地映像（依改動範圍選擇）：
-   - 後端/共享改動：`docker build -f packages/server/Dockerfile -t daojie-server:lxc .`
-   - 前端改動：`docker build -f packages/client/Dockerfile -t daojie-client:lxc .`（builder 階段需 chromium，build:client 含 proof 守門）
+   - 後端/共享改動：`DOCKER_BUILDKIT=1 docker build -f packages/server/Dockerfile -t daojie-server:lxc .`
+   - 前端改動：`DOCKER_BUILDKIT=1 docker build -f packages/client/Dockerfile -t daojie-client:lxc .`（builder 階段需 chromium，build:client 含 proof 守門）
 4. 重跑 `/opt/daojie/lxc-deploy.sh`（冪等：重建四容器，pgdata/redis-data/server-data 在 host volume 不動）
 5. 驗證 `/health` + `/live` + `http://192.168.0.191:11921/` + `docker logs` 無新 WARN
 

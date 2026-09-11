@@ -48,11 +48,29 @@ function Read-PveEnv {
   return $map
 }
 
+function Protect-DeploymentOutput {
+  param([string]$Text)
+  # Remote errors may echo connection arguments or environment values.
+  # Redact exact known secrets before either returning output or throwing it.
+  $secrets = foreach ($entry in $envMap.GetEnumerator()) {
+    if ($entry.Key -match '(?i)PASSWORD|SECRET|TOKEN|KEY') {
+      $rawValue = [string]$entry.Value
+      $value = $rawValue.Trim().Trim('"').Trim("'")
+      if ($rawValue) { $rawValue; [uri]::EscapeDataString($rawValue) }
+      if ($value) { $value; [uri]::EscapeDataString($value) }
+    }
+  }
+  foreach ($secret in @($secrets | Sort-Object Length -Descending)) {
+    $Text = $Text.Replace($secret, '[REDACTED]')
+  }
+  return $Text
+}
+
 function Invoke-WinSCP {
   param([string]$ScriptPath)
   $winscp = Resolve-WinSCP
   $output = & $winscp /script="$ScriptPath" 2>&1
-  $text = $output -join "`n"
+  $text = Protect-DeploymentOutput -Text ($output -join "`n")
   if ($LASTEXITCODE -ne 0) {
     throw "WinSCP script failed (exit $LASTEXITCODE): $ScriptPath`n$text"
   }
