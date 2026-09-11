@@ -13,6 +13,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-12',
+    summary: '改善移動流暢度，轉向與停止更及時。',
+    items: [
+      '移動：玩家位置改為更細緻的即時推進，畫面平滑銜接每段移動；移速與地形消耗維持原有規則。',
+      '節奏：戰鬥、妖獸行動與修煉繼續沿用一秒息制。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-12',
     summary: '金丹至渡劫新增五十六部功法全卷，補齊內功、法術、神通與秘術的定向掉落。',
     items: [
       '功法：七境各新增兩部內功、兩部法術、兩部神通與兩部秘術，可從相應野外的指定妖獸取得全卷。',
