@@ -1143,9 +1143,9 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
 
   const fixture = await cdp.evaluate(fixtureExpression);
   // 失敗時帶回頁面端診斷（WebGL renderer 字串、地圖像素、canvas 尺寸），
-  // 便於容器環境一次定位「地圖未就緒」的真實原因；真機 GPU 環境 1-2 秒內就緒。
+  // 便於容器環境定位「地圖未就緒」的真實原因。
   try {
-    await waitFor(() => cdp.evaluate(`window.__gameWorkspaceProof.getMapPixels().slice(0,3).some(value=>value>0)`), '正式 Pixi 地圖繪製', 90_000);
+    await waitFor(() => cdp.evaluate(`window.__gameWorkspaceProof.getMapPixels().slice(0,3).some(value=>value>0)`), '正式 Pixi 地圖繪製');
   } catch (waitError) {
     const diagnostics = await cdp.evaluate(`(() => {
       const offscreen = document.createElement('canvas');
@@ -1154,6 +1154,7 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
       if (gl) {
         const ext = gl.getExtension('WEBGL_debug_renderer_info');
         rendererText = ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : String(gl.getParameter(gl.RENDERER));
+        gl.getExtension('WEBGL_lose_context')?.loseContext();
       }
       const canvas = document.getElementById('game-canvas');
       let pixels = null;
@@ -1166,7 +1167,7 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
         readyState: document.readyState,
       };
     })()`);
-    throw new Error(`正式 Pixi 地圖繪製未就緒：${JSON.stringify(diagnostics)}`);
+    throw new Error(`正式 Pixi 地圖繪製未就緒：${JSON.stringify(diagnostics)}`, { cause: waitError });
   }
   assert(fixture.inventoryCells > 0, '正式背包 Panel 未載入非空 fixture');
   assert(fixture.actionTabs > 0, '正式行動 Panel 未載入非空 fixture');

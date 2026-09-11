@@ -8,8 +8,9 @@ ARG PNPM_VERSION=10.29.1
 ARG NPM_CONFIG_REGISTRY=https://registry.npmmirror.com
 ENV NPM_CONFIG_REGISTRY=${NPM_CONFIG_REGISTRY}
 ENV CHROME_BIN=/usr/lib/chromium/chromium
+# Alpine 建置透過 Mesa 軟體 Vulkan 與 Xvfb 執行 WebGL、觸控及滑鼠切換 proof。
 RUN sed -i 's#dl-cdn.alpinelinux.org#mirrors.aliyun.com#' /etc/apk/repositories \
-  && apk add --no-cache chromium font-noto-cjk
+  && apk add --no-cache chromium font-noto-cjk mesa-vulkan-swrast xvfb-run
 RUN test -x "$CHROME_BIN"
 RUN npm install -g "pnpm@${PNPM_VERSION}" --registry="${NPM_CONFIG_REGISTRY}" \
   && pnpm --version
@@ -24,7 +25,7 @@ COPY packages/server/src/tools/protocol-audit.ts packages/server/src/tools/proto
 COPY packages/server/src/runtime/instance/map-instance.runtime.ts packages/server/src/runtime/instance/map-instance.runtime.ts
 ARG BUILD_CACHEBUST=local
 RUN printf '%s\n' "$BUILD_CACHEBUST" >/dev/null
-RUN NODE_OPTIONS=--experimental-websocket pnpm build:client
+RUN NODE_OPTIONS=--experimental-websocket xvfb-run -a pnpm build:client
 
 FROM nginx:alpine
 ENV NGINX_WORKER_PROCESSES=auto

@@ -162,7 +162,14 @@ export async function withClientBrowserProof({ viewport, profilePrefix }, run) {
 
     profileDir = await mkdtemp(path.join(os.tmpdir(), profilePrefix));
     chrome = spawn(await findChromeExecutable(), [
-      '--headless=new',
+      // Xvfb 提供可在取消觸控模擬後恢復的滑鼠能力；Alpine headless 的基線沒有指標。
+      ...(process.platform === 'linux' && process.env.DISPLAY
+        ? ['--ozone-platform=x11']
+        : [
+          '--headless=new',
+          // headless 滑鼠懸停（2）與精準指標（4）；觸控另由 CDP 模擬。
+          '--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4',
+        ]),
       '--no-first-run',
       '--no-default-browser-check',
       '--disable-background-networking',
@@ -170,7 +177,8 @@ export async function withClientBrowserProof({ viewport, profilePrefix }, run) {
       '--disable-default-apps',
       '--disable-extensions',
       '--disable-sync',
-      '--disable-gpu',
+      // Linux 隔離 proof 使用 Mesa 軟體 Vulkan；停用 GPU 程序會連 WebGL 一起阻擋。
+      ...(process.platform === 'linux' ? ['--use-angle=vulkan', '--ignore-gpu-blocklist'] : ['--disable-gpu']),
       // Docker build 默认只有 64MB /dev/shm，避免渲染器在布局 proof 中阻塞。
       '--disable-dev-shm-usage',
       '--no-sandbox',
