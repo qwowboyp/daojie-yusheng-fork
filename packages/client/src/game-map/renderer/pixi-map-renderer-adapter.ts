@@ -477,12 +477,18 @@ export class PixiMapRendererAdapter {
     this.profiler.end('syncScene', startedAt);
   }
 
-  /** 读取上一实际绘制帧中的实体中心，供镜头跟随表现层位置。 */
-  getRenderedEntityCenter(id: string): { x: number; y: number } | null {
+  /** 在繪製地形前取本幀實體中心，與實體插值共用相同時鐘。 */
+  getEntityCenterAtFrame(id: string, progress: number, frameAtMs: number): { x: number; y: number } | null {
     const view = this.entities.get(id);
     if (!view) return null;
     const halfCell = getCellSize() / 2;
-    return { x: view.root.position.x + halfCell, y: view.root.position.y + halfCell };
+    const anim = view.anim;
+    const entityProgress = this.resolveEntityMotionProgress(anim, clamp01(progress), frameAtMs);
+    const t = anim.motionStartedAt !== undefined ? entityProgress : easeOutCubic(entityProgress);
+    return {
+      x: anim.oldWX + (anim.targetWX - anim.oldWX) * t + halfCell,
+      y: anim.oldWY + (anim.targetWY - anim.oldWY) * t + halfCell,
+    };
   }
 
   enqueueEffect(effect: CombatEffect): void {
@@ -2464,6 +2470,12 @@ export class PixiMapRendererAdapter {
     container.addChild(graphics, text);
   }
 
+  private resolveEntityMotionProgress(anim: AnimEntity, progress: number, frameNow: number): number {
+    return anim.motionStartedAt !== undefined && anim.motionDurationMs
+      ? clamp01((frameNow - anim.motionStartedAt) / anim.motionDurationMs)
+      : progress;
+  }
+
   private updateEntityViews(camera: CameraState, progress: number, localPlayerId: string, localPlayerX: number, localPlayerY: number, localPlayerChar: string, frameNow: number): void {
     const cellSize = getCellSize();
     this.profiler.setCounter('entities', this.entities.size);
@@ -2479,9 +2491,7 @@ export class PixiMapRendererAdapter {
     for (const [id, view] of this.entities) {
       const anim = view.anim;
       if (anim.kind === 'crowd') {
-        const entityProgress = anim.motionStartedAt !== undefined && anim.motionDurationMs
-          ? clamp01((frameNow - anim.motionStartedAt) / anim.motionDurationMs)
-          : motionProgress;
+        const entityProgress = this.resolveEntityMotionProgress(anim, motionProgress, frameNow);
         const entityT = anim.motionStartedAt !== undefined ? entityProgress : t;
         const worldX = anim.oldWX + (anim.targetWX - anim.oldWX) * entityT;
         const worldY = anim.oldWY + (anim.targetWY - anim.oldWY) * entityT;
@@ -2497,9 +2507,7 @@ export class PixiMapRendererAdapter {
         view.root.visible = false;
         continue;
       }
-      const entityProgress = anim.motionStartedAt !== undefined && anim.motionDurationMs
-        ? clamp01((frameNow - anim.motionStartedAt) / anim.motionDurationMs)
-        : motionProgress;
+      const entityProgress = this.resolveEntityMotionProgress(anim, motionProgress, frameNow);
       const entityT = anim.motionStartedAt !== undefined ? entityProgress : t;
       const wx = anim.oldWX + (anim.targetWX - anim.oldWX) * entityT;
       const wy = anim.oldWY + (anim.targetWY - anim.oldWY) * entityT;

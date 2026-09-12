@@ -25,7 +25,7 @@ assert.match(pixiSource, /entityT = anim\.motionStartedAt !== undefined \? entit
 assert.match(pixiSource, /updateEntityViews\([^\n]+frameAtMs\)/, '实体插值必须使用 runtime 注入的同一帧时钟');
 assert.match(runtimeSource, /snapshot\.entityTransition\?\.motionSyncToken/, 'runtime 必须将同帧 token 传给 Pixi');
 
-for (const viewport of [{ width: 960, height: 640 }, { width: 390, height: 844 }]) {
+for (const viewport of [{ width: 960, height: 640 }, { width: 390, height: 844 }, { width: 844, height: 390 }]) {
 await withClientBrowserProof({ viewport, profilePrefix: 'mud-movement-substeps-' }, async (cdp) => {
   const result = await cdp.evaluate(`(async () => {
     const { MapStore } = await import('/src/game-map/store/map-store.ts');
@@ -97,12 +97,12 @@ await withClientBrowserProof({ viewport, profilePrefix: 'mud-movement-substeps-'
     const renderAt = (nextFrameNow) => {
       frameNow = nextFrameNow;
       runtime.flushPendingSceneSync();
-      runtime.syncCameraToPresentedPlayer();
-      runtime.camera.update(1 / 60);
       const timing = runtime.store.getTickTiming();
       const progress = timing.durationMs > 0
         ? Math.min((frameNow - timing.startedAt) / timing.durationMs, 1)
         : 1;
+      runtime.syncCameraToPresentedPlayer(progress, frameNow);
+      runtime.camera.update();
       runtime.renderer.render(runtime.currentScene, runtime.camera.getState(), runtime.projection, progress, frameNow);
     };
     try {
@@ -144,6 +144,99 @@ await withClientBrowserProof({ viewport, profilePrefix: 'mud-movement-substeps-'
     const selfTargetX = selfView?.anim.targetWX;
     const selfMotionMs = runtime.store.getSnapshot().entityTransition?.motions?.get('self')?.durationMs;
     const cameraTargetX = runtime.camera.getState().targetX;
+    const { getCellSize } = await import('/src/display.ts');
+    const { PIXI_TERRAIN_CHUNK_SIZE } = await import('/src/game-map/renderer/pixi-terrain-cache-signatures.ts');
+    runtime.setViewportSize(${viewport.width}, ${viewport.height}, 1);
+    runtime.setSafeArea({ left: 24, right: 64, top: 36, bottom: 80 });
+    let maxCameraError = 0;
+    let checkedFrames = 0;
+    let q = 5;
+    let gx = 1;
+    let gy = 0;
+    const checkCameraFrame = () => {
+      const view = runtime.renderer.entities.get('self');
+      const camera = runtime.camera.getState();
+      const size = getCellSize();
+      const x = view.root.x + size / 2;
+      const y = view.root.y + size / 2;
+      maxCameraError = Math.max(maxCameraError, Math.abs(x - camera.x), Math.abs(y - camera.y));
+      if (!view.root.visible) throw new Error('高速移動時本人被視口裁切');
+      const screen = runtime.projection.worldToScreen(x, y, camera, ${viewport.width}, ${viewport.height});
+      if (Math.abs(screen.x - (${viewport.width} / 2 - 20)) > 0.05 || Math.abs(screen.y - (${viewport.height} / 2 - 22)) > 0.05) {
+        throw new Error('鏡頭未將本人保持在安全區中心：' + JSON.stringify(screen));
+      }
+      const cx = Math.floor(x / size / PIXI_TERRAIN_CHUNK_SIZE);
+      const cy = Math.floor(y / size / PIXI_TERRAIN_CHUNK_SIZE);
+      const chunk = runtime.renderer.terrainChunks.get(cx + ',' + cy);
+      if (!chunk || chunk.lastSeenFrame !== runtime.renderer.chunkFrame) throw new Error('本人所在的新地形區塊未於同幀繪製');
+      checkedFrames += 1;
+    };
+    renderAt(frameNow + 1000);
+    checkCameraFrame();
+    // 涵蓋正常高速與加速實例、斜走及反向，避免只驗目標座標而漏掉鏡頭實際延遲。
+    for (const step of [2, 20]) {
+      for (const direction of [1, -1]) {
+        for (let segment = 0; segment < 6; segment += 1) {
+          gx += step * direction;
+          gy += step * direction;
+          runtime.applyWorldDelta({ playerPatches: [{ id: 'self', x: gx, y: gy }], entityPatches: [], entityMotionDurations: new Map([['self', 100]]), motion: { e: 3, q: q++, at: frameNow, dt: 100 }, tickDurationMs: 1000,
+            visibleTilePatches: [{ x: gx, y: gy, tile: { type: 'floor' } }],
+          });
+          const start = frameNow;
+          for (const elapsed of [0, 16, 33, 67, 100]) {
+            renderAt(start + elapsed);
+            checkCameraFrame();
+          }
+          if (!runtime.getVisibleTileAt(gx, gy)) throw new Error('新視野地塊未同步');
+        }
+      }
+    }
+    // 停止與背景頁恢復的長幀也必須直接收斂，不累積追趕距離。
+    renderAt(frameNow + 5000);
+    checkCameraFrame();
+    runtime.setZoom(1);
+    renderAt(frameNow + 16);
+    checkCameraFrame();
+    runtime.reset();
+    runtime.applyBootstrap({ self: { ...self, mapId: 'm2', instanceId: 'i2', x: -80, y: 60 }, players: [] });
+    renderAt(frameNow + 16);
+    checkCameraFrame();
+    // 再走真正的 RAF 編排，避免手動 renderAt 掩蓋正式流程的先後順序錯誤。
+    if (originalPerformanceNowDescriptor) {
+      Object.defineProperty(performance, 'now', originalPerformanceNowDescriptor);
+    } else {
+      delete performance.now;
+    }
+    runtime.reset();
+    runtime.applyBootstrap({ self, players: [] });
+    let liveFrames = 0;
+    let liveSegments = 0;
+    await new Promise((resolve, reject) => {
+      const deadline = setTimeout(() => reject(new Error('RAF 鏡頭驗證逾時')), 5000);
+      let nextMoveAt = 0;
+      runtime.setRenderFrameObserver((now) => {
+        try {
+          checkCameraFrame();
+          liveFrames += 1;
+          if (now < nextMoveAt) return;
+          if (liveSegments >= 6) {
+            clearTimeout(deadline);
+            runtime.stopFrameLoop();
+            resolve();
+            return;
+          }
+          liveSegments += 1;
+          nextMoveAt = now + 100;
+          runtime.applyWorldDelta({ playerPatches: [{ id: 'self', x: liveSegments * 2, y: 0 }], entityPatches: [], entityMotionDurations: new Map([['self', 100]]), motion: { e: 4, q: liveSegments, at: now, dt: 100 }, tickDurationMs: 1000 });
+        } catch (error) {
+          clearTimeout(deadline);
+          runtime.stopFrameLoop();
+          reject(error);
+        }
+      });
+      runtime.ensureFrameLoop();
+    });
+    runtime.setRenderFrameObserver(null);
     store.reset();
     return {
       tickMs,
@@ -166,6 +259,10 @@ await withClientBrowserProof({ viewport, profilePrefix: 'mud-movement-substeps-'
       selfTargetX,
       selfMotionMs,
       cameraTargetX,
+      maxCameraError,
+      checkedFrames,
+      liveFrames,
+      liveSegments,
       resetTransition: store.getSnapshot().entityTransition,
     };
     } finally {
@@ -197,7 +294,10 @@ await withClientBrowserProof({ viewport, profilePrefix: 'mud-movement-substeps-'
   assertNear(result.longSegmentEndX, result.longTargetX, '1000ms md 段最终必须抵达权威目标');
   assert.equal(result.selfMotionMs, 500, '本人的 world p.md 必须在 same-q self 后保留');
   assertNear(result.selfVisualX, result.selfTargetX * (180 / 500), 'same-q self.x 必须保留本人的 500ms 线性段');
-  assertNear(result.cameraTargetX, result.selfTargetX * (160 / 500) + result.selfTargetX / 2, '镜头目标必须跟随上一实际绘制的本体中心');
+  assertNear(result.cameraTargetX, result.selfVisualX + result.selfTargetX / 2, '鏡頭必須跟隨本幀的本體中心');
+  assertNear(result.maxCameraError, 0, '高速移動的實際鏡頭與角色中心不得累積距離');
+  assert.ok(result.checkedFrames >= 120, '必須驗證連續移動、反向、長幀、縮放及跨圖的視野');
+  assert.ok(result.liveFrames >= 7 && result.liveSegments === 6, '正式 RAF 必須連續追蹤多個移動子步');
   assert.equal(result.resetTransition, null, 'map reset 必须清除旧插值');
 });
 }

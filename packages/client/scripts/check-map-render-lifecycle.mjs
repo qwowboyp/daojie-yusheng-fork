@@ -298,7 +298,7 @@ assert.match(pixiRenderer, /const self = arrow\.ownerId === localPlayerId/, '不
 assert.match(pixiRenderer, /if \(!from\?\.root\.visible \|\| !to\?\.root\.visible\) continue/, '离开当前视口的实体不得继续绘制穿屏威胁箭头');
 assert.match(
   pixiRenderer,
-  /this\.updateEntityViews\([^\n]+frameAtMs\);[\s\S]*?private updateEntityViews\([^\n]+frameNow: number\): void \{[\s\S]*?\(frameNow - anim\.motionStartedAt\) \/ anim\.motionDurationMs[\s\S]*?this\.patchEntityMotion\(view, entityProgress, frameNow\)/,
+  /this\.updateEntityViews\([^\n]+frameAtMs\);[\s\S]*?private resolveEntityMotionProgress[\s\S]*?\(frameNow - anim\.motionStartedAt\) \/ anim\.motionDurationMs[\s\S]*?private updateEntityViews[\s\S]*?this\.resolveEntityMotionProgress\(anim, motionProgress, frameNow\)[\s\S]*?this\.patchEntityMotion\(view, entityProgress, frameNow\)/,
   '同一帧的实体动画必须以 render 注入的 frameNow 推进各自的权威时间轴',
 );
 assert.match(pixiRenderer, /return this\.entities\.get\(id\);/, '威胁实体必须直接复用权威实体索引');

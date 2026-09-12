@@ -3,7 +3,6 @@
  *
  * 维护时要保证表现层只处理显示和输入命中，移动合法性、占位和地图权威状态仍以服务端为准。
  */
-import { CAMERA_DELAY_SECONDS, CAMERA_SMOOTH_SPEED } from '@mud/shared';
 import type { MapSafeAreaInsets } from '../types';
 
 /** 摄像机状态快照。 */
@@ -57,8 +56,6 @@ export class CameraController {
 
   /** 世界绘制时当前格子像素尺寸。 */
   private cellSize = 1;
-  /** 延迟跟随起始时间。 */
-  private divergeTime: number | null = null;
 
   /** 更新格子像素尺寸（从配置变化时透传）。 */
   setCellSize(cellSize: number): void {
@@ -71,13 +68,13 @@ export class CameraController {
     this.state.offsetY = (insets.top - insets.bottom) / 2;
   }
 
-  /** 设置新的追踪目标（先缓慢靠拢）。 */
+  /** 設定格子追蹤目標，供尚無實體時回退使用。 */
   follow(x: number, y: number): void {
     this.state.targetX = (x + 0.5) * this.cellSize;
     this.state.targetY = (y + 0.5) * this.cellSize;
   }
 
-  /** 以当前渲染出的世界像素位置作为跟随目标，避免权威子步终点提前拉走镜头。 */
+  /** 跟隨本幀插值位置；角色本身已平滑移動，鏡頭不再疊加延遲。 */
   followWorldPosition(x: number, y: number): void {
     this.state.targetX = x;
     this.state.targetY = y;
@@ -88,36 +85,12 @@ export class CameraController {
     this.follow(x, y);
     this.state.x = this.state.targetX;
     this.state.y = this.state.targetY;
-    this.divergeTime = null;
   }
 
-  /** 逐帧推进摄像机位置。 */
-  update(dt: number): void {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-    const dx = this.state.targetX - this.state.x;
-    const dy = this.state.targetY - this.state.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-
-    if (dist < 0.1) {
-      this.state.x = this.state.targetX;
-      this.state.y = this.state.targetY;
-      this.divergeTime = null;
-      return;
-    }
-
-    if (this.divergeTime === null) {
-      this.divergeTime = performance.now();
-    }
-
-    const elapsed = (performance.now() - this.divergeTime) / 1000;
-    if (elapsed < CAMERA_DELAY_SECONDS) {
-      return;
-    }
-
-    const t = 1 - Math.exp(-CAMERA_SMOOTH_SPEED * dt);
-    this.state.x += dx * t;
-    this.state.y += dy * t;
+  /** 與角色同幀對齊，避免高速移動超出畫面才開始追趕。 */
+  update(): void {
+    this.state.x = this.state.targetX;
+    this.state.y = this.state.targetY;
   }
 
   /** 重置摄像机到初始状态。 */
@@ -126,7 +99,6 @@ export class CameraController {
     this.state.y = 0;
     this.state.targetX = 0;
     this.state.targetY = 0;
-    this.divergeTime = null;
   }
 
   /** 输出当前摄像机状态用于投影层。 */
@@ -134,6 +106,5 @@ export class CameraController {
     return this.state;
   }
 }
-
 
 

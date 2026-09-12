@@ -430,14 +430,14 @@ export class MapRuntime implements MapRuntimeApi {
     this.syncSceneFromStore();
   }
 
-  /** 让镜头跟随已绘制的位置；没有表现层实体时保留最近的权威回退目标。 */
-  private syncCameraToPresentedPlayer(): void {
+  /** 本幀先取角色插值位置，再更新鏡頭與地形；無實體時保留權威回退目標。 */
+  private syncCameraToPresentedPlayer(progress: number, frameAtMs: number): void {
     const snapshot = this.store.getSnapshot();
     const player = snapshot.player;
     if (!player) {
       return;
     }
-    const center = this.renderer.getRenderedEntityCenter(player.id);
+    const center = this.renderer.getEntityCenterAtFrame(player.id, progress, frameAtMs);
     if (center) {
       this.camera.followWorldPosition(center.x, center.y);
     }
@@ -468,7 +468,6 @@ export class MapRuntime implements MapRuntimeApi {
         this.skippedRafCallbacksSinceRender += 1;
         return;
       }
-      const dt = (now - this.lastFrameAt) / 1000;
       this.lastFrameAt = now;
       const scheduleLateMs = now - this.nextFrameAt;
       const rafCallbacks = this.rafCallbacksSinceRender;
@@ -477,12 +476,12 @@ export class MapRuntime implements MapRuntimeApi {
       this.skippedRafCallbacksSinceRender = 0;
       this.nextFrameAt = advanceFrameDeadlineAfterRender(this.nextFrameAt, now, minFrameIntervalMs);
       this.flushPendingSceneSync();
-      this.syncCameraToPresentedPlayer();
-      this.camera.update(dt);
       const timing = this.store.getTickTiming();
       const progress = timing.durationMs > 0
         ? Math.min((now - timing.startedAt) / timing.durationMs, 1)
         : 1;
+      this.syncCameraToPresentedPlayer(progress, now);
+      this.camera.update();
       const renderDispatchAt = performance.now();
       this.renderer.render(this.currentScene, this.camera.getState(), this.projection, progress, now, {
         rafIntervalMs,
