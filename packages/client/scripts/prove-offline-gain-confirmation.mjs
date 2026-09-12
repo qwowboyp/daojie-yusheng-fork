@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { delay, withClientBrowserProof } from './browser-proof-runtime.mjs';
+import { delay, withClientBrowserProof, waitFor } from './browser-proof-runtime.mjs';
 
 const DESKTOP = { width: 1280, height: 720 };
 const PORTRAIT = { width: 390, height: 844 };
@@ -175,11 +175,15 @@ async function clickPoint(cdp, point, touch) {
 
 async function assertRealInputConfirmation(cdp, label, touch) {
   await cdp.evaluate(`(() => {
-    const body = document.getElementById('detail-modal-body');
-    if (body instanceof HTMLElement) body.scrollTop = 0;
+    const row = document.querySelector('.offline-gain-row');
+    if (!(row instanceof HTMLElement)) throw new Error('離線收益明細不存在');
+    // 橫向視口可能裁切第一筆明細；先捲入正文可視區，不能點擊被裁切的中心。
+    row.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
   })()`);
-  await delay(40);
-  const points = await cdp.evaluate(interactionPointsExpression);
+  const points = await waitFor(
+    () => cdp.evaluate(interactionPointsExpression),
+    label + '離線收益明細與遮罩實際可命中',
+  );
   await clickPoint(cdp, points.inner, touch);
   assert.equal(await cdp.evaluate('window.__offlineGainProof.ackCalls'), 0, `${label}內文點擊誤觸確認`);
   await clickPoint(cdp, points.backdrop, touch);
