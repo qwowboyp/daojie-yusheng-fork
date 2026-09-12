@@ -212,7 +212,7 @@
 
     .chat-kind-transmission { color: var(--chat-kind-transmission); }
 
-    .chat-kind-combat { color: var(--chat-kind-combat); }
+    .chat-kind-combat { color: var(--ink-dark); }
 
     .chat-kind-grudge { color: var(--chat-kind-grudge); }
 
@@ -432,3 +432,201 @@
         min-height: 44px;
       }
     }
+
+/* 戰報：方向色只落在標記與結果，人物、技能維持穩定的閱讀層次。 */
+.chat-log {
+  --combat-outgoing: #176458;
+  --combat-incoming: #ac302e;
+  --combat-self: #35672d;
+  --combat-muted: #666057;
+  --combat-dodge: #205f87;
+  --combat-buff: #276837;
+  --combat-debuff: #7e3994;
+  --combat-critical: #855500;
+  --combat-divider: rgba(70, 60, 46, 0.14);
+  container-type: inline-size;
+  container-name: chat-log;
+}
+
+:root[data-color-mode="dark"] .chat-log {
+  --combat-outgoing: #85d5c5;
+  --combat-incoming: #ff9e94;
+  --combat-self: #b2d994;
+  --combat-muted: #b5aa9e;
+  --combat-dodge: #94cbed;
+  --combat-buff: #a3d9ac;
+  --combat-debuff: #d6b0ed;
+  --combat-critical: #ebca81;
+  --combat-divider: rgba(222, 205, 179, 0.15);
+}
+
+.chat-line.chat-kind-combat {
+  display: grid;
+  grid-template-columns: 4.4rem minmax(0, 1fr);
+  column-gap: 10px;
+  padding-block: 5px;
+  color: var(--ink-dark);
+}
+
+.chat-line.chat-kind-combat + .chat-line {
+  margin-top: 0;
+  border-top-color: var(--combat-divider);
+}
+
+.chat-combat-time {
+  padding-top: 5px;
+  color: var(--combat-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.chat-combat-body { min-width: 0; }
+
+.chat-combat-row {
+  --combat-direction: var(--combat-muted);
+  display: grid;
+  grid-template-columns: 2.8rem minmax(0, 1fr);
+  align-items: start;
+  gap: 8px;
+  padding: 5px 8px;
+  border-left: 2px solid var(--combat-direction);
+  background: color-mix(in srgb, var(--combat-direction) 4%, transparent);
+  min-width: 0;
+}
+
+.chat-combat-row + .chat-combat-row { margin-top: 3px; }
+.chat-combat-row[data-direction="outgoing"] { --combat-direction: var(--combat-outgoing); }
+.chat-combat-row[data-direction="incoming"] { --combat-direction: var(--combat-incoming); }
+.chat-combat-row[data-direction="self"] { --combat-direction: var(--combat-self); }
+.chat-combat-row[data-direction="incoming"].chat-combat-row--effect { --combat-direction: var(--combat-muted); }
+
+.chat-combat-direction {
+  color: var(--combat-direction);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.chat-combat-content {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  min-width: 0;
+  line-height: 1.65;
+}
+
+.chat-combat-actors {
+  display: inline;
+  min-width: 0;
+  max-width: 100%;
+  font-weight: 600;
+}
+
+.chat-combat-arrow,
+.chat-combat-muted { color: var(--combat-muted); }
+.chat-combat-muted { font-size: 12px; }
+
+:root .chat-kind-combat .chat-target-pill {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink-dark);
+  font-size: inherit;
+}
+
+:root .chat-kind-combat .chat-skill-pill {
+  display: inline;
+  margin: 0;
+  padding: 1px 5px;
+  border: 0;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--combat-muted) 10%, transparent);
+  color: var(--combat-muted);
+  font-size: 12px;
+  font-weight: 500;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.chat-combat-outcome,
+.chat-combat-summary {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 5px;
+  max-width: 100%;
+  min-width: 0;
+  margin-left: auto;
+}
+
+.chat-combat-outcome:empty { display: none; }
+.chat-combat-summary { flex-basis: 100%; }
+
+.chat-combat-result {
+  color: var(--combat-direction);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.chat-combat-result--dodge { color: var(--combat-dodge); }
+
+.chat-kind-combat .chat-damage-pill {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  transition: none;
+  font-size: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.chat-kind-combat .chat-combat-amount {
+  color: var(--combat-direction);
+  font-size: 1.08em;
+  font-weight: 750;
+}
+
+.chat-combat-effect {
+  --combat-effect: var(--combat-muted);
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0 5px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--combat-effect) 9%, transparent);
+  color: var(--combat-effect);
+}
+
+.chat-combat-effect--heal,
+.chat-combat-effect--buff { --combat-effect: var(--combat-buff); }
+.chat-combat-effect--debuff { --combat-effect: var(--combat-debuff); }
+.chat-combat-effect-label { font-size: 12px; font-weight: 600; }
+.chat-kind-combat .chat-combat-effect-name,
+.chat-kind-combat .chat-combat-heal-amount { color: var(--combat-effect); font-size: 13px; }
+.chat-kind-combat .chat-combat-badge { margin: 0; font-size: 12px; }
+.chat-kind-combat .chat-combat-badge--crit { color: var(--combat-critical); }
+.chat-kind-combat .chat-combat-notice { min-width: 0; }
+.chat-kind-combat .chat-merged-combat-indent { display: none; }
+
+@container chat-log (max-width: 560px) {
+  .chat-line.chat-kind-combat { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+  .chat-combat-time { padding: 0 0 0 10px; font-size: 12px; }
+  .chat-combat-row { gap: 4px; padding: 4px 6px; }
+  .chat-combat-content { column-gap: 6px; }
+  .chat-combat-outcome { margin-left: 0; }
+  .chat-combat-actors { flex-basis: 100%; }
+}
