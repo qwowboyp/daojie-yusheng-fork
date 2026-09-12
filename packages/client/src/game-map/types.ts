@@ -651,6 +651,8 @@ export interface MapInteractionTarget {
 
 /** 地图交互回调。 */
 export interface MapRuntimeInteractionCallbacks {
+  /** 雙指手勢產生的地圖倍率，交由正式縮放入口套用。 */
+  onZoom?: (zoom: number) => void;
 /**
  * onTarget：on目标相关字段。
  */

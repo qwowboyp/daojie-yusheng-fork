@@ -195,6 +195,7 @@ export class MapRuntime implements MapRuntimeApi {
 
   /** 收到首次入场数据后初始化 store 并重置摄像机。 */
   applyBootstrap(data: Parameters<MapRuntimeApi['applyBootstrap']>[0]): void {
+    this.interaction.reset();
     this.store.applyBootstrap(data);
     this.viewport.setSafeArea(this.safeArea);
     this.camera.setSafeArea(this.safeArea);
@@ -241,6 +242,7 @@ export class MapRuntime implements MapRuntimeApi {
     const snapshot = this.store.getSnapshot();
     const mapChanged = Boolean(previousMapId && snapshot.player?.mapId !== previousMapId);
     if (mapChanged) {
+      this.interaction.reset();
       this.renderer.resetScene();
     }
     if (snapshot.player) {
@@ -255,6 +257,7 @@ export class MapRuntime implements MapRuntimeApi {
 
   /** 重置运行时状态以支持新会话重连或切图。 */
   reset(): void {
+    this.interaction.reset();
     this.store.reset();
     this.camera.reset();
     this.viewport.setSafeArea(this.safeArea);

@@ -3,7 +3,7 @@
  *
  * 维护时要保证表现层只处理显示和输入命中，移动合法性、占位和地图权威状态仍以服务端为准。
  */
-import { getCellSize } from '../../display';
+import { getCellSize, getZoom, MAX_ZOOM, MIN_ZOOM } from '../../display';
 import type { CameraController } from '../camera/camera-controller';
 import type { TopdownProjection } from '../projection/topdown-projection';
 import type {
@@ -15,9 +15,10 @@ import type {
 /** 提供当前地图快照的读取函数。 */
 type SnapshotProvider = () => MapStoreSnapshot;
 
-type PointerPosition = Pick<PointerEvent, 'clientX' | 'clientY'>;
+type PointerPosition = { clientX: number; clientY: number };
+const TOUCH_TAP_SLOP = 10;
 
-/** 处理地图点击与悬停命中，转换为交互目标坐标。 */
+/** 處理地圖點擊、懸停與雙指縮放，將點擊轉為交互目標座標。 */
 export class InteractionController {
   /** 已绑定事件监听的画布引用。 */
   private canvas: HTMLCanvasElement | null = null;
@@ -31,6 +32,12 @@ export class InteractionController {
   private lastHoverSignature: string | null = null;
   /** 绑定前的 touch-action 样式，解绑时恢复。 */
   private previousTouchAction = '';
+  private readonly touchPointers = new Map<number, PointerPosition>();
+  private touchTap: (PointerPosition & { pointerId: number }) | null = null;
+  private pinchDistance = 0;
+  private pinchZoom = 1;
+  private pendingZoom: number | null = null;
+  private zoomRafHandle: number | null = null;
 
   constructor(
     private readonly getSnapshot: SnapshotProvider,
@@ -49,8 +56,12 @@ export class InteractionController {
     canvas.style.touchAction = 'none';
     canvas.addEventListener('pointerdown', this.handlePointerDown);
     canvas.addEventListener('pointermove', this.handlePointerMove);
+    canvas.addEventListener('pointerup', this.handlePointerUp);
     canvas.addEventListener('pointerleave', this.handlePointerLeave);
-    canvas.addEventListener('pointercancel', this.handlePointerLeave);
+    canvas.addEventListener('pointercancel', this.handlePointerCancel);
+    canvas.addEventListener('lostpointercapture', this.handlePointerCancel);
+    window.addEventListener('blur', this.handleBlur);
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
   }
 
   /** 解绑 pointer 事件，避免内存泄漏和后台 rAF 残留。 */
@@ -60,8 +71,13 @@ export class InteractionController {
     }
     this.canvas.removeEventListener('pointerdown', this.handlePointerDown);
     this.canvas.removeEventListener('pointermove', this.handlePointerMove);
+    this.canvas.removeEventListener('pointerup', this.handlePointerUp);
     this.canvas.removeEventListener('pointerleave', this.handlePointerLeave);
-    this.canvas.removeEventListener('pointercancel', this.handlePointerLeave);
+    this.canvas.removeEventListener('pointercancel', this.handlePointerCancel);
+    this.canvas.removeEventListener('lostpointercapture', this.handlePointerCancel);
+    window.removeEventListener('blur', this.handleBlur);
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    this.reset();
     this.canvas.style.touchAction = this.previousTouchAction;
     this.canvas = null;
     this.clearPendingHover();
@@ -78,7 +94,33 @@ export class InteractionController {
     this.detach();
   }
 
+  /** 切圖、失焦或卸載時丟棄未完成手勢，避免延後點擊與縮放。 */
+  reset(): void {
+    this.touchTap = null;
+    this.pinchDistance = 0;
+    this.clearPendingZoom();
+    for (const pointerId of this.touchPointers.keys()) {
+      if (this.canvas?.hasPointerCapture(pointerId)) {
+        this.canvas.releasePointerCapture(pointerId);
+      }
+    }
+    this.touchPointers.clear();
+    this.clearPendingHover();
+    this.emitHoverIfChanged(null);
+  }
+
   private readonly handlePointerDown = (event: PointerEvent): void => {
+    if (event.pointerType === 'touch') {
+      this.clearPendingHover();
+      this.emitHoverIfChanged(null);
+      this.touchPointers.set(event.pointerId, { clientX: event.clientX, clientY: event.clientY });
+      this.canvas?.setPointerCapture(event.pointerId);
+      this.touchTap = this.touchPointers.size === 1
+        ? { pointerId: event.pointerId, clientX: event.clientX, clientY: event.clientY }
+        : null;
+      this.rebasePinch();
+      return;
+    }
     if (event.pointerType === 'mouse' && event.button !== 0) {
       return;
     }
@@ -89,6 +131,28 @@ export class InteractionController {
   };
 
   private readonly handlePointerMove = (event: PointerEvent): void => {
+    if (event.pointerType === 'touch') {
+      const position = this.touchPointers.get(event.pointerId);
+      if (!position) return;
+      position.clientX = event.clientX;
+      position.clientY = event.clientY;
+      if (this.touchTap && Math.hypot(
+        event.clientX - this.touchTap.clientX,
+        event.clientY - this.touchTap.clientY,
+      ) > TOUCH_TAP_SLOP) {
+        this.touchTap = null;
+      }
+      const distance = this.getPinchDistance();
+      if (distance > 0 && this.pinchDistance > 0) {
+        this.pinchZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, this.pinchZoom * distance / this.pinchDistance));
+        this.pendingZoom = this.pinchZoom;
+        if (this.zoomRafHandle === null) {
+          this.zoomRafHandle = window.requestAnimationFrame(this.flushPendingZoom);
+        }
+      }
+      this.pinchDistance = distance;
+      return;
+    }
     this.pendingHoverPosition = { clientX: event.clientX, clientY: event.clientY };
     if (this.hoverRafHandle !== null) {
       return;
@@ -96,10 +160,78 @@ export class InteractionController {
     this.hoverRafHandle = window.requestAnimationFrame(this.flushPendingHover);
   };
 
-  private readonly handlePointerLeave = (): void => {
+  private readonly handlePointerLeave = (event: PointerEvent): void => {
+    if (event.pointerType === 'touch' && !this.canvas?.hasPointerCapture(event.pointerId)) {
+      this.finishTouch(event, true);
+    }
     this.clearPendingHover();
     this.emitHoverIfChanged(null);
   };
+
+  private readonly handlePointerUp = (event: PointerEvent): void => {
+    this.finishTouch(event, false);
+  };
+
+  private readonly handlePointerCancel = (event: PointerEvent): void => {
+    this.finishTouch(event, true);
+    this.clearPendingHover();
+    this.emitHoverIfChanged(null);
+  };
+
+  private readonly handleBlur = (): void => this.reset();
+
+  private readonly handleVisibilityChange = (): void => {
+    if (document.hidden) this.reset();
+  };
+
+  private finishTouch(event: PointerEvent, cancelled: boolean): void {
+    if (!this.touchPointers.has(event.pointerId)) return;
+    const tap = this.touchTap;
+    this.touchTap = null;
+    if (cancelled) this.clearPendingZoom();
+    else this.flushPendingZoom();
+    this.touchPointers.delete(event.pointerId);
+    if (this.canvas?.hasPointerCapture(event.pointerId)) {
+      this.canvas.releasePointerCapture(event.pointerId);
+    }
+    this.rebasePinch();
+    const rect = this.canvas?.getBoundingClientRect();
+    if (!cancelled && tap?.pointerId === event.pointerId && rect
+      && Math.hypot(event.clientX - tap.clientX, event.clientY - tap.clientY) <= TOUCH_TAP_SLOP
+      && event.clientX >= rect.left && event.clientX < rect.right
+      && event.clientY >= rect.top && event.clientY < rect.bottom) {
+      const target = this.resolveTarget(event);
+      if (target) this.callbacks.onTarget?.(target);
+    }
+  }
+
+  private getPinchDistance(): number {
+    if (this.touchPointers.size !== 2) return 0;
+    const pointers = this.touchPointers.values();
+    const first = pointers.next().value;
+    const second = pointers.next().value;
+    return first && second ? Math.hypot(first.clientX - second.clientX, first.clientY - second.clientY) : 0;
+  }
+
+  private rebasePinch(): void {
+    this.flushPendingZoom();
+    this.pinchDistance = this.getPinchDistance();
+    this.pinchZoom = getZoom();
+  }
+
+  private readonly flushPendingZoom = (): void => {
+    const zoom = this.pendingZoom;
+    this.clearPendingZoom();
+    if (zoom !== null && Number(zoom.toFixed(2)) !== getZoom()) {
+      this.callbacks.onZoom?.(zoom);
+    }
+  };
+
+  private clearPendingZoom(): void {
+    if (this.zoomRafHandle !== null) window.cancelAnimationFrame(this.zoomRafHandle);
+    this.zoomRafHandle = null;
+    this.pendingZoom = null;
+  }
 
   private readonly flushPendingHover = (): void => {
     this.hoverRafHandle = null;
