@@ -10,22 +10,22 @@ description: 道劫余生（daojie-yusheng-fork）一鍵佈署到正式環境（
 ## 快速用法
 
 ```powershell
-# 腳本位置：<repo>/.claude/skills/daojie-deploy/scripts/deploy.ps1
+# 腳本位置：<repo>/.agents/skills/daojie-deploy/scripts/deploy.ps1
 
 # 常規：同時重建 server + client（最安全，最慢）
-pwsh -NoProfile -File .claude/skills/daojie-deploy/scripts/deploy.ps1
+pwsh -NoProfile -File .agents/skills/daojie-deploy/scripts/deploy.ps1
 
 # 只改了 packages/client（前端/UI/音檔）→ 只重建 client，省一半時間
-pwsh -NoProfile -File .claude/skills/daojie-deploy/scripts/deploy.ps1 -Target client
+pwsh -NoProfile -File .agents/skills/daojie-deploy/scripts/deploy.ps1 -Target client
 
 # 只改了 packages/server → 只重建 server
-pwsh -NoProfile -File .claude/skills/daojie-deploy/scripts/deploy.ps1 -Target server
+pwsh -NoProfile -File .agents/skills/daojie-deploy/scripts/deploy.ps1 -Target server
 
 # 佈署特定 commit（預設 HEAD）
-pwsh -NoProfile -File .claude/skills/daojie-deploy/scripts/deploy.ps1 -Ref <sha>
+pwsh -NoProfile -File .agents/skills/daojie-deploy/scripts/deploy.ps1 -Ref <sha>
 
 # 不執行遠端操作，只驗證環境與 git archive（測試用）
-pwsh -NoProfile -File .claude/skills/daojie-deploy/scripts/deploy.ps1 -DryRun
+pwsh -NoProfile -File .agents/skills/daojie-deploy/scripts/deploy.ps1 -DryRun
 ```
 
 **前置條件（腳本外的硬規則）**：先 commit（必要时 push）。`git archive HEAD` 只打包已提交內容，未提交的修改不會上線。遠端原始碼解包到 `/opt/daojie/src`。

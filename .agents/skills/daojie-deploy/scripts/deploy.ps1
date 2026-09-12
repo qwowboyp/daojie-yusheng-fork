@@ -9,7 +9,7 @@ param(
   [string]$Ref = 'HEAD',
   [switch]$DryRun,
   [switch]$SkipVerify,
-  # repo root = four levels up from this script (<repo>/.claude/skills/daojie-deploy/scripts/)
+  # repo root = four levels up from this script (<repo>/.agents/skills/daojie-deploy/scripts/)
   [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..\..\')).Path
 )
 

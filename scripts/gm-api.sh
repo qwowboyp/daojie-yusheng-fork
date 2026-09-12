@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 正式服 GM API 助手：登录换 token、缓存复用、封装常用只读/运维端点。
 # 密码永不写死，从 prod.env（gitignored）或环境变量读取。
-# 用法见 .claude/skills/prod-gm-api/SKILL.md
+# 用法见 .agents/skills/prod-gm-api/SKILL.md
 set -euo pipefail
 
 # ---- 可配置项（均有生产友好默认值）----
