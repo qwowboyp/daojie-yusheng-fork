@@ -276,6 +276,91 @@ await withClientBrowserProof({ viewport: viewports[0], profilePrefix: 'item-sour
   await cdp.evaluate(`window.__sourcesProof.reactUiBridge.reset()`);
   assert.equal(await cdp.evaluate(`document.querySelectorAll('.item-sources-learned').length`), 0, '登出清除已學狀態');
 
+  // 從正式目錄驗證分類與數值排序，不以名稱中的數字推測功法境界。
+  async function setFilter(selector, value) {
+    await cdp.evaluate(`(async () => {
+      const el = document.querySelector(${JSON.stringify(selector)});
+      const prototype = el instanceof HTMLInputElement ? HTMLInputElement.prototype : HTMLSelectElement.prototype;
+      Object.getOwnPropertyDescriptor(prototype, 'value').set.call(el, ${JSON.stringify(value)});
+      el.dispatchEvent(new Event(el instanceof HTMLInputElement ? 'input' : 'change', { bubbles: true }));
+      await ${paint};
+    })()`);
+  }
+  await click(cdp, '[data-item-sources-conditions] summary');
+  await click(cdp, '[data-item-sources-reset]');
+  await setFilter('[data-item-sources-type-filter]', 'skill_book');
+  assert.equal(await cdp.evaluate(`document.querySelector('[data-item-sources-sort]').value`), 'level-asc');
+  assert.deepEqual(await cdp.evaluate(`Array.from(document.querySelector('[data-item-sources-technique-filter]').options).map(o => o.value)`), ['', 'arts', 'internal', 'divine', 'secret']);
+  const catalog = await cdp.evaluate(`(async () => {
+    const { LOCAL_EDITOR_CATALOG } = await import('/src/content/editor-catalog.ts');
+    const { getLocalTechniqueCategoryForBookItem, resolveTechniqueIdFromBookItem } = await import('/src/content/local-templates.ts');
+    return LOCAL_EDITOR_CATALOG.items.filter(item => item.type === 'skill_book').map(item => {
+      const technique = LOCAL_EDITOR_CATALOG.techniques.find(t => t.id === resolveTechniqueIdFromBookItem(item));
+      return { id: item.itemId, category: getLocalTechniqueCategoryForBookItem(item.itemId), level: technique?.realmLv ?? null };
+    });
+  })()`);
+  for (const category of ['arts', 'internal', 'divine', 'secret']) {
+    await setFilter('[data-item-sources-technique-filter]', category);
+    const result = await cdp.evaluate(`({ count: document.querySelector('[data-item-sources-match-count]').textContent,
+      rows: Array.from(document.querySelectorAll('[data-item-sources-item]')).map(el => ({ category: el.dataset.itemSourcesCategory, level: Number(el.dataset.itemSourcesLevel) })) })`);
+    assert.equal(result.count, `符合 ${catalog.filter(item => item.category === category).length} 項`);
+    assert(result.rows.length > 0 && result.rows.every(item => item.category === category));
+    assert(result.rows.every((item, index) => index === 0 || result.rows[index - 1].level <= item.level), '預設功法等級由低到高');
+  }
+  await setFilter('[data-item-sources-technique-filter]', 'internal');
+  await setFilter('[data-item-sources-min-level]', '31');
+  await setFilter('[data-item-sources-max-level]', '42');
+  const expectedRange = catalog.filter(item => item.category === 'internal' && item.level >= 31 && item.level <= 42);
+  assert(expectedRange.length > 0);
+  assert.equal(await cdp.evaluate(`document.querySelector('[data-item-sources-match-count]').textContent`), `符合 ${expectedRange.length} 項`, '等級上下限與分類取交集');
+  await setFilter('[data-item-sources-sort]', 'level-desc');
+  const levels = await cdp.evaluate(`Array.from(document.querySelectorAll('[data-item-sources-item]')).map(el => Number(el.dataset.itemSourcesLevel))`);
+  assert.equal(levels[0], Math.max(...expectedRange.map(item => item.level)));
+  assert(levels.every((level, index) => index === 0 || levels[index - 1] >= level));
+  await setFilter('[data-item-sources-max-level]', '30');
+  assert.match(await cdp.evaluate(`document.getElementById('item-sources-level-error').textContent`), /最低等級不可高於最高等級/);
+  assert.equal(await cdp.evaluate(`document.querySelectorAll('[data-item-sources-item]').length`), 0);
+  await setFilter('[data-item-sources-max-level]', '42');
+  for (const viewport of viewports) {
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: viewport.width, height: viewport.height, deviceScaleFactor: 1, mobile: false });
+    await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: viewport.touch, maxTouchPoints: 5 });
+    await cdp.evaluate(`(async () => { await ${paint}; })()`);
+    if (viewport.touch) await click(cdp, '.item-sources-back', true);
+    for (const theme of ['light', 'dark']) {
+      await cdp.evaluate(`(async () => { const { updateUiColorMode } = await import('/src/ui/ui-style-config.ts'); updateUiColorMode('${theme}'); await ${paint}; })()`);
+      for (const expanded of [false, true]) {
+        await cdp.evaluate(`(async () => { document.querySelector('[data-item-sources-conditions]').open = ${expanded}; document.querySelector('.item-sources-filters').scrollTop = 0; await ${paint}; })()`);
+        const geometry = await cdp.evaluate(`(() => {
+          const panel = document.querySelector('.item-sources-panel');
+          const list = document.querySelector('.item-sources-list');
+          const filters = document.querySelector('.item-sources-filters');
+          return { overflow: panel.scrollWidth > panel.clientWidth + 1 || filters.scrollWidth > filters.clientWidth + 1,
+            listHeight: list.getBoundingClientRect().height,
+            heights: Array.from(filters.querySelectorAll('input, select')).filter(el => el.getBoundingClientRect().height > 0).map(el => el.getBoundingClientRect().height) };
+        })()`);
+        assert.equal(geometry.overflow, false, viewport.name + ' 篩選不可水平溢出');
+        assert(geometry.listHeight >= 100, viewport.name + ' 展開篩選仍保留清單空間');
+        assert(geometry.heights.every(height => height >= 44), '篩選觸控高度至少44px');
+        if (output) {
+          const shot = await cdp.send('Page.captureScreenshot', { format: 'png' });
+          await writeFile(path.join(output, `${viewport.name}-${theme}-filters-${expanded ? 'open' : 'closed'}.png`), Buffer.from(shot.data, 'base64'));
+        }
+      }
+    }
+  }
+  await cdp.send('Emulation.setDeviceMetricsOverride', { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
+  await click(cdp, '[data-item-sources-reset]');
+  assert.equal(await cdp.evaluate(`document.querySelector('[data-item-sources-sort]').value`), 'level-asc');
+  assert.equal(await cdp.evaluate(`document.querySelector('[data-item-sources-min-level]').value`), '');
+  const unknownLast = await cdp.evaluate(`(async () => {
+    const { loadItemSourcePanelData } = await import('/src/react-ui/panels/item-sources/model.ts');
+    const data = await loadItemSourcePanelData();
+    const firstUnknown = data.items.findIndex(item => item.level === undefined);
+    return firstUnknown >= 0 && data.items.slice(firstUnknown).every(item => item.level === undefined)
+      && data.items.find(item => item.itemId === 'book.custom_technique')?.level === undefined;
+  })()`);
+  assert.equal(unknownLast, true, '未知功法境界不推測且置後');
+
   assert.deepEqual(await cdp.evaluate(`(async () => {
     const { createMainNoticeStateSource } = await import('/src/main-notice-state-source.ts');
     const messages = [], toasts = [], acknowledgements = [];

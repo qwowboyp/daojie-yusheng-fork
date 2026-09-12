@@ -12,6 +12,15 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 /** 当前内置的更新日志条目。 */
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    updatedAt: '2026-09-13',
+    summary: '取得途徑百科補上功法子分類、等級排序與條件篩選。',
+    items: [
+      '分類：功法可依坊市相同的法術、內功、神通、秘術分類查找，保留只看未學與一鍵前往。',
+      '排序：預設依等級由低到高，也可切換由高到低或名稱排序；功法使用模板境界等級。',
+      '篩選：可設定最低與最高等級，並結合來源方式、地圖與名稱搜尋；未標示等級的物品排在最後。',
+    ],
+  },
+  {
     updatedAt: '2026-09-12',
     summary: '百科補齊功法學習狀態與境界資訊，改善資源更新。',
     items: [
