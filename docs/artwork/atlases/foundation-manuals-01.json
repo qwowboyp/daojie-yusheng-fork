@@ -1,0 +1,629 @@
+{
+  "id": "foundation-manuals-01",
+  "columns": 4,
+  "rows": 3,
+  "prompt": "為仙俠遊戲製作一張道具圖集，精確4欄3列，共12本完整閉合線裝古冊，透明背景。參考圖片僅作風格參考，不能沿用其道具。斜視角3/4、鮮明精緻手繪遊戲圖示、清楚輪廓與封面意象，非寫實照片。每格只放一本完整書，佔格中央64%，四邊至少18%留白含微弱靈氣效果，禁止跨格重疊、文字、書名、標籤、格線、框架或水印。真正RGBA PNG透明alpha=0背景，不要畫棋盤格或黑色底色。全12件依左到右上到下順序：第一列1冰鱗凝脈經：霜藍銀皮，蛇鱗環繞經脈冰晶圖紋；2霜刃穿雲訣：深藍古冊，銀色細長刃穿過白雲；3寒淵觀隙錄：靛青古冊，深淵岩隙裡一隻冰藍觀察眼；4玄龜護元章：灰銀靛藍古冊，玄龜甲殼包覆靈元珠。第二列5焚木回春篇：深綠焦邊古冊，燒焦樹樁生出碧綠嫩芽；6藤火纏枝訣：赤銅綠色古冊，細藤纏繞橙色火枝；7燼息調元法：暗赭紅古冊，灰燼中柔和金色氣旋；8焚林照夜印：黑紅古冊，火樹剪影與明亮印章形太陽。第三列9玄壤鎮岳經：厚實赭金古冊，層疊黑金山岳與土地紋路；10裂地迴鋒式：灰銅古冊，地裂中迴旋的銀色彎刃；11五脈歸流錄：墨綠古冊，五色細脈匯入中心丹田珠；12五行鎮脈印：深紫金古冊，五行石柱圍繞鎮脈法印。每本外觀由意象材質區分，不能只換色。可讀於40px。",
+  "editPrompt": "去背：請使用背景移除處理，把灰白棋盤格變成真正的透明像素（RGBA PNG）。圖片裡的12本書必須原封不動，保留4欄3列格位。不要用生成方式重畫棋盤格。這是要直接放進遊戲的透明貼圖。",
+  "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+  "dimensions": [
+    1448,
+    1086
+  ],
+  "items": [
+    {
+      "id": "book.foundation_manual_1",
+      "name": "《冰鱗凝脈經》",
+      "description": "31級內功全卷，可修至12層。霜刃淵寒鱗一脈的內功，偏重體魄、經脈與神識的穩固。"
+    },
+    {
+      "id": "book.foundation_manual_2",
+      "name": "《霜刃穿雲訣》",
+      "description": "32級法術全卷，可修至12層。引霜成刃的遠距法術，命中後可短暫壓低敵手移速。"
+    },
+    {
+      "id": "book.foundation_manual_3",
+      "name": "《寒淵觀隙錄》",
+      "description": "33級秘術全卷，可修至12層。觀察寒淵氣隙的行旅秘術，可在危險地形中拓展視野。"
+    },
+    {
+      "id": "book.foundation_manual_4",
+      "name": "《玄龜護元章》",
+      "description": "34級神通全卷，可修至12層。借玄龜厚甲護住元氣的護持神通，適合承受危急一擊。"
+    },
+    {
+      "id": "book.foundation_manual_5",
+      "name": "《焚木回春篇》",
+      "description": "35級內功全卷，可修至14層。焚木荒臺留傳的回春內功，兼顧體魄、神識與經脈。"
+    },
+    {
+      "id": "book.foundation_manual_6",
+      "name": "《藤火纏枝訣》",
+      "description": "36級法術全卷，可修至14層。以藤火纏住敵手的法術，犧牲部分傷害換取短暫控場。"
+    },
+    {
+      "id": "book.foundation_manual_7",
+      "name": "《燼息調元法》",
+      "description": "37級秘術全卷，可修至14層。收束燼火餘息的調元秘術，適合短時間強化靈力輸出。"
+    },
+    {
+      "id": "book.foundation_manual_8",
+      "name": "《焚林照夜印》",
+      "description": "38級神通全卷，可修至14層。以焚林火光照破夜幕的清場神通，需蓄勢後才可施展。"
+    },
+    {
+      "id": "book.foundation_manual_9",
+      "name": "《玄壤鎮嶽經》",
+      "description": "39級內功全卷，可修至16層。玄壤深淵鎮嶽一脈的內功，偏重體魄、力道與經脈。"
+    },
+    {
+      "id": "book.foundation_manual_10",
+      "name": "《裂地迴鋒式》",
+      "description": "40級法術全卷，可修至16層。借地脈反震回斬的近距法術，可把物防轉為部分殺傷。"
+    },
+    {
+      "id": "book.foundation_manual_11",
+      "name": "《五脈歸流錄》",
+      "description": "41級秘術全卷，可修至16層。調和五脈靈流的修持秘術，可短暫提高功法修煉收益。"
+    },
+    {
+      "id": "book.foundation_manual_12",
+      "name": "《五行鎮脈印》",
+      "description": "42級神通全卷，可修至16層。鎮住五行衝脈的護持神通，適合在長戰中維持防線。"
+    }
+  ],
+  "records": [
+    {
+      "id": "book.foundation_manual_1",
+      "name": "《冰鱗凝脈經》",
+      "description": "31級內功全卷，可修至12層。霜刃淵寒鱗一脈的內功，偏重體魄、經脈與神識的穩固。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 0,
+        "row": 0,
+        "left": 0,
+        "top": 0,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 23,
+        "top": 47,
+        "width": 323,
+        "height": 306,
+        "componentIds": [
+          4
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "dfd36f95be4176161b4f408b036064010a49911eabd91bf79e20a6fc26115119",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "9555439f6650259226506d7e2d3225c158acfae3348eaee3e1fce5076a2f4ef4",
+          "bytes": 5984
+        },
+        {
+          "size": 192,
+          "sha256": "c70848c7c74bf5a121847925654d8b61744e1e75760d4c6d18359884793cd0c2",
+          "bytes": 16694
+        }
+      ]
+    },
+    {
+      "id": "book.foundation_manual_2",
+      "name": "《霜刃穿雲訣》",
+      "description": "32級法術全卷，可修至12層。引霜成刃的遠距法術，命中後可短暫壓低敵手移速。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 1,
+        "row": 0,
+        "left": 362,
+        "top": 0,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 384,
+        "top": 37,
+        "width": 324,
+        "height": 319,
+        "componentIds": [
+          2
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "36b807c28959f47fae9050e1e8b8026fc1adc79ca65151c6a1341bce13ce0cea",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "4851bd9fe84233b9e7a75e4408a3ca82c1c26f8f9c280e28bfddf01237ebf1ce",
+          "bytes": 5404
+        },
+        {
+          "size": 192,
+          "sha256": "cca335f6b3dc8c16cc1d706eb5a935ec517ca2cc6e6d30738af79b539a4d5333",
+          "bytes": 14702
+        }
+      ]
+    },
+    {
+      "id": "book.foundation_manual_3",
+      "name": "《寒淵觀隙錄》",
+      "description": "33級秘術全卷，可修至12層。觀察寒淵氣隙的行旅秘術，可在危險地形中拓展視野。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 2,
+        "row": 0,
+        "left": 724,
+        "top": 0,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 744,
+        "top": 36,
+        "width": 322,
+        "height": 317,
+        "componentIds": [
+          1
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "0f5480c7655fc10f88aa57365675767f406d8d888f37cda5c116e0d5ba9948af",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "a46de54c7d8ab9a73c0761e7bf967b36a1396c3e9632ae9414be1e9288e436cc",
+          "bytes": 5556
+        },
+        {
+          "size": 192,
+          "sha256": "ece5a1c6004dc92a49ac6deaa974c0b29b59d87dc1100756be1fb457514a96c1",
+          "bytes": 15300
+        }
+      ]
+    },
+    {
+      "id": "book.foundation_manual_4",
+      "name": "《玄龜護元章》",
+      "description": "34級神通全卷，可修至12層。借玄龜厚甲護住元氣的護持神通，適合承受危急一擊。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 3,
+        "row": 0,
+        "left": 1086,
+        "top": 0,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 1104,
+        "top": 39,
+        "width": 322,
+        "height": 315,
+        "componentIds": [
+          3,
+          47
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "1a38831d3b22e938f3ac6d8c8ca442e2364d807e76179d18174bd7aeee1af54a",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "3db5aa83feed7eba4c18af4d4122c71aaead4ef6da1227332bcc07e5e0a05a24",
+          "bytes": 5658
+        },
+        {
+          "size": 192,
+          "sha256": "8883248a6d56b2dfdcb2f9585ee9b6e2dd1668c828cb3091fdda68a134622008",
+          "bytes": 15972
+        }
+      ]
+    },
+    {
+      "id": "book.foundation_manual_5",
+      "name": "《焚木回春篇》",
+      "description": "35級內功全卷，可修至14層。焚木荒臺留傳的回春內功，兼顧體魄、神識與經脈。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 0,
+        "row": 1,
+        "left": 0,
+        "top": 362,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 24,
+        "top": 377,
+        "width": 326,
+        "height": 317,
+        "componentIds": [
+          54
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "13ec407ad57a54b3b27d269bb8c17c96a187f5500a00114ee19bba4e6ae820a1",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "8920bcbae5ba16a2fed4e9c5e80a4c33cb9ad9313d8b6320286943575450be5b",
+          "bytes": 5518
+        },
+        {
+          "size": 192,
+          "sha256": "447a14234d2bb7aba38743eaeed96d0be64ab8756a88c5e17172c81dbedb3a00",
+          "bytes": 15214
+        }
+      ]
+    },
+    {
+      "id": "book.foundation_manual_6",
+      "name": "《藤火纏枝訣》",
+      "description": "36級法術全卷，可修至14層。以藤火纏住敵手的法術，犧牲部分傷害換取短暫控場。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 1,
+        "row": 1,
+        "left": 362,
+        "top": 362,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 384,
+        "top": 376,
+        "width": 329,
+        "height": 317,
+        "componentIds": [
+          52
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "d38774fd8d3a84c31a32898325775bb987825a34aec83444543a9376985a4a40",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "46e75f9c38a0b571d8b1f8bfb77700f7e1707382feb492b6e2409b0b781ba01e",
+          "bytes": 5738
+        },
+        {
+          "size": 192,
+          "sha256": "d37a4a195841926903947f0ba1b02644df12e120fc1382208168baf5f1abb226",
+          "bytes": 15768
+        }
+      ]
+    },
+    {
+      "id": "book.foundation_manual_7",
+      "name": "《燼息調元法》",
+      "description": "37級秘術全卷，可修至14層。收束燼火餘息的調元秘術，適合短時間強化靈力輸出。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 2,
+        "row": 1,
+        "left": 724,
+        "top": 362,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 742,
+        "top": 376,
+        "width": 326,
+        "height": 316,
+        "componentIds": [
+          53
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "578f6eab8640b4bf16a453ec83e3318db597030cc0156a59db5e5a23c961e347",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "d1751ce4a60d356c524db9aaa8355f193438c1ba43165c2e2ce7d49f961d4598",
+          "bytes": 5490
+        },
+        {
+          "size": 192,
+          "sha256": "256bfff29820557f6420fabe0724ba4b575e1521e72bb93d47e381b72b4a5e83",
+          "bytes": 15348
+        }
+      ]
+    },
+    {
+      "id": "book.foundation_manual_8",
+      "name": "《焚林照夜印》",
+      "description": "38級神通全卷，可修至14層。以焚林火光照破夜幕的清場神通，需蓄勢後才可施展。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 3,
+        "row": 1,
+        "left": 1086,
+        "top": 362,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 1104,
+        "top": 374,
+        "width": 322,
+        "height": 317,
+        "componentIds": [
+          51
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "ba421f884aa57ea2478a8a02a6fe2e6ac1de3c36b80963cc2e872346a9581660",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "00b14005e0f9f01d72c98010383e927f4423217f6fba75ebfafbc1cfed774987",
+          "bytes": 5602
+        },
+        {
+          "size": 192,
+          "sha256": "264387b0701f25922c83b1dc3925424de6223f046a2220c8d4b8a711f8c819d0",
+          "bytes": 15266
+        }
+      ]
+    },
+    {
+      "id": "book.foundation_manual_9",
+      "name": "《玄壤鎮嶽經》",
+      "description": "39級內功全卷，可修至16層。玄壤深淵鎮嶽一脈的內功，偏重體魄、力道與經脈。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 0,
+        "row": 2,
+        "left": 0,
+        "top": 724,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 23,
+        "top": 708,
+        "width": 329,
+        "height": 316,
+        "componentIds": [
+          92
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "aa09f1363b3e977ec14fa0893ac73a6a266403b03ca1b81657969eb721b2eac0",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "68901cc75f91dc865d7ceb9ee8d885b443c7b68085574fc88bc4f7c078491cb6",
+          "bytes": 5606
+        },
+        {
+          "size": 192,
+          "sha256": "c672afdfb7a409e7afaa7f336e58303e1c0097be758bfd936a3038e285b7dda4",
+          "bytes": 15868
+        }
+      ]
+    },
+    {
+      "id": "book.foundation_manual_10",
+      "name": "《裂地迴鋒式》",
+      "description": "40級法術全卷，可修至16層。借地脈反震回斬的近距法術，可把物防轉為部分殺傷。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 1,
+        "row": 2,
+        "left": 362,
+        "top": 724,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 385,
+        "top": 708,
+        "width": 326,
+        "height": 320,
+        "componentIds": [
+          93
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "f50d006212c8f89b3777adaa7e3cd3233526ba040f7fa191f42664bd280cea56",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "c5b4f4f96b26b904e535d7a60e7a9215935f44c122d6624dba89b6b0845ecb00",
+          "bytes": 5656
+        },
+        {
+          "size": 192,
+          "sha256": "d424164904d7e91b80a0416342509fe0321f823ae456ed0d9e00231f11b20cb9",
+          "bytes": 15714
+        }
+      ]
+    },
+    {
+      "id": "book.foundation_manual_11",
+      "name": "《五脈歸流錄》",
+      "description": "41級秘術全卷，可修至16層。調和五脈靈流的修持秘術，可短暫提高功法修煉收益。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 2,
+        "row": 2,
+        "left": 724,
+        "top": 724,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 740,
+        "top": 700,
+        "width": 329,
+        "height": 325,
+        "componentIds": [
+          91
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "7c714ebe445015e2c4aee7472161a35c9e0de40d9ecdaef2c0449384e1ef7907",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "547cd32f2aa27b5e37f6321458304085f603f9592207103c3b07e8968d979d6b",
+          "bytes": 5134
+        },
+        {
+          "size": 192,
+          "sha256": "106125627697abdea1cad47419a83f2b6577dd8b63bed185b7278d4762770e5e",
+          "bytes": 14036
+        }
+      ]
+    },
+    {
+      "id": "book.foundation_manual_12",
+      "name": "《五行鎮脈印》",
+      "description": "42級神通全卷，可修至16層。鎮住五行衝脈的護持神通，適合在長戰中維持防線。",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-manuals-01.webp",
+      "cell": {
+        "col": 3,
+        "row": 2,
+        "left": 1086,
+        "top": 724,
+        "width": 362,
+        "height": 362
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 1104,
+        "top": 699,
+        "width": 325,
+        "height": 326,
+        "componentIds": [
+          90
+        ]
+      },
+      "sourceSha256": "ce26545155e61828599581e8e16c721b80883dfe5266b3f05a53723029576efe",
+      "cropSha256": "a7eb5b7f6f15595bc078618f57e130b830a4ca403785c7fb338358356e80a61d",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "sha256": "e1a3897f923cae1f95d4a4ad7ff8aad22cb7f21ce19212cfcd95569cff56a748",
+          "bytes": 5502
+        },
+        {
+          "size": 192,
+          "sha256": "a7c46515c5f14375eb7467544111af08936994bae2cd9b0a0cff0ae2930795ce",
+          "bytes": 15420
+        }
+      ]
+    }
+  ]
+}

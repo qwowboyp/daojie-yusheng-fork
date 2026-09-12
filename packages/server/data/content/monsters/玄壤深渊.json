@@ -46,6 +46,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.25
+      },
+      {
+        "itemId": "book.foundation_manual_9",
+        "name": "《玄壤鎮嶽經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "attrTendency": {
@@ -126,6 +133,34 @@
         "type": "material",
         "count": 1,
         "chance": 0.12
+      },
+      {
+        "itemId": "book.foundation_manual_9",
+        "name": "《玄壤鎮嶽經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_10",
+        "name": "《裂地迴鋒式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_11",
+        "name": "《五脈歸流錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_12",
+        "name": "《五行鎮脈印》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.02
       }
     ],
     "attrTendency": {
@@ -206,6 +241,34 @@
         "type": "material",
         "count": 1,
         "chance": 0.1
+      },
+      {
+        "itemId": "book.foundation_manual_9",
+        "name": "《玄壤鎮嶽經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_10",
+        "name": "《裂地迴鋒式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_11",
+        "name": "《五脈歸流錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_12",
+        "name": "《五行鎮脈印》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.02
       }
     ],
     "attrTendency": {
@@ -294,6 +357,41 @@
         "type": "material",
         "count": 1,
         "chance": 0.001
+      },
+      {
+        "itemId": "book.foundation_manual_9",
+        "name": "《玄壤鎮嶽經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.foundation_manual_10",
+        "name": "《裂地迴鋒式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.foundation_manual_11",
+        "name": "《五脈歸流錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.foundation_manual_12",
+        "name": "《五行鎮脈印》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.06
+      },
+      {
+        "itemId": "book.xuesha_huanling_jue",
+        "name": "《血煞喚靈決》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "attrTendency": {
@@ -382,6 +480,41 @@
         "type": "material",
         "count": 1,
         "chance": 0.001
+      },
+      {
+        "itemId": "book.foundation_manual_9",
+        "name": "《玄壤鎮嶽經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.foundation_manual_10",
+        "name": "《裂地迴鋒式》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.foundation_manual_11",
+        "name": "《五脈歸流錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.foundation_manual_12",
+        "name": "《五行鎮脈印》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.06
+      },
+      {
+        "itemId": "book.xuesha_huanling_jue",
+        "name": "《血煞喚靈決》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.03
       }
     ],
     "attrTendency": {

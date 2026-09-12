@@ -1,0 +1,170 @@
+[
+  {
+    "itemId": "book.foundation_manual_1",
+    "name": "《冰鱗凝脈經》",
+    "type": "skill_book",
+    "grade": "mystic",
+    "level": 31,
+    "learnTechniqueId": "foundation_manual_1",
+    "desc": "31級內功全卷，可修至12層。霜刃淵寒鱗一脈的內功，偏重體魄、經脈與神識的穩固。",
+    "tags": [
+      "功法書",
+      "內功",
+      "築基期"
+    ]
+  },
+  {
+    "itemId": "book.foundation_manual_2",
+    "name": "《霜刃穿雲訣》",
+    "type": "skill_book",
+    "grade": "mystic",
+    "level": 32,
+    "learnTechniqueId": "foundation_manual_2",
+    "desc": "32級法術全卷，可修至12層。引霜成刃的遠距法術，命中後可短暫壓低敵手移速。",
+    "tags": [
+      "功法書",
+      "法術",
+      "築基期"
+    ]
+  },
+  {
+    "itemId": "book.foundation_manual_3",
+    "name": "《寒淵觀隙錄》",
+    "type": "skill_book",
+    "grade": "mystic",
+    "level": 33,
+    "learnTechniqueId": "foundation_manual_3",
+    "desc": "33級秘術全卷，可修至12層。觀察寒淵氣隙的行旅秘術，可在危險地形中拓展視野。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "築基期"
+    ]
+  },
+  {
+    "itemId": "book.foundation_manual_4",
+    "name": "《玄龜護元章》",
+    "type": "skill_book",
+    "grade": "mystic",
+    "level": 34,
+    "learnTechniqueId": "foundation_manual_4",
+    "desc": "34級神通全卷，可修至12層。借玄龜厚甲護住元氣的護持神通，適合承受危急一擊。",
+    "tags": [
+      "功法書",
+      "神通",
+      "築基期"
+    ]
+  },
+  {
+    "itemId": "book.foundation_manual_5",
+    "name": "《焚木回春篇》",
+    "type": "skill_book",
+    "grade": "mystic",
+    "level": 35,
+    "learnTechniqueId": "foundation_manual_5",
+    "desc": "35級內功全卷，可修至14層。焚木荒臺留傳的回春內功，兼顧體魄、神識與經脈。",
+    "tags": [
+      "功法書",
+      "內功",
+      "築基期"
+    ]
+  },
+  {
+    "itemId": "book.foundation_manual_6",
+    "name": "《藤火纏枝訣》",
+    "type": "skill_book",
+    "grade": "mystic",
+    "level": 36,
+    "learnTechniqueId": "foundation_manual_6",
+    "desc": "36級法術全卷，可修至14層。以藤火纏住敵手的法術，犧牲部分傷害換取短暫控場。",
+    "tags": [
+      "功法書",
+      "法術",
+      "築基期"
+    ]
+  },
+  {
+    "itemId": "book.foundation_manual_7",
+    "name": "《燼息調元法》",
+    "type": "skill_book",
+    "grade": "mystic",
+    "level": 37,
+    "learnTechniqueId": "foundation_manual_7",
+    "desc": "37級秘術全卷，可修至14層。收束燼火餘息的調元秘術，適合短時間強化靈力輸出。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "築基期"
+    ]
+  },
+  {
+    "itemId": "book.foundation_manual_8",
+    "name": "《焚林照夜印》",
+    "type": "skill_book",
+    "grade": "mystic",
+    "level": 38,
+    "learnTechniqueId": "foundation_manual_8",
+    "desc": "38級神通全卷，可修至14層。以焚林火光照破夜幕的清場神通，需蓄勢後才可施展。",
+    "tags": [
+      "功法書",
+      "神通",
+      "築基期"
+    ]
+  },
+  {
+    "itemId": "book.foundation_manual_9",
+    "name": "《玄壤鎮嶽經》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 39,
+    "learnTechniqueId": "foundation_manual_9",
+    "desc": "39級內功全卷，可修至16層。玄壤深淵鎮嶽一脈的內功，偏重體魄、力道與經脈。",
+    "tags": [
+      "功法書",
+      "內功",
+      "築基期"
+    ]
+  },
+  {
+    "itemId": "book.foundation_manual_10",
+    "name": "《裂地迴鋒式》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 40,
+    "learnTechniqueId": "foundation_manual_10",
+    "desc": "40級法術全卷，可修至16層。借地脈反震回斬的近距法術，可把物防轉為部分殺傷。",
+    "tags": [
+      "功法書",
+      "法術",
+      "築基期"
+    ]
+  },
+  {
+    "itemId": "book.foundation_manual_11",
+    "name": "《五脈歸流錄》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 41,
+    "learnTechniqueId": "foundation_manual_11",
+    "desc": "41級秘術全卷，可修至16層。調和五脈靈流的修持秘術，可短暫提高功法修煉收益。",
+    "tags": [
+      "功法書",
+      "秘術",
+      "築基期"
+    ]
+  },
+  {
+    "itemId": "book.foundation_manual_12",
+    "name": "《五行鎮脈印》",
+    "type": "skill_book",
+    "grade": "earth",
+    "level": 42,
+    "learnTechniqueId": "foundation_manual_12",
+    "desc": "42級神通全卷，可修至16層。鎮住五行衝脈的護持神通，適合在長戰中維持防線。",
+    "tags": [
+      "功法書",
+      "神通",
+      "築基期"
+    ]
+  }
+]

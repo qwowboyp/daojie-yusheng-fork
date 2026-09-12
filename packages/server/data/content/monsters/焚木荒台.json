@@ -43,6 +43,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.25
+      },
+      {
+        "itemId": "book.foundation_manual_5",
+        "name": "《焚木回春篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "attrTendency": {
@@ -115,6 +122,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.3
+      },
+      {
+        "itemId": "book.foundation_manual_6",
+        "name": "《藤火纏枝訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "attrTendency": {
@@ -195,6 +209,34 @@
         "type": "material",
         "count": 1,
         "chance": 0.12
+      },
+      {
+        "itemId": "book.foundation_manual_5",
+        "name": "《焚木回春篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_6",
+        "name": "《藤火纏枝訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_7",
+        "name": "《燼息調元法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_8",
+        "name": "《焚林照夜印》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.02
       }
     ],
     "attrTendency": {
@@ -275,6 +317,34 @@
         "type": "material",
         "count": 1,
         "chance": 0.1
+      },
+      {
+        "itemId": "book.foundation_manual_5",
+        "name": "《焚木回春篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_6",
+        "name": "《藤火纏枝訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_7",
+        "name": "《燼息調元法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_8",
+        "name": "《焚林照夜印》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.02
       }
     ],
     "attrTendency": {
@@ -363,6 +433,41 @@
         "type": "material",
         "count": 1,
         "chance": 0.001
+      },
+      {
+        "itemId": "book.foundation_manual_5",
+        "name": "《焚木回春篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.foundation_manual_6",
+        "name": "《藤火纏枝訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.foundation_manual_7",
+        "name": "《燼息調元法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.1
+      },
+      {
+        "itemId": "book.foundation_manual_8",
+        "name": "《焚林照夜印》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.06
+      },
+      {
+        "itemId": "book.ningqi_chengji",
+        "name": "《凝氣成基法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.01
       }
     ],
     "attrTendency": {

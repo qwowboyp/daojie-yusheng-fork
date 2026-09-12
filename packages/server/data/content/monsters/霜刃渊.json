@@ -40,6 +40,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.3
+      },
+      {
+        "itemId": "book.foundation_manual_1",
+        "name": "《冰鱗凝脈經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "attrTendency": {
@@ -109,6 +116,13 @@
         "type": "material",
         "count": 1,
         "chance": 0.25
+      },
+      {
+        "itemId": "book.foundation_manual_2",
+        "name": "《霜刃穿雲訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
       }
     ],
     "attrTendency": {
@@ -258,6 +272,34 @@
         "type": "material",
         "count": 1,
         "chance": 0.15
+      },
+      {
+        "itemId": "book.foundation_manual_1",
+        "name": "《冰鱗凝脈經》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_2",
+        "name": "《霜刃穿雲訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_3",
+        "name": "《寒淵觀隙錄》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      },
+      {
+        "itemId": "book.foundation_manual_4",
+        "name": "《玄龜護元章》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.02
       }
     ],
     "attrTendency": {

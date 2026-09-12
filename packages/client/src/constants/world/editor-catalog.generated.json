@@ -224,6 +224,21 @@
       ]
     },
     {
+      "id": "foundation_manual_1",
+      "name": "冰鱗凝脈經",
+      "desc": "霜刃淵寒鱗一脈的內功，偏重體魄、經脈與神識的穩固。",
+      "grade": "mystic",
+      "category": "internal",
+      "realmLv": 31,
+      "attrRatio": {
+        "constitution": 5,
+        "meridians": 3,
+        "spirit": 2
+      },
+      "maxLayer": 12,
+      "expDifficulty": 1
+    },
+    {
       "id": "lg_arts_lg_golden_core_furnace_mender_remnant",
       "name": "補天匠·殘念妖術",
       "desc": "補天匠·殘念實際使用的火行術式。",
@@ -2420,6 +2435,79 @@
       "expDifficulty": 1
     },
     {
+      "id": "foundation_manual_8",
+      "name": "焚林照夜印",
+      "desc": "以焚林火光照破夜幕的清場神通，需蓄勢後才可施展。",
+      "grade": "mystic",
+      "category": "divine",
+      "realmLv": 38,
+      "maxLayer": 14,
+      "expDifficulty": 1.1,
+      "skills": [
+        {
+          "id": "skill.foundation_manual_8.manifest",
+          "name": "焚林照夜",
+          "desc": "蓄勢兩息後焚照落點周圍，長冷卻的清場神通。",
+          "cooldown": 420,
+          "costMultiplier": 2.678575,
+          "cost": 293377,
+          "range": 5,
+          "targeting": {
+            "shape": "area",
+            "radius": 1,
+            "maxTargets": 3
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "fire",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 4.4
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.6,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.028571428571428574
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "unlockLevel": 10,
+          "playerCast": {
+            "windupTicks": 2,
+            "warningColor": "#80a9c7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "foundation_manual_5",
+      "name": "焚木回春篇",
+      "desc": "焚木荒臺留傳的回春內功，兼顧體魄、神識與經脈。",
+      "grade": "mystic",
+      "category": "internal",
+      "realmLv": 35,
+      "attrRatio": {
+        "constitution": 4,
+        "spirit": 3,
+        "meridians": 3
+      },
+      "maxLayer": 14,
+      "expDifficulty": 1
+    },
+    {
       "id": "monster_blazewood_arts",
       "name": "焚木妖術",
       "desc": "焚木荒臺妖獸的木火合炁術式。",
@@ -4115,6 +4203,46 @@
       ]
     },
     {
+      "id": "foundation_manual_3",
+      "name": "寒淵觀隙錄",
+      "desc": "觀察寒淵氣隙的行旅秘術，可在危險地形中拓展視野。",
+      "grade": "mystic",
+      "category": "secret",
+      "realmLv": 33,
+      "maxLayer": 12,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.foundation_manual_3.invoke",
+          "name": "寒淵觀隙",
+          "desc": "短暫拓展視野，與後期引路秘術互斥，避免跨境疊加。",
+          "cooldown": 120,
+          "costMultiplier": 0.561219,
+          "cost": 18769,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.wayfinding",
+              "name": "七境引路",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 45,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "viewRange": 1
+              },
+              "statMode": "flat"
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
       "id": "houtu_chengyuan",
       "name": "厚土承元功",
       "desc": "土勁厚重沉實，一擊之後再疊山嶽之護。",
@@ -4905,6 +5033,46 @@
                   }
                 ]
               }
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
+      "id": "foundation_manual_7",
+      "name": "燼息調元法",
+      "desc": "收束燼火餘息的調元秘術，適合短時間強化靈力輸出。",
+      "grade": "mystic",
+      "category": "secret",
+      "realmLv": 37,
+      "maxLayer": 14,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.foundation_manual_7.invoke",
+          "name": "燼息調元",
+          "desc": "短暫提高靈力輸出，與後期調息秘術互斥，適合施法窗口。",
+          "cooldown": 180,
+          "costMultiplier": 0.892856,
+          "cost": 79159,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.breath",
+              "name": "七境調息",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 18,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "maxQiOutputPerTick": 8
+              },
+              "statMode": "percent"
             }
           ],
           "unlockLevel": 1
@@ -6136,6 +6304,77 @@
               "statMode": "percent",
               "type": "buff",
               "stacks": 10
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
+      "id": "foundation_manual_10",
+      "name": "裂地迴鋒式",
+      "desc": "借地脈反震回斬的近距法術，可把物防轉為部分殺傷。",
+      "grade": "earth",
+      "category": "arts",
+      "realmLv": 40,
+      "maxLayer": 16,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.foundation_manual_10.cast",
+          "name": "裂地迴鋒",
+          "desc": "以迴鋒借地脈反震，物理點殺可從自身物防取得部分威力。",
+          "cooldown": 9,
+          "costMultiplier": 1.020408,
+          "cost": 266119,
+          "range": 3,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "earth",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "var": "caster.stat.physAtk",
+                        "scale": 2.7
+                      },
+                      {
+                        "op": "min",
+                        "args": [
+                          {
+                            "var": "caster.stat.physDef",
+                            "scale": 0.55
+                          },
+                          {
+                            "var": "caster.stat.physAtk",
+                            "scale": 0.55
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.6,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.025
+                      }
+                    ]
+                  }
+                ]
+              }
             }
           ],
           "unlockLevel": 1
@@ -8263,6 +8502,74 @@
       ]
     },
     {
+      "id": "foundation_manual_2",
+      "name": "霜刃穿雲訣",
+      "desc": "引霜成刃的遠距法術，命中後可短暫壓低敵手移速。",
+      "grade": "mystic",
+      "category": "arts",
+      "realmLv": 32,
+      "maxLayer": 12,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.foundation_manual_2.cast",
+          "name": "霜刃穿雲",
+          "desc": "遠距冰行點殺，並短暫減慢目標；同類寒滯不疊加。",
+          "cooldown": 8,
+          "costMultiplier": 1.326511,
+          "cost": 35385,
+          "range": 5,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 3.1
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.6,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.03333333333333333
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "buff",
+              "target": "target",
+              "buffId": "foundation.frost_slow",
+              "name": "寒滯",
+              "category": "debuff",
+              "visibility": "public",
+              "duration": 3,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "moveSpeed": -20
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
       "id": "monster_frostblade_abyss_arts",
       "name": "霜刃妖術",
       "desc": "霜刃淵妖獸的寒冰與鐵甲術式。",
@@ -9373,6 +9680,74 @@
       ]
     },
     {
+      "id": "foundation_manual_6",
+      "name": "藤火纏枝訣",
+      "desc": "以藤火纏住敵手的法術，犧牲部分傷害換取短暫控場。",
+      "grade": "mystic",
+      "category": "arts",
+      "realmLv": 36,
+      "maxLayer": 14,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.foundation_manual_6.cast",
+          "name": "藤火纏枝",
+          "desc": "藤火束縛單一敵手，短暫限制移速，以有限控場換取較低傷害。",
+          "cooldown": 10,
+          "costMultiplier": 1.47959,
+          "cost": 105885,
+          "range": 4,
+          "targeting": {
+            "shape": "single",
+            "maxTargets": 1
+          },
+          "requiresTarget": true,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "fire",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.stat.spellAtk",
+                    "scale": 2.8
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.6,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.028571428571428574
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "buff",
+              "target": "target",
+              "buffId": "foundation.root_bind",
+              "name": "藤火纏身",
+              "category": "debuff",
+              "visibility": "public",
+              "duration": 2,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "moveSpeed": -45
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
       "id": "lg_manual_great_vehicle_3",
       "name": "天痕納海篇",
       "desc": "鎮涯關守關者把獸潮前的守禦與破陣經驗留給後人。側重經脈、神識、根骨，滿層總量遵循同品階、同境界內功基準。",
@@ -10447,6 +10822,46 @@
       ]
     },
     {
+      "id": "foundation_manual_11",
+      "name": "五脈歸流錄",
+      "desc": "調和五脈靈流的修持秘術，可短暫提高功法修煉收益。",
+      "grade": "earth",
+      "category": "secret",
+      "realmLv": 41,
+      "maxLayer": 16,
+      "expDifficulty": 0.9,
+      "skills": [
+        {
+          "id": "skill.foundation_manual_11.invoke",
+          "name": "五脈歸流",
+          "desc": "短暫提升修煉經驗與領悟速度，與後期澄心秘術互斥。",
+          "cooldown": 240,
+          "costMultiplier": 0.546647,
+          "cost": 174230,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.contemplation",
+              "name": "七境澄心",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 50,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "techniqueExpRate": 400
+              },
+              "statMode": "flat"
+            }
+          ],
+          "unlockLevel": 1
+        }
+      ]
+    },
+    {
       "id": "wuqi_guiliu",
       "name": "五炁歸流篇",
       "desc": "五炁歸元，如百川入海，匯成周天根基。",
@@ -10662,6 +11077,52 @@
       },
       "maxLayer": 30,
       "expDifficulty": 1
+    },
+    {
+      "id": "foundation_manual_12",
+      "name": "五行鎮脈印",
+      "desc": "鎮住五行衝脈的護持神通，適合在長戰中維持防線。",
+      "grade": "earth",
+      "category": "divine",
+      "realmLv": 42,
+      "maxLayer": 16,
+      "expDifficulty": 1.1,
+      "skills": [
+        {
+          "id": "skill.foundation_manual_12.guard",
+          "name": "五行鎮脈",
+          "desc": "長冷卻鎮脈護持，提升雙防與抗暴；與後期護持神通共用狀態。",
+          "cooldown": 300,
+          "costMultiplier": 1.494169,
+          "cost": 580635,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.divine_guard",
+              "name": "七境護持",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 12,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "physDef": 16,
+                "spellDef": 16,
+                "antiCrit": 12
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 6,
+          "playerCast": {
+            "windupTicks": 1,
+            "warningColor": "#80a9c7"
+          }
+        }
+      ]
     },
     {
       "id": "lg_manual_tribulation_4",
@@ -11411,6 +11872,74 @@
             }
           ],
           "unlockLevel": 1
+        }
+      ]
+    },
+    {
+      "id": "foundation_manual_4",
+      "name": "玄龜護元章",
+      "desc": "借玄龜厚甲護住元氣的護持神通，適合承受危急一擊。",
+      "grade": "mystic",
+      "category": "divine",
+      "realmLv": 34,
+      "maxLayer": 12,
+      "expDifficulty": 1.1,
+      "skills": [
+        {
+          "id": "skill.foundation_manual_4.guard",
+          "name": "玄龜護元",
+          "desc": "長冷卻護持，回復少量生命並提升雙防；與後期護持神通共用狀態。",
+          "cooldown": 240,
+          "costMultiplier": 1.785711,
+          "cost": 74609,
+          "range": 0,
+          "requiresTarget": false,
+          "effects": [
+            {
+              "type": "heal",
+              "target": "self",
+              "formula": {
+                "op": "mul",
+                "args": [
+                  {
+                    "var": "caster.maxHp",
+                    "scale": 0.05
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      0.6,
+                      {
+                        "var": "techLevel",
+                        "scale": 0.03333333333333333
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "lg.manual.divine_guard",
+              "name": "七境護持",
+              "category": "buff",
+              "visibility": "public",
+              "duration": 10,
+              "stacks": 1,
+              "maxStacks": 1,
+              "stats": {
+                "physDef": 12,
+                "spellDef": 12
+              },
+              "statMode": "percent"
+            }
+          ],
+          "unlockLevel": 1,
+          "playerCast": {
+            "windupTicks": 1,
+            "warningColor": "#80a9c7"
+          }
         }
       ]
     },
@@ -12383,6 +12912,21 @@
           "requiresTarget": false
         }
       ]
+    },
+    {
+      "id": "foundation_manual_9",
+      "name": "玄壤鎮嶽經",
+      "desc": "玄壤深淵鎮嶽一脈的內功，偏重體魄、力道與經脈。",
+      "grade": "earth",
+      "category": "internal",
+      "realmLv": 39,
+      "attrRatio": {
+        "constitution": 5,
+        "strength": 3,
+        "meridians": 2
+      },
+      "maxLayer": 16,
+      "expDifficulty": 1
     },
     {
       "id": "mountain_insight_chart",
@@ -14854,6 +15398,20 @@
       ]
     },
     {
+      "itemId": "book.foundation_manual_1",
+      "name": "《冰鱗凝脈經》",
+      "type": "skill_book",
+      "grade": "mystic",
+      "level": 31,
+      "learnTechniqueId": "foundation_manual_1",
+      "desc": "31級內功全卷，可修至12層。霜刃淵寒鱗一脈的內功，偏重體魄、經脈與神識的穩固。",
+      "tags": [
+        "功法書",
+        "內功",
+        "築基期"
+      ]
+    },
+    {
       "itemId": "book.lg_manual_golden_core_8",
       "name": "《補天一炬》",
       "type": "skill_book",
@@ -15022,6 +15580,34 @@
       "learnTechniqueId": "cloudchase_steps"
     },
     {
+      "itemId": "book.foundation_manual_8",
+      "name": "《焚林照夜印》",
+      "type": "skill_book",
+      "grade": "mystic",
+      "level": 38,
+      "learnTechniqueId": "foundation_manual_8",
+      "desc": "38級神通全卷，可修至14層。以焚林火光照破夜幕的清場神通，需蓄勢後才可施展。",
+      "tags": [
+        "功法書",
+        "神通",
+        "築基期"
+      ]
+    },
+    {
+      "itemId": "book.foundation_manual_5",
+      "name": "《焚木回春篇》",
+      "type": "skill_book",
+      "grade": "mystic",
+      "level": 35,
+      "learnTechniqueId": "foundation_manual_5",
+      "desc": "35級內功全卷，可修至14層。焚木荒臺留傳的回春內功，兼顧體魄、神識與經脈。",
+      "tags": [
+        "功法書",
+        "內功",
+        "築基期"
+      ]
+    },
+    {
       "itemId": "book.lg_manual_great_vehicle_7",
       "name": "《風劫定念法》",
       "type": "skill_book",
@@ -15100,6 +15686,20 @@
       "type": "skill_book",
       "desc": "記載寒汐洗脈法的修行法門，使用後學會寒汐洗脈法。",
       "learnTechniqueId": "hanxi_ximai"
+    },
+    {
+      "itemId": "book.foundation_manual_3",
+      "name": "《寒淵觀隙錄》",
+      "type": "skill_book",
+      "grade": "mystic",
+      "level": 33,
+      "learnTechniqueId": "foundation_manual_3",
+      "desc": "33級秘術全卷，可修至12層。觀察寒淵氣隙的行旅秘術，可在危險地形中拓展視野。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "築基期"
+      ]
     },
     {
       "itemId": "book.houtu_chengyuan",
@@ -15202,6 +15802,20 @@
         "功法書",
         "法術",
         "金丹期"
+      ]
+    },
+    {
+      "itemId": "book.foundation_manual_7",
+      "name": "《燼息調元法》",
+      "type": "skill_book",
+      "grade": "mystic",
+      "level": 37,
+      "learnTechniqueId": "foundation_manual_7",
+      "desc": "37級秘術全卷，可修至14層。收束燼火餘息的調元秘術，適合短時間強化靈力輸出。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "築基期"
       ]
     },
     {
@@ -15331,6 +15945,20 @@
       "learnTechniqueId": "liyan_duanxi"
     },
     {
+      "itemId": "book.foundation_manual_10",
+      "name": "《裂地迴鋒式》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 40,
+      "learnTechniqueId": "foundation_manual_10",
+      "desc": "40級法術全卷，可修至16層。借地脈反震回斬的近距法術，可把物防轉為部分殺傷。",
+      "tags": [
+        "功法書",
+        "法術",
+        "築基期"
+      ]
+    },
+    {
       "itemId": "book.cloud_blade",
       "name": "《流雲刀譜》",
       "type": "skill_book",
@@ -15447,6 +16075,20 @@
       ]
     },
     {
+      "itemId": "book.foundation_manual_2",
+      "name": "《霜刃穿雲訣》",
+      "type": "skill_book",
+      "grade": "mystic",
+      "level": 32,
+      "learnTechniqueId": "foundation_manual_2",
+      "desc": "32級法術全卷，可修至12層。引霜成刃的遠距法術，命中後可短暫壓低敵手移速。",
+      "tags": [
+        "功法書",
+        "法術",
+        "築基期"
+      ]
+    },
+    {
       "itemId": "book.lg_manual_void_refinement_1",
       "name": "《碎界固身經》",
       "type": "skill_book",
@@ -15495,6 +16137,20 @@
       "type": "skill_book",
       "desc": "記載太陰歸潮經的修行法門，使用後學會太陰歸潮經。",
       "learnTechniqueId": "taiyin_guichao"
+    },
+    {
+      "itemId": "book.foundation_manual_6",
+      "name": "《藤火纏枝訣》",
+      "type": "skill_book",
+      "grade": "mystic",
+      "level": 36,
+      "learnTechniqueId": "foundation_manual_6",
+      "desc": "36級法術全卷，可修至14層。以藤火纏住敵手的法術，犧牲部分傷害換取短暫控場。",
+      "tags": [
+        "功法書",
+        "法術",
+        "築基期"
+      ]
     },
     {
       "itemId": "book.lg_manual_great_vehicle_3",
@@ -15653,6 +16309,20 @@
       ]
     },
     {
+      "itemId": "book.foundation_manual_11",
+      "name": "《五脈歸流錄》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 41,
+      "learnTechniqueId": "foundation_manual_11",
+      "desc": "41級秘術全卷，可修至16層。調和五脈靈流的修持秘術，可短暫提高功法修煉收益。",
+      "tags": [
+        "功法書",
+        "秘術",
+        "築基期"
+      ]
+    },
+    {
       "itemId": "book.wuqi_guiliu",
       "name": "《五炁歸流篇》",
       "type": "skill_book",
@@ -15672,6 +16342,20 @@
         "功法書",
         "內功",
         "渡劫期"
+      ]
+    },
+    {
+      "itemId": "book.foundation_manual_12",
+      "name": "《五行鎮脈印》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 42,
+      "learnTechniqueId": "foundation_manual_12",
+      "desc": "42級神通全卷，可修至16層。鎮住五行衝脈的護持神通，適合在長戰中維持防線。",
+      "tags": [
+        "功法書",
+        "神通",
+        "築基期"
       ]
     },
     {
@@ -15810,6 +16494,20 @@
       ]
     },
     {
+      "itemId": "book.foundation_manual_4",
+      "name": "《玄龜護元章》",
+      "type": "skill_book",
+      "grade": "mystic",
+      "level": 34,
+      "learnTechniqueId": "foundation_manual_4",
+      "desc": "34級神通全卷，可修至12層。借玄龜厚甲護住元氣的護持神通，適合承受危急一擊。",
+      "tags": [
+        "功法書",
+        "神通",
+        "築基期"
+      ]
+    },
+    {
       "itemId": "book.xuanjin_huilan",
       "name": "《玄津回瀾錄》",
       "type": "skill_book",
@@ -15822,6 +16520,20 @@
       "type": "skill_book",
       "desc": "記載玄鏡落印訣的修行法門，使用後學會玄鏡落印訣。",
       "learnTechniqueId": "xuanjing_luoyin"
+    },
+    {
+      "itemId": "book.foundation_manual_9",
+      "name": "《玄壤鎮嶽經》",
+      "type": "skill_book",
+      "grade": "earth",
+      "level": 39,
+      "learnTechniqueId": "foundation_manual_9",
+      "desc": "39級內功全卷，可修至16層。玄壤深淵鎮嶽一脈的內功，偏重體魄、力道與經脈。",
+      "tags": [
+        "功法書",
+        "內功",
+        "築基期"
+      ]
     },
     {
       "itemId": "book.mountain_insight_chart",
@@ -28764,8 +29476,6 @@
       "duration": 24,
       "stacks": 1,
       "maxStacks": 5,
-      "sourceSkillId": "skill.frost_sutra",
-      "sourceSkillName": "寒魄經",
       "realmLv": 1,
       "color": "#73b5d7",
       "statMode": "percent"
@@ -28790,7 +29500,6 @@
     {
       "buffId": "buff.huanling_candan_faxiang",
       "name": "殘丹法相虛影",
-      "desc": "重傷之下強撐殘丹法相虛影，術勢外翻，後續所有熔脈殺招都會跟著整座洞府一併擴開。",
       "shortMark": "相",
       "category": "buff",
       "visibility": "public",
@@ -28798,21 +29507,12 @@
       "duration": 1,
       "stacks": 1,
       "maxStacks": 1,
-      "sourceSkillId": "skill.huanling_candan_faxiang",
-      "sourceSkillName": "殘丹法相虛影",
       "realmLv": 1,
-      "stats": {
-        "physAtk": 60,
-        "spellAtk": 80,
-        "cooldownSpeed": 120,
-        "viewRange": 30
-      },
       "statMode": "percent"
     },
     {
       "buffId": "buff.huanling_canmai_suobu",
       "name": "殘脈鎖步",
-      "desc": "腳下被熔流殘脈死死拖住，身法幾乎廢掉。",
       "shortMark": "鎖",
       "category": "debuff",
       "visibility": "public",
@@ -28820,8 +29520,6 @@
       "duration": 20,
       "stacks": 1,
       "maxStacks": 1,
-      "sourceSkillId": "skill.huanling_ronghe_guanmai",
-      "sourceSkillName": "熔河貫脈",
       "realmLv": 1,
       "color": "#ff954f",
       "stats": {
@@ -28841,8 +29539,6 @@
       "duration": 20,
       "stacks": 1,
       "maxStacks": 5,
-      "sourceSkillId": "skill.hanxi_ximai",
-      "sourceSkillName": "凝",
       "realmLv": 1,
       "color": "#7dbfd8",
       "statMode": "percent"
@@ -28858,8 +29554,6 @@
       "duration": 20,
       "stacks": 1,
       "maxStacks": 5,
-      "sourceSkillId": "skill.charwood_slam",
-      "sourceSkillName": "焦木重砸",
       "realmLv": 1,
       "color": "#aa9271",
       "statMode": "percent"
@@ -29112,8 +29806,6 @@
       "duration": 28,
       "stacks": 1,
       "maxStacks": 24,
-      "sourceSkillId": "skill.venom_fang",
-      "sourceSkillName": "毒牙噬",
       "realmLv": 1,
       "color": "#6aa84f"
     },
@@ -29273,6 +29965,24 @@
       "statMode": "percent"
     },
     {
+      "buffId": "foundation.frost_slow",
+      "name": "寒滯",
+      "shortMark": "寒",
+      "category": "debuff",
+      "visibility": "public",
+      "remainingTicks": 3,
+      "duration": 3,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.foundation_manual_2.cast",
+      "sourceSkillName": "霜刃穿雲",
+      "realmLv": 1,
+      "stats": {
+        "moveSpeed": -20
+      },
+      "statMode": "percent"
+    },
+    {
       "buffId": "buff.wood_bloom",
       "name": "回春",
       "desc": "木脈回春，生命自動回覆大幅提高。",
@@ -29372,8 +30082,6 @@
       "duration": 28,
       "stacks": 1,
       "maxStacks": 24,
-      "sourceSkillId": "skill.soul_wail",
-      "sourceSkillName": "噬魂哀鳴",
       "realmLv": 1,
       "color": "#8170c2"
     },
@@ -29470,8 +30178,6 @@
       "duration": 20,
       "stacks": 1,
       "maxStacks": 1,
-      "sourceSkillId": "skill.vine_constrict",
-      "sourceSkillName": "藤焰絞纏",
       "realmLv": 1,
       "color": "#69ba74",
       "statMode": "percent"
@@ -29642,8 +30348,6 @@
       "duration": 24,
       "stacks": 1,
       "maxStacks": 18,
-      "sourceSkillId": "skill.plume_shot",
-      "sourceSkillName": "裂羽攢射",
       "realmLv": 1,
       "color": "#9bb7d4"
     },
@@ -29722,8 +30426,6 @@
       "duration": 28,
       "stacks": 1,
       "maxStacks": 5,
-      "sourceSkillId": "skill.baihong_duanyue",
-      "sourceSkillName": "斷影",
       "realmLv": 1,
       "color": "#d2bd6e",
       "statMode": "percent"
@@ -29783,16 +30485,9 @@
       "shortMark": "七",
       "category": "buff",
       "visibility": "public",
-      "remainingTicks": 60,
-      "duration": 60,
       "stacks": 1,
       "maxStacks": 1,
-      "sourceSkillId": "skill.lg_manual_great_vehicle_7.invoke",
-      "sourceSkillName": "風劫定念",
       "realmLv": 1,
-      "stats": {
-        "techniqueExpRate": 750
-      },
       "statMode": "flat"
     },
     {
@@ -29801,16 +30496,9 @@
       "shortMark": "七",
       "category": "buff",
       "visibility": "public",
-      "remainingTicks": 20,
-      "duration": 20,
       "stacks": 1,
       "maxStacks": 1,
-      "sourceSkillId": "skill.lg_manual_golden_core_7.invoke",
-      "sourceSkillName": "殘爐養息",
       "realmLv": 1,
-      "stats": {
-        "maxQiOutputPerTick": 10
-      },
       "statMode": "percent"
     },
     {
@@ -29819,17 +30507,9 @@
       "shortMark": "七",
       "category": "buff",
       "visibility": "public",
-      "remainingTicks": 12,
-      "duration": 12,
       "stacks": 1,
       "maxStacks": 1,
-      "sourceSkillId": "skill.lg_manual_golden_core_6.guard",
-      "sourceSkillName": "百燈護命",
       "realmLv": 1,
-      "stats": {
-        "physDef": 18,
-        "spellDef": 18
-      },
       "statMode": "percent"
     },
     {
@@ -29842,12 +30522,7 @@
       "duration": 45,
       "stacks": 1,
       "maxStacks": 1,
-      "sourceSkillId": "skill.lg_manual_great_vehicle_4.invoke",
-      "sourceSkillName": "雷原尋隙",
       "realmLv": 1,
-      "stats": {
-        "moveSpeed": 3
-      },
       "statMode": "flat"
     },
     {
@@ -29861,8 +30536,6 @@
       "duration": 28,
       "stacks": 1,
       "maxStacks": 24,
-      "sourceSkillId": "skill.bamboo_whip",
-      "sourceSkillName": "竹影抽",
       "realmLv": 1,
       "color": "#79b56b"
     },
@@ -29877,8 +30550,6 @@
       "duration": 24,
       "stacks": 1,
       "maxStacks": 18,
-      "sourceSkillId": "skill.scythe_limb",
-      "sourceSkillName": "裂刃前肢",
       "realmLv": 1,
       "color": "#89c46a"
     },
@@ -29902,7 +30573,6 @@
     {
       "buffId": "terrain_molten_pool_burn",
       "name": "熔池灼燒",
-      "desc": "熔河當頭捲過，火毒直接烙進經脈。每層灼燒每息造成 1% 最大氣血的火系傷害，持續 10 息，最多 20 層。",
       "shortMark": "灼",
       "category": "debuff",
       "visibility": "public",
@@ -29910,8 +30580,6 @@
       "duration": 10,
       "stacks": 1,
       "maxStacks": 20,
-      "sourceSkillId": "skill.huanling_ronghe_guanmai",
-      "sourceSkillName": "熔河貫脈",
       "realmLv": 1,
       "color": "#ff8e54"
     },
@@ -29926,8 +30594,6 @@
       "duration": 20,
       "stacks": 1,
       "maxStacks": 4,
-      "sourceSkillId": "skill.molten_charge",
-      "sourceSkillName": "熔鱗衝撞",
       "realmLv": 1,
       "color": "#d56b3a",
       "statMode": "percent"
@@ -29935,7 +30601,6 @@
     {
       "buffId": "buff.huanling_rongmai_yin",
       "name": "熔脈陰痕",
-      "desc": "斷魂靈釘沿著裂脈再補一記，陰痕會持續拖垮攻勢與護體。",
       "shortMark": "熔",
       "category": "debuff",
       "visibility": "public",
@@ -29943,8 +30608,6 @@
       "duration": 60,
       "stacks": 1,
       "maxStacks": 100,
-      "sourceSkillId": "skill.huanling_duanhun_ding",
-      "sourceSkillName": "斷魂靈釘",
       "realmLv": 1,
       "color": "#ff8a54",
       "stats": {
@@ -30169,8 +30832,6 @@
       "duration": 20,
       "stacks": 1,
       "maxStacks": 10,
-      "sourceSkillId": "skill.hanxi_ximai",
-      "sourceSkillName": "凝",
       "realmLv": 1,
       "color": "#74bdd7",
       "statMode": "percent"
@@ -30209,6 +30870,24 @@
       "stats": {
         "moveSpeed": 22,
         "dodge": 7
+      },
+      "statMode": "percent"
+    },
+    {
+      "buffId": "foundation.root_bind",
+      "name": "藤火纏身",
+      "shortMark": "藤",
+      "category": "debuff",
+      "visibility": "public",
+      "remainingTicks": 2,
+      "duration": 2,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.foundation_manual_6.cast",
+      "sourceSkillName": "藤火纏枝",
+      "realmLv": 1,
+      "stats": {
+        "moveSpeed": -45
       },
       "statMode": "percent"
     },
@@ -30399,8 +31078,6 @@
       "duration": 24,
       "stacks": 1,
       "maxStacks": 18,
-      "sourceSkillId": "skill.predator_pounce",
-      "sourceSkillName": "裂喉撲殺",
       "realmLv": 1,
       "color": "#c96d56"
     },
@@ -30415,13 +31092,7 @@
       "duration": 1,
       "stacks": 1,
       "maxStacks": 1,
-      "sourceSkillId": "skill.huanling_candan_faxiang",
-      "sourceSkillName": "殘丹法相虛影",
       "realmLv": 1,
-      "stats": {
-        "extraRange": 3,
-        "extraArea": 1
-      },
       "statMode": "flat"
     },
     {
@@ -30452,8 +31123,6 @@
       "duration": 28,
       "stacks": 1,
       "maxStacks": 18,
-      "sourceSkillId": "skill.core_smash",
-      "sourceSkillName": "礦核重擊",
       "realmLv": 1,
       "color": "#8b8472"
     },
@@ -30758,8 +31427,6 @@
       "duration": 10,
       "stacks": 1,
       "maxStacks": 30,
-      "sourceSkillId": "skill.redflame_art",
-      "sourceSkillName": "赤焰訣",
       "realmLv": 1,
       "color": "#ef6b3b",
       "statMode": "percent"

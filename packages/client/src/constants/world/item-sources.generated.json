@@ -504,6 +504,363 @@
       "count": 1
     }
   ],
+  "book.foundation_manual_1": [
+    {
+      "kind": "monster_drop",
+      "mapId": "frostblade_abyss",
+      "mapName": "霜刃淵",
+      "monsterId": "m_ironshell_turtle",
+      "monsterName": "鐵甲玄龜",
+      "chance": 0.04,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "frostblade_abyss",
+      "mapName": "霜刃淵",
+      "monsterId": "m_frost_scale_serpent",
+      "monsterName": "霜鱗蛇",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.foundation_manual_10": [
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_darksoil_dragon",
+      "monsterName": "玄壤地龍",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_fivephase_devourer",
+      "monsterName": "五行噬脈獸",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_earthsplit_centipede",
+      "monsterName": "裂地蜈蚣",
+      "chance": 0.04,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_mixed_stone_toad",
+      "monsterName": "混元石蟾",
+      "chance": 0.04,
+      "count": 1
+    }
+  ],
+  "book.foundation_manual_11": [
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_darksoil_dragon",
+      "monsterName": "玄壤地龍",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_fivephase_devourer",
+      "monsterName": "五行噬脈獸",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_earthsplit_centipede",
+      "monsterName": "裂地蜈蚣",
+      "chance": 0.04,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_mixed_stone_toad",
+      "monsterName": "混元石蟾",
+      "chance": 0.04,
+      "count": 1
+    }
+  ],
+  "book.foundation_manual_12": [
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_darksoil_dragon",
+      "monsterName": "玄壤地龍",
+      "chance": 0.06,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_fivephase_devourer",
+      "monsterName": "五行噬脈獸",
+      "chance": 0.06,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_earthsplit_centipede",
+      "monsterName": "裂地蜈蚣",
+      "chance": 0.02,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_mixed_stone_toad",
+      "monsterName": "混元石蟾",
+      "chance": 0.02,
+      "count": 1
+    }
+  ],
+  "book.foundation_manual_2": [
+    {
+      "kind": "monster_drop",
+      "mapId": "frostblade_abyss",
+      "mapName": "霜刃淵",
+      "monsterId": "m_ironshell_turtle",
+      "monsterName": "鐵甲玄龜",
+      "chance": 0.04,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "frostblade_abyss",
+      "mapName": "霜刃淵",
+      "monsterId": "m_cold_iron_scorpion",
+      "monsterName": "寒鐵蠍",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.foundation_manual_3": [
+    {
+      "kind": "monster_drop",
+      "mapId": "frostblade_abyss",
+      "mapName": "霜刃淵",
+      "monsterId": "m_ironshell_turtle",
+      "monsterName": "鐵甲玄龜",
+      "chance": 0.04,
+      "count": 1
+    }
+  ],
+  "book.foundation_manual_4": [
+    {
+      "kind": "monster_drop",
+      "mapId": "frostblade_abyss",
+      "mapName": "霜刃淵",
+      "monsterId": "m_ironshell_turtle",
+      "monsterName": "鐵甲玄龜",
+      "chance": 0.02,
+      "count": 1
+    }
+  ],
+  "book.foundation_manual_5": [
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_blazewood_king",
+      "monsterName": "焚木妖王",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_blaze_lizard",
+      "monsterName": "烈焰蜥",
+      "chance": 0.04,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_vine_flame_serpent",
+      "monsterName": "藤焰蟒",
+      "chance": 0.04,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_flame_tail_fox",
+      "monsterName": "焰尾狐",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.foundation_manual_6": [
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_blazewood_king",
+      "monsterName": "焚木妖王",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_blaze_lizard",
+      "monsterName": "烈焰蜥",
+      "chance": 0.04,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_vine_flame_serpent",
+      "monsterName": "藤焰蟒",
+      "chance": 0.04,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_charwood_walker",
+      "monsterName": "枯木行者",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
+  "book.foundation_manual_7": [
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_blazewood_king",
+      "monsterName": "焚木妖王",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_blaze_lizard",
+      "monsterName": "烈焰蜥",
+      "chance": 0.04,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_vine_flame_serpent",
+      "monsterName": "藤焰蟒",
+      "chance": 0.04,
+      "count": 1
+    }
+  ],
+  "book.foundation_manual_8": [
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_blazewood_king",
+      "monsterName": "焚木妖王",
+      "chance": 0.06,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_blaze_lizard",
+      "monsterName": "烈焰蜥",
+      "chance": 0.02,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_vine_flame_serpent",
+      "monsterName": "藤焰蟒",
+      "chance": 0.02,
+      "count": 1
+    }
+  ],
+  "book.foundation_manual_9": [
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_darksoil_dragon",
+      "monsterName": "玄壤地龍",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_fivephase_devourer",
+      "monsterName": "五行噬脈獸",
+      "chance": 0.1,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_earthsplit_centipede",
+      "monsterName": "裂地蜈蚣",
+      "chance": 0.04,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_mixed_stone_toad",
+      "monsterName": "混元石蟾",
+      "chance": 0.04,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_darksoil_beetle",
+      "monsterName": "玄土甲蟲",
+      "chance": 0.008,
+      "count": 1
+    }
+  ],
   "book.frost_sutra": [
     {
       "kind": "monster_drop",
@@ -2387,6 +2744,15 @@
   ],
   "book.ningqi_chengji": [
     {
+      "kind": "monster_drop",
+      "mapId": "blazewood_waste",
+      "mapName": "焚木荒臺",
+      "monsterId": "m_blazewood_king",
+      "monsterName": "焚木妖王",
+      "chance": 0.01,
+      "count": 1
+    },
+    {
       "kind": "shop",
       "mapId": "qizhen_crossing",
       "mapName": "棲真渡",
@@ -2827,6 +3193,24 @@
     }
   ],
   "book.xuesha_huanling_jue": [
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_darksoil_dragon",
+      "monsterName": "玄壤地龍",
+      "chance": 0.03,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "darksoil_abyss",
+      "mapName": "玄壤深淵",
+      "monsterId": "m_fivephase_devourer",
+      "monsterName": "五行噬脈獸",
+      "chance": 0.03,
+      "count": 1
+    },
     {
       "kind": "monster_drop",
       "mapId": "ruined_cavern_manor",

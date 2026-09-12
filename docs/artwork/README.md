@@ -16,6 +16,8 @@
 
 ## 來源與製作方式
 
+築基十二部功法使用 `atlases/foundation-manuals-01.webp` 的 4 × 3 圖集；同名 JSON 保存提示詞、去背指令、逐格 ID、裁切與 24 個正式產物雜湊。獨立縮圖沿用 `assets/item-icons/v1/book.foundation_manual_*-96.webp`／`-192.webp`，並收錄在 `item-icons-v1.json`。`node scripts/prove-foundation-techniques.mjs` 驗證全卷、掉落、坊市目錄與本批美術對應。
+
 後期七境的 56 本功法書與 168 件裝備使用 `atlases/late-unique-*.webp` 七張圖集，每格對應一件物品。`late-game-unique-icons.json` 記錄 224 件的格位、透明輪廓裁切與兩種尺寸雜湊；正式檔案置於 `assets/item-icons/v2/`，避免沿用舊路徑的長效快取。其餘 247 件材料與消耗品仍由 `late-game-icon-reuse.json` 記錄既有美術來源。
 
 生成後以 `node scripts/import-late-game-unique-icons.mjs` 匯入；`node scripts/prove-late-game-unique-icons.mjs` 可在乾淨 checkout 檢查完整覆蓋、透明度、尺寸、唯一性與同步腳本不覆蓋專屬美術。生成器輸出的棋盤格像素不等於透明背景，必須檢查實際 alpha 通道與每格透明留白。

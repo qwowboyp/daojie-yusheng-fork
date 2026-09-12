@@ -1,0 +1,417 @@
+[
+  {
+    "techniqueId": "foundation_manual_1",
+    "bookId": "book.foundation_manual_1",
+    "name": "《冰鱗凝脈經》",
+    "category": "internal",
+    "grade": "mystic",
+    "realmLv": 31,
+    "maxLayer": 12,
+    "mapId": "frostblade_abyss",
+    "mapName": "霜刃淵",
+    "sources": [
+      {
+        "monsterId": "m_frost_scale_serpent",
+        "monsterName": "霜鱗蛇",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 18
+      },
+      {
+        "monsterId": "m_ironshell_turtle",
+        "monsterName": "鐵甲玄龜",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 35
+      }
+    ]
+  },
+  {
+    "techniqueId": "foundation_manual_2",
+    "bookId": "book.foundation_manual_2",
+    "name": "《霜刃穿雲訣》",
+    "category": "arts",
+    "grade": "mystic",
+    "realmLv": 32,
+    "maxLayer": 12,
+    "mapId": "frostblade_abyss",
+    "mapName": "霜刃淵",
+    "sources": [
+      {
+        "monsterId": "m_cold_iron_scorpion",
+        "monsterName": "寒鐵蠍",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 18
+      },
+      {
+        "monsterId": "m_ironshell_turtle",
+        "monsterName": "鐵甲玄龜",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 35
+      }
+    ]
+  },
+  {
+    "techniqueId": "foundation_manual_3",
+    "bookId": "book.foundation_manual_3",
+    "name": "《寒淵觀隙錄》",
+    "category": "secret",
+    "grade": "mystic",
+    "realmLv": 33,
+    "maxLayer": 12,
+    "mapId": "frostblade_abyss",
+    "mapName": "霜刃淵",
+    "sources": [
+      {
+        "monsterId": "m_ironshell_turtle",
+        "monsterName": "鐵甲玄龜",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 35
+      }
+    ]
+  },
+  {
+    "techniqueId": "foundation_manual_4",
+    "bookId": "book.foundation_manual_4",
+    "name": "《玄龜護元章》",
+    "category": "divine",
+    "grade": "mystic",
+    "realmLv": 34,
+    "maxLayer": 12,
+    "mapId": "frostblade_abyss",
+    "mapName": "霜刃淵",
+    "sources": [
+      {
+        "monsterId": "m_ironshell_turtle",
+        "monsterName": "鐵甲玄龜",
+        "role": "elite",
+        "chance": 0.02,
+        "respawnSec": 35
+      }
+    ]
+  },
+  {
+    "techniqueId": "foundation_manual_5",
+    "bookId": "book.foundation_manual_5",
+    "name": "《焚木回春篇》",
+    "category": "internal",
+    "grade": "mystic",
+    "realmLv": 35,
+    "maxLayer": 14,
+    "mapId": "blazewood_waste",
+    "mapName": "焚木荒臺",
+    "sources": [
+      {
+        "monsterId": "m_flame_tail_fox",
+        "monsterName": "焰尾狐",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 17
+      },
+      {
+        "monsterId": "m_blaze_lizard",
+        "monsterName": "烈焰蜥",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 35
+      },
+      {
+        "monsterId": "m_vine_flame_serpent",
+        "monsterName": "藤焰蟒",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 38
+      },
+      {
+        "monsterId": "m_blazewood_king",
+        "monsterName": "焚木妖王",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "foundation_manual_6",
+    "bookId": "book.foundation_manual_6",
+    "name": "《藤火纏枝訣》",
+    "category": "arts",
+    "grade": "mystic",
+    "realmLv": 36,
+    "maxLayer": 14,
+    "mapId": "blazewood_waste",
+    "mapName": "焚木荒臺",
+    "sources": [
+      {
+        "monsterId": "m_charwood_walker",
+        "monsterName": "枯木行者",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 18
+      },
+      {
+        "monsterId": "m_blaze_lizard",
+        "monsterName": "烈焰蜥",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 35
+      },
+      {
+        "monsterId": "m_vine_flame_serpent",
+        "monsterName": "藤焰蟒",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 38
+      },
+      {
+        "monsterId": "m_blazewood_king",
+        "monsterName": "焚木妖王",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "foundation_manual_7",
+    "bookId": "book.foundation_manual_7",
+    "name": "《燼息調元法》",
+    "category": "secret",
+    "grade": "mystic",
+    "realmLv": 37,
+    "maxLayer": 14,
+    "mapId": "blazewood_waste",
+    "mapName": "焚木荒臺",
+    "sources": [
+      {
+        "monsterId": "m_blaze_lizard",
+        "monsterName": "烈焰蜥",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 35
+      },
+      {
+        "monsterId": "m_vine_flame_serpent",
+        "monsterName": "藤焰蟒",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 38
+      },
+      {
+        "monsterId": "m_blazewood_king",
+        "monsterName": "焚木妖王",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "foundation_manual_8",
+    "bookId": "book.foundation_manual_8",
+    "name": "《焚林照夜印》",
+    "category": "divine",
+    "grade": "mystic",
+    "realmLv": 38,
+    "maxLayer": 14,
+    "mapId": "blazewood_waste",
+    "mapName": "焚木荒臺",
+    "sources": [
+      {
+        "monsterId": "m_blaze_lizard",
+        "monsterName": "烈焰蜥",
+        "role": "elite",
+        "chance": 0.02,
+        "respawnSec": 35
+      },
+      {
+        "monsterId": "m_vine_flame_serpent",
+        "monsterName": "藤焰蟒",
+        "role": "elite",
+        "chance": 0.02,
+        "respawnSec": 38
+      },
+      {
+        "monsterId": "m_blazewood_king",
+        "monsterName": "焚木妖王",
+        "role": "boss",
+        "chance": 0.06,
+        "respawnSec": 120
+      }
+    ]
+  },
+  {
+    "techniqueId": "foundation_manual_9",
+    "bookId": "book.foundation_manual_9",
+    "name": "《玄壤鎮嶽經》",
+    "category": "internal",
+    "grade": "earth",
+    "realmLv": 39,
+    "maxLayer": 16,
+    "mapId": "darksoil_abyss",
+    "mapName": "玄壤深淵",
+    "sources": [
+      {
+        "monsterId": "m_darksoil_beetle",
+        "monsterName": "玄土甲蟲",
+        "role": "normal",
+        "chance": 0.008,
+        "respawnSec": 18
+      },
+      {
+        "monsterId": "m_earthsplit_centipede",
+        "monsterName": "裂地蜈蚣",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 35
+      },
+      {
+        "monsterId": "m_mixed_stone_toad",
+        "monsterName": "混元石蟾",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 38
+      },
+      {
+        "monsterId": "m_darksoil_dragon",
+        "monsterName": "玄壤地龍",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 150
+      },
+      {
+        "monsterId": "m_fivephase_devourer",
+        "monsterName": "五行噬脈獸",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 180
+      }
+    ]
+  },
+  {
+    "techniqueId": "foundation_manual_10",
+    "bookId": "book.foundation_manual_10",
+    "name": "《裂地迴鋒式》",
+    "category": "arts",
+    "grade": "earth",
+    "realmLv": 40,
+    "maxLayer": 16,
+    "mapId": "darksoil_abyss",
+    "mapName": "玄壤深淵",
+    "sources": [
+      {
+        "monsterId": "m_earthsplit_centipede",
+        "monsterName": "裂地蜈蚣",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 35
+      },
+      {
+        "monsterId": "m_mixed_stone_toad",
+        "monsterName": "混元石蟾",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 38
+      },
+      {
+        "monsterId": "m_darksoil_dragon",
+        "monsterName": "玄壤地龍",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 150
+      },
+      {
+        "monsterId": "m_fivephase_devourer",
+        "monsterName": "五行噬脈獸",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 180
+      }
+    ]
+  },
+  {
+    "techniqueId": "foundation_manual_11",
+    "bookId": "book.foundation_manual_11",
+    "name": "《五脈歸流錄》",
+    "category": "secret",
+    "grade": "earth",
+    "realmLv": 41,
+    "maxLayer": 16,
+    "mapId": "darksoil_abyss",
+    "mapName": "玄壤深淵",
+    "sources": [
+      {
+        "monsterId": "m_earthsplit_centipede",
+        "monsterName": "裂地蜈蚣",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 35
+      },
+      {
+        "monsterId": "m_mixed_stone_toad",
+        "monsterName": "混元石蟾",
+        "role": "elite",
+        "chance": 0.04,
+        "respawnSec": 38
+      },
+      {
+        "monsterId": "m_darksoil_dragon",
+        "monsterName": "玄壤地龍",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 150
+      },
+      {
+        "monsterId": "m_fivephase_devourer",
+        "monsterName": "五行噬脈獸",
+        "role": "boss",
+        "chance": 0.1,
+        "respawnSec": 180
+      }
+    ]
+  },
+  {
+    "techniqueId": "foundation_manual_12",
+    "bookId": "book.foundation_manual_12",
+    "name": "《五行鎮脈印》",
+    "category": "divine",
+    "grade": "earth",
+    "realmLv": 42,
+    "maxLayer": 16,
+    "mapId": "darksoil_abyss",
+    "mapName": "玄壤深淵",
+    "sources": [
+      {
+        "monsterId": "m_earthsplit_centipede",
+        "monsterName": "裂地蜈蚣",
+        "role": "elite",
+        "chance": 0.02,
+        "respawnSec": 35
+      },
+      {
+        "monsterId": "m_mixed_stone_toad",
+        "monsterName": "混元石蟾",
+        "role": "elite",
+        "chance": 0.02,
+        "respawnSec": 38
+      },
+      {
+        "monsterId": "m_darksoil_dragon",
+        "monsterName": "玄壤地龍",
+        "role": "boss",
+        "chance": 0.06,
+        "respawnSec": 150
+      },
+      {
+        "monsterId": "m_fivephase_devourer",
+        "monsterName": "五行噬脈獸",
+        "role": "boss",
+        "chance": 0.06,
+        "respawnSec": 180
+      }
+    ]
+  }
+]

@@ -1,0 +1,549 @@
+[
+  {
+    "id": "foundation_manual_1",
+    "name": "冰鱗凝脈經",
+    "desc": "霜刃淵寒鱗一脈的內功，偏重體魄、經脈與神識的穩固。",
+    "grade": "mystic",
+    "category": "internal",
+    "realmLv": 31,
+    "maxLayer": 12,
+    "expDifficulty": 1,
+    "attrRatio": {
+      "constitution": 5,
+      "meridians": 3,
+      "spirit": 2
+    },
+    "budgetPercent": 0.8
+  },
+  {
+    "id": "foundation_manual_2",
+    "name": "霜刃穿雲訣",
+    "desc": "引霜成刃的遠距法術，命中後可短暫壓低敵手移速。",
+    "grade": "mystic",
+    "category": "arts",
+    "realmLv": 32,
+    "maxLayer": 12,
+    "expDifficulty": 1,
+    "skills": [
+      {
+        "id": "skill.foundation_manual_2.cast",
+        "name": "霜刃穿雲",
+        "desc": "遠距冰行點殺，並短暫減慢目標；同類寒滯不疊加。",
+        "cooldown": 8,
+        "costMultiplier": 1.326511,
+        "cost": 35385,
+        "range": 5,
+        "targeting": {
+          "shape": "single",
+          "maxTargets": 1
+        },
+        "requiresTarget": true,
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "water",
+            "formula": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "caster.stat.spellAtk",
+                  "scale": 3.1
+                },
+                {
+                  "op": "add",
+                  "args": [
+                    0.6,
+                    {
+                      "var": "techLevel",
+                      "scale": 0.03333333333333333
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "buff",
+            "target": "target",
+            "buffId": "foundation.frost_slow",
+            "name": "寒滯",
+            "category": "debuff",
+            "visibility": "public",
+            "duration": 3,
+            "stacks": 1,
+            "maxStacks": 1,
+            "stats": {
+              "moveSpeed": -20
+            },
+            "statMode": "percent"
+          }
+        ],
+        "unlockLevel": 1
+      }
+    ]
+  },
+  {
+    "id": "foundation_manual_3",
+    "name": "寒淵觀隙錄",
+    "desc": "觀察寒淵氣隙的行旅秘術，可在危險地形中拓展視野。",
+    "grade": "mystic",
+    "category": "secret",
+    "realmLv": 33,
+    "maxLayer": 12,
+    "expDifficulty": 0.9,
+    "skills": [
+      {
+        "id": "skill.foundation_manual_3.invoke",
+        "name": "寒淵觀隙",
+        "desc": "短暫拓展視野，與後期引路秘術互斥，避免跨境疊加。",
+        "cooldown": 120,
+        "costMultiplier": 0.561219,
+        "cost": 18769,
+        "range": 0,
+        "requiresTarget": false,
+        "effects": [
+          {
+            "type": "buff",
+            "target": "self",
+            "buffId": "lg.manual.wayfinding",
+            "name": "七境引路",
+            "category": "buff",
+            "visibility": "public",
+            "duration": 45,
+            "stacks": 1,
+            "maxStacks": 1,
+            "stats": {
+              "viewRange": 1
+            },
+            "statMode": "flat"
+          }
+        ],
+        "unlockLevel": 1
+      }
+    ]
+  },
+  {
+    "id": "foundation_manual_4",
+    "name": "玄龜護元章",
+    "desc": "借玄龜厚甲護住元氣的護持神通，適合承受危急一擊。",
+    "grade": "mystic",
+    "category": "divine",
+    "realmLv": 34,
+    "maxLayer": 12,
+    "expDifficulty": 1.1,
+    "skills": [
+      {
+        "id": "skill.foundation_manual_4.guard",
+        "name": "玄龜護元",
+        "desc": "長冷卻護持，回復少量生命並提升雙防；與後期護持神通共用狀態。",
+        "cooldown": 240,
+        "costMultiplier": 1.785711,
+        "cost": 74609,
+        "range": 0,
+        "requiresTarget": false,
+        "effects": [
+          {
+            "type": "heal",
+            "target": "self",
+            "formula": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "caster.maxHp",
+                  "scale": 0.05
+                },
+                {
+                  "op": "add",
+                  "args": [
+                    0.6,
+                    {
+                      "var": "techLevel",
+                      "scale": 0.03333333333333333
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "buff",
+            "target": "self",
+            "buffId": "lg.manual.divine_guard",
+            "name": "七境護持",
+            "category": "buff",
+            "visibility": "public",
+            "duration": 10,
+            "stacks": 1,
+            "maxStacks": 1,
+            "stats": {
+              "physDef": 12,
+              "spellDef": 12
+            },
+            "statMode": "percent"
+          }
+        ],
+        "unlockLevel": 1,
+        "playerCast": {
+          "windupTicks": 1,
+          "warningColor": "#80a9c7"
+        }
+      }
+    ]
+  },
+  {
+    "id": "foundation_manual_5",
+    "name": "焚木回春篇",
+    "desc": "焚木荒臺留傳的回春內功，兼顧體魄、神識與經脈。",
+    "grade": "mystic",
+    "category": "internal",
+    "realmLv": 35,
+    "maxLayer": 14,
+    "expDifficulty": 1,
+    "attrRatio": {
+      "constitution": 4,
+      "spirit": 3,
+      "meridians": 3
+    },
+    "budgetPercent": 0.84
+  },
+  {
+    "id": "foundation_manual_6",
+    "name": "藤火纏枝訣",
+    "desc": "以藤火纏住敵手的法術，犧牲部分傷害換取短暫控場。",
+    "grade": "mystic",
+    "category": "arts",
+    "realmLv": 36,
+    "maxLayer": 14,
+    "expDifficulty": 1,
+    "skills": [
+      {
+        "id": "skill.foundation_manual_6.cast",
+        "name": "藤火纏枝",
+        "desc": "藤火束縛單一敵手，短暫限制移速，以有限控場換取較低傷害。",
+        "cooldown": 10,
+        "costMultiplier": 1.47959,
+        "cost": 105885,
+        "range": 4,
+        "targeting": {
+          "shape": "single",
+          "maxTargets": 1
+        },
+        "requiresTarget": true,
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "fire",
+            "formula": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "caster.stat.spellAtk",
+                  "scale": 2.8
+                },
+                {
+                  "op": "add",
+                  "args": [
+                    0.6,
+                    {
+                      "var": "techLevel",
+                      "scale": 0.028571428571428574
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "buff",
+            "target": "target",
+            "buffId": "foundation.root_bind",
+            "name": "藤火纏身",
+            "category": "debuff",
+            "visibility": "public",
+            "duration": 2,
+            "stacks": 1,
+            "maxStacks": 1,
+            "stats": {
+              "moveSpeed": -45
+            },
+            "statMode": "percent"
+          }
+        ],
+        "unlockLevel": 1
+      }
+    ]
+  },
+  {
+    "id": "foundation_manual_7",
+    "name": "燼息調元法",
+    "desc": "收束燼火餘息的調元秘術，適合短時間強化靈力輸出。",
+    "grade": "mystic",
+    "category": "secret",
+    "realmLv": 37,
+    "maxLayer": 14,
+    "expDifficulty": 0.9,
+    "skills": [
+      {
+        "id": "skill.foundation_manual_7.invoke",
+        "name": "燼息調元",
+        "desc": "短暫提高靈力輸出，與後期調息秘術互斥，適合施法窗口。",
+        "cooldown": 180,
+        "costMultiplier": 0.892856,
+        "cost": 79159,
+        "range": 0,
+        "requiresTarget": false,
+        "effects": [
+          {
+            "type": "buff",
+            "target": "self",
+            "buffId": "lg.manual.breath",
+            "name": "七境調息",
+            "category": "buff",
+            "visibility": "public",
+            "duration": 18,
+            "stacks": 1,
+            "maxStacks": 1,
+            "stats": {
+              "maxQiOutputPerTick": 8
+            },
+            "statMode": "percent"
+          }
+        ],
+        "unlockLevel": 1
+      }
+    ]
+  },
+  {
+    "id": "foundation_manual_8",
+    "name": "焚林照夜印",
+    "desc": "以焚林火光照破夜幕的清場神通，需蓄勢後才可施展。",
+    "grade": "mystic",
+    "category": "divine",
+    "realmLv": 38,
+    "maxLayer": 14,
+    "expDifficulty": 1.1,
+    "skills": [
+      {
+        "id": "skill.foundation_manual_8.manifest",
+        "name": "焚林照夜",
+        "desc": "蓄勢兩息後焚照落點周圍，長冷卻的清場神通。",
+        "cooldown": 420,
+        "costMultiplier": 2.678575,
+        "cost": 293377,
+        "range": 5,
+        "targeting": {
+          "shape": "area",
+          "radius": 1,
+          "maxTargets": 3
+        },
+        "requiresTarget": true,
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "fire",
+            "formula": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "caster.stat.spellAtk",
+                  "scale": 4.4
+                },
+                {
+                  "op": "add",
+                  "args": [
+                    0.6,
+                    {
+                      "var": "techLevel",
+                      "scale": 0.028571428571428574
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "unlockLevel": 10,
+        "playerCast": {
+          "windupTicks": 2,
+          "warningColor": "#80a9c7"
+        }
+      }
+    ]
+  },
+  {
+    "id": "foundation_manual_9",
+    "name": "玄壤鎮嶽經",
+    "desc": "玄壤深淵鎮嶽一脈的內功，偏重體魄、力道與經脈。",
+    "grade": "earth",
+    "category": "internal",
+    "realmLv": 39,
+    "maxLayer": 16,
+    "expDifficulty": 1,
+    "attrRatio": {
+      "constitution": 5,
+      "strength": 3,
+      "meridians": 2
+    },
+    "budgetPercent": 0.9
+  },
+  {
+    "id": "foundation_manual_10",
+    "name": "裂地迴鋒式",
+    "desc": "借地脈反震回斬的近距法術，可把物防轉為部分殺傷。",
+    "grade": "earth",
+    "category": "arts",
+    "realmLv": 40,
+    "maxLayer": 16,
+    "expDifficulty": 1,
+    "skills": [
+      {
+        "id": "skill.foundation_manual_10.cast",
+        "name": "裂地迴鋒",
+        "desc": "以迴鋒借地脈反震，物理點殺可從自身物防取得部分威力。",
+        "cooldown": 9,
+        "costMultiplier": 1.020408,
+        "cost": 266119,
+        "range": 3,
+        "targeting": {
+          "shape": "single",
+          "maxTargets": 1
+        },
+        "requiresTarget": true,
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "physical",
+            "element": "earth",
+            "formula": {
+              "op": "mul",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "var": "caster.stat.physAtk",
+                      "scale": 2.7
+                    },
+                    {
+                      "op": "min",
+                      "args": [
+                        {
+                          "var": "caster.stat.physDef",
+                          "scale": 0.55
+                        },
+                        {
+                          "var": "caster.stat.physAtk",
+                          "scale": 0.55
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "add",
+                  "args": [
+                    0.6,
+                    {
+                      "var": "techLevel",
+                      "scale": 0.025
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "unlockLevel": 1
+      }
+    ]
+  },
+  {
+    "id": "foundation_manual_11",
+    "name": "五脈歸流錄",
+    "desc": "調和五脈靈流的修持秘術，可短暫提高功法修煉收益。",
+    "grade": "earth",
+    "category": "secret",
+    "realmLv": 41,
+    "maxLayer": 16,
+    "expDifficulty": 0.9,
+    "skills": [
+      {
+        "id": "skill.foundation_manual_11.invoke",
+        "name": "五脈歸流",
+        "desc": "短暫提升修煉經驗與領悟速度，與後期澄心秘術互斥。",
+        "cooldown": 240,
+        "costMultiplier": 0.546647,
+        "cost": 174230,
+        "range": 0,
+        "requiresTarget": false,
+        "effects": [
+          {
+            "type": "buff",
+            "target": "self",
+            "buffId": "lg.manual.contemplation",
+            "name": "七境澄心",
+            "category": "buff",
+            "visibility": "public",
+            "duration": 50,
+            "stacks": 1,
+            "maxStacks": 1,
+            "stats": {
+              "techniqueExpRate": 400
+            },
+            "statMode": "flat"
+          }
+        ],
+        "unlockLevel": 1
+      }
+    ]
+  },
+  {
+    "id": "foundation_manual_12",
+    "name": "五行鎮脈印",
+    "desc": "鎮住五行衝脈的護持神通，適合在長戰中維持防線。",
+    "grade": "earth",
+    "category": "divine",
+    "realmLv": 42,
+    "maxLayer": 16,
+    "expDifficulty": 1.1,
+    "skills": [
+      {
+        "id": "skill.foundation_manual_12.guard",
+        "name": "五行鎮脈",
+        "desc": "長冷卻鎮脈護持，提升雙防與抗暴；與後期護持神通共用狀態。",
+        "cooldown": 300,
+        "costMultiplier": 1.494169,
+        "cost": 580635,
+        "range": 0,
+        "requiresTarget": false,
+        "effects": [
+          {
+            "type": "buff",
+            "target": "self",
+            "buffId": "lg.manual.divine_guard",
+            "name": "七境護持",
+            "category": "buff",
+            "visibility": "public",
+            "duration": 12,
+            "stacks": 1,
+            "maxStacks": 1,
+            "stats": {
+              "physDef": 16,
+              "spellDef": 16,
+              "antiCrit": 12
+            },
+            "statMode": "percent"
+          }
+        ],
+        "unlockLevel": 6,
+        "playerCast": {
+          "windupTicks": 1,
+          "warningColor": "#80a9c7"
+        }
+      }
+    ]
+  }
+]

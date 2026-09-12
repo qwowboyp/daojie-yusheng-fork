@@ -9,6 +9,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { isDeepStrictEqual } from 'node:util';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -791,7 +792,17 @@ function buildBuffCatalog(techniques, items) {/**
   const buffMap = new Map();
   const register = (buff) => {
     const buffId = typeof buff?.buffId === 'string' ? buff.buffId.trim() : '';
-    if (!buffId || buffMap.has(buffId)) {
+    if (!buffId) {
+      return;
+    }
+    const previous = buffMap.get(buffId);
+    if (previous) {
+      // 同一互斥狀態可由不同境界技能施放；全域目錄只保留一致資料，
+      // 避免聊天提示把某個來源的效果數值當成所有來源的共同數值。
+      for (const key of ['desc', 'duration', 'remainingTicks', 'sourceSkillId', 'sourceSkillName', 'realmLv',
+        'attrs', 'attrMode', 'stats', 'statMode', 'qiProjection', 'maxStacks', 'color']) {
+        if (!isDeepStrictEqual(previous[key], buff[key])) delete previous[key];
+      }
       return;
     }
     buffMap.set(buffId, {
