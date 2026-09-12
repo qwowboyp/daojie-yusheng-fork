@@ -385,14 +385,12 @@ function testMoveToQueuesInitialInstanceMoveImmediately() {
         }],
     ]);
     instance.tickOnce();
-    // 基础移动点数 200（平地代价 100），单 tick 可走完 2 步路径直达终点
-    assert.deepEqual(instance.getPlayerPosition(runtimePlayer.playerId), { x: 2, y: 1 });
+    assert.deepEqual(instance.getPlayerPosition(runtimePlayer.playerId), { x: 1, y: 1 });
 }
 
 function testHighCostTileAccumulatesMoveBudget() {
-    // 基础移动点数为 200（2 倍单位），高耗费地块代价按同倍数放大为 1860，保持原测试节奏
-    assert.equal(getMaxStoredMovePoints(0), 200);
-    assert.equal(getMaxStoredMovePoints(0, 1860), 1860);
+    assert.equal(getMaxStoredMovePoints(0), 100);
+    assert.equal(getMaxStoredMovePoints(0, 930), 930);
 
     const templateRepository = new MapTemplateRepository();
     templateRepository.registerRuntimeMapTemplate({
@@ -415,7 +413,7 @@ function testHighCostTileAccumulatesMoveBudget() {
         containers: [],
         auras: [],
         tileEffects: [
-            { x: 1, y: 1, width: 1, height: 1, movementCost: 1860 },
+            { x: 1, y: 1, width: 1, height: 1, movementCost: 930 },
         ],
     });
     const instance = new MapInstanceRuntime({
@@ -450,7 +448,7 @@ function testHighCostTileAccumulatesMoveBudget() {
         instance.tickOnce();
         assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 0, y: 1 });
     }
-    assert.equal(player.movePoints, 1800);
+    assert.equal(player.movePoints, 900);
 
     instance.enqueueMove({
         playerId: player.playerId,
@@ -608,6 +606,8 @@ function testPlayerPlansThroughMonsterTileAndArrives() {
         preferredY: 0,
     });
     injectLiveMonster(instance, 'monster:traverse:1', 3, 0);
+    // 身法 +100 使每息移動點數 = 100 基礎 + 100 加成 = 200，同一息可踏入並離開妖獸格
+    instance.setPlayerMoveSpeed(runtimePlayer.playerId, 100);
     const service = new WorldRuntimeNavigationService(templateRepository, {
         getPlayer(playerId) {
             return { playerId, templateId: instance.template.mapId, x: runtimePlayer.x, y: runtimePlayer.y };
@@ -658,8 +658,8 @@ function testPlayerPlansThroughMonsterTileAndArrives() {
         { x: 5, y: 0 },
     ]);
 
-    // 基础移动点数每息回复 200（平地单步代价 100），单条移动命令每息最多走两步；
-    // 与线上节奏一致，导航意图逐息重新物化并从当前位置续规划；全程确认从未停靠在妖兽格
+    // 每息 200 點（基礎 100 + 身法 100），平地單步代價 100，同一息最多走兩步以穿越妖獸格；
+    // 與線上節奏一致，導航意圖逐息重新物化並從當前位置續規劃；全程確認從未停靠在妖獸格
     for (let round = 0; round < 6; round += 1) {
         if (instance.getPlayerPosition(runtimePlayer.playerId).x === 5) {
             break;
@@ -769,8 +769,10 @@ function testBudgetExhaustionOnMonsterTileRestsOnPreviousLegalTile() {
     assert.equal(instance.occupancy[instance.toTileIndex(1, 0)] !== 0, true);
     assert.equal(instance.monsterRuntimeIdByTile.get(monsterTileIndex), 'monster:budget:1');
 
-    // 补足行动节奏后继续行进可正常穿过妖兽格抵达后方：
-    // 预算上限随首次步进代价收口，手工巨额注入会被夹回；改为按线上节奏逐息续发剩余路径
+    // 補足行動節奏後繼續行進可正常穿過妖獸格抵達後方：
+    // 預算上限隨首次步進代價收口，手工巨額注入會被夾回；改為按線上節奏逐息續發剩餘路徑
+    // 身法 +100 使每息 200 點，同一息可踏入並離開妖獸格
+    instance.setPlayerMoveSpeed(player.playerId, 100);
     for (let round = 0; round < 4; round += 1) {
         const position = instance.getPlayerPosition(player.playerId);
         if (position.x === 4) {
