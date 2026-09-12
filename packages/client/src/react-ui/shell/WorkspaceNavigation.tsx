@@ -23,7 +23,7 @@ export const WORKSPACES: readonly WorkspaceDefinition[] = [
     { id: 'enhancement', label: '強化', paneId: 'workspace-enhancement' }, { id: 'transmission', label: '傳功', paneId: 'workspace-transmission' },
     { id: 'building', label: '營造', paneId: 'workspace-building' },
   ] },
-  { id: 'cultivation', label: '修行', description: '功法・煉體・技能', tabs: [{ id: 'technique', label: '功法', paneId: 'pane-technique' }, { id: 'body-training', label: '煉體', paneId: 'pane-body-training' }, { id: 'skill', label: '技能管理', paneId: 'workspace-skill' }] },
+  { id: 'cultivation', label: '修行', description: '功法・煉體・技能', compact: true, tabs: [{ id: 'technique', label: '功法', paneId: 'pane-technique' }, { id: 'body-training', label: '煉體', paneId: 'pane-body-training' }, { id: 'skill', label: '技能管理', paneId: 'workspace-skill' }] },
   { id: 'action', label: '行動與自動設定', description: '交互・行動・開關', compact: true, tabs: [{ id: 'dialogue', label: '附近交互', paneId: 'workspace-dialogue' }, { id: 'utility', label: '行動', paneId: 'workspace-utility' }, { id: 'toggle', label: '自動設定', paneId: 'workspace-toggle' }] },
   { id: 'quests', label: '任務與活動', description: '任務・限時活動', tabs: [{ id: 'quest', label: '任務', paneId: 'pane-quest' }] },
   { id: 'social', label: '社交', description: '道友・宗門・飛書', compact: true, tabs: [{ id: 'social', label: '道友', paneId: 'pane-social' }] },
@@ -181,7 +181,7 @@ function WorkspaceHeader({ state }: { state: WorkspaceNavigationState }) {
         {workspace.id === 'quests' && <button type="button" onClick={() => state.onAction('activity')}>活動</button>}
         {workspace.id === 'world' && <button type="button" onClick={() => state.onAction('chronicle')}>史書</button>}
       </div>
-      <button type="button" className="workspace-close" onClick={state.onClose} aria-label="關閉工作區，返回地圖">返回地圖</button></div>
+      <button type="button" className="workspace-close" onClick={state.onClose} aria-label={`關閉${workspace.label}視窗`} title="關閉"><span aria-hidden="true">×</span></button></div>
     <div className="workspace-tabs" role="tablist" data-tab-group={groupId} aria-label={`${workspace.label}分頁`}>
       {workspace.tabs.map((tab, index) => <button key={tab.id} type="button" id={`workspace-tab-${tab.id}`} data-tab={tab.id}
         className={`workspace-tab tab-btn${state.activeTab === tab.id ? ' active' : ''}`} role="tab" aria-selected={state.activeTab === tab.id}

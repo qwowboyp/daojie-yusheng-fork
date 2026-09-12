@@ -50,6 +50,7 @@ import './styles/ui-responsive.css';
 import './styles/responsive.css';
 import './styles/game-workspace.css';
 import './styles/mobile-game-workspace.css';
+import './styles/cultivation-workspace.css';
 import './styles/item-art.css';
 
 import { bindExternalLinkGuard } from './ui/external-link-guard';

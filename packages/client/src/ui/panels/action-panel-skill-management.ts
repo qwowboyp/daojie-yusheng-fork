@@ -52,6 +52,7 @@ function replaceElementHtml(root: HTMLElement, html: string): void {
 
 export class SkillManagementSubpanel {
   private readonly p: ActionPanelInternal;
+  private skillManagementBatchOpen = false;
 
   constructor(parent: ActionPanel) {
     this.p = parent as unknown as ActionPanelInternal;
@@ -281,6 +282,7 @@ export class SkillManagementSubpanel {
     this.p.skillManagementTab = this.p.activeSkillTab;
     this.p.skillManagementListScrollTop = 0;
     this.p.skillManagementStatus = null;
+    this.skillManagementBatchOpen = false;
     this.syncSkillManagementDraft();
     this.renderSkillManagementModal();
   }
@@ -419,6 +421,11 @@ export class SkillManagementSubpanel {
     const list = document.querySelector<HTMLElement>('.skill-manage-list');
     if (!list) return;
     this.p.skillManagementListScrollTop = list.scrollTop;
+  }
+
+  private captureSkillManagementBatchOpen(): void {
+    const batch = document.querySelector<HTMLDetailsElement>('[data-skill-manage-batch-details]');
+    if (batch) this.skillManagementBatchOpen = batch.open;
   }
 
   restoreSkillManagementListScroll(root: HTMLElement): void {
@@ -1283,6 +1290,7 @@ export class SkillManagementSubpanel {
   private renderSkillManagementModal(): void {
     if (detailModalHost.isOpenFor(this.p.SKILL_MANAGEMENT_MODAL_OWNER)) {
       this.captureSkillManagementListScroll();
+      this.captureSkillManagementBatchOpen();
     }
     const previewActions = this.getSkillManagementPreviewActions();
     const skillEntries = this.getSkillManagementEntries(previewActions);
@@ -1342,13 +1350,6 @@ export class SkillManagementSubpanel {
               </button>
             </div>
           </div>
-          <div class="skill-manage-summary">
-            <span>${t('action.skill.manage.summary.enabled', { slotSummary })}</span>
-            <span>${t('action.skill.manage.summary.filtered', { count: formatDisplayInteger(filteredEntries.length) })}</span>
-            <span>${t('action.skill.manage.summary.auto', { count: formatDisplayInteger(autoEntries.length) })}</span>
-            <span>${t('action.skill.manage.summary.manual', { count: formatDisplayInteger(manualEntries.length) })}</span>
-            <span>${t('action.skill.manage.summary.disabled', { count: formatDisplayInteger(disabledEntries.length) })}</span>
-          </div>
           ${this.p.skillManagementSortOpen ? this.renderSkillManagementSortPanel() : ''}
           ${this.p.skillManagementFilterOpen ? `
             <div class="skill-manage-filter-panel">
@@ -1370,12 +1371,15 @@ export class SkillManagementSubpanel {
               <div class="skill-manage-filter-copy">${t('action.skill.manage.filter.copy', undefined)}</div>
             </div>
           ` : ''}
-          <div class="skill-manage-batch">
-            <button class="small-btn" data-skill-manage-bulk="auto" type="button"${filteredEntries.length > 0 ? '' : ' disabled'}>${t('action.skill.manage.bulk.auto', undefined)}</button>
-            <button class="small-btn ghost" data-skill-manage-bulk="manual" type="button"${filteredEntries.length > 0 ? '' : ' disabled'}>${t('action.skill.manage.bulk.manual', undefined)}</button>
-            <button class="small-btn ghost" data-skill-manage-bulk="enabled" type="button"${filteredEntries.length > 0 ? '' : ' disabled'}>${t('action.skill.manage.bulk.enabled', undefined)}</button>
-            <button class="small-btn ghost" data-skill-manage-bulk="disabled" type="button"${filteredEntries.length > 0 ? '' : ' disabled'}>${t('action.skill.manage.bulk.disabled', undefined)}</button>
-          </div>
+          <details class="skill-manage-batch-details" data-skill-manage-batch-details${this.skillManagementBatchOpen ? ' open' : ''}>
+            <summary>批次調整</summary>
+            <div class="skill-manage-batch">
+              <button class="small-btn" data-skill-manage-bulk="auto" type="button"${filteredEntries.length > 0 ? '' : ' disabled'}>${t('action.skill.manage.bulk.auto', undefined)}</button>
+              <button class="small-btn ghost" data-skill-manage-bulk="manual" type="button"${filteredEntries.length > 0 ? '' : ' disabled'}>${t('action.skill.manage.bulk.manual', undefined)}</button>
+              <button class="small-btn ghost" data-skill-manage-bulk="enabled" type="button"${filteredEntries.length > 0 ? '' : ' disabled'}>${t('action.skill.manage.bulk.enabled', undefined)}</button>
+              <button class="small-btn ghost" data-skill-manage-bulk="disabled" type="button"${filteredEntries.length > 0 ? '' : ' disabled'}>${t('action.skill.manage.bulk.disabled', undefined)}</button>
+            </div>
+          </details>
           <div class="action-section-hint">${hint}</div>
           ${visibleEntries.length === 0
             ? `<div class="empty-hint">${escapeHtml(this.getSkillManagementEmptyStateText())}</div>`
@@ -1408,6 +1412,11 @@ export class SkillManagementSubpanel {
 
   /** 给技能管理弹层装配分组切换、筛选、排序和应用事件。 */
   private bindSkillManagementEvents(root: HTMLElement, signal: AbortSignal): void {
+    root.querySelectorAll<HTMLDetailsElement>('[data-skill-manage-batch-details]').forEach((details) => {
+      details.addEventListener('toggle', () => {
+        this.skillManagementBatchOpen = details.open;
+      }, { signal });
+    });
     root.querySelectorAll<HTMLElement>('[data-skill-manage-apply]').forEach((button) => {
       button.addEventListener('click', () => {
         this.applySkillManagementChanges();

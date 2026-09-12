@@ -1207,6 +1207,52 @@ async function verifyMobileInventoryInteractions(cdp, viewport, theme = 'light')
   await clickCenterWithCdp(cdp, '#game-dock .workspace-dock-nav > [data-workspace-open="items"]');
 }
 
+async function verifyWorkspaceOutsideDismiss(cdp, viewport, touch) {
+  await setViewport(cdp, viewport, { touch });
+  for (const id of ['items', 'cultivation', 'action', 'quests', 'character', 'social', 'market', 'world', 'system']) {
+    const opened = await cdp.evaluate(`(async () => {
+      document.querySelector('#game-workspace .workspace-close')?.click();
+      document.querySelector('[data-workspace-open="${id}"]')?.click();
+      await window.__gameWorkspaceProof.nextPaint();
+      const workspace = document.getElementById('game-workspace');
+      const close = workspace.querySelector('.workspace-close');
+      return { id: workspace.dataset.workspace, text: close.textContent.trim(), label: close.getAttribute('aria-label') };
+    })()`);
+    assert.equal(opened.id, id, '外點關閉驗證未開啟指定工作窗');
+    assert.equal(opened.text, '×', '工作窗未使用 X 關閉按鈕');
+    assert.match(opened.label, /^關閉.+視窗$/, 'X 缺少清楚的輔助科技名稱');
+    await clickCenterWithCdp(cdp, '#game-workspace .workspace-title');
+    assert.equal(await cdp.evaluate(`document.getElementById('game-workspace').classList.contains('hidden')`), false, '視窗內點擊意外關閉');
+    const outside = await cdp.evaluate(`(() => {
+      for (let y = 4; y < innerHeight; y += 24) for (let x = 4; x < innerWidth; x += 24) {
+        if (document.elementFromPoint(x, y)?.id === 'game-workspace-backdrop') return { x, y };
+      }
+      return null;
+    })()`);
+    assert(outside, '工作窗沒有可點擊關閉的空白背景');
+    await cdp.evaluate(`(() => {
+      const canvas = document.getElementById('game-canvas');
+      window.__workspaceMapPointerCount = 0;
+      window.__workspaceMapPointer = () => window.__workspaceMapPointerCount++;
+      canvas?.addEventListener('pointerdown', window.__workspaceMapPointer);
+      return true;
+    })()`);
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: outside.x, y: outside.y, button: 'left', clickCount: 1 });
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: outside.x, y: outside.y, button: 'left', clickCount: 1 });
+    const closed = await cdp.evaluate(`(() => {
+      document.getElementById('game-canvas')?.removeEventListener('pointerdown', window.__workspaceMapPointer);
+      return { hidden: document.getElementById('game-workspace').classList.contains('hidden'),
+        backdropHidden: getComputedStyle(document.getElementById('game-workspace-backdrop')).display === 'none',
+        mapPointers: window.__workspaceMapPointerCount,
+        focusInside: document.getElementById('game-workspace').contains(document.activeElement) };
+    })()`);
+    assert.equal(closed.hidden, true, `${id} 點背景未關閉`);
+    assert.equal(closed.backdropHidden, true, `${id} 關閉後背景仍攔截地圖`);
+    assert.equal(closed.mapPointers, 0, `${id} 關閉手勢穿透到地圖`);
+    assert.equal(closed.focusInside, false, `${id} 關閉後焦點仍留在隱藏視窗`);
+  }
+}
+
 await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-proof-' }, async (cdp) => {
   // 舊 active tab 不得在啟動時自動打開按需工作窗。
   await cdp.evaluate(`(async () => {
@@ -1708,6 +1754,9 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
     return document.querySelector('.inventory-tooltip.visible')?.textContent ?? '';
   })()`);
   assert.match(desktopHover, /回春散/, '桌面滑鼠道具說明遺失');
+  await verifyWorkspaceOutsideDismiss(cdp, PHONE, true);
+  await verifyWorkspaceOutsideDismiss(cdp, LANDSCAPE, true);
+  await verifyWorkspaceOutsideDismiss(cdp, DESKTOP, false);
 });
 
 console.log('game workspace proof: PASS');
