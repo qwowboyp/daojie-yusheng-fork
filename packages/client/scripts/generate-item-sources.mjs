@@ -46,6 +46,8 @@ const mapsDir = path.join(repoRoot, 'packages/server/data/maps');
 const alchemyRecipesPath = path.join(repoRoot, 'packages/server/data/content/alchemy/recipes.json');
 /** 记录炼器配方路径。 */
 const forgingRecipesPath = path.join(repoRoot, 'packages/server/data/content/forging/recipes.json');
+/** 記錄新角色初始背包設定路徑。 */
+const starterInventoryPath = path.join(repoRoot, 'packages/server/data/content/starter-inventory.json');
 /**
  * 记录输出文件路径。
  */
@@ -313,6 +315,10 @@ function pushResourceNodeContainerSources(sourceByItemId, items, map, resourceNo
       mapName: map.name,
       landmarkId: sourceInfo.landmarkId,
       landmarkName: sourceInfo.landmarkName,
+      ...(sourceInfo.navigationPoint ? {
+        navigationX: sourceInfo.navigationPoint.x,
+        navigationY: sourceInfo.navigationPoint.y,
+      } : {}),
       mode: 'direct',
       count: 1,
     });
@@ -333,6 +339,10 @@ function pushResourceNodeContainerSources(sourceByItemId, items, map, resourceNo
           mapName: map.name,
           landmarkId: sourceInfo.landmarkId,
           landmarkName: sourceInfo.landmarkName,
+          ...(sourceInfo.navigationPoint ? {
+            navigationX: sourceInfo.navigationPoint.x,
+            navigationY: sourceInfo.navigationPoint.y,
+          } : {}),
           mode: 'pool',
           poolIndex,
           poolChance: typeof pool.chance === 'number' ? pool.chance : undefined,
@@ -354,6 +364,10 @@ function pushResourceNodeContainerSources(sourceByItemId, items, map, resourceNo
       mapName: map.name,
       landmarkId: sourceInfo.landmarkId,
       landmarkName: sourceInfo.landmarkName,
+      ...(sourceInfo.navigationPoint ? {
+        navigationX: sourceInfo.navigationPoint.x,
+        navigationY: sourceInfo.navigationPoint.y,
+      } : {}),
       mode: 'direct',
       chance: typeof drop.chance === 'number' ? drop.chance : undefined,
       count: escapeNonFiniteInteger(drop.count) ?? 1,
@@ -368,6 +382,23 @@ function resolveMonsterSpawnTemplateId(spawn) {
   return typeof spawn?.templateId === 'string'
     ? spawn.templateId
     : (typeof spawn?.id === 'string' ? spawn.id : null);
+}
+
+/** 解析怪物出生點的權威地圖座標。 */
+function resolveMonsterSpawnPoint(spawn) {
+  const x = Array.isArray(spawn) ? spawn[0] : spawn?.x;
+  const y = Array.isArray(spawn) ? spawn[1] : spawn?.y;
+  return Number.isInteger(x) && Number.isInteger(y) ? { x: Number(x), y: Number(y) } : null;
+}
+
+/** 取資源群組中排序穩定的一個實際放置點作為出發目標。 */
+function resolveResourceNodeGroupNavigationPoint(group) {
+  const points = Array.isArray(group?.placements)
+    ? group.placements
+      .filter((placement) => Number.isInteger(placement?.x) && Number.isInteger(placement?.y))
+      .map((placement) => ({ x: Number(placement.x), y: Number(placement.y) }))
+    : [];
+  return points.sort((left, right) => left.y - right.y || left.x - right.x)[0] ?? null;
 }
 
 /**
@@ -402,10 +433,25 @@ function buildMonsterMapRefs(maps) {/**
  * 记录引用列表。
  */
       const refs = mapRefsByMonsterId.get(monsterId) ?? new Map();
+      const navigationPoint = resolveMonsterSpawnPoint(spawn);
+      const currentRef = refs.get(map.id);
+      const shouldReplace = !currentRef
+        || (navigationPoint && (
+          !Number.isInteger(currentRef.navigationY)
+          || navigationPoint.y < currentRef.navigationY
+          || (navigationPoint.y === currentRef.navigationY && navigationPoint.x < currentRef.navigationX)
+        ));
+      if (!shouldReplace) {
+        continue;
+      }
       refs.set(map.id, {
         mapId: map.id,
         mapName: map.name,
         mapLv: escapeNonFiniteInteger(map.mapLv),
+        ...(navigationPoint ? {
+          navigationX: navigationPoint.x,
+          navigationY: navigationPoint.y,
+        } : {}),
       });
       mapRefsByMonsterId.set(monsterId, refs);
     }
@@ -514,6 +560,7 @@ function sortSources(entries) {
     alchemy: 4,
     forging: 5,
     runtime_pvp_reward: 6,
+    acquisition_rule: 7,
   };
 /**
  * 记录seen。
@@ -634,6 +681,7 @@ function main() {
   const monsterLocationCatalog = buildMonsterLocationCatalog(monsters, mapRefsByMonsterId);
   const alchemyRecipes = readJson(alchemyRecipesPath);
   const forgingRecipes = readJson(forgingRecipesPath);
+  const starterInventory = readJson(starterInventoryPath);
   const sourceByItemId = new Map(
     items
       .slice()
@@ -641,6 +689,66 @@ function main() {
       .map((item) => [item.itemId, []]),
   );
   const itemNameById = buildItemNameById(items);
+
+  for (const entry of Array.isArray(starterInventory?.items) ? starterInventory.items : []) {
+    if (typeof entry?.itemId !== 'string') {
+      continue;
+    }
+    pushSource(sourceByItemId, entry.itemId, {
+      kind: 'acquisition_rule',
+      mapId: 'new_player',
+      mapName: '新手引導',
+      ruleId: 'new-player-starter-inventory',
+      title: '新手初始背包',
+      description: '建立新角色時自動獲得。',
+    });
+  }
+
+  for (const itemId of ['spirit_stone', 'merit']) {
+    pushSource(sourceByItemId, itemId, {
+      kind: 'acquisition_rule',
+      mapId: 'world',
+      mapName: '全域',
+      ruleId: 'monster-currency-drop',
+      title: '擊殺怪物',
+      description: '怪物擊殺依戰鬥掉落規則有機率結算。',
+    });
+  }
+
+  pushSource(sourceByItemId, 'merit', {
+    kind: 'acquisition_rule',
+    mapId: 'activity',
+    mapName: '活動',
+    ruleId: 'activity-daily-sign-in',
+    title: '每日簽到',
+    description: '每日簽到後可領取，數量依境界與連續簽到結算。',
+  });
+  for (const itemId of ['spirit_stone', 'merit']) {
+    pushSource(sourceByItemId, itemId, {
+      kind: 'acquisition_rule',
+      mapId: 'activity',
+      mapName: '活動',
+      ruleId: 'activity-invitation-reward',
+      title: '邀請活動獎勵',
+      description: '完成邀請活動的待領獎勵後發放。',
+    });
+  }
+  pushSource(sourceByItemId, 'book.custom_technique', {
+    kind: 'acquisition_rule',
+    mapId: 'crafting',
+    mapName: '煉法臺',
+    ruleId: 'technique-book-craft',
+    title: '抄錄自創功法',
+    description: '消耗功法殘頁，抄錄已掌握且修至滿層的自創功法。',
+  });
+  pushSource(sourceByItemId, 'mat.technique_fragment', {
+    kind: 'acquisition_rule',
+    mapId: 'crafting',
+    mapName: '煉法臺',
+    ruleId: 'technique-book-decompose',
+    title: '分解功法書',
+    description: '分解背包內具有有效功法模板的功法書可取得。',
+  });
 
   for (const monster of monsters) {
 /**
@@ -656,6 +764,10 @@ function main() {
           mapName: mapRef.mapName,
           monsterId: monster.id,
           monsterName: monster.name,
+          ...(Number.isInteger(mapRef.navigationX) && Number.isInteger(mapRef.navigationY) ? {
+            navigationX: mapRef.navigationX,
+            navigationY: mapRef.navigationY,
+          } : {}),
           chance: typeof drop.chance === 'number' ? drop.chance : undefined,
           count: escapeNonFiniteInteger(drop.count) ?? 1,
         });
@@ -678,6 +790,10 @@ function main() {
           mapName: map.name,
           npcId: npc.id,
           npcName: npc.name,
+          ...(Number.isInteger(npc.x) && Number.isInteger(npc.y) ? {
+            navigationX: Number(npc.x),
+            navigationY: Number(npc.y),
+          } : {}),
         });
       }
     }
@@ -701,6 +817,9 @@ function main() {
  * 记录来源kind。
  */
       const sourceKind = isMiningLandmark(landmark, resourceNode) ? 'mining' : 'search';
+      const navigationPoint = Number.isInteger(landmark.x) && Number.isInteger(landmark.y)
+        ? { x: Number(landmark.x), y: Number(landmark.y) }
+        : null;
       if (resourceNode?.kind === 'landmark_marker') {
         pushSource(sourceByItemId, resourceNode.itemId, {
           kind: sourceKind,
@@ -708,6 +827,7 @@ function main() {
           mapName: map.name,
           landmarkId: landmark.id,
           landmarkName: landmark.name,
+          ...(navigationPoint ? { navigationX: navigationPoint.x, navigationY: navigationPoint.y } : {}),
           mode: 'direct',
           count: 1,
         });
@@ -730,6 +850,7 @@ function main() {
               mapName: map.name,
               landmarkId: landmark.id,
               landmarkName: landmark.name,
+              ...(navigationPoint ? { navigationX: navigationPoint.x, navigationY: navigationPoint.y } : {}),
               mode: 'pool',
               poolIndex,
               poolChance: typeof pool.chance === 'number' ? pool.chance : undefined,
@@ -752,6 +873,7 @@ function main() {
           mapName: map.name,
           landmarkId: landmark.id,
           landmarkName: landmark.name,
+          ...(navigationPoint ? { navigationX: navigationPoint.x, navigationY: navigationPoint.y } : {}),
           mode: 'direct',
           chance: typeof drop.chance === 'number' ? drop.chance : undefined,
           count: escapeNonFiniteInteger(drop.count) ?? 1,
@@ -766,6 +888,9 @@ function main() {
         landmarkId: map.landmarks?.find((entry) => entry.x === node.x && entry.y === node.y)?.id
           ?? `mineral:${node.x}:${node.y}`,
         landmarkName: node.name, mode: 'direct', count: node.destroyCount ?? 1,
+        ...(Number.isInteger(node.x) && Number.isInteger(node.y) ? {
+          navigationX: Number(node.x), navigationY: Number(node.y),
+        } : {}),
       });
     }
     for (const group of map.resourceNodeGroups ?? []) {
@@ -783,6 +908,7 @@ function main() {
         landmarkName: typeof group.name === 'string' && group.name.trim()
           ? group.name.trim()
           : (resourceNode.sourceLabel ?? resourceNode.name ?? group.resourceNodeId),
+        navigationPoint: resolveResourceNodeGroupNavigationPoint(group),
       });
     }
   }
@@ -908,8 +1034,11 @@ function main() {
   const currentMonsterLocationContent = fs.existsSync(monsterLocationOutputPath)
     ? fs.readFileSync(monsterLocationOutputPath, 'utf8')
     : null;
+  const checkMode = process.argv.includes('--check');
   if (currentContent === nextContent) {
     console.log('item-sources.generated.json 无变更');
+  } else if (checkMode) {
+    throw new Error('item-sources.generated.json 已過期，請先執行 generate-item-sources.mjs');
   } else {
     fs.writeFileSync(outputPath, nextContent);
     console.log(`已生成 ${path.relative(repoRoot, outputPath)}`);
@@ -918,6 +1047,10 @@ function main() {
   if (currentMonsterLocationContent === nextMonsterLocationContent) {
     console.log('monster-locations.generated.json 无变更');
     return;
+  }
+
+  if (checkMode) {
+    throw new Error('monster-locations.generated.json 已過期，請先執行 generate-item-sources.mjs');
   }
 
   fs.writeFileSync(monsterLocationOutputPath, nextMonsterLocationContent);

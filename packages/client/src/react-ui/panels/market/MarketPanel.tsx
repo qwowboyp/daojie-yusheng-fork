@@ -6,6 +6,8 @@
 import { memo, useCallback } from 'react';
 import type { AuctionHouseTab } from '@mud/shared';
 import { t } from '../../../ui/i18n';
+import { openItemSourcesPanel } from '../item-sources/mount-item-sources-panel';
+import { isReactPanelEnabled } from '../../bridge/panel-flags';
 
 // ─── Callbacks ───────────────────────────────────────────────────────────────
 
@@ -69,6 +71,9 @@ export const MarketPanel = memo(function MarketPanel() {
       <div className="panel-section market-pane ui-surface-pane ui-surface-pane--stack">
         <div className="panel-section-title">{t('market.pane.title', undefined)}</div>
         <div className="market-pane-entry-actions">
+          {isReactPanelEnabled('item-sources') && <button className="small-btn" style={{ minHeight: 44 }} type="button" data-item-sources-catalog onClick={(event) => openItemSourcesPanel({ opener: event.currentTarget })}>
+            取得途徑百科
+          </button>}
           <button className="small-btn" type="button" onClick={handleOpenMarket}>
             坊市
           </button>

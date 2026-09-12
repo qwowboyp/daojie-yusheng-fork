@@ -47,6 +47,7 @@ import {
   resolveTechniqueIdFromBookItem,
 } from '../../content/local-templates';
 import { detailModalHost } from '../detail-modal-host';
+import { bindItemSourceLinks, renderItemSourceButton } from '../item-source-links';
 import { FloatingTooltip, prefersPinnedTooltipInteraction } from '../floating-tooltip';
 import {
   buildItemTooltipPayload,
@@ -1748,6 +1749,7 @@ export class InventoryPanel {
           this.sourceExpanded = !this.sourceExpanded;
           this.renderModal();
         }, { signal });
+        bindItemSourceLinks(body, signal);
         this.bindItemDetailActions(body, signal, item, slotIndex);
       },
     });
@@ -1949,6 +1951,7 @@ export class InventoryPanel {
       </div>` : ''}
       <div class="quest-detail-section inventory-source-section">
         <strong>${t('inventory.detail.sources', undefined)}</strong>
+        ${renderItemSourceButton(item.itemId)}
         ${sourceListHtml}
         ${canToggleSourceList
           ? `<button class="small-btn ghost inventory-source-toggle" data-inventory-source-toggle="true" type="button">${this.sourceExpanded ? t('inventory.source.collapse', undefined) : t('inventory.source.expand-all', { count: formatDisplayInteger(sourceEntryCount) })}</button>`

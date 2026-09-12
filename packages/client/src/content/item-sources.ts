@@ -4,7 +4,7 @@
  * 维护时要区分展示缓存与正式配置真源，避免在客户端内容层重新裁定掉落、资产或战斗规则。
  */
 /** 物品来源的分类类型。 */
-export type ItemSourceKind = 'monster_drop' | 'mining' | 'search' | 'shop' | 'heavenly_dao_shop' | 'quest' | 'alchemy' | 'forging' | 'runtime_pvp_reward';
+export type ItemSourceKind = 'monster_drop' | 'mining' | 'search' | 'shop' | 'heavenly_dao_shop' | 'quest' | 'alchemy' | 'forging' | 'runtime_pvp_reward' | 'acquisition_rule';
 /** 灵石对应的物品 ID。 */
 const SPIRIT_STONE_ITEM_ID = 'spirit_stone';
 /** 功德对应的物品 ID。 */
@@ -27,6 +27,10 @@ interface ItemSourceBaseEntry {
  */
 
   mapName: string;
+  /** 權威內容設定解析出的可自動移動目標座標。 */
+  navigationX?: number;
+  /** 權威內容設定解析出的可自動移動目標座標。 */
+  navigationY?: number;
 }
 
 /** 击杀掉落类来源条目。 */
@@ -234,6 +238,14 @@ export interface RuntimePvpRewardItemSourceEntry extends ItemSourceBaseEntry {
   sourceLabel: string;
 }
 
+/** 由權威規則直接證明、但不對應固定地圖節點的取得途徑。 */
+export interface AcquisitionRuleItemSourceEntry extends ItemSourceBaseEntry {
+  kind: 'acquisition_rule';
+  ruleId: string;
+  title: string;
+  description: string;
+}
+
 /** 任意一种静态物品来源条目。 */
 export type ItemSourceEntry =
   | MonsterItemSourceEntry
@@ -244,7 +256,8 @@ export type ItemSourceEntry =
   | QuestItemSourceEntry
   | AlchemyItemSourceEntry
   | ForgingItemSourceEntry
-  | RuntimePvpRewardItemSourceEntry;
+  | RuntimePvpRewardItemSourceEntry
+  | AcquisitionRuleItemSourceEntry;
 
 /** 物品来源目录的内存结构。 */
 type ItemSourceCatalog = Record<string, ItemSourceEntry[]>;
@@ -265,6 +278,10 @@ function loadItemSourceCatalog(): Promise<ItemSourceCatalog> {
       .then((module) => {
         itemSourceCatalog = module.default as ItemSourceCatalog;
         return itemSourceCatalog;
+      })
+      .catch((error: unknown) => {
+        itemSourceCatalogPromise = null;
+        throw error;
       });
   }
   return itemSourceCatalogPromise;
@@ -295,8 +312,8 @@ function escapeHtml(value: string): string {
     .replaceAll("'", '&#39;');
 }
 
-/** 读取来源标签文案。 */
-function getSourceLinkLabel(kind: ItemSourceKind): string {
+/** 讀取取得途徑分類的玩家顯示名稱。 */
+export function getItemSourceKindLabel(kind: ItemSourceKind): string {
   switch (kind) {
     case 'monster_drop':
       return '擊殺';
@@ -316,11 +333,13 @@ function getSourceLinkLabel(kind: ItemSourceKind): string {
       return '煉器';
     case 'runtime_pvp_reward':
       return '戰鬥';
+    case 'acquisition_rule':
+      return '規則';
   }
 }
 
-/** 把来源条目拆成若干个展示标签。 */
-function formatSourceDetails(entry: ItemSourceEntry): Array<{
+/** 取得途徑顯示欄位，供 Tooltip 與途徑百科共用。 */
+export function getItemSourceDisplayDetails(entry: ItemSourceEntry): Array<{
 /**
  * tone：tone相关字段。
  */
@@ -373,6 +392,14 @@ function formatSourceDetails(entry: ItemSourceEntry): Array<{
     ];
   }
 
+  if (entry.kind === 'acquisition_rule') {
+    return [
+      { tone: 'map', text: entry.mapName },
+      { tone: 'quest', text: entry.title },
+      { tone: 'location', text: entry.description },
+    ];
+  }
+
   return [
     { tone: 'map', text: entry.mapName },
     { tone: entry.kind === 'mining' ? 'mining' : 'location', text: entry.landmarkName },
@@ -407,10 +434,10 @@ function renderSpecialSourceSummaryHtml(itemId: string): string | null {
 
   if (itemId !== SPIRIT_STONE_ITEM_ID) {
     return itemId === MERIT_ITEM_ID
-      ? '<span class="inventory-source-note">全部怪物擊殺都有概率獲得</span>'
+      ? '<span class="inventory-source-note">擊殺怪物有機會獲得</span>'
       : null;
   }
-  return '<span class="inventory-source-note">挖礦或者全部怪物擊殺都有概率獲得</span>';
+  return '<span class="inventory-source-note">可由挖礦或擊殺怪物獲得</span>';
 }
 
 /** 把物品来源目录渲染成可直接插入的 HTML。 */
@@ -451,15 +478,15 @@ export function renderItemSourceListHtml(
     visibleEntries.map((entry) => `
       <div class="inventory-source-row">
         <span class="inventory-source-detail">${
-          formatSourceDetails(entry)
+          getItemSourceDisplayDetails(entry)
             .map((part) => `<span class="inventory-source-chip inventory-source-chip--${escapeHtml(part.tone)}">${escapeHtml(part.text)}</span>`)
-            .join(`<span class="inventory-source-link-wrap"><span class="inventory-source-link-label">${escapeHtml(getSourceLinkLabel(entry.kind))}</span><span class="inventory-source-link" aria-hidden="true"></span></span>`)
+            .join(`<span class="inventory-source-link-wrap"><span class="inventory-source-link-label">${escapeHtml(getItemSourceKindLabel(entry.kind))}</span><span class="inventory-source-link" aria-hidden="true"></span></span>`)
         }</span>
       </div>
     `).join('')
   }${
     remaining > 0
-      ? `<div class="inventory-source-row"><span class="inventory-source-detail">另有 ${escapeHtml(String(remaining))} 條來源</span></div>`
+      ? `<div class="inventory-source-row"><span class="inventory-source-detail">另有 ${escapeHtml(String(remaining))} 條來源，可至途徑百科查看</span></div>`
       : ''
   }</div>`;
 }

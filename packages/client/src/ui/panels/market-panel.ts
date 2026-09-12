@@ -66,6 +66,7 @@ import { getLocalItemTemplate, getLocalTechniqueCategoryForBookItem, resolvePrev
 import { resolveClientItemBaseName } from '../../content/item-display-name';
 import { renderItemIcon } from '../../content/item-art';
 import { buildItemTooltipPayload, describeItemEffectDetails } from '../equipment-tooltip';
+import { bindItemSourceLinks } from '../item-source-links';
 import { FloatingTooltip, prefersPinnedTooltipInteraction } from '../floating-tooltip';
 import { detailModalHost } from '../detail-modal-host';
 import { confirmModalHost } from '../confirm-modal-host';
@@ -2898,6 +2899,7 @@ export class MarketPanel {
   }
 
   private bindMarketModalDelegatedEvents(body: HTMLElement, signal: AbortSignal): void {
+    bindItemSourceLinks(body, signal);
     const tapMode = prefersPinnedTooltipInteraction();
     body.addEventListener('click', (event) => {
       const target = event.target;

@@ -18,6 +18,7 @@ import type {
   MarketTradeDialogKind,
 } from './market-panel-types';
 import type { TechniqueCategory } from '@mud/shared';
+import { renderItemSourceButton } from '../item-source-links';
 
 function escapeHtml(value: unknown): string {
   return String(value ?? '')
@@ -165,6 +166,7 @@ export class MarketBrowseView {
         <div>
           <div class="market-item-title market-item-title--interactive" data-market-item-tooltip="selected">${escapeHtml(itemName)}</div>
           <div class="market-book-subtitle">${escapeHtml(getItemTypeLabel(entry.item.type))}${itemDesc ? ` · ${escapeHtml(itemDesc)}` : ''}</div>
+          ${renderItemSourceButton(entry.item.itemId)}
         </div>
       </div>
       <div class="market-book-columns">
@@ -201,12 +203,12 @@ export class MarketBrowseView {
     const itemName = p.getMarketDisplayName(referenceEntry?.item ?? group.item);
     if (browsingEnhancementVariants) {
       return `
-        <div class="market-book-header">${renderItemIcon(group.itemId, 'detail')}<div><div class="${titleClass}"${titleTooltipAttr}>${escapeHtml(itemName)}</div><div class="market-book-subtitle">${escapeHtml(t('market.book.subtitle.enhance-select', undefined))}</div></div></div>
+        <div class="market-book-header">${renderItemIcon(group.itemId, 'detail')}<div><div class="${titleClass}"${titleTooltipAttr}>${escapeHtml(itemName)}</div><div class="market-book-subtitle">${escapeHtml(t('market.book.subtitle.enhance-select', undefined))}</div>${renderItemSourceButton(group.itemId)}</div></div>
         <div class="empty-hint">${escapeHtml(t('market.book.empty.enhance-level', undefined))}</div>
       `;
     }
     return `
-      <div class="market-book-header">${renderItemIcon(group.itemId, 'detail')}<div><div class="${titleClass}"${titleTooltipAttr}>${escapeHtml(itemName)}</div><div class="market-book-subtitle">${escapeHtml(t('market.book.subtitle.group', { typeLabel: getItemTypeLabel(group.item.type) }))}</div></div></div>
+      <div class="market-book-header">${renderItemIcon(group.itemId, 'detail')}<div><div class="${titleClass}"${titleTooltipAttr}>${escapeHtml(itemName)}</div><div class="market-book-subtitle">${escapeHtml(t('market.book.subtitle.group', { typeLabel: getItemTypeLabel(group.item.type) }))}</div>${renderItemSourceButton(group.itemId)}</div></div>
       <div class="empty-hint">${group.canEnhance ? escapeHtml(t('market.book.group.hint.enhance', undefined)) : escapeHtml(t('market.book.group.hint.normal', undefined))}</div>
     `;
   }
