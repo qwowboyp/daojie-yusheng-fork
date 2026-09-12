@@ -1,0 +1,368 @@
+/* 修行工作區：640px 緊湊工作窗內保留功法、煉體與技能的完整操作。 */
+#game-workspace[data-workspace="cultivation"] {
+  container-type: inline-size;
+  container-name: cultivation-workspace;
+}
+
+#game-workspace[data-workspace="cultivation"] :is(#pane-technique, #pane-body-training, #workspace-skill) {
+  min-width: 0;
+}
+
+/* 功法：分類與進度狀態都使用橫向選擇列，將有限寬度留給功法名稱與操作。 */
+#game-workspace[data-workspace="cultivation"] .tech-panel-shell {
+  gap: 8px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-filter-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-filter-tab {
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 8px;
+  justify-content: center;
+  gap: 5px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-panel-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 7px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-side-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-side-tab {
+  min-height: 44px;
+  padding: 0 8px;
+  flex-direction: row;
+  gap: 5px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-side-tab.active {
+  box-shadow: inset 0 -2px 0 var(--stamp-red), inset 0 0 0 1px rgba(139, 48, 35, 0.12);
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-side-tab > span:first-child {
+  writing-mode: horizontal-tb;
+  line-height: 1.2;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-card {
+  gap: 8px;
+  padding: 9px 10px;
+  margin-bottom: 6px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-card-main {
+  gap: 5px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-summary-main {
+  gap: 5px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-badge {
+  min-height: 20px;
+  padding: 0 6px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-card-actions {
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-card-actions .small-btn,
+#game-workspace[data-workspace="cultivation"] .tech-pagination .small-btn {
+  min-height: 44px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-pagination {
+  justify-content: space-between;
+  gap: 5px;
+}
+
+#game-workspace[data-workspace="cultivation"] .tech-pagination-status {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 煉體：主進度與三個決策資訊在短窗內緊湊呈現，灌注按鈕仍保有觸控尺寸。 */
+#game-workspace[data-workspace="cultivation"] .body-training-panel {
+  gap: 8px;
+}
+
+#game-workspace[data-workspace="cultivation"] .body-training-hero,
+#game-workspace[data-workspace="cultivation"] .body-training-card,
+#game-workspace[data-workspace="cultivation"] .body-training-attr-chip {
+  border-radius: 10px;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.06);
+}
+
+#game-workspace[data-workspace="cultivation"] .body-training-hero {
+  padding: 10px 12px;
+  gap: 6px;
+}
+
+#game-workspace[data-workspace="cultivation"] .body-training-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+#game-workspace[data-workspace="cultivation"] .body-training-card {
+  padding: 9px 10px;
+  gap: 4px;
+}
+
+#game-workspace[data-workspace="cultivation"] .body-training-infuse-btn {
+  min-height: 44px;
+  margin-top: 2px;
+}
+
+/* 技能主頁沿用既有 auto/manual 分頁；降低項目空白並讓操作列自然換行。 */
+#game-workspace[data-workspace="cultivation"] .action-skill-subtabs {
+  margin-bottom: 7px;
+}
+
+#game-workspace[data-workspace="cultivation"] .action-skill-subtab-btn {
+  min-height: 44px;
+}
+
+#game-workspace[data-workspace="cultivation"] .action-section-hint {
+  margin-bottom: 6px;
+}
+
+#game-workspace[data-workspace="cultivation"] .action-item {
+  gap: 8px;
+  padding: 8px 9px;
+  margin-bottom: 5px;
+}
+
+#game-workspace[data-workspace="cultivation"] .action-cta {
+  gap: 5px;
+}
+
+#game-workspace[data-workspace="cultivation"] .action-cta .small-btn {
+  min-height: 44px;
+}
+
+/* 技能管理是獨立彈窗；保留篩選、排序、草稿與拖曳列表，避免佔滿桌面。 */
+.detail-modal-card.detail-modal--skill-management {
+  width: min(820px, calc(100vw - 24px));
+  height: min(620px, 76dvh, calc(100dvh - var(--detail-modal-padding-top) - var(--detail-modal-padding-bottom) - (var(--detail-modal-safe-gap) * 2) - 16px));
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-topbar {
+  align-items: center;
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-toolbar,
+.detail-modal-card.detail-modal--skill-management .skill-manage-batch {
+  gap: 5px;
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-toolbar .small-btn,
+.detail-modal-card.detail-modal--skill-management .skill-manage-batch .small-btn,
+.detail-modal-card.detail-modal--skill-management .skill-manage-toggle-chip {
+  min-height: 44px;
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-summary {
+  gap: 4px;
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-summary span {
+  padding: 2px 6px;
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-filter-panel,
+.detail-modal-card.detail-modal--skill-management .skill-manage-sort-panel {
+  padding: 8px;
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-list .action-item {
+  padding: 8px 9px;
+  margin-bottom: 5px;
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-batch-details > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  color: var(--ink-grey);
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-batch-details > summary::before {
+  content: '▸';
+  margin-right: 6px;
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-batch-details[open] > summary::before {
+  content: '▾';
+}
+
+/* 展開大量篩選或批次控制時，讓正文承接捲動，避免小窗把技能列表壓成零高。 */
+.detail-modal-card.detail-modal--skill-management #detail-modal-body:has(.skill-manage-batch-details[open], .skill-manage-filter-panel, .skill-manage-sort-panel) {
+  overflow-y: auto;
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-shell:has(.skill-manage-batch-details[open], .skill-manage-filter-panel, .skill-manage-sort-panel) {
+  height: auto;
+  min-height: 100%;
+}
+
+.detail-modal-card.detail-modal--skill-management .skill-manage-shell:has(.skill-manage-batch-details[open], .skill-manage-filter-panel, .skill-manage-sort-panel) .skill-manage-list {
+  flex: none;
+  overflow-y: visible;
+}
+
+@container cultivation-workspace (max-width: 520px) {
+  #game-workspace[data-workspace="cultivation"] .tech-filter-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  #game-workspace[data-workspace="cultivation"] .tech-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  #game-workspace[data-workspace="cultivation"] .tech-card-actions {
+    justify-content: stretch;
+  }
+
+  #game-workspace[data-workspace="cultivation"] .tech-card-actions .small-btn {
+    flex: 1 1 132px;
+  }
+
+  #game-workspace[data-workspace="cultivation"] .body-training-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #game-workspace[data-workspace="cultivation"] .action-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  #game-workspace[data-workspace="cultivation"] .action-cta {
+    justify-content: stretch;
+  }
+
+  #game-workspace[data-workspace="cultivation"] .action-cta .small-btn {
+    flex: 1 1 120px;
+  }
+}
+
+/* 短橫屏把標題、分頁並排，確保首屏仍有主要內容可操作。 */
+@media (orientation: landscape) and (max-height: 500px) {
+  #game-workspace[data-workspace="cultivation"] .workspace-header {
+    position: relative;
+    padding: 8px 12px;
+  }
+
+  #game-workspace[data-workspace="cultivation"] .workspace-tabs {
+    position: absolute;
+    top: 8px;
+    left: 72px;
+    right: 64px;
+    width: auto;
+    padding: 0;
+    flex-wrap: nowrap;
+  }
+
+  #game-workspace[data-workspace="cultivation"] .tech-filter-tabs {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-topbar {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-toolbar {
+    flex-wrap: nowrap;
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-shell {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .detail-modal-card.detail-modal--skill-management #detail-modal-body {
+    overflow-y: auto;
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-list {
+    flex: none;
+    overflow-y: visible;
+  }
+}
+
+@media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
+  #game-workspace[data-workspace="cultivation"] :is(.tech-filter-tab, .tech-side-tab, .tech-card-actions .small-btn, .tech-pagination .small-btn, .action-skill-subtab-btn, .action-cta .small-btn),
+  .detail-modal-card.detail-modal--skill-management :is(.small-btn, .action-skill-subtab-btn, .skill-manage-toggle-chip) {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 640px) {
+  .detail-modal-card.detail-modal--skill-management {
+    width: min(calc(100vw - 16px), 620px);
+    height: min(82dvh, calc(100dvh - 16px));
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-topbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-toolbar,
+  .detail-modal-card.detail-modal--skill-management .skill-manage-batch {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-toolbar .small-btn,
+  .detail-modal-card.detail-modal--skill-management .skill-manage-batch .small-btn {
+    width: 100%;
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-summary span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-list .action-item {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-list .action-cta {
+    justify-content: stretch;
+  }
+
+  .detail-modal-card.detail-modal--skill-management .skill-manage-list .action-cta .small-btn {
+    flex: 1 1 112px;
+    min-height: 44px;
+  }
+}

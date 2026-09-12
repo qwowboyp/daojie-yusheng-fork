@@ -223,6 +223,8 @@
 .workspace-menu button small { color: var(--ink-grey); font-size: 12px; line-height: 1.4; }
 
 /* 所有 pane 仍是原本的節點；切工作區不銷毀業務元件。 */
+#game-workspace-backdrop { display: none; position: absolute; inset: 0; z-index: 69; touch-action: none; }
+#game-shell[data-workspace-open="true"] > #game-workspace-backdrop { display: block; }
 #game-workspace {
   position: absolute;
   z-index: 70;
@@ -243,6 +245,7 @@
 }
 #game-workspace.hidden { display: none; }
 #game-workspace[data-compact="true"] { width: min(520px, calc(100% - 32px)); height: min(480px, calc(100% - 112px)); top: auto; }
+#game-workspace[data-workspace="cultivation"] { width: min(640px, calc(100% - 32px)); height: min(540px, calc(100% - 112px)); }
 #game-workspace[data-workspace="system"] { height: min(320px, calc(100% - 112px)); }
 #game-workspace[data-workspace="market"],
 #game-workspace[data-workspace="social"] { height: min(400px, calc(100% - 112px)); }
@@ -253,7 +256,8 @@
 .workspace-shortcuts { display: flex; margin-left: auto; gap: 6px; }
 .workspace-shortcuts:empty { display: none; }
 .workspace-shortcuts button { border-color: var(--accent-border); color: var(--accent-ink); background: var(--accent-soft); padding: 6px 10px; }
-.workspace-close { flex: 0 0 auto; min-width: 44px; }
+.workspace-close { flex: 0 0 44px; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; min-width: 44px; padding: 0; color: var(--stamp-red); border-color: var(--accent-border); background: var(--accent-soft); }
+.workspace-close span { font: 400 28px/1 var(--font-role-body); }
 .workspace-tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px 0 8px; width: 100%; }
 .workspace-tab { flex: 0 0 auto; white-space: nowrap; border-radius: 4px 4px 0 0; }
 #game-workspace-body { flex: 1 1 auto; min-height: 0; min-width: 0; overflow: hidden; container: workspace-body / inline-size; }

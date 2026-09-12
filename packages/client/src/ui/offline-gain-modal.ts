@@ -142,13 +142,13 @@ function patchOrOpenOfflineGainModal(
     return;
   }
   const bodyHtml = renderOfflineGainReportsWithConfirm(reports, blocking);
-  const bindConfirm = (body: HTMLElement) => {
+  const bindConfirm = (body: HTMLElement, renderSignal: AbortSignal) => {
     const confirmBtn = body.querySelector<HTMLButtonElement>('.offline-gain-confirm-btn');
     if (!confirmBtn) {
       return;
     }
     syncBlockingConfirmationButton(confirmBtn, blocking && blockingConfirmationState.isPending());
-    confirmBtn.addEventListener('click', () => {
+    const confirm = () => {
       if (blocking && blockingConfirmationState.isPending()) {
         return;
       }
@@ -168,7 +168,17 @@ function patchOrOpenOfflineGainModal(
       }
       closeOfflineGainModal();
       showOfflineGainConfirmationToast(confirmResult, options);
-    });
+    };
+    confirmBtn.addEventListener('click', confirm, { signal: renderSignal });
+
+    // 收益層不可由宿主關閉；只有直接點到視窗外的遮罩空白處才視為確認。
+    // 卡片內的文字、捲動區與互動元件都會以自身節點作為 event.target，因此不會誤觸。
+    const modal = document.getElementById('detail-modal');
+    modal?.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        confirm();
+      }
+    }, { signal: renderSignal });
   };
 
   const patched = detailModalHost.patch({
@@ -397,10 +407,10 @@ function showOfflineGainConfirmationToast(
 
 function renderOfflineGainReportsWithConfirm(reports: readonly OfflineGainReportView[], blocking = false): string {
   return `
-    ${renderOfflineGainReports(reports)}
-    ${blocking ? '<div class="offline-gain-blocking-note">確認前角色仍保持離線掛機，收益會自動刷新。</div>' : ''}
     <div class="offline-gain-confirm-area">
       <button class="offline-gain-confirm-btn small-btn">${t('offline-gain.modal.confirm-btn')}</button>
     </div>
+    ${blocking ? '<div class="offline-gain-blocking-note">確認前角色仍保持離線掛機，收益會自動刷新。</div>' : ''}
+    ${renderOfflineGainReports(reports)}
   `;
 }

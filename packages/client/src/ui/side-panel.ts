@@ -138,6 +138,7 @@ export class SidePanel {
   private readonly preparedTabTransitions = new WeakMap<HTMLElement, SidePanelTabTransition>();
   private tabsInitialized = false;
   private workspace: HTMLElement | null = null;
+  private workspaceBackdrop: HTMLElement | null = null;
   private workspaceNavigation: WorkspaceNavigationMount | null = null;
   private workspaceDefinitions: WorkspaceDefinition[] = [];
   private readonly workspacePanes = new Map<string, HTMLElement>();
@@ -474,6 +475,18 @@ export class SidePanel {
       for (const tab of tabs) this.resolveReactTabContainer(tab)?.remove();
     }
     this.workspace = workspace;
+    const backdrop = document.createElement('div');
+    backdrop.id = 'game-workspace-backdrop';
+    backdrop.setAttribute('aria-hidden', 'true');
+    // 獨立背景接住整個點擊，關閉工作窗時不把同一次手勢送往地圖移動。
+    backdrop.addEventListener('pointerdown', (event) => event.stopPropagation());
+    backdrop.addEventListener('click', (event) => {
+      if (event.target !== backdrop) return;
+      event.stopPropagation();
+      this.closeWorkspace();
+    });
+    this.panel.appendChild(backdrop);
+    this.workspaceBackdrop = backdrop;
     this.panel.dataset.workspaceMode = 'true';
     this.panel.dataset.workspaceOpen = 'false';
     workspace.hidden = true;
@@ -671,6 +684,8 @@ export class SidePanel {
     this.mobileSurfaceCleanup.forEach((cleanup) => cleanup());
     this.panel.removeEventListener('pointerdown', this.dismissMobileSurfacesOnMap);
     this.workspaceWindow?.destroy();
+    this.workspaceBackdrop?.remove();
+    this.workspaceBackdrop = null;
     this.chatWindow?.destroy();
     this.hudWindow?.destroy();
     window.removeEventListener('keydown', this.handleWorkspaceEscape, true);

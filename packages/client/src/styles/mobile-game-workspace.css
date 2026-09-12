@@ -113,6 +113,7 @@
 
   #game-workspace { left: var(--mobile-left); right: var(--mobile-right); top: var(--mobile-top); bottom: calc(var(--mobile-bottom) + 68px); width: auto; border-radius: 14px; }
   #game-workspace[data-compact="true"] { left: auto; width: min(520px, calc(100% - var(--mobile-left) - var(--mobile-right))); top: auto; height: min(430px, calc(100% - 160px)); }
+  #game-workspace[data-workspace="cultivation"] { height: min(560px, calc(100% - 160px)); }
   #game-workspace[data-workspace="system"] { height: min(300px, calc(100% - 160px)); }
   .workspace-header { padding: 10px 12px 0; gap: 4px; }
   .workspace-title { font-size: 18px; }
