@@ -220,6 +220,8 @@ def _replace_from_payload(source: Path, destination: Path) -> None:
             destination.unlink()
     temporary = destination.with_name(f".{destination.name}.{os.getpid()}.new")
     shutil.copy2(source, temporary)
+    # Upload staging is private (0600); only the new public asset inode is readable by nginx.
+    temporary.chmod(0o644)
     os.replace(temporary, destination)
 
 
@@ -439,6 +441,8 @@ class RemoteReleaseManager:
         plan = self.plan(receipt)
         changed = plan["changed"] if seed_site is None else [item["path"] for item in receipt["dist"]["files"]]
         verify_payload(payload_dir, receipt, changed)
+        self.root.mkdir(parents=True, exist_ok=True)
+        self.root.chmod(0o755)
         self.releases.mkdir(parents=True, exist_ok=True)
         temporary = self.releases / f".{artifact}.{os.getpid()}.tmp"
         if temporary.exists():
@@ -511,6 +515,8 @@ class RemoteReleaseManager:
         adopted = build_adopted_receipt(seed_site, template_receipt, adopt_commit)
         artifact = adopted["artifactVersion"]
         final = self.releases / artifact
+        self.root.mkdir(parents=True, exist_ok=True)
+        self.root.chmod(0o755)
         self.releases.mkdir(parents=True, exist_ok=True)
         temporary = self.releases / f".{artifact}.{os.getpid()}.tmp"
         if temporary.exists():
@@ -593,8 +599,11 @@ class RemoteReleaseManager:
         return {"current": target, "previous": expected_current}
 
 
-def run_checked(command: list[str], *, capture: bool = True) -> str:
-    result = subprocess.run(command, text=True, capture_output=capture, check=False)
+def run_checked(command: list[str], *, capture: bool = True, timeout: float = 120) -> str:
+    try:
+        result = subprocess.run(command, text=True, capture_output=capture, check=False, timeout=timeout)
+    except subprocess.TimeoutExpired as error:
+        raise ReleaseError(f"command timed out after {timeout}s ({command[0]})") from error
     if result.returncode != 0:
         message = result.stderr.strip() if capture else ""
         raise ReleaseError(f"command failed ({command[0]}): {message}")

@@ -23,6 +23,7 @@ from remote_apply import (
     transform_nginx_templates,
     validate_client_container_contract,
     validate_bootstrap_identity,
+    run_checked,
     validate_receipt,
 )
 from remote_publish import Remote, diff_receipts, parse_args, validate_bundle
@@ -126,6 +127,27 @@ class RemoteReleaseTests(unittest.TestCase):
         staging = self.temp / f"stage-{len(list(self.temp.glob('stage-*')))}"
         payload = make_payload(staging, site, receipt, changed)
         return self.manager.publish(receipt, payload, self.adopted["artifactVersion"], postcheck)
+
+    def test_private_upload_permissions_become_public_only_at_release(self) -> None:
+        root = self.temp / "private-upload-root"
+        root.mkdir(mode=0o700)
+        manager = RemoteReleaseManager(root)
+        adopted = manager.adopt_live(self.next_receipt, self.seed, COMMIT_A, "sha256:" + "d" * 64, {})
+        self.assertEqual(stat.S_IMODE(root.stat().st_mode), 0o755)
+        changed = manager.plan(self.next_receipt)["changed"]
+        payload = make_payload(self.temp / "private-upload", self.next_site, self.next_receipt, changed)
+        for name in changed:
+            (payload / name).chmod(0o600)
+        previous = root / "current/index.html"
+        old_mode = previous.stat().st_mode
+        manager.publish(self.next_receipt, payload, adopted["artifactVersion"])
+        self.assertEqual(stat.S_IMODE((root / "current/index.html").stat().st_mode), 0o644)
+        self.assertEqual(stat.S_IMODE((payload / "dist/index.html").stat().st_mode), 0o600)
+        self.assertEqual((root / "releases" / adopted["artifactVersion"] / "site/index.html").stat().st_mode, old_mode)
+
+    def test_external_command_timeout_is_bounded(self) -> None:
+        with self.assertRaisesRegex(ReleaseError, "timed out"):
+            run_checked([sys.executable, "-c", "import time; time.sleep(10)"], timeout=0.05)
 
     def test_path_traversal_and_bad_hash_are_rejected(self) -> None:
         bad = json.loads(json.dumps(self.next_receipt))
