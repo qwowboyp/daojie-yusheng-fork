@@ -733,6 +733,17 @@ def _verify_protected(expected: dict[str, str]) -> None:
         raise ReleaseError("server/Postgres/Redis container identity changed")
 
 
+def validate_bootstrap_identity(info: dict, expected_container: str, expected_image: str) -> dict:
+    if not (info.get("State") or {}).get("Running"):
+        raise ReleaseError("current client container is not running")
+    if info.get("Id") != expected_container:
+        raise ReleaseError("client container changed during bootstrap inspection")
+    contract = validate_client_container_contract(info)
+    if contract["image"] != expected_image:
+        raise ReleaseError("client image digest does not match --expected-image")
+    return contract
+
+
 def bootstrap_docker(manager: RemoteReleaseManager, receipt: dict, payload_dir: Path, check_timeout: int,
                      expected_image: str, adopt_commit: str) -> dict:
     if receipt["baseCommit"] != adopt_commit:
@@ -741,11 +752,7 @@ def bootstrap_docker(manager: RemoteReleaseManager, receipt: dict, payload_dir: 
         raise ReleaseError("bootstrap expected image must be an exact sha256 digest")
     before = container_ids(("daojie-client",) + PROTECTED_CONTAINERS)
     info = docker_inspect("daojie-client")
-    if not (info.get("State") or {}).get("Running"):
-        raise ReleaseError("current client container is not running")
-    contract = validate_client_container_contract(info)
-    if contract["image"] != before["daojie-client"] or contract["image"] != expected_image:
-        raise ReleaseError("client image digest does not match --expected-image")
+    contract = validate_bootstrap_identity(info, before["daojie-client"], expected_image)
 
     manager.root.parent.mkdir(parents=True, exist_ok=True)
     seed_parent = Path(tempfile.mkdtemp(prefix=".daojie-client-live-", dir=manager.root.parent))

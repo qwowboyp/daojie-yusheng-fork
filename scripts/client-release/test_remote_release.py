@@ -22,6 +22,7 @@ from remote_apply import (
     sha256_file,
     transform_nginx_templates,
     validate_client_container_contract,
+    validate_bootstrap_identity,
     validate_receipt,
 )
 from remote_publish import Remote, diff_receipts, parse_args, validate_bundle
@@ -232,6 +233,7 @@ class RemoteReleaseTests(unittest.TestCase):
 
     def test_client_container_contract_rejects_unknown_runtime_shape(self) -> None:
         info = {
+            "Id": "c" * 64, "State": {"Running": True},
             "Image": "sha256:" + "d" * 64,
             "Config": {"Cmd": ["nginx", "-g", "daemon off;"], "Entrypoint": ["/docker-entrypoint.sh"],
                        "Env": ["NGINX_ENTRYPOINT_QUIET_LOGS=1"], "Labels": {}},
@@ -242,6 +244,13 @@ class RemoteReleaseTests(unittest.TestCase):
             "Mounts": [],
         }
         self.assertEqual(validate_client_container_contract(info)["aliases"], ["client"])
+        # A container ID and its immutable image digest are distinct Docker identities.
+        self.assertEqual(validate_bootstrap_identity(info, "c" * 64, "sha256:" + "d" * 64)["image"], info["Image"])
+        with self.assertRaisesRegex(ReleaseError, "container changed"):
+            validate_bootstrap_identity(info, "e" * 64, info["Image"])
+        with self.assertRaisesRegex(ReleaseError, "image digest"):
+            validate_bootstrap_identity(info, info["Id"], "sha256:" + "e" * 64)
+
         for mutation in (
             lambda value: value["Mounts"].append({"Destination": "/unknown"}),
             lambda value: value["HostConfig"]["PortBindings"].update({"81/tcp": []}),
