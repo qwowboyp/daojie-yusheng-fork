@@ -93,6 +93,10 @@ export class QuestPanel {
   private lastStructureLine: QuestState['line'] | null = null;  
   /** completedExpandedLines：已完成任务展开状态，按任务线保存。 */
   private completedExpandedLines = new Set<QuestState['line']>();
+  /** lastAvailableQuests：last 可接任務（未接取，服務端判定，僅展示與導航提示）。 */
+  private lastAvailableQuests: QuestState[] = [];
+  /** availableExpandedLines：可接任務展開狀態，按任務線保存（預設全部展開）。 */
+  private availableExpandedLines = new Set<QuestState['line']>(LINE_ORDER);
   /**
  * currentMapId：current地图ID标识。
  */
@@ -174,7 +178,7 @@ export class QuestPanel {
       this.patchModal();
       return;
     }
-    if (this.lastQuests.length === 0) {
+    if (this.lastQuests.length === 0 && this.lastAvailableQuests.length === 0) {
       return;
     }
     if (!this.patchList()) {
@@ -201,6 +205,23 @@ export class QuestPanel {
     this.patchModal();
   }
 
+  /** 更新可接任務列表（服務端低頻推送，全量替換）並刷新列表與彈層 */
+  updateAvailable(quests: QuestState[]): void {
+  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
+
+    this.lastAvailableQuests = quests;
+    if (this.useReactPanel()) {
+      this.syncReactState();
+      this.mountReactPanel();
+      this.patchModal();
+      return;
+    }
+    if (!this.patchList()) {
+      this.renderList();
+    }
+    this.patchModal();
+  }
+
   /** initFromPlayer：初始化From玩家。 */
   initFromPlayer(player: PlayerState): void {
     this.currentMapId = player.mapId;
@@ -211,15 +232,17 @@ export class QuestPanel {
   /** clear：清理clear。 */
   clear(): void {
     this.lastQuests = [];
+    this.lastAvailableQuests = [];
     this.lastVisibleQuestIds = null;
     this.lastStructureLine = null;
     this.selectedQuestId = undefined;
     this.hasUserSelectedLine = false;
     this.completedExpandedLines.clear();
+    this.availableExpandedLines = new Set(LINE_ORDER);
     this.inventory = null;
     this.shellRefs = null;
     if (this.useReactPanel()) {
-      syncReactQuestPanelState({ quests: [], inventory: null });
+      syncReactQuestPanelState({ quests: [], availableQuests: [], inventory: null });
       this.mountReactPanel();
       detailModalHost.close(QuestPanel.MODAL_OWNER);
       return;
@@ -243,6 +266,7 @@ export class QuestPanel {
   private syncReactState(): void {
     syncReactQuestPanelState({
       quests: this.lastQuests,
+      availableQuests: this.lastAvailableQuests,
       inventory: this.inventory,
     });
   }
@@ -258,7 +282,7 @@ export class QuestPanel {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     const quests = this.lastQuests;
-    if (quests.length === 0) {
+    if (quests.length === 0 && this.lastAvailableQuests.length === 0) {
       this.selectedQuestId = undefined;
       this.lastVisibleQuestIds = [];
       this.lastStructureLine = this.activeLine;
@@ -355,6 +379,20 @@ export class QuestPanel {
         return;
       }
 
+      const availableToggle = target.closest<HTMLElement>('[data-quest-available-toggle]');
+      if (availableToggle) {
+        const line = availableToggle.dataset.questAvailableToggle as QuestState['line'] | undefined;
+        if (!line) return;
+        if (this.availableExpandedLines.has(line)) {
+          this.availableExpandedLines.delete(line);
+        } else {
+          this.availableExpandedLines.add(line);
+        }
+        this.renderList();
+        this.patchModal();
+        return;
+      }
+
       const questButton = target.closest<HTMLElement>('[data-quest-id]');
       if (!questButton) {
         return;
@@ -371,7 +409,7 @@ export class QuestPanel {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     const quests = this.lastQuests;
-    if (quests.length === 0) {
+    if (quests.length === 0 && this.lastAvailableQuests.length === 0) {
       return false;
     }
 
@@ -393,13 +431,18 @@ export class QuestPanel {
     }
 
     const visibleGroups = this.getVisibleQuestGroups(quests);
-    const visibleQuests = this.getRenderedVisibleQuests(visibleGroups);
-    const visibleQuestIds = visibleQuests.map((quest) => quest.id);
+    const availableGroups = this.getAvailableQuestGroups();
+    const renderedQuests = this.getRenderedVisibleQuests(visibleGroups, availableGroups);
+    const renderedQuestIds = renderedQuests.map((quest) => quest.id);
     const titleNode = section.querySelector<HTMLElement>('.panel-section-title');
     if (!titleNode) {
       return false;
     }
-    if (visibleGroups.incomplete.length === 0 && visibleGroups.completed.length === 0) {
+    if (
+      visibleGroups.incomplete.length === 0
+      && visibleGroups.completed.length === 0
+      && availableGroups.available.length === 0
+    ) {
       const emptyNode = this.pane.querySelector<HTMLElement>('[data-quest-empty="true"]') ?? this.createEmptyState();
       emptyNode.textContent = t('quest.empty.line', {
         line: getQuestLineLabel(this.activeLine),
@@ -413,17 +456,19 @@ export class QuestPanel {
     // Fast path: structure unchanged — only patch card contents in place
     if (
       this.lastStructureLine === this.activeLine
-      && isSameQuestIdSequence(this.lastVisibleQuestIds, visibleQuestIds)
+      && isSameQuestIdSequence(this.lastVisibleQuestIds, renderedQuestIds)
       && Boolean(section.querySelector('[data-quest-completed-toggle]'))
+      && (availableGroups.available.length === 0) === !section.querySelector('[data-quest-available-toggle]')
     ) {
-      for (const quest of visibleQuests) {
+      for (const quest of renderedQuests) {
         const card = this.pane.querySelector<HTMLElement>(`[data-quest-id="${CSS.escape(quest.id)}"]`);
         if (card) {
           this.patchQuestCard(card, quest);
         }
       }
       this.patchCompletedToggle(section, visibleGroups);
-      this.lastVisibleQuestIds = visibleQuestIds;
+      this.patchAvailableToggle(section, availableGroups);
+      this.lastVisibleQuestIds = renderedQuestIds;
       this.lastStructureLine = this.activeLine;
       return true;
     }
@@ -441,6 +486,14 @@ export class QuestPanel {
       existingCards.delete(quest.id);
       return card;
     });
+    const orderedAvailableCards = availableGroups.availableExpanded
+      ? availableGroups.available.map((quest) => {
+        const card = existingCards.get(quest.id) ?? this.createQuestCard(quest);
+        this.patchQuestCard(card, quest);
+        existingCards.delete(quest.id);
+        return card;
+      })
+      : [];
     const orderedCompletedCards = visibleGroups.completedExpanded
       ? visibleGroups.completed.map((quest) => {
         const card = existingCards.get(quest.id) ?? this.createQuestCard(quest);
@@ -470,6 +523,17 @@ export class QuestPanel {
     for (const card of orderedIncompleteCards) {
       section.append(card);
     }
+    if (availableGroups.available.length > 0) {
+      const availableToggle = this.createAvailableToggle(availableGroups);
+      section.append(availableToggle);
+      if (availableGroups.availableExpanded && orderedAvailableCards.length > 0) {
+        const availableList = document.createElement('div');
+        availableList.className = 'quest-available-list';
+        availableList.dataset.questAvailableList = this.activeLine;
+        availableList.append(...orderedAvailableCards);
+        section.append(availableList);
+      }
+    }
     const completedToggle = this.createCompletedToggle(visibleGroups);
     section.append(completedToggle);
     if (visibleGroups.completedExpanded && orderedCompletedCards.length > 0) {
@@ -480,7 +544,7 @@ export class QuestPanel {
       section.append(completedList);
     }
 
-    this.lastVisibleQuestIds = visibleQuestIds;
+    this.lastVisibleQuestIds = renderedQuestIds;
     this.lastStructureLine = this.activeLine;
     return true;
   }
@@ -593,6 +657,51 @@ export class QuestPanel {
     }
   }
 
+  /** createAvailableToggle：创建可接任務折叠头（無可接任務時由調用方跳過渲染）。 */
+  private createAvailableToggle(groups: {
+    available: QuestState[];
+    availableExpanded: boolean;
+  }): HTMLButtonElement {
+    const button = document.createElement('button');
+    button.className = 'quest-available-toggle';
+    button.type = 'button';
+    button.dataset.questAvailableToggle = this.activeLine;
+    button.setAttribute('aria-expanded', groups.availableExpanded ? 'true' : 'false');
+
+    const icon = document.createElement('span');
+    icon.className = 'quest-completed-toggle-icon';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = groups.availableExpanded ? 'v' : '>';
+    const label = document.createElement('span');
+    label.textContent = t('quest.available.title', undefined, '可接任務');
+    const count = document.createElement('span');
+    count.className = 'quest-available-count';
+    count.textContent = `${groups.available.length}`;
+    button.append(icon, label, count);
+    return button;
+  }
+
+  /** patchAvailableToggle：局部更新可接任務折叠头。 */
+  private patchAvailableToggle(section: HTMLElement, groups: {
+    available: QuestState[];
+    availableExpanded: boolean;
+  }): void {
+    const toggle = section.querySelector<HTMLButtonElement>('[data-quest-available-toggle]');
+    if (!toggle) {
+      return;
+    }
+    toggle.dataset.questAvailableToggle = this.activeLine;
+    toggle.setAttribute('aria-expanded', groups.availableExpanded ? 'true' : 'false');
+    const icon = toggle.querySelector<HTMLElement>('.quest-completed-toggle-icon');
+    if (icon) {
+      icon.textContent = groups.availableExpanded ? 'v' : '>';
+    }
+    const count = toggle.querySelector<HTMLElement>('.quest-available-count');
+    if (count) {
+      count.textContent = `${groups.available.length}`;
+    }
+  }
+
   /** patchQuestCard：处理patch任务卡片。 */
   private patchQuestCard(card: HTMLElement, quest: QuestState): boolean {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
@@ -637,7 +746,8 @@ export class QuestPanel {
       return;
     }
 
-    const quest = this.lastQuests.find((entry) => entry.id === this.selectedQuestId);
+    const quest = this.lastQuests.find((entry) => entry.id === this.selectedQuestId)
+      ?? this.lastAvailableQuests.find((entry) => entry.id === this.selectedQuestId);
     if (!quest) {
       this.selectedQuestId = undefined;
       detailModalHost.close(QuestPanel.MODAL_OWNER);
@@ -765,7 +875,8 @@ export class QuestPanel {
       return false;
     }
 
-    const quest = this.lastQuests.find((entry) => entry.id === this.selectedQuestId);
+    const quest = this.lastQuests.find((entry) => entry.id === this.selectedQuestId)
+      ?? this.lastAvailableQuests.find((entry) => entry.id === this.selectedQuestId);
     if (!quest) {
       this.selectedQuestId = undefined;
       detailModalHost.close(QuestPanel.MODAL_OWNER);
@@ -876,7 +987,11 @@ export class QuestPanel {
     if (!this.hasUserSelectedLine && counts[this.activeLine] === 0) {
       this.activeLine = LINE_ORDER.find((line) => counts[line] > 0) ?? 'main';
     }
-    if (this.selectedQuestId && !quests.some((quest) => quest.id === this.selectedQuestId)) {
+    if (
+      this.selectedQuestId
+      && !quests.some((quest) => quest.id === this.selectedQuestId)
+      && !this.lastAvailableQuests.some((quest) => quest.id === this.selectedQuestId)
+    ) {
       this.selectedQuestId = undefined;
     }
   }
@@ -902,15 +1017,34 @@ export class QuestPanel {
     };
   }
 
+  /** getAvailableQuestGroups：按当前任务线拆分可接任務。 */
+  private getAvailableQuestGroups(): {
+    available: QuestState[];
+    availableExpanded: boolean;
+  } {
+    return {
+      available: this.lastAvailableQuests.filter((quest) => quest.line === this.activeLine),
+      availableExpanded: this.availableExpandedLines.has(this.activeLine),
+    };
+  }
+
   /** getRenderedVisibleQuests：读取当前实际渲染为卡片的任务。 */
   private getRenderedVisibleQuests(groups: {
     incomplete: QuestState[];
     completed: QuestState[];
     completedExpanded: boolean;
+  }, availableGroups: {
+    available: QuestState[];
+    availableExpanded: boolean;
   }): QuestState[] {
-    return groups.completedExpanded
-      ? [...groups.incomplete, ...groups.completed]
-      : groups.incomplete;
+    const rendered = [...groups.incomplete];
+    if (availableGroups.availableExpanded) {
+      rendered.push(...availableGroups.available);
+    }
+    if (groups.completedExpanded) {
+      rendered.push(...groups.completed);
+    }
+    return rendered;
   }
 
   /** buildVisibleQuestIds：构建可见任务ID 列表。 */
@@ -1079,6 +1213,9 @@ export class QuestPanel {
   }
 
   private resolveNavigateLabel(quest: QuestState): string {
+    if (quest.status === 'available') {
+      return t('quest.action.navigate-accept', undefined, '前往接取');
+    }
     return quest.status === 'ready'
       ? t('quest.action.navigate-submit', undefined)
       : t('quest.action.navigate-target', undefined);
@@ -1088,6 +1225,10 @@ export class QuestPanel {
   private canNavigateQuest(quest: QuestState): boolean {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
+    if (quest.status === 'available') {
+      // 未接取任務的導航目的地是發布 NPC（giver），走近後走現有 NPC 彈窗接取。
+      return Boolean(quest.giverMapId);
+    }
     if (quest.status === 'ready') {
       return Boolean(quest.submitMapId ?? quest.giverMapId);
     }

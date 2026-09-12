@@ -44,6 +44,7 @@ export class WorldSyncService {
         this.emitEnvelope(socket, envelope);
         this.emitAuxInitialSync(binding.playerId, socket, view, player);
         this.worldSyncQuestLootService.markQuestSyncBaseline(binding.playerId, player.quests.revision);
+        this.worldSyncQuestLootService.emitAvailableQuestsSyncIfChanged(socket, binding.playerId);
         this.emitPendingInitialNotices(binding.playerId, socket);
     }
     emitDeltaSync(playerId: string, socketOverride = undefined) {
@@ -205,6 +206,7 @@ export class WorldSyncService {
     private emitDeltaPostSync(playerId: string, socket: any, view: any, player: any, envelope: any, auxDeferred: boolean, breakdown?: SyncFlushBreakdownSample) {
         if (auxDeferred) runMeasuredAuxSync(breakdown, () => this.emitAuxDeltaSync(playerId, socket, view, player, { breakdown }));
         runMeasuredSyncFlushStep(breakdown, 'questSyncMs', 'questSyncCount', () => this.worldSyncQuestLootService.emitQuestSyncIfChanged(socket, playerId, player?.quests?.revision));
+        runMeasuredSyncFlushStep(breakdown, 'availableQuestSyncMs', 'availableQuestSyncCount', () => this.worldSyncQuestLootService.emitAvailableQuestsSyncIfChanged(socket, playerId));
         runMeasuredSyncFlushStep(breakdown, 'runtimeEventsMs', 'runtimeEventsCount', () => this.emitPendingRuntimeEvents(playerId, socket, envelope));
         runMeasuredSyncFlushStep(breakdown, 'statisticRecordsMs', 'statisticRecordsCount', () => emitPendingPlayerStatisticRecords(this.playerRuntimeService, playerId, socket));
     }

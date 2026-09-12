@@ -132,11 +132,11 @@ function testQuestQueryServiceBuildQuestListView() {
             id: 'quest:1',
             title: '云游初试',
             desc: '',
-            targetName: 'quest:1',
+            targetName: '未知目標',
             rewardText: '',
             rewardItemId: '',
             rewardItemIds: [],
-            rewards: [{ itemId: 'stone', count: 1 }],
+            rewards: [{ itemId: 'stone', count: 1, name: '未知物品' }],
         }],
     });
     assert.notEqual(view.quests, quests);
@@ -305,10 +305,93 @@ function testContentQuestFilesBindToNpcTemplates() {
     assert.ok(totalQuestBindings > 0, 'content quests should be attached to NPC templates');
 }
 
+/**
+ * testCollectAvailableQuestsForPlayer：驗證任務分頁「可接任務」的全域收集：
+ * 無任務玩家可看到 NPC 鏈上第一個可接任務（帶 giver 導航欄位）；
+ * 已有進行中主線任務的玩家會被主線單一遮蔽。
+ */
+function testCollectAvailableQuestsForPlayer() {
+    const questSource = {
+        quest: {
+            id: 'q_avail_smoke',
+            title: '山門試煉',
+            desc: '向阿青回報。',
+            line: 'main',
+            objectiveType: 'talk',
+            required: 1,
+        },
+        giverNpcId: 'npc_a',
+        giverNpcName: '阿青',
+        giverMapId: 'yunlai_town',
+        giverMapName: '雲來鎮',
+        giverX: 3,
+        giverY: 5,
+    };
+    const createService = (playerQuests) => new WorldRuntimeQuestQueryService(
+        {
+            getItemName(itemId) {
+                return itemId;
+            },
+            getTechniqueName(techniqueId) {
+                return techniqueId;
+            },
+            createItem(itemId, count) {
+                return { itemId, count };
+            },
+        },
+        {
+            questSourceById: new Map([['q_avail_smoke', questSource]]),
+            getQuestSource(questId) {
+                return questSource.quest.id === questId ? questSource : null;
+            },
+            getNpcLocation() {
+                return null;
+            },
+            npcRegistry: {
+                listIds() {
+                    return ['npc_a', 'npc_b'];
+                },
+                tryGetRef(npcId) {
+                    if (npcId === 'npc_a') {
+                        // NPC 模板欄位名是 id；quests 是原始任務定義陣列
+                        return Object.freeze({ id: 'npc_a', name: '阿青', quests: [{ id: 'q_avail_smoke' }] });
+                    }
+                    return Object.freeze({ id: 'npc_b', name: '老鐵匠', quests: [] });
+                },
+            },
+        },
+        {
+            listQuests() {
+                return [];
+            },
+            getPlayer() {
+                return null;
+            },
+            getPlayerOrThrow(playerId) {
+                return { quests: { quests: playerQuests }, realm: { realmLv: 1 } };
+            },
+        },
+    );
+
+    const available = createService([]).collectAvailableQuestsForPlayer('player:5');
+    assert.equal(available.length, 1, 'fresh player should see one available quest');
+    const view = available[0];
+    assert.equal(view.id, 'q_avail_smoke');
+    assert.equal(view.status, 'available');
+    assert.equal(view.giverId, 'npc_a');
+    assert.equal(view.giverMapId, 'yunlai_town');
+    assert.ok(Number.isInteger(view.giverX) && Number.isInteger(view.giverY), 'available view should carry giver coordinates for navigation');
+
+    const shielded = createService([{ id: 'q_other_main', line: 'main', status: 'active', required: 1, progress: 0 }])
+        .collectAvailableQuestsForPlayer('player:6');
+    assert.equal(shielded.length, 0, 'player with an in-progress main quest should have main-line availability shielded');
+}
+
 testQuestQueryServiceBuildQuestListView();
 testWorldRuntimeFacadeBuildQuestListView();
 testQuestQueryServiceBuildNpcQuestsView();
 testWorldRuntimeFacadeBuildNpcQuestsView();
 testContentQuestFilesBindToNpcTemplates();
+testCollectAvailableQuestsForPlayer();
 
 console.log(JSON.stringify({ ok: true, case: 'world-runtime-quest-list-view' }, null, 2));

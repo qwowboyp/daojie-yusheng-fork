@@ -218,7 +218,7 @@ export function createMainPanelContext(options: CreateMainPanelContextOptions) {
     handleWorldSummary: (data) => worldSummaryStateSource.handleWorldSummary(data),
     handleNpcQuests: (data) => questStateSource.handleNpcQuests(data),
     handleQuestUpdate: (data) => questStateSource.handleQuestUpdate(data, rootRuntimeSource.getPlayer()),
-    handleQuestNavigateResult: (data) => questStateSource.handleQuestNavigateResult(data),
+    handleAvailableQuests: (data) => questStateSource.handleAvailableQuests(data), handleQuestNavigateResult: (data) => questStateSource.handleQuestNavigateResult(data),
     handleTileDetailResult: callbacks.handleTileDetailResult,
   });
   const noticeStateSource = createMainNoticeStateSource({

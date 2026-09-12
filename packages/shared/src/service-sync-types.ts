@@ -759,6 +759,15 @@ export interface QuestUpdateView {
   removeQuestIds?: string[];
 }
 
+/** 可接任務同步視圖：全量替換語義，低頻推送未接取但當前符合條件的任務。 */
+export interface AvailableQuestsView {
+  /**
+   * quests：可接任務最小運行態列表（顯示欄位由客戶端本地模板補齊）。
+   */
+
+  quests: QuestRuntimeStateView[];
+}
+
 /** 邮件摘要同步视图。 */
 export interface MailSummarySyncView {
 /**

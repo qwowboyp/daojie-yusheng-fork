@@ -26,11 +26,13 @@ function resolveQuestRequiredItemName(itemId: string): string {
 
 interface QuestPanelState {
   quests: QuestState[];
+  availableQuests: QuestState[];
   inventory: Inventory | null;
 }
 
 export const { store: questPanelStore, useStore: useQuestPanelStore } = createPanelStore<QuestPanelState>({
   quests: [],
+  availableQuests: [],
   inventory: null,
 });
 
@@ -81,6 +83,10 @@ function isUnsetLocation(location: string): boolean {
 }
 
 function canNavigateQuest(quest: QuestState): boolean {
+  if (quest.status === 'available') {
+    // 未接取任務的導航目的地是發布 NPC（giver），走近後走現有 NPC 彈窗接取。
+    return Boolean(quest.giverMapId);
+  }
   if (quest.status === 'ready') {
     return Boolean(quest.submitMapId ?? quest.giverMapId);
   }
@@ -94,6 +100,9 @@ function canNavigateQuest(quest: QuestState): boolean {
 }
 
 function resolveNavigateLabel(quest: QuestState): string {
+  if (quest.status === 'available') {
+    return t('quest.action.navigate-accept', undefined, '前往接取');
+  }
   return quest.status === 'ready'
     ? t('quest.action.navigate-submit', undefined)
     : t('quest.action.navigate-target', undefined);
@@ -249,10 +258,12 @@ function buildQuestReferences(text: string, quest: QuestState): UiInlineReferenc
 // ─── 组件 ────────────────────────────────────────────────────────────────────
 
 export function QuestPanel() {
-  const { quests, inventory } = useQuestPanelStore();
+  const { quests, availableQuests, inventory } = useQuestPanelStore();
   const [activeLine, setActiveLine] = useState<QuestState['line']>('main');
   const [userHasSelected, setUserHasSelected] = useState(false);
   const [expandedCompletedLines, setExpandedCompletedLines] = useState<ReadonlySet<QuestState['line']>>(() => new Set());
+  // 可接任務預設展開：玩家需要它提示下一步去哪接任務。
+  const [expandedAvailableLines, setExpandedAvailableLines] = useState<ReadonlySet<QuestState['line']>>(() => new Set(LINE_ORDER));
 
   const counts = useMemo(() => buildCounts(quests), [quests]);
 
@@ -265,7 +276,12 @@ export function QuestPanel() {
   const visibleQuests = useMemo(() => getVisibleQuests(quests, effectiveLine), [quests, effectiveLine]);
   const incompleteQuests = useMemo(() => visibleQuests.filter((quest) => quest.status !== 'completed'), [visibleQuests]);
   const completedQuests = useMemo(() => visibleQuests.filter((quest) => quest.status === 'completed'), [visibleQuests]);
+  const lineAvailableQuests = useMemo(
+    () => availableQuests.filter((quest) => quest.line === effectiveLine),
+    [availableQuests, effectiveLine],
+  );
   const completedExpanded = expandedCompletedLines.has(effectiveLine);
+  const availableExpanded = expandedAvailableLines.has(effectiveLine);
 
   const handleTabClick = useCallback((line: QuestState['line']) => {
     setUserHasSelected(true);
@@ -292,7 +308,19 @@ export function QuestPanel() {
     });
   }, [effectiveLine]);
 
-  if (quests.length === 0) {
+  const handleAvailableToggle = useCallback(() => {
+    setExpandedAvailableLines((previous) => {
+      const next = new Set(previous);
+      if (next.has(effectiveLine)) {
+        next.delete(effectiveLine);
+      } else {
+        next.add(effectiveLine);
+      }
+      return next;
+    });
+  }, [effectiveLine]);
+
+  if (quests.length === 0 && availableQuests.length === 0) {
     return (
       <div className="panel-section">
         <div className="panel-section-title">{t('quest.panel.title')}</div>
@@ -309,19 +337,28 @@ export function QuestPanel() {
         counts={counts}
         onTabClick={handleTabClick}
       />
-      {visibleQuests.length === 0 ? (
-        <div className="empty-hint" data-quest-empty="true">{t('quest.empty.line', { line: getQuestLineLabel(effectiveLine) })}</div>
-      ) : (
-        <div className="quest-card-list">
-          {incompleteQuests.map((quest) => (
-            <QuestCard
-              key={quest.id}
-              quest={quest}
-              requiredItemCount={quest.requiredItemId ? getInventoryItemCount(inventory, quest.requiredItemId) : 0}
-              onClick={handleQuestClick}
-              onNavigate={handleNavigate}
-            />
-          ))}
+      <div className="quest-card-list">
+        {visibleQuests.length === 0 && (
+          <div className="empty-hint" data-quest-empty="true">{t('quest.empty.line', { line: getQuestLineLabel(effectiveLine) })}</div>
+        )}
+        {incompleteQuests.map((quest) => (
+          <QuestCard
+            key={quest.id}
+            quest={quest}
+            requiredItemCount={quest.requiredItemId ? getInventoryItemCount(inventory, quest.requiredItemId) : 0}
+            onClick={handleQuestClick}
+            onNavigate={handleNavigate}
+          />
+        ))}
+        <QuestAvailableSection
+          availableExpanded={availableExpanded}
+          availableQuests={lineAvailableQuests}
+          inventory={inventory}
+          onClick={handleQuestClick}
+          onNavigate={handleNavigate}
+          onToggle={handleAvailableToggle}
+        />
+        {visibleQuests.length > 0 && (
           <QuestCompletedSection
             completedExpanded={completedExpanded}
             completedQuests={completedQuests}
@@ -330,8 +367,8 @@ export function QuestPanel() {
             onNavigate={handleNavigate}
             onToggle={handleCompletedToggle}
           />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
@@ -364,6 +401,54 @@ const QuestLineTabs = memo(function QuestLineTabs({
         </button>
       ))}
     </div>
+  );
+});
+
+const QuestAvailableSection = memo(function QuestAvailableSection({
+  availableExpanded,
+  availableQuests,
+  inventory,
+  onClick,
+  onNavigate,
+  onToggle,
+}: {
+  availableExpanded: boolean;
+  availableQuests: QuestState[];
+  inventory: Inventory | null;
+  onClick: (questId: string) => void;
+  onNavigate: (questId: string) => void;
+  onToggle: () => void;
+}) {
+  if (availableQuests.length === 0) {
+    return null;
+  }
+  return (
+    <>
+      <button
+        className="quest-available-toggle"
+        type="button"
+        aria-expanded={availableExpanded ? 'true' : 'false'}
+        data-quest-available-toggle="true"
+        onClick={onToggle}
+      >
+        <span className="quest-completed-toggle-icon" aria-hidden="true">{availableExpanded ? 'v' : '>'}</span>
+        <span>{t('quest.available.title', undefined, '可接任務')}</span>
+        <span className="quest-available-count">{availableQuests.length}</span>
+      </button>
+      {availableExpanded && (
+        <div className="quest-available-list" data-quest-available-list="true">
+          {availableQuests.map((quest) => (
+            <QuestCard
+              key={quest.id}
+              quest={quest}
+              requiredItemCount={quest.requiredItemId ? getInventoryItemCount(inventory, quest.requiredItemId) : 0}
+              onClick={onClick}
+              onNavigate={onNavigate}
+            />
+          ))}
+        </div>
+      )}
+    </>
   );
 });
 

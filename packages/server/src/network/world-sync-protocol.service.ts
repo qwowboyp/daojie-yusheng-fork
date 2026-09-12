@@ -91,6 +91,10 @@ export class WorldSyncProtocolService {
     socket.emit(S2C.Quests, payload);
   }
 
+  sendAvailableQuests(socket: any, payload: any): void {
+    socket.emit(S2C.AvailableQuests, payload);
+  }
+
   sendMapStatic(socket: any, payload: any): void {
     socket.emit(S2C.MapStatic, payload);
   }

@@ -75,6 +75,11 @@ type MainLowFrequencySocketBindingsOptions = {
 
   onQuests: (data: ServerToClientEventPayload<typeof S2C.Quests>) => void;
   /**
+ * onAvailableQuests：可接任務同步（任務分頁「可接任務」區塊資料源，全量替換語義）。
+ */
+
+  onAvailableQuests: (data: ServerToClientEventPayload<typeof S2C.AvailableQuests>) => void;
+  /**
  * onQuestNavigateResult：on任务Navigate结果相关字段。
  */
 
@@ -234,6 +239,7 @@ export function bindMainLowFrequencySocketEvents(options: MainLowFrequencySocket
   options.socket.on(S2C.WorldSummary, options.onWorldSummary);
   options.socket.on(S2C.NpcQuests, options.onNpcQuests);
   options.socket.on(S2C.Quests, options.onQuests);
+  options.socket.on(S2C.AvailableQuests, options.onAvailableQuests);
   options.socket.on(S2C.QuestNavigateResult, options.onQuestNavigateResult);
   options.socket.on(S2C.OfflineGainReports, options.onOfflineGainReports);
   options.socket.on(S2C.ActivityStatus, options.onActivityStatus);

@@ -22,6 +22,7 @@ export function shouldUseReactQuestPanel(): boolean {
 
 export function syncReactQuestPanelState(input: {
   quests: QuestState[];
+  availableQuests: QuestState[];
   inventory: Inventory | null;
 }): void {
   questPanelStore.patchState(input);

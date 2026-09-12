@@ -29,7 +29,8 @@
       background: var(--surface-hover);
     }
 
-    .quest-completed-toggle {
+    .quest-completed-toggle,
+    .quest-available-toggle {
       width: 100%;
       min-height: 36px;
       display: flex;
@@ -46,7 +47,8 @@
       cursor: pointer;
     }
 
-    .quest-completed-toggle:hover:not(:disabled) {
+    .quest-completed-toggle:hover:not(:disabled),
+    .quest-available-toggle:hover {
       border-color: rgba(125, 27, 27, 0.35);
       background: var(--surface-hover);
       color: var(--ink-black);
@@ -64,7 +66,8 @@
       font-weight: var(--font-weight-heavy);
     }
 
-    .quest-completed-count {
+    .quest-completed-count,
+    .quest-available-count {
       min-width: 18px;
       padding: 1px 6px;
       border: 1px solid currentColor;
@@ -73,7 +76,8 @@
       line-height: 1.1;
     }
 
-    .quest-completed-list {
+    .quest-completed-list,
+    .quest-available-list {
       margin-bottom: 8px;
     }
 

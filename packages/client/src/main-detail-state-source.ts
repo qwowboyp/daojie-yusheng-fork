@@ -7,6 +7,7 @@ import {
   LootWindowState,
   S2C_AlchemyPanel,
   S2C_AttrDetail,
+  S2C_AvailableQuests,
   S2C_Detail,
   S2C_EnhancementPanel,
   S2C_Leaderboard,
@@ -91,6 +92,11 @@ type MainDetailStateSourceOptions = {
  */
 
   handleQuestUpdate: (data: S2C_QuestUpdate) => void;
+  /**
+ * handleAvailableQuests：可接任務同步相關欄位。
+ */
+
+  handleAvailableQuests: (data: S2C_AvailableQuests) => void;
   /**
  * handleQuestNavigateResult：任务Navigate结果相关字段。
  */
@@ -227,6 +233,16 @@ export function createMainDetailStateSource(options: MainDetailStateSourceOption
 
     handleQuests(data: S2C_QuestUpdate): void {
       options.handleQuestUpdate(data);
+    },
+    /**
+ * handleAvailableQuests：處理可接任務同步並轉發相關狀態。
+ * @param data S2C_AvailableQuests 原始資料。
+ * @returns 無返回值，直接更新可接任務相關狀態。
+ */
+
+
+    handleAvailableQuests(data: S2C_AvailableQuests): void {
+      options.handleAvailableQuests(data);
     },
     /**
  * handleQuestNavigateResult：处理任务Navigate结果并更新相关状态。

@@ -49,6 +49,7 @@ import type {
   MarketStorageView,
   MarketTradeHistoryView,
   MarketUpdateView,
+  AvailableQuestsView,
   NpcQuestsView,
   NpcShopSyncView,
   QuestUpdateView,
@@ -352,6 +353,8 @@ export interface S2C_TileDetail extends TileDetailView {
 export interface S2C_TileRuntimeDetail extends TileRuntimeDetailView {}
 /** 任务列表更新。 */
 export interface S2C_QuestUpdate extends QuestUpdateView {}
+/** 可接任務同步包（任務分頁「可接任務」區塊資料源）。 */
+export interface S2C_AvailableQuests extends AvailableQuestsView {}
 /** 排行榜同步包。 */
 export interface S2C_Leaderboard extends LeaderboardView {}
 /** 玩家击杀榜坐标追索同步包。 */

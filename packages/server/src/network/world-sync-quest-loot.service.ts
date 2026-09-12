@@ -31,6 +31,8 @@ export class WorldSyncQuestLootService {
     lastQuestRuntimeByPlayerId = new Map();
     /** 每个玩家的拾取窗口缓存。 */
     lootWindowByPlayerId = new Map();
+    /** 每个玩家最近一次可接任務同步簽名（模板版本 / 任務 revision / 境界 / 已接任務數），避免每 tick 重算。 */
+    lastAvailableQuestSignatureByPlayerId = new Map();
     /**
  * 构造器：初始化 当前 实例并建立基础状态。
  * @param worldRuntimeService 参数说明。
@@ -84,6 +86,40 @@ export class WorldSyncQuestLootService {
         this.worldSyncProtocolService.sendQuestSync(socket, payload);
         this.lastQuestRevisionByPlayerId.set(playerId, revision);
         this.lastQuestRuntimeByPlayerId.set(playerId, quests);
+    }
+    /**
+     * 可接任務簽名變化時才重算並全量下發（任務分頁「可接任務」區塊資料源）。
+     * 觸發時機：任務接取/提交/完成、境界提升、模板重載；全量替換語義，可冪等重放。
+     */
+    emitAvailableQuestsSyncIfChanged(socket, playerId) {
+        const player = this.playerRuntimeService.getPlayer(playerId);
+        if (!player) {
+            this.lastAvailableQuestSignatureByPlayerId.delete(playerId);
+            return;
+        }
+        const templateVersion = typeof this.worldRuntimeService?.worldRuntimeQuestQueryService?.getQuestTemplateVersion === 'function'
+            ? this.worldRuntimeService.worldRuntimeQuestQueryService.getQuestTemplateVersion()
+            : 0;
+        // 與 world-runtime-quest-query.service 的 getPlayerRealmLevel 同源的境界讀取口徑，僅用於變化比對。
+        const signature = {
+            templateVersion,
+            questRevision: player.quests?.revision ?? 0,
+            realmLv: player?.realm?.realmLv ?? player?.realmLv ?? player?.attrs?.realmLv ?? 1,
+            questCount: Array.isArray(player.quests?.quests) ? player.quests.quests.length : 0,
+        };
+        const previous = this.lastAvailableQuestSignatureByPlayerId.get(playerId);
+        if (previous
+            && previous.templateVersion === signature.templateVersion
+            && previous.questRevision === signature.questRevision
+            && previous.realmLv === signature.realmLv
+            && previous.questCount === signature.questCount) {
+            return;
+        }
+        const available = this.worldRuntimeService.collectAvailableQuestsForPlayer(playerId);
+        this.worldSyncProtocolService.sendAvailableQuests(socket, {
+            quests: available.map((quest) => ({ id: quest.id, status: 'available' })),
+        });
+        this.lastAvailableQuestSignatureByPlayerId.set(playerId, signature);
     }
     /** 构造任务运行态列表。 */
     buildQuestRuntimeList(playerId) {
@@ -139,6 +175,7 @@ export class WorldSyncQuestLootService {
     clearPlayerCache(playerId) {
         this.lastQuestRevisionByPlayerId.delete(playerId);
         this.lastQuestRuntimeByPlayerId.delete(playerId);
+        this.lastAvailableQuestSignatureByPlayerId.delete(playerId);
         this.lootWindowByPlayerId.delete(playerId);
     }
 };

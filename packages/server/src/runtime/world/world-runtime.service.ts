@@ -1169,6 +1169,9 @@ export class WorldRuntimeService {
         resolveQuestNavigationTarget(quest) {
         return this.worldRuntimeReadFacadeService.resolveQuestNavigationTarget(quest, this);
     }
+        collectAvailableQuestsForPlayer(playerId) {
+        return this.worldRuntimeQuestQueryService.collectAvailableQuestsForPlayer(playerId);
+    }
         materializeQuestView(playerId, quest) {
         return this.worldRuntimeReadFacadeService.materializeQuestView(playerId, quest, this);
     }

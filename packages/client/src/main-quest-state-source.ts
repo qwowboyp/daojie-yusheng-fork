@@ -6,6 +6,7 @@
 import {
   Inventory,
   PlayerState,
+  S2C_AvailableQuests,
   S2C_NpcQuests,
   S2C_QuestNavigateResult,
   S2C_QuestUpdate,
@@ -220,6 +221,16 @@ export function createMainQuestStateSource(options: MainQuestStateSourceOptions)
       options.syncQuestBridgeState(quests);
       options.syncPlayerBridgeState(player);
       options.refreshUiChrome();
+    },
+    /**
+ * handleAvailableQuests：處理可接任務同步並更新任務面板「可接任務」區塊。
+ * @param data S2C_AvailableQuests 原始資料（全量替換語義）。
+ * @returns 無返回值，顯示欄位由本地模板補齊。
+ */
+
+
+    handleAvailableQuests(data: S2C_AvailableQuests): void {
+      options.questPanel.updateAvailable(resolvePreviewQuests(data.quests as PlayerState['quests']));
     },    
     /**
  * handleQuestNavigateResult：处理任务Navigate结果并更新相关状态。

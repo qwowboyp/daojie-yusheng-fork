@@ -267,9 +267,42 @@ export class WorldRuntimeQuestQueryService {
             if (source?.giverNpcId && source.giverNpcId !== npc.npcId) {
                 return undefined;
             }
-            return { line, state: 'available' };
+            return { line, state: 'available', questId };
         }
         return undefined;
+    }
+    /**
+     * collectAvailableQuestsForPlayer：收集全伺服器範圍內玩家當前可接（available）的任務視圖。
+     * 每個 NPC 的任務鏈同時最多揭曉一個可接任務（與走到 NPC 旁看到的內容一致），
+     * 供任務分頁「可接任務」區塊低頻同步；接取仍須走近 NPC 走現有流程。
+     */
+    collectAvailableQuestsForPlayer(playerId) {
+        const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
+        const npcRegistry = this.templateRepository.npcRegistry;
+        const result = [];
+        if (!npcRegistry
+            || typeof npcRegistry.listIds !== 'function'
+            || typeof npcRegistry.tryGetRef !== 'function') {
+            return result;
+        }
+        for (const npcId of npcRegistry.listIds()) {
+            const template = npcRegistry.tryGetRef(npcId);
+            if (!template || !Array.isArray(template.quests) || template.quests.length === 0) {
+                continue;
+            }
+            // 凍結 NPC 模板欄位名是 id；marker 判定吃運行態投影欄位 npcId，這裡包輕量介面重用同一權威判定。
+            const marker = this.resolveAvailableNpcQuestMarkerForPlayer(player, {
+                npcId,
+                name: template.name,
+                quests: template.quests,
+            });
+            const questId = typeof marker?.questId === 'string' ? marker.questId.trim() : '';
+            if (!questId) {
+                continue;
+            }
+            result.push(this.materializeQuestView(playerId, this.createQuestStateFromSource(playerId, questId, 'available')));
+        }
+        return result;
     }
     resolveQuestLineFromCandidate(rawQuest) {
         const questId = typeof rawQuest?.id === 'string' ? rawQuest.id.trim() : '';
@@ -610,6 +643,31 @@ export class WorldRuntimeQuestQueryService {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
         quest = this.materializeQuestView('', quest);
+        if (quest.status === 'available') {
+            // 未接取任務的導航目標是發布 NPC：走近後走現有 NPC 彈窗接取，不改變接取規則。
+            const source = this.templateRepository.getQuestSource(quest.id);
+            const giverNpcId = typeof source?.giverNpcId === 'string' && source.giverNpcId.trim()
+                ? source.giverNpcId.trim()
+                : (typeof quest.giverId === 'string' ? quest.giverId.trim() : '');
+            const giverLocation = giverNpcId ? this.templateRepository.getNpcLocation(giverNpcId) : null;
+            if (giverLocation) {
+                return {
+                    mapId: giverLocation.mapId,
+                    x: giverLocation.x,
+                    y: giverLocation.y,
+                    adjacent: true,
+                };
+            }
+            if (quest.giverMapId && Number.isInteger(quest.giverX) && Number.isInteger(quest.giverY)) {
+                return {
+                    mapId: quest.giverMapId,
+                    x: Number(quest.giverX),
+                    y: Number(quest.giverY),
+                    adjacent: true,
+                };
+            }
+            return null;
+        }
         if (quest.status === 'ready') {
             if (quest.submitMapId && Number.isInteger(quest.submitX) && Number.isInteger(quest.submitY)) {
                 return {

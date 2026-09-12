@@ -837,7 +837,14 @@ export class WorldRuntimeNavigationService {
             return { mapId: intent.mapId, goals };
         }
         const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
-        const quest = player.quests.quests.find((entry) => entry.id === intent.questId && entry.status !== 'completed');
+        let quest = player.quests.quests.find((entry) => entry.id === intent.questId && entry.status !== 'completed');
+        if (!quest) {
+            // 未接取任務：允許導航到發布 NPC（任務分頁「可接任務」前往功能），接取仍須走近 NPC。
+            const templateQuestId = typeof intent.questId === 'string' ? intent.questId.trim() : '';
+            if (templateQuestId && this.templateRepository.getQuestSource(templateQuestId)) {
+                quest = { id: templateQuestId, status: 'available' };
+            }
+        }
         if (!quest) {
             throw new NotFoundException('目標任務不存在或已完成');
         }

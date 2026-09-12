@@ -320,6 +320,7 @@ export const S2C = {
   RedeemCodesResult: 'n:s:redeemCodesResult',
   MailOpResult: 'n:s:mailOpResult',
   Quests: 'n:s:quests',
+  AvailableQuests: 'n:s:availableQuests',
   NpcQuests: 'n:s:npcQuests',
   MarketUpdate: 'n:s:marketUpdate',
   MarketListings: 'n:s:marketListings',
@@ -574,6 +575,7 @@ export interface S2C_PayloadMap extends Record<S2C_EventName, unknown> {
   [S2C.RedeemCodesResult]: ResponsePayloads.S2C_RedeemCodesResult;
   [S2C.MailOpResult]: ResponsePayloads.S2C_MailOpResult;
   [S2C.Quests]: ResponsePayloads.S2C_QuestUpdate;
+  [S2C.AvailableQuests]: ResponsePayloads.S2C_AvailableQuests;
   [S2C.NpcQuests]: ResponsePayloads.S2C_NpcQuests;
   [S2C.MarketUpdate]: ResponsePayloads.S2C_MarketUpdate;
   [S2C.MarketListings]: ResponsePayloads.S2C_MarketListings;

@@ -44,6 +44,7 @@ export const GAMEPLAY_SERVER_EVENTS = [
   S2C.TileDetail,
   S2C.Detail,
   S2C.Quests,
+  S2C.AvailableQuests,
   S2C.NpcQuests,
   S2C.QuestNavigateResult,
   S2C.OfflineGainReports,

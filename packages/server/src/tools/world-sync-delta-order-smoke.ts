@@ -119,6 +119,8 @@ function createService(log: LogEntry[] = [], options: DeltaOrderSmokeOptions = {
             emitQuestSyncIfChanged(socketInput: { id: string }, playerId: string, revision?: number) {
                 log.push(['emitQuestSyncIfChanged', socketInput.id, playerId, revision ?? null]);
             },
+            // 可接任務同步與 delta 順序無關，這裡以 no-op 滿足介面契約
+            emitAvailableQuestsSyncIfChanged() {},
             clearPlayerCache() {},
         },
         {

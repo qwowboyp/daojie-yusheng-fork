@@ -268,6 +268,7 @@ type MainBootstrapAssemblyOptions = {
     | 'handleWorldSummary'
     | 'handleNpcQuests'
     | 'handleQuests'
+    | 'handleAvailableQuests'
     | 'handleQuestNavigateResult'
     | 'handleNpcShop'
   >;
@@ -801,6 +802,7 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
     onWorldSummary: (data) => options.detailStateSource.handleWorldSummary(data),
     onNpcQuests: (data) => options.detailStateSource.handleNpcQuests(data),
     onQuests: (data) => options.detailStateSource.handleQuests(data),
+    onAvailableQuests: (data) => options.detailStateSource.handleAvailableQuests(data),
     onQuestNavigateResult: (data) => options.detailStateSource.handleQuestNavigateResult(data),
     onOfflineGainReports: (data) => handleOfflineGainReports(data, {
       getPlayerId: () => options.getPlayer()?.id,

@@ -60,6 +60,8 @@ export interface SyncFlushBreakdownSample {
     emitEnvelopeCount: number;
     questSyncMs: number;
     questSyncCount: number;
+    availableQuestSyncMs: number;
+    availableQuestSyncCount: number;
     runtimeEventsMs: number;
     runtimeEventsCount: number;
     statisticRecordsMs: number;
@@ -159,6 +161,8 @@ export function createSyncFlushBreakdownSample(): SyncFlushBreakdownSample {
         emitEnvelopeCount: 0,
         questSyncMs: 0,
         questSyncCount: 0,
+        availableQuestSyncMs: 0,
+        availableQuestSyncCount: 0,
         runtimeEventsMs: 0,
         runtimeEventsCount: 0,
         statisticRecordsMs: 0,
@@ -231,6 +235,7 @@ export type SyncFlushDurationKey = keyof Pick<SyncFlushBreakdownSample,
     | 'auxSyncMs'
     | 'emitEnvelopeMs'
     | 'questSyncMs'
+    | 'availableQuestSyncMs'
     | 'runtimeEventsMs'
     | 'statisticRecordsMs'
     | 'clearCachesMs'>;
@@ -258,6 +263,7 @@ export type SyncFlushCountKey = keyof Pick<SyncFlushBreakdownSample,
     | 'auxSyncCount'
     | 'emitEnvelopeCount'
     | 'questSyncCount'
+    | 'availableQuestSyncCount'
     | 'runtimeEventsCount'
     | 'statisticRecordsCount'
     | 'contextActionsCacheHitCount'
