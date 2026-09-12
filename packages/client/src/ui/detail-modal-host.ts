@@ -305,6 +305,11 @@ class DetailModalHost {
     this.dismiss(false);
   }
 
+  /** 程式切換介面時沿用使用者關窗生命週期，不偽造遮罩點擊。 */
+  requestClose(): boolean {
+    return this.dismiss(true);
+  }
+
   /** 判断当前弹层是否属于指定 owner 且处于打开状态 */
   isOpenFor(ownerId: string): boolean {
     return this.ownerId === ownerId && !this.modal.classList.contains('hidden');

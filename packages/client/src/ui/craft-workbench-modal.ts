@@ -674,7 +674,7 @@ export class CraftWorkbenchModal {
     if (detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
       detailModalHost.close(CraftWorkbenchModal.MODAL_OWNER);
     } else {
-      layer.click();
+      detailModalHost.requestClose();
     }
     return layer.classList.contains('hidden');
   }
