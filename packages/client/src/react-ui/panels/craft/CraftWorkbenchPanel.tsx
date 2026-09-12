@@ -8,6 +8,7 @@ import { createPanelStore } from '../../stores/create-panel-store';
 
 export interface ReactCraftWorkbenchState {
   activeMode: 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'technique_refining' | null;
+  embedded: boolean;
   tabsKey: string;
   tabsHtml: string;
   headerKey: string;
@@ -18,6 +19,7 @@ export interface ReactCraftWorkbenchState {
 
 export const { store: craftWorkbenchStore, useStore: useCraftWorkbenchStore } = createPanelStore<ReactCraftWorkbenchState>({
   activeMode: null,
+  embedded: false,
   tabsKey: '',
   tabsHtml: '',
   headerKey: '',
@@ -88,10 +90,17 @@ export const CraftWorkbenchPanel = memo(function CraftWorkbenchPanel() {
   }, [state.contentHtml]);
 
   return (
-    <div className="craft-workbench-shell" data-craft-workbench-shell="true" data-react-craft-mode={state.activeMode ?? 'none'}>
-      <aside className="craft-workbench-sidebar">
-        <CraftWorkbenchTabs tabsKey={state.tabsKey} tabsHtml={state.tabsHtml} />
-      </aside>
+    <div
+      className={`craft-workbench-shell${state.embedded ? ' craft-workbench-shell--embedded' : ''}`}
+      data-craft-workbench-shell="true"
+      data-craft-workbench-embedded={state.embedded ? 'true' : undefined}
+      data-react-craft-mode={state.activeMode ?? 'none'}
+    >
+      {state.embedded ? null : (
+        <aside className="craft-workbench-sidebar">
+          <CraftWorkbenchTabs tabsKey={state.tabsKey} tabsHtml={state.tabsHtml} />
+        </aside>
+      )}
       <section className="craft-workbench-main" data-craft-workbench-main="true">
         <CraftWorkbenchHeader headerKey={state.headerKey} headerHtml={state.headerHtml} />
         <CraftWorkbenchContent contentHtml={state.contentHtml} />

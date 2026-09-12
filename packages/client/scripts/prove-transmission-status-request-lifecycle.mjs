@@ -56,6 +56,7 @@ const proofHtml = String.raw`<!doctype html>
           playerRealmLv: 1,
           inventory: { items: [], capacity: 20 },
           callbacks: null,
+          getOpenCraftBody: () => document.getElementById('detail-modal-body'),
           patchOpenCraftShell() {},
         };
       }

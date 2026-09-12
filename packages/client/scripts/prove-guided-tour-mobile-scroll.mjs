@@ -11,6 +11,7 @@ const VIEWPORT = { width: 390, height: 844 };
 const initializeGuidedTourExpression = String.raw`
   (async () => {
     const { GuidedTour } = await import('/src/ui/guided-tour.ts');
+    const { GUIDED_TOUR_FLOWS } = await import('/src/constants/ui/guided-tour.ts');
     const target = document.createElement('button');
     target.id = 'guided-tour-mobile-scroll-target';
     target.type = 'button';
@@ -59,7 +60,35 @@ const initializeGuidedTourExpression = String.raw`
     tour.start(flow.id, { force: true });
     window.__guidedTourMobileScrollProof = tour;
     await new Promise((resolve) => setTimeout(resolve, 320));
-    return document.querySelector('.guided-tour-card-title')?.textContent?.trim() ?? '';
+    const step = (flowId, stepId) => GUIDED_TOUR_FLOWS.find((entry) => entry.id === flowId)?.steps.find((entry) => entry.id === stepId);
+    const preparesWorkspaceTab = (flowId, stepId, tab) => {
+      const entry = step(flowId, stepId);
+      return entry?.prepare?.some((action) => action.type === 'switch-tab' && action.tabName === tab) === true;
+    };
+    const targetsWorkspaceTab = (flowId, stepId, tab) => {
+      const entry = step(flowId, stepId);
+      return entry?.targetSelector.includes('#workspace-tab-' + tab)
+        && entry.targetSelector.includes('[data-action-tab="' + tab + '"]');
+    };
+    const routing = {
+      observe: targetsWorkspaceTab('observe-guide', 'observe-utility-tab', 'utility')
+        && preparesWorkspaceTab('observe-guide', 'observe-utility-tab', 'utility')
+        && preparesWorkspaceTab('observe-guide', 'observe-button', 'utility'),
+      senseQi: targetsWorkspaceTab('sense-qi-guide', 'sense-qi-toggle-tab', 'toggle')
+        && preparesWorkspaceTab('sense-qi-guide', 'sense-qi-toggle-tab', 'toggle')
+        && preparesWorkspaceTab('sense-qi-guide', 'sense-qi-card', 'toggle'),
+      cultivation: targetsWorkspaceTab('cultivation-guide', 'cultivation-toggle-tab', 'toggle')
+        && preparesWorkspaceTab('cultivation-guide', 'cultivation-toggle-tab', 'toggle')
+        && preparesWorkspaceTab('cultivation-guide', 'cultivation-toggle-card', 'toggle')
+        && preparesWorkspaceTab('cultivation-guide', 'cultivation-auto-card', 'toggle'),
+      forceAttack: targetsWorkspaceTab('force-attack-guide', 'force-attack-utility-tab', 'utility')
+        && preparesWorkspaceTab('force-attack-guide', 'force-attack-utility-tab', 'utility')
+        && preparesWorkspaceTab('force-attack-guide', 'force-attack-button', 'utility'),
+      mining: targetsWorkspaceTab('mining-guide', 'mining-skill-tab', 'skill')
+        && preparesWorkspaceTab('mining-guide', 'mining-skill-tab', 'skill')
+        && preparesWorkspaceTab('mining-guide', 'mining-button', 'skill'),
+    };
+    return { title: document.querySelector('.guided-tour-card-title')?.textContent?.trim() ?? '', routing };
   })()
 `;
 
@@ -94,7 +123,11 @@ const measureGuidedTourExpression = String.raw`
 `;
 
 await withClientBrowserProof({ viewport: VIEWPORT, profilePrefix: 'guided-tour-mobile-scroll-proof-' }, async (cdp) => {
-  assert.equal(await cdp.evaluate(initializeGuidedTourExpression), '长内容步骤 1', '未打开正式运行时导览步骤');
+  const initialized = await cdp.evaluate(initializeGuidedTourExpression);
+  assert.equal(initialized.title, '长内容步骤 1', '未打开正式运行时导览步骤');
+  assert.deepEqual(initialized.routing, {
+    observe: true, senseQi: true, cultivation: true, forceAttack: true, mining: true,
+  }, `workspace 導覽未在目標出現前切到正確分頁：${JSON.stringify(initialized.routing)}`);
 
   const initial = await cdp.evaluate(measureGuidedTourExpression);
   assert(initial.cardTop >= 0 && initial.cardBottom <= initial.viewportHeight, `导览卡片超出手机视口：${JSON.stringify(initial)}`);

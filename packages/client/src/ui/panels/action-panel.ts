@@ -151,6 +151,8 @@ function enforceSkillEnabledLimitLocal<T extends SkillEnabledEntry>(
 
 /** 行动面板的主标签页：交互、技能、开关和通用动作。 */
 type ActionMainTab = 'dialogue' | 'skill' | 'toggle' | 'utility';
+/** 工作窗中行动面板可挂载的独立分区。 */
+export type ActionWorkspaceSection = ActionMainTab;
 /** 技能区的子标签页：自动技能和手动技能。 */
 type SkillSubTab = 'auto' | 'manual';
 
@@ -222,6 +224,8 @@ export class ActionPanel {
   private readonly AUTO_USE_PILL_SLOT_LIMIT = 12;
   /** 面板根节点，后续只做局部 patch。 */
   private pane = document.getElementById('pane-action')!;
+  /** 当前是否只在工作窗中显示一个行动分区。 */
+  private workspaceSection: ActionWorkspaceSection | null = null;
   /** 缓存出手力度控制条 DOM，避免频繁全量 re-render 破坏 SVG 及 CSS 关键帧动画的连贯性 */
   private cachedAttackIntensityEl: HTMLElement | null = null;
   /** 执行动作的外部回调，由战斗/交互层接手真正执行。 */
@@ -432,12 +436,7 @@ export class ActionPanel {
     detailModalHost.close(this.SKILL_PRESET_MODAL_OWNER);
     detailModalHost.close(this.TARGETING_PLAN_MODAL_OWNER);
     detailModalHost.close(this.SECT_MANAGEMENT_MODAL_OWNER);
-    if (this.useReactPanel()) {
-      this.renderReactPanel(`<div class="empty-hint">${t('action.empty.no-actions', undefined)}</div>`, 'empty');
-    } else {
-      unmountReactActionPanel();
-      replaceElementHtml(this.pane, `<div class="empty-hint">${t('action.empty.no-actions', undefined)}</div>`);
-    }
+    this.renderEmptyActionPanel();
     this.interactionFloatingPanel?.setTransientHidden(true);
   }  
   /**
@@ -478,6 +477,36 @@ export class ActionPanel {
   mountQuickActions(container: HTMLElement): void {
     if (!shouldUseReactActionPanel()) return;
     mountReactQuickActions(container, this.getQuickActionsProps());
+  }
+
+  /**
+   * 将同一个行动 pane 挂入工作窗指定分区。
+   *
+   * 移动 pane 本体会保留 React root 与 constructor 已绑定的常驻事件委托，
+   * 只重绘当前分区的内容，避免工作窗再次出现旧版四分頁切换。
+   */
+  showWorkspaceSection(section: ActionWorkspaceSection, host: HTMLElement): void {
+    const needsMove = this.pane.parentElement !== host;
+    const needsRender = this.workspaceSection !== section || this.activeTab !== section || needsMove;
+    this.workspaceSection = section;
+    this.activeTab = section;
+    this.tooltip.hide(true);
+    if (needsMove) host.append(this.pane);
+    if (needsRender) {
+      if (this.currentActions.length > 0) {
+        this.render(this.currentActions);
+      } else {
+        this.renderEmptyActionPanel();
+      }
+    }
+  }
+
+  /** 关闭工作窗时只收起 transient UI；pane 留在最后一个工作窗宿主，避免重挂根与重复重绘。 */
+  hideWorkspaceSection(): void {
+    this.tooltip.hide(true);
+    this.interactionFloatingTooltip.hide(true);
+    this.autoUsePillTooltip.hide(true);
+    this.autoUsePillTooltipNode = null;
   }
 
   /** 供属性等外部面板进入或退出行动绑键模式。 */
@@ -622,6 +651,19 @@ export class ActionPanel {
     return shouldUseReactActionPanel();
   }
 
+  /** 在尚未取得首包时同步空态，仍遵守当前 workspace 分区布局。 */
+  private renderEmptyActionPanel(): void {
+    const html = `<div class="empty-hint">${t('action.empty.no-actions', undefined)}</div>`;
+    const contentKey = this.buildActionPanelContentKey([]);
+    this.lastRenderedContentKey = contentKey;
+    if (this.useReactPanel()) {
+      this.renderReactPanel(html, contentKey);
+      return;
+    }
+    unmountReactActionPanel();
+    replaceElementHtml(this.pane, html);
+  }
+
   private renderReactPanel(html: string, contentKey: string): void {
     this.paneRenderEvents?.abort();
     this.paneRenderEvents = new AbortController();
@@ -644,6 +686,7 @@ export class ActionPanel {
   private buildActionPanelContentKey(actions: ActionDef[]): string {
     const visibleStructure = this.getActionPanelVisibleStructure(actions);
     return [
+      this.workspaceSection ?? 'legacy',
       this.activeTab,
       this.activeSkillTab,
       this.previewPlayer?.autoBattleTargetingMode ?? '',
@@ -674,8 +717,11 @@ export class ActionPanel {
   private patchDynamicActionPanel(): boolean {
     // 自癒探針：面板上已有分頁按鈕、但本輪渲染的事件信號已失效或從未建立時，
     // 拒絕局部 patch 並回退全量渲染，確保按鈕監聽一定被重新裝配。
+    const hasTabNavigation = this.pane.querySelector('[data-action-tab]') !== null;
+    const hasWorkspaceSection = this.workspaceSection !== null
+      && this.pane.querySelector(`[data-action-pane="${this.workspaceSection}"]`) !== null;
     if (
-      this.pane.querySelector('[data-action-tab]')
+      (hasTabNavigation || hasWorkspaceSection)
       && (!this.paneRenderEvents || this.paneRenderEvents.signal.aborted)
     ) {
       return false;
@@ -705,7 +751,12 @@ export class ActionPanel {
     const enabledSkillCount = this.getEnabledSkillCount(actions);
     const skillSlotLimit = this.getSkillSlotLimit();
 
-    let html = `<div class="action-tab-bar">
+    const visibleTabGroups = this.workspaceSection
+      ? tabGroups.filter((tab) => tab.id === this.workspaceSection)
+      : tabGroups;
+    let html = this.workspaceSection
+      ? ''
+      : `<div class="action-tab-bar">
       ${tabGroups.map((tab) => `
         <button class="action-tab-btn ${this.activeTab === tab.id ? 'active' : ''}" data-action-tab="${tab.id}" type="button">${tab.id === 'skill'
           ? `${tab.label} <span class="action-skill-subtab-count">${enabledSkillCount}/${skillSlotLimit}</span>`
@@ -713,7 +764,7 @@ export class ActionPanel {
       `).join('')}
     </div>`;
 
-    for (const tab of tabGroups) {
+    for (const tab of visibleTabGroups) {
       html += `<div class="action-tab-pane ${this.activeTab === tab.id ? 'active' : ''}" data-action-pane="${tab.id}">`;
       if (tab.id === 'toggle') {
         const switchEntries = actions.filter((action) => this.isSwitchAction(action));

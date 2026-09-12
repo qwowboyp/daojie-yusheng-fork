@@ -110,7 +110,12 @@ type CraftWorkbenchCallbacks = {
   getTransmissionTargets?: () => Array<{ playerId: string; name: string }>;
 };
 
-type CraftMode = 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'technique_refining' | null;
+export type CraftWorkspaceMode = 'alchemy' | 'forging' | 'enhancement' | 'transmission';
+export type CraftWorkspaceNavigation = {
+  open: (mode: CraftWorkspaceMode) => void;
+  resolveBody: (mode: CraftWorkspaceMode) => HTMLElement | null;
+};
+type CraftMode = CraftWorkspaceMode | 'technique_refining' | null;
 type AlchemyTab = 'full' | 'simple';
 type AlchemyRealmTab = 'mortal' | 'qi' | 'foundation';
 type AlchemyMaterialPickerSortKey = 'name' | 'level' | 'grade' | 'metal' | 'wood' | 'water' | 'fire' | 'earth' | 'count';
@@ -315,6 +320,11 @@ export class CraftWorkbenchModal {
   private callbacks: CraftWorkbenchCallbacks | null = null;
   private activeMode: CraftMode = null;
   private loading = false;
+  private workspaceNavigation: CraftWorkspaceNavigation | null = null;
+  private workspaceBody: HTMLElement | null = null;
+  private workspaceBodyMode: CraftWorkspaceMode | null = null;
+  private workspaceBodyEvents: AbortController | null = null;
+  private workspaceActivationRevision = 0;
 
   private alchemyPanel: S2C_AlchemyPanel | null = null;
   private enhancementPanel: S2C_EnhancementPanel | null = null;
@@ -385,6 +395,10 @@ export class CraftWorkbenchModal {
     this.callbacks = callbacks;
   }
 
+  configureWorkspaceNavigation(navigation: CraftWorkspaceNavigation | null): void {
+    this.workspaceNavigation = navigation;
+  }
+
   setTransmissionCallbacks(callbacks: CraftTransmissionCallbacks): void {
     this.transmissionView.setCallbacks(callbacks);
   }
@@ -449,7 +463,7 @@ export class CraftWorkbenchModal {
     if (typeof update.specialStats?.luck === 'number') {
       this.playerLuck = Math.max(0, Math.floor(Number(update.specialStats.luck) || 0));
     }
-    if (detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
+    if (this.getOpenCraftBody()) {
       this.patchOpenCraftShell();
     }
   }
@@ -469,7 +483,7 @@ export class CraftWorkbenchModal {
     const luckChanged = this.playerLuck !== nextLuck;
     this.playerRealmLv = nextRealmLv;
     this.playerLuck = nextLuck;
-    if ((realmChanged || luckChanged || this.activeMode === 'transmission' || this.activeMode === 'technique_refining') && detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
+    if ((realmChanged || luckChanged || this.activeMode === 'transmission' || this.activeMode === 'technique_refining') && this.getOpenCraftBody()) {
       this.patchOpenCraftShell();
     }
   }
@@ -479,7 +493,7 @@ export class CraftWorkbenchModal {
     if (inventory) {
       this.inventory = inventory;
     }
-    if (this.activeMode === 'technique_refining' && detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
+    if (this.activeMode === 'technique_refining' && this.getOpenCraftBody()) {
       this.patchOpenCraftShell();
       return;
     }
@@ -497,6 +511,118 @@ export class CraftWorkbenchModal {
   }
 
   openAlchemy(): void {
+    if (this.workspaceNavigation) {
+      if (!this.dismissOpenDetailModalForWorkspace()) {
+        return;
+      }
+      const activationRevision = this.workspaceActivationRevision;
+      this.workspaceNavigation.open('alchemy');
+      if (this.workspaceActivationRevision !== activationRevision) {
+        return;
+      }
+      this.showWorkspaceMode('alchemy', this.workspaceNavigation.resolveBody('alchemy'));
+      return;
+    }
+    this.activateCraftMode('alchemy', null);
+  }
+
+  openForging(): void {
+    if (this.workspaceNavigation) {
+      if (!this.dismissOpenDetailModalForWorkspace()) {
+        return;
+      }
+      const activationRevision = this.workspaceActivationRevision;
+      this.workspaceNavigation.open('forging');
+      if (this.workspaceActivationRevision !== activationRevision) {
+        return;
+      }
+      this.showWorkspaceMode('forging', this.workspaceNavigation.resolveBody('forging'));
+      return;
+    }
+    this.activateCraftMode('forging', null);
+  }
+
+  openEnhancement(): void {
+    if (this.workspaceNavigation) {
+      if (!this.dismissOpenDetailModalForWorkspace()) {
+        return;
+      }
+      const activationRevision = this.workspaceActivationRevision;
+      this.workspaceNavigation.open('enhancement');
+      if (this.workspaceActivationRevision !== activationRevision) {
+        return;
+      }
+      this.showWorkspaceMode('enhancement', this.workspaceNavigation.resolveBody('enhancement'));
+      return;
+    }
+    this.activateCraftMode('enhancement', null);
+  }
+
+  openTransmission(): void {
+    if (this.workspaceNavigation) {
+      if (!this.dismissOpenDetailModalForWorkspace()) {
+        return;
+      }
+      const activationRevision = this.workspaceActivationRevision;
+      this.workspaceNavigation.open('transmission');
+      if (this.workspaceActivationRevision !== activationRevision) {
+        return;
+      }
+      this.showWorkspaceMode('transmission', this.workspaceNavigation.resolveBody('transmission'));
+      return;
+    }
+    this.activateCraftMode('transmission', null);
+  }
+
+  showWorkspaceMode(mode: CraftWorkspaceMode, host: HTMLElement | null): void {
+    this.workspaceActivationRevision += 1;
+    if (
+      host
+      && this.activeMode === mode
+      && this.workspaceBodyMode === mode
+      && this.workspaceBody === host
+      && host.isConnected
+    ) {
+      return;
+    }
+    this.activateCraftMode(mode, host);
+  }
+
+  hideWorkspace(): void {
+    if (
+      !this.workspaceBody
+      && this.workspaceBodyMode === null
+      && (this.activeMode === null || this.activeMode === 'technique_refining')
+    ) {
+      return;
+    }
+    this.releaseWorkspaceBody(true);
+  }
+
+  getOpenCraftBody(): HTMLElement | null {
+    if (
+      this.activeMode !== null
+      && this.activeMode !== 'technique_refining'
+      && this.workspaceBodyMode === this.activeMode
+      && this.workspaceBody?.isConnected
+    ) {
+      return this.workspaceBody;
+    }
+    return detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)
+      ? document.getElementById('detail-modal-body')
+      : null;
+  }
+
+  private activateCraftMode(mode: CraftWorkspaceMode, workspaceBody: HTMLElement | null): void {
+    if (workspaceBody) {
+      if (detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
+        detailModalHost.close(CraftWorkbenchModal.MODAL_OWNER);
+      }
+      this.attachWorkspaceBody(mode, workspaceBody);
+    } else {
+      this.releaseWorkspaceBody(false);
+    }
+    if (mode === 'alchemy') {
     this.ensureLocalCraftFormulaPresetsLoaded();
     this.activeMode = 'alchemy';
     this.loading = true;
@@ -505,9 +631,9 @@ export class CraftWorkbenchModal {
     this.confirmStartRequest = null;
     this.render();
     this.callbacks?.onRequestAlchemy(this.craftCatalogCache.getKnownVersion('alchemy'));
-  }
-
-  openForging(): void {
+      return;
+    }
+    if (mode === 'forging') {
     this.ensureLocalCraftFormulaPresetsLoaded();
     this.activeMode = 'forging';
     this.loading = true;
@@ -520,9 +646,9 @@ export class CraftWorkbenchModal {
     confirmModalHost.close(CraftWorkbenchModal.ALCHEMY_PRESET_PICKER_OWNER);
     this.render();
     this.callbacks?.onRequestForging(this.craftCatalogCache.getKnownVersion('forging'));
-  }
-
-  openEnhancement(): void {
+      return;
+    }
+    if (mode === 'enhancement') {
     this.enhancementView.ensureLocalEnhancementHistoryLoaded();
     this.activeMode = 'enhancement';
     this.loading = true;
@@ -533,15 +659,59 @@ export class CraftWorkbenchModal {
     this.lastEnhancementCandidateSourceKey = this.buildEnhancementCandidateSourceKey();
     this.render();
     this.callbacks?.onRequestEnhancement();
-  }
-
-  openTransmission(): void {
+      return;
+    }
     this.activeMode = 'transmission';
     this.loading = false;
     this.render();
   }
 
+  private dismissOpenDetailModalForWorkspace(): boolean {
+    const layer = document.getElementById('detail-modal');
+    if (!layer || layer.classList.contains('hidden')) {
+      return true;
+    }
+    if (detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
+      detailModalHost.close(CraftWorkbenchModal.MODAL_OWNER);
+    } else {
+      layer.click();
+    }
+    return layer.classList.contains('hidden');
+  }
+
+  private attachWorkspaceBody(mode: CraftWorkspaceMode, body: HTMLElement): void {
+    if (this.workspaceBody === body && this.workspaceBodyMode === mode) {
+      return;
+    }
+    this.releaseWorkspaceBody(false);
+    this.workspaceBody = body;
+    this.workspaceBodyMode = mode;
+  }
+
+  private releaseWorkspaceBody(clearActiveMode: boolean): void {
+    this.workspaceBodyEvents?.abort();
+    this.workspaceBodyEvents = null;
+    unmountReactCraftWorkbenchPanel();
+    if (this.workspaceBody) {
+      delete this.workspaceBody.dataset.reactCraftRootBound;
+      delete this.workspaceBody.dataset.alchemyMaterialControlsBound;
+      this.workspaceBody.replaceChildren();
+    }
+    this.workspaceBody = null;
+    this.workspaceBodyMode = null;
+    confirmModalHost.close(CraftWorkbenchModal.ALCHEMY_CONFIRM_OWNER);
+    confirmModalHost.close(CraftWorkbenchModal.ALCHEMY_MATERIAL_PICKER_OWNER);
+    confirmModalHost.close(CraftWorkbenchModal.ALCHEMY_PRESET_PICKER_OWNER);
+    this.transmissionView.closeTransientUi();
+    this.enhancementView.closeTransientUi();
+    if (clearActiveMode) {
+      this.activeMode = null;
+      this.loading = false;
+    }
+  }
+
   openTechniqueRefining(): void {
+    this.releaseWorkspaceBody(false);
     this.activeMode = 'technique_refining';
     this.loading = false;
     this.transmissionView.resetTechniqueRefiningSelection();
@@ -549,6 +719,7 @@ export class CraftWorkbenchModal {
   }
 
   openTechniqueAggregation(buildingId: string): void {
+    this.releaseWorkspaceBody(false);
     this.activeMode = 'technique_refining';
     this.loading = false;
     this.transmissionView.resetTechniqueRefiningSelection();
@@ -672,7 +843,7 @@ export class CraftWorkbenchModal {
     if (this.activeMode === 'technique_refining') {
       return;
     }
-    if (detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
+    if (this.getOpenCraftBody()) {
       this.patchOpenCraftQueueOnly();
     }
   }
@@ -721,6 +892,7 @@ export class CraftWorkbenchModal {
   }
 
   clear(): void {
+    this.releaseWorkspaceBody(false);
     this.activeMode = null;
     this.loading = false;
     this.alchemyPanel = null;
@@ -757,12 +929,11 @@ export class CraftWorkbenchModal {
     confirmModalHost.close(CraftWorkbenchModal.ALCHEMY_PRESET_PICKER_OWNER);
     this.transmissionView.closeTransientUi();
     this.enhancementView.closeTransientUi();
-    unmountReactCraftWorkbenchPanel();
     detailModalHost.close(CraftWorkbenchModal.MODAL_OWNER);
   }
 
   private requestCurrentPanel(): void {
-    if (!detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
+    if (!this.getOpenCraftBody()) {
       return;
     }
     if (this.activeMode === 'alchemy') {
@@ -786,7 +957,7 @@ export class CraftWorkbenchModal {
         this.callbacks?.onRequestEnhancement();
         return;
       }
-      if (detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
+      if (this.getOpenCraftBody()) {
         this.patchOpenCraftShell();
       }
       return;
@@ -861,6 +1032,13 @@ export class CraftWorkbenchModal {
     if (this.activeMode === 'enhancement') {
       this.lastEnhancementRenderKey = this.buildEnhancementPanelRenderKey();
     }
+    if (this.workspaceBodyMode === this.activeMode && this.workspaceBody?.isConnected) {
+      this.renderWorkspaceBody(this.workspaceBody, definition);
+      return;
+    }
+    if (this.workspaceNavigation && this.activeMode !== 'technique_refining') {
+      return;
+    }
     if (this.activeMode !== 'technique_refining' && this.useReactPanel()) {
       this.renderReact(definition);
       return;
@@ -897,6 +1075,62 @@ export class CraftWorkbenchModal {
         this.loading = false;
       },
     });
+  }
+
+  private renderWorkspaceBody(
+    body: HTMLElement,
+    definition: { title: string; subtitle: string; variantClass: string; body: string },
+  ): void {
+    if (this.useReactPanel()) {
+      this.syncReactShell(definition, true, true);
+      mountReactCraftWorkbenchPanel(body);
+      this.bindWorkspaceBody(body, true);
+      return;
+    }
+    if (body.querySelector('[data-craft-workbench-shell="true"]') && this.tryPatchWorkspaceBody(body)) {
+      return;
+    }
+    replaceElementHtml(body, this.renderCraftBody(true));
+    this.bindWorkspaceBody(body, false);
+  }
+
+  private bindWorkspaceBody(body: HTMLElement, react: boolean): void {
+    if (this.workspaceBodyEvents && this.workspaceBody === body) {
+      if (react && this.activeMode === 'enhancement') {
+        this.bindEnhancementEvents(body, this.workspaceBodyEvents.signal);
+      }
+      return;
+    }
+    this.workspaceBodyEvents?.abort();
+    this.workspaceBodyEvents = new AbortController();
+    const signal = this.workspaceBodyEvents.signal;
+    if (react) {
+      this.bindReactCraftBody(body, signal);
+      return;
+    }
+    bindInlineItemTooltips(body, signal);
+    this.bindActions(body, signal);
+    if (this.activeMode === 'alchemy') {
+      this.syncAlchemyConfirmModal();
+    }
+  }
+
+  private tryPatchWorkspaceBody(body: HTMLElement): boolean {
+    this.patchCraftShellHeaderAndTabs(body);
+    if ((this.activeMode === 'alchemy' || this.activeMode === 'forging') && this.tryPatchAlchemyBody(body)) {
+      return true;
+    }
+    if (this.activeMode === 'transmission' && this.transmissionView.tryPatchTransmissionBody(body)) {
+      return true;
+    }
+    if (this.activeMode === 'enhancement' && this.tryPatchEnhancementBody(body)) {
+      return true;
+    }
+    replaceElementHtml(body, this.renderCraftBody(true));
+    this.workspaceBodyEvents?.abort();
+    this.workspaceBodyEvents = null;
+    this.bindWorkspaceBody(body, false);
+    return true;
   }
 
   private useReactPanel(): boolean {
@@ -976,6 +1210,7 @@ export class CraftWorkbenchModal {
   private syncReactShell(
     _definition: { title: string; subtitle: string; variantClass: string; body: string },
     includeContent: boolean,
+    embedded = false,
   ): void {
     const current = getReactCraftWorkbenchState();
     const nextTabsKey = this.buildCraftTabsKey();
@@ -984,6 +1219,7 @@ export class CraftWorkbenchModal {
     const shouldReplaceContent = includeContent && current.contentKey !== nextContentKey;
     syncReactCraftWorkbenchState({
       activeMode: this.activeMode,
+      embedded,
       tabsKey: nextTabsKey,
       ...(current.tabsKey !== nextTabsKey ? { tabsHtml: this.renderCraftModeTabs() } : {}),
       headerKey: nextHeaderKey,
@@ -1146,12 +1382,31 @@ export class CraftWorkbenchModal {
   }
 
   private patchOpenCraftShell(): void {
-    if (!detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
+    const openBody = this.getOpenCraftBody();
+    if (!openBody) {
       return;
     }
     const definition = this.getCurrentModalDefinition(this.activeMode === 'technique_refining');
-    const body = document.getElementById('detail-modal-body');
-    if (!definition || !(body instanceof HTMLElement)) {
+    const body = openBody;
+    if (!definition) {
+      return;
+    }
+    if (this.workspaceBodyMode === this.activeMode && body === this.workspaceBody) {
+      if (this.useReactPanel()) {
+        this.syncReactShell(definition, false, true);
+        mountReactCraftWorkbenchPanel(body);
+        this.patchCraftShellHeaderAndTabs(body);
+        if ((this.activeMode === 'alchemy' || this.activeMode === 'forging') && this.tryPatchAlchemyBody(body)) {
+          return;
+        }
+        if (this.activeMode === 'enhancement') {
+          this.tryPatchEnhancementBody(body);
+        } else if (this.activeMode === 'transmission') {
+          this.transmissionView.tryPatchTransmissionBody(body);
+        }
+        return;
+      }
+      this.tryPatchWorkspaceBody(body);
       return;
     }
     if (this.activeMode === 'technique_refining') {
@@ -1229,11 +1484,8 @@ export class CraftWorkbenchModal {
     if (this.activeMode === 'technique_refining') {
       return;
     }
-    if (!detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
-      return;
-    }
-    const body = document.getElementById('detail-modal-body');
-    if (!(body instanceof HTMLElement)) {
+    const body = this.getOpenCraftBody();
+    if (!body) {
       return;
     }
     if (this.useReactPanel()) {
@@ -1336,14 +1588,14 @@ export class CraftWorkbenchModal {
     return t('craft.workbench.modal.subtitle.default');
   }
 
-  private renderCraftBody(): string {
+  private renderCraftBody(embedded = false): string {
     return `
-      <div class="craft-workbench-shell" data-craft-workbench-shell="true">
-        <aside class="craft-workbench-sidebar">
+      <div class="craft-workbench-shell${embedded ? ' craft-workbench-shell--embedded' : ''}" data-craft-workbench-shell="true"${embedded ? ' data-craft-workbench-embedded="true"' : ''}>
+        ${embedded ? '' : `<aside class="craft-workbench-sidebar">
           <nav class="craft-workbench-tabs" data-craft-workbench-tabs="true" data-craft-tabs-key="${escapeHtml(this.buildCraftTabsKey())}">
             ${this.renderCraftModeTabs()}
           </nav>
-        </aside>
+        </aside>`}
         <section class="craft-workbench-main" data-craft-workbench-main="true">
           <div class="craft-workbench-header" data-craft-workbench-header="true" data-craft-header-key="${escapeHtml(this.buildCraftHeaderKey())}">
             ${this.renderCraftHeader()}
@@ -3103,7 +3355,7 @@ export class CraftWorkbenchModal {
   private syncAlchemyConfirmModal(): void {
     const request = this.confirmStartRequest;
     const recipe = request ? this.alchemyCatalog.find((entry) => entry.recipeId === request.recipeId) ?? null : null;
-    if (!request || !recipe || !detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER) || (this.activeMode !== 'alchemy' && this.activeMode !== 'forging')) {
+    if (!request || !recipe || !this.getOpenCraftBody() || (this.activeMode !== 'alchemy' && this.activeMode !== 'forging')) {
       this.confirmStartRequest = null;
       confirmModalHost.close(CraftWorkbenchModal.ALCHEMY_CONFIRM_OWNER);
       return;

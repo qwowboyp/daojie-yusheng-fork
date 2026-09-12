@@ -34,6 +34,7 @@ export class SocialWorkspacePanel {
       title: meta.title,
       subtitle: meta.subtitle,
       className: `social-workspace-content social-workspace-content--${kind}`,
+      compact: kind !== 'messages',
       onBeforeClose,
       onClose,
     });

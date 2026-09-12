@@ -122,6 +122,26 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
     helpers: { showToast },
   });
 
+  if (documentRef.getElementById('game-shell')?.dataset.workspaceMode === 'true') {
+    modules.craftWorkbenchModal.configureWorkspaceNavigation({
+      open: (mode) => modules.sidePanel.switchTab(mode),
+      resolveBody: (mode) => documentRef.getElementById(`workspace-${mode}`),
+    });
+  }
+  modules.sidePanel.setWorkspaceContentHandler((tab, pane) => {
+    if (pane && (tab === 'alchemy' || tab === 'forging' || tab === 'enhancement' || tab === 'transmission')) {
+      modules.actionPanel.hideWorkspaceSection();
+      modules.craftWorkbenchModal.showWorkspaceMode(tab, pane);
+    } else {
+      modules.craftWorkbenchModal.hideWorkspace();
+      if (pane && (tab === 'skill' || tab === 'dialogue' || tab === 'utility' || tab === 'toggle')) {
+        modules.actionPanel.showWorkspaceSection(tab, pane);
+      } else {
+        modules.actionPanel.hideWorkspaceSection();
+      }
+    }
+  });
+
   modules.sidePanel.setWorkspaceActionHandler((action) => {
     switch (action) {
       case 'alchemy': modules.craftWorkbenchModal.openAlchemy(); break;
@@ -129,6 +149,9 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
       case 'enhancement': modules.craftWorkbenchModal.openEnhancement(); break;
       case 'transmission': modules.craftWorkbenchModal.openTransmission(); break;
       case 'building': panelContext.buildingFengShuiStateSource.openBuildingPanel(); break;
+      case 'mail': documentRef.getElementById('hud-open-mail')?.click(); break;
+      case 'activity': documentRef.getElementById('hud-open-activity')?.click(); break;
+      case 'chronicle': documentRef.getElementById('hud-open-chronicle')?.click(); break;
     }
   });
 

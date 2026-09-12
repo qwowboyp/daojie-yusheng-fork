@@ -3,6 +3,12 @@
 .floating-list-panel__mobile-label, .floating-interaction-description { display: none; }
 .chat-action-sheet { display: contents; }
 
+/* 控制器在 920px 以下停用桌面拖曳；中型滑鼠視窗仍需明確的工作區邊界。 */
+@media (min-width: 769px) and (max-width: 920px) and (pointer: fine) {
+  #game-workspace { left: 12px; right: 12px; top: 12px; width: auto; }
+  #game-workspace[data-compact="true"] { left: auto; top: auto; width: min(520px, calc(100% - 24px)); }
+}
+
 @media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
   #game-shell[data-workspace-mode="true"] {
     position: absolute;
@@ -54,7 +60,7 @@
   .workspace-dock-nav { width: 100%; height: 60px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; padding: 2px; border-radius: 14px; }
   .workspace-dock-nav > button { min-width: 0; min-height: 52px; padding: 4px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border-color: transparent; border-radius: 10px; font-size: 12px; line-height: 1.2; }
   .workspace-dock-nav > button[aria-expanded="true"] { color: var(--stamp-red); background: var(--surface-muted); }
-  .workspace-menu { width: 100%; bottom: calc(100% + 8px); max-height: calc(100dvh - 160px); overflow: auto; border-radius: 14px; }
+  .workspace-menu { width: min(390px, 100%); bottom: calc(100% + 8px); max-height: min(310px, 43dvh); overflow: auto; border-radius: 14px; }
   .workspace-menu-group button { min-height: 44px; }
   .workspace-dock-nav button:active, #mobile-map-tools-toggle:active, .chat-header button:active { background: var(--surface-muted); }
 
@@ -106,8 +112,13 @@
   #floating-interaction-list .floating-interaction-description { display: block; font-size: 14px; line-height: 1.5; font-weight: 400; color: var(--ink-grey); }
 
   #game-workspace { left: var(--mobile-left); right: var(--mobile-right); top: var(--mobile-top); bottom: calc(var(--mobile-bottom) + 68px); width: auto; border-radius: 14px; }
+  #game-workspace[data-compact="true"] { left: auto; width: min(520px, calc(100% - var(--mobile-left) - var(--mobile-right))); top: auto; height: min(430px, calc(100% - 160px)); }
+  #game-workspace[data-workspace="system"] { height: min(300px, calc(100% - 160px)); }
   .workspace-header { padding: 10px 12px 0; gap: 4px; }
   .workspace-title { font-size: 18px; }
+  .workspace-shortcuts button, .workspace-close { padding: 6px 8px; font-size: 13px; }
+  .workspace-title { flex: 1 1 auto; }
+  .workspace-tab { padding: 6px 10px; }
   .workspace-tabs { padding: 4px 0 8px; }
   #game-workspace-body > .workspace-pane { padding: 12px; }
   #game-workspace :is(input, select, textarea) { font-size: max(16px, var(--font-size-16)); }
@@ -136,12 +147,19 @@
   html[data-mobile-keyboard="true"] #game-workspace { bottom: 8px; }
 }
 
+@media (max-width: 599px) {
+  #game-workspace[data-workspace="items"] .workspace-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
 @media (pointer: coarse) and (min-width: 600px) and (max-height: 520px) {
   #game-shell[data-workspace-mode="true"] { --mobile-sheet-height: calc(100% - 24px); --mobile-action-bottom: var(--mobile-bottom); }
   #game-dock { left: auto; width: 320px; }
   #game-shell[data-workspace-mode="true"] #chat-panel { right: auto; width: 320px; max-height: calc(100% - 112px); }
   #floating-interaction-list[data-mobile-sheet="true"] { right: auto !important; width: 320px !important; max-height: calc(100% - 112px); }
   #game-workspace { left: max(292px, env(safe-area-inset-left, 0px)); bottom: calc(var(--mobile-bottom) + 68px); }
+  #game-workspace[data-compact="true"] { height: calc(100% - var(--mobile-top) - var(--mobile-bottom) - 68px); width: min(520px, calc(100% - 308px)); }
+  .workspace-menu { max-height: calc(100dvh - 92px); }
+  .workspace-menu button small { display: none; }
   .chat-action-sheet { max-height: calc(100dvh - 116px); }
   #game-shell[data-workspace-mode="true"] .map-side-tool-center { top: var(--mobile-top); right: calc(var(--mobile-right) + 100px); }
   #game-shell[data-workspace-mode="true"] #map-tick-rate { top: calc(var(--mobile-top) + 68px); right: calc(var(--mobile-right) + 100px); }

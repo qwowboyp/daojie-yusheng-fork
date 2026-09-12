@@ -152,6 +152,7 @@ export class SidePanel {
   private chatWindow: ReturnType<typeof bindDesktopWindow> | null = null;
   private hudWindow: ReturnType<typeof bindDesktopWindow> | null = null;
   private workspaceActionHandler: ((action: WorkspaceAction) => void) | null = null;
+  private workspaceContentHandler: ((tab: string | null, pane: HTMLElement | null) => void) | null = null;
   private readonly workspaceActionRoots: { unmount(): void }[] = [];
   private readonly mobileSurfaceCleanup: (() => void)[] = [];
   private readonly dismissMobileSurfacesOnMap = (event: PointerEvent): void => {
@@ -346,7 +347,7 @@ export class SidePanel {
       }
       const aliases: Record<string, string> = {
         'mobile-overview': 'overview', 'mobile-attrs': 'attr', 'mobile-bag': 'inventory',
-        'mobile-action': 'action', 'mobile-world': 'map-intel', intel: 'map-intel',
+        'mobile-action': 'dialogue', action: 'dialogue', crafting: 'alchemy', 'mobile-world': 'map-intel', intel: 'map-intel',
       };
       tabName = aliases[tabName] ?? tabName;
       if (this.workspacePanes.has(tabName)) {
@@ -426,11 +427,16 @@ export class SidePanel {
     this.workspaceActionHandler = handler;
   }
 
+  setWorkspaceContentHandler(handler: (tab: string | null, pane: HTMLElement | null) => void): void {
+    this.workspaceContentHandler = handler;
+  }
+
   closeWorkspace(restoreFocus = true): void {
     dismissPinnedFloatingTooltips();
     if (!this.workspace || !this.activeWorkspace) return;
     const previousWorkspace = this.activeWorkspace;
     this.activeWorkspace = null;
+    this.workspaceContentHandler?.(null, null);
     this.workspace.hidden = true;
     this.workspace.classList.add('hidden');
     this.workspace.setAttribute('aria-hidden', 'true');
@@ -479,8 +485,13 @@ export class SidePanel {
     workspace.setAttribute('aria-labelledby', 'workspace-title');
     workspace.setAttribute('aria-hidden', 'true');
 
+    for (const id of ['alchemy', 'forging', 'enhancement', 'transmission', 'skill', 'dialogue', 'utility', 'toggle']) {
+      const pane = document.createElement('section');
+      pane.id = `workspace-${id}`;
+      body.appendChild(pane);
+    }
     const launcher = document.createElement('section');
-    launcher.id = 'workspace-craft-launcher';
+    launcher.id = 'workspace-building';
     body.appendChild(launcher);
     this.workspaceActionRoots.push(mountWorkspaceActions(launcher, (action) => this.workspaceActionHandler?.(action)));
 
@@ -488,6 +499,11 @@ export class SidePanel {
     if (systemContent) {
       for (const actions of this.panel.querySelectorAll<HTMLElement>('.hud-link-actions, .hud-corner-actions')) {
         systemContent.appendChild(actions);
+      }
+      // 保留既有事件接線，入口由各工作區的捷徑提供。
+      for (const id of ['hud-open-mail', 'hud-open-activity', 'hud-open-chronicle']) {
+        const button = document.getElementById(id);
+        if (button) button.hidden = true;
       }
     }
     const chat = document.getElementById('chat-panel');
@@ -518,8 +534,8 @@ export class SidePanel {
     }
     this.workspaceNavigation = mountWorkspaceNavigation(dock, controls, chatHeader);
     this.workspaceWindow = bindDesktopWindow(workspace, {
-      storageKey: () => `workspace-${this.activeWorkspace ?? 'items'}`,
-      handleSelector: '.workspace-heading', minWidth: 360, minHeight: 320,
+      storageKey: () => `workspace-v2-${this.activeWorkspace ?? 'items'}-${workspace.dataset.compact === 'true' ? 'compact' : 'full'}`,
+      handleSelector: '.workspace-heading', minWidth: 320, minHeight: 220,
     });
     if (chat) this.chatWindow = bindDesktopWindow(chat, {
       storageKey: 'chat', handleSelector: '.chat-header', minWidth: 360, minHeight: 280,
@@ -547,6 +563,7 @@ export class SidePanel {
     this.activeWorkspace = definition.id;
     this.workspaceTab = tabName;
     this.workspace.dataset.workspace = definition.id;
+    this.workspace.dataset.compact = String(definition.compact === true || tabName === 'building');
     this.workspace.hidden = false;
     this.workspace.classList.remove('hidden');
     this.workspace.setAttribute('aria-hidden', 'false');
@@ -560,6 +577,7 @@ export class SidePanel {
       if (active) pane.setAttribute('aria-labelledby', `workspace-tab-${tabName}`);
       else pane.removeAttribute('aria-labelledby');
     }
+    this.workspaceContentHandler?.(tabName, this.workspacePanes.get(tabName) ?? null);
     this.persistedState = {
       ...this.persistedState, version: 1,
       activeTabs: { ...this.persistedState?.activeTabs, [`workspace-${definition.id}`]: tabName },
@@ -578,6 +596,7 @@ export class SidePanel {
       onPrepareTab: (tab) => this.prepareWorkspaceTab(tab),
       onPrepareOpen: (id) => { const tab = this.getWorkspaceEntryTab(id); if (tab) this.prepareWorkspaceTab(tab); },
       onToggleChat: () => this.toggleChat(),
+      onAction: (action) => this.workspaceActionHandler?.(action),
     });
   }
 
