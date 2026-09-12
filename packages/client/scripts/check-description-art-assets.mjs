@@ -24,11 +24,17 @@ async function readItems(directory) {
 
 const items = await readItems(itemRoot);
 const icons = await readJson(path.join(clientRoot, 'src/constants/world/item-art.generated.json'));
-const manifest = await readJson(path.join(clientRoot, 'public/assets/runtime-image-packs/default/manifest.json'));
+const runtimeManifest = await readJson(path.join(clientRoot, 'public/assets/runtime-image-packs/default/manifest.json'));
+const uniqueManifest = await readJson(path.join(repoRoot, 'docs/artwork/late-game-unique-icons.json'));
+const uniqueRecords = Array.isArray(uniqueManifest.records) ? uniqueManifest.records : [];
+const uniqueById = new Map(uniqueRecords.map((record) => [record.id, record]));
+assert.equal(uniqueById.size, 224, '獨立美術 manifest 必須包含 224 個唯一 ID');
 const buildings = await readJson(path.join(repoRoot, 'packages/server/data/content/building-runtime/buildings.json'));
 const files = [];
 for (const item of items) {
-  const stem = `/assets/item-icons/v1/${item.itemId}`;
+  const unique = uniqueById.get(item.itemId);
+  const stem = unique ? `/assets/item-icons/v2/${item.itemId}` : `/assets/item-icons/v1/${item.itemId}`;
+  assert.equal(unique?.stem ?? stem, stem, `獨立美術 stem 不符：${item.itemId}`);
   assert.equal(icons[item.itemId], stem, `道具未配圖：${item.itemId} ${item.name}`);
   files.push(`${stem}-96.webp`, `${stem}-192.webp`);
 }
@@ -36,7 +42,7 @@ const tileBuildings = new Set(['stone_wall', 'wooden_door', 'wooden_window', 'pl
 for (const building of buildings) {
   const stem = `/assets/building-art/v1/${building.id}`;
   files.push(`${stem}-icon-96.webp`, `${stem}-icon-192.webp`, `${stem}-ground-256.webp`);
-  const entry = tileBuildings.has(building.id) ? manifest.tiles[`building:${building.id}`] : manifest.entities[`building:${building.id}`];
+  const entry = tileBuildings.has(building.id) ? runtimeManifest.tiles[`building:${building.id}`] : runtimeManifest.entities[`building:${building.id}`];
   assert.equal(entry?.src, `${stem}-ground-256.webp`, `建築地圖未配圖：${building.id}`);
 }
 let bytes = 0;
@@ -45,4 +51,4 @@ for (const file of files) {
   assert(asset.isFile() && asset.size > 0, `美術產物缺失：${file}`);
   bytes += asset.size;
 }
-console.log(`DESCRIPTION_ART_ASSETS:PASS items=${items.length} buildings=${buildings.length} files=${files.length} bytes=${bytes}`);
+console.log(`DESCRIPTION_ART_ASSETS:PASS items=${items.length} uniqueItems=${uniqueById.size} buildings=${buildings.length} files=${files.length} bytes=${bytes}`);

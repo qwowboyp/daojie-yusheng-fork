@@ -1,0 +1,230 @@
+{
+  "id": "late-unique-05",
+  "columns": 6,
+  "rows": 6,
+  "items": [
+    {
+      "id": "lg_equip_lg_void_refinement_m1_entry_war_blade",
+      "name": "碎界灘土煞戰刃",
+      "type": "equipment",
+      "desc": "以碎界灘礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m1_entry_spirit_staff",
+      "name": "碎界灘土紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m1_entry_head",
+      "name": "碎界灘土紋冠",
+      "type": "equipment",
+      "desc": "以碎界灘礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m1_entry_body",
+      "name": "碎界灘土紋衣",
+      "type": "equipment",
+      "desc": "以碎界灘礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m1_entry_legs",
+      "name": "碎界灘土紋履",
+      "type": "equipment",
+      "desc": "以碎界灘礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m1_entry_accessory",
+      "name": "碎界灘土紋佩",
+      "type": "equipment",
+      "desc": "以碎界灘礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m2_entry_war_blade",
+      "name": "虛獸巢帶木煞戰刃",
+      "type": "equipment",
+      "desc": "以虛獸巢帶礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m2_entry_spirit_staff",
+      "name": "虛獸巢帶木紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m2_entry_head",
+      "name": "虛獸巢帶木紋冠",
+      "type": "equipment",
+      "desc": "以虛獸巢帶礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m2_entry_body",
+      "name": "虛獸巢帶木紋衣",
+      "type": "equipment",
+      "desc": "以虛獸巢帶礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m2_entry_legs",
+      "name": "虛獸巢帶木紋履",
+      "type": "equipment",
+      "desc": "以虛獸巢帶礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m2_entry_accessory",
+      "name": "虛獸巢帶木紋佩",
+      "type": "equipment",
+      "desc": "以虛獸巢帶礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m3_entry_war_blade",
+      "name": "星骸舊港金煞戰刃",
+      "type": "equipment",
+      "desc": "以星骸舊港礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m3_entry_spirit_staff",
+      "name": "星骸舊港金紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m3_entry_head",
+      "name": "星骸舊港金紋冠",
+      "type": "equipment",
+      "desc": "以星骸舊港礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m3_entry_body",
+      "name": "星骸舊港金紋衣",
+      "type": "equipment",
+      "desc": "以星骸舊港礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m3_entry_legs",
+      "name": "星骸舊港金紋履",
+      "type": "equipment",
+      "desc": "以星骸舊港礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m3_entry_accessory",
+      "name": "星骸舊港金紋佩",
+      "type": "equipment",
+      "desc": "以星骸舊港礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m4_entry_war_blade",
+      "name": "無光海·裂土煞戰刃",
+      "type": "equipment",
+      "desc": "以無光海·裂礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m4_entry_spirit_staff",
+      "name": "無光海·裂土紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m4_entry_head",
+      "name": "無光海·裂土紋冠",
+      "type": "equipment",
+      "desc": "以無光海·裂礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m4_entry_body",
+      "name": "無光海·裂土紋衣",
+      "type": "equipment",
+      "desc": "以無光海·裂礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m4_entry_legs",
+      "name": "無光海·裂土紋履",
+      "type": "equipment",
+      "desc": "以無光海·裂礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_void_refinement_m4_entry_accessory",
+      "name": "無光海·裂土紋佩",
+      "type": "equipment",
+      "desc": "以無光海·裂礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m1_entry_war_blade",
+      "name": "垣門外壘土煞戰刃",
+      "type": "equipment",
+      "desc": "以垣門外壘礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m1_entry_spirit_staff",
+      "name": "垣門外壘土紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m1_entry_head",
+      "name": "垣門外壘土紋冠",
+      "type": "equipment",
+      "desc": "以垣門外壘礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m1_entry_body",
+      "name": "垣門外壘土紋衣",
+      "type": "equipment",
+      "desc": "以垣門外壘礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m1_entry_legs",
+      "name": "垣門外壘土紋履",
+      "type": "equipment",
+      "desc": "以垣門外壘礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m1_entry_accessory",
+      "name": "垣門外壘土紋佩",
+      "type": "equipment",
+      "desc": "以垣門外壘礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m2_entry_war_blade",
+      "name": "鏡我之澤土煞戰刃",
+      "type": "equipment",
+      "desc": "以鏡我之澤礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m2_entry_spirit_staff",
+      "name": "鏡我之澤土紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m2_entry_head",
+      "name": "鏡我之澤土紋冠",
+      "type": "equipment",
+      "desc": "以鏡我之澤礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m2_entry_body",
+      "name": "鏡我之澤土紋衣",
+      "type": "equipment",
+      "desc": "以鏡我之澤礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m2_entry_legs",
+      "name": "鏡我之澤土紋履",
+      "type": "equipment",
+      "desc": "以鏡我之澤礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m2_entry_accessory",
+      "name": "鏡我之澤土紋佩",
+      "type": "equipment",
+      "desc": "以鏡我之澤礦材與首領部件鍛成的佩位護具。"
+    }
+  ],
+  "prompt": "Create ONE multi-item sprite atlas with exactly 36 DISTINCT Chinese xianxia game item icons, strict 6 columns x 6 rows of equal square cells. Match the attached existing game atlas as STYLE REFERENCE ONLY, replace all depicted objects with the roster below. This is one sheet containing MANY items, NOT a single large item. True transparent alpha background everywhere outside objects. Every complete icon including glow must fit central 64% of its own cell, with at least 18% empty transparent padding on every side. Nothing may cross a cell boundary. No visible grid, frames, lettering, labels, numbers, text, watermark. Cohesive vibrant hand-painted fantasy GAME ICONS: crisp silhouette readable at 40px, clear metallic/cloth highlights, restrained elemental accents, not photorealistic closeups. Distinguish blade versus staff, crown versus robe, boots and pendant. Equipment is displayed without wearer, body parts or mannequin. Entire weapons and both shoes fit inside their assigned cells. Vary physical shape and material according to each named origin, not just recolors. EXACT row-major order; names and IDs are metadata, NOT text to draw.\nROW 1 COLUMN 1: 碎界灘土煞戰刃 [lg_equip_lg_void_refinement_m1_entry_war_blade], equipment. 以碎界灘礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: straight ridge-backed war sword with asymmetric guard; fractured sandstone and amber crystal, floating-looking linked shards, jagged geometric void gaps.\nROW 1 COLUMN 2: 碎界灘土紋法杖 [lg_equip_lg_void_refinement_m1_entry_spirit_staff], equipment. 杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: crooked staff whose head curls into an open spiral; fractured sandstone and amber crystal, floating-looking linked shards, jagged geometric void gaps.\nROW 1 COLUMN 3: 碎界灘土紋冠 [lg_equip_lg_void_refinement_m1_entry_head], equipment. 以碎界灘礦材與首領部件鍛成的冠位護具。 Visual motif/material: cylindrical ancient crown with open lattice; fractured sandstone and amber crystal, floating-looking linked shards, jagged geometric void gaps.\nROW 1 COLUMN 4: 碎界灘土紋衣 [lg_equip_lg_void_refinement_m1_entry_body], equipment. 以碎界灘礦材與首領部件鍛成的衣位護具。 Visual motif/material: long ceremonial coat with broad shoulder cape; fractured sandstone and amber crystal, floating-looking linked shards, jagged geometric void gaps.\nROW 1 COLUMN 5: 碎界灘土紋履 [lg_equip_lg_void_refinement_m1_entry_legs], equipment. 以碎界灘礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of slender pointed ritual boots; fractured sandstone and amber crystal, floating-looking linked shards, jagged geometric void gaps.\nROW 1 COLUMN 6: 碎界灘土紋佩 [lg_equip_lg_void_refinement_m1_entry_accessory], equipment. 以碎界灘礦材與首領部件鍛成的佩位護具。 Visual motif/material: layered rectangular jade tally pendant; fractured sandstone and amber crystal, floating-looking linked shards, jagged geometric void gaps.\nROW 2 COLUMN 1: 虛獸巢帶木煞戰刃 [lg_equip_lg_void_refinement_m2_entry_war_blade], equipment. 以虛獸巢帶礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: heavy angular cleaver-like ceremonial saber; pearly beast carapace, indigo hide, clustered shell scales and crescent fangs.\nROW 2 COLUMN 2: 虛獸巢帶木紋法杖 [lg_equip_lg_void_refinement_m2_entry_spirit_staff], equipment. 杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: broad-headed ritual staff with a geometric cap; pearly beast carapace, indigo hide, clustered shell scales and crescent fangs.\nROW 2 COLUMN 3: 虛獸巢帶木紋冠 [lg_equip_lg_void_refinement_m2_entry_head], equipment. 以虛獸巢帶礦材與首領部件鍛成的冠位護具。 Visual motif/material: layered low-profile circlet with a rear upright crest; pearly beast carapace, indigo hide, clustered shell scales and crescent fangs.\nROW 2 COLUMN 4: 虛獸巢帶木紋衣 [lg_equip_lg_void_refinement_m2_entry_body], equipment. 以虛獸巢帶礦材與首領部件鍛成的衣位護具。 Visual motif/material: compact lamellar chest robe with a split lower hem; pearly beast carapace, indigo hide, clustered shell scales and crescent fangs.\nROW 2 COLUMN 5: 虛獸巢帶木紋履 [lg_equip_lg_void_refinement_m2_entry_legs], equipment. 以虛獸巢帶礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of layered scale-armored boots; pearly beast carapace, indigo hide, clustered shell scales and crescent fangs.\nROW 2 COLUMN 6: 虛獸巢帶木紋佩 [lg_equip_lg_void_refinement_m2_entry_accessory], equipment. 以虛獸巢帶礦材與首領部件鍛成的佩位護具。 Visual motif/material: asymmetrical knot-hung carved amulet; pearly beast carapace, indigo hide, clustered shell scales and crescent fangs.\nROW 3 COLUMN 1: 星骸舊港金煞戰刃 [lg_equip_lg_void_refinement_m3_entry_war_blade], equipment. 以星骸舊港礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: single-edged broad dao with a clipped tip; meteoric iron and faded copper, starship anchor hooks, asymmetric broken navigation rings.\nROW 3 COLUMN 2: 星骸舊港金紋法杖 [lg_equip_lg_void_refinement_m3_entry_spirit_staff], equipment. 杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: long straight staff with a forked finial; meteoric iron and faded copper, starship anchor hooks, asymmetric broken navigation rings.\nROW 3 COLUMN 3: 星骸舊港金紋冠 [lg_equip_lg_void_refinement_m3_entry_head], equipment. 以星骸舊港礦材與首領部件鍛成的冠位護具。 Visual motif/material: low Chinese cultivator coronet with a single central crest; meteoric iron and faded copper, starship anchor hooks, asymmetric broken navigation rings.\nROW 3 COLUMN 4: 星骸舊港金紋衣 [lg_equip_lg_void_refinement_m3_entry_body], equipment. 以星骸舊港礦材與首領部件鍛成的衣位護具。 Visual motif/material: long cross-collar cultivator robe with wide sleeves and one broad sash; meteoric iron and faded copper, starship anchor hooks, asymmetric broken navigation rings.\nROW 3 COLUMN 5: 星骸舊港金紋履 [lg_equip_lg_void_refinement_m3_entry_legs], equipment. 以星骸舊港礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of low soft cloth cultivation shoes with upturned tips; meteoric iron and faded copper, starship anchor hooks, asymmetric broken navigation rings.\nROW 3 COLUMN 6: 星骸舊港金紋佩 [lg_equip_lg_void_refinement_m3_entry_accessory], equipment. 以星骸舊港礦材與首領部件鍛成的佩位護具。 Visual motif/material: elongated pendant with one silk tassel; meteoric iron and faded copper, starship anchor hooks, asymmetric broken navigation rings.\nROW 4 COLUMN 1: 無光海·裂土煞戰刃 [lg_equip_lg_void_refinement_m4_entry_war_blade], equipment. 以無光海·裂礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: slender straight jian with a long diamond tip; matte obsidian, ivory fissures, thin violet edge light, stark elongated split silhouettes.\nROW 4 COLUMN 2: 無光海·裂土紋法杖 [lg_equip_lg_void_refinement_m4_entry_spirit_staff], equipment. 杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: curved wooden staff with a ring-shaped head; matte obsidian, ivory fissures, thin violet edge light, stark elongated split silhouettes.\nROW 4 COLUMN 3: 無光海·裂土紋冠 [lg_equip_lg_void_refinement_m4_entry_head], equipment. 以無光海·裂礦材與首領部件鍛成的冠位護具。 Visual motif/material: tall openwork Taoist crown with three rising prongs; matte obsidian, ivory fissures, thin violet edge light, stark elongated split silhouettes.\nROW 4 COLUMN 4: 無光海·裂土紋衣 [lg_equip_lg_void_refinement_m4_entry_body], equipment. 以無光海·裂礦材與首領部件鍛成的衣位護具。 Visual motif/material: short layered robe-armor with overlapping shoulder plates; matte obsidian, ivory fissures, thin violet edge light, stark elongated split silhouettes.\nROW 4 COLUMN 5: 無光海·裂土紋履 [lg_equip_lg_void_refinement_m4_entry_legs], equipment. 以無光海·裂礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of tall wrapped martial boots; matte obsidian, ivory fissures, thin violet edge light, stark elongated split silhouettes.\nROW 4 COLUMN 6: 無光海·裂土紋佩 [lg_equip_lg_void_refinement_m4_entry_accessory], equipment. 以無光海·裂礦材與首領部件鍛成的佩位護具。 Visual motif/material: circular openwork waist medallion; matte obsidian, ivory fissures, thin violet edge light, stark elongated split silhouettes.\nROW 5 COLUMN 1: 垣門外壘土煞戰刃 [lg_equip_lg_body_integration_m1_entry_war_blade], equipment. 以垣門外壘礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: forward-curved falchion with a hook guard; ochre stone and blackened steel, crenellated fortress battlements, broad overlapping shields.\nROW 5 COLUMN 2: 垣門外壘土紋法杖 [lg_equip_lg_body_integration_m1_entry_spirit_staff], equipment. 杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: segmented scepter with an angular crystal cage; ochre stone and blackened steel, crenellated fortress battlements, broad overlapping shields.\nROW 5 COLUMN 3: 垣門外壘土紋冠 [lg_equip_lg_body_integration_m1_entry_head], equipment. 以垣門外壘礦材與首領部件鍛成的冠位護具。 Visual motif/material: compact wrapped headpiece with a curved metal brow plate; ochre stone and blackened steel, crenellated fortress battlements, broad overlapping shields.\nROW 5 COLUMN 4: 垣門外壘土紋衣 [lg_equip_lg_body_integration_m1_entry_body], equipment. 以垣門外壘礦材與首領部件鍛成的衣位護具。 Visual motif/material: sleeveless long ritual vest over folded fabric panels; ochre stone and blackened steel, crenellated fortress battlements, broad overlapping shields.\nROW 5 COLUMN 5: 垣門外壘土紋履 [lg_equip_lg_body_integration_m1_entry_legs], equipment. 以垣門外壘礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of armored shin-high boots with angular toe guards; ochre stone and blackened steel, crenellated fortress battlements, broad overlapping shields.\nROW 5 COLUMN 6: 垣門外壘土紋佩 [lg_equip_lg_body_integration_m1_entry_accessory], equipment. 以垣門外壘礦材與首領部件鍛成的佩位護具。 Visual motif/material: diamond-shaped pendant with two small beads; ochre stone and blackened steel, crenellated fortress battlements, broad overlapping shields.\nROW 6 COLUMN 1: 鏡我之澤土煞戰刃 [lg_equip_lg_body_integration_m2_entry_war_blade], equipment. 以鏡我之澤礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: wide tapered ancient bronze battle sword; silver mirrors and dark turquoise lacquer, reflective oval insets, liquid droplet contours.\nROW 6 COLUMN 2: 鏡我之澤土紋法杖 [lg_equip_lg_body_integration_m2_entry_spirit_staff], equipment. 杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: long staff topped by a compact sculpted seal; silver mirrors and dark turquoise lacquer, reflective oval insets, liquid droplet contours.\nROW 6 COLUMN 3: 鏡我之澤土紋冠 [lg_equip_lg_body_integration_m2_entry_head], equipment. 以鏡我之澤礦材與首領部件鍛成的冠位護具。 Visual motif/material: wide arch-shaped ancient ritual crown; silver mirrors and dark turquoise lacquer, reflective oval insets, liquid droplet contours.\nROW 6 COLUMN 4: 鏡我之澤土紋衣 [lg_equip_lg_body_integration_m2_entry_body], equipment. 以鏡我之澤礦材與首領部件鍛成的衣位護具。 Visual motif/material: high-collar Taoist battle coat with narrow sleeves; silver mirrors and dark turquoise lacquer, reflective oval insets, liquid droplet contours.\nROW 6 COLUMN 5: 鏡我之澤土紋履 [lg_equip_lg_body_integration_m2_entry_legs], equipment. 以鏡我之澤礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of elegant ankle boots with split cuffs; silver mirrors and dark turquoise lacquer, reflective oval insets, liquid droplet contours.\nROW 6 COLUMN 6: 鏡我之澤土紋佩 [lg_equip_lg_body_integration_m2_entry_accessory], equipment. 以鏡我之澤礦材與首領部件鍛成的佩位護具。 Visual motif/material: small sculpted seal pendant on a looped cord; silver mirrors and dark turquoise lacquer, reflective oval insets, liquid droplet contours.",
+  "mode": "built-in-imagegen-atlas",
+  "sourceSha256": "94cf371999ce1fb50e66f4f8cbea0d14b947926aea96ea5b660e08a4f2cc7360",
+  "dimensions": [
+    1254,
+    1254
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "id": "late-unique-06",
+  "columns": 6,
+  "rows": 6,
+  "items": [
+    {
+      "id": "lg_equip_lg_body_integration_m3_entry_war_blade",
+      "name": "法骸陵土煞戰刃",
+      "type": "equipment",
+      "desc": "以法骸陵礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m3_entry_spirit_staff",
+      "name": "法骸陵土紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m3_entry_head",
+      "name": "法骸陵土紋冠",
+      "type": "equipment",
+      "desc": "以法骸陵礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m3_entry_body",
+      "name": "法骸陵土紋衣",
+      "type": "equipment",
+      "desc": "以法骸陵礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m3_entry_legs",
+      "name": "法骸陵土紋履",
+      "type": "equipment",
+      "desc": "以法骸陵礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m3_entry_accessory",
+      "name": "法骸陵土紋佩",
+      "type": "equipment",
+      "desc": "以法骸陵礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m4_entry_war_blade",
+      "name": "垣心之井木煞戰刃",
+      "type": "equipment",
+      "desc": "以垣心之井礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m4_entry_spirit_staff",
+      "name": "垣心之井木紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m4_entry_head",
+      "name": "垣心之井木紋冠",
+      "type": "equipment",
+      "desc": "以垣心之井礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m4_entry_body",
+      "name": "垣心之井木紋衣",
+      "type": "equipment",
+      "desc": "以垣心之井礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m4_entry_legs",
+      "name": "垣心之井木紋履",
+      "type": "equipment",
+      "desc": "以垣心之井礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_body_integration_m4_entry_accessory",
+      "name": "垣心之井木紋佩",
+      "type": "equipment",
+      "desc": "以垣心之井礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m1_entry_war_blade",
+      "name": "劫風口木煞戰刃",
+      "type": "equipment",
+      "desc": "以劫風口礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m1_entry_spirit_staff",
+      "name": "劫風口木紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m1_entry_head",
+      "name": "劫風口木紋冠",
+      "type": "equipment",
+      "desc": "以劫風口礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m1_entry_body",
+      "name": "劫風口木紋衣",
+      "type": "equipment",
+      "desc": "以劫風口礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m1_entry_legs",
+      "name": "劫風口木紋履",
+      "type": "equipment",
+      "desc": "以劫風口礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m1_entry_accessory",
+      "name": "劫風口木紋佩",
+      "type": "equipment",
+      "desc": "以劫風口礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m2_entry_war_blade",
+      "name": "雷罰原金煞戰刃",
+      "type": "equipment",
+      "desc": "以雷罰原礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m2_entry_spirit_staff",
+      "name": "雷罰原金紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m2_entry_head",
+      "name": "雷罰原金紋冠",
+      "type": "equipment",
+      "desc": "以雷罰原礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m2_entry_body",
+      "name": "雷罰原金紋衣",
+      "type": "equipment",
+      "desc": "以雷罰原礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m2_entry_legs",
+      "name": "雷罰原金紋履",
+      "type": "equipment",
+      "desc": "以雷罰原礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m2_entry_accessory",
+      "name": "雷罰原金紋佩",
+      "type": "equipment",
+      "desc": "以雷罰原礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m3_entry_war_blade",
+      "name": "獸潮舊壘木煞戰刃",
+      "type": "equipment",
+      "desc": "以獸潮舊壘礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m3_entry_spirit_staff",
+      "name": "獸潮舊壘木紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m3_entry_head",
+      "name": "獸潮舊壘木紋冠",
+      "type": "equipment",
+      "desc": "以獸潮舊壘礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m3_entry_body",
+      "name": "獸潮舊壘木紋衣",
+      "type": "equipment",
+      "desc": "以獸潮舊壘礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m3_entry_legs",
+      "name": "獸潮舊壘木紋履",
+      "type": "equipment",
+      "desc": "以獸潮舊壘礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m3_entry_accessory",
+      "name": "獸潮舊壘木紋佩",
+      "type": "equipment",
+      "desc": "以獸潮舊壘礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m4_entry_war_blade",
+      "name": "天痕下坡金煞戰刃",
+      "type": "equipment",
+      "desc": "以天痕下坡礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m4_entry_spirit_staff",
+      "name": "天痕下坡金紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m4_entry_head",
+      "name": "天痕下坡金紋冠",
+      "type": "equipment",
+      "desc": "以天痕下坡礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m4_entry_body",
+      "name": "天痕下坡金紋衣",
+      "type": "equipment",
+      "desc": "以天痕下坡礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m4_entry_legs",
+      "name": "天痕下坡金紋履",
+      "type": "equipment",
+      "desc": "以天痕下坡礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_great_vehicle_m4_entry_accessory",
+      "name": "天痕下坡金紋佩",
+      "type": "equipment",
+      "desc": "以天痕下坡礦材與首領部件鍛成的佩位護具。"
+    }
+  ],
+  "prompt": "Create ONE multi-item sprite atlas with exactly 36 DISTINCT Chinese xianxia game item icons, strict 6 columns x 6 rows of equal square cells. Match the attached existing game atlas as STYLE REFERENCE ONLY, replace all depicted objects with the roster below. This is one sheet containing MANY items, NOT a single large item. True transparent alpha background everywhere outside objects. Every complete icon including glow must fit central 64% of its own cell, with at least 18% empty transparent padding on every side. Nothing may cross a cell boundary. No visible grid, frames, lettering, labels, numbers, text, watermark. Cohesive vibrant hand-painted fantasy GAME ICONS: crisp silhouette readable at 40px, clear metallic/cloth highlights, restrained elemental accents, not photorealistic closeups. Distinguish blade versus staff, crown versus robe, boots and pendant. Equipment is displayed without wearer, body parts or mannequin. Entire weapons and both shoes fit inside their assigned cells. Vary physical shape and material according to each named origin, not just recolors. EXACT row-major order; names and IDs are metadata, NOT text to draw.\nROW 1 COLUMN 1: 法骸陵土煞戰刃 [lg_equip_lg_body_integration_m3_entry_war_blade], equipment. 以法骸陵礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: crescent-tipped long dao with an openwork spine; bone-white marble, burial bronze, vertebral segmented ridges and austere funerary geometry.\nROW 1 COLUMN 2: 法骸陵土紋法杖 [lg_equip_lg_body_integration_m3_entry_spirit_staff], equipment. 杖芯刻入土行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: lean ritual pole with a suspended small charm; bone-white marble, burial bronze, vertebral segmented ridges and austere funerary geometry.\nROW 1 COLUMN 3: 法骸陵土紋冠 [lg_equip_lg_body_integration_m3_entry_head], equipment. 以法骸陵礦材與首領部件鍛成的冠位護具。 Visual motif/material: asymmetrical swept-back crown with side fins; bone-white marble, burial bronze, vertebral segmented ridges and austere funerary geometry.\nROW 1 COLUMN 4: 法骸陵土紋衣 [lg_equip_lg_body_integration_m3_entry_body], equipment. 以法骸陵礦材與首領部件鍛成的衣位護具。 Visual motif/material: asymmetric draped battle robe with one armored shoulder; bone-white marble, burial bronze, vertebral segmented ridges and austere funerary geometry.\nROW 1 COLUMN 5: 法骸陵土紋履 [lg_equip_lg_body_integration_m3_entry_legs], equipment. 以法骸陵礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of thick-soled travel boots with braided straps; bone-white marble, burial bronze, vertebral segmented ridges and austere funerary geometry.\nROW 1 COLUMN 6: 法骸陵土紋佩 [lg_equip_lg_body_integration_m3_entry_accessory], equipment. 以法骸陵礦材與首領部件鍛成的佩位護具。 Visual motif/material: crescent-shaped waist ornament; bone-white marble, burial bronze, vertebral segmented ridges and austere funerary geometry.\nROW 2 COLUMN 1: 垣心之井木煞戰刃 [lg_equip_lg_body_integration_m4_entry_war_blade], equipment. 以垣心之井礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: straight ridge-backed war sword with asymmetric guard; deep emerald roots and old limestone, circular well-ring motifs, braided living vines.\nROW 2 COLUMN 2: 垣心之井木紋法杖 [lg_equip_lg_body_integration_m4_entry_spirit_staff], equipment. 杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: crooked staff whose head curls into an open spiral; deep emerald roots and old limestone, circular well-ring motifs, braided living vines.\nROW 2 COLUMN 3: 垣心之井木紋冠 [lg_equip_lg_body_integration_m4_entry_head], equipment. 以垣心之井礦材與首領部件鍛成的冠位護具。 Visual motif/material: cylindrical ancient crown with open lattice; deep emerald roots and old limestone, circular well-ring motifs, braided living vines.\nROW 2 COLUMN 4: 垣心之井木紋衣 [lg_equip_lg_body_integration_m4_entry_body], equipment. 以垣心之井礦材與首領部件鍛成的衣位護具。 Visual motif/material: long ceremonial coat with broad shoulder cape; deep emerald roots and old limestone, circular well-ring motifs, braided living vines.\nROW 2 COLUMN 5: 垣心之井木紋履 [lg_equip_lg_body_integration_m4_entry_legs], equipment. 以垣心之井礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of slender pointed ritual boots; deep emerald roots and old limestone, circular well-ring motifs, braided living vines.\nROW 2 COLUMN 6: 垣心之井木紋佩 [lg_equip_lg_body_integration_m4_entry_accessory], equipment. 以垣心之井礦材與首領部件鍛成的佩位護具。 Visual motif/material: layered rectangular jade tally pendant; deep emerald roots and old limestone, circular well-ring motifs, braided living vines.\nROW 3 COLUMN 1: 劫風口木煞戰刃 [lg_equip_lg_great_vehicle_m1_entry_war_blade], equipment. 以劫風口礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: heavy angular cleaver-like ceremonial saber; storm-worn green wood and black jade, swept wind fins and resilient bent reed shapes.\nROW 3 COLUMN 2: 劫風口木紋法杖 [lg_equip_lg_great_vehicle_m1_entry_spirit_staff], equipment. 杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: broad-headed ritual staff with a geometric cap; storm-worn green wood and black jade, swept wind fins and resilient bent reed shapes.\nROW 3 COLUMN 3: 劫風口木紋冠 [lg_equip_lg_great_vehicle_m1_entry_head], equipment. 以劫風口礦材與首領部件鍛成的冠位護具。 Visual motif/material: layered low-profile circlet with a rear upright crest; storm-worn green wood and black jade, swept wind fins and resilient bent reed shapes.\nROW 3 COLUMN 4: 劫風口木紋衣 [lg_equip_lg_great_vehicle_m1_entry_body], equipment. 以劫風口礦材與首領部件鍛成的衣位護具。 Visual motif/material: compact lamellar chest robe with a split lower hem; storm-worn green wood and black jade, swept wind fins and resilient bent reed shapes.\nROW 3 COLUMN 5: 劫風口木紋履 [lg_equip_lg_great_vehicle_m1_entry_legs], equipment. 以劫風口礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of layered scale-armored boots; storm-worn green wood and black jade, swept wind fins and resilient bent reed shapes.\nROW 3 COLUMN 6: 劫風口木紋佩 [lg_equip_lg_great_vehicle_m1_entry_accessory], equipment. 以劫風口礦材與首領部件鍛成的佩位護具。 Visual motif/material: asymmetrical knot-hung carved amulet; storm-worn green wood and black jade, swept wind fins and resilient bent reed shapes.\nROW 4 COLUMN 1: 雷罰原金煞戰刃 [lg_equip_lg_great_vehicle_m2_entry_war_blade], equipment. 以雷罰原礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: single-edged broad dao with a clipped tip; bright storm silver, scorched purple enamel, forked thunder-strike forms and lightning rods.\nROW 4 COLUMN 2: 雷罰原金紋法杖 [lg_equip_lg_great_vehicle_m2_entry_spirit_staff], equipment. 杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: long straight staff with a forked finial; bright storm silver, scorched purple enamel, forked thunder-strike forms and lightning rods.\nROW 4 COLUMN 3: 雷罰原金紋冠 [lg_equip_lg_great_vehicle_m2_entry_head], equipment. 以雷罰原礦材與首領部件鍛成的冠位護具。 Visual motif/material: low Chinese cultivator coronet with a single central crest; bright storm silver, scorched purple enamel, forked thunder-strike forms and lightning rods.\nROW 4 COLUMN 4: 雷罰原金紋衣 [lg_equip_lg_great_vehicle_m2_entry_body], equipment. 以雷罰原礦材與首領部件鍛成的衣位護具。 Visual motif/material: long cross-collar cultivator robe with wide sleeves and one broad sash; bright storm silver, scorched purple enamel, forked thunder-strike forms and lightning rods.\nROW 4 COLUMN 5: 雷罰原金紋履 [lg_equip_lg_great_vehicle_m2_entry_legs], equipment. 以雷罰原礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of low soft cloth cultivation shoes with upturned tips; bright storm silver, scorched purple enamel, forked thunder-strike forms and lightning rods.\nROW 4 COLUMN 6: 雷罰原金紋佩 [lg_equip_lg_great_vehicle_m2_entry_accessory], equipment. 以雷罰原礦材與首領部件鍛成的佩位護具。 Visual motif/material: elongated pendant with one silk tassel; bright storm silver, scorched purple enamel, forked thunder-strike forms and lightning rods.\nROW 5 COLUMN 1: 獸潮舊壘木煞戰刃 [lg_equip_lg_great_vehicle_m3_entry_war_blade], equipment. 以獸潮舊壘礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: slender straight jian with a long diamond tip; umber beast horn, layered green-black scales, rugged spiked siege palisade motifs.\nROW 5 COLUMN 2: 獸潮舊壘木紋法杖 [lg_equip_lg_great_vehicle_m3_entry_spirit_staff], equipment. 杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: curved wooden staff with a ring-shaped head; umber beast horn, layered green-black scales, rugged spiked siege palisade motifs.\nROW 5 COLUMN 3: 獸潮舊壘木紋冠 [lg_equip_lg_great_vehicle_m3_entry_head], equipment. 以獸潮舊壘礦材與首領部件鍛成的冠位護具。 Visual motif/material: tall openwork Taoist crown with three rising prongs; umber beast horn, layered green-black scales, rugged spiked siege palisade motifs.\nROW 5 COLUMN 4: 獸潮舊壘木紋衣 [lg_equip_lg_great_vehicle_m3_entry_body], equipment. 以獸潮舊壘礦材與首領部件鍛成的衣位護具。 Visual motif/material: short layered robe-armor with overlapping shoulder plates; umber beast horn, layered green-black scales, rugged spiked siege palisade motifs.\nROW 5 COLUMN 5: 獸潮舊壘木紋履 [lg_equip_lg_great_vehicle_m3_entry_legs], equipment. 以獸潮舊壘礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of tall wrapped martial boots; umber beast horn, layered green-black scales, rugged spiked siege palisade motifs.\nROW 5 COLUMN 6: 獸潮舊壘木紋佩 [lg_equip_lg_great_vehicle_m3_entry_accessory], equipment. 以獸潮舊壘礦材與首領部件鍛成的佩位護具。 Visual motif/material: circular openwork waist medallion; umber beast horn, layered green-black scales, rugged spiked siege palisade motifs.\nROW 6 COLUMN 1: 天痕下坡金煞戰刃 [lg_equip_lg_great_vehicle_m4_entry_war_blade], equipment. 以天痕下坡礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: forward-curved falchion with a hook guard; pale gold and sky-blue crystal, a single dramatic celestial split, long descending taper.\nROW 6 COLUMN 2: 天痕下坡金紋法杖 [lg_equip_lg_great_vehicle_m4_entry_spirit_staff], equipment. 杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: segmented scepter with an angular crystal cage; pale gold and sky-blue crystal, a single dramatic celestial split, long descending taper.\nROW 6 COLUMN 3: 天痕下坡金紋冠 [lg_equip_lg_great_vehicle_m4_entry_head], equipment. 以天痕下坡礦材與首領部件鍛成的冠位護具。 Visual motif/material: compact wrapped headpiece with a curved metal brow plate; pale gold and sky-blue crystal, a single dramatic celestial split, long descending taper.\nROW 6 COLUMN 4: 天痕下坡金紋衣 [lg_equip_lg_great_vehicle_m4_entry_body], equipment. 以天痕下坡礦材與首領部件鍛成的衣位護具。 Visual motif/material: sleeveless long ritual vest over folded fabric panels; pale gold and sky-blue crystal, a single dramatic celestial split, long descending taper.\nROW 6 COLUMN 5: 天痕下坡金紋履 [lg_equip_lg_great_vehicle_m4_entry_legs], equipment. 以天痕下坡礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of armored shin-high boots with angular toe guards; pale gold and sky-blue crystal, a single dramatic celestial split, long descending taper.\nROW 6 COLUMN 6: 天痕下坡金紋佩 [lg_equip_lg_great_vehicle_m4_entry_accessory], equipment. 以天痕下坡礦材與首領部件鍛成的佩位護具。 Visual motif/material: diamond-shaped pendant with two small beads; pale gold and sky-blue crystal, a single dramatic celestial split, long descending taper.",
+  "mode": "built-in-imagegen-atlas",
+  "sourceSha256": "f879837042869f7a48f88e1eaebfd14b532e14304aaffc29f3827896934e2fac",
+  "dimensions": [
+    1254,
+    1254
+  ]
+}

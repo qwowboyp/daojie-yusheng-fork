@@ -1,0 +1,230 @@
+{
+  "id": "late-unique-03",
+  "columns": 6,
+  "rows": 6,
+  "items": [
+    {
+      "id": "lg_equip_lg_golden_core_xinjin_slope_war_blade",
+      "name": "薪盡坡火煞戰刃",
+      "type": "equipment",
+      "desc": "以薪盡坡礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_xinjin_slope_spirit_staff",
+      "name": "薪盡坡火紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_xinjin_slope_head",
+      "name": "薪盡坡火紋冠",
+      "type": "equipment",
+      "desc": "以薪盡坡礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_xinjin_slope_body",
+      "name": "薪盡坡火紋衣",
+      "type": "equipment",
+      "desc": "以薪盡坡礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_xinjin_slope_legs",
+      "name": "薪盡坡火紋履",
+      "type": "equipment",
+      "desc": "以薪盡坡礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_xinjin_slope_accessory",
+      "name": "薪盡坡火紋佩",
+      "type": "equipment",
+      "desc": "以薪盡坡礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_molten_channel_war_blade",
+      "name": "熔渠舊坊火煞戰刃",
+      "type": "equipment",
+      "desc": "以熔渠舊坊礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_molten_channel_spirit_staff",
+      "name": "熔渠舊坊火紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_molten_channel_head",
+      "name": "熔渠舊坊火紋冠",
+      "type": "equipment",
+      "desc": "以熔渠舊坊礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_molten_channel_body",
+      "name": "熔渠舊坊火紋衣",
+      "type": "equipment",
+      "desc": "以熔渠舊坊礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_molten_channel_legs",
+      "name": "熔渠舊坊火紋履",
+      "type": "equipment",
+      "desc": "以熔渠舊坊礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_molten_channel_accessory",
+      "name": "熔渠舊坊火紋佩",
+      "type": "equipment",
+      "desc": "以熔渠舊坊礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_hanging_lamps_war_blade",
+      "name": "懸燈峽火煞戰刃",
+      "type": "equipment",
+      "desc": "以懸燈峽礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_hanging_lamps_spirit_staff",
+      "name": "懸燈峽火紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_hanging_lamps_head",
+      "name": "懸燈峽火紋冠",
+      "type": "equipment",
+      "desc": "以懸燈峽礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_hanging_lamps_body",
+      "name": "懸燈峽火紋衣",
+      "type": "equipment",
+      "desc": "以懸燈峽礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_hanging_lamps_legs",
+      "name": "懸燈峽火紋履",
+      "type": "equipment",
+      "desc": "以懸燈峽礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_hanging_lamps_accessory",
+      "name": "懸燈峽火紋佩",
+      "type": "equipment",
+      "desc": "以懸燈峽礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_sky_mending_furnace_war_blade",
+      "name": "補天殘爐火煞戰刃",
+      "type": "equipment",
+      "desc": "以補天殘爐礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_sky_mending_furnace_spirit_staff",
+      "name": "補天殘爐火紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_sky_mending_furnace_head",
+      "name": "補天殘爐火紋冠",
+      "type": "equipment",
+      "desc": "以補天殘爐礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_sky_mending_furnace_body",
+      "name": "補天殘爐火紋衣",
+      "type": "equipment",
+      "desc": "以補天殘爐礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_sky_mending_furnace_legs",
+      "name": "補天殘爐火紋履",
+      "type": "equipment",
+      "desc": "以補天殘爐礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_golden_core_sky_mending_furnace_accessory",
+      "name": "補天殘爐火紋佩",
+      "type": "equipment",
+      "desc": "以補天殘爐礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m1_entry_war_blade",
+      "name": "漏聲灘水煞戰刃",
+      "type": "equipment",
+      "desc": "以漏聲灘礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m1_entry_spirit_staff",
+      "name": "漏聲灘水紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入水行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m1_entry_head",
+      "name": "漏聲灘水紋冠",
+      "type": "equipment",
+      "desc": "以漏聲灘礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m1_entry_body",
+      "name": "漏聲灘水紋衣",
+      "type": "equipment",
+      "desc": "以漏聲灘礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m1_entry_legs",
+      "name": "漏聲灘水紋履",
+      "type": "equipment",
+      "desc": "以漏聲灘礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m1_entry_accessory",
+      "name": "漏聲灘水紋佩",
+      "type": "equipment",
+      "desc": "以漏聲灘礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m2_entry_war_blade",
+      "name": "沉鐘澥水煞戰刃",
+      "type": "equipment",
+      "desc": "以沉鐘澥礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m2_entry_spirit_staff",
+      "name": "沉鐘澥水紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入水行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m2_entry_head",
+      "name": "沉鐘澥水紋冠",
+      "type": "equipment",
+      "desc": "以沉鐘澥礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m2_entry_body",
+      "name": "沉鐘澥水紋衣",
+      "type": "equipment",
+      "desc": "以沉鐘澥礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m2_entry_legs",
+      "name": "沉鐘澥水紋履",
+      "type": "equipment",
+      "desc": "以沉鐘澥礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m2_entry_accessory",
+      "name": "沉鐘澥水紋佩",
+      "type": "equipment",
+      "desc": "以沉鐘澥礦材與首領部件鍛成的佩位護具。"
+    }
+  ],
+  "prompt": "Create ONE multi-item sprite atlas with exactly 36 DISTINCT Chinese xianxia game item icons, strict 6 columns x 6 rows of equal square cells. Match the attached existing game atlas as STYLE REFERENCE ONLY, replace all depicted objects with the roster below. This is one sheet containing MANY items, NOT a single large item. True transparent alpha background everywhere outside objects. Every complete icon including glow must fit central 64% of its own cell, with at least 18% empty transparent padding on every side. Nothing may cross a cell boundary. No visible grid, frames, lettering, labels, numbers, text, watermark. Cohesive vibrant hand-painted fantasy GAME ICONS: crisp silhouette readable at 40px, clear metallic/cloth highlights, restrained elemental accents, not photorealistic closeups. Distinguish blade versus staff, crown versus robe, boots and pendant. Equipment is displayed without wearer, body parts or mannequin. Entire weapons and both shoes fit inside their assigned cells. Vary physical shape and material according to each named origin, not just recolors. EXACT row-major order; names and IDs are metadata, NOT text to draw.\nROW 1 COLUMN 1: 薪盡坡火煞戰刃 [lg_equip_lg_golden_core_xinjin_slope_war_blade], equipment. 以薪盡坡礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: single-edged broad dao with a clipped tip; charred timber, dark copper, ember-orange cracks, bundled firewood and a tiny surviving coal.\nROW 1 COLUMN 2: 薪盡坡火紋法杖 [lg_equip_lg_golden_core_xinjin_slope_spirit_staff], equipment. 杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: long straight staff with a forked finial; charred timber, dark copper, ember-orange cracks, bundled firewood and a tiny surviving coal.\nROW 1 COLUMN 3: 薪盡坡火紋冠 [lg_equip_lg_golden_core_xinjin_slope_head], equipment. 以薪盡坡礦材與首領部件鍛成的冠位護具。 Visual motif/material: low Chinese cultivator coronet with a single central crest; charred timber, dark copper, ember-orange cracks, bundled firewood and a tiny surviving coal.\nROW 1 COLUMN 4: 薪盡坡火紋衣 [lg_equip_lg_golden_core_xinjin_slope_body], equipment. 以薪盡坡礦材與首領部件鍛成的衣位護具。 Visual motif/material: long cross-collar cultivator robe with wide sleeves and one broad sash; charred timber, dark copper, ember-orange cracks, bundled firewood and a tiny surviving coal.\nROW 1 COLUMN 5: 薪盡坡火紋履 [lg_equip_lg_golden_core_xinjin_slope_legs], equipment. 以薪盡坡礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of low soft cloth cultivation shoes with upturned tips; charred timber, dark copper, ember-orange cracks, bundled firewood and a tiny surviving coal.\nROW 1 COLUMN 6: 薪盡坡火紋佩 [lg_equip_lg_golden_core_xinjin_slope_accessory], equipment. 以薪盡坡礦材與首領部件鍛成的佩位護具。 Visual motif/material: elongated pendant with one silk tassel; charred timber, dark copper, ember-orange cracks, bundled firewood and a tiny surviving coal.\nROW 2 COLUMN 1: 熔渠舊坊火煞戰刃 [lg_equip_lg_golden_core_molten_channel_war_blade], equipment. 以熔渠舊坊礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: slender straight jian with a long diamond tip; forged black iron, molten copper channels, angular industrial rivets and segmented crucible plates.\nROW 2 COLUMN 2: 熔渠舊坊火紋法杖 [lg_equip_lg_golden_core_molten_channel_spirit_staff], equipment. 杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: curved wooden staff with a ring-shaped head; forged black iron, molten copper channels, angular industrial rivets and segmented crucible plates.\nROW 2 COLUMN 3: 熔渠舊坊火紋冠 [lg_equip_lg_golden_core_molten_channel_head], equipment. 以熔渠舊坊礦材與首領部件鍛成的冠位護具。 Visual motif/material: tall openwork Taoist crown with three rising prongs; forged black iron, molten copper channels, angular industrial rivets and segmented crucible plates.\nROW 2 COLUMN 4: 熔渠舊坊火紋衣 [lg_equip_lg_golden_core_molten_channel_body], equipment. 以熔渠舊坊礦材與首領部件鍛成的衣位護具。 Visual motif/material: short layered robe-armor with overlapping shoulder plates; forged black iron, molten copper channels, angular industrial rivets and segmented crucible plates.\nROW 2 COLUMN 5: 熔渠舊坊火紋履 [lg_equip_lg_golden_core_molten_channel_legs], equipment. 以熔渠舊坊礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of tall wrapped martial boots; forged black iron, molten copper channels, angular industrial rivets and segmented crucible plates.\nROW 2 COLUMN 6: 熔渠舊坊火紋佩 [lg_equip_lg_golden_core_molten_channel_accessory], equipment. 以熔渠舊坊礦材與首領部件鍛成的佩位護具。 Visual motif/material: circular openwork waist medallion; forged black iron, molten copper channels, angular industrial rivets and segmented crucible plates.\nROW 3 COLUMN 1: 懸燈峽火煞戰刃 [lg_equip_lg_golden_core_hanging_lamps_war_blade], equipment. 以懸燈峽礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: forward-curved falchion with a hook guard; smoked gold, suspended miniature lantern shapes, thin hanging chains and red silk knots.\nROW 3 COLUMN 2: 懸燈峽火紋法杖 [lg_equip_lg_golden_core_hanging_lamps_spirit_staff], equipment. 杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: segmented scepter with an angular crystal cage; smoked gold, suspended miniature lantern shapes, thin hanging chains and red silk knots.\nROW 3 COLUMN 3: 懸燈峽火紋冠 [lg_equip_lg_golden_core_hanging_lamps_head], equipment. 以懸燈峽礦材與首領部件鍛成的冠位護具。 Visual motif/material: compact wrapped headpiece with a curved metal brow plate; smoked gold, suspended miniature lantern shapes, thin hanging chains and red silk knots.\nROW 3 COLUMN 4: 懸燈峽火紋衣 [lg_equip_lg_golden_core_hanging_lamps_body], equipment. 以懸燈峽礦材與首領部件鍛成的衣位護具。 Visual motif/material: sleeveless long ritual vest over folded fabric panels; smoked gold, suspended miniature lantern shapes, thin hanging chains and red silk knots.\nROW 3 COLUMN 5: 懸燈峽火紋履 [lg_equip_lg_golden_core_hanging_lamps_legs], equipment. 以懸燈峽礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of armored shin-high boots with angular toe guards; smoked gold, suspended miniature lantern shapes, thin hanging chains and red silk knots.\nROW 3 COLUMN 6: 懸燈峽火紋佩 [lg_equip_lg_golden_core_hanging_lamps_accessory], equipment. 以懸燈峽礦材與首領部件鍛成的佩位護具。 Visual motif/material: diamond-shaped pendant with two small beads; smoked gold, suspended miniature lantern shapes, thin hanging chains and red silk knots.\nROW 4 COLUMN 1: 補天殘爐火煞戰刃 [lg_equip_lg_golden_core_sky_mending_furnace_war_blade], equipment. 以補天殘爐礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: wide tapered ancient bronze battle sword; cracked white ceramic and ancient bronze, gold repaired seams, monumental three-legged furnace forms.\nROW 4 COLUMN 2: 補天殘爐火紋法杖 [lg_equip_lg_golden_core_sky_mending_furnace_spirit_staff], equipment. 杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: long staff topped by a compact sculpted seal; cracked white ceramic and ancient bronze, gold repaired seams, monumental three-legged furnace forms.\nROW 4 COLUMN 3: 補天殘爐火紋冠 [lg_equip_lg_golden_core_sky_mending_furnace_head], equipment. 以補天殘爐礦材與首領部件鍛成的冠位護具。 Visual motif/material: wide arch-shaped ancient ritual crown; cracked white ceramic and ancient bronze, gold repaired seams, monumental three-legged furnace forms.\nROW 4 COLUMN 4: 補天殘爐火紋衣 [lg_equip_lg_golden_core_sky_mending_furnace_body], equipment. 以補天殘爐礦材與首領部件鍛成的衣位護具。 Visual motif/material: high-collar Taoist battle coat with narrow sleeves; cracked white ceramic and ancient bronze, gold repaired seams, monumental three-legged furnace forms.\nROW 4 COLUMN 5: 補天殘爐火紋履 [lg_equip_lg_golden_core_sky_mending_furnace_legs], equipment. 以補天殘爐礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of elegant ankle boots with split cuffs; cracked white ceramic and ancient bronze, gold repaired seams, monumental three-legged furnace forms.\nROW 4 COLUMN 6: 補天殘爐火紋佩 [lg_equip_lg_golden_core_sky_mending_furnace_accessory], equipment. 以補天殘爐礦材與首領部件鍛成的佩位護具。 Visual motif/material: small sculpted seal pendant on a looped cord; cracked white ceramic and ancient bronze, gold repaired seams, monumental three-legged furnace forms.\nROW 5 COLUMN 1: 漏聲灘水煞戰刃 [lg_equip_lg_nascent_soul_m1_entry_war_blade], equipment. 以漏聲灘礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: crescent-tipped long dao with an openwork spine; pale sea glass, weathered driftwood, hollow listening shells and rippled sand impressions.\nROW 5 COLUMN 2: 漏聲灘水紋法杖 [lg_equip_lg_nascent_soul_m1_entry_spirit_staff], equipment. 杖芯刻入水行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: lean ritual pole with a suspended small charm; pale sea glass, weathered driftwood, hollow listening shells and rippled sand impressions.\nROW 5 COLUMN 3: 漏聲灘水紋冠 [lg_equip_lg_nascent_soul_m1_entry_head], equipment. 以漏聲灘礦材與首領部件鍛成的冠位護具。 Visual motif/material: asymmetrical swept-back crown with side fins; pale sea glass, weathered driftwood, hollow listening shells and rippled sand impressions.\nROW 5 COLUMN 4: 漏聲灘水紋衣 [lg_equip_lg_nascent_soul_m1_entry_body], equipment. 以漏聲灘礦材與首領部件鍛成的衣位護具。 Visual motif/material: asymmetric draped battle robe with one armored shoulder; pale sea glass, weathered driftwood, hollow listening shells and rippled sand impressions.\nROW 5 COLUMN 5: 漏聲灘水紋履 [lg_equip_lg_nascent_soul_m1_entry_legs], equipment. 以漏聲灘礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of thick-soled travel boots with braided straps; pale sea glass, weathered driftwood, hollow listening shells and rippled sand impressions.\nROW 5 COLUMN 6: 漏聲灘水紋佩 [lg_equip_lg_nascent_soul_m1_entry_accessory], equipment. 以漏聲灘礦材與首領部件鍛成的佩位護具。 Visual motif/material: crescent-shaped waist ornament; pale sea glass, weathered driftwood, hollow listening shells and rippled sand impressions.\nROW 6 COLUMN 1: 沉鐘澥水煞戰刃 [lg_equip_lg_nascent_soul_m2_entry_war_blade], equipment. 以沉鐘澥礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: straight ridge-backed war sword with asymmetric guard; verdigris bronze, heavy submerged bell contours, dark teal patina and resonant concentric grooves.\nROW 6 COLUMN 2: 沉鐘澥水紋法杖 [lg_equip_lg_nascent_soul_m2_entry_spirit_staff], equipment. 杖芯刻入水行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: crooked staff whose head curls into an open spiral; verdigris bronze, heavy submerged bell contours, dark teal patina and resonant concentric grooves.\nROW 6 COLUMN 3: 沉鐘澥水紋冠 [lg_equip_lg_nascent_soul_m2_entry_head], equipment. 以沉鐘澥礦材與首領部件鍛成的冠位護具。 Visual motif/material: cylindrical ancient crown with open lattice; verdigris bronze, heavy submerged bell contours, dark teal patina and resonant concentric grooves.\nROW 6 COLUMN 4: 沉鐘澥水紋衣 [lg_equip_lg_nascent_soul_m2_entry_body], equipment. 以沉鐘澥礦材與首領部件鍛成的衣位護具。 Visual motif/material: long ceremonial coat with broad shoulder cape; verdigris bronze, heavy submerged bell contours, dark teal patina and resonant concentric grooves.\nROW 6 COLUMN 5: 沉鐘澥水紋履 [lg_equip_lg_nascent_soul_m2_entry_legs], equipment. 以沉鐘澥礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of slender pointed ritual boots; verdigris bronze, heavy submerged bell contours, dark teal patina and resonant concentric grooves.\nROW 6 COLUMN 6: 沉鐘澥水紋佩 [lg_equip_lg_nascent_soul_m2_entry_accessory], equipment. 以沉鐘澥礦材與首領部件鍛成的佩位護具。 Visual motif/material: layered rectangular jade tally pendant; verdigris bronze, heavy submerged bell contours, dark teal patina and resonant concentric grooves.",
+  "mode": "built-in-imagegen-atlas",
+  "sourceSha256": "37c42e7f3ade770dbe11bde438921766f9682b9fda5d0dba172827ba74ce3b42",
+  "dimensions": [
+    1254,
+    1254
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "id": "late-unique-04",
+  "columns": 6,
+  "rows": 6,
+  "items": [
+    {
+      "id": "lg_equip_lg_nascent_soul_m3_entry_war_blade",
+      "name": "千帆骨場木煞戰刃",
+      "type": "equipment",
+      "desc": "以千帆骨場礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m3_entry_spirit_staff",
+      "name": "千帆骨場木紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m3_entry_head",
+      "name": "千帆骨場木紋冠",
+      "type": "equipment",
+      "desc": "以千帆骨場礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m3_entry_body",
+      "name": "千帆骨場木紋衣",
+      "type": "equipment",
+      "desc": "以千帆骨場礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m3_entry_legs",
+      "name": "千帆骨場木紋履",
+      "type": "equipment",
+      "desc": "以千帆骨場礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m3_entry_accessory",
+      "name": "千帆骨場木紋佩",
+      "type": "equipment",
+      "desc": "以千帆骨場礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m4_entry_war_blade",
+      "name": "回瀾淵水煞戰刃",
+      "type": "equipment",
+      "desc": "以回瀾淵礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m4_entry_spirit_staff",
+      "name": "回瀾淵水紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入水行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m4_entry_head",
+      "name": "回瀾淵水紋冠",
+      "type": "equipment",
+      "desc": "以回瀾淵礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m4_entry_body",
+      "name": "回瀾淵水紋衣",
+      "type": "equipment",
+      "desc": "以回瀾淵礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m4_entry_legs",
+      "name": "回瀾淵水紋履",
+      "type": "equipment",
+      "desc": "以回瀾淵礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_nascent_soul_m4_entry_accessory",
+      "name": "回瀾淵水紋佩",
+      "type": "equipment",
+      "desc": "以回瀾淵礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m1_entry_war_blade",
+      "name": "斷崖階金煞戰刃",
+      "type": "equipment",
+      "desc": "以斷崖階礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m1_entry_spirit_staff",
+      "name": "斷崖階金紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m1_entry_head",
+      "name": "斷崖階金紋冠",
+      "type": "equipment",
+      "desc": "以斷崖階礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m1_entry_body",
+      "name": "斷崖階金紋衣",
+      "type": "equipment",
+      "desc": "以斷崖階礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m1_entry_legs",
+      "name": "斷崖階金紋履",
+      "type": "equipment",
+      "desc": "以斷崖階礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m1_entry_accessory",
+      "name": "斷崖階金紋佩",
+      "type": "equipment",
+      "desc": "以斷崖階礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m2_entry_war_blade",
+      "name": "律動雷原金煞戰刃",
+      "type": "equipment",
+      "desc": "以律動雷原礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m2_entry_spirit_staff",
+      "name": "律動雷原金紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m2_entry_head",
+      "name": "律動雷原金紋冠",
+      "type": "equipment",
+      "desc": "以律動雷原礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m2_entry_body",
+      "name": "律動雷原金紋衣",
+      "type": "equipment",
+      "desc": "以律動雷原礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m2_entry_legs",
+      "name": "律動雷原金紋履",
+      "type": "equipment",
+      "desc": "以律動雷原礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m2_entry_accessory",
+      "name": "律動雷原金紋佩",
+      "type": "equipment",
+      "desc": "以律動雷原礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m3_entry_war_blade",
+      "name": "古觀星臺金煞戰刃",
+      "type": "equipment",
+      "desc": "以古觀星臺礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m3_entry_spirit_staff",
+      "name": "古觀星臺金紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m3_entry_head",
+      "name": "古觀星臺金紋冠",
+      "type": "equipment",
+      "desc": "以古觀星臺礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m3_entry_body",
+      "name": "古觀星臺金紋衣",
+      "type": "equipment",
+      "desc": "以古觀星臺礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m3_entry_legs",
+      "name": "古觀星臺金紋履",
+      "type": "equipment",
+      "desc": "以古觀星臺礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m3_entry_accessory",
+      "name": "古觀星臺金紋佩",
+      "type": "equipment",
+      "desc": "以古觀星臺礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m4_entry_war_blade",
+      "name": "涯底風獄金煞戰刃",
+      "type": "equipment",
+      "desc": "以涯底風獄礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m4_entry_spirit_staff",
+      "name": "涯底風獄金紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m4_entry_head",
+      "name": "涯底風獄金紋冠",
+      "type": "equipment",
+      "desc": "以涯底風獄礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m4_entry_body",
+      "name": "涯底風獄金紋衣",
+      "type": "equipment",
+      "desc": "以涯底風獄礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m4_entry_legs",
+      "name": "涯底風獄金紋履",
+      "type": "equipment",
+      "desc": "以涯底風獄礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_spirit_transformation_m4_entry_accessory",
+      "name": "涯底風獄金紋佩",
+      "type": "equipment",
+      "desc": "以涯底風獄礦材與首領部件鍛成的佩位護具。"
+    }
+  ],
+  "prompt": "Create ONE multi-item sprite atlas with exactly 36 DISTINCT Chinese xianxia game item icons, strict 6 columns x 6 rows of equal square cells. Match the attached existing game atlas as STYLE REFERENCE ONLY, replace all depicted objects with the roster below. This is one sheet containing MANY items, NOT a single large item. True transparent alpha background everywhere outside objects. Every complete icon including glow must fit central 64% of its own cell, with at least 18% empty transparent padding on every side. Nothing may cross a cell boundary. No visible grid, frames, lettering, labels, numbers, text, watermark. Cohesive vibrant hand-painted fantasy GAME ICONS: crisp silhouette readable at 40px, clear metallic/cloth highlights, restrained elemental accents, not photorealistic closeups. Distinguish blade versus staff, crown versus robe, boots and pendant. Equipment is displayed without wearer, body parts or mannequin. Entire weapons and both shoes fit inside their assigned cells. Vary physical shape and material according to each named origin, not just recolors. EXACT row-major order; names and IDs are metadata, NOT text to draw.\nROW 1 COLUMN 1: 千帆骨場木煞戰刃 [lg_equip_lg_nascent_soul_m3_entry_war_blade], equipment. 以千帆骨場礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: heavy angular cleaver-like ceremonial saber; ivory ship ribs, mossy wood, triangular torn-sail motifs and rope lashings.\nROW 1 COLUMN 2: 千帆骨場木紋法杖 [lg_equip_lg_nascent_soul_m3_entry_spirit_staff], equipment. 杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: broad-headed ritual staff with a geometric cap; ivory ship ribs, mossy wood, triangular torn-sail motifs and rope lashings.\nROW 1 COLUMN 3: 千帆骨場木紋冠 [lg_equip_lg_nascent_soul_m3_entry_head], equipment. 以千帆骨場礦材與首領部件鍛成的冠位護具。 Visual motif/material: layered low-profile circlet with a rear upright crest; ivory ship ribs, mossy wood, triangular torn-sail motifs and rope lashings.\nROW 1 COLUMN 4: 千帆骨場木紋衣 [lg_equip_lg_nascent_soul_m3_entry_body], equipment. 以千帆骨場礦材與首領部件鍛成的衣位護具。 Visual motif/material: compact lamellar chest robe with a split lower hem; ivory ship ribs, mossy wood, triangular torn-sail motifs and rope lashings.\nROW 1 COLUMN 5: 千帆骨場木紋履 [lg_equip_lg_nascent_soul_m3_entry_legs], equipment. 以千帆骨場礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of layered scale-armored boots; ivory ship ribs, mossy wood, triangular torn-sail motifs and rope lashings.\nROW 1 COLUMN 6: 千帆骨場木紋佩 [lg_equip_lg_nascent_soul_m3_entry_accessory], equipment. 以千帆骨場礦材與首領部件鍛成的佩位護具。 Visual motif/material: asymmetrical knot-hung carved amulet; ivory ship ribs, mossy wood, triangular torn-sail motifs and rope lashings.\nROW 2 COLUMN 1: 回瀾淵水煞戰刃 [lg_equip_lg_nascent_soul_m4_entry_war_blade], equipment. 以回瀾淵礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: single-edged broad dao with a clipped tip; deep cobalt crystal, silver spiral eddies, asymmetrical curling wave profiles.\nROW 2 COLUMN 2: 回瀾淵水紋法杖 [lg_equip_lg_nascent_soul_m4_entry_spirit_staff], equipment. 杖芯刻入水行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: long straight staff with a forked finial; deep cobalt crystal, silver spiral eddies, asymmetrical curling wave profiles.\nROW 2 COLUMN 3: 回瀾淵水紋冠 [lg_equip_lg_nascent_soul_m4_entry_head], equipment. 以回瀾淵礦材與首領部件鍛成的冠位護具。 Visual motif/material: low Chinese cultivator coronet with a single central crest; deep cobalt crystal, silver spiral eddies, asymmetrical curling wave profiles.\nROW 2 COLUMN 4: 回瀾淵水紋衣 [lg_equip_lg_nascent_soul_m4_entry_body], equipment. 以回瀾淵礦材與首領部件鍛成的衣位護具。 Visual motif/material: long cross-collar cultivator robe with wide sleeves and one broad sash; deep cobalt crystal, silver spiral eddies, asymmetrical curling wave profiles.\nROW 2 COLUMN 5: 回瀾淵水紋履 [lg_equip_lg_nascent_soul_m4_entry_legs], equipment. 以回瀾淵礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of low soft cloth cultivation shoes with upturned tips; deep cobalt crystal, silver spiral eddies, asymmetrical curling wave profiles.\nROW 2 COLUMN 6: 回瀾淵水紋佩 [lg_equip_lg_nascent_soul_m4_entry_accessory], equipment. 以回瀾淵礦材與首領部件鍛成的佩位護具。 Visual motif/material: elongated pendant with one silk tassel; deep cobalt crystal, silver spiral eddies, asymmetrical curling wave profiles.\nROW 3 COLUMN 1: 斷崖階金煞戰刃 [lg_equip_lg_spirit_transformation_m1_entry_war_blade], equipment. 以斷崖階礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: slender straight jian with a long diamond tip; sharp slate stone, brushed silver, stepped cliff edges and narrow vertical ridges.\nROW 3 COLUMN 2: 斷崖階金紋法杖 [lg_equip_lg_spirit_transformation_m1_entry_spirit_staff], equipment. 杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: curved wooden staff with a ring-shaped head; sharp slate stone, brushed silver, stepped cliff edges and narrow vertical ridges.\nROW 3 COLUMN 3: 斷崖階金紋冠 [lg_equip_lg_spirit_transformation_m1_entry_head], equipment. 以斷崖階礦材與首領部件鍛成的冠位護具。 Visual motif/material: tall openwork Taoist crown with three rising prongs; sharp slate stone, brushed silver, stepped cliff edges and narrow vertical ridges.\nROW 3 COLUMN 4: 斷崖階金紋衣 [lg_equip_lg_spirit_transformation_m1_entry_body], equipment. 以斷崖階礦材與首領部件鍛成的衣位護具。 Visual motif/material: short layered robe-armor with overlapping shoulder plates; sharp slate stone, brushed silver, stepped cliff edges and narrow vertical ridges.\nROW 3 COLUMN 5: 斷崖階金紋履 [lg_equip_lg_spirit_transformation_m1_entry_legs], equipment. 以斷崖階礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of tall wrapped martial boots; sharp slate stone, brushed silver, stepped cliff edges and narrow vertical ridges.\nROW 3 COLUMN 6: 斷崖階金紋佩 [lg_equip_lg_spirit_transformation_m1_entry_accessory], equipment. 以斷崖階礦材與首領部件鍛成的佩位護具。 Visual motif/material: circular openwork waist medallion; sharp slate stone, brushed silver, stepped cliff edges and narrow vertical ridges.\nROW 4 COLUMN 1: 律動雷原金煞戰刃 [lg_equip_lg_spirit_transformation_m2_entry_war_blade], equipment. 以律動雷原礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: forward-curved falchion with a hook guard; polished platinum, amethyst lightning channels, tuning-fork prongs and rhythmic triangular ribs.\nROW 4 COLUMN 2: 律動雷原金紋法杖 [lg_equip_lg_spirit_transformation_m2_entry_spirit_staff], equipment. 杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: segmented scepter with an angular crystal cage; polished platinum, amethyst lightning channels, tuning-fork prongs and rhythmic triangular ribs.\nROW 4 COLUMN 3: 律動雷原金紋冠 [lg_equip_lg_spirit_transformation_m2_entry_head], equipment. 以律動雷原礦材與首領部件鍛成的冠位護具。 Visual motif/material: compact wrapped headpiece with a curved metal brow plate; polished platinum, amethyst lightning channels, tuning-fork prongs and rhythmic triangular ribs.\nROW 4 COLUMN 4: 律動雷原金紋衣 [lg_equip_lg_spirit_transformation_m2_entry_body], equipment. 以律動雷原礦材與首領部件鍛成的衣位護具。 Visual motif/material: sleeveless long ritual vest over folded fabric panels; polished platinum, amethyst lightning channels, tuning-fork prongs and rhythmic triangular ribs.\nROW 4 COLUMN 5: 律動雷原金紋履 [lg_equip_lg_spirit_transformation_m2_entry_legs], equipment. 以律動雷原礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of armored shin-high boots with angular toe guards; polished platinum, amethyst lightning channels, tuning-fork prongs and rhythmic triangular ribs.\nROW 4 COLUMN 6: 律動雷原金紋佩 [lg_equip_lg_spirit_transformation_m2_entry_accessory], equipment. 以律動雷原礦材與首領部件鍛成的佩位護具。 Visual motif/material: diamond-shaped pendant with two small beads; polished platinum, amethyst lightning channels, tuning-fork prongs and rhythmic triangular ribs.\nROW 5 COLUMN 1: 古觀星臺金煞戰刃 [lg_equip_lg_spirit_transformation_m3_entry_war_blade], equipment. 以古觀星臺礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: wide tapered ancient bronze battle sword; antique gold and midnight enamel, brass astrolabe discs, seven tiny inlaid stars.\nROW 5 COLUMN 2: 古觀星臺金紋法杖 [lg_equip_lg_spirit_transformation_m3_entry_spirit_staff], equipment. 杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: long staff topped by a compact sculpted seal; antique gold and midnight enamel, brass astrolabe discs, seven tiny inlaid stars.\nROW 5 COLUMN 3: 古觀星臺金紋冠 [lg_equip_lg_spirit_transformation_m3_entry_head], equipment. 以古觀星臺礦材與首領部件鍛成的冠位護具。 Visual motif/material: wide arch-shaped ancient ritual crown; antique gold and midnight enamel, brass astrolabe discs, seven tiny inlaid stars.\nROW 5 COLUMN 4: 古觀星臺金紋衣 [lg_equip_lg_spirit_transformation_m3_entry_body], equipment. 以古觀星臺礦材與首領部件鍛成的衣位護具。 Visual motif/material: high-collar Taoist battle coat with narrow sleeves; antique gold and midnight enamel, brass astrolabe discs, seven tiny inlaid stars.\nROW 5 COLUMN 5: 古觀星臺金紋履 [lg_equip_lg_spirit_transformation_m3_entry_legs], equipment. 以古觀星臺礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of elegant ankle boots with split cuffs; antique gold and midnight enamel, brass astrolabe discs, seven tiny inlaid stars.\nROW 5 COLUMN 6: 古觀星臺金紋佩 [lg_equip_lg_spirit_transformation_m3_entry_accessory], equipment. 以古觀星臺礦材與首領部件鍛成的佩位護具。 Visual motif/material: small sculpted seal pendant on a looped cord; antique gold and midnight enamel, brass astrolabe discs, seven tiny inlaid stars.\nROW 6 COLUMN 1: 涯底風獄金煞戰刃 [lg_equip_lg_spirit_transformation_m4_entry_war_blade], equipment. 以涯底風獄礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: crescent-tipped long dao with an openwork spine; dark iron and pale jade, hooked wind blades, open spiral cutouts and taut streamers.\nROW 6 COLUMN 2: 涯底風獄金紋法杖 [lg_equip_lg_spirit_transformation_m4_entry_spirit_staff], equipment. 杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: lean ritual pole with a suspended small charm; dark iron and pale jade, hooked wind blades, open spiral cutouts and taut streamers.\nROW 6 COLUMN 3: 涯底風獄金紋冠 [lg_equip_lg_spirit_transformation_m4_entry_head], equipment. 以涯底風獄礦材與首領部件鍛成的冠位護具。 Visual motif/material: asymmetrical swept-back crown with side fins; dark iron and pale jade, hooked wind blades, open spiral cutouts and taut streamers.\nROW 6 COLUMN 4: 涯底風獄金紋衣 [lg_equip_lg_spirit_transformation_m4_entry_body], equipment. 以涯底風獄礦材與首領部件鍛成的衣位護具。 Visual motif/material: asymmetric draped battle robe with one armored shoulder; dark iron and pale jade, hooked wind blades, open spiral cutouts and taut streamers.\nROW 6 COLUMN 5: 涯底風獄金紋履 [lg_equip_lg_spirit_transformation_m4_entry_legs], equipment. 以涯底風獄礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of thick-soled travel boots with braided straps; dark iron and pale jade, hooked wind blades, open spiral cutouts and taut streamers.\nROW 6 COLUMN 6: 涯底風獄金紋佩 [lg_equip_lg_spirit_transformation_m4_entry_accessory], equipment. 以涯底風獄礦材與首領部件鍛成的佩位護具。 Visual motif/material: crescent-shaped waist ornament; dark iron and pale jade, hooked wind blades, open spiral cutouts and taut streamers.",
+  "mode": "built-in-imagegen-atlas",
+  "sourceSha256": "413beafb45f67ed52a48c0db616b2f70e9bea92bbc3ec08ba0bc80440490c222",
+  "dimensions": [
+    1254,
+    1254
+  ]
+}

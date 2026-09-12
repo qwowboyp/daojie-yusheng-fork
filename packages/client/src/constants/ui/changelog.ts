@@ -13,6 +13,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-12',
+    summary: '七境功法與武防換上專屬圖示。',
+    items: [
+      '功法：五十六本功法書各有獨立封面，依功法意象呈現火焰、潮汐、星辰與草木等紋飾。',
+      '裝備：百六十八件武器、防具與飾品依材料及用途繪製造型，背包、坊市與道具說明同步使用新圖。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-12',
     summary: '七境新增功法、武防與材料收錄坊市目錄，功法書圖片同步齊備。',
     items: [
       '坊市：收錄五十六本功法、百六十八件武防、二百十九種材料與二十八種消耗品，可依物品、裝備部位及功法類別瀏覽。',

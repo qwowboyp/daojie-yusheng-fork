@@ -1,0 +1,230 @@
+{
+  "id": "late-unique-01",
+  "columns": 6,
+  "rows": 6,
+  "items": [
+    {
+      "id": "book.lg_manual_golden_core_1",
+      "name": "《餘燼守爐經》",
+      "type": "skill_book",
+      "desc": "內功全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。側重體魄、經脈、力道，滿層總量遵循同品階、同境界內功基準。"
+    },
+    {
+      "id": "book.lg_manual_golden_core_2",
+      "name": "《燼燈點火訣》",
+      "type": "skill_book",
+      "desc": "法術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。集中靈力打擊單一目標，低耗靈、短冷卻，適合持續作戰。"
+    },
+    {
+      "id": "book.lg_manual_golden_core_3",
+      "name": "《懸燈照脈篇》",
+      "type": "skill_book",
+      "desc": "內功全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。側重神識、身法、根骨，滿層總量遵循同品階、同境界內功基準。"
+    },
+    {
+      "id": "book.lg_manual_golden_core_4",
+      "name": "《薪途識火錄》",
+      "type": "skill_book",
+      "desc": "秘術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。四十五息內視野增加 1 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。"
+    },
+    {
+      "id": "book.lg_manual_golden_core_5",
+      "name": "《熔渠斷流式》",
+      "type": "skill_book",
+      "desc": "法術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。沿直線掃過至多四名目標，單體威力低於專精點殺。"
+    },
+    {
+      "id": "book.lg_manual_golden_core_6",
+      "name": "《百燈護命章》",
+      "type": "skill_book",
+      "desc": "神通全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。回復自身生命，並短暫提升雙防；同類護持不疊加。"
+    },
+    {
+      "id": "book.lg_manual_golden_core_7",
+      "name": "《殘爐養息法》",
+      "type": "skill_book",
+      "desc": "秘術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。二十息內靈力輸出提高 10%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。"
+    },
+    {
+      "id": "book.lg_manual_golden_core_8",
+      "name": "《補天一炬》",
+      "type": "skill_book",
+      "desc": "神通全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。"
+    },
+    {
+      "id": "book.lg_manual_nascent_soul_1",
+      "name": "《沉鐘定魄經》",
+      "type": "skill_book",
+      "desc": "內功全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。側重神識、體魄、經脈，滿層總量遵循同品階、同境界內功基準。"
+    },
+    {
+      "id": "book.lg_manual_nascent_soul_2",
+      "name": "《回瀾分潮訣》",
+      "type": "skill_book",
+      "desc": "法術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。單體水行攻擊，並回復自身少量生命；以較低傷害換取續戰。"
+    },
+    {
+      "id": "book.lg_manual_nascent_soul_3",
+      "name": "《千帆寄神篇》",
+      "type": "skill_book",
+      "desc": "內功全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。側重身法、神識、根骨，滿層總量遵循同品階、同境界內功基準。"
+    },
+    {
+      "id": "book.lg_manual_nascent_soul_4",
+      "name": "《漏聲辨潮錄》",
+      "type": "skill_book",
+      "desc": "秘術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。四十五息內移動速度增加 1，同類引路狀態不疊加。 不提供永久幸運或掉落加成。"
+    },
+    {
+      "id": "book.lg_manual_nascent_soul_5",
+      "name": "《骨帆歸汐式》",
+      "type": "skill_book",
+      "desc": "法術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。以自身為中心的潮環打擊至多五名目標，中央與貼身內圈不受攻擊。"
+    },
+    {
+      "id": "book.lg_manual_nascent_soul_6",
+      "name": "《鎮海安魂章》",
+      "type": "skill_book",
+      "desc": "神通全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。回復自身生命，並短暫提升雙防；同類護持不疊加。"
+    },
+    {
+      "id": "book.lg_manual_nascent_soul_7",
+      "name": "《聽潮澄心法》",
+      "type": "skill_book",
+      "desc": "秘術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。六十息內功法經驗加成增加 5.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。"
+    },
+    {
+      "id": "book.lg_manual_nascent_soul_8",
+      "name": "《萬帆鎮淵》",
+      "type": "skill_book",
+      "desc": "神通全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。蓄勢三息後重擊單一目標；長冷卻的決戰招式。"
+    },
+    {
+      "id": "book.lg_manual_spirit_transformation_1",
+      "name": "《望涯凝神經》",
+      "type": "skill_book",
+      "desc": "內功全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。側重身法、神識、體魄，滿層總量遵循同品階、同境界內功基準。"
+    },
+    {
+      "id": "book.lg_manual_spirit_transformation_2",
+      "name": "《雷原穿雲訣》",
+      "type": "skill_book",
+      "desc": "法術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。遠距離金行穿雲一擊，以略低傷害換取射程。"
+    },
+    {
+      "id": "book.lg_manual_spirit_transformation_3",
+      "name": "《古曜洗髓篇》",
+      "type": "skill_book",
+      "desc": "內功全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。側重力道、經脈、根骨，滿層總量遵循同品階、同境界內功基準。"
+    },
+    {
+      "id": "book.lg_manual_spirit_transformation_4",
+      "name": "《星臺觀路錄》",
+      "type": "skill_book",
+      "desc": "秘術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。四十五息內視野增加 1 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。"
+    },
+    {
+      "id": "book.lg_manual_spirit_transformation_5",
+      "name": "《斷崖截風式》",
+      "type": "skill_book",
+      "desc": "法術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。沿直線掃過至多四名目標，單體威力低於專精點殺。"
+    },
+    {
+      "id": "book.lg_manual_spirit_transformation_6",
+      "name": "《定星護魂章》",
+      "type": "skill_book",
+      "desc": "神通全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。"
+    },
+    {
+      "id": "book.lg_manual_spirit_transformation_7",
+      "name": "《引雷歸竅法》",
+      "type": "skill_book",
+      "desc": "秘術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。二十息內靈力輸出提高 12%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。"
+    },
+    {
+      "id": "book.lg_manual_spirit_transformation_8",
+      "name": "《九曜墜涯》",
+      "type": "skill_book",
+      "desc": "神通全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。"
+    },
+    {
+      "id": "book.lg_manual_void_refinement_1",
+      "name": "《碎界固身經》",
+      "type": "skill_book",
+      "desc": "內功全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。側重體魄、力道、身法，滿層總量遵循同品階、同境界內功基準。"
+    },
+    {
+      "id": "book.lg_manual_void_refinement_2",
+      "name": "《虛舟穿隙訣》",
+      "type": "skill_book",
+      "desc": "法術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。瞄準界隙作遠距物理一擊，距離加成最多計五格。"
+    },
+    {
+      "id": "book.lg_manual_void_refinement_3",
+      "name": "《星骸藏息篇》",
+      "type": "skill_book",
+      "desc": "內功全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。側重經脈、神識、根骨，滿層總量遵循同品階、同境界內功基準。"
+    },
+    {
+      "id": "book.lg_manual_void_refinement_4",
+      "name": "《無光引航錄》",
+      "type": "skill_book",
+      "desc": "秘術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。四十五息內移動速度增加 2，同類引路狀態不疊加。 不提供永久幸運或掉落加成。"
+    },
+    {
+      "id": "book.lg_manual_void_refinement_5",
+      "name": "《空巢迴刃式》",
+      "type": "skill_book",
+      "desc": "法術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。在落點附近迴旋斬擊至多三名目標，適合小群敵人。"
+    },
+    {
+      "id": "book.lg_manual_void_refinement_6",
+      "name": "《界舟固錨章》",
+      "type": "skill_book",
+      "desc": "神通全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。"
+    },
+    {
+      "id": "book.lg_manual_void_refinement_7",
+      "name": "《虛海寂照法》",
+      "type": "skill_book",
+      "desc": "秘術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。六十息內功法經驗加成增加 6.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。"
+    },
+    {
+      "id": "book.lg_manual_void_refinement_8",
+      "name": "《星港沉界》",
+      "type": "skill_book",
+      "desc": "神通全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。蓄勢三息後重擊單一目標；長冷卻的決戰招式。"
+    },
+    {
+      "id": "book.lg_manual_body_integration_1",
+      "name": "《天垣合身經》",
+      "type": "skill_book",
+      "desc": "內功全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。側重體魄、力道、經脈，滿層總量遵循同品階、同境界內功基準。"
+    },
+    {
+      "id": "book.lg_manual_body_integration_2",
+      "name": "《法骸鎮門訣》",
+      "type": "skill_book",
+      "desc": "法術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。近距物理打擊，以自身物防補充威力；防禦轉傷最多為物攻的七成。"
+    },
+    {
+      "id": "book.lg_manual_body_integration_3",
+      "name": "《鏡我返真篇》",
+      "type": "skill_book",
+      "desc": "內功全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。側重神識、身法、根骨，滿層總量遵循同品階、同境界內功基準。"
+    },
+    {
+      "id": "book.lg_manual_body_integration_4",
+      "name": "《垣井辨影錄》",
+      "type": "skill_book",
+      "desc": "秘術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。四十五息內視野增加 2 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。"
+    }
+  ],
+  "prompt": "Create ONE multi-item sprite atlas with exactly 36 DISTINCT Chinese xianxia game item icons, strict 6 columns x 6 rows of equal square cells. Match the attached existing game atlas as STYLE REFERENCE ONLY, replace all depicted objects with the roster below. This is one sheet containing MANY items, NOT a single large item. True transparent alpha background everywhere outside objects. Every complete icon including glow must fit central 64% of its own cell, with at least 18% empty transparent padding on every side. Nothing may cross a cell boundary. No visible grid, frames, lettering, labels, numbers, text, watermark. Cohesive vibrant hand-painted fantasy GAME ICONS: crisp silhouette readable at 40px, clear metallic/cloth highlights, restrained elemental accents, not photorealistic closeups. All icons are closed ancient thread-bound cultivation books in the consistent three-quarter view of the reference. Differentiate EVERY cover with the specific name-inspired motif, color, clasp and restrained elemental energy; never repeat one generic emblem. Do not substitute open scrolls or concertinas for books. EXACT row-major order; names and IDs are metadata, NOT text to draw.\nROW 1 COLUMN 1: 《餘燼守爐經》 [book.lg_manual_golden_core_1], skill_book. 內功全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。側重體魄、經脈、力道，滿層總量遵循同品階、同境界內功基準。 Visual motif/material: interpret the name as a unique cover illustration.\nROW 1 COLUMN 2: 《燼燈點火訣》 [book.lg_manual_golden_core_2], skill_book. 法術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。集中靈力打擊單一目標，低耗靈、短冷卻，適合持續作戰。 Visual motif/material: one slender red candle wick piercing a bronze lantern window, vermilion silk and black trim.\nROW 1 COLUMN 3: 《懸燈照脈篇》 [book.lg_manual_golden_core_3], skill_book. 內功全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。側重神識、身法、根骨，滿層總量遵循同品階、同境界內功基準。 Visual motif/material: a suspended hexagonal lantern with branching golden meridian lines, pale ochre brocade.\nROW 1 COLUMN 4: 《薪途識火錄》 [book.lg_manual_golden_core_4], skill_book. 秘術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。四十五息內視野增加 1 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。 Visual motif/material: a folded fire-traveller route expressed as winding copper inlay and a tiny ember compass, soot-grey fabric.\nROW 1 COLUMN 5: 《熔渠斷流式》 [book.lg_manual_golden_core_5], skill_book. 法術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。沿直線掃過至多四名目標，單體威力低於專精點殺。 Visual motif/material: a sharp channel-shaped red copper clasp over flowing molten grooves, black lacquer boards.\nROW 1 COLUMN 6: 《百燈護命章》 [book.lg_manual_golden_core_6], skill_book. 神通全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。回復自身生命，並短暫提升雙防；同類護持不疊加。 Visual motif/material: a circle of miniature pale lantern-shaped embossed studs sheltering a central flame, cream silk.\nROW 2 COLUMN 1: 《殘爐養息法》 [book.lg_manual_golden_core_7], skill_book. 秘術全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。二十息內靈力輸出提高 10%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。 Visual motif/material: a half-broken furnace rim breathing a thin warm mist, rough orange-brown bark cover.\nROW 2 COLUMN 2: 《補天一炬》 [book.lg_manual_golden_core_8], skill_book. 神通全卷，可修至18層。燼燈坊守燈人將護爐與引火的心得藏在焦邊書頁裡。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。 Visual motif/material: one brilliant upright golden flame repairing a fractured turquoise seal, dark red jade boards.\nROW 2 COLUMN 3: 《沉鐘定魄經》 [book.lg_manual_nascent_soul_1], skill_book. 內功全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。側重神識、體魄、經脈，滿層總量遵循同品階、同境界內功基準。 Visual motif/material: a heavy submerged verdigris bell seal, blue-grey leather with water-worn edges.\nROW 2 COLUMN 4: 《回瀾分潮訣》 [book.lg_manual_nascent_soul_2], skill_book. 法術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。單體水行攻擊，並回復自身少量生命；以較低傷害換取續戰。 Visual motif/material: two curling silver tidal channels splitting around a cobalt pearl, aquamarine silk.\nROW 2 COLUMN 5: 《千帆寄神篇》 [book.lg_manual_nascent_soul_3], skill_book. 內功全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。側重身法、神識、根骨，滿層總量遵循同品階、同境界內功基準。 Visual motif/material: an ivory sailboat rib and many small triangular sails, moss-green wood covers and rope ties.\nROW 2 COLUMN 6: 《漏聲辨潮錄》 [book.lg_manual_nascent_soul_4], skill_book. 秘術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。四十五息內移動速度增加 1，同類引路狀態不疊加。 不提供永久幸運或掉落加成。 Visual motif/material: a hollow spiral shell with sound-wave silver grooves, pale sand linen.\nROW 3 COLUMN 1: 《骨帆歸汐式》 [book.lg_manual_nascent_soul_5], skill_book. 法術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。以自身為中心的潮環打擊至多五名目標，中央與貼身內圈不受攻擊。 Visual motif/material: a skeletal triangular sail folded over a deep blue wave clasp, ivory and navy lacquer.\nROW 3 COLUMN 2: 《鎮海安魂章》 [book.lg_manual_nascent_soul_6], skill_book. 神通全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。回復自身生命，並短暫提升雙防；同類護持不疊加。 Visual motif/material: an ancient bronze anchor holding a tranquil moon pearl, green-black leather.\nROW 3 COLUMN 3: 《聽潮澄心法》 [book.lg_manual_nascent_soul_7], skill_book. 秘術全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。六十息內功法經驗加成增加 5.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。 Visual motif/material: a quiet pool formed by a mother-of-pearl disc with delicate ripple rings, light teal silk.\nROW 3 COLUMN 4: 《萬帆鎮淵》 [book.lg_manual_nascent_soul_8], skill_book. 神通全卷，可修至20層。殘響渡行舟者以鐘聲校正神魂，以潮痕記錄歸途。蓄勢三息後重擊單一目標；長冷卻的決戰招式。 Visual motif/material: a monumental fan of dark ivory sails descending into an indigo whirlpool motif, thick silver clasps.\nROW 3 COLUMN 5: 《望涯凝神經》 [book.lg_manual_spirit_transformation_1], skill_book. 內功全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。側重身法、神識、體魄，滿層總量遵循同品階、同境界內功基準。 Visual motif/material: a solitary long mountain ridge enclosing a bright star, cool slate-blue cloth.\nROW 3 COLUMN 6: 《雷原穿雲訣》 [book.lg_manual_spirit_transformation_2], skill_book. 法術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。遠距離金行穿雲一擊，以略低傷害換取射程。 Visual motif/material: a silver lightning spear cutting one cloud motif, white silk and amethyst stitching.\nROW 4 COLUMN 1: 《古曜洗髓篇》 [book.lg_manual_spirit_transformation_3], skill_book. 內功全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。側重力道、經脈、根骨，滿層總量遵循同品階、同境界內功基準。 Visual motif/material: a golden ancient sun-disc with marrow-like branching channels, dark ochre leather.\nROW 4 COLUMN 2: 《星臺觀路錄》 [book.lg_manual_spirit_transformation_4], skill_book. 秘術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。四十五息內視野增加 1 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。 Visual motif/material: an openwork brass astrolabe pinned to folded midnight silk pages, seven silver stars.\nROW 4 COLUMN 3: 《斷崖截風式》 [book.lg_manual_spirit_transformation_5], skill_book. 法術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。沿直線掃過至多四名目標，單體威力低於專精點殺。 Visual motif/material: a clean angular cliff split crossed by a single pale wind blade, jade-grey lacquer.\nROW 4 COLUMN 4: 《定星護魂章》 [book.lg_manual_spirit_transformation_6], skill_book. 神通全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。 Visual motif/material: a stable eight-spoked star compass over a luminous protected pearl, midnight blue and gold.\nROW 4 COLUMN 5: 《引雷歸竅法》 [book.lg_manual_spirit_transformation_7], skill_book. 秘術全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。二十息內靈力輸出提高 12%，同類調息狀態不疊加；適合短暫施法窗口。 不提供永久幸運或掉落加成。 Visual motif/material: a hooked copper conductor channeling violet lightning inward, iron-grey folio.\nROW 4 COLUMN 6: 《九曜墜涯》 [book.lg_manual_spirit_transformation_8], skill_book. 神通全卷，可修至22層。望涯驛觀星者從雷律與斷崖風向中拆解行氣節奏。蓄勢三息後打擊落點周圍至多五名目標；長冷卻的清場招式。 Visual motif/material: nine differently sized golden star stones falling in a diagonal arc, imperial purple jade-bound book.\nROW 5 COLUMN 1: 《碎界固身經》 [book.lg_manual_void_refinement_1], skill_book. 內功全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。側重體魄、力道、身法，滿層總量遵循同品階、同境界內功基準。 Visual motif/material: a patchwork of stone fragments held by golden joints, warm grey hard boards.\nROW 5 COLUMN 2: 《虛舟穿隙訣》 [book.lg_manual_void_refinement_2], skill_book. 法術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。瞄準界隙作遠距物理一擊，距離加成最多計五格。 Visual motif/material: a narrow silver void ship passing through one split oval aperture, dark violet silk.\nROW 5 COLUMN 3: 《星骸藏息篇》 [book.lg_manual_void_refinement_3], skill_book. 內功全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。側重經脈、神識、根骨，滿層總量遵循同品階、同境界內功基準。 Visual motif/material: a white meteor fragment nested inside an iron rib cage, dusty copper leather.\nROW 5 COLUMN 4: 《無光引航錄》 [book.lg_manual_void_refinement_4], skill_book. 秘術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。四十五息內移動速度增加 2，同類引路狀態不疊加。 不提供永久幸運或掉落加成。 Visual motif/material: a long slender luminous compass needle against matte black wood, violet knot closure.\nROW 5 COLUMN 5: 《空巢迴刃式》 [book.lg_manual_void_refinement_5], skill_book. 法術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。在落點附近迴旋斬擊至多三名目標，適合小群敵人。 Visual motif/material: three nested crescent blade loops over an empty center, pale silver cover.\nROW 5 COLUMN 6: 《界舟固錨章》 [book.lg_manual_void_refinement_6], skill_book. 神通全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。短暫強化自身雙防與抗暴，以較長冷卻換取危急時的承傷能力。 Visual motif/material: a large old anchor clasp locked across indigo boards, thick rope spine.\nROW 6 COLUMN 1: 《虛海寂照法》 [book.lg_manual_void_refinement_7], skill_book. 秘術全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。六十息內功法經驗加成增加 6.5 個百分點，亦依既有規則影響領悟速度；同類澄心不疊加。 不提供永久幸運或掉落加成。 Visual motif/material: a still black pearl within a thin ivory halo carved directly into the cover, quiet blue-black silk.\nROW 6 COLUMN 2: 《星港沉界》 [book.lg_manual_void_refinement_8], skill_book. 神通全卷，可修至24層。虛舟市領航人將界隙的張合寫成可反覆演練的法式。蓄勢三息後重擊單一目標；長冷卻的決戰招式。 Visual motif/material: an asymmetrical broken star harbor wheel surrounding a falling meteor, dark bronze slab covers.\nROW 6 COLUMN 3: 《天垣合身經》 [book.lg_manual_body_integration_1], skill_book. 內功全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。側重體魄、力道、經脈，滿層總量遵循同品階、同境界內功基準。 Visual motif/material: a relief of layered fortress walls protecting a small gold heart, ochre stone boards.\nROW 6 COLUMN 4: 《法骸鎮門訣》 [book.lg_manual_body_integration_2], skill_book. 法術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。近距物理打擊，以自身物防補充威力；防禦轉傷最多為物攻的七成。 Visual motif/material: an upright bone-white gate pillar held by bronze chains, dark earth leather.\nROW 6 COLUMN 5: 《鏡我返真篇》 [book.lg_manual_body_integration_3], skill_book. 內功全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。側重神識、身法、根骨，滿層總量遵循同品階、同境界內功基準。 Visual motif/material: a silver mirror reflecting one green leaf, white-grey silk and delicate jade corners.\nROW 6 COLUMN 6: 《垣井辨影錄》 [book.lg_manual_body_integration_4], skill_book. 秘術全卷，可修至26層。天垣城修士藉法骸與鏡我之試，校準肉身和神識。四十五息內視野增加 2 格，同類引路狀態不疊加。 不提供永久幸運或掉落加成。 Visual motif/material: a deep circular well-eye surrounded by four mirror facets, turquoise and black lacquer.",
+  "mode": "built-in-imagegen-atlas",
+  "sourceSha256": "c6ffe7e2f017db26714130ee283267ac1061307ec992da581d0dd8673afb1e78",
+  "dimensions": [
+    1254,
+    1254
+  ]
+}

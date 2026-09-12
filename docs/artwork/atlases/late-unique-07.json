@@ -1,0 +1,158 @@
+{
+  "id": "late-unique-07",
+  "columns": 6,
+  "rows": 4,
+  "items": [
+    {
+      "id": "lg_equip_lg_tribulation_m1_entry_war_blade",
+      "name": "劫雲海火煞戰刃",
+      "type": "equipment",
+      "desc": "以劫雲海礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m1_entry_spirit_staff",
+      "name": "劫雲海火紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m1_entry_head",
+      "name": "劫雲海火紋冠",
+      "type": "equipment",
+      "desc": "以劫雲海礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m1_entry_body",
+      "name": "劫雲海火紋衣",
+      "type": "equipment",
+      "desc": "以劫雲海礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m1_entry_legs",
+      "name": "劫雲海火紋履",
+      "type": "equipment",
+      "desc": "以劫雲海礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m1_entry_accessory",
+      "name": "劫雲海火紋佩",
+      "type": "equipment",
+      "desc": "以劫雲海礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m2_entry_war_blade",
+      "name": "雷池第九重金煞戰刃",
+      "type": "equipment",
+      "desc": "以雷池第九重礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m2_entry_spirit_staff",
+      "name": "雷池第九重金紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m2_entry_head",
+      "name": "雷池第九重金紋冠",
+      "type": "equipment",
+      "desc": "以雷池第九重礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m2_entry_body",
+      "name": "雷池第九重金紋衣",
+      "type": "equipment",
+      "desc": "以雷池第九重礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m2_entry_legs",
+      "name": "雷池第九重金紋履",
+      "type": "equipment",
+      "desc": "以雷池第九重礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m2_entry_accessory",
+      "name": "雷池第九重金紋佩",
+      "type": "equipment",
+      "desc": "以雷池第九重礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m3_entry_war_blade",
+      "name": "心魔鏡城木煞戰刃",
+      "type": "equipment",
+      "desc": "以心魔鏡城礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m3_entry_spirit_staff",
+      "name": "心魔鏡城木紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m3_entry_head",
+      "name": "心魔鏡城木紋冠",
+      "type": "equipment",
+      "desc": "以心魔鏡城礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m3_entry_body",
+      "name": "心魔鏡城木紋衣",
+      "type": "equipment",
+      "desc": "以心魔鏡城礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m3_entry_legs",
+      "name": "心魔鏡城木紋履",
+      "type": "equipment",
+      "desc": "以心魔鏡城礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m3_entry_accessory",
+      "name": "心魔鏡城木紋佩",
+      "type": "equipment",
+      "desc": "以心魔鏡城礦材與首領部件鍛成的佩位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m4_entry_war_blade",
+      "name": "天人五衰崖木煞戰刃",
+      "type": "equipment",
+      "desc": "以天人五衰崖礦材鑄成，強化物理攻擊、命中與破招。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m4_entry_spirit_staff",
+      "name": "天人五衰崖木紋法杖",
+      "type": "equipment",
+      "desc": "杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m4_entry_head",
+      "name": "天人五衰崖木紋冠",
+      "type": "equipment",
+      "desc": "以天人五衰崖礦材與首領部件鍛成的冠位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m4_entry_body",
+      "name": "天人五衰崖木紋衣",
+      "type": "equipment",
+      "desc": "以天人五衰崖礦材與首領部件鍛成的衣位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m4_entry_legs",
+      "name": "天人五衰崖木紋履",
+      "type": "equipment",
+      "desc": "以天人五衰崖礦材與首領部件鍛成的履位護具。"
+    },
+    {
+      "id": "lg_equip_lg_tribulation_m4_entry_accessory",
+      "name": "天人五衰崖木紋佩",
+      "type": "equipment",
+      "desc": "以天人五衰崖礦材與首領部件鍛成的佩位護具。"
+    }
+  ],
+  "prompt": "Create ONE multi-item sprite atlas with exactly 24 DISTINCT Chinese xianxia game item icons, strict 6 columns x 4 rows of equal square cells. Match the attached existing game atlas as STYLE REFERENCE ONLY, replace all depicted objects with the roster below. This is one sheet containing MANY items, NOT a single large item. True transparent alpha background everywhere outside objects. Every complete icon including glow must fit central 64% of its own cell, with at least 18% empty transparent padding on every side. Nothing may cross a cell boundary. No visible grid, frames, lettering, labels, numbers, text, watermark. Cohesive vibrant hand-painted fantasy GAME ICONS: crisp silhouette readable at 40px, clear metallic/cloth highlights, restrained elemental accents, not photorealistic closeups. Distinguish blade versus staff, crown versus robe, boots and pendant. Equipment is displayed without wearer, body parts or mannequin. Entire weapons and both shoes fit inside their assigned cells. Vary physical shape and material according to each named origin, not just recolors. EXACT row-major order; names and IDs are metadata, NOT text to draw.\nROW 1 COLUMN 1: 劫雲海火煞戰刃 [lg_equip_lg_tribulation_m1_entry_war_blade], equipment. 以劫雲海礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: wide tapered ancient bronze battle sword; black storm cloud enamel and scarlet gold, billowing flame crests and cloud volutes.\nROW 1 COLUMN 2: 劫雲海火紋法杖 [lg_equip_lg_tribulation_m1_entry_spirit_staff], equipment. 杖芯刻入火行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: long staff topped by a compact sculpted seal; black storm cloud enamel and scarlet gold, billowing flame crests and cloud volutes.\nROW 1 COLUMN 3: 劫雲海火紋冠 [lg_equip_lg_tribulation_m1_entry_head], equipment. 以劫雲海礦材與首領部件鍛成的冠位護具。 Visual motif/material: wide arch-shaped ancient ritual crown; black storm cloud enamel and scarlet gold, billowing flame crests and cloud volutes.\nROW 1 COLUMN 4: 劫雲海火紋衣 [lg_equip_lg_tribulation_m1_entry_body], equipment. 以劫雲海礦材與首領部件鍛成的衣位護具。 Visual motif/material: high-collar Taoist battle coat with narrow sleeves; black storm cloud enamel and scarlet gold, billowing flame crests and cloud volutes.\nROW 1 COLUMN 5: 劫雲海火紋履 [lg_equip_lg_tribulation_m1_entry_legs], equipment. 以劫雲海礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of elegant ankle boots with split cuffs; black storm cloud enamel and scarlet gold, billowing flame crests and cloud volutes.\nROW 1 COLUMN 6: 劫雲海火紋佩 [lg_equip_lg_tribulation_m1_entry_accessory], equipment. 以劫雲海礦材與首領部件鍛成的佩位護具。 Visual motif/material: small sculpted seal pendant on a looped cord; black storm cloud enamel and scarlet gold, billowing flame crests and cloud volutes.\nROW 2 COLUMN 1: 雷池第九重金煞戰刃 [lg_equip_lg_tribulation_m2_entry_war_blade], equipment. 以雷池第九重礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: crescent-tipped long dao with an openwork spine; white-gold and electric blue crystal, nine stepped concentric thunder rings, refined high-tier geometry.\nROW 2 COLUMN 2: 雷池第九重金紋法杖 [lg_equip_lg_tribulation_m2_entry_spirit_staff], equipment. 杖芯刻入金行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: lean ritual pole with a suspended small charm; white-gold and electric blue crystal, nine stepped concentric thunder rings, refined high-tier geometry.\nROW 2 COLUMN 3: 雷池第九重金紋冠 [lg_equip_lg_tribulation_m2_entry_head], equipment. 以雷池第九重礦材與首領部件鍛成的冠位護具。 Visual motif/material: asymmetrical swept-back crown with side fins; white-gold and electric blue crystal, nine stepped concentric thunder rings, refined high-tier geometry.\nROW 2 COLUMN 4: 雷池第九重金紋衣 [lg_equip_lg_tribulation_m2_entry_body], equipment. 以雷池第九重礦材與首領部件鍛成的衣位護具。 Visual motif/material: asymmetric draped battle robe with one armored shoulder; white-gold and electric blue crystal, nine stepped concentric thunder rings, refined high-tier geometry.\nROW 2 COLUMN 5: 雷池第九重金紋履 [lg_equip_lg_tribulation_m2_entry_legs], equipment. 以雷池第九重礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of thick-soled travel boots with braided straps; white-gold and electric blue crystal, nine stepped concentric thunder rings, refined high-tier geometry.\nROW 2 COLUMN 6: 雷池第九重金紋佩 [lg_equip_lg_tribulation_m2_entry_accessory], equipment. 以雷池第九重礦材與首領部件鍛成的佩位護具。 Visual motif/material: crescent-shaped waist ornament; white-gold and electric blue crystal, nine stepped concentric thunder rings, refined high-tier geometry.\nROW 3 COLUMN 1: 心魔鏡城木煞戰刃 [lg_equip_lg_tribulation_m3_entry_war_blade], equipment. 以心魔鏡城礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: straight ridge-backed war sword with asymmetric guard; black mirror shards and moss-green jade, split reflection masks and angular mirrored doubles.\nROW 3 COLUMN 2: 心魔鏡城木紋法杖 [lg_equip_lg_tribulation_m3_entry_spirit_staff], equipment. 杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: crooked staff whose head curls into an open spiral; black mirror shards and moss-green jade, split reflection masks and angular mirrored doubles.\nROW 3 COLUMN 3: 心魔鏡城木紋冠 [lg_equip_lg_tribulation_m3_entry_head], equipment. 以心魔鏡城礦材與首領部件鍛成的冠位護具。 Visual motif/material: cylindrical ancient crown with open lattice; black mirror shards and moss-green jade, split reflection masks and angular mirrored doubles.\nROW 3 COLUMN 4: 心魔鏡城木紋衣 [lg_equip_lg_tribulation_m3_entry_body], equipment. 以心魔鏡城礦材與首領部件鍛成的衣位護具。 Visual motif/material: long ceremonial coat with broad shoulder cape; black mirror shards and moss-green jade, split reflection masks and angular mirrored doubles.\nROW 3 COLUMN 5: 心魔鏡城木紋履 [lg_equip_lg_tribulation_m3_entry_legs], equipment. 以心魔鏡城礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of slender pointed ritual boots; black mirror shards and moss-green jade, split reflection masks and angular mirrored doubles.\nROW 3 COLUMN 6: 心魔鏡城木紋佩 [lg_equip_lg_tribulation_m3_entry_accessory], equipment. 以心魔鏡城礦材與首領部件鍛成的佩位護具。 Visual motif/material: layered rectangular jade tally pendant; black mirror shards and moss-green jade, split reflection masks and angular mirrored doubles.\nROW 4 COLUMN 1: 天人五衰崖木煞戰刃 [lg_equip_lg_tribulation_m4_entry_war_blade], equipment. 以天人五衰崖礦材鑄成，強化物理攻擊、命中與破招。 Visual motif/material: heavy angular cleaver-like ceremonial saber; ashen wood, pale aged gold, five fading leaf ornaments surrounding a single jade-green living shoot.\nROW 4 COLUMN 2: 天人五衰崖木紋法杖 [lg_equip_lg_tribulation_m4_entry_spirit_staff], equipment. 杖芯刻入木行迴路，強化法術攻擊、命中與靈力輸出。 Visual motif/material: broad-headed ritual staff with a geometric cap; ashen wood, pale aged gold, five fading leaf ornaments surrounding a single jade-green living shoot.\nROW 4 COLUMN 3: 天人五衰崖木紋冠 [lg_equip_lg_tribulation_m4_entry_head], equipment. 以天人五衰崖礦材與首領部件鍛成的冠位護具。 Visual motif/material: layered low-profile circlet with a rear upright crest; ashen wood, pale aged gold, five fading leaf ornaments surrounding a single jade-green living shoot.\nROW 4 COLUMN 4: 天人五衰崖木紋衣 [lg_equip_lg_tribulation_m4_entry_body], equipment. 以天人五衰崖礦材與首領部件鍛成的衣位護具。 Visual motif/material: compact lamellar chest robe with a split lower hem; ashen wood, pale aged gold, five fading leaf ornaments surrounding a single jade-green living shoot.\nROW 4 COLUMN 5: 天人五衰崖木紋履 [lg_equip_lg_tribulation_m4_entry_legs], equipment. 以天人五衰崖礦材與首領部件鍛成的履位護具。 Visual motif/material: pair of layered scale-armored boots; ashen wood, pale aged gold, five fading leaf ornaments surrounding a single jade-green living shoot.\nROW 4 COLUMN 6: 天人五衰崖木紋佩 [lg_equip_lg_tribulation_m4_entry_accessory], equipment. 以天人五衰崖礦材與首領部件鍛成的佩位護具。 Visual motif/material: asymmetrical knot-hung carved amulet; ashen wood, pale aged gold, five fading leaf ornaments surrounding a single jade-green living shoot.",
+  "mode": "built-in-imagegen-atlas",
+  "sourceSha256": "58dda9036bff0a64d52acdff06969e042f042372359c4b066e1a54792b49e1eb",
+  "dimensions": [
+    1536,
+    1024
+  ]
+}
