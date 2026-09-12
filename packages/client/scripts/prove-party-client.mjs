@@ -218,7 +218,7 @@ await withClientBrowserProof(
         await new Promise((resolve) => requestAnimationFrame(resolve));
         const workspaceOpened = workspaceOpenCount() === before + 1 && partyWorkspace.isOpen();
         const workspaceFocused = partyWorkspace.root.contains(document.activeElement);
-        document.getElementById('detail-modal')?.click();
+        document.querySelector('[data-detail-modal-close]')?.click();
         await new Promise((resolve) => requestAnimationFrame(resolve));
         const hudFocusReturned = document.activeElement === hudOpener;
         hudOpener?.click();

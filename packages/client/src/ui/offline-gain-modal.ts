@@ -16,6 +16,7 @@ import { t } from './i18n';
 import { formatDisplayInteger } from '../utils/number';
 import { OfflineGainConfirmationState } from './offline-gain-confirmation-state';
 import { OfflineGainRefreshState } from './offline-gain-refresh-state';
+import { isMapBackdropClick } from './map-backdrop-click';
 
 type OfflineGainToastKind = 'success' | 'warn' | 'system';
 
@@ -171,11 +172,14 @@ function patchOrOpenOfflineGainModal(
     };
     confirmBtn.addEventListener('click', confirm, { signal: renderSignal });
 
-    // 收益層不可由宿主關閉；只有直接點到視窗外的遮罩空白處才視為確認。
-    // 卡片內的文字、捲動區與互動元件都會以自身節點作為 event.target，因此不會誤觸。
+    // 阻塞收益只能由收取按鈕或實際命中地圖的遮罩點擊確認；其他 UI 不可誤送 ACK。
     const modal = document.getElementById('detail-modal');
+    const explicitClose = modal?.querySelector<HTMLButtonElement>('[data-detail-modal-close]');
+    if (explicitClose) {
+      explicitClose.hidden = true;
+    }
     modal?.addEventListener('click', (event) => {
-      if (event.target === modal) {
+      if (event.target === modal && isMapBackdropClick(event, modal)) {
         confirm();
       }
     }, { signal: renderSignal });
@@ -387,6 +391,7 @@ function syncBlockingConfirmationButton(confirmBtn: HTMLButtonElement, pending: 
 }
 
 function closeOfflineGainModal(): void {
+  document.querySelector<HTMLButtonElement>('[data-detail-modal-close]')?.toggleAttribute('hidden', false);
   detailModalHost.patch({
     ownerId: OFFLINE_GAIN_MODAL_OWNER,
     onRequestClose: null,

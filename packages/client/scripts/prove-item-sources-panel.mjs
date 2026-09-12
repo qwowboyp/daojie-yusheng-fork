@@ -304,10 +304,18 @@ await withClientBrowserProof({ viewport: viewports[0], profilePrefix: 'item-sour
     document.body.append(canvas, ui);
     detailModalHost.open({ ownerId: 'map-dismiss-proof', title: '關閉判斷', size: 'sm', bodyHtml: '<button>視窗內按鈕</button>' });
   })()`);
-  for (const [x, shouldStay] of [[180, true], [40, false]]) {
-    await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y: 700, button: 'left', clickCount: 1 });
-    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y: 700, button: 'left', clickCount: 1 });
-    assert.equal(await cdp.evaluate(`window.__sourcesProof.detailModalHost.isOpenFor('map-dismiss-proof')`), shouldStay, shouldStay ? '點其他 UI 不得當空白關閉' : '點主地圖畫布應關閉');
+  for (const touch of [false, true]) {
+    await cdp.evaluate(`window.__sourcesProof.detailModalHost.open({ ownerId: 'map-dismiss-proof', title: '關閉判斷', size: 'sm', bodyHtml: '<button>視窗內按鈕</button>' })`);
+    for (const [x, shouldStay] of [[180, true], [40, false]]) {
+      if (touch) {
+        await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y: 700, id: 1 }] });
+        await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+      } else {
+        await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y: 700, button: 'left', clickCount: 1 });
+        await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y: 700, button: 'left', clickCount: 1 });
+      }
+      assert.equal(await cdp.evaluate(`window.__sourcesProof.detailModalHost.isOpenFor('map-dismiss-proof')`), shouldStay, shouldStay ? '點其他 UI 不得當空白關閉' : '點主地圖畫布應關閉');
+    }
   }
   await cdp.evaluate(`window.__sourcesProof.detailModalHost.open({ ownerId: 'map-dismiss-proof', title: '關閉判斷', bodyHtml: '<p>內容</p>' })`);
   await click(cdp, '[data-detail-modal-close]');
