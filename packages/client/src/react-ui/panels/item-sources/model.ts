@@ -1,6 +1,8 @@
 /**
  * 取得途徑百科的純展示模型；資料只來自本機內容快照與靜態來源目錄。
  */
+import { getLocalRealmLevelEntry, resolveTechniqueIdFromBookItem } from '../../../content/local-templates';
+import { getTechniqueGradeLabel } from '../../../domain-labels';
 import type { ItemSourceEntry, ItemSourceKind } from '../../../content/item-sources';
 
 export interface ItemSourceCatalogItem {
@@ -8,6 +10,8 @@ export interface ItemSourceCatalogItem {
   name: string;
   type: string;
   desc?: string;
+  techniqueId?: string;
+  techniqueLabel?: string;
 }
 
 export interface ItemSourcePanelData {
@@ -27,14 +31,22 @@ export async function loadItemSourcePanelData(): Promise<ItemSourcePanelData> {
   const entriesByItemId = new Map<string, readonly ItemSourceEntry[]>();
   const sourceKinds = new Set<ItemSourceKind>();
   const maps = new Map<string, string>();
+  const techniques = new Map(LOCAL_EDITOR_CATALOG.techniques.map((technique) => [technique.id, technique]));
   const items = LOCAL_EDITOR_CATALOG.items
     .filter((item) => item.itemId !== 'mat.technique_unification_test')
-    .map((item) => ({
-      itemId: item.itemId,
-      name: item.name,
-      type: item.type,
-      desc: item.desc,
-    }))
+    .map((item) => {
+      const techniqueId = item.type === 'skill_book' ? resolveTechniqueIdFromBookItem(item) : null;
+      const technique = techniqueId ? techniques.get(techniqueId) : undefined;
+      const realmLv = technique?.realmLv;
+      return {
+        itemId: item.itemId,
+        name: item.name,
+        type: item.type,
+        desc: item.desc,
+        techniqueId: techniqueId ?? undefined,
+        techniqueLabel: technique ? `${getTechniqueGradeLabel(technique.grade)} · 功法境界 ${realmLv ? `${getLocalRealmLevelEntry(realmLv)?.displayName ?? '未知境界'} Lv.${realmLv}` : '未標示'}` : undefined,
+      };
+    })
     .sort((left, right) => left.name.localeCompare(right.name, 'zh-Hant'));
 
   for (const item of items) {

@@ -44,11 +44,9 @@ function ensureDialog(): HTMLDialogElement {
     event.stopPropagation();
   });
   dialog.addEventListener('keyup', (event) => event.stopPropagation());
+  // 原生 modal 的背景為 inert，無法操作地圖；使用明確返回鈕或 Esc 關閉。
   dialog.addEventListener('click', (event) => {
-    if (event.target === dialog) {
-      event.stopPropagation();
-      closeItemSourcesPanel();
-    }
+    if (event.target === dialog) event.stopPropagation();
   });
   dialog.addEventListener('close', () => {
     if (!isOpen || dialog?.open) return;

@@ -1,9 +1,5 @@
-FROM node:20-alpine AS builder
+FROM node:20-alpine AS toolchain
 WORKDIR /app
-COPY pnpm-workspace.yaml package.json pnpm-lock.yaml* ./
-COPY tsconfig.base.json ./
-COPY packages/shared/package.json packages/shared/
-COPY packages/client/package.json packages/client/
 ARG PNPM_VERSION=10.29.1
 ARG NPM_CONFIG_REGISTRY=https://registry.npmmirror.com
 ENV NPM_CONFIG_REGISTRY=${NPM_CONFIG_REGISTRY}
@@ -14,6 +10,13 @@ RUN sed -i 's#dl-cdn.alpinelinux.org#mirrors.aliyun.com#' /etc/apk/repositories 
 RUN test -x "$CHROME_BIN"
 RUN npm install -g "pnpm@${PNPM_VERSION}" --registry="${NPM_CONFIG_REGISTRY}" \
   && pnpm --version
+
+# 工具層不依賴任何專案檔案：調整 UI 或 package scripts 不得重裝 Chromium。
+FROM toolchain AS builder
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml* ./
+COPY tsconfig.base.json ./
+COPY packages/shared/package.json packages/shared/
+COPY packages/client/package.json packages/client/
 # pnpm store 走 BuildKit 掛載快取：重複 build 不複製 node_modules 層，節省磁碟
 RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile

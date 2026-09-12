@@ -1,5 +1,5 @@
 /** 取得途徑百科的 React 顯示層。 */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { getItemIconSources, ITEM_ICON_DETAIL_SIZES, ITEM_ICON_LIST_SIZES } from '../../../content/item-art';
 import { getItemTypeLabel } from '../../../domain-labels';
 import {
@@ -12,6 +12,10 @@ import { loadItemSourcePanelData, type ItemSourceCatalogItem, type ItemSourcePan
 import { resolveItemSourceNavigation } from '../../../content/item-source-navigation';
 import { navigateToItemSource } from '../../../ui/item-source-navigation';
 
+import { panelDataStore } from '../../stores/panel-data-store';
+import { formatMapRecommendedRealmText } from '../../../utils/map-level-display';
+
+const getTechniques = () => panelDataStore.getState().techniques;
 const PAGE_SIZE = 50;
 
 export interface ItemSourcesPanelProps {
@@ -97,7 +101,7 @@ function ItemSourceDetails({ entries, onNavigate }: { entries: readonly ItemSour
           <h3>{getItemSourceKindLabel(kind)}</h3>
           {[...maps.entries()].map(([mapName, mapEntries]) => (
             <div className="item-sources-map-group" key={`${kind}:${mapName}`}>
-              <h4>{mapName}</h4>
+              <h4>{mapName}{mapEntries[0]?.mapLv && <small className="item-sources-map-realm">地圖 Lv.{mapEntries[0].mapLv} · {formatMapRecommendedRealmText(mapEntries[0].mapLv)}</small>}</h4>
               <ul>
                 {mapEntries.map((entry, index) => (
                   <SourceRoute key={`${kind}:${mapName}:${index}`} entry={entry} onNavigate={onNavigate} />
@@ -111,7 +115,7 @@ function ItemSourceDetails({ entries, onNavigate }: { entries: readonly ItemSour
   );
 }
 
-function ItemDetail({ item, entries, onBack, onNavigate }: { item: ItemSourceCatalogItem; entries: readonly ItemSourceEntry[]; onBack: () => void; onNavigate: () => void }) {
+function ItemDetail({ item, learned, entries, onBack, onNavigate }: { learned: boolean; item: ItemSourceCatalogItem; entries: readonly ItemSourceEntry[]; onBack: () => void; onNavigate: () => void }) {
   return (
     <aside className="item-sources-detail" aria-live="polite">
       <button className="item-sources-back" type="button" onClick={onBack}>返回清單</button>
@@ -120,6 +124,8 @@ function ItemDetail({ item, entries, onBack, onNavigate }: { item: ItemSourceCat
         <div>
           <p>{getItemTypeLabel(item.type)}</p>
           <h2>{item.name}</h2>
+          {learned && <b className="item-sources-learned">已學</b>}
+          {item.techniqueLabel && <p className="item-sources-technique-realm">{item.techniqueLabel}</p>}
           {item.desc && <span>{item.desc}</span>}
         </div>
       </header>
@@ -132,6 +138,9 @@ function ItemDetail({ item, entries, onBack, onNavigate }: { item: ItemSourceCat
 export function ItemSourcesPanel({ active, initialItemId, onClose }: ItemSourcesPanelProps) {
   const [loadState, setLoadState] = useState<LoadState>({ status: 'loading' });
   const [reloadKey, setReloadKey] = useState(0);
+  const techniques = useSyncExternalStore(panelDataStore.subscribe, getTechniques);
+  const learnedIds = useMemo(() => new Set(techniques.map((technique) => technique.techId)), [techniques]);
+  const [onlyUnlearned, setOnlyUnlearned] = useState(false);
   const [query, setQuery] = useState('');
   const [itemType, setItemType] = useState('');
   const [sourceKind, setSourceKind] = useState('');
@@ -160,6 +169,7 @@ export function ItemSourcesPanel({ active, initialItemId, onClose }: ItemSources
     if (!active || !initialItemId || loadState.status !== 'ready') return;
     if (!loadState.data.items.some((item) => item.itemId === initialItemId)) return;
     setQuery('');
+    setOnlyUnlearned(false);
     setItemType('');
     setSourceKind('');
     setMapId('');
@@ -173,13 +183,14 @@ export function ItemSourcesPanel({ active, initialItemId, onClose }: ItemSources
     if (!data) return [];
     const normalizedQuery = query.trim().toLocaleLowerCase('zh-Hant');
     return data.items.filter((item) => {
+      if (onlyUnlearned && (!item.techniqueId || learnedIds.has(item.techniqueId))) return false;
       if (normalizedQuery && !`${item.name} ${item.itemId}`.toLocaleLowerCase('zh-Hant').includes(normalizedQuery)) return false;
       if (itemType && item.type !== itemType) return false;
       if (!sourceKind && !mapId) return true;
       const entries = data.entriesByItemId.get(item.itemId) ?? [];
       return entries.some((entry) => (!sourceKind || entry.kind === sourceKind) && (!mapId || entry.mapId === mapId));
     });
-  }, [data, itemType, mapId, query, sourceKind]);
+  }, [data, itemType, mapId, query, sourceKind, onlyUnlearned, learnedIds]);
   const selectedItem = data?.items.find((item) => item.itemId === selectedItemId) ?? null;
   const selectedEntries = selectedItem && data ? data.entriesByItemId.get(selectedItem.itemId) ?? [] : [];
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
@@ -217,16 +228,17 @@ export function ItemSourcesPanel({ active, initialItemId, onClose }: ItemSources
       </div>
       <div className="item-sources-body">
         <section className="item-sources-list" aria-label="物品清單">
+          <label className="item-sources-unlearned"><input type="checkbox" data-item-sources-unlearned checked={onlyUnlearned} onChange={(event) => { setOnlyUnlearned(event.target.checked); setPage(0); }} />只看未學功法</label>
           <p className="item-sources-match-count" data-item-sources-match-count>符合 {filteredItems.length} 項</p>
           {visibleItems.length === 0 ? <p className="item-sources-empty-list">沒有符合條件的物品</p> : visibleItems.map((item) => (
             <button className={`item-sources-item${item.itemId === selectedItemId ? ' is-selected' : ''}`} data-item-sources-item={item.itemId} type="button" key={item.itemId} onClick={() => chooseItem(item.itemId)} aria-pressed={item.itemId === selectedItemId}>
               <ItemArt itemId={item.itemId} />
-              <span><strong>{item.name}</strong><small>{getItemTypeLabel(item.type)}</small></span>
+              <span><strong>{item.name}</strong><small>{item.techniqueLabel ?? getItemTypeLabel(item.type)}</small>{item.techniqueId && learnedIds.has(item.techniqueId) && <b className="item-sources-learned">已學</b>}</span>
             </button>
           ))}
           {filteredItems.length > PAGE_SIZE && <nav className="item-sources-pagination" aria-label="清單分頁"><button type="button" disabled={page === 0} onClick={() => setPage((value) => value - 1)}>上一頁</button><span>{page + 1} / {totalPages}</span><button type="button" disabled={page + 1 >= totalPages} onClick={() => setPage((value) => value + 1)}>下一頁</button></nav>}
         </section>
-        {selectedItem ? <ItemDetail key={selectedItem.itemId} item={selectedItem} entries={selectedEntries} onBack={returnToList} onNavigate={onClose} /> : <aside className="item-sources-detail item-sources-detail--placeholder"><p>選擇物品即可查看完整取得途徑。</p></aside>}
+        {selectedItem ? <ItemDetail key={selectedItem.itemId} item={selectedItem} learned={Boolean(selectedItem.techniqueId && learnedIds.has(selectedItem.techniqueId))} entries={selectedEntries} onBack={returnToList} onNavigate={onClose} /> : <aside className="item-sources-detail item-sources-detail--placeholder"><p>選擇物品即可查看完整取得途徑。</p></aside>}
       </div>
     </div>
   );

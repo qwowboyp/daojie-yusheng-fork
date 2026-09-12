@@ -105,6 +105,7 @@ const itemIds = new Set(
     .filter((itemId) => typeof itemId === 'string' && itemId.length > 0),
 );
 const catalog = readJson(catalogPath);
+const mapLevels = new Map(walkJsonFiles(mapsDir).map(readJson).map(map => [map.id, map.mapLv]));
 const sourceCoordinateIndex = buildSourceCoordinateIndex(walkJsonFiles(mapsDir).map(readJson));
 
 assert.deepEqual(new Set(Object.keys(catalog)), itemIds, '索引物品鍵必須與內容物品真源一致');
@@ -115,6 +116,8 @@ for (const [itemId, entries] of Object.entries(catalog)) {
   assert.ok(Array.isArray(entries), `${itemId} 的來源必須是陣列`);
   for (const entry of entries) {
     sourceEntryCount += 1;
+    const mapLv = mapLevels.get(entry.mapId);
+    assert.equal(entry.mapLv, Number.isInteger(mapLv) && mapLv > 0 ? mapLv : undefined, `${itemId} 地圖等級必須對齊地圖真源`);
     if (entry?.kind !== 'acquisition_rule') nonRuleSourceEntryCount += 1;
     assert.equal(typeof entry?.kind, 'string', `${itemId} 的來源缺少 kind`);
     assert.equal(typeof entry?.mapId, 'string', `${itemId} 的來源缺少 mapId`);

@@ -90,6 +90,16 @@ function isToastNoticeKind(kind: DisplayNoticeKind): kind is ToastNoticeKind {
   return TOAST_NOTICE_KINDS.has(kind as ToastNoticeKind);
 }
 
+/** 每批結果保留訊息紀錄，避免高頻浮動提示遮住技藝介面。混合通知不略過。 */
+function isRoutineCraftBatchNotice(data: S2C_SystemMsg): boolean {
+  const group = (data as S2C_SystemMsg & { structuredGroup?: unknown[] }).structuredGroup;
+  const payloads = group?.length ? group : [data.structured];
+  return payloads.every((payload) => {
+    if (!payload || typeof payload !== 'object' || !('key' in payload)) return false;
+    return payload.key === 'notice.craft.alchemy.batch-success' || payload.key === 'notice.craft.alchemy.batch-failed';
+  });
+}
+
 function normalizeSystemNoticeKind(kind: NoticeKind | undefined): MainToastKind {
   switch (kind) {
     case 'chat':
@@ -329,7 +339,7 @@ export function createMainNoticeStateSource(options: MainNoticeStateSourceOption
           ...(data.structured ? { structured: data.structured } : undefined),
           ...(structuredGroup ? { structuredGroup } : undefined),
         } : undefined);
-        if (isToastNoticeKind(data.kind)) {
+        if (isToastNoticeKind(data.kind) && !isRoutineCraftBatchNotice(data)) {
           options.showToast(text, data.kind);
         }
         return;
@@ -362,7 +372,7 @@ export function createMainNoticeStateSource(options: MainNoticeStateSourceOption
         || text === t('notice.rewrite.target-too-far', undefined)) {
         options.clearCurrentPath();
       }
-      options.showToast(text, fallbackKind);
+      if (!isRoutineCraftBatchNotice(data)) options.showToast(text, fallbackKind);
     },
     /**
  * handleNotice：处理Notice并更新相关状态。

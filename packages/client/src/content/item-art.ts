@@ -11,6 +11,8 @@ export interface ItemIconSources {
 }
 
 const itemIcons: Readonly<Record<string, string>> = icons;
+// 圖片路徑可保留 stable itemId，但內容更新必須避開舊的 immutable 瀏覽器快取。
+const imageRevision = encodeURIComponent(typeof __APP_BUILD_ID__ === 'string' ? __APP_BUILD_ID__ : 'dev');
 
 /** 道具圖片只按內容 ID 對應；圖片不參與物品身份或資產判定。 */
 export function getItemIconSources(itemId: string): ItemIconSources | null {
@@ -18,8 +20,8 @@ export function getItemIconSources(itemId: string): ItemIconSources | null {
   if (!Object.hasOwn(itemIcons, templateId)) return null;
   const stem = itemIcons[templateId];
   return {
-    src: `${stem}-96.webp`,
-    srcSet: `${stem}-96.webp 96w, ${stem}-192.webp 192w`,
+    src: `${stem}-96.webp?v=${imageRevision}`,
+    srcSet: `${stem}-96.webp?v=${imageRevision} 96w, ${stem}-192.webp?v=${imageRevision} 192w`,
   };
 }
 

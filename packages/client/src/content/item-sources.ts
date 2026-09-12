@@ -27,6 +27,8 @@ interface ItemSourceBaseEntry {
  */
 
   mapName: string;
+  /** 地圖內容設定的推薦境界等級。 */
+  mapLv?: number;
   /** 權威內容設定解析出的可自動移動目標座標。 */
   navigationX?: number;
   /** 權威內容設定解析出的可自動移動目標座標。 */

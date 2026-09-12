@@ -43,6 +43,10 @@ await withClientBrowserProof({ viewport: viewports[0], profilePrefix: 'item-sour
     const { LOCAL_EDITOR_CATALOG } = await import('/src/content/editor-catalog.ts');
     const sources = await import('/src/content/item-sources.ts');
     await sources.preloadItemSourceCatalog();
+    const { getItemIconSources } = await import('/src/content/item-art.ts');
+    const icon = getItemIconSources('pill.breakmirror_pellet');
+    const revision = new URL(icon.src, location.origin).searchParams.get('v');
+    if (!revision || !icon.srcSet.includes('-192.webp?v=' + revision + ' 192w')) throw new Error('道具圖片缺少一致的版本快取參數');
     const { MarketPanel } = await import('/src/ui/panels/market-panel.ts');
     const { InventoryPanel } = await import('/src/ui/panels/inventory-panel.ts');
     const pill = { ...LOCAL_EDITOR_CATALOG.items.find(item => item.itemId === 'pill.breakmirror_pellet'), count: 1, itemInstanceId: 'source-proof-pill' };
@@ -226,5 +230,89 @@ await withClientBrowserProof({ viewport: viewports[0], profilePrefix: 'item-sour
     state.sent = [];
     return Boolean(state.bridge.navigateToItemSource(entry)) && state.sent.length === 0;
   })()`), true, '通用來源不可發送虛構座標');
+  await cdp.evaluate(`(async () => {
+    const { loadItemSourcePanelData } = await import('/src/react-ui/panels/item-sources/model.ts');
+    const { reactUiBridge } = await import('/src/react-ui/bridge/react-ui-bridge.ts');
+    const data = await loadItemSourcePanelData();
+    const books = data.items.filter(item => item.techniqueId && item.techniqueLabel);
+    const book = books.find(item => data.entriesByItemId.get(item.itemId).some(entry => entry.mapLv));
+    window.__sourcesProof.book = book;
+    window.__sourcesProof.books = books;
+    window.__sourcesProof.reactUiBridge = reactUiBridge;
+    reactUiBridge.syncTechniques([{ techId: book.techniqueId }], undefined);
+    const panel = await import('/src/react-ui/panels/item-sources/mount-item-sources-panel.tsx');
+    panel.openItemSourcesPanel({ itemId: book.itemId });
+  })()`);
+  await waitFor(() => cdp.evaluate(`Boolean(document.querySelector('.item-sources-detail .item-sources-learned'))`), '已學功法詳情標記');
+  assert.equal(await cdp.evaluate(`document.querySelector('.item-sources-technique-realm').textContent === window.__sourcesProof.book.techniqueLabel`), true, '顯示模板品階與境界等級');
+  assert.match(await cdp.evaluate(`document.querySelector('.item-sources-map-realm').textContent`), /地圖 Lv\.\d+ · 推薦境界 .+ Lv\.\d+/, '掉落地圖顯示等級及推薦境界');
+  for (const viewport of viewports) {
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: viewport.width, height: viewport.height, deviceScaleFactor: 1, mobile: false });
+    await cdp.evaluate(`(async () => { await ${paint}; })()`);
+    const bounds = await cdp.evaluate(`(() => {
+      const realm = document.querySelector('.item-sources-technique-realm');
+      const map = document.querySelector('.item-sources-map-realm');
+      return [realm, map].every(el => el.getBoundingClientRect().width > 0 && el.scrollWidth <= el.clientWidth + 1);
+    })()`);
+    assert.equal(bounds, true, viewport.name + ' 功法與地圖境界不得水平截字');
+    if (output) {
+      const shot = await cdp.send('Page.captureScreenshot', { format: 'png' });
+      await writeFile(path.join(output, viewport.name + '-technique.png'), Buffer.from(shot.data, 'base64'));
+    }
+  }
+  await cdp.send('Emulation.setDeviceMetricsOverride', { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
+  await cdp.evaluate(`(async () => {
+    const input = document.querySelector('[data-item-sources-search]');
+    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, window.__sourcesProof.book.name);
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await ${paint};
+  })()`);
+  await waitFor(() => cdp.evaluate(`Boolean(document.querySelector('.item-sources-item .item-sources-learned'))`), '清單已學標記');
+  await click(cdp, '[data-item-sources-unlearned]');
+  assert.equal(await cdp.evaluate(`document.querySelectorAll('[data-item-sources-item]').length`), 0, '只看未學排除已學功法');
+  await cdp.evaluate(`window.__sourcesProof.reactUiBridge.syncTechniques([], undefined)`);
+  await waitFor(() => cdp.evaluate(`document.querySelectorAll('[data-item-sources-item]').length === 1`), '學習狀態更新同步篩選');
+  assert.equal(await cdp.evaluate(`document.querySelector('[data-item-sources-search]').value === window.__sourcesProof.book.name`), true, '狀態更新保留搜尋');
+  await cdp.evaluate(`window.__sourcesProof.reactUiBridge.reset()`);
+  assert.equal(await cdp.evaluate(`document.querySelectorAll('.item-sources-learned').length`), 0, '登出清除已學狀態');
+
+  assert.deepEqual(await cdp.evaluate(`(async () => {
+    const { createMainNoticeStateSource } = await import('/src/main-notice-state-source.ts');
+    const messages = [], toasts = [], acknowledgements = [];
+    const source = createMainNoticeStateSource({
+      chatUI: { addMessage: async (...args) => { messages.push(args); return true; } },
+      ackSystemMessages: ids => acknowledgements.push(...ids),
+      showToast: (...args) => toasts.push(args), clearCurrentPath() {}, getCurrentPlayerId: () => 'proof',
+    });
+    for (const [index, key] of ['notice.craft.alchemy.batch-success', 'notice.craft.alchemy.batch-failed', 'notice.craft.forging.batch-resources-missing'].entries()) {
+      source.handleSystemMsg({ id: String(index + 1), persistUntilAck: true, text: key, kind: index === 1 ? 'system' : 'forging', structured: { key, vars: { batch: 321, successNoun: '成器', count: 1 } } });
+    }
+    await Promise.resolve(); await Promise.resolve();
+    return { messages: messages.length, toasts: toasts.length, acknowledgements };
+  })()`), { messages: 3, toasts: 1, acknowledgements: ['1', '2', '3'] }, '批次紀錄與確認保留，僅異常需要浮動提示');
+
+  await cdp.evaluate(`(async () => {
+    const panel = await import('/src/react-ui/panels/item-sources/mount-item-sources-panel.tsx');
+    panel.closeItemSourcesPanel();
+    const { detailModalHost } = await import('/src/ui/detail-modal-host.ts');
+    window.__sourcesProof.detailModalHost = detailModalHost;
+    document.querySelector('#game-canvas').id = 'proof-original-game-canvas';
+    const canvas = document.createElement('canvas'); canvas.id = 'game-canvas'; canvas.dataset.mapDismissFixture = '';
+    canvas.style.cssText = 'position:fixed;left:0;top:650px;width:100px;height:100px;z-index:100';
+    const ui = document.createElement('button'); ui.dataset.mapDismissFixture = ''; ui.textContent = '其他 UI';
+    ui.style.cssText = 'position:fixed;left:150px;top:650px;width:100px;height:100px;z-index:100';
+    document.body.append(canvas, ui);
+    detailModalHost.open({ ownerId: 'map-dismiss-proof', title: '關閉判斷', size: 'sm', bodyHtml: '<button>視窗內按鈕</button>' });
+  })()`);
+  for (const [x, shouldStay] of [[180, true], [40, false]]) {
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y: 700, button: 'left', clickCount: 1 });
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y: 700, button: 'left', clickCount: 1 });
+    assert.equal(await cdp.evaluate(`window.__sourcesProof.detailModalHost.isOpenFor('map-dismiss-proof')`), shouldStay, shouldStay ? '點其他 UI 不得當空白關閉' : '點主地圖畫布應關閉');
+  }
+  await cdp.evaluate(`window.__sourcesProof.detailModalHost.open({ ownerId: 'map-dismiss-proof', title: '關閉判斷', bodyHtml: '<p>內容</p>' })`);
+  await click(cdp, '[data-detail-modal-close]');
+  assert.equal(await cdp.evaluate(`window.__sourcesProof.detailModalHost.isOpenFor('map-dismiss-proof')`), false, '明確關閉鈕可關窗');
+  await cdp.evaluate(`document.querySelectorAll('[data-map-dismiss-fixture]').forEach(el => el.remove()); document.querySelector('#proof-original-game-canvas').id = 'game-canvas'`);
+
 });
 console.log('item sources panel: PASS (complete sources, desktop/touch, return/Escape, navigation same/cross map, quest, offline)');

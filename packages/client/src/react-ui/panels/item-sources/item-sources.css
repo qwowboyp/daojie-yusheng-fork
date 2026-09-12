@@ -50,3 +50,9 @@
 @media (max-height: 500px) { .item-sources-detail-head span { display: none; }.item-sources-detail-head { padding-bottom: 8px; }.item-sources-back { float: right; margin-left: 12px; }.item-sources-source-kind { margin-top: 10px; } }
 @media (min-width: 721px) and (max-height: 500px) { .item-sources-filters { grid-template-columns: 1.5fr repeat(3, minmax(0, 1fr)); }.item-sources-filters label:first-child { grid-column: auto; } }
 @media (prefers-reduced-motion: reduce) { .item-sources-panel * { scroll-behavior: auto; } }
+
+.item-sources-unlearned { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 6px; font-size: 13px; color: var(--color-role-body); cursor: pointer; }
+.item-sources-unlearned input { width: 18px; height: 18px; accent-color: var(--accent); }
+.item-sources-learned { display: inline-block; justify-self: start; padding: 2px 7px; border: 1px solid var(--accent-border); border-radius: 5px; background: var(--accent-soft); color: var(--accent-ink); font-size: 12px; }
+.item-sources-map-realm { display: block; margin-top: 4px; color: var(--color-role-body-muted); font-size: 12px; font-weight: normal; }
+.item-sources-detail-head .item-sources-technique-realm { margin-top: 6px; line-height: 1.5; }

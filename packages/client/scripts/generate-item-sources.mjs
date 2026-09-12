@@ -1013,6 +1013,13 @@ function main() {
 /**
  * 记录目录。
  */
+  const mapLevels = new Map(maps.map((map) => [map.id, escapeNonFiniteInteger(map.mapLv)]));
+  for (const entries of sourceByItemId.values()) {
+    for (const entry of entries) {
+      const mapLv = mapLevels.get(entry.mapId);
+      if (mapLv !== undefined && mapLv > 0) entry.mapLv = mapLv;
+    }
+  }
   const catalog = Object.fromEntries(
     [...sourceByItemId.entries()].map(([itemId, entries]) => [itemId, sortSources(entries)]),
   );

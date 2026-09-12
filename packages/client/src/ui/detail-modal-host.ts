@@ -7,6 +7,7 @@
  * 全局单实例详情弹层宿主
  * 所有"点击展开详情"类交互共用此弹层，通过 ownerId 区分归属
  */
+import { isMapBackdropClick } from './map-backdrop-click';
 import { preserveSelection } from './selection-preserver';
 import { t } from './i18n';
 import {
@@ -362,8 +363,15 @@ class DetailModalHost {
 
     if (this.initialized) return;
     this.initialized = true;
-    this.modal.addEventListener('click', () => {
-      this.dismiss(true);
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.className = 'ui-modal-explicit-close';
+    closeButton.dataset.detailModalClose = 'true';
+    closeButton.textContent = '關閉';
+    closeButton.addEventListener('click', () => this.dismiss(true));
+    this.card.querySelector('.detail-modal-head')?.appendChild(closeButton);
+    this.modal.addEventListener('click', (event) => {
+      if (event.target === this.modal && isMapBackdropClick(event, this.modal)) this.dismiss(true);
     });
     this.card.addEventListener('click', (event) => {
       event.stopPropagation();

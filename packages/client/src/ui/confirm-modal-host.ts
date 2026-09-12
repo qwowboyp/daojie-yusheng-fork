@@ -3,6 +3,7 @@
  *
  * 维护时优先保持局部更新和原有焦点/滚动状态，不在 UI 层裁定资产、战斗或移动合法性。
  */
+import { isMapBackdropClick } from './map-backdrop-click';
 import { t } from './i18n';
 import { bindDesktopWindow, type DesktopWindowController } from './desktop-window';
 
@@ -111,8 +112,8 @@ class ConfirmModalHost {
     this.cancelButton = modal.querySelector<HTMLButtonElement>('[data-confirm-modal-cancel="true"]');
     this.confirmButton = modal.querySelector<HTMLButtonElement>('[data-confirm-modal-confirm="true"]');
 
-    modal.querySelector<HTMLElement>('[data-confirm-modal-backdrop="true"]')?.addEventListener('click', () => {
-      this.dismiss(true);
+    modal.querySelector<HTMLElement>('[data-confirm-modal-backdrop="true"]')?.addEventListener('click', (event) => {
+      if (isMapBackdropClick(event, modal)) this.dismiss(true);
     });
     this.card?.addEventListener('click', (event) => {
       event.stopPropagation();

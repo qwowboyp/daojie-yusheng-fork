@@ -5,6 +5,7 @@
  */
 import { useExternalStoreSnapshot } from '../hooks/use-external-store-snapshot';
 import { closeDetailModal, overlayStore } from './overlay-store';
+import { isMapBackdropClick } from '../../ui/map-backdrop-click';
 import { t } from '../../ui/i18n';
 /**
  * DetailModalLayer：渲染Next详情弹层层组件。
@@ -25,7 +26,7 @@ export function DetailModalLayer() {
     <div
       className="react-ui-modal-layer react-ui-detail-modal-layer"
       aria-hidden="false"
-      onClick={closeDetailModal}
+      onClick={(event) => { if (event.target === event.currentTarget && isMapBackdropClick(event, event.currentTarget)) closeDetailModal(); }}
     >
       <div
         className="react-ui-modal-card react-ui-modal-card--md react-ui-detail-modal-card"
@@ -39,6 +40,7 @@ export function DetailModalLayer() {
             ) : null}
           </div>
           <div className="react-ui-modal-hint">{detailModal.hint ?? t('detail-modal.hint.close')}</div>
+          <button type="button" className="ui-modal-explicit-close" onClick={closeDetailModal}>關閉</button>
         </div>
         <div className="react-ui-modal-body react-ui-detail-modal-body">
           {detailModal.body}

@@ -123,6 +123,8 @@
 
 ### 更新流程（部署新版）
 
+前端 UI／圖片更新優先使用 `docs/runbook/client-hot-release.md`：乾淨提交在本機完成 `prepare.mjs` 驗證與封裝，由 `remote_publish.py` 驗證差異後只傳改動資源、原子切換並保留回復版本。首次需 bootstrap 前端掛載；後續 publish 不重啟容器。後端、shared、資料契約或未知範圍改動不得套用純前端發布。以下原始碼映像流程保留作為後端／建置環境變更的回退入口。
+
 1. 本機 `git archive --format=tar.gz -o daojie-src.tar.gz HEAD`（乾淨樹，不含未追蹤檔案）
 2. 傳輸至 LXC（直連 scp 或經 PVE `pct push 105`），解包到 `/opt/daojie/src`
 3. LXC 內 build 本地映像（依改動範圍選擇）：
