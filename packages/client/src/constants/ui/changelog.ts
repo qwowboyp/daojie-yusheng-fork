@@ -13,6 +13,13 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-12',
+    summary: '聊天視窗改為預設顯示系統訊息。',
+    items: [
+      '介面：日誌與聊天視窗打開時改顯示「系統」分頁，不再預設落在「情仇」；情仇、附近與世界仍可手動切換。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-12',
     summary: '基礎移動速度恢復為平地每息一格。',
     items: [
       '移動：平地每息改回走一格，先前加倍為每息兩格的基礎移速已還原；身法加成與地形消耗規則不變。',
