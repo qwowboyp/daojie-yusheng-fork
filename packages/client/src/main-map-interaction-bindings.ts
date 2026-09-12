@@ -113,6 +113,7 @@ type HoveredMapTile = {
 
 
 type MainMapInteractionBindingsOptions = {
+  applyZoomChange: (zoom: number) => number;
 /**
  * mapRuntime：地图运行态引用。
  */
@@ -128,6 +129,7 @@ type MainMapInteractionBindingsOptions = {
  */
 
     setInteractionCallbacks: (callbacks: {
+      onZoom: (zoom: number) => void;
     /**
  * onTarget：on目标相关字段。
  */
@@ -386,6 +388,7 @@ export function bindMainMapInteractions(options: MainMapInteractionBindingsOptio
   });
 
   options.mapRuntime.setInteractionCallbacks({
+    onZoom: (zoom) => options.applyZoomChange(zoom),
     onTarget: (target) => {
       const clickedMonster = options.findObservedEntityAt(target.x, target.y, 'monster');
       const clickedNpc = options.findObservedEntityAt(target.x, target.y, 'npc');

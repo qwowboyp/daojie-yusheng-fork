@@ -446,6 +446,7 @@ type MainBootstrapAssemblyOptions = {
  */
 
     setInteractionCallbacks: (callbacks: {
+      onZoom: (zoom: number) => void;
     /**
  * onTarget：on目标相关字段。
  */
@@ -708,6 +709,7 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
   });
 
   bindMainMapInteractions({
+    applyZoomChange: (zoom) => options.uiStateSource.applyZoomChange(zoom),
     mapRuntime: options.mapRuntime,
     planPathTo: (target, bindOptions) => options.mapRuntimeBridgeSource.planPathTo(target, bindOptions),
     findObservedEntityAt: (x, y, kind) => options.mapRuntimeBridgeSource.findObservedEntityAt(x, y, kind),
