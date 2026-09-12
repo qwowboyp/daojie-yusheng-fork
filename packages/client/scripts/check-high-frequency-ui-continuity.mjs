@@ -487,7 +487,7 @@ assertIncludes(socialPanel, /this\.conversationInputByPlayerId\.set\(peerId, sna
 assertIncludes(socialPanel, /inputSnapshot \?\? this\.conversationInputByPlayerId\.get\(peerId\)/, '私聊重建后必须回读焦点与选区快照');
 assertIncludes(socialWorkspacePanel, /new WorkspaceModalPanel\(/, '道友独立窗口必须复用统一坊市式适配器');
 assertIncludes(workspaceModalPanel, /detailModalHost\.open\(/, '固定功能窗口必须复用全局 detail modal 宿主');
-assertIncludes(workspaceModalPanel, /variantClass: 'detail-modal--feature-workspace'/, '固定功能窗口必须使用统一坊市式视觉变体');
+assertIncludes(workspaceModalPanel, /variantClass: [`']detail-modal--feature-workspace/, '功能視窗必須保留共用視覺變體，允許依內容縮小');
 assertIncludes(workspaceModalPanel, /closeButton\.dataset\.workspaceClose = 'true'/, '固定功能窗口必须提供手机端可直接触达的关闭按钮');
 assertIncludes(workspaceModalPanel, /this\.root\.append\(this\.body, toolbar\)/, '固定功能窗口必须保持可滚动内容与固定关闭栏分层');
 assertIncludes(sidePanel, /tabTransitionListeners/, 'SidePanel 必须集中管理固定面板切换生命周期');
@@ -524,7 +524,8 @@ assertMissing(socialPanel, /data-social-menu-shell="true"/, '道友子功能不�
 assertMissing(socialPanel, /panel-section-header/, '道友面板不得继续使用不存在的 panel-section-header 类');
 assertIncludes(panelsCss, /\.social-panel \.ui-list-row\s*\{/, '道友列表行必须有明确布局样式');
 assertIncludes(panelsCss, /\.social-menu-launcher\s*\{[\s\S]*?repeat\(2, minmax\(0, 1fr\)\)/, '道友面板入口必须使用双列按钮网格');
-assertIncludes(panelsCss, /\.detail-modal-card\.detail-modal--feature-workspace\s*\{[\s\S]*?960px[\s\S]*?640px/, '五个完整功能页必须使用统一 960×640 坊市式窗口');
+assertIncludes(panelsCss, /\.detail-modal-card\.detail-modal--feature-workspace\s*\{[\s\S]*?960px[\s\S]*?640px/, '隊伍與私聊保留完整功能視窗尺寸');
+assertIncludes(panelsCss, /\.detail-modal-card\.detail-modal--feature-workspace\.detail-modal--feature-compact\s*\{[\s\S]*?600px[\s\S]*?520px/, '簡單社交名錄與申請必須使用較小視窗');
 assertIncludes(panelsCss, /@media \(max-width: 992px\), \(max-height: 672px\)/, '五个完整功能页必须在空间不足时切换近全屏布局');
 assertIncludes(panelsCss, /\.feature-workspace-close\s*\{[\s\S]*?min-height:\s*44px/, '手机端固定功能窗口关闭按钮必须至少 44px');
 assertIncludes(panelsCss, /\.social-workspace-content\s*\{/, '道友独立窗口必须使用稳定滚动内容布局');

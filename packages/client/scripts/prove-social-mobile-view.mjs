@@ -1,4 +1,4 @@
-/** 道友启动器 proof：六入口复用坊市式固定窗口、全局互斥与私聊连续性。 */
+/** 道友入口 proof：分類完整、按內容分配視窗大小、全局互斥與私聊連續性。 */
 import assert from 'node:assert/strict';
 import { delay, withClientBrowserProof } from './browser-proof-runtime.mjs';
 
@@ -64,11 +64,12 @@ const fixtureExpression = String.raw`
 `;
 
 function assertWorkspaceState(state, expectedId, label) {
+  const compact = !['party-workspace-panel', 'social-workspace-messages'].includes(expectedId);
   assert.equal(state.open, true, `${label}未打开共享详情窗口`);
   assert.equal(state.ownerId, expectedId, `${label}内容宿主不正确`);
   assert.equal(state.ownerCount, 1, `${label}打开后共享宿主内不是单一功能页`);
-  assert.equal(Math.abs(state.width - 960) <= 1, true, `${label}桌面宽度不是 960px`);
-  assert.equal(Math.abs(state.height - 640) <= 1, true, `${label}桌面高度不是 640px`);
+  assert.equal(Math.abs(state.width - (compact ? 600 : 960)) <= 1, true, `${label}桌面寬度未符合內容類型`);
+  assert.equal(Math.abs(state.height - (compact ? 520 : 640)) <= 1, true, `${label}桌面高度未符合內容類型`);
   assert.equal(state.bounded, true, `${label}越出视口`);
   assert.equal(state.variant, true, `${label}未使用坊市式固定窗口变体`);
 }
@@ -85,8 +86,8 @@ await withClientBrowserProof(
         directTabs: document.querySelectorAll('.social-feature-tab').length,
         embeddedPanes: document.querySelectorAll('#pane-party, [id^="pane-social-"]').length };
     })()`);
-    assert.equal(launcher.count, 6, '道友面板不是六按钮启动器');
-    for (const label of ['队伍', '道友名录', '道友申请', '附近修士', '線上修士', '私聊']) {
+    assert.equal(launcher.count, 7, '道友面板缺少既有功能入口');
+    for (const label of ['隊伍', '宗門總覽', '道友名錄', '道友申請', '附近修士', '線上修士', '私聊']) {
       assert.equal(launcher.labels.some((text) => text.includes(label)), true, `缺少${label}按钮`);
     }
     assert.equal(launcher.directTabs, 0, '五项仍被错误放进右侧 Tab');

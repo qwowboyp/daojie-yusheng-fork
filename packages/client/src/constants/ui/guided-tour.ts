@@ -58,6 +58,18 @@ const OPEN_ACTION_PANEL_PREPARE: GuidedTourPrepareAction[] = [
   { type: 'switch-tab', tabName: 'action' },
 ];
 
+const OPEN_ACTION_UTILITY_PREPARE: GuidedTourPrepareAction[] = [
+  { type: 'switch-tab', tabName: 'utility' },
+];
+
+const OPEN_ACTION_TOGGLE_PREPARE: GuidedTourPrepareAction[] = [
+  { type: 'switch-tab', tabName: 'toggle' },
+];
+
+const OPEN_SKILL_PANEL_PREPARE: GuidedTourPrepareAction[] = [
+  { type: 'switch-tab', tabName: 'skill' },
+];
+
 const OPEN_TECHNIQUE_PANEL_PREPARE: GuidedTourPrepareAction[] = [
   { type: 'switch-tab', tabName: 'technique' },
 ];
@@ -128,7 +140,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         titleKey: 'guided-tour.step.action.title',
         titleFallback: '行動欄執行操作',
         bodyKey: 'guided-tour.step.action.body',
-        bodyFallback: '常用互動、技能、開關和通用操作都在行動欄。需要點目標的操作會先進入選擇狀態，再到地圖上點目標。',
+        bodyFallback: '常用互動、行動與開關都在行動工作區；技能管理位於修行工作區。需要點目標的操作會先進入選擇狀態，再到地圖上點目標。',
         placement: 'left',
         prepare: OPEN_ACTION_PANEL_PREPARE,
       },
@@ -299,14 +311,14 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
       },
       {
         id: 'observe-utility-tab',
-        targetSelector: '[data-action-tab="utility"]',
+        targetSelector: '#workspace-tab-utility, [data-action-tab="utility"]',
         titleKey: 'guided-tour.step.observe-utility-tab.title',
         titleFallback: '切到通用頁',
         bodyKey: 'guided-tour.step.observe-utility-tab.body',
         bodyFallback: '通用頁放置觀察、強制攻擊、返回復活點等不屬於普通技能的操作。',
         placement: 'bottom',
         advanceMode: 'target-click',
-        prepare: OPEN_ACTION_PANEL_PREPARE,
+        prepare: OPEN_ACTION_UTILITY_PREPARE,
       },
       {
         id: 'observe-button',
@@ -318,8 +330,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         placement: 'left',
         advanceMode: 'target-click',
         prepare: [
-          ...OPEN_ACTION_PANEL_PREPARE,
-          { type: 'click', selector: '[data-action-tab="utility"]' },
+          ...OPEN_ACTION_UTILITY_PREPARE,
         ],
       },
       {
@@ -343,14 +354,14 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
     steps: [
       {
         id: 'sense-qi-toggle-tab',
-        targetSelector: '[data-action-tab="toggle"]',
+        targetSelector: '#workspace-tab-toggle, [data-action-tab="toggle"]',
         titleKey: 'guided-tour.step.sense-qi-toggle-tab.title',
         titleFallback: '切到開關頁',
         bodyKey: 'guided-tour.step.sense-qi-toggle-tab.body',
         bodyFallback: '感氣是顯示類開關，先進入行動欄的開關頁。',
         placement: 'bottom',
         advanceMode: 'target-click',
-        prepare: OPEN_ACTION_PANEL_PREPARE,
+        prepare: OPEN_ACTION_TOGGLE_PREPARE,
       },
       {
         id: 'sense-qi-card',
@@ -362,8 +373,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         placement: 'left',
         advanceMode: 'target-click',
         prepare: [
-          ...OPEN_ACTION_PANEL_PREPARE,
-          { type: 'click', selector: '[data-action-tab="toggle"]' },
+          ...OPEN_ACTION_TOGGLE_PREPARE,
         ],
       },
       {
@@ -418,14 +428,14 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
       },
       {
         id: 'cultivation-toggle-tab',
-        targetSelector: '[data-action-tab="toggle"]',
+        targetSelector: '#workspace-tab-toggle, [data-action-tab="toggle"]',
         titleKey: 'guided-tour.step.cultivation-toggle-tab.title',
         titleFallback: '回到修煉開關',
         bodyKey: 'guided-tour.step.cultivation-toggle-tab.body',
         bodyFallback: '主修功法確定後，再回到行動欄開關頁控制當前是否閉關修煉。',
         placement: 'bottom',
         advanceMode: 'target-click',
-        prepare: OPEN_ACTION_PANEL_PREPARE,
+        prepare: OPEN_ACTION_TOGGLE_PREPARE,
       },
       {
         id: 'cultivation-toggle-card',
@@ -436,8 +446,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyFallback: '這個開關控制是否進行閉關修煉。開啟後每息獲得境界修為和主修功法經驗，移動、攻擊等操作可能打斷當前修煉狀態。',
         placement: 'left',
         prepare: [
-          ...OPEN_ACTION_PANEL_PREPARE,
-          { type: 'click', selector: '[data-action-tab="toggle"]' },
+          ...OPEN_ACTION_TOGGLE_PREPARE,
         ],
       },
       {
@@ -449,8 +458,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         bodyFallback: '自動修煉會在空閒時嘗試恢復修煉；修滿切換可輔助輪換功法。按當前策略選擇開啟即可。',
         placement: 'left',
         prepare: [
-          ...OPEN_ACTION_PANEL_PREPARE,
-          { type: 'click', selector: '[data-action-tab="toggle"]' },
+          ...OPEN_ACTION_TOGGLE_PREPARE,
         ],
       },
     ],
@@ -464,14 +472,14 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
     steps: [
       {
         id: 'force-attack-utility-tab',
-        targetSelector: '[data-action-tab="utility"]',
+        targetSelector: '#workspace-tab-utility, [data-action-tab="utility"]',
         titleKey: 'guided-tour.step.force-attack-utility-tab.title',
         titleFallback: '切到通用頁',
         bodyKey: 'guided-tour.step.force-attack-utility-tab.body',
         bodyFallback: '強制攻擊屬於通用操作，用於主動選擇目標發起攻擊。',
         placement: 'bottom',
         advanceMode: 'target-click',
-        prepare: OPEN_ACTION_PANEL_PREPARE,
+        prepare: OPEN_ACTION_UTILITY_PREPARE,
       },
       {
         id: 'force-attack-button',
@@ -483,8 +491,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         placement: 'left',
         advanceMode: 'target-click',
         prepare: [
-          ...OPEN_ACTION_PANEL_PREPARE,
-          { type: 'click', selector: '[data-action-tab="utility"]' },
+          ...OPEN_ACTION_UTILITY_PREPARE,
         ],
       },
       {
@@ -558,14 +565,14 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
       },
       {
         id: 'mining-skill-tab',
-        targetSelector: '[data-action-tab="skill"]',
+        targetSelector: '#workspace-tab-skill, [data-action-tab="skill"]',
         titleKey: 'guided-tour.step.mining-skill-tab.title',
         titleFallback: '切到技能頁',
         bodyKey: 'guided-tour.step.mining-skill-tab.body',
-        bodyFallback: '挖礦是需要附近有礦脈時出現的採集行動。先進入行動欄的技能頁。',
+        bodyFallback: '挖礦是需要附近有礦脈時出現的採集行動。先進入修行工作區的技能管理頁。',
         placement: 'bottom',
         advanceMode: 'target-click',
-        prepare: OPEN_ACTION_PANEL_PREPARE,
+        prepare: OPEN_SKILL_PANEL_PREPARE,
       },
       {
         id: 'mining-button',
@@ -577,8 +584,7 @@ export const GUIDED_TOUR_FLOWS: GuidedTourFlow[] = [
         placement: 'left',
         advanceMode: 'target-click',
         prepare: [
-          ...OPEN_ACTION_PANEL_PREPARE,
-          { type: 'click', selector: '[data-action-tab="skill"]' },
+          ...OPEN_SKILL_PANEL_PREPARE,
         ],
       },
       {

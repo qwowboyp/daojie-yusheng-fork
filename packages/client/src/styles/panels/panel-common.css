@@ -841,6 +841,13 @@
       overflow: hidden;
     }
 
+    .detail-modal-card.detail-modal--feature-workspace.detail-modal--feature-compact {
+      --ui-modal-width: min(600px, calc(100vw - 32px));
+      width: var(--ui-modal-width);
+      height: min(520px, calc(100dvh - 32px));
+      max-height: calc(100dvh - 32px);
+    }
+
     .feature-workspace-content {
       height: 100%;
       min-height: 0;

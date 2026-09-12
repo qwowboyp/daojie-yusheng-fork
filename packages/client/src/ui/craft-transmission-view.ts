@@ -82,6 +82,7 @@ export interface CraftTransmissionParent {
   readonly callbacks: (CraftTransmissionCallbacks & {
     onDecomposeTechniqueBook?: (itemInstanceId: string, count: number) => void;
   }) | null;
+  getOpenCraftBody(): HTMLElement | null;
   patchOpenCraftShell(): void;
 }
 
@@ -324,7 +325,7 @@ export class CraftTransmissionView {
     if (this.parent.activeMode !== 'transmission') {
       return;
     }
-    const body = document.getElementById('detail-modal-body');
+    const body = this.parent.getOpenCraftBody();
     if (body instanceof HTMLElement) {
       this.patchTransmissionTechniqueOptions(body);
     }
@@ -339,7 +340,7 @@ export class CraftTransmissionView {
     this.failedTransmissionStatusTargetPlayerId = '';
     this.transmissionLearnedByTechniqueId.clear();
     if (this.parent.activeMode === 'transmission') {
-      const body = document.getElementById('detail-modal-body');
+      const body = this.parent.getOpenCraftBody();
       if (body instanceof HTMLElement) {
         this.requestTransmissionStatuses(body);
       }
@@ -848,7 +849,7 @@ export class CraftTransmissionView {
     if (this.parent.activeMode !== 'transmission') {
       return;
     }
-    const body = document.getElementById('detail-modal-body');
+    const body = this.parent.getOpenCraftBody();
     if (body instanceof HTMLElement) {
       this.patchTransmissionTechniqueOptions(body);
     }
@@ -1808,7 +1809,7 @@ export class CraftTransmissionView {
   }
 
   private patchOpenTechniqueAggregationControls(): void {
-    const body = document.getElementById('detail-modal-body');
+    const body = this.parent.getOpenCraftBody();
     const root = body?.querySelector<HTMLElement>('[data-technique-aggregation-panel="true"]');
     if (root) this.patchTechniqueAggregationControls(root);
   }

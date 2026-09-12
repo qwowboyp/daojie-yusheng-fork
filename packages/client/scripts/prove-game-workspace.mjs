@@ -14,6 +14,7 @@ const PHONE_BROWSER_CHROME = { width: 390, height: 670 };
 const PHONE_SMALL = { width: 375, height: 667 };
 const LANDSCAPE = { width: 844, height: 390 };
 const DESKTOP = { width: 1440, height: 900 };
+const SQUARE_DESKTOP = { width: 900, height: 900 };
 const LARGE_DESKTOP = { width: 3727, height: 2233 };
 const VISUALIZATION_DIR = process.env.WORKSPACE_PROOF_OUTPUT_DIR;
 
@@ -80,6 +81,16 @@ const fixtureExpression = String.raw`
       { id: 'client:observe', name: '觀察', desc: '觀察指定地格', type: 'toggle', cooldownLeft: 0, requiresTarget: true, targetMode: 'tile', range: 8 },
     ];
     actionPanel.update(fixtureActions, false, false, player);
+    // 正式 SidePanel 已在頁面啟動時建立自己的 ActionPanel。本 proof 的 fixture
+    // 必須接住它的 workspace 回呼，才能驗證真實導航是否把同一 pane 掛到正確分區。
+    const showWorkspaceSection = ActionPanel.prototype.showWorkspaceSection;
+    const hideWorkspaceSection = ActionPanel.prototype.hideWorkspaceSection;
+    ActionPanel.prototype.showWorkspaceSection = function(section, host) {
+      return showWorkspaceSection.call(actionPanel, section, host);
+    };
+    ActionPanel.prototype.hideWorkspaceSection = function() {
+      return hideWorkspaceSection.call(actionPanel);
+    };
     const quickActionsHost = document.getElementById('chat-quick-actions');
     if (quickActionsHost instanceof HTMLElement && typeof actionPanel.mountQuickActions === 'function') {
       actionPanel.mountQuickActions(quickActionsHost);
@@ -202,33 +213,110 @@ const preserveInputExpression = String.raw`
 const verifyAllWorkspacesExpression = String.raw`
   (async () => {
     const expected = [
-      ['character', '人物'], ['items', '物品與裝備'], ['cultivation', '修行'], ['craft', '技藝與行動'],
-      ['quests', '任務日誌'], ['social', '社交'], ['market', '坊市'], ['world', '世界'], ['system', '系統與協助'],
+      ['character', '人物', ['overview', 'attr']],
+      ['items', '背包與技藝', ['inventory', 'equipment', 'alchemy', 'forging', 'enhancement', 'transmission', 'building']],
+      ['cultivation', '修行', ['technique', 'body-training', 'skill']],
+      ['action', '行動與自動設定', ['dialogue', 'utility', 'toggle']],
+      ['quests', '任務與活動', ['quest']], ['social', '社交', ['social']], ['market', '坊市', ['market']],
+      ['world', '世界', ['map-intel', 'tianji']], ['system', '系統與協助', ['system']],
     ];
     const menu = document.getElementById('workspace-menu-toggle');
     if (!(menu instanceof HTMLButtonElement)) throw new Error('未找到全部功能入口');
     const results = [];
-    for (const [id, title] of expected) {
+    for (const [id, title, tabs] of expected) {
       menu.click();
       await window.__gameWorkspaceProof.nextPaint();
-      const entry = document.querySelector((id === 'craft' ? '#game-dock .workspace-dock-nav > ' : '#workspace-menu ') + '[data-workspace-open="' + id + '"]');
+      const entry = document.querySelector((id === 'action' ? '#game-dock .workspace-dock-nav > ' : '#workspace-menu ') + '[data-workspace-open="' + id + '"]');
       if (!(entry instanceof HTMLButtonElement)) throw new Error('全部功能缺少分類：' + id);
-      if (id === 'craft' && (!entry.getClientRects().length || entry.textContent !== '技藝')) throw new Error('右下角缺少可見技藝入口');
+      if (id === 'action' && (!entry.getClientRects().length || entry.textContent !== '行動')) throw new Error('右下角缺少可見行動入口');
       entry.click();
       await window.__gameWorkspaceProof.nextPaint();
-      const activeTab = document.querySelector('#game-workspace-controls [role="tab"][aria-selected="true"]');
-      const paneId = activeTab?.getAttribute('aria-controls');
-      const pane = paneId ? document.getElementById(paneId) : null;
-      const activePane = pane instanceof HTMLElement && document.getElementById('game-workspace-body')?.contains(pane)
-        && !pane.hidden && pane.getAttribute('aria-hidden') === 'false';
-      if (id === 'craft') {
-        if (paneId !== 'workspace-craft-launcher') throw new Error('技藝入口未開啟正式技藝工作窗');
-        const actions = [...pane.querySelectorAll('[data-workspace-action]')].map((button) => button.dataset.workspaceAction);
-        if (actions.join(',') !== 'alchemy,forging,enhancement,transmission,building') throw new Error('技藝工作窗原有功能不完整');
+      const tabResults = [];
+      for (const tabId of tabs) {
+        const tab = document.getElementById('workspace-tab-' + tabId);
+        if (!(tab instanceof HTMLButtonElement)) throw new Error('工作分類缺少分頁：' + id + '/' + tabId);
+        tab.click();
+        await window.__gameWorkspaceProof.nextPaint();
+        const paneId = tab.getAttribute('aria-controls');
+        const pane = paneId ? document.getElementById(paneId) : null;
+        const activePane = pane instanceof HTMLElement && document.getElementById('game-workspace-body')?.contains(pane)
+          && !pane.hidden && pane.getAttribute('aria-hidden') === 'false';
+        const actionPane = pane?.querySelector('#pane-action');
+        const actionSection = ['skill', 'dialogue', 'utility', 'toggle'].includes(tabId)
+          ? actionPane instanceof HTMLElement
+            && actionPane.parentElement === pane
+            && actionPane.querySelector('[data-action-pane="' + tabId + '"]') instanceof HTMLElement
+            && !actionPane.querySelector('[data-action-tab]')
+          : true;
+        tabResults.push({ tabId, activePane, actionSection });
       }
-      results.push({ id, expectedTitle: title, title: document.getElementById('workspace-title')?.textContent, activePane });
+      results.push({ id, expectedTitle: title, title: document.getElementById('workspace-title')?.textContent, tabResults });
     }
     return results;
+  })()
+`;
+
+const verifyWorkspaceMenuAndShortcutExpression = String.raw`
+  (async () => {
+    const paint = window.__gameWorkspaceProof.nextPaint;
+    const items = document.querySelector('[data-workspace-open="items"]');
+    if (!(items instanceof HTMLButtonElement)) throw new Error('缺少背包入口');
+    items.click();
+    await paint();
+    const input = document.querySelector('.inventory-search-input');
+    const inventoryPane = document.getElementById('pane-inventory');
+    if (!(input instanceof HTMLInputElement) || !(inventoryPane instanceof HTMLElement)) throw new Error('缺少背包搜尋控制');
+    input.value = '赤鐵';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    inventoryPane.scrollTop = Math.max(1, inventoryPane.scrollHeight);
+    const marketShortcut = document.querySelector('[data-workspace-shortcut="market"]');
+    if (!(marketShortcut instanceof HTMLButtonElement)) throw new Error('背包缺少前往坊市捷徑');
+    marketShortcut.click();
+    await paint();
+    const inventoryShortcut = document.querySelector('[data-workspace-shortcut="inventory"]');
+    if (!(inventoryShortcut instanceof HTMLButtonElement)) throw new Error('坊市缺少返回背包捷徑');
+    inventoryShortcut.click();
+    await paint();
+    const restoredInput = document.querySelector('.inventory-search-input');
+    const menu = document.getElementById('workspace-menu-toggle');
+    if (!(menu instanceof HTMLButtonElement)) throw new Error('缺少全部功能選單');
+    if (menu.getAttribute('aria-expanded') !== 'true') menu.click();
+    await paint();
+    const menuRoot = document.getElementById('workspace-menu');
+    const menuRect = menuRoot?.getBoundingClientRect();
+    const entries = [...(menuRoot?.querySelectorAll('button[data-workspace-open]') ?? [])].map((button) => button.getBoundingClientRect());
+    const menuWasOpen = menuRoot instanceof HTMLElement && !menuRoot.hidden;
+    document.body.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+    await paint();
+    return {
+      inputPreserved: restoredInput === input && restoredInput instanceof HTMLInputElement && restoredInput.value === '赤鐵',
+      scrollPreserved: inventoryPane.scrollTop >= 0,
+      menuOpen: menuWasOpen,
+      menuBounded: !!menuRect && menuRect.left >= 0 && menuRect.top >= 0 && menuRect.right <= innerWidth && menuRect.bottom <= innerHeight,
+      menuEntrySizes: entries.map((rect) => ({ width: rect.width, height: rect.height })),
+      menuClosedByOutsidePointer: menuRoot?.hidden === true,
+    };
+  })()
+`;
+
+const measureWorkspaceCompactnessExpression = String.raw`
+  (async () => {
+    const paint = window.__gameWorkspaceProof.nextPaint;
+    const open = async (id) => {
+      const button = document.querySelector('[data-workspace-open="' + id + '"]');
+      if (!(button instanceof HTMLButtonElement)) throw new Error('缺少工作分類入口：' + id);
+      button.click();
+      await paint();
+      const workspace = document.getElementById('game-workspace');
+      const rect = workspace?.getBoundingClientRect();
+      return { compact: workspace?.dataset.compact, width: rect?.width ?? 0, height: rect?.height ?? 0 };
+    };
+    const items = await open('items');
+    const menu = document.getElementById('workspace-menu-toggle');
+    if (!(menu instanceof HTMLButtonElement)) throw new Error('缺少全部功能選單');
+    menu.click(); await paint();
+    const system = await open('system');
+    return { items, system };
   })()
 `;
 
@@ -554,7 +642,7 @@ const stabilizeAnchorExpression = String.raw`
       return { hudTop: hud.top, timeTop: time.top };
     };
     const before = read();
-    const target = document.querySelector('#game-dock [data-workspace-open="craft"], #game-dock [data-workspace-open="items"]');
+    const target = document.querySelector('#game-dock [data-workspace-open="action"], #game-dock [data-workspace-open="items"]');
     if (!(target instanceof HTMLElement)) throw new Error('未找到正式工作窗按鈕');
     target.focus();
     target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
@@ -1044,7 +1132,7 @@ async function verifyMobileInventoryInteractions(cdp, viewport, theme = 'light')
     ] });
     await proof.nextPaint();
   })()`);
-  for (const id of ['items', 'cultivation', 'craft', 'quests']) {
+  for (const id of ['items', 'cultivation', 'action', 'quests']) {
     const selector = '#game-dock .workspace-dock-nav > [data-workspace-open="' + id + '"]';
     await clickCenterWithCdp(cdp, selector);
     assert.equal(await cdp.evaluate(`document.querySelector(${JSON.stringify(selector)}).getAttribute('aria-expanded')`), 'true', '手機 dock 未開啟 ' + id);
@@ -1212,8 +1300,35 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assert.equal(allWorkspaces.length, 9, '全部功能缺少工作分類');
   for (const workspace of allWorkspaces) {
     assert.equal(workspace.title, workspace.expectedTitle, `工作分類未切換：${workspace.id}`);
-    assert.equal(workspace.activePane, true, `工作分類未對應到可見正式 pane：${workspace.id}`);
+    for (const tab of workspace.tabResults) {
+      assert.equal(tab.activePane, true, `工作分類未對應到可見正式 pane：${workspace.id}/${tab.tabId}`);
+      assert.equal(tab.actionSection, true, `技能或行動內容未單獨掛入正確工作窗：${workspace.id}/${tab.tabId}`);
+    }
   }
+  const menuAndShortcut = await cdp.evaluate(verifyWorkspaceMenuAndShortcutExpression);
+  assert.equal(menuAndShortcut.inputPreserved, true, '背包與坊市捷徑往返破壞搜尋輸入或節點身分');
+  assert.equal(menuAndShortcut.scrollPreserved, true, '背包與坊市捷徑往返破壞背包捲動狀態');
+  assert.equal(menuAndShortcut.menuOpen, true, '全部功能選單未正常展開');
+  assert.equal(menuAndShortcut.menuBounded, true, '全部功能選單超出目前視口');
+  assert(menuAndShortcut.menuEntrySizes.every((entry) => entry.width > 0 && entry.height >= 40),
+    `全部功能選單入口尺寸不足：${JSON.stringify(menuAndShortcut.menuEntrySizes)}`);
+  assert.equal(menuAndShortcut.menuClosedByOutsidePointer, true, '全部功能選單未能由外部點擊關閉');
+  await cdp.evaluate(`(async () => {
+    const items = document.querySelector('[data-workspace-open="items"]');
+    if (!(items instanceof HTMLButtonElement)) throw new Error('截圖前缺少背包入口');
+    items.click(); await window.__gameWorkspaceProof.nextPaint();
+    const menu = document.getElementById('workspace-menu-toggle');
+    if (!(menu instanceof HTMLButtonElement)) throw new Error('截圖前缺少全部功能選單');
+    if (menu.getAttribute('aria-expanded') !== 'true') menu.click();
+    await window.__gameWorkspaceProof.nextPaint();
+  })()`);
+  await captureWorkspace(cdp, `workspace-menu-${PHONE.width}x${PHONE.height}-menu.png`);
+  await cdp.evaluate(`(async () => {
+    const system = document.querySelector('#workspace-menu [data-workspace-open="system"]');
+    if (!(system instanceof HTMLButtonElement)) throw new Error('截圖前缺少系統入口');
+    system.click(); await window.__gameWorkspaceProof.nextPaint();
+  })()`);
+  await captureWorkspace(cdp, `workspace-system-${PHONE.width}x${PHONE.height}-compact.png`);
   const guidedTourAfterNavigation = await cdp.evaluate(dismissGuidedTourExpression);
   assert.equal(guidedTourAfterNavigation.closed, true, '工作分類切換後仍有可攔截操作的引導層');
 
@@ -1573,6 +1688,15 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   await verifyMobileInventoryInteractions(cdp, PHONE_SMALL);
   await verifyMobileInventoryInteractions(cdp, PHONE_BROWSER_CHROME, 'dark');
   await verifyMobileInventoryInteractions(cdp, LANDSCAPE);
+  await setViewport(cdp, DESKTOP, { touch: false });
+  await setViewport(cdp, SQUARE_DESKTOP, { touch: false });
+  const squareCompactness = await cdp.evaluate(measureWorkspaceCompactnessExpression);
+  assert.equal(squareCompactness.items.compact, 'false', '900x900 背包工作窗錯誤套用 compact 版型');
+  assert.equal(squareCompactness.system.compact, 'true', '900x900 系統工作窗未套用 compact 版型');
+  assert(squareCompactness.items.width > squareCompactness.system.width,
+    `900x900 背包工作窗未大於系統工作窗：${JSON.stringify(squareCompactness)}`);
+  assert(squareCompactness.items.height > squareCompactness.system.height,
+    `900x900 背包工作窗高度未大於系統工作窗：${JSON.stringify(squareCompactness)}`);
   await setViewport(cdp, DESKTOP, { touch: false });
   await cdp.evaluate(openWorkspaceExpression);
   await cdp.evaluate(openWorkspaceExpression);

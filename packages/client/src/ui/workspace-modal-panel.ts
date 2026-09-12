@@ -7,6 +7,7 @@ export type WorkspaceModalPanelOptions = {
   title: string;
   subtitle: string;
   className?: string;
+  compact?: boolean;
   onBeforeClose?: () => void;
   onClose?: () => void;
 };
@@ -48,8 +49,8 @@ export class WorkspaceModalPanel {
       title: this.title,
       subtitle: this.options.subtitle,
       hint: '點擊空白處或按 Esc 關閉',
-      size: 'lg',
-      variantClass: 'detail-modal--feature-workspace',
+      size: this.options.compact ? 'md' : 'lg',
+      variantClass: `detail-modal--feature-workspace${this.options.compact ? ' detail-modal--feature-compact' : ''}`,
       renderBody: (body) => body.appendChild(this.root),
       onRequestClose: () => {
         this.prepareClose();

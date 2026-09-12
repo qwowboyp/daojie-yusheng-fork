@@ -169,6 +169,8 @@
 .workspace-menu button,
 .workspace-close,
 .workspace-tab,
+.workspace-shortcuts button,
+.workspace-building-entry button,
 .workspace-action-grid button {
   min-height: 44px;
   padding: 8px 14px;
@@ -202,18 +204,23 @@
   position: absolute;
   right: 0;
   bottom: calc(100% + 10px);
-  width: min(420px, calc(100vw - 24px));
-  max-height: min(620px, calc(100dvh - 104px));
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: min(390px, calc(100vw - 24px));
+  max-height: min(310px, calc(100dvh - 104px));
   overflow: auto;
-  padding: 16px;
+  padding: 10px;
   background: var(--paper-light);
   border: 1px solid var(--wash-ink);
   border-radius: 8px;
   box-shadow: 0 10px 36px rgb(0 0 0 / 24%);
 }
+.workspace-menu[hidden] { display: none; }
 .workspace-menu h2,
-.workspace-menu h3 { margin: 8px 0; font-size: 14px; color: var(--ink-grey); }
-.workspace-menu button { text-align: left; width: 100%; }
+.workspace-menu h3 { margin: 4px 6px 8px; font-size: 12px; color: var(--ink-grey); }
+.workspace-menu button { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; text-align: left; width: 100%; padding: 8px 6px; font-size: 13px; }
+.workspace-menu button small { color: var(--ink-grey); font-size: 12px; line-height: 1.4; }
 
 /* 所有 pane 仍是原本的節點；切工作區不銷毀業務元件。 */
 #game-workspace {
@@ -235,12 +242,19 @@
   font-size: max(14px, var(--font-size-14));
 }
 #game-workspace.hidden { display: none; }
+#game-workspace[data-compact="true"] { width: min(520px, calc(100% - 32px)); height: min(480px, calc(100% - 112px)); top: auto; }
+#game-workspace[data-workspace="system"] { height: min(320px, calc(100% - 112px)); }
+#game-workspace[data-workspace="market"],
+#game-workspace[data-workspace="social"] { height: min(400px, calc(100% - 112px)); }
 #game-workspace-controls { flex: 0 0 auto; min-width: 0; border-bottom: 1px solid var(--wash-ink); }
 .workspace-header { display: flex; flex-direction: column; gap: 4px; padding: 12px 16px 4px; }
-.workspace-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; }
+.workspace-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; flex-wrap: wrap; }
 .workspace-title { margin: 0; font: 600 max(20px, var(--font-size-20)) / 1.4 var(--font-role-body); }
+.workspace-shortcuts { display: flex; margin-left: auto; gap: 6px; }
+.workspace-shortcuts:empty { display: none; }
+.workspace-shortcuts button { border-color: var(--accent-border); color: var(--accent-ink); background: var(--accent-soft); padding: 6px 10px; }
 .workspace-close { flex: 0 0 auto; min-width: 44px; }
-.workspace-tabs { display: flex; gap: 4px; padding: 4px 0 8px; width: 100%; overflow-x: auto; }
+.workspace-tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px 0 8px; width: 100%; }
 .workspace-tab { flex: 0 0 auto; white-space: nowrap; border-radius: 4px 4px 0 0; }
 #game-workspace-body { flex: 1 1 auto; min-height: 0; min-width: 0; overflow: hidden; container: workspace-body / inline-size; }
 #game-workspace-body > .workspace-pane {
@@ -255,6 +269,18 @@
   scrollbar-gutter: stable;
 }
 #game-workspace-body > .workspace-pane.active:not(.hidden):not([hidden]) { display: block; }
+#game-workspace #pane-action { display: block; height: auto; min-height: 0; overflow: visible; }
+#game-workspace .craft-workbench-shell--embedded { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; min-height: 0; }
+#game-workspace .craft-workbench-shell--embedded .craft-workbench-main { min-width: 0; overflow: visible; }
+@container workspace-body (max-width: 720px) {
+  .craft-workbench-shell--embedded .craft-workbench-header,
+  .craft-workbench-shell--embedded .alchemy-layout,
+  .craft-workbench-shell--embedded .enhancement-layout { grid-template-columns: minmax(0, 1fr); }
+  .craft-workbench-shell--embedded .craft-profession-summary { display: none; }
+}
+.workspace-building-entry p { color: var(--ink-grey); line-height: 1.6; }
+.workspace-building-entry button { background: var(--accent-soft); border-color: var(--accent-border); }
+#workspace-system-content .hud-corner-btn[hidden] { display: none; }
 #game-workspace .ui-filter-tabs { gap: 6px; flex-wrap: wrap; }
 #game-workspace .ui-filter-tab { min-height: 40px; padding: 6px 12px; font-size: max(13px, var(--font-size-13)); }
 #game-workspace .inventory-search-input { min-height: 44px; font-size: 16px; }
