@@ -13,6 +13,13 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-12',
+    summary: '基礎移動速度恢復為平地每息一格。',
+    items: [
+      '移動：平地每息改回走一格，先前加倍為每息兩格的基礎移速已還原；身法加成與地形消耗規則不變。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-12',
     summary: '七境功法與武防換上專屬圖示。',
     items: [
       '功法：五十六本功法書各有獨立封面，依功法意象呈現火焰、潮汐、星辰與草木等紋飾。',
