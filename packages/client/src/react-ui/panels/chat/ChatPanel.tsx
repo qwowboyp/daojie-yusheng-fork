@@ -11,7 +11,6 @@ import {
   CHAT_FIXED_CHANNELS,
   CHAT_SELECTABLE_CHANNELS,
   DEFAULT_CHAT_CHANNEL,
-  DEFAULT_CHAT_CHANNEL_SLOT,
   DEFAULT_CHAT_CHANNEL_SLOTS,
 } from '../../../constants/ui/chat';
 import { t } from '../../../ui/i18n';
@@ -33,7 +32,7 @@ export const ChatPanel = memo(function ChatPanel() {
         {CHAT_FIXED_CHANNELS.map((channel) => (
           <button
             key={channel}
-            className="tab-btn"
+            className={`tab-btn${channel === DEFAULT_CHAT_CHANNEL ? ' active' : ''}`}
             data-chat-fixed-channel={channel}
             data-chat-unread-host={channel}
             type="button"
@@ -47,7 +46,7 @@ export const ChatPanel = memo(function ChatPanel() {
           return (
             <div
               key={slotId}
-              className={`chat-channel-slot${slotId === DEFAULT_CHAT_CHANNEL_SLOT ? ' active' : ''}`}
+              className="chat-channel-slot"
               data-chat-slot-host={slotId}
               data-chat-unread-host={slotId}
             >

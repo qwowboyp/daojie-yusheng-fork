@@ -109,4 +109,4 @@ export interface ChatStoredMessage {
 }
 
 /** DEFAULT_CHAT_CHANNEL：初次打开日志与聊天时显示的频道。 */
-export const DEFAULT_CHAT_CHANNEL: ChatChannel = DEFAULT_CHAT_CHANNEL_SLOTS[DEFAULT_CHAT_CHANNEL_SLOT];
+export const DEFAULT_CHAT_CHANNEL: ChatFixedChannel = 'system';

@@ -1146,7 +1146,7 @@ export class ChatUI {
   /** 本地水合完成后提交云端增量游标。 */
   private onHistorySync: ((payload: C2S_RequestChatHistoryView) => void) | null = null;
   /** 当前激活的固定页或自定义频道槽。 */
-  private activeView: ChatPanelView = DEFAULT_CHAT_CHANNEL_SLOT;
+  private activeView: ChatPanelView = DEFAULT_CHAT_CHANNEL;
   /** 当前激活槽位解析出的实际聊天频道。 */
   private activeChannel: ChatChannel = DEFAULT_CHAT_CHANNEL;
   /** 当前权威队伍 ID；为空时队伍频道只读且清空。 */
@@ -1245,7 +1245,7 @@ export class ChatUI {
       this.bindDamageTooltip(log);
     });
 
-    this.switchView(DEFAULT_CHAT_CHANNEL_SLOT);
+    this.switchView(DEFAULT_CHAT_CHANNEL);
     this.renderAllChannels();
   }  
   /**
