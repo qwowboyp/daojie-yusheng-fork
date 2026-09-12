@@ -100,6 +100,7 @@ export const MAP_BGM_ASSIGNMENTS: Readonly<Record<string, string>> = {
   heaven_ladder: 'heaven_ladder', // 天梯：半步築基關
   frostblade_abyss: 'frostblade_abyss', // 霜刃淵：冰鐵深淵
   blazewood_waste: 'blazewood_waste', // 焚木荒臺：焦灼荒原
+  foundation_qinglin_marsh: 'cold_tide_marsh', // 青霖澤：沿用既有濕地曲目
   darksoil_abyss: 'darksoil_abyss', // 玄壤深淵：地脈洞穴
 };
 

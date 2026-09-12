@@ -6885,6 +6885,482 @@
       "expDifficulty": 1
     },
     {
+      "id": "monster_qinglin_arts",
+      "name": "青霖澤妖術",
+      "desc": "青霖澤妖物借木水濕氣施展的攻守術式。",
+      "grade": "earth",
+      "category": "arts",
+      "realmLv": 35,
+      "maxLayer": 10,
+      "expDifficulty": 1,
+      "skills": [
+        {
+          "id": "skill.qinglin_moss_pounce",
+          "name": "苔影撲咬",
+          "desc": "青苔雨蜥借濕苔掩護撲咬，造成一點四倍物理攻擊的木行傷害。",
+          "cooldown": 14,
+          "costMultiplier": 2,
+          "cost": 161869,
+          "range": 1,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "wood",
+              "formula": {
+                "var": "caster.stat.physAtk",
+                "scale": 1.4
+              }
+            }
+          ],
+          "unlockLevel": 1
+        },
+        {
+          "id": "skill.qinglin_rain_spit",
+          "name": "雨涎飛濺",
+          "desc": "青苔雨蜥沿直線噴出雨涎，造成一點五倍法術攻擊的水行傷害。",
+          "cooldown": 18,
+          "costMultiplier": 2,
+          "cost": 161869,
+          "range": 4,
+          "targeting": {
+            "shape": "line",
+            "width": 1,
+            "maxTargets": 4
+          },
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "var": "caster.stat.spellAtk",
+                "scale": 1.5
+              }
+            }
+          ],
+          "unlockLevel": 1
+        },
+        {
+          "id": "skill.qinglin_mist_peck",
+          "name": "霧羽啄",
+          "desc": "濕羽鶴從霧中啄出水刃，造成一點五倍法術攻擊的水行傷害。",
+          "cooldown": 15,
+          "costMultiplier": 2,
+          "cost": 161869,
+          "range": 3,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "var": "caster.stat.spellAtk",
+                "scale": 1.5
+              }
+            }
+          ],
+          "unlockLevel": 1
+        },
+        {
+          "id": "skill.qinglin_wet_wing_sweep",
+          "name": "濕羽橫掃",
+          "desc": "濕羽鶴以飽含水氣的翼尖掃過前方，造成一點六倍物理攻擊的木行傷害。",
+          "cooldown": 20,
+          "costMultiplier": 3,
+          "cost": 242803,
+          "range": 1,
+          "targeting": {
+            "shape": "orientedBox",
+            "width": 3,
+            "height": 1,
+            "maxTargets": 3
+          },
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "wood",
+              "formula": {
+                "var": "caster.stat.physAtk",
+                "scale": 1.6
+              }
+            }
+          ],
+          "unlockLevel": 1
+        },
+        {
+          "id": "skill.qinglin_shell_clamp",
+          "name": "厚螯夾擊",
+          "desc": "碧螯澤蟹以雙螯夾擊，造成一點四倍物理攻擊的土行傷害。",
+          "cooldown": 15,
+          "costMultiplier": 2,
+          "cost": 161869,
+          "range": 1,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "earth",
+              "formula": {
+                "var": "caster.stat.physAtk",
+                "scale": 1.4
+              }
+            }
+          ],
+          "unlockLevel": 1
+        },
+        {
+          "id": "skill.qinglin_marsh_guard",
+          "name": "澤殼固守",
+          "desc": "碧螯澤蟹縮入厚殼，十二息內提高物理與法術防禦百分之十。",
+          "cooldown": 30,
+          "costMultiplier": 2,
+          "cost": 161869,
+          "range": 0,
+          "requiresTarget": false,
+          "unlockLevel": 1,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "buff.qinglin_marsh_guard",
+              "name": "澤殼固守",
+              "desc": "厚殼閉合，雙防提高百分之十。",
+              "shortMark": "殼",
+              "category": "buff",
+              "visibility": "public",
+              "color": "#718f7d",
+              "duration": 12,
+              "maxStacks": 1,
+              "statMode": "percent",
+              "valueStats": {
+                "physDef": 10,
+                "spellDef": 10
+              }
+            }
+          ]
+        },
+        {
+          "id": "skill.qinglin_dew_thread",
+          "name": "凝露絲",
+          "desc": "凝露蛛母射出帶露蛛絲，造成一點八倍法術攻擊的水行傷害，並使目標十二息內移速與閃避降低百分之十。",
+          "cooldown": 18,
+          "costMultiplier": 3,
+          "cost": 242803,
+          "range": 4,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "var": "caster.stat.spellAtk",
+                "scale": 1.8
+              }
+            },
+            {
+              "type": "buff",
+              "target": "target",
+              "buffId": "buff.qinglin_dew_thread",
+              "name": "凝露纏絲",
+              "desc": "蛛絲黏住步伐，移速與閃避降低百分之十。",
+              "shortMark": "絲",
+              "category": "debuff",
+              "visibility": "public",
+              "color": "#93c9c2",
+              "duration": 12,
+              "maxStacks": 1,
+              "statMode": "percent",
+              "valueStats": {
+                "moveSpeed": -10,
+                "dodge": -10
+              }
+            }
+          ],
+          "unlockLevel": 1
+        },
+        {
+          "id": "skill.qinglin_rain_needle",
+          "name": "驟雨飛針",
+          "desc": "凝露蛛母沿直線散出細密水針，造成兩倍法術攻擊的水行傷害。",
+          "cooldown": 23,
+          "costMultiplier": 4,
+          "cost": 323737,
+          "range": 5,
+          "targeting": {
+            "shape": "line",
+            "width": 2,
+            "maxTargets": 8
+          },
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "var": "caster.stat.spellAtk",
+                "scale": 2
+              }
+            }
+          ],
+          "unlockLevel": 1
+        },
+        {
+          "id": "skill.qinglin_dewburst",
+          "name": "露網迸裂",
+          "desc": "凝露蛛母引爆三乘三範圍內的露網，預警兩息後造成二點三倍法術攻擊的水行傷害。",
+          "cooldown": 30,
+          "costMultiplier": 5,
+          "cost": 404671,
+          "range": 5,
+          "targeting": {
+            "shape": "box",
+            "width": 3,
+            "height": 3,
+            "maxTargets": 9
+          },
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "var": "caster.stat.spellAtk",
+                "scale": 2.3
+              }
+            }
+          ],
+          "unlockLevel": 1,
+          "monsterCast": {
+            "windupTicks": 2,
+            "warningColor": "#78c9d4"
+          }
+        },
+        {
+          "id": "skill.qinglin_root_lash",
+          "name": "盤根鞭",
+          "desc": "盤根泥魈抽出老根，造成一點八倍物理攻擊的木行傷害。",
+          "cooldown": 17,
+          "costMultiplier": 3,
+          "cost": 242803,
+          "range": 2,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "wood",
+              "formula": {
+                "var": "caster.stat.physAtk",
+                "scale": 1.8
+              }
+            }
+          ],
+          "unlockLevel": 1
+        },
+        {
+          "id": "skill.qinglin_bog_mist",
+          "name": "泥澤濁霧",
+          "desc": "盤根泥魈吐出濁霧，造成兩倍法術攻擊的水行傷害，並使目標十二息內命中降低百分之十。",
+          "cooldown": 24,
+          "costMultiplier": 4,
+          "cost": 323737,
+          "range": 4,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "var": "caster.stat.spellAtk",
+                "scale": 2
+              }
+            },
+            {
+              "type": "buff",
+              "target": "target",
+              "buffId": "buff.qinglin_bog_mist",
+              "name": "濁霧障目",
+              "desc": "濁霧遮蔽視線，命中降低百分之十。",
+              "shortMark": "霧",
+              "category": "debuff",
+              "visibility": "public",
+              "color": "#788f67",
+              "duration": 12,
+              "maxStacks": 1,
+              "statMode": "percent",
+              "valueStats": {
+                "hit": -10
+              }
+            }
+          ],
+          "unlockLevel": 1
+        },
+        {
+          "id": "skill.qinglin_sinking_roots",
+          "name": "沉根陷地",
+          "desc": "盤根泥魈使三乘三範圍內的老根翻起，預警兩息後造成二點三倍物理攻擊的木行傷害。",
+          "cooldown": 31,
+          "costMultiplier": 5,
+          "cost": 404671,
+          "range": 5,
+          "targeting": {
+            "shape": "box",
+            "width": 3,
+            "height": 3,
+            "maxTargets": 9
+          },
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "wood",
+              "formula": {
+                "var": "caster.stat.physAtk",
+                "scale": 2.3
+              }
+            }
+          ],
+          "unlockLevel": 1,
+          "monsterCast": {
+            "windupTicks": 2,
+            "warningColor": "#6e9b63"
+          }
+        },
+        {
+          "id": "skill.qinglin_tide_bite",
+          "name": "潮牙噬",
+          "desc": "青霖蛟主借潮勢近身撕咬，造成二點四倍物理攻擊的水行傷害。",
+          "cooldown": 18,
+          "costMultiplier": 3,
+          "cost": 242803,
+          "range": 2,
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "physical",
+              "element": "water",
+              "formula": {
+                "var": "caster.stat.physAtk",
+                "scale": 2.4
+              }
+            }
+          ],
+          "unlockLevel": 1
+        },
+        {
+          "id": "skill.qinglin_rainfall",
+          "name": "青霖暴雨",
+          "desc": "青霖蛟主召下暴雨，預警三息後對五乘五範圍造成三倍法術攻擊的水行傷害。",
+          "cooldown": 34,
+          "costMultiplier": 6,
+          "cost": 485606,
+          "range": 6,
+          "targeting": {
+            "shape": "box",
+            "width": 5,
+            "height": 5,
+            "maxTargets": 25
+          },
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "var": "caster.stat.spellAtk",
+                "scale": 3
+              }
+            }
+          ],
+          "unlockLevel": 1,
+          "monsterCast": {
+            "windupTicks": 3,
+            "warningColor": "#4daed0"
+          }
+        },
+        {
+          "id": "skill.qinglin_dragon_coil",
+          "name": "蛟影纏江",
+          "desc": "青霖蛟主沿直線捲起水流，預警兩息後造成二點四倍法術攻擊的水行傷害，並使目標十二息內移速降低百分之十二。",
+          "cooldown": 28,
+          "costMultiplier": 5,
+          "cost": 404671,
+          "range": 6,
+          "targeting": {
+            "shape": "line",
+            "width": 2,
+            "maxTargets": 10
+          },
+          "effects": [
+            {
+              "type": "damage",
+              "damageKind": "spell",
+              "element": "water",
+              "formula": {
+                "var": "caster.stat.spellAtk",
+                "scale": 2.4
+              }
+            },
+            {
+              "type": "buff",
+              "target": "target",
+              "buffId": "buff.qinglin_dragon_coil",
+              "name": "蛟流纏身",
+              "desc": "迴流纏住雙腿，移速降低百分之十二。",
+              "shortMark": "纏",
+              "category": "debuff",
+              "visibility": "public",
+              "color": "#62b9c7",
+              "duration": 12,
+              "maxStacks": 1,
+              "statMode": "percent",
+              "valueStats": {
+                "moveSpeed": -12
+              }
+            }
+          ],
+          "unlockLevel": 1,
+          "monsterCast": {
+            "windupTicks": 2,
+            "warningColor": "#62b9c7"
+          }
+        },
+        {
+          "id": "skill.qinglin_deep_pool_guard",
+          "name": "深潭護鱗",
+          "desc": "青霖蛟主收攏潭水護住鱗甲，十四息內提高雙防百分之十與化解百分之八。",
+          "cooldown": 42,
+          "costMultiplier": 3,
+          "cost": 242803,
+          "range": 0,
+          "requiresTarget": false,
+          "unlockLevel": 1,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "buffId": "buff.qinglin_deep_pool_guard",
+              "name": "深潭護鱗",
+              "desc": "潭水覆住鱗甲，雙防提高百分之十、化解提高百分之八。",
+              "shortMark": "潭",
+              "category": "buff",
+              "visibility": "public",
+              "color": "#478f99",
+              "duration": 14,
+              "maxStacks": 1,
+              "statMode": "percent",
+              "valueStats": {
+                "physDef": 10,
+                "spellDef": 10,
+                "resolvePower": 8
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "qingmu_sword",
       "name": "青木劍訣",
       "desc": "青木劍氣凝作一線，專取單體破敵。",
@@ -16847,6 +17323,42 @@
       ]
     },
     {
+      "itemId": "equip.qinglin_pool_pendant",
+      "name": "碧潭守心佩",
+      "type": "equipment",
+      "grade": "mystic",
+      "level": 37,
+      "desc": "玉佩內封一縷深潭迴流，能穩住出手與靈力運轉。",
+      "equipSlot": "accessory",
+      "equipStats": {
+        "hit": 17,
+        "breakPower": 15,
+        "maxQiOutputPerTick": 21,
+        "qiRegenRate": 3
+      }
+    },
+    {
+      "itemId": "mat.qinglin_copper_ore",
+      "name": "碧紋銅礦",
+      "type": "material",
+      "grade": "mystic",
+      "level": 37,
+      "materialCategory": "ore",
+      "materialValues": {
+        "elements": {
+          "metal": 63,
+          "earth": 34
+        }
+      },
+      "desc": "濕地岩脊露出的古銅礦，翠色礦紋在雨中尤其清楚。",
+      "tags": [
+        "石材",
+        "金属",
+        "矿石",
+        "矿材"
+      ]
+    },
+    {
       "itemId": "lg_tribulation_m1_entry_resource_5",
       "name": "避劫雲芝",
       "type": "material",
@@ -17371,6 +17883,26 @@
         "異材",
         "妖材",
         "异材"
+      ]
+    },
+    {
+      "itemId": "mat.qinglin_jade_sand",
+      "name": "沉水玉砂",
+      "type": "material",
+      "grade": "mystic",
+      "level": 37,
+      "materialCategory": "ore",
+      "materialValues": {
+        "elements": {
+          "water": 63,
+          "earth": 34
+        }
+      },
+      "desc": "水道底部沉積的玉砂，顆粒雖細，仍封著厚實水土之氣。",
+      "tags": [
+        "石材",
+        "矿石",
+        "矿材"
       ]
     },
     {
@@ -21706,6 +22238,20 @@
       ]
     },
     {
+      "itemId": "equip.qinglin_raincleaver",
+      "name": "霖紋斷雨刀",
+      "type": "equipment",
+      "grade": "mystic",
+      "level": 37,
+      "desc": "斷雨刀刃以碧紋銅反覆摺鍛，適合在濕地中破開厚殼。",
+      "equipSlot": "weapon",
+      "equipStats": {
+        "physAtk": 40,
+        "hit": 19,
+        "breakPower": 21
+      }
+    },
+    {
       "itemId": "spirit_ridge_sigil",
       "name": "靈嶺行令",
       "type": "quest_item",
@@ -22388,6 +22934,44 @@
       }
     },
     {
+      "itemId": "equip.qinglin_dew_crown",
+      "name": "凝露冠",
+      "type": "equipment",
+      "grade": "mystic",
+      "level": 37,
+      "desc": "荷葉狀冠片承住晨露，替識海卸開迎面的術勢。",
+      "equipSlot": "head",
+      "equipStats": {
+        "maxHp": 206,
+        "physDef": 21,
+        "spellDef": 17,
+        "antiCrit": 13
+      }
+    },
+    {
+      "itemId": "pill.qinglin_meridian_restore",
+      "name": "凝露養脈丹",
+      "type": "consumable",
+      "grade": "mystic",
+      "level": 37,
+      "desc": "凝露裹住受損經脈，服下後立即回覆生命，並短時加快生命回覆。",
+      "cooldown": 60,
+      "baselineHealPercent": 2,
+      "consumeBuffs": [
+        {
+          "buffId": "item_buff.pill_qinglin_meridian_restore",
+          "name": "凝露養脈",
+          "desc": "凝露護住經脈，生命回覆提高百分之三百。",
+          "shortMark": "養",
+          "duration": 90,
+          "stats": {
+            "hpRegenRate": 300
+          },
+          "statMode": "percent"
+        }
+      ]
+    },
+    {
       "itemId": "pill.ningxiang",
       "name": "凝相丹",
       "type": "consumable",
@@ -22723,6 +23307,75 @@
       "grade": "黃階",
       "desc": "宗主或副宗主可使用，將本宗山門入口傳送陣遷至當前位置；宗門遷移冷卻為 3 天，冷卻綁定宗門。",
       "useBehavior": "relocate_sect_entrance"
+    },
+    {
+      "itemId": "pill.qinglin_qi_restore",
+      "name": "青霖回元丹",
+      "type": "consumable",
+      "grade": "mystic",
+      "level": 37,
+      "desc": "澤心苓與青霖蘭煉成的回元丹，服下後立即補回靈力，並短時加快靈力回覆。",
+      "cooldown": 60,
+      "baselineQiPercent": 2,
+      "consumeBuffs": [
+        {
+          "buffId": "item_buff.pill_qinglin_qi_restore",
+          "name": "青霖回元",
+          "desc": "藥力迴流氣海，靈力回覆提高百分之三百。",
+          "shortMark": "元",
+          "duration": 90,
+          "stats": {
+            "qiRegenRate": 300
+          },
+          "statMode": "percent"
+        }
+      ]
+    },
+    {
+      "itemId": "mat.qinglin_orchid",
+      "name": "青霖蘭",
+      "type": "material",
+      "grade": "mystic",
+      "level": 37,
+      "materialCategory": "herb",
+      "materialValues": {
+        "elements": {
+          "wood": 63,
+          "water": 34
+        }
+      },
+      "desc": "古石棧橋外側迎雨而生的蘭草，葉脈與花心都蓄著木水靈機。",
+      "tags": [
+        "药材"
+      ]
+    },
+    {
+      "itemId": "mat.qinglin_dragon_core",
+      "name": "青霖妖丹",
+      "type": "material",
+      "grade": "mystic",
+      "level": 37,
+      "materialCategory": "exotic",
+      "materialValues": {
+        "elements": {
+          "water": 58,
+          "wood": 34,
+          "earth": 23
+        }
+      },
+      "desc": "青霖蛟主凝成的妖丹，水木氣機纏著一線沉厚地脈。",
+      "tags": [
+        "异材"
+      ]
+    },
+    {
+      "itemId": "scroll.qinglin_marsh",
+      "name": "青霖澤圖卷",
+      "type": "consumable",
+      "grade": "mystic",
+      "level": 35,
+      "desc": "記著寒鐵側洞、濕地石棧橋、採集岸與深潭位置。使用後可永久解鎖青霖澤地圖。",
+      "mapUnlockId": "foundation_qinglin_marsh"
     },
     {
       "itemId": "mat.green_spirit_stem",
@@ -24064,6 +24717,20 @@
       "type": "consumable",
       "level": 29,
       "desc": "藥力專碎命宮舊痕。使用後會立刻重置天門，清掉當前已開出的靈根結果，並額外增加 1 次逆天改命累計；同時消耗當前境界修為的 25%。至少需在叩仙門境界使用。"
+    },
+    {
+      "itemId": "equip.qinglin_lotus_boots",
+      "name": "踏荷履",
+      "type": "equipment",
+      "grade": "mystic",
+      "level": 37,
+      "desc": "鞋底刻著荷脈水紋，踏過泥澤時仍能迅速轉身。",
+      "equipSlot": "legs",
+      "equipStats": {
+        "dodge": 21,
+        "cooldownSpeed": 13,
+        "moveSpeed": 27
+      }
     },
     {
       "itemId": "mat.void_boundary_crystal",
@@ -27059,6 +27726,24 @@
       ]
     },
     {
+      "itemId": "mat.qinglin_lizard_scale",
+      "name": "雨蜥鱗",
+      "type": "material",
+      "grade": "mystic",
+      "level": 37,
+      "materialCategory": "exotic",
+      "materialValues": {
+        "elements": {
+          "water": 63,
+          "wood": 34
+        }
+      },
+      "desc": "青苔雨蜥脫落的厚鱗，雨水滑過時會浮出細密木紋。",
+      "tags": [
+        "异材"
+      ]
+    },
+    {
       "itemId": "equip.yuetown_mask",
       "name": "御土面",
       "type": "equipment",
@@ -27856,6 +28541,24 @@
       ]
     },
     {
+      "itemId": "mat.qinglin_crab_shell",
+      "name": "澤螯殼",
+      "type": "material",
+      "grade": "mystic",
+      "level": 37,
+      "materialCategory": "exotic",
+      "materialValues": {
+        "elements": {
+          "earth": 63,
+          "water": 34
+        }
+      },
+      "desc": "碧螯澤蟹留下的硬殼，能承受泥澤與暗流的長年沖刷。",
+      "tags": [
+        "异材"
+      ]
+    },
+    {
       "itemId": "lg_body_integration_m2_entry_resource_6",
       "name": "澤底照魂晶",
       "type": "material",
@@ -27892,6 +28595,53 @@
       "tags": [
         "异材"
       ]
+    },
+    {
+      "itemId": "equip.qinglin_scale_robe",
+      "name": "澤鱗護衣",
+      "type": "equipment",
+      "grade": "mystic",
+      "level": 37,
+      "desc": "雨蜥厚鱗覆在墨綠短袍上，兼顧氣血與雙重防護。",
+      "equipSlot": "body",
+      "equipStats": {
+        "maxHp": 298,
+        "physDef": 29,
+        "spellDef": 25,
+        "resolvePower": 13
+      }
+    },
+    {
+      "itemId": "mat.qinglin_ling",
+      "name": "澤心苓",
+      "type": "material",
+      "grade": "mystic",
+      "level": 37,
+      "materialCategory": "herb",
+      "materialValues": {
+        "elements": {
+          "water": 63,
+          "wood": 34
+        }
+      },
+      "desc": "紮根於淺澤泥心的靈苓，能引散亂靈力回歸氣海。",
+      "tags": [
+        "药材"
+      ]
+    },
+    {
+      "itemId": "equip.qinglin_tide_staff",
+      "name": "澤心引潮杖",
+      "type": "equipment",
+      "grade": "mystic",
+      "level": 37,
+      "desc": "古木杖芯封入澤心水脈，能穩定牽引法術與靈力輸出。",
+      "equipSlot": "weapon",
+      "equipStats": {
+        "spellAtk": 40,
+        "hit": 17,
+        "maxQiOutputPerTick": 19
+      }
     },
     {
       "itemId": "lg_golden_core_molten_channel_resource_5",
@@ -30137,6 +30887,23 @@
       "statMode": "percent"
     },
     {
+      "buffId": "buff.qinglin_dragon_coil",
+      "name": "蛟流纏身",
+      "desc": "迴流纏住雙腿，移速降低百分之十二。",
+      "shortMark": "纏",
+      "category": "debuff",
+      "visibility": "public",
+      "remainingTicks": 12,
+      "duration": 12,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.qinglin_dragon_coil",
+      "sourceSkillName": "蛟影纏江",
+      "realmLv": 1,
+      "color": "#62b9c7",
+      "statMode": "percent"
+    },
+    {
       "buffId": "equip.runner_step",
       "name": "借步",
       "desc": "藉著餘勢調整步點，短時間內更易搶到先手。",
@@ -30386,6 +31153,42 @@
       "statMode": "percent"
     },
     {
+      "buffId": "buff.qinglin_dew_thread",
+      "name": "凝露纏絲",
+      "desc": "蛛絲黏住步伐，移速與閃避降低百分之十。",
+      "shortMark": "絲",
+      "category": "debuff",
+      "visibility": "public",
+      "remainingTicks": 12,
+      "duration": 12,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.qinglin_dew_thread",
+      "sourceSkillName": "凝露絲",
+      "realmLv": 1,
+      "color": "#93c9c2",
+      "statMode": "percent"
+    },
+    {
+      "buffId": "item_buff.pill_qinglin_meridian_restore",
+      "name": "凝露養脈",
+      "desc": "凝露護住經脈，生命回覆提高百分之三百。",
+      "shortMark": "養",
+      "category": "buff",
+      "visibility": "public",
+      "remainingTicks": 90,
+      "duration": 90,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "item:pill.qinglin_meridian_restore",
+      "sourceSkillName": "凝露養脈丹",
+      "realmLv": 1,
+      "stats": {
+        "hpRegenRate": 300
+      },
+      "statMode": "percent"
+    },
+    {
       "buffId": "equip.cleft_cloak_shift",
       "name": "偏鋒",
       "shortMark": "偏",
@@ -30540,6 +31343,25 @@
       "color": "#79b56b"
     },
     {
+      "buffId": "item_buff.pill_qinglin_qi_restore",
+      "name": "青霖回元",
+      "desc": "藥力迴流氣海，靈力回覆提高百分之三百。",
+      "shortMark": "元",
+      "category": "buff",
+      "visibility": "public",
+      "remainingTicks": 90,
+      "duration": 90,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "item:pill.qinglin_qi_restore",
+      "sourceSkillName": "青霖回元丹",
+      "realmLv": 1,
+      "stats": {
+        "qiRegenRate": 300
+      },
+      "statMode": "percent"
+    },
+    {
       "buffId": "buff.monster_blade_limb",
       "name": "刃勢",
       "desc": "肢鋒未止，下一式更容易撕開破綻。",
@@ -30616,6 +31438,23 @@
         "physDef": -10,
         "spellDef": -10
       },
+      "statMode": "percent"
+    },
+    {
+      "buffId": "buff.qinglin_deep_pool_guard",
+      "name": "深潭護鱗",
+      "desc": "潭水覆住鱗甲，雙防提高百分之十、化解提高百分之八。",
+      "shortMark": "潭",
+      "category": "buff",
+      "visibility": "public",
+      "remainingTicks": 14,
+      "duration": 14,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.qinglin_deep_pool_guard",
+      "sourceSkillName": "深潭護鱗",
+      "realmLv": 1,
+      "color": "#478f99",
       "statMode": "percent"
     },
     {
@@ -31281,6 +32120,23 @@
       "statMode": "percent"
     },
     {
+      "buffId": "buff.qinglin_marsh_guard",
+      "name": "澤殼固守",
+      "desc": "厚殼閉合，雙防提高百分之十。",
+      "shortMark": "殼",
+      "category": "buff",
+      "visibility": "public",
+      "remainingTicks": 12,
+      "duration": 12,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.qinglin_marsh_guard",
+      "sourceSkillName": "澤殼固守",
+      "realmLv": 1,
+      "color": "#718f7d",
+      "statMode": "percent"
+    },
+    {
       "buffId": "lg_buff_lg_skill_lg_golden_core_xinjin_lamplighter_2",
       "name": "照魂焰",
       "desc": "氣機受擾，命中與移速降低 12%。",
@@ -31429,6 +32285,23 @@
       "maxStacks": 30,
       "realmLv": 1,
       "color": "#ef6b3b",
+      "statMode": "percent"
+    },
+    {
+      "buffId": "buff.qinglin_bog_mist",
+      "name": "濁霧障目",
+      "desc": "濁霧遮蔽視線，命中降低百分之十。",
+      "shortMark": "霧",
+      "category": "debuff",
+      "visibility": "public",
+      "remainingTicks": 12,
+      "duration": 12,
+      "stacks": 1,
+      "maxStacks": 1,
+      "sourceSkillId": "skill.qinglin_bog_mist",
+      "sourceSkillName": "泥澤濁霧",
+      "realmLv": 1,
+      "color": "#788f67",
       "statMode": "percent"
     },
     {

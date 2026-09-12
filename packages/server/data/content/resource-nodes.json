@@ -2040,6 +2040,48 @@
           }
         ]
       }
+    },
+    {
+      "id": "landmark.herb.qinglin_orchid",
+      "kind": "landmark_container",
+      "name": "青霖蘭",
+      "container": {
+        "variant": "herb",
+        "grade": "mystic",
+        "refreshTicksMin": 90,
+        "refreshTicksMax": 140,
+        "char": "蘭",
+        "color": "#88c9a0",
+        "drops": [
+          {
+            "itemId": "mat.qinglin_orchid",
+            "name": "青霖蘭",
+            "type": "material",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "landmark.herb.qinglin_ling",
+      "kind": "landmark_container",
+      "name": "澤心苓",
+      "container": {
+        "variant": "herb",
+        "grade": "mystic",
+        "refreshTicksMin": 100,
+        "refreshTicksMax": 150,
+        "char": "苓",
+        "color": "#b8d6a3",
+        "drops": [
+          {
+            "itemId": "mat.qinglin_ling",
+            "name": "澤心苓",
+            "type": "material",
+            "count": 1
+          }
+        ]
+      }
     }
   ]
 }

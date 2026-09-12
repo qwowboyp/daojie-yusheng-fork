@@ -314,6 +314,23 @@
       "hidden": false,
       "observeTitle": "焚木荒臺通道",
       "observeDesc": "淵底裂縫中透出灼熱氣息，穿過這道冰火交界便是焚木荒臺。"
+    },
+    {
+      "id": "frostblade_abyss:32,26",
+      "targetPortalId": "foundation_qinglin_marsh:4,24",
+      "direction": "two_way",
+      "x": 32,
+      "y": 26,
+      "targetMapId": "foundation_qinglin_marsh",
+      "targetX": 4,
+      "targetY": 24,
+      "kind": "portal",
+      "trigger": "manual",
+      "routeDomain": "inherit",
+      "allowPlayerOverlap": false,
+      "hidden": false,
+      "observeTitle": "青霖澤石棧橋",
+      "observeDesc": "寒鐵側洞外修補的古石棧橋通往青霖澤。"
     }
   ],
   "spawnPoint": {
@@ -389,7 +406,14 @@
       "color": "#8bb8cf",
       "dialogue": "淵裡的妖獸都帶金水雙行靈力，皮糙肉厚還會凍人。外圍的寒鐵蠍、霜鱗蛇還好對付；鐵脈甬道里多留意東壁礦脈，那一段路最容易被夾擊。下到冰橋再往深處走，寒沼會拖慢你的腳步——鐵殼玄龜那殼子，築基前期的術法打上去跟撓癢似的。",
       "role": "warning",
-      "shopItems": [],
+      "shopItems": [
+        {
+          "itemId": "scroll.qinglin_marsh",
+          "price": 180,
+          "stockLimit": 1,
+          "refreshSeconds": 3600
+        }
+      ],
       "quests": []
     }
   ],

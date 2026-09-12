@@ -2025,5 +2025,481 @@
         "requiresTarget": false
       }
     ]
+  },
+  {
+    "id": "monster_qinglin_arts",
+    "name": "青霖澤妖術",
+    "desc": "青霖澤妖物借木水濕氣施展的攻守術式。",
+    "grade": "earth",
+    "category": "arts",
+    "realmLv": 35,
+    "maxLayer": 10,
+    "expDifficulty": 1,
+    "skills": [
+      {
+        "id": "skill.qinglin_moss_pounce",
+        "name": "苔影撲咬",
+        "desc": "青苔雨蜥借濕苔掩護撲咬，造成一點四倍物理攻擊的木行傷害。",
+        "cooldown": 14,
+        "costMultiplier": 2,
+        "cost": 161869,
+        "range": 1,
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "physical",
+            "element": "wood",
+            "formula": {
+              "var": "caster.stat.physAtk",
+              "scale": 1.4
+            }
+          }
+        ],
+        "unlockLevel": 1
+      },
+      {
+        "id": "skill.qinglin_rain_spit",
+        "name": "雨涎飛濺",
+        "desc": "青苔雨蜥沿直線噴出雨涎，造成一點五倍法術攻擊的水行傷害。",
+        "cooldown": 18,
+        "costMultiplier": 2,
+        "cost": 161869,
+        "range": 4,
+        "targeting": {
+          "shape": "line",
+          "width": 1,
+          "maxTargets": 4
+        },
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "water",
+            "formula": {
+              "var": "caster.stat.spellAtk",
+              "scale": 1.5
+            }
+          }
+        ],
+        "unlockLevel": 1
+      },
+      {
+        "id": "skill.qinglin_mist_peck",
+        "name": "霧羽啄",
+        "desc": "濕羽鶴從霧中啄出水刃，造成一點五倍法術攻擊的水行傷害。",
+        "cooldown": 15,
+        "costMultiplier": 2,
+        "cost": 200379,
+        "range": 3,
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "water",
+            "formula": {
+              "var": "caster.stat.spellAtk",
+              "scale": 1.5
+            }
+          }
+        ],
+        "unlockLevel": 1
+      },
+      {
+        "id": "skill.qinglin_wet_wing_sweep",
+        "name": "濕羽橫掃",
+        "desc": "濕羽鶴以飽含水氣的翼尖掃過前方，造成一點六倍物理攻擊的木行傷害。",
+        "cooldown": 20,
+        "costMultiplier": 3,
+        "cost": 300568,
+        "range": 1,
+        "targeting": {
+          "shape": "orientedBox",
+          "width": 3,
+          "height": 1,
+          "maxTargets": 3
+        },
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "physical",
+            "element": "wood",
+            "formula": {
+              "var": "caster.stat.physAtk",
+              "scale": 1.6
+            }
+          }
+        ],
+        "unlockLevel": 1
+      },
+      {
+        "id": "skill.qinglin_shell_clamp",
+        "name": "厚螯夾擊",
+        "desc": "碧螯澤蟹以雙螯夾擊，造成一點四倍物理攻擊的土行傷害。",
+        "cooldown": 15,
+        "costMultiplier": 2,
+        "cost": 200379,
+        "range": 1,
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "physical",
+            "element": "earth",
+            "formula": {
+              "var": "caster.stat.physAtk",
+              "scale": 1.4
+            }
+          }
+        ],
+        "unlockLevel": 1
+      },
+      {
+        "id": "skill.qinglin_marsh_guard",
+        "name": "澤殼固守",
+        "desc": "碧螯澤蟹縮入厚殼，十二息內提高物理與法術防禦百分之十。",
+        "cooldown": 30,
+        "costMultiplier": 2,
+        "cost": 200379,
+        "range": 0,
+        "requiresTarget": false,
+        "unlockLevel": 1,
+        "effects": [
+          {
+            "type": "buff",
+            "target": "self",
+            "buffId": "buff.qinglin_marsh_guard",
+            "name": "澤殼固守",
+            "desc": "厚殼閉合，雙防提高百分之十。",
+            "shortMark": "殼",
+            "category": "buff",
+            "visibility": "public",
+            "color": "#718f7d",
+            "duration": 12,
+            "maxStacks": 1,
+            "statMode": "percent",
+            "valueStats": {
+              "physDef": 10,
+              "spellDef": 10
+            }
+          }
+        ]
+      },
+      {
+        "id": "skill.qinglin_dew_thread",
+        "name": "凝露絲",
+        "desc": "凝露蛛母射出帶露蛛絲，造成一點八倍法術攻擊的水行傷害，並使目標十二息內移速與閃避降低百分之十。",
+        "cooldown": 18,
+        "costMultiplier": 3,
+        "cost": 372363,
+        "range": 4,
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "water",
+            "formula": {
+              "var": "caster.stat.spellAtk",
+              "scale": 1.8
+            }
+          },
+          {
+            "type": "buff",
+            "target": "target",
+            "buffId": "buff.qinglin_dew_thread",
+            "name": "凝露纏絲",
+            "desc": "蛛絲黏住步伐，移速與閃避降低百分之十。",
+            "shortMark": "絲",
+            "category": "debuff",
+            "visibility": "public",
+            "color": "#93c9c2",
+            "duration": 12,
+            "maxStacks": 1,
+            "statMode": "percent",
+            "valueStats": {
+              "moveSpeed": -10,
+              "dodge": -10
+            }
+          }
+        ],
+        "unlockLevel": 1
+      },
+      {
+        "id": "skill.qinglin_rain_needle",
+        "name": "驟雨飛針",
+        "desc": "凝露蛛母沿直線散出細密水針，造成兩倍法術攻擊的水行傷害。",
+        "cooldown": 23,
+        "costMultiplier": 4,
+        "cost": 496484,
+        "range": 5,
+        "targeting": {
+          "shape": "line",
+          "width": 2,
+          "maxTargets": 8
+        },
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "water",
+            "formula": {
+              "var": "caster.stat.spellAtk",
+              "scale": 2
+            }
+          }
+        ],
+        "unlockLevel": 1
+      },
+      {
+        "id": "skill.qinglin_dewburst",
+        "name": "露網迸裂",
+        "desc": "凝露蛛母引爆三乘三範圍內的露網，預警兩息後造成二點三倍法術攻擊的水行傷害。",
+        "cooldown": 30,
+        "costMultiplier": 5,
+        "cost": 620605,
+        "range": 5,
+        "targeting": {
+          "shape": "box",
+          "width": 3,
+          "height": 3,
+          "maxTargets": 9
+        },
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "water",
+            "formula": {
+              "var": "caster.stat.spellAtk",
+              "scale": 2.3
+            }
+          }
+        ],
+        "unlockLevel": 1,
+        "monsterCast": {
+          "windupTicks": 2,
+          "warningColor": "#78c9d4"
+        }
+      },
+      {
+        "id": "skill.qinglin_root_lash",
+        "name": "盤根鞭",
+        "desc": "盤根泥魈抽出老根，造成一點八倍物理攻擊的木行傷害。",
+        "cooldown": 17,
+        "costMultiplier": 3,
+        "cost": 460014,
+        "range": 2,
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "physical",
+            "element": "wood",
+            "formula": {
+              "var": "caster.stat.physAtk",
+              "scale": 1.8
+            }
+          }
+        ],
+        "unlockLevel": 1
+      },
+      {
+        "id": "skill.qinglin_bog_mist",
+        "name": "泥澤濁霧",
+        "desc": "盤根泥魈吐出濁霧，造成兩倍法術攻擊的水行傷害，並使目標十二息內命中降低百分之十。",
+        "cooldown": 24,
+        "costMultiplier": 4,
+        "cost": 613352,
+        "range": 4,
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "water",
+            "formula": {
+              "var": "caster.stat.spellAtk",
+              "scale": 2
+            }
+          },
+          {
+            "type": "buff",
+            "target": "target",
+            "buffId": "buff.qinglin_bog_mist",
+            "name": "濁霧障目",
+            "desc": "濁霧遮蔽視線，命中降低百分之十。",
+            "shortMark": "霧",
+            "category": "debuff",
+            "visibility": "public",
+            "color": "#788f67",
+            "duration": 12,
+            "maxStacks": 1,
+            "statMode": "percent",
+            "valueStats": {
+              "hit": -10
+            }
+          }
+        ],
+        "unlockLevel": 1
+      },
+      {
+        "id": "skill.qinglin_sinking_roots",
+        "name": "沉根陷地",
+        "desc": "盤根泥魈使三乘三範圍內的老根翻起，預警兩息後造成二點三倍物理攻擊的木行傷害。",
+        "cooldown": 31,
+        "costMultiplier": 5,
+        "cost": 766690,
+        "range": 5,
+        "targeting": {
+          "shape": "box",
+          "width": 3,
+          "height": 3,
+          "maxTargets": 9
+        },
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "physical",
+            "element": "wood",
+            "formula": {
+              "var": "caster.stat.physAtk",
+              "scale": 2.3
+            }
+          }
+        ],
+        "unlockLevel": 1,
+        "monsterCast": {
+          "windupTicks": 2,
+          "warningColor": "#6e9b63"
+        }
+      },
+      {
+        "id": "skill.qinglin_tide_bite",
+        "name": "潮牙噬",
+        "desc": "青霖蛟主借潮勢近身撕咬，造成二點四倍物理攻擊的水行傷害。",
+        "cooldown": 18,
+        "costMultiplier": 3,
+        "cost": 460014,
+        "range": 2,
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "physical",
+            "element": "water",
+            "formula": {
+              "var": "caster.stat.physAtk",
+              "scale": 2.4
+            }
+          }
+        ],
+        "unlockLevel": 1
+      },
+      {
+        "id": "skill.qinglin_rainfall",
+        "name": "青霖暴雨",
+        "desc": "青霖蛟主召下暴雨，預警三息後對五乘五範圍造成三倍法術攻擊的水行傷害。",
+        "cooldown": 34,
+        "costMultiplier": 6,
+        "cost": 920028,
+        "range": 6,
+        "targeting": {
+          "shape": "box",
+          "width": 5,
+          "height": 5,
+          "maxTargets": 25
+        },
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "water",
+            "formula": {
+              "var": "caster.stat.spellAtk",
+              "scale": 3
+            }
+          }
+        ],
+        "unlockLevel": 1,
+        "monsterCast": {
+          "windupTicks": 3,
+          "warningColor": "#4daed0"
+        }
+      },
+      {
+        "id": "skill.qinglin_dragon_coil",
+        "name": "蛟影纏江",
+        "desc": "青霖蛟主沿直線捲起水流，預警兩息後造成二點四倍法術攻擊的水行傷害，並使目標十二息內移速降低百分之十二。",
+        "cooldown": 28,
+        "costMultiplier": 5,
+        "cost": 766690,
+        "range": 6,
+        "targeting": {
+          "shape": "line",
+          "width": 2,
+          "maxTargets": 10
+        },
+        "effects": [
+          {
+            "type": "damage",
+            "damageKind": "spell",
+            "element": "water",
+            "formula": {
+              "var": "caster.stat.spellAtk",
+              "scale": 2.4
+            }
+          },
+          {
+            "type": "buff",
+            "target": "target",
+            "buffId": "buff.qinglin_dragon_coil",
+            "name": "蛟流纏身",
+            "desc": "迴流纏住雙腿，移速降低百分之十二。",
+            "shortMark": "纏",
+            "category": "debuff",
+            "visibility": "public",
+            "color": "#62b9c7",
+            "duration": 12,
+            "maxStacks": 1,
+            "statMode": "percent",
+            "valueStats": {
+              "moveSpeed": -12
+            }
+          }
+        ],
+        "unlockLevel": 1,
+        "monsterCast": {
+          "windupTicks": 2,
+          "warningColor": "#62b9c7"
+        }
+      },
+      {
+        "id": "skill.qinglin_deep_pool_guard",
+        "name": "深潭護鱗",
+        "desc": "青霖蛟主收攏潭水護住鱗甲，十四息內提高雙防百分之十與化解百分之八。",
+        "cooldown": 42,
+        "costMultiplier": 3,
+        "cost": 460014,
+        "range": 0,
+        "requiresTarget": false,
+        "unlockLevel": 1,
+        "effects": [
+          {
+            "type": "buff",
+            "target": "self",
+            "buffId": "buff.qinglin_deep_pool_guard",
+            "name": "深潭護鱗",
+            "desc": "潭水覆住鱗甲，雙防提高百分之十、化解提高百分之八。",
+            "shortMark": "潭",
+            "category": "buff",
+            "visibility": "public",
+            "color": "#478f99",
+            "duration": 14,
+            "maxStacks": 1,
+            "statMode": "percent",
+            "valueStats": {
+              "physDef": 10,
+              "spellDef": 10,
+              "resolvePower": 8
+            }
+          }
+        ]
+      }
+    ]
   }
 ]

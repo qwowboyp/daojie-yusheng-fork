@@ -25,6 +25,21 @@ const output = new Map();
 const excludedFields = loadExcludeFields();
 const put = (relative, value) => output.set(relative,
   `${JSON.stringify(convertJsonValue(value, { excludedFields }), null, 2)}\n`);
+const stableUpsertBy = (entries, replacements, key) => {
+  const replacementsByKey = new Map(replacements.map((entry) => [entry[key], entry]));
+  const replacedKeys = new Set();
+  const merged = entries.map((entry) => {
+    const entryKey = entry?.[key];
+    const replacement = replacementsByKey.get(entryKey);
+    if (!replacement) return entry;
+    replacedKeys.add(entryKey);
+    return replacement;
+  });
+  for (const replacement of replacements) {
+    if (!replacedKeys.has(replacement[key])) merged.push(replacement);
+  }
+  return merged;
+};
 for (const map of layout.finalize()) put(`${data}/maps/${map.id}.json`, map);
 put(`${data}/content/items/後期七境/內容.json`, encounters.items);
 put(`${data}/content/monsters/後期七境.json`, encounters.monsters);
@@ -68,13 +83,15 @@ const manifestLines = [
 output.set('docs/design/balance/後期七境功法與掉落.md', `${manifestLines.join('\n').trimEnd()}\n`);
 for (const kind of ['forging', 'alchemy']) {
   const relative = `${data}/content/${kind}/recipes.json`;
-  const original = read(relative).filter((entry) => !/(^|[.])lg_/.test(entry.recipeId));
-  put(relative, [...original, ...encounters[kind]]);
+  put(relative, stableUpsertBy(read(relative), encounters[kind], 'recipeId'));
 }
 
 const nodes = read(`${data}/content/resource-nodes.json`);
-nodes.resourceNodes = nodes.resourceNodes.filter((entry) => !entry.id.startsWith('lg_') && !entry.id.startsWith('landmark.lg_'));
-nodes.resourceNodes.push(...Object.values(encounters.mapContent).flatMap((entry) => entry.herbNodeTemplates ?? []));
+nodes.resourceNodes = stableUpsertBy(
+  nodes.resourceNodes,
+  Object.values(encounters.mapContent).flatMap((entry) => entry.herbNodeTemplates ?? []),
+  'id',
+);
 put(`${data}/content/resource-nodes.json`, nodes);
 
 const abyss = read(`${data}/maps/darksoil_abyss.json`);

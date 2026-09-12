@@ -16,6 +16,12 @@
 
 ## 來源與製作方式
 
+青霖澤使用 `atlases/foundation-qinglin-items-01.webp` 的 4×4 圖集產出 16 件道具，以及 `atlases/foundation-qinglin-monsters-01.webp` 的 3×2 像素怪物圖集產出 6 隻怪物。同名 JSON 記錄提示詞、去背指令、stable ID、格位、透明輪廓擷取與正式輸出雜湊。道具為 96px／192px WebP；地圖怪物沿用 128px PNG 與 `monster:<id>` 單格 manifest，圖包版本至少為 11。
+
+`node scripts/import-foundation-expansion-art.mjs <job.json>` 匯入已完成去背與檢視的多格原圖；工作檔指定來源與正式 metadata 相同的清單，不逐件生圖。`node scripts/prove-foundation-expansion-art.mjs` 在乾淨 checkout 驗證兩張圖集、38 個正式產物與所有 ID 映射。
+
+`packages/client/scripts/prove-foundation-expansion-art-browser.mjs` 驗證全部新圖解碼、透明留白和兩套正式怪物選圖；`prove-foundation-qinglin-map-browser.mjs` 使用權威地圖模板驗證整圖地貌、藥草與蛟潭。兩者均涵蓋桌面、手機直向／橫向與深淺背景，證據為瀏覽器模擬。
+
 築基十二部功法使用 `atlases/foundation-manuals-01.webp` 的 4 × 3 圖集；同名 JSON 保存提示詞、去背指令、逐格 ID、裁切與 24 個正式產物雜湊。獨立縮圖沿用 `assets/item-icons/v1/book.foundation_manual_*-96.webp`／`-192.webp`，並收錄在 `item-icons-v1.json`。`node scripts/prove-foundation-techniques.mjs` 驗證全卷、掉落、坊市目錄與本批美術對應。
 
 後期七境的 56 本功法書與 168 件裝備使用 `atlases/late-unique-*.webp` 七張圖集，每格對應一件物品。`late-game-unique-icons.json` 記錄 224 件的格位、透明輪廓裁切與兩種尺寸雜湊；正式檔案置於 `assets/item-icons/v2/`，避免沿用舊路徑的長效快取。其餘 247 件材料與消耗品仍由 `late-game-icon-reuse.json` 記錄既有美術來源。

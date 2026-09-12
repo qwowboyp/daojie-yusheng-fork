@@ -1749,5 +1749,76 @@
       "wood": 1039,
       "water": 560
     }
+  },
+  {
+    "recipeId": "alchemy.pill.qinglin_qi_restore",
+    "outputItemId": "pill.qinglin_qi_restore",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 37,
+    "grade": "mystic",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_ling",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_orchid",
+        "count": 1,
+        "role": "aux"
+      },
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_ling",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 63,
+      "water": 97,
+      "earth": 34
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.qinglin_meridian_restore",
+    "outputItemId": "pill.qinglin_meridian_restore",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 37,
+    "grade": "mystic",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_orchid",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_ling",
+        "count": 1,
+        "role": "aux"
+      },
+      {
+        "itemId": "mat.qinglin_lizard_scale",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_orchid",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 126,
+      "wood": 68
+    }
   }
 ]

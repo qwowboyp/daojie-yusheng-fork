@@ -782,5 +782,21 @@
   "book.foundation_manual_9": "/assets/item-icons/v1/book.foundation_manual_9",
   "book.foundation_manual_10": "/assets/item-icons/v1/book.foundation_manual_10",
   "book.foundation_manual_11": "/assets/item-icons/v1/book.foundation_manual_11",
-  "book.foundation_manual_12": "/assets/item-icons/v1/book.foundation_manual_12"
+  "book.foundation_manual_12": "/assets/item-icons/v1/book.foundation_manual_12",
+  "equip.qinglin_raincleaver": "/assets/item-icons/v1/equip.qinglin_raincleaver",
+  "equip.qinglin_tide_staff": "/assets/item-icons/v1/equip.qinglin_tide_staff",
+  "equip.qinglin_dew_crown": "/assets/item-icons/v1/equip.qinglin_dew_crown",
+  "equip.qinglin_scale_robe": "/assets/item-icons/v1/equip.qinglin_scale_robe",
+  "equip.qinglin_lotus_boots": "/assets/item-icons/v1/equip.qinglin_lotus_boots",
+  "equip.qinglin_pool_pendant": "/assets/item-icons/v1/equip.qinglin_pool_pendant",
+  "mat.qinglin_orchid": "/assets/item-icons/v1/mat.qinglin_orchid",
+  "mat.qinglin_ling": "/assets/item-icons/v1/mat.qinglin_ling",
+  "mat.qinglin_copper_ore": "/assets/item-icons/v1/mat.qinglin_copper_ore",
+  "mat.qinglin_jade_sand": "/assets/item-icons/v1/mat.qinglin_jade_sand",
+  "mat.qinglin_lizard_scale": "/assets/item-icons/v1/mat.qinglin_lizard_scale",
+  "mat.qinglin_crab_shell": "/assets/item-icons/v1/mat.qinglin_crab_shell",
+  "mat.qinglin_dragon_core": "/assets/item-icons/v1/mat.qinglin_dragon_core",
+  "pill.qinglin_qi_restore": "/assets/item-icons/v1/pill.qinglin_qi_restore",
+  "pill.qinglin_meridian_restore": "/assets/item-icons/v1/pill.qinglin_meridian_restore",
+  "scroll.qinglin_marsh": "/assets/item-icons/v1/scroll.qinglin_marsh"
 }

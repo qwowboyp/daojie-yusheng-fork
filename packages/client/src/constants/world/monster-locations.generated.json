@@ -1991,6 +1991,54 @@
     "mapLv": 6,
     "totalMaps": 1
   },
+  "m_qinglin_dew_spider": {
+    "monsterId": "m_qinglin_dew_spider",
+    "monsterName": "凝露蛛母",
+    "mapId": "foundation_qinglin_marsh",
+    "mapName": "青霖澤",
+    "mapLv": 35,
+    "totalMaps": 1
+  },
+  "m_qinglin_dragon_lord": {
+    "monsterId": "m_qinglin_dragon_lord",
+    "monsterName": "青霖蛟主",
+    "mapId": "foundation_qinglin_marsh",
+    "mapName": "青霖澤",
+    "mapLv": 35,
+    "totalMaps": 1
+  },
+  "m_qinglin_marsh_crab": {
+    "monsterId": "m_qinglin_marsh_crab",
+    "monsterName": "碧螯澤蟹",
+    "mapId": "foundation_qinglin_marsh",
+    "mapName": "青霖澤",
+    "mapLv": 35,
+    "totalMaps": 1
+  },
+  "m_qinglin_rain_lizard": {
+    "monsterId": "m_qinglin_rain_lizard",
+    "monsterName": "青苔雨蜥",
+    "mapId": "foundation_qinglin_marsh",
+    "mapName": "青霖澤",
+    "mapLv": 35,
+    "totalMaps": 1
+  },
+  "m_qinglin_root_fiend": {
+    "monsterId": "m_qinglin_root_fiend",
+    "monsterName": "盤根泥魈",
+    "mapId": "foundation_qinglin_marsh",
+    "mapName": "青霖澤",
+    "mapLv": 35,
+    "totalMaps": 1
+  },
+  "m_qinglin_wet_crane": {
+    "monsterId": "m_qinglin_wet_crane",
+    "monsterName": "濕羽鶴",
+    "mapId": "foundation_qinglin_marsh",
+    "mapName": "青霖澤",
+    "mapLv": 35,
+    "totalMaps": 1
+  },
   "m_ridge_ghost": {
     "monsterId": "m_ridge_ghost",
     "monsterName": "守嶺殘魂精英",

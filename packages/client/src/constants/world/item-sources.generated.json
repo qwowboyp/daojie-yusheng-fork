@@ -716,6 +716,15 @@
       "monsterName": "焰尾狐",
       "chance": 0.008,
       "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_rain_lizard",
+      "monsterName": "青苔雨蜥",
+      "chance": 0.008,
+      "count": 1
     }
   ],
   "book.foundation_manual_6": [
@@ -754,6 +763,15 @@
       "monsterName": "枯木行者",
       "chance": 0.008,
       "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_wet_crane",
+      "monsterName": "濕羽鶴",
+      "chance": 0.008,
+      "count": 1
     }
   ],
   "book.foundation_manual_7": [
@@ -783,9 +801,27 @@
       "monsterName": "藤焰蟒",
       "chance": 0.04,
       "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_dew_spider",
+      "monsterName": "凝露蛛母",
+      "chance": 0.04,
+      "count": 1
     }
   ],
   "book.foundation_manual_8": [
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_dragon_lord",
+      "monsterName": "青霖蛟主",
+      "chance": 0.08,
+      "count": 1
+    },
     {
       "kind": "monster_drop",
       "mapId": "blazewood_waste",
@@ -793,6 +829,15 @@
       "monsterId": "m_blazewood_king",
       "monsterName": "焚木妖王",
       "chance": 0.06,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_root_fiend",
+      "monsterName": "盤根泥魈",
+      "chance": 0.04,
       "count": 1
     },
     {
@@ -4546,6 +4591,60 @@
       "mapName": "炼器",
       "recipeId": "forging.qi_halfbase_building_hammer",
       "recipeName": "半基營造錘器方"
+    }
+  ],
+  "equip.qinglin_dew_crown": [
+    {
+      "kind": "forging",
+      "mapId": "crafting",
+      "mapName": "炼器",
+      "recipeId": "forging.qinglin_dew_crown",
+      "recipeName": "凝露冠器方"
+    }
+  ],
+  "equip.qinglin_lotus_boots": [
+    {
+      "kind": "forging",
+      "mapId": "crafting",
+      "mapName": "炼器",
+      "recipeId": "forging.qinglin_lotus_boots",
+      "recipeName": "踏荷履器方"
+    }
+  ],
+  "equip.qinglin_pool_pendant": [
+    {
+      "kind": "forging",
+      "mapId": "crafting",
+      "mapName": "炼器",
+      "recipeId": "forging.qinglin_pool_pendant",
+      "recipeName": "碧潭守心佩器方"
+    }
+  ],
+  "equip.qinglin_raincleaver": [
+    {
+      "kind": "forging",
+      "mapId": "crafting",
+      "mapName": "炼器",
+      "recipeId": "forging.qinglin_raincleaver",
+      "recipeName": "霖紋斷雨刀器方"
+    }
+  ],
+  "equip.qinglin_scale_robe": [
+    {
+      "kind": "forging",
+      "mapId": "crafting",
+      "mapName": "炼器",
+      "recipeId": "forging.qinglin_scale_robe",
+      "recipeName": "澤鱗護衣器方"
+    }
+  ],
+  "equip.qinglin_tide_staff": [
+    {
+      "kind": "forging",
+      "mapId": "crafting",
+      "mapName": "炼器",
+      "recipeId": "forging.qinglin_tide_staff",
+      "recipeName": "澤心引潮杖器方"
     }
   ],
   "equip.returnarray_boots": [
@@ -13588,6 +13687,195 @@
       "count": 1
     }
   ],
+  "mat.qinglin_copper_ore": [
+    {
+      "kind": "mining",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "landmarkId": "mineral:12:26",
+      "landmarkName": "碧紋銅礦",
+      "mode": "direct",
+      "count": 1
+    },
+    {
+      "kind": "mining",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "landmarkId": "mineral:29:9",
+      "landmarkName": "碧紋銅礦",
+      "mode": "direct",
+      "count": 1
+    },
+    {
+      "kind": "mining",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "landmarkId": "mineral:36:13",
+      "landmarkName": "碧紋銅礦",
+      "mode": "direct",
+      "count": 1
+    },
+    {
+      "kind": "mining",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "landmarkId": "mineral:8:29",
+      "landmarkName": "碧紋銅礦",
+      "mode": "direct",
+      "count": 1
+    }
+  ],
+  "mat.qinglin_crab_shell": [
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_dragon_lord",
+      "monsterName": "青霖蛟主",
+      "chance": 0.5,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_dew_spider",
+      "monsterName": "凝露蛛母",
+      "chance": 0.4,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_marsh_crab",
+      "monsterName": "碧螯澤蟹",
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_root_fiend",
+      "monsterName": "盤根泥魈",
+      "count": 1
+    }
+  ],
+  "mat.qinglin_dragon_core": [
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_dragon_lord",
+      "monsterName": "青霖蛟主",
+      "count": 1
+    }
+  ],
+  "mat.qinglin_jade_sand": [
+    {
+      "kind": "mining",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "landmarkId": "mineral:24:32",
+      "landmarkName": "沉水玉砂",
+      "mode": "direct",
+      "count": 1
+    },
+    {
+      "kind": "mining",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "landmarkId": "mineral:28:28",
+      "landmarkName": "沉水玉砂",
+      "mode": "direct",
+      "count": 1
+    },
+    {
+      "kind": "mining",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "landmarkId": "mineral:39:19",
+      "landmarkName": "沉水玉砂",
+      "mode": "direct",
+      "count": 1
+    },
+    {
+      "kind": "mining",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "landmarkId": "mineral:44:27",
+      "landmarkName": "沉水玉砂",
+      "mode": "direct",
+      "count": 1
+    }
+  ],
+  "mat.qinglin_ling": [
+    {
+      "kind": "search",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "landmarkId": "lm_qinglin_ling",
+      "landmarkName": "澤心苓",
+      "mode": "direct",
+      "count": 1
+    }
+  ],
+  "mat.qinglin_lizard_scale": [
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_dragon_lord",
+      "monsterName": "青霖蛟主",
+      "chance": 0.5,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_root_fiend",
+      "monsterName": "盤根泥魈",
+      "chance": 0.4,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_wet_crane",
+      "monsterName": "濕羽鶴",
+      "chance": 0.35,
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_dew_spider",
+      "monsterName": "凝露蛛母",
+      "count": 1
+    },
+    {
+      "kind": "monster_drop",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "monsterId": "m_qinglin_rain_lizard",
+      "monsterName": "青苔雨蜥",
+      "count": 1
+    }
+  ],
+  "mat.qinglin_orchid": [
+    {
+      "kind": "search",
+      "mapId": "foundation_qinglin_marsh",
+      "mapName": "青霖澤",
+      "landmarkId": "lm_qinglin_orchid",
+      "landmarkName": "青霖蘭",
+      "mode": "direct",
+      "count": 1
+    }
+  ],
   "mat.red_flame_leaf": [
     {
       "kind": "search",
@@ -14580,6 +14868,24 @@
       "chapter": "金丹·喚靈"
     }
   ],
+  "pill.qinglin_meridian_restore": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.qinglin_meridian_restore",
+      "recipeName": "凝露養脈丹丹方"
+    }
+  ],
+  "pill.qinglin_qi_restore": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.qinglin_qi_restore",
+      "recipeName": "青霖回元丹丹方"
+    }
+  ],
   "pill.shatter_spirit": [
     {
       "kind": "monster_drop",
@@ -14873,6 +15179,15 @@
       "monsterId": "m_stele_arbiter",
       "monsterName": "裂碑司命",
       "count": 1
+    }
+  ],
+  "scroll.qinglin_marsh": [
+    {
+      "kind": "shop",
+      "mapId": "frostblade_abyss",
+      "mapName": "霜刃淵",
+      "npcId": "npc_frostblade_scout",
+      "npcName": "探淵斥候·寒七"
     }
   ],
   "sect_entrance_relocation_token": [

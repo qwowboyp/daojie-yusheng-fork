@@ -1,0 +1,855 @@
+{
+  "id": "foundation-qinglin-items-01",
+  "kind": "items",
+  "columns": 4,
+  "rows": 4,
+  "prompt": "為既有仙俠遊戲製作一張全新道具圖集，精確4欄4列，共16種不同道具，真正RGBA透明背景。附圖僅供美術風格參考，不得複製其中物件。風格：鮮明細緻手繪遊戲道具，3/4斜視角，暗色清晰邊緣、明確材質高光，小尺寸40px仍可辨認；非寫實照片。每格只有一件完整物品（成對鞋算一件），物品含光效僅佔各格中央64%，四邊至少18%完全透明留白。不跨格、不截斷、無文字、標籤、格線、外框、水印、底座或環境場景。不要繪製棋盤格底色。每格必須有獨特剪影/結構，並非換色複製。嚴格按由左到右、由上到下排列：第一列1霖紋斷雨刀：短寬彎曲銀刃，雨滴凹紋，青銅刀鍔與深綠握柄；2澤心引潮杖：細长深色古木法杖，杖首彎成水滴環抱水藍寶珠，少量荷葉紋；3凝露冠：窄而高的青銅冠，三片向上的荷葉托住一粒凝露，非頭盔；4澤鱗護衣：墨綠短袍內襯銀青鱗甲，棕皮腰封，完整衣物。第二列5踏荷履：一雙暗綠布靴，翹頭與淺金荷脈繡紋；6碧潭守心佩：橢圓青玉鏤空潭水紋玉佩，中央乳白珠和短金穗；7青霖蘭：一株有完整根部的纖細蘭草，藍白三瓣花、青綠狹葉、露珠；8澤心苓：一團白金色帶短根靈芝狀藥苓，表面濕潤青綠小芽。第三列9碧紋銅礦：稜角分明的褐色銅礦塊，露出翠綠和亮銅色礦脈，非寶石；10沉水玉砂：一小堆大小不一的水藍和乳白玉砂顆粒，有明確堆狀輪廓；11雨蜥鱗：扇形排列的三枚厚實青藍鱗片，鱗緣淡銀，非整隻動物；12澤螯殼：一片完整深褐青色蟹螯硬殼，鋸齒內緣清楚。第四列13青霖妖丹：一顆不規則深碧珠，內有金綠蛟影，克制柔和光暈；14青霖回元丹：白瓷小藥瓶與一顆淡綠丸藥作為一組，瓶口青銅荷葉蓋；15凝露養脈丹：紅棕矮陶藥罐與一顆水藍丸藥作為一組，白色布封口、細金繩；16青霖澤圖卷：半展開的淡米色羊皮地圖卷，青銅卷軸端，圖面為簡潔藍色河道與綠色島形示意，不含任何文字數字。",
+  "editPrompt": "去背：請使用背景移除處理，把灰白棋盤格變成真正的透明像素（RGBA PNG）。圖片裡16件道具必須原封不動，保留精確4欄4列格位、全部材質紋路顏色、完整輪廓與光效。不重畫道具，不增加物件，不把棋盤格當成圖案留下。輸出要直接放進遊戲的真透明貼圖。",
+  "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+  "atlasSha256": "89506d4c12692191cefa178d0ec4ceed72391e30851e8ff1a1eb68f4c64142db",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "items": [
+    {
+      "id": "equip.qinglin_raincleaver",
+      "name": "霖紋斷雨刀"
+    },
+    {
+      "id": "equip.qinglin_tide_staff",
+      "name": "澤心引潮杖"
+    },
+    {
+      "id": "equip.qinglin_dew_crown",
+      "name": "凝露冠"
+    },
+    {
+      "id": "equip.qinglin_scale_robe",
+      "name": "澤鱗護衣"
+    },
+    {
+      "id": "equip.qinglin_lotus_boots",
+      "name": "踏荷履"
+    },
+    {
+      "id": "equip.qinglin_pool_pendant",
+      "name": "碧潭守心佩"
+    },
+    {
+      "id": "mat.qinglin_orchid",
+      "name": "青霖蘭"
+    },
+    {
+      "id": "mat.qinglin_ling",
+      "name": "澤心苓"
+    },
+    {
+      "id": "mat.qinglin_copper_ore",
+      "name": "碧紋銅礦"
+    },
+    {
+      "id": "mat.qinglin_jade_sand",
+      "name": "沉水玉砂"
+    },
+    {
+      "id": "mat.qinglin_lizard_scale",
+      "name": "雨蜥鱗"
+    },
+    {
+      "id": "mat.qinglin_crab_shell",
+      "name": "澤螯殼"
+    },
+    {
+      "id": "mat.qinglin_dragon_core",
+      "name": "青霖妖丹"
+    },
+    {
+      "id": "pill.qinglin_qi_restore",
+      "name": "青霖回元丹"
+    },
+    {
+      "id": "pill.qinglin_meridian_restore",
+      "name": "凝露養脈丹"
+    },
+    {
+      "id": "scroll.qinglin_marsh",
+      "name": "青霖澤圖卷"
+    }
+  ],
+  "records": [
+    {
+      "id": "equip.qinglin_raincleaver",
+      "name": "霖紋斷雨刀",
+      "description": "霖紋斷雨刀",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 0,
+        "row": 0,
+        "left": 0,
+        "top": 0,
+        "width": 314,
+        "height": 314
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 20,
+        "top": 26,
+        "width": 312,
+        "height": 296,
+        "componentIds": [
+          3,
+          19
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "492924b895090b53f5864538cfb8488f72486365c6c586a295c4e59666be3816",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/equip.qinglin_raincleaver-96.webp",
+          "sha256": "94e1dcc96c2f106937eaf0dfb93f6f340cc73a57cbfee3a3b1ee23be094d726f",
+          "bytes": 4582
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/equip.qinglin_raincleaver-192.webp",
+          "sha256": "6fd3cedc25df446575d1d51ce5ac152f4a11ac7b7ff1345261584ca1afd9b67f",
+          "bytes": 12608
+        }
+      ]
+    },
+    {
+      "id": "equip.qinglin_tide_staff",
+      "name": "澤心引潮杖",
+      "description": "澤心引潮杖",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 1,
+        "row": 0,
+        "left": 314,
+        "top": 0,
+        "width": 313,
+        "height": 314
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 373,
+        "top": 3,
+        "width": 243,
+        "height": 337,
+        "componentIds": [
+          1,
+          12,
+          10
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "1e234c75ea13ab1f44c3bace30e23fb5a7f8cdf484c76c767338fb5cb8af85c1",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/equip.qinglin_tide_staff-96.webp",
+          "sha256": "7bcd163f5ee2a1784219ca29330589e5edbacc7717a5e295df0594eb90649a9e",
+          "bytes": 2966
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/equip.qinglin_tide_staff-192.webp",
+          "sha256": "07e12367fd3ea5801bb8b44df4e865f50af8316d9af29078f898f97178ee3dac",
+          "bytes": 7814
+        }
+      ]
+    },
+    {
+      "id": "equip.qinglin_dew_crown",
+      "name": "凝露冠",
+      "description": "凝露冠",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 2,
+        "row": 0,
+        "left": 627,
+        "top": 0,
+        "width": 314,
+        "height": 314
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 659,
+        "top": 49,
+        "width": 245,
+        "height": 271,
+        "componentIds": [
+          4
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "5f4c24195116110e23903ca62517ec290fa0b4d22e6931d13a6d2ecf9a558710",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/equip.qinglin_dew_crown-96.webp",
+          "sha256": "53fdc9590a18ef44384e2a09012a96bf52ecdf8b2147972f8a0d8cb73a7f82c7",
+          "bytes": 4214
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/equip.qinglin_dew_crown-192.webp",
+          "sha256": "8fb0c50e0fbb06ddf64fd8ead24e1317c67d4a9395ec99c39b448f9cb054f26b",
+          "bytes": 11116
+        }
+      ]
+    },
+    {
+      "id": "equip.qinglin_scale_robe",
+      "name": "澤鱗護衣",
+      "description": "澤鱗護衣",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 3,
+        "row": 0,
+        "left": 941,
+        "top": 0,
+        "width": 313,
+        "height": 314
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 938,
+        "top": 11,
+        "width": 302,
+        "height": 333,
+        "componentIds": [
+          2
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "b0b21c3f30414857f27b9bf31a69e146e8f6d733ab58acb97b883d5d86ae8758",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/equip.qinglin_scale_robe-96.webp",
+          "sha256": "12e3c656e0e1b4722b5b0b69acce78a5a131ebdcc820828d111f258a402e825f",
+          "bytes": 4842
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/equip.qinglin_scale_robe-192.webp",
+          "sha256": "3d68378e21ed3cebd5c25f162ef08d059768328bb4ac879d6a507bcc8bbab1e0",
+          "bytes": 12954
+        }
+      ]
+    },
+    {
+      "id": "equip.qinglin_lotus_boots",
+      "name": "踏荷履",
+      "description": "踏荷履",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 0,
+        "row": 1,
+        "left": 0,
+        "top": 314,
+        "width": 314,
+        "height": 313
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 34,
+        "top": 368,
+        "width": 278,
+        "height": 265,
+        "componentIds": [
+          39
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "43f6587318fcee097f9e58899ccf97c74c0df02be12e191cf70c240c1a523e66",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/equip.qinglin_lotus_boots-96.webp",
+          "sha256": "4bdf443169abf8dabd453dba3185998a83fbd4e65209c23cee4fbb9110dc894d",
+          "bytes": 4558
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/equip.qinglin_lotus_boots-192.webp",
+          "sha256": "f97eec79eb387544c08706e92fe21522774f547baf6796316c6bb7e6ac7c5497",
+          "bytes": 12390
+        }
+      ]
+    },
+    {
+      "id": "equip.qinglin_pool_pendant",
+      "name": "碧潭守心佩",
+      "description": "碧潭守心佩",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 1,
+        "row": 1,
+        "left": 314,
+        "top": 314,
+        "width": 313,
+        "height": 313
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 383,
+        "top": 315,
+        "width": 229,
+        "height": 320,
+        "componentIds": [
+          36
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "cf45ed6d1f7872abae34a7dd663c55922e4758687da266fea1b7842a502d746f",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/equip.qinglin_pool_pendant-96.webp",
+          "sha256": "17af59fd43dc15540b0c432323a5af8c1a1f5ac93b07a44b99a759435eb79b51",
+          "bytes": 4112
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/equip.qinglin_pool_pendant-192.webp",
+          "sha256": "32096c3ff28f507bfebdc0472b690674d5bdf5a5b34366d32358e8f8a4aaab57",
+          "bytes": 11002
+        }
+      ]
+    },
+    {
+      "id": "mat.qinglin_orchid",
+      "name": "青霖蘭",
+      "description": "青霖蘭",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 2,
+        "row": 1,
+        "left": 627,
+        "top": 314,
+        "width": 314,
+        "height": 313
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 650,
+        "top": 335,
+        "width": 268,
+        "height": 322,
+        "componentIds": [
+          37
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "ff489beab8507fd5a610e636cba3fdb7091a82b2cc95a956916f003457c6b6c0",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/mat.qinglin_orchid-96.webp",
+          "sha256": "f2b3e2e9ff4888d040fcb19d89b02c217252df72b746bc05c170d8d9ea8dbb57",
+          "bytes": 5188
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/mat.qinglin_orchid-192.webp",
+          "sha256": "0833da56f30eddd555c33f037c8014db98f7de69446d305693fb9626873939de",
+          "bytes": 13886
+        }
+      ]
+    },
+    {
+      "id": "mat.qinglin_ling",
+      "name": "澤心苓",
+      "description": "澤心苓",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 3,
+        "row": 1,
+        "left": 941,
+        "top": 314,
+        "width": 313,
+        "height": 313
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 957,
+        "top": 355,
+        "width": 273,
+        "height": 289,
+        "componentIds": [
+          38
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "685864e92a6f6364a1ae08bd73b12b0c00802dd088a147c222d5fc542c1acaf8",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/mat.qinglin_ling-96.webp",
+          "sha256": "f311638260dfd5283b7fadac8866772aae8fbb7e5e94c7d2ed173c0a3ad1b340",
+          "bytes": 5274
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/mat.qinglin_ling-192.webp",
+          "sha256": "347e48eb19ca96cdff82516de9b1380bbd80bc209480974a97dd29b892091ea4",
+          "bytes": 14420
+        }
+      ]
+    },
+    {
+      "id": "mat.qinglin_copper_ore",
+      "name": "碧紋銅礦",
+      "description": "碧紋銅礦",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 0,
+        "row": 2,
+        "left": 0,
+        "top": 627,
+        "width": 314,
+        "height": 314
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 39,
+        "top": 641,
+        "width": 263,
+        "height": 277,
+        "componentIds": [
+          46
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "9d9d16f0f14d8dd3e85469c64acf29d8cec92a0c3143592394cc1062a11197ab",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/mat.qinglin_copper_ore-96.webp",
+          "sha256": "ae7793ac9443c27b886e427d5ba25b30c853db0b6efa35f66af86096336a99c0",
+          "bytes": 4400
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/mat.qinglin_copper_ore-192.webp",
+          "sha256": "2af0dd7b44394374054a35da18fee4e55e28601ac21606728f3a1b6389540a2a",
+          "bytes": 12730
+        }
+      ]
+    },
+    {
+      "id": "mat.qinglin_jade_sand",
+      "name": "沉水玉砂",
+      "description": "沉水玉砂",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 1,
+        "row": 2,
+        "left": 314,
+        "top": 627,
+        "width": 313,
+        "height": 314
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 336,
+        "top": 687,
+        "width": 292,
+        "height": 215,
+        "componentIds": [
+          49,
+          51,
+          50
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "9b0d7a25feea5317eb74d5ecfc2b284d3f8872f3d69086e30ff2790bad92bcf5",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/mat.qinglin_jade_sand-96.webp",
+          "sha256": "9240dca6d9d42232442a8bb77a24e94dbdd8b270e05b9f2fe977bea236f8eff9",
+          "bytes": 3884
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/mat.qinglin_jade_sand-192.webp",
+          "sha256": "458043a914b549129de8ab3902680c5ab40addae42776b0c2a8d3607333b2ba2",
+          "bytes": 10574
+        }
+      ]
+    },
+    {
+      "id": "mat.qinglin_lizard_scale",
+      "name": "雨蜥鱗",
+      "description": "雨蜥鱗",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 2,
+        "row": 2,
+        "left": 627,
+        "top": 627,
+        "width": 314,
+        "height": 314
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 664,
+        "top": 654,
+        "width": 262,
+        "height": 258,
+        "componentIds": [
+          47
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "56445dd23a100d8a52574059185ddae60751f97daff02db48883bcc26229199e",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/mat.qinglin_lizard_scale-96.webp",
+          "sha256": "44d5b17ec478e94ebdb00da6cc8a8cb0bcdd051d898cc20fe47bc2eccfbc6e7d",
+          "bytes": 4702
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/mat.qinglin_lizard_scale-192.webp",
+          "sha256": "109fea860761f8569ea5f1f77284548b7c55ca5ecb5f1d157674ce3da1f43e17",
+          "bytes": 13414
+        }
+      ]
+    },
+    {
+      "id": "mat.qinglin_crab_shell",
+      "name": "澤螯殼",
+      "description": "澤螯殼",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 3,
+        "row": 2,
+        "left": 941,
+        "top": 627,
+        "width": 313,
+        "height": 314
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 954,
+        "top": 656,
+        "width": 278,
+        "height": 269,
+        "componentIds": [
+          48
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "e0613a3dd2db9ee3efc6c56b4404a17dc07ae679baf25f84c241a8433b662086",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/mat.qinglin_crab_shell-96.webp",
+          "sha256": "f67bd415e640803682c115c58354dde7798d2db9475517c14012cd7c99f5e66c",
+          "bytes": 4530
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/mat.qinglin_crab_shell-192.webp",
+          "sha256": "f5788757b7cc22687c0b0a47a9423768261c809c07f03ed800a428a24bcb5414",
+          "bytes": 12462
+        }
+      ]
+    },
+    {
+      "id": "mat.qinglin_dragon_core",
+      "name": "青霖妖丹",
+      "description": "青霖妖丹",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 0,
+        "row": 3,
+        "left": 0,
+        "top": 941,
+        "width": 314,
+        "height": 313
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 32,
+        "top": 927,
+        "width": 269,
+        "height": 283,
+        "componentIds": [
+          54
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "10d34c4c99ab78a28bb8d48924beebd44b4a227e183febe09303f8151775e02e",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/mat.qinglin_dragon_core-96.webp",
+          "sha256": "11e290fca6c4a0556cf4592a99497f41e6f331192a61af13cf074502bed32246",
+          "bytes": 5646
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/mat.qinglin_dragon_core-192.webp",
+          "sha256": "87f757ebd02ad3e4ec70e398fdc2d69f96a7f7c25e5e72b811e38d1831359815",
+          "bytes": 15766
+        }
+      ]
+    },
+    {
+      "id": "pill.qinglin_qi_restore",
+      "name": "青霖回元丹",
+      "description": "青霖回元丹",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 1,
+        "row": 3,
+        "left": 314,
+        "top": 941,
+        "width": 313,
+        "height": 313
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 353,
+        "top": 914,
+        "width": 255,
+        "height": 286,
+        "componentIds": [
+          52
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "65d663b92ced73c51abfa6204fd943075d91c9992e0b0015416fab22ba500a61",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/pill.qinglin_qi_restore-96.webp",
+          "sha256": "a98bf205bd5f91c3ec1ac0ccd5403afd77ea11e97ded3b80ea1e1a6d578f4f88",
+          "bytes": 4136
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/pill.qinglin_qi_restore-192.webp",
+          "sha256": "8580ac6abbeec4faec0b8d25481af13ab3ee0da1d0b32ca8623b37f2865050db",
+          "bytes": 11280
+        }
+      ]
+    },
+    {
+      "id": "pill.qinglin_meridian_restore",
+      "name": "凝露養脈丹",
+      "description": "凝露養脈丹",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 2,
+        "row": 3,
+        "left": 627,
+        "top": 941,
+        "width": 314,
+        "height": 313
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 636,
+        "top": 943,
+        "width": 277,
+        "height": 249,
+        "componentIds": [
+          56
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "df7bc4fb54dc0af569fdcfbc85304660aa7ac527fa79709c004523553f5cd463",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/pill.qinglin_meridian_restore-96.webp",
+          "sha256": "d89686adfbda424139a237955e06c13f95798d7f5c76c20f8728e99919b3f83b",
+          "bytes": 3922
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/pill.qinglin_meridian_restore-192.webp",
+          "sha256": "ede0f07f291f1c938d004cb698a42bd5c2a360c53db36c11197a916a20cbf696",
+          "bytes": 10766
+        }
+      ]
+    },
+    {
+      "id": "scroll.qinglin_marsh",
+      "name": "青霖澤圖卷",
+      "description": "青霖澤圖卷",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-items-01.webp",
+      "cell": {
+        "col": 3,
+        "row": 3,
+        "left": 941,
+        "top": 941,
+        "width": 313,
+        "height": 313
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 935,
+        "top": 926,
+        "width": 315,
+        "height": 295,
+        "componentIds": [
+          53
+        ]
+      },
+      "sourceSha256": "d6067d339313fd7592b233b6d3f6f4015a9e826aef32fc068a55a37779f21fbd",
+      "cropSha256": "b048cd37c16d8d255fb1ed305b0d5af7f88845f2e4bb51b121190b73c3b8c27a",
+      "variants": [
+        96,
+        192
+      ],
+      "outputs": [
+        {
+          "size": 96,
+          "path": "assets/item-icons/v1/scroll.qinglin_marsh-96.webp",
+          "sha256": "4975059cb58ee5931b704877f72789029d525b96b97bfbd936c91f3d5a2459e9",
+          "bytes": 4334
+        },
+        {
+          "size": 192,
+          "path": "assets/item-icons/v1/scroll.qinglin_marsh-192.webp",
+          "sha256": "00131ad45d2e3c8869d76e03ac688ef676e830b2e2627b50ae1eb24bf7c4c84e",
+          "bytes": 11504
+        }
+      ]
+    }
+  ]
+}

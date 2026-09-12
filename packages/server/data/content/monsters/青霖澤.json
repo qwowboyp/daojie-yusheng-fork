@@ -1,0 +1,437 @@
+[
+  {
+    "id": "m_qinglin_rain_lizard",
+    "name": "青苔雨蜥",
+    "char": "蜥",
+    "color": "#5d9c72",
+    "count": 4,
+    "radius": 5,
+    "aggroRange": 6,
+    "respawnSec": 18,
+    "skills": [
+      "skill.qinglin_moss_pounce",
+      "skill.qinglin_rain_spit"
+    ],
+    "drops": [
+      {
+        "itemId": "mat.qinglin_lizard_scale",
+        "name": "雨蜥鱗",
+        "type": "material",
+        "count": 1
+      },
+      {
+        "itemId": "book.foundation_manual_5",
+        "name": "《焚木回春篇》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
+      }
+    ],
+    "grade": "mystic",
+    "tier": "mortal_blood",
+    "level": 35,
+    "valueStats": {
+      "maxHp": 2418,
+      "maxQi": 2341,
+      "physAtk": 14487,
+      "spellAtk": 10999,
+      "physDef": 41,
+      "spellDef": 46,
+      "hit": 2040,
+      "dodge": 1175,
+      "crit": 286,
+      "antiCrit": 1208,
+      "breakPower": 903,
+      "resolvePower": 962,
+      "maxQiOutputPerTick": 1258,
+      "hpRegenRate": 146,
+      "qiRegenRate": 1587,
+      "moveSpeed": 1
+    },
+    "statPercents": {
+      "maxHp": 99.96144864,
+      "maxQi": 99.9905251,
+      "physAtk": 99.99411585,
+      "spellAtk": 99.99746935,
+      "physDef": 98.93887946,
+      "spellDef": 99.43267776,
+      "hit": 99.99403051,
+      "dodge": 99.97631174,
+      "crit": 99.78103522,
+      "antiCrit": 99.98847926,
+      "breakPower": 99.9479849,
+      "resolvePower": 99.9222395,
+      "maxQiOutputPerTick": 99.93085614,
+      "hpRegenRate": 98.72881356,
+      "qiRegenRate": 99.90140012,
+      "moveSpeed": 382.69230769
+    }
+  },
+  {
+    "id": "m_qinglin_wet_crane",
+    "name": "濕羽鶴",
+    "char": "鶴",
+    "color": "#a8c9c1",
+    "count": 3,
+    "radius": 6,
+    "aggroRange": 6,
+    "respawnSec": 19,
+    "skills": [
+      "skill.qinglin_mist_peck",
+      "skill.qinglin_wet_wing_sweep"
+    ],
+    "drops": [
+      {
+        "itemId": "mat.qinglin_lizard_scale",
+        "name": "雨蜥鱗",
+        "type": "material",
+        "count": 1,
+        "chance": 0.35
+      },
+      {
+        "itemId": "book.foundation_manual_6",
+        "name": "《藤火纏枝訣》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.008
+      }
+    ],
+    "grade": "mystic",
+    "tier": "mortal_blood",
+    "level": 36,
+    "valueStats": {
+      "maxHp": 2150,
+      "maxQi": 2082,
+      "physAtk": 8880,
+      "spellAtk": 11695,
+      "physDef": 37,
+      "spellDef": 33,
+      "hit": 1815,
+      "dodge": 1045,
+      "crit": 254,
+      "antiCrit": 1075,
+      "breakPower": 803,
+      "resolvePower": 855,
+      "maxQiOutputPerTick": 1119,
+      "hpRegenRate": 133,
+      "qiRegenRate": 1443,
+      "moveSpeed": 1
+    },
+    "statPercents": {
+      "maxHp": 99.9797913,
+      "maxQi": 99.98662419,
+      "physAtk": 99.99094021,
+      "spellAtk": 99.99642816,
+      "physDef": 98.99665552,
+      "spellDef": 98.49906191,
+      "hit": 99.95056004,
+      "dodge": 99.97631174,
+      "crit": 99.92690504,
+      "antiCrit": 99.92516263,
+      "breakPower": 99.95953913,
+      "resolvePower": 99.98371453,
+      "maxQiOutputPerTick": 99.91013162,
+      "hpRegenRate": 100.43103448,
+      "qiRegenRate": 99.87185806,
+      "moveSpeed": 355.35714286
+    }
+  },
+  {
+    "id": "m_qinglin_marsh_crab",
+    "name": "碧螯澤蟹",
+    "char": "蟹",
+    "color": "#658f84",
+    "count": 3,
+    "radius": 5,
+    "aggroRange": 5,
+    "respawnSec": 20,
+    "skills": [
+      "skill.qinglin_shell_clamp",
+      "skill.qinglin_marsh_guard"
+    ],
+    "drops": [
+      {
+        "itemId": "mat.qinglin_crab_shell",
+        "name": "澤螯殼",
+        "type": "material",
+        "count": 1
+      }
+    ],
+    "grade": "mystic",
+    "tier": "mortal_blood",
+    "level": 36,
+    "valueStats": {
+      "maxHp": 2365,
+      "maxQi": 2082,
+      "physAtk": 9746,
+      "spellAtk": 9746,
+      "physDef": 39,
+      "spellDef": 39,
+      "hit": 1815,
+      "dodge": 857,
+      "crit": 254,
+      "antiCrit": 1075,
+      "breakPower": 803,
+      "resolvePower": 855,
+      "maxQiOutputPerTick": 1119,
+      "hpRegenRate": 133,
+      "qiRegenRate": 1443,
+      "moveSpeed": 1
+    },
+    "statPercents": {
+      "maxHp": 99.97982946,
+      "maxQi": 99.98662419,
+      "physAtk": 99.99476139,
+      "spellAtk": 99.99476139,
+      "physDef": 97.46132487,
+      "spellDef": 97.46132487,
+      "hit": 99.95056004,
+      "dodge": 99.9638937,
+      "crit": 99.92690504,
+      "antiCrit": 99.92516263,
+      "breakPower": 99.95953913,
+      "resolvePower": 99.98371453,
+      "maxQiOutputPerTick": 99.91013162,
+      "hpRegenRate": 100.43103448,
+      "qiRegenRate": 99.87185806,
+      "moveSpeed": 355.35714286
+    }
+  },
+  {
+    "id": "m_qinglin_dew_spider",
+    "name": "凝露蛛母",
+    "char": "蛛",
+    "color": "#86b7ab",
+    "count": 2,
+    "radius": 4,
+    "aggroRange": 7,
+    "respawnSec": 36,
+    "skills": [
+      "skill.qinglin_dew_thread",
+      "skill.qinglin_rain_needle",
+      "skill.qinglin_dewburst"
+    ],
+    "drops": [
+      {
+        "itemId": "mat.qinglin_lizard_scale",
+        "name": "雨蜥鱗",
+        "type": "material",
+        "count": 1
+      },
+      {
+        "itemId": "mat.qinglin_crab_shell",
+        "name": "澤螯殼",
+        "type": "material",
+        "count": 1,
+        "chance": 0.4
+      },
+      {
+        "itemId": "book.foundation_manual_7",
+        "name": "《燼息調元法》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      }
+    ],
+    "grade": "earth",
+    "tier": "variant",
+    "level": 37,
+    "valueStats": {
+      "maxHp": 3443,
+      "maxQi": 2942,
+      "physAtk": 13334,
+      "spellAtk": 10371,
+      "physDef": 39,
+      "spellDef": 36,
+      "hit": 1899,
+      "dodge": 1333,
+      "crit": 332,
+      "antiCrit": 1402,
+      "breakPower": 1009,
+      "resolvePower": 1074,
+      "maxQiOutputPerTick": 1422,
+      "hpRegenRate": 121,
+      "qiRegenRate": 1312,
+      "moveSpeed": 1
+    },
+    "statPercents": {
+      "maxHp": 99.98933828,
+      "maxQi": 99.99116839,
+      "physAtk": 99.99514787,
+      "spellAtk": 99.99442526,
+      "physDef": 99.75299929,
+      "spellDef": 99.7324159,
+      "hit": 99.99710044,
+      "dodge": 99.95043166,
+      "crit": 99.763662,
+      "antiCrit": 99.98821774,
+      "breakPower": 99.92360059,
+      "resolvePower": 99.98205588,
+      "maxQiOutputPerTick": 99.93417295,
+      "hpRegenRate": 100.43103448,
+      "qiRegenRate": 99.93095966,
+      "moveSpeed": 320.96774194
+    }
+  },
+  {
+    "id": "m_qinglin_root_fiend",
+    "name": "盤根泥魈",
+    "char": "魈",
+    "color": "#607a58",
+    "count": 2,
+    "radius": 4,
+    "aggroRange": 7,
+    "respawnSec": 40,
+    "skills": [
+      "skill.qinglin_root_lash",
+      "skill.qinglin_bog_mist",
+      "skill.qinglin_sinking_roots"
+    ],
+    "drops": [
+      {
+        "itemId": "mat.qinglin_crab_shell",
+        "name": "澤螯殼",
+        "type": "material",
+        "count": 1
+      },
+      {
+        "itemId": "mat.qinglin_lizard_scale",
+        "name": "雨蜥鱗",
+        "type": "material",
+        "count": 1,
+        "chance": 0.4
+      },
+      {
+        "itemId": "book.foundation_manual_8",
+        "name": "《焚林照夜印》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.04
+      }
+    ],
+    "grade": "earth",
+    "tier": "variant",
+    "level": 38,
+    "valueStats": {
+      "maxHp": 3065,
+      "maxQi": 2619,
+      "physAtk": 8373,
+      "spellAtk": 10765,
+      "physDef": 29,
+      "spellDef": 32,
+      "hit": 1691,
+      "dodge": 1186,
+      "crit": 295,
+      "antiCrit": 1248,
+      "breakPower": 898,
+      "resolvePower": 956,
+      "maxQiOutputPerTick": 1265,
+      "hpRegenRate": 110,
+      "qiRegenRate": 1192,
+      "moveSpeed": 1
+    },
+    "statPercents": {
+      "maxHp": 99.98254262,
+      "maxQi": 99.98450185,
+      "physAtk": 99.99517061,
+      "spellAtk": 99.99772346,
+      "physDef": 99.3660186,
+      "spellDef": 97.54883187,
+      "hit": 99.96087013,
+      "dodge": 99.99586743,
+      "crit": 99.94599983,
+      "antiCrit": 99.98821774,
+      "breakPower": 99.94132576,
+      "resolvePower": 99.98333739,
+      "maxQiOutputPerTick": 99.99709404,
+      "hpRegenRate": 97.89915966,
+      "qiRegenRate": 99.99013125,
+      "moveSpeed": 292.64705882
+    }
+  },
+  {
+    "id": "m_qinglin_dragon_lord",
+    "name": "青霖蛟主",
+    "char": "蛟",
+    "color": "#38a3a5",
+    "count": 1,
+    "maxAlive": 1,
+    "radius": 3,
+    "aggroRange": 9,
+    "respawnSec": 120,
+    "skills": [
+      "skill.qinglin_tide_bite",
+      "skill.qinglin_rainfall",
+      "skill.qinglin_dragon_coil",
+      "skill.qinglin_deep_pool_guard"
+    ],
+    "drops": [
+      {
+        "itemId": "mat.qinglin_dragon_core",
+        "name": "青霖妖丹",
+        "type": "material",
+        "count": 1
+      },
+      {
+        "itemId": "mat.qinglin_lizard_scale",
+        "name": "雨蜥鱗",
+        "type": "material",
+        "count": 1,
+        "chance": 0.5
+      },
+      {
+        "itemId": "mat.qinglin_crab_shell",
+        "name": "澤螯殼",
+        "type": "material",
+        "count": 1,
+        "chance": 0.5
+      },
+      {
+        "itemId": "book.foundation_manual_8",
+        "name": "《焚林照夜印》",
+        "type": "skill_book",
+        "count": 1,
+        "chance": 0.08
+      }
+    ],
+    "grade": "heaven",
+    "tier": "demon_king",
+    "level": 38,
+    "valueStats": {
+      "maxHp": 4495,
+      "maxQi": 4171,
+      "physAtk": 12385,
+      "spellAtk": 12385,
+      "physDef": 47,
+      "spellDef": 47,
+      "hit": 1902,
+      "dodge": 1435,
+      "crit": 416,
+      "antiCrit": 1759,
+      "breakPower": 1122,
+      "resolvePower": 1195,
+      "maxQiOutputPerTick": 1853,
+      "hpRegenRate": 173,
+      "qiRegenRate": 2682,
+      "moveSpeed": 1
+    },
+    "statPercents": {
+      "maxHp": 99.99883793,
+      "maxQi": 99.9844665,
+      "physAtk": 99.99772443,
+      "spellAtk": 99.99772443,
+      "physDef": 98.98305085,
+      "spellDef": 98.98305085,
+      "hit": 99.98067284,
+      "dodge": 99.94535146,
+      "crit": 99.86745214,
+      "antiCrit": 99.9582033,
+      "breakPower": 99.98689456,
+      "resolvePower": 99.98359378,
+      "maxQiOutputPerTick": 99.96032323,
+      "hpRegenRate": 99.25595238,
+      "qiRegenRate": 99.90358066,
+      "moveSpeed": 292.64705882
+    }
+  }
+]

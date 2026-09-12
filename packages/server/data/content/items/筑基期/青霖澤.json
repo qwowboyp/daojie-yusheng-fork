@@ -1,0 +1,276 @@
+[
+  {
+    "itemId": "equip.qinglin_raincleaver",
+    "name": "霖紋斷雨刀",
+    "type": "equipment",
+    "grade": "mystic",
+    "level": 37,
+    "desc": "斷雨刀刃以碧紋銅反覆摺鍛，適合在濕地中破開厚殼。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "physAtk": 105,
+      "hit": 50,
+      "breakPower": 55
+    }
+  },
+  {
+    "itemId": "equip.qinglin_tide_staff",
+    "name": "澤心引潮杖",
+    "type": "equipment",
+    "grade": "mystic",
+    "level": 37,
+    "desc": "古木杖芯封入澤心水脈，能穩定牽引法術與靈力輸出。",
+    "equipSlot": "weapon",
+    "equipBaselinePercents": {
+      "spellAtk": 105,
+      "hit": 45,
+      "maxQiOutputPerTick": 50
+    }
+  },
+  {
+    "itemId": "equip.qinglin_dew_crown",
+    "name": "凝露冠",
+    "type": "equipment",
+    "grade": "mystic",
+    "level": 37,
+    "desc": "荷葉狀冠片承住晨露，替識海卸開迎面的術勢。",
+    "equipSlot": "head",
+    "equipBaselinePercents": {
+      "maxHp": 45,
+      "physDef": 55,
+      "spellDef": 45,
+      "antiCrit": 35
+    }
+  },
+  {
+    "itemId": "equip.qinglin_scale_robe",
+    "name": "澤鱗護衣",
+    "type": "equipment",
+    "grade": "mystic",
+    "level": 37,
+    "desc": "雨蜥厚鱗覆在墨綠短袍上，兼顧氣血與雙重防護。",
+    "equipSlot": "body",
+    "equipBaselinePercents": {
+      "maxHp": 65,
+      "physDef": 75,
+      "spellDef": 65,
+      "resolvePower": 35
+    }
+  },
+  {
+    "itemId": "equip.qinglin_lotus_boots",
+    "name": "踏荷履",
+    "type": "equipment",
+    "grade": "mystic",
+    "level": 37,
+    "desc": "鞋底刻著荷脈水紋，踏過泥澤時仍能迅速轉身。",
+    "equipSlot": "legs",
+    "equipBaselinePercents": {
+      "moveSpeed": 70,
+      "dodge": 55,
+      "cooldownSpeed": 35
+    }
+  },
+  {
+    "itemId": "equip.qinglin_pool_pendant",
+    "name": "碧潭守心佩",
+    "type": "equipment",
+    "grade": "mystic",
+    "level": 37,
+    "desc": "玉佩內封一縷深潭迴流，能穩住出手與靈力運轉。",
+    "equipSlot": "accessory",
+    "equipBaselinePercents": {
+      "maxQiOutputPerTick": 55,
+      "hit": 45,
+      "breakPower": 40,
+      "qiRegenRate": 30
+    }
+  },
+  {
+    "itemId": "mat.qinglin_orchid",
+    "name": "青霖蘭",
+    "type": "material",
+    "grade": "mystic",
+    "level": 37,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 63,
+        "water": 34
+      }
+    },
+    "desc": "古石棧橋外側迎雨而生的蘭草，葉脈與花心都蓄著木水靈機。",
+    "tags": [
+      "药材"
+    ]
+  },
+  {
+    "itemId": "mat.qinglin_ling",
+    "name": "澤心苓",
+    "type": "material",
+    "grade": "mystic",
+    "level": 37,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "water": 63,
+        "wood": 34
+      }
+    },
+    "desc": "紮根於淺澤泥心的靈苓，能引散亂靈力回歸氣海。",
+    "tags": [
+      "药材"
+    ]
+  },
+  {
+    "itemId": "mat.qinglin_copper_ore",
+    "name": "碧紋銅礦",
+    "type": "material",
+    "grade": "mystic",
+    "level": 37,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 63,
+        "earth": 34
+      }
+    },
+    "desc": "濕地岩脊露出的古銅礦，翠色礦紋在雨中尤其清楚。",
+    "tags": [
+      "矿石",
+      "矿材",
+      "石材",
+      "金属"
+    ]
+  },
+  {
+    "itemId": "mat.qinglin_jade_sand",
+    "name": "沉水玉砂",
+    "type": "material",
+    "grade": "mystic",
+    "level": 37,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "water": 63,
+        "earth": 34
+      }
+    },
+    "desc": "水道底部沉積的玉砂，顆粒雖細，仍封著厚實水土之氣。",
+    "tags": [
+      "矿石",
+      "矿材",
+      "石材"
+    ]
+  },
+  {
+    "itemId": "mat.qinglin_lizard_scale",
+    "name": "雨蜥鱗",
+    "type": "material",
+    "grade": "mystic",
+    "level": 37,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 63,
+        "wood": 34
+      }
+    },
+    "desc": "青苔雨蜥脫落的厚鱗，雨水滑過時會浮出細密木紋。",
+    "tags": [
+      "异材"
+    ]
+  },
+  {
+    "itemId": "mat.qinglin_crab_shell",
+    "name": "澤螯殼",
+    "type": "material",
+    "grade": "mystic",
+    "level": 37,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "earth": 63,
+        "water": 34
+      }
+    },
+    "desc": "碧螯澤蟹留下的硬殼，能承受泥澤與暗流的長年沖刷。",
+    "tags": [
+      "异材"
+    ]
+  },
+  {
+    "itemId": "mat.qinglin_dragon_core",
+    "name": "青霖妖丹",
+    "type": "material",
+    "grade": "mystic",
+    "level": 37,
+    "materialCategory": "exotic",
+    "materialValues": {
+      "elements": {
+        "water": 58,
+        "wood": 34,
+        "earth": 23
+      }
+    },
+    "desc": "青霖蛟主凝成的妖丹，水木氣機纏著一線沉厚地脈。",
+    "tags": [
+      "异材"
+    ]
+  },
+  {
+    "itemId": "pill.qinglin_qi_restore",
+    "name": "青霖回元丹",
+    "type": "consumable",
+    "grade": "mystic",
+    "level": 37,
+    "desc": "澤心苓與青霖蘭煉成的回元丹，服下後立即補回靈力，並短時加快靈力回覆。",
+    "cooldown": 60,
+    "baselineQiPercent": 2,
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.pill_qinglin_qi_restore",
+        "name": "青霖回元",
+        "desc": "藥力迴流氣海，靈力回覆提高百分之三百。",
+        "shortMark": "元",
+        "duration": 90,
+        "stats": {
+          "qiRegenRate": 300
+        },
+        "statMode": "percent"
+      }
+    ]
+  },
+  {
+    "itemId": "pill.qinglin_meridian_restore",
+    "name": "凝露養脈丹",
+    "type": "consumable",
+    "grade": "mystic",
+    "level": 37,
+    "desc": "凝露裹住受損經脈，服下後立即回覆生命，並短時加快生命回覆。",
+    "cooldown": 60,
+    "baselineHealPercent": 2,
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.pill_qinglin_meridian_restore",
+        "name": "凝露養脈",
+        "desc": "凝露護住經脈，生命回覆提高百分之三百。",
+        "shortMark": "養",
+        "duration": 90,
+        "stats": {
+          "hpRegenRate": 300
+        },
+        "statMode": "percent"
+      }
+    ]
+  },
+  {
+    "itemId": "scroll.qinglin_marsh",
+    "name": "青霖澤圖卷",
+    "type": "consumable",
+    "grade": "mystic",
+    "level": 35,
+    "desc": "記著寒鐵側洞、濕地石棧橋、採集岸與深潭位置。使用後可永久解鎖青霖澤地圖。",
+    "mapUnlockId": "foundation_qinglin_marsh"
+  }
+]

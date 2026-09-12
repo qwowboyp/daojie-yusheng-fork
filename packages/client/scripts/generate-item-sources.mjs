@@ -762,7 +762,9 @@ function main() {
     for (const node of map.mineralNodes ?? []) {
       pushSource(sourceByItemId, node.itemId, {
         kind: 'mining', mapId: map.id, mapName: map.name,
-        landmarkId: map.landmarks?.find((entry) => entry.x === node.x && entry.y === node.y)?.id,
+        // 獨立礦脈不必綁定地標，以地圖內座標提供穩定的來源識別。
+        landmarkId: map.landmarks?.find((entry) => entry.x === node.x && entry.y === node.y)?.id
+          ?? `mineral:${node.x}:${node.y}`,
         landmarkName: node.name, mode: 'direct', count: node.destroyCount ?? 1,
       });
     }

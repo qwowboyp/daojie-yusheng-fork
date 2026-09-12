@@ -9119,5 +9119,213 @@
       "wood": 2078,
       "water": 1120
     }
+  },
+  {
+    "recipeId": "forging.qinglin_raincleaver",
+    "outputItemId": "equip.qinglin_raincleaver",
+    "outputCount": 1,
+    "baseBrewTicks": 84,
+    "level": 37,
+    "grade": "mystic",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_lizard_scale",
+        "count": 1,
+        "role": "aux"
+      },
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 126,
+      "wood": 34,
+      "earth": 34
+    }
+  },
+  {
+    "recipeId": "forging.qinglin_tide_staff",
+    "outputItemId": "equip.qinglin_tide_staff",
+    "outputCount": 1,
+    "baseBrewTicks": 84,
+    "level": 37,
+    "grade": "mystic",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_ling",
+        "count": 1,
+        "role": "aux"
+      },
+      {
+        "itemId": "mat.qinglin_lizard_scale",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 126,
+      "wood": 68
+    }
+  },
+  {
+    "recipeId": "forging.qinglin_dew_crown",
+    "outputItemId": "equip.qinglin_dew_crown",
+    "outputCount": 1,
+    "baseBrewTicks": 82,
+    "level": 37,
+    "grade": "mystic",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_crab_shell",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_orchid",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_crab_shell",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 63,
+      "water": 34
+    }
+  },
+  {
+    "recipeId": "forging.qinglin_scale_robe",
+    "outputItemId": "equip.qinglin_scale_robe",
+    "outputCount": 1,
+    "baseBrewTicks": 88,
+    "level": 37,
+    "grade": "mystic",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_lizard_scale",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_orchid",
+        "count": 1,
+        "role": "aux"
+      },
+      {
+        "itemId": "mat.qinglin_ling",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_lizard_scale",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 97,
+      "water": 97
+    }
+  },
+  {
+    "recipeId": "forging.qinglin_lotus_boots",
+    "outputItemId": "equip.qinglin_lotus_boots",
+    "outputCount": 1,
+    "baseBrewTicks": 82,
+    "level": 37,
+    "grade": "mystic",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_crab_shell",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "earth": 63,
+      "water": 34
+    }
+  },
+  {
+    "recipeId": "forging.qinglin_pool_pendant",
+    "outputItemId": "equip.qinglin_pool_pendant",
+    "outputCount": 1,
+    "baseBrewTicks": 90,
+    "level": 37,
+    "grade": "mystic",
+    "category": "equipment",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_dragon_core",
+        "count": 1,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_ling",
+        "count": 2,
+        "role": "aux"
+      },
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_dragon_core",
+        "count": 1
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 189,
+      "wood": 68,
+      "earth": 34
+    }
   }
 ]

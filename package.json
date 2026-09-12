@@ -3,6 +3,8 @@
   "private": true,
   "packageManager": "pnpm@10.29.1",
   "scripts": {
+    "generate:foundation-expansion": "node scripts/generate-foundation-expansion.mjs --write && node packages/client/scripts/generate-item-sources.mjs && node scripts/generate-editor-catalog.mjs --client=client --shared=shared",
+    "proof:foundation-expansion": "node scripts/generate-foundation-expansion.mjs && node scripts/prove-foundation-expansion.mjs && node scripts/prove-foundation-expansion-art.mjs",
     "generate:late-game": "node scripts/generate-late-game-content.mjs --write && node scripts/sync-late-game-icons.mjs && node packages/client/scripts/generate-item-sources.mjs && node scripts/generate-editor-catalog.mjs --client=client --shared=shared",
     "proof:late-game": "node scripts/generate-late-game-content.mjs && node scripts/prove-late-game-content.mjs && node scripts/lib/late-game-balance-proof.mjs && node scripts/prove-late-game-techniques.mjs && node scripts/prove-late-game-market.mjs",
     "proof:late-game-market": "node scripts/prove-late-game-market.mjs",

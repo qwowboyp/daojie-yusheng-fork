@@ -1,5 +1,5 @@
 {
-  "version": 10,
+  "version": 11,
   "defaults": {
     "tile": {
       "cols": 4,
@@ -2519,6 +2519,78 @@
       "row": 0,
       "fit": "contain",
       "insetRatio": 0.02
+    },
+    "monster:m_qinglin_rain_lizard": {
+      "src": "monsters/m_qinglin_rain_lizard.png",
+      "cols": 1,
+      "rows": 1,
+      "col": 0,
+      "row": 0,
+      "fit": "contain",
+      "insetRatio": 0.02
+    },
+    "monster:m_qinglin_wet_crane": {
+      "src": "monsters/m_qinglin_wet_crane.png",
+      "cols": 1,
+      "rows": 1,
+      "col": 0,
+      "row": 0,
+      "fit": "contain",
+      "insetRatio": 0.02
+    },
+    "monster:m_qinglin_marsh_crab": {
+      "src": "monsters/m_qinglin_marsh_crab.png",
+      "cols": 1,
+      "rows": 1,
+      "col": 0,
+      "row": 0,
+      "fit": "contain",
+      "insetRatio": 0.02
+    },
+    "monster:m_qinglin_dew_spider": {
+      "src": "monsters/m_qinglin_dew_spider.png",
+      "cols": 1,
+      "rows": 1,
+      "col": 0,
+      "row": 0,
+      "fit": "contain",
+      "insetRatio": 0.02
+    },
+    "monster:m_qinglin_root_fiend": {
+      "src": "monsters/m_qinglin_root_fiend.png",
+      "cols": 1,
+      "rows": 1,
+      "col": 0,
+      "row": 0,
+      "fit": "contain",
+      "insetRatio": 0.02
+    },
+    "monster:m_qinglin_dragon_lord": {
+      "src": "monsters/m_qinglin_dragon_lord.png",
+      "cols": 1,
+      "rows": 1,
+      "col": 0,
+      "row": 0,
+      "fit": "contain",
+      "insetRatio": 0.02
+    },
+    "container:青霖蘭": {
+      "src": "/assets/item-icons/v1/mat.qinglin_orchid-192.webp",
+      "cols": 1,
+      "rows": 1,
+      "col": 0,
+      "row": 0,
+      "fit": "contain",
+      "insetRatio": 0.04
+    },
+    "container:澤心苓": {
+      "src": "/assets/item-icons/v1/mat.qinglin_ling-192.webp",
+      "cols": 1,
+      "rows": 1,
+      "col": 0,
+      "row": 0,
+      "fit": "contain",
+      "insetRatio": 0.04
     }
   }
 }

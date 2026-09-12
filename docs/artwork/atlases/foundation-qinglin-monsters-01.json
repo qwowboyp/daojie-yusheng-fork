@@ -1,0 +1,288 @@
+{
+  "id": "foundation-qinglin-monsters-01",
+  "kind": "monsters",
+  "columns": 3,
+  "rows": 2,
+  "prompt": "為仙俠MUD遊戲製作一張透明怪物精靈圖集，精確3欄2列，共6隻不同怪物。提供的4張圖只作現有怪物美術風格參考：延續暗色輪廓、細緻低解析像素畫、克制色階與陰影、小型等角略俯視RPG地圖角色，非道具插畫、非卡牌、非寫實照片。每隻完整身體含尾巴腳翼，佔各格中央64%，四周至少18%透明留白。全部向右側或右前方，便於遊戲水平翻轉；沒有地面圓盤、底座、文字、格線、邊框、名字、血條、水印或景物。背景必須是真正RGBA alpha=0透明，禁止畫棋盤格。第一列左到右：1青苔雨蜥：低伏四足青藍蜥蜴，背脊有少量苔綠鬃毛，小銀白露珠，細長尾巴彎在身旁；2濕羽鶴：修長濕地靈鶴，灰白與墨綠羽毛，長腳、彎頸、藍色尖喙，一側翅膀稍張開，整隻可辨；3碧螯澤蟹：低矮寬身青銅色澤蟹，兩隻碧青巨大蟹螯，六根短足和厚背甲。第二列：4凝露蛛母：圓潤藍紫腹部的大蜘蛛，八隻深綠修長足，背面三顆白色露珠狀結節，所有腳完整；5盤根泥魈：駝背樹根妖，泥褐色粗壯樹幹身軀、盤纏根鬚形成雙臂與雙腿，肩部綠苔，小碧綠雙眼，不穿人類盔甲；6青霖蛟主：威嚴深碧蛟龍，完整盤曲身體和四隻利爪，金銅色小角，白色短鬚、背上荷葉狀鱗脊，一點水藍靈氣，不要變成蛇或人形。六隻都要符合參考128px像素精靈外觀，彼此外形清楚可辨。",
+  "editPrompt": "去背：請使用背景移除處理，把灰白棋盤格變成真正的透明像素（RGBA PNG）。圖裡6隻怪物原封不動，保留精確3欄2列格位、像素細節、全身輪廓與所有腿尾翅膀鬍鬚。不重畫，不改色，不增加物件，不把棋盤格當成圖案留下。輸出為可直接放入遊戲的真透明貼圖。",
+  "sourceSha256": "353f008f05a7fcf7c00dda9519200914ed56bd11d763543fdf5313dd527c8223",
+  "atlasSha256": "bd330d65cc400903412397c3f7dab7f77936e521bbe040d2e55cb80ce1bf54b3",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "items": [
+    {
+      "id": "m_qinglin_rain_lizard",
+      "name": "青苔雨蜥"
+    },
+    {
+      "id": "m_qinglin_wet_crane",
+      "name": "濕羽鶴"
+    },
+    {
+      "id": "m_qinglin_marsh_crab",
+      "name": "碧螯澤蟹"
+    },
+    {
+      "id": "m_qinglin_dew_spider",
+      "name": "凝露蛛母"
+    },
+    {
+      "id": "m_qinglin_root_fiend",
+      "name": "盤根泥魈"
+    },
+    {
+      "id": "m_qinglin_dragon_lord",
+      "name": "青霖蛟主"
+    }
+  ],
+  "records": [
+    {
+      "id": "m_qinglin_rain_lizard",
+      "name": "青苔雨蜥",
+      "description": "青苔雨蜥",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-monsters-01.webp",
+      "cell": {
+        "col": 0,
+        "row": 0,
+        "left": 0,
+        "top": 0,
+        "width": 512,
+        "height": 512
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 32,
+        "top": 187,
+        "width": 501,
+        "height": 313,
+        "componentIds": [
+          5
+        ]
+      },
+      "sourceSha256": "353f008f05a7fcf7c00dda9519200914ed56bd11d763543fdf5313dd527c8223",
+      "cropSha256": "3b738a45389ba7c98abdc26a14c6af1e9e0bb79b54dd862dd7c776968ab15a59",
+      "variants": [
+        128
+      ],
+      "outputs": [
+        {
+          "size": 128,
+          "path": "assets/runtime-image-packs/default/monsters/m_qinglin_rain_lizard.png",
+          "sha256": "4c672ddfec15c983a0abfef28b81dbdc2d1463b8fb49b1685a27f3163584b876",
+          "bytes": 12529
+        }
+      ]
+    },
+    {
+      "id": "m_qinglin_wet_crane",
+      "name": "濕羽鶴",
+      "description": "濕羽鶴",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-monsters-01.webp",
+      "cell": {
+        "col": 1,
+        "row": 0,
+        "left": 512,
+        "top": 0,
+        "width": 512,
+        "height": 512
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 576,
+        "top": 41,
+        "width": 391,
+        "height": 460,
+        "componentIds": [
+          1
+        ]
+      },
+      "sourceSha256": "353f008f05a7fcf7c00dda9519200914ed56bd11d763543fdf5313dd527c8223",
+      "cropSha256": "9f3638dc5636f2ac4aeae4822194a0676f8ff71941f7023c47b3aac32c7994ab",
+      "variants": [
+        128
+      ],
+      "outputs": [
+        {
+          "size": 128,
+          "path": "assets/runtime-image-packs/default/monsters/m_qinglin_wet_crane.png",
+          "sha256": "aa29f013f79334230b3a01f17a1fcc8e93cf2185589b279265ea7520a69f1ef5",
+          "bytes": 16946
+        }
+      ]
+    },
+    {
+      "id": "m_qinglin_marsh_crab",
+      "name": "碧螯澤蟹",
+      "description": "碧螯澤蟹",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-monsters-01.webp",
+      "cell": {
+        "col": 2,
+        "row": 0,
+        "left": 1024,
+        "top": 0,
+        "width": 512,
+        "height": 512
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 1011,
+        "top": 203,
+        "width": 501,
+        "height": 287,
+        "componentIds": [
+          6
+        ]
+      },
+      "sourceSha256": "353f008f05a7fcf7c00dda9519200914ed56bd11d763543fdf5313dd527c8223",
+      "cropSha256": "eac818e8cb69c4e97e0acc655bd1b3ebaf2616b0e48ab0d714ef6363d98b53f7",
+      "variants": [
+        128
+      ],
+      "outputs": [
+        {
+          "size": 128,
+          "path": "assets/runtime-image-packs/default/monsters/m_qinglin_marsh_crab.png",
+          "sha256": "d9f1f2c603c21b57437364cf4f9b5b374efa30d83dba2d70ca2b86dae34f9ec2",
+          "bytes": 13955
+        }
+      ]
+    },
+    {
+      "id": "m_qinglin_dew_spider",
+      "name": "凝露蛛母",
+      "description": "凝露蛛母",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-monsters-01.webp",
+      "cell": {
+        "col": 0,
+        "row": 1,
+        "left": 0,
+        "top": 512,
+        "width": 512,
+        "height": 512
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 38,
+        "top": 576,
+        "width": 498,
+        "height": 399,
+        "componentIds": [
+          18
+        ]
+      },
+      "sourceSha256": "353f008f05a7fcf7c00dda9519200914ed56bd11d763543fdf5313dd527c8223",
+      "cropSha256": "66b870c928fd9de37da33594d7da86cae98a5a1c49fd231bee3c7e10a55ec262",
+      "variants": [
+        128
+      ],
+      "outputs": [
+        {
+          "size": 128,
+          "path": "assets/runtime-image-packs/default/monsters/m_qinglin_dew_spider.png",
+          "sha256": "ba41ada3de228d2b653a4cf62bc675bdd5ea588515618ad4bf920bf60adeacfe",
+          "bytes": 15629
+        }
+      ]
+    },
+    {
+      "id": "m_qinglin_root_fiend",
+      "name": "盤根泥魈",
+      "description": "盤根泥魈",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-monsters-01.webp",
+      "cell": {
+        "col": 1,
+        "row": 1,
+        "left": 512,
+        "top": 512,
+        "width": 512,
+        "height": 512
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 560,
+        "top": 517,
+        "width": 411,
+        "height": 467,
+        "componentIds": [
+          17
+        ]
+      },
+      "sourceSha256": "353f008f05a7fcf7c00dda9519200914ed56bd11d763543fdf5313dd527c8223",
+      "cropSha256": "064fb2a126603268975d9d38e94c9ec678d93eec65d6f42a6dc1d8f621bb2148",
+      "variants": [
+        128
+      ],
+      "outputs": [
+        {
+          "size": 128,
+          "path": "assets/runtime-image-packs/default/monsters/m_qinglin_root_fiend.png",
+          "sha256": "c047e1012355af13596e7a2e3c503ee483c92269fb3a4012bad527dd04274f92",
+          "bytes": 22075
+        }
+      ]
+    },
+    {
+      "id": "m_qinglin_dragon_lord",
+      "name": "青霖蛟主",
+      "description": "青霖蛟主",
+      "mode": "built-in-imagegen-atlas",
+      "atlas": "atlases/foundation-qinglin-monsters-01.webp",
+      "cell": {
+        "col": 2,
+        "row": 1,
+        "left": 1024,
+        "top": 512,
+        "width": 512,
+        "height": 512
+      },
+      "extraction": {
+        "method": "connected-alpha-components",
+        "alphaThreshold": 96,
+        "alphaHalo": 6,
+        "contentRatio": 0.84,
+        "left": 1002,
+        "top": 514,
+        "width": 518,
+        "height": 480,
+        "componentIds": [
+          16
+        ]
+      },
+      "sourceSha256": "353f008f05a7fcf7c00dda9519200914ed56bd11d763543fdf5313dd527c8223",
+      "cropSha256": "518d33d968bcc9bcd956edd5bb781310c1e0f229cfd080d7c3d2aee9043dd05d",
+      "variants": [
+        128
+      ],
+      "outputs": [
+        {
+          "size": 128,
+          "path": "assets/runtime-image-packs/default/monsters/m_qinglin_dragon_lord.png",
+          "sha256": "0ec4caa98a7d289cc3ed6faeaa2c047ebf85a8821d02d0069e5465ef6820806b",
+          "bytes": 23844
+        }
+      ]
+    }
+  ]
+}
