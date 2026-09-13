@@ -68,6 +68,7 @@ import { t } from './i18n';
 import { bindInlineItemTooltips, renderInlineItemChip } from './item-inline-tooltip';
 import { CraftAlchemyView } from './craft-alchemy-view';
 import type { CraftAlchemyParent } from './craft-alchemy-view';
+import { getCraftRealmTab, normalizeCraftRealmTab, type CraftRealmTab } from './craft-realm-tabs';
 import { CraftCatalogCache, type CraftCatalogKind } from './craft-catalog-cache';
 import { CraftEnhancementView } from './craft-enhancement-view';
 import type { CraftEnhancementParent } from './craft-enhancement-view';
@@ -117,7 +118,7 @@ export type CraftWorkspaceNavigation = {
 };
 type CraftMode = CraftWorkspaceMode | 'technique_refining' | null;
 type AlchemyTab = 'full' | 'simple';
-type AlchemyRealmTab = 'mortal' | 'qi' | 'foundation';
+type AlchemyRealmTab = CraftRealmTab;
 type AlchemyMaterialPickerSortKey = 'name' | 'level' | 'grade' | 'metal' | 'wood' | 'water' | 'fire' | 'earth' | 'count';
 type CraftQueueProgressView = {
   ratio: number;
@@ -261,24 +262,6 @@ function normalizeLocalAlchemyIngredients(value: unknown): AlchemyIngredientSele
     counts.set(itemId, (counts.get(itemId) ?? 0) + count);
   }
   return Array.from(counts.entries()).map(([itemId, count]) => ({ itemId, count }));
-}
-
-function getAlchemyRealmTab(level: number): AlchemyRealmTab {
-  const normalizedLevel = Math.max(1, Math.floor(Number(level) || 1));
-  if (normalizedLevel >= 31) {
-    return 'foundation';
-  }
-  if (normalizedLevel >= 19) {
-    return 'qi';
-  }
-  return 'mortal';
-}
-
-function normalizeAlchemyRealm(value: string | undefined): AlchemyRealmTab {
-  if (value === 'qi' || value === 'foundation') {
-    return value;
-  }
-  return 'mortal';
 }
 
 function normalizeAlchemyCategory(value: string | undefined): AlchemyRecipeCategory {
@@ -2107,7 +2090,7 @@ export class CraftWorkbenchModal {
         return;
       }
       if (action === 'alchemy-switch-realm') {
-        const realm = normalizeAlchemyRealm(target.dataset.realm);
+        const realm = normalizeCraftRealmTab(target.dataset.realm);
         this.activeAlchemyRealm = realm;
         const firstRecipe = this.getVisibleAlchemyRecipes()[0] ?? null;
         if (firstRecipe) {
@@ -2243,7 +2226,7 @@ export class CraftWorkbenchModal {
   private getVisibleAlchemyRecipes(): AlchemyRecipeCatalogEntry[] {
     return this.alchemyCatalog.filter((entry) => (
       entry.category === this.activeAlchemyCategory
-      && getAlchemyRealmTab(entry.outputLevel) === this.activeAlchemyRealm
+      && getCraftRealmTab(entry.outputLevel) === this.activeAlchemyRealm
     ));
   }
 
@@ -2252,7 +2235,7 @@ export class CraftWorkbenchModal {
     if (!recipe) {
       return null;
     }
-    return recipe.category === this.activeAlchemyCategory && getAlchemyRealmTab(recipe.outputLevel) === this.activeAlchemyRealm
+    return recipe.category === this.activeAlchemyCategory && getCraftRealmTab(recipe.outputLevel) === this.activeAlchemyRealm
       ? recipe
       : null;
   }

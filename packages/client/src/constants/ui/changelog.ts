@@ -13,6 +13,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-13',
+    summary: '修正煉丹與煉器境界分類及深色模式顯示。',
+    items: [
+      '分類：配方依產物等級歸入對應境界，有配方的金丹與更高境界會顯示獨立選單，不再全部擠入築基。',
+      '顯示：修正深色模式下第一層境界選單底色反白，讓未選取、選取與滑鼠移入狀態保持清楚可讀。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-13',
     summary: '角色獨立入口與數值整合，精簡任務視窗並修正活動關閉操作。',
     items: [
       '角色：右下角新增角色按鈕，放在背包前方；其它選單不再重複列出。',

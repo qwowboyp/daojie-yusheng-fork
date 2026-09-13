@@ -81,13 +81,13 @@ const initialize = String.raw`
     modal.syncInventory(inventory);
     modal.syncEquipment({ weapon: null, helmet: null, armor: null, belt: null, boots: null, necklace: null, ring: null, bracelet: null, pillFurnace: null, forgingTool: null, buildingTool: null, luopan: null, formationDisk: null });
 
-    const recipe = (index, kind = 'alchemy') => ({
+    const recipe = (index, kind = 'alchemy', outputLevel = 1) => ({
       recipeId: 'proof-' + kind + '-' + index,
       outputItemId: kind === 'alchemy' ? 'pill.minor_heal' : 'equip.copper_building_hammer',
       outputName: (kind === 'alchemy' ? '回元丹' : '玄鐵器') + String(index + 1).padStart(2, '0'),
       category: kind === 'alchemy' ? 'recovery' : 'weapon',
       outputCount: 1,
-      outputLevel: 1,
+      outputLevel,
       baseBrewTicks: 8 + index,
       level: 1,
       grade: 'mortal',
@@ -96,8 +96,25 @@ const initialize = String.raw`
       mainIngredients: [{ itemId: kind === 'alchemy' ? 'mat.moondew_grass' : 'black_iron_chunk', name: kind === 'alchemy' ? '月露草' : '黑鐵塊', count: 1 }],
       ingredients: [{ itemId: kind === 'alchemy' ? 'mat.moondew_grass' : 'black_iron_chunk', name: kind === 'alchemy' ? '月露草' : '黑鐵塊', role: 'main', count: 1, level: 1, grade: 'mortal', powerPerUnit: 5 }],
     });
-    const alchemyCatalog = Array.from({ length: 24 }, (_, index) => recipe(index));
-    const forgingCatalog = Array.from({ length: 18 }, (_, index) => recipe(index, 'forging'));
+    const alchemyCatalog = [
+      ...Array.from({ length: 24 }, (_, index) => recipe(index)),
+      recipe(31, 'alchemy', 31),
+      recipe(42, 'alchemy', 42),
+      recipe(43, 'alchemy', 43),
+      recipe(54, 'alchemy', 54),
+      recipe(55, 'alchemy', 55),
+      recipe(67, 'alchemy', 67),
+      recipe(79, 'alchemy', 79),
+      recipe(91, 'alchemy', 91),
+      recipe(103, 'alchemy', 103),
+      recipe(115, 'alchemy', 115),
+      recipe(127, 'alchemy', 127),
+    ];
+    const forgingCatalog = [
+      ...Array.from({ length: 18 }, (_, index) => recipe(index, 'forging')),
+      recipe(31, 'forging', 31),
+      recipe(43, 'forging', 43),
+    ];
     const job = {
       jobRunId: 'proof-alchemy-job', jobType: 'alchemy', jobVersion: 1,
       recipeId: alchemyCatalog[0].recipeId, outputItemId: alchemyCatalog[0].outputItemId,
@@ -156,12 +173,15 @@ async function runCase(entry) {
         await new Promise((resolve) => requestAnimationFrame(resolve));
         const afterList = pane.querySelector('[data-alchemy-recipe-list="true"]');
         const afterScrollOwner = scrollOwner === list ? afterList : pane;
+        const realmTabs = pane.querySelector('[data-alchemy-realm-tabs="true"]');
         const result = {
           requestCount: p.requests.alchemy,
           detailHidden: document.getElementById('detail-modal').classList.contains('hidden'),
           embedded: pane.querySelector('[data-craft-workbench-embedded="true"]') !== null,
           noInnerTabs: pane.querySelector('[data-craft-workbench-tabs="true"]') === null,
           recipeCount: pane.querySelectorAll('.alchemy-recipe-item').length,
+          realmTabs: [...pane.querySelectorAll('[data-alchemy-realm-tabs="true"] [data-craft-action="alchemy-switch-realm"]')].map((button) => button.dataset.realm),
+          realmTabsOverflow: realmTabs.scrollWidth > realmTabs.clientWidth,
           scrollable: scrollOwner.scrollHeight > scrollOwner.clientHeight,
           scrollPreserved: afterScrollOwner.scrollTop === beforeScroll,
           hostPreserved: pane.querySelector('[data-react-panel="craft"]') === beforeHost,
@@ -177,16 +197,56 @@ async function runCase(entry) {
     assert.equal(alchemy.embedded, true, 'React 工坊必须带 embedded 标记');
     assert.equal(alchemy.noInnerTabs, true, 'workspace 已有主分页时不得重复工坊侧栏分页');
     assert.equal(alchemy.recipeCount, 24, '非空煉丹长列表必须完整进入正式 renderer');
+    assert.deepEqual(alchemy.realmTabs, ['mortal', 'qi', 'foundation', 'golden-core', 'nascent', 'soul-transform', 'void-refine', 'body-integration', 'mahayana', 'tribulation', 'ascension'], '築基後配方必須依真實境界邊界新增各大境界分頁');
+    assert.equal(alchemy.realmTabsOverflow, false, '境界分頁不得橫向溢出容器');
     assert.equal(alchemy.scrollable, true, '煉丹长列表必须存在可滚动路径');
     assert.equal(alchemy.scrollPreserved, true, '增量 patch 不得打断列表滚动位置');
     assert.equal(alchemy.hostPreserved, true, '增量 patch 不得重挂 React root');
     assert.equal(alchemy.progressChanged, true, `job statePatch 必须更新工作进度：${JSON.stringify(alchemy)}`);
-    const alchemyShot = await capture(cdp, `craft-workspace-${entry.id}-alchemy.png`);
+    const alchemyShot = await capture(cdp, `craft-workspace-${entry.id}-alchemy-light.png`);
+
+    const realmSwitching = await cdp.evaluate(String.raw`
+      (async () => {
+        const pane = document.getElementById('workspace-alchemy');
+        const clickRealm = async (realm) => {
+          pane.querySelector('[data-alchemy-realm-tabs="true"] [data-realm="' + realm + '"]')?.click();
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+          return [...pane.querySelectorAll('.alchemy-recipe-item')].map((item) => item.dataset.guidedTourAlchemyRecipe);
+        };
+        const foundation = await clickRealm('foundation');
+        const goldenCore = await clickRealm('golden-core');
+        const ascension = await clickRealm('ascension');
+        document.documentElement.dataset.colorMode = 'dark';
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const realmTabs = pane.querySelector('[data-alchemy-realm-tabs="true"]');
+        return {
+          foundation,
+          goldenCore,
+          ascension,
+          darkRealmBackground: getComputedStyle(realmTabs).backgroundColor,
+          darkRealmText: getComputedStyle(realmTabs.querySelector('.alchemy-category-btn.active')).color,
+          realmTabsOverflow: realmTabs.scrollWidth > realmTabs.clientWidth,
+        };
+      })()
+    `);
+    assert.deepEqual(realmSwitching.foundation, ['proof-alchemy-31', 'proof-alchemy-42'], 'Lv.31 至 Lv.42 必須都留在築基分頁');
+    assert.deepEqual(realmSwitching.goldenCore, ['proof-alchemy-43', 'proof-alchemy-54'], 'Lv.43 起必須切換至金丹分頁');
+    assert.deepEqual(realmSwitching.ascension, ['proof-alchemy-127'], '飛昇配方必須落入飛昇分頁');
+    assert.notEqual(realmSwitching.darkRealmBackground, 'rgba(247, 239, 225, 0.64)', '深色模式境界分頁不得沿用淺色底');
+    assert.equal(realmSwitching.darkRealmText, 'rgb(246, 238, 224)', '深色模式境界分頁必須保留高對比文字');
+    assert.equal(realmSwitching.realmTabsOverflow, false, '深色模式境界分頁不得橫向溢出容器');
+    const alchemyDarkShot = await capture(cdp, `craft-workspace-${entry.id}-alchemy-dark.png`);
 
     const enhancement = await cdp.evaluate(String.raw`
       (async () => {
         const p = window.__craftWorkspaceProof;
         p.openForging();
+        p.modal.updateForging({ kind: 'forging', catalogVersion: 4, catalog: p.forgingCatalog, state: { presets: [], job: null, queue: [] } });
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const forgingPane = document.getElementById('workspace-forging');
+        forgingPane.querySelector('[data-alchemy-realm-tabs="true"] [data-realm="golden-core"]')?.click();
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const forgingGoldenRecipes = [...forgingPane.querySelectorAll('.alchemy-recipe-item')].map((item) => item.dataset.guidedTourAlchemyRecipe);
         p.openEnhancement();
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
         const pane = document.getElementById('workspace-enhancement');
@@ -195,6 +255,7 @@ async function runCase(entry) {
           enhancementRequests: p.requests.enhancement,
           embedded: pane.querySelector('[data-craft-workbench-embedded="true"]') !== null,
           candidateText: pane.textContent.includes('銅鑄造鎚'),
+          forgingGoldenRecipes,
         };
       })()
     `);
@@ -202,6 +263,7 @@ async function runCase(entry) {
     assert.equal(enhancement.enhancementRequests, 1, '强化同步切页只能请求一次');
     assert.equal(enhancement.embedded, true, '强化必须沿用 embedded 正式 renderer');
     assert.equal(enhancement.candidateText, true, '强化非空候选必须可见');
+    assert.deepEqual(enhancement.forgingGoldenRecipes, ['proof-forging-43'], '煉器入口必須與煉丹共用金丹分頁邊界');
     const enhancementShot = await capture(cdp, `craft-workspace-${entry.id}-enhancement.png`);
 
     const lifecycle = await cdp.evaluate(String.raw`
@@ -238,7 +300,7 @@ async function runCase(entry) {
     assert.equal(lifecycle.transmissionVisible, true, '傳功必须进入自身 workspace pane');
     assert.equal(lifecycle.confirmClosed, true, `离开 workspace 必须关闭 transient confirm：${JSON.stringify(lifecycle.confirmStates)}`);
     assert.equal(lifecycle.bodyCleared, true, '离开 workspace 必须卸载 React 与清空专属宿主');
-    return [alchemyShot, enhancementShot];
+    return [alchemyShot, alchemyDarkShot, enhancementShot];
   });
 }
 

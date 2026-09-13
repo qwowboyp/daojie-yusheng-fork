@@ -1280,6 +1280,11 @@
       background: rgba(50, 41, 33, 0.72);
     }
 
+    :root[data-color-mode="dark"] .alchemy-realm-tabs {
+      border-color: rgba(212, 176, 137, 0.14);
+      background: rgba(50, 41, 33, 0.72);
+    }
+
     :root[data-color-mode="dark"] .alchemy-category-tabs {
       border-color: rgba(212, 176, 137, 0.14);
       background: rgba(50, 41, 33, 0.72);
