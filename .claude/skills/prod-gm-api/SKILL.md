@@ -1,6 +1,6 @@
 ---
 name: prod-gm-api
-description: 连接本项目正式服（https://dj.faith.wang）的 GM API，用于查看服务端日志、查询运行时/数据库状态、查玩家、执行只读 SQL 诊断以及必要的运维操作，辅助开发与线上验证。当需要"看正式服日志/线上报错""查正式服玩家或数据""确认某改动在生产的实际表现""线上运行态/在线数/tick""只读查库"或类似排查、验证、复现线上问题时使用。
+description: 连接本项目正式服（http://a.twno1.uk:11921）的 GM API，用于查看服务端日志、查询运行时/数据库状态、查玩家、执行只读 SQL 诊断以及必要的运维操作，辅助开发与线上验证。当需要"看正式服日志/线上报错""查正式服玩家或数据""确认某改动在生产的实际表现""线上运行态/在线数/tick""只读查库"或类似排查、验证、复现线上问题时使用。
 ---
 
 # 正式服 GM API（道劫余生）
@@ -8,8 +8,8 @@ description: 连接本项目正式服（https://dj.faith.wang）的 GM API，用
 通过统一助手脚本 `scripts/gm-api.sh` 调用正式服 GM API，帮助开发和线上验证。
 **这是与正式服交互的唯一入口，不要手写 curl 拼 token。**
 
-- 正式服域名：`https://dj.faith.wang`（GM 面板 `https://dj.faith.wang/gm.html`，API 前缀 `/api/gm`、`/api/auth/gm`）
-- 鉴权：脚本自动从 `prod.env`（gitignored）读取 `GM_PASSWORD`，`POST /api/auth/gm/login` 换取 Bearer token，缓存到 `.runtime/.gm-api-token`（600 权限，11h 复用，401 自动重登）。**密码不出现在任何入库文件里，不要打印、不要写进代码或文档。**
+- 正式服域名：`http://a.twno1.uk:11921`（GM 面板 `http://a.twno1.uk:11921/gm.html`，API 前缀 `/api/gm`、`/api/auth/gm`）
+- 鉴权：脚本自动从 `.env/pve.env`（gitignored）读取 `DAOJIE_GM_PASSWORD`，`POST /api/auth/gm/login` 换取 Bearer token，缓存到 `.runtime/.gm-api-token`（600 权限，11h 复用，401 自动重登）。**密码不出现在任何入库文件里，不要打印、不要写进代码或文档。**
 
 ## 调用方式
 
@@ -71,9 +71,9 @@ bash scripts/gm-api.sh token          # 打印当前有效 token（供特殊场�
 
 ## 环境变量（一般无需设置）
 
-- `GM_BASE_URL`：默认 `https://dj.faith.wang`（临时指向本地/测试服时覆盖）
-- `GM_ENV_FILE`：密码来源文件，默认仓库根 `prod.env`
-- `GM_PASSWORD`：直接从环境变量取密码（优先于文件），避免依赖 `prod.env`
+- `GM_BASE_URL`：默认 `http://192.168.0.191:11921`，使用已确认的区网入口。公网游戏入口为 `http://a.twno1.uk:11921`；其他域名不属于本项目，不得据此查询或发送凭证。
+- `GM_ENV_FILE`：密码来源文件，默认仓库 `.env/pve.env`
+- `GM_PASSWORD`：直接从环境变量取密码（优先于文件），避免依赖环境文件
 
 ## 参考
 

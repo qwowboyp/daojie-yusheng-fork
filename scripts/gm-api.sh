@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # 正式服 GM API 助手：登录换 token、缓存复用、封装常用只读/运维端点。
-# 密码永不写死，从 prod.env（gitignored）或环境变量读取。
+# 密码永不写死，从 .env/pve.env（gitignored）或环境变量读取。
 # 用法见 .claude/skills/prod-gm-api/SKILL.md
 set -euo pipefail
 
 # ---- 可配置项（均有生产友好默认值）----
-BASE_URL="${GM_BASE_URL:-https://dj.faith.wang}"
+BASE_URL="${GM_BASE_URL:-http://192.168.0.191:11921}"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ENV_FILE="${GM_ENV_FILE:-$REPO_ROOT/prod.env}"
+ENV_FILE="${GM_ENV_FILE:-$REPO_ROOT/.env/pve.env}"
 CACHE_DIR="${GM_CACHE_DIR:-$REPO_ROOT/.runtime}"
 CACHE_FILE="$CACHE_DIR/.gm-api-token"
 TOKEN_MAX_AGE="${GM_TOKEN_MAX_AGE:-39600}"   # 11h，服务端默认 12h TTL
@@ -17,7 +17,7 @@ die() { echo "[gm-api] $*" >&2; exit 1; }
 command -v curl >/dev/null || die "缺少 curl"
 command -v jq >/dev/null || die "缺少 jq"
 
-# ---- 读取密码：优先环境变量，其次 prod.env ----
+# ---- 读取密码：优先环境变量，其次 .env/pve.env ----
 read_password() {
   if [ -n "${SERVER_GM_PASSWORD:-}" ]; then printf '%s' "$SERVER_GM_PASSWORD"; return; fi
   if [ -n "${GM_PASSWORD:-}" ]; then printf '%s' "$GM_PASSWORD"; return; fi
@@ -25,7 +25,9 @@ read_password() {
   local val
   val="$(grep -E '^SERVER_GM_PASSWORD=' "$ENV_FILE" | head -1 | cut -d= -f2- || true)"
   [ -z "$val" ] && val="$(grep -E '^GM_PASSWORD=' "$ENV_FILE" | head -1 | cut -d= -f2- || true)"
-  [ -z "$val" ] && die "在 $ENV_FILE 中找不到 GM_PASSWORD"
+  [ -z "$val" ] && val="$(grep -E '^DAOJIE_GM_PASSWORD=' "$ENV_FILE" | head -1 | cut -d= -f2- || true)"
+  val="${val%$'\r'}"
+  [ -z "$val" ] && die "在 $ENV_FILE 中找不到 GM_PASSWORD 或 DAOJIE_GM_PASSWORD"
   printf '%s' "$val"
 }
 
@@ -154,7 +156,7 @@ usage() {
   tables                列出所有表
   presence              在线玩家（presence all）
 
-环境变量: GM_BASE_URL(默认 https://dj.faith.wang) GM_ENV_FILE GM_PASSWORD
+环境变量: GM_BASE_URL(默认 http://192.168.0.191:11921) GM_ENV_FILE GM_PASSWORD
 EOF
   exit 1
 }
