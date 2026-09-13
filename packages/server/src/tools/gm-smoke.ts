@@ -1416,9 +1416,13 @@ async function requestJson(path, init = {}) {
 /**
  * 记录headers。
  */
+    const runtimeToken = process.env.SERVER_SHADOW_RUNTIME_ADMIN_TOKEN?.trim()
+        || process.env.SERVER_RUNTIME_ADMIN_TOKEN?.trim()
+        || process.env.SERVER_RUNTIME_HTTP_TOKEN?.trim();
     const headers = {
         ...(body === undefined ? {} : { 'content-type': 'application/json' }),
         ...(init.token ? { authorization: `Bearer ${init.token}` } : {}),
+        ...(path.startsWith('/runtime/') && runtimeToken ? { 'x-runtime-admin-token': runtimeToken } : {}),
     };
 /**
  * 记录response。

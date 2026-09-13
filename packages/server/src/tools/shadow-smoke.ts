@@ -454,7 +454,8 @@ function resolveShadowHealthReady(payload) {
  * 处理fetch玩家状态。
  */
 async function fetchPlayerState(playerIdValue) {
-    const runtimeToken = process.env.SERVER_RUNTIME_ADMIN_TOKEN?.trim()
+    const runtimeToken = process.env.SERVER_SHADOW_RUNTIME_ADMIN_TOKEN?.trim()
+        || process.env.SERVER_RUNTIME_ADMIN_TOKEN?.trim()
         || process.env.SERVER_RUNTIME_HTTP_TOKEN?.trim();
     return fetchJson(`/runtime/players/${playerIdValue}/state`, {
         headers: runtimeToken ? { 'x-runtime-admin-token': runtimeToken } : {},
