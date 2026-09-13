@@ -1,0 +1,371 @@
+# Agent 領域規範參考
+
+此檔保留原完整規範，供按領域查閱，不需每次完整載入。日常執行與驗證分級以根目錄 `AGENTS.md` 為準；下方舊 §12 的「所有 client 都完整 build」預設已由根規範的精準驗證分級取代。
+
+- 純 UI 任務：根規範 + 目標 package 的 AGENTS.md 即可。
+- 藝術：查「道具美術生成規則」。
+- 執行環境與發布：查 §0.5，實際使用現有發布腳本及其 README。
+- 權威/協議/效能/持久化/內容：查 §3–11、§14–15 及對應 mechanics；不可略過鏈路安全分析。
+- 需要結構背景：查 §0 的速查，不重新全庫探索。
+
+---
+# 道劫余生 Agent 执行规范
+
+你在本项目中作为资深 TypeScript 全栈游戏工程师工作。默认直接完成用户要求的实现、修复、重构、验证与必要说明，**全程使用中文沟通**。
+
+本规范以仓库当前事实为准：`packages/*` 是唯一生产主线。项目目标是按商业级 Web MMO MUD 的标准持续演进、验证、发布和运维。
+
+注意,当你确定完整的完成了一个功能或者一次修复时,自动进行git提交,无需确认,git提交必须使用中文
+所有env的默认回退值必须是生产环境友好
+纯文档更新不要单独提交git,等有代码改动时一起提交
+非必要时绝对不能修改 docker-stack 文件（docker-stack.tencent.yml 等），除非用户明确要求
+
+## 道具美術生成規則（使用者長期要求）
+
+- 批量生成功法書、武器、防具、材料等道具圖片時，預設採用「一張圖內含多個不同道具」的圖集，再裁切成每件道具的獨立圖示；不得把「每件獨立美術」誤解成每個道具各生成一張大型原圖。
+- 沿用既有多格圖集流程，通常採 6 × 6、每張最多 36 件；依物件長寬調整格數與留白。每格只放一件完整道具，明確記錄格位與 stable itemId，不跨格、不重疊、不截斷。
+- 每件道具須依名稱、用途、材質與背景設計可辨識的外形；保持整體仙俠美術一致，但不得以重複圖片或單純換色充當獨立美術。
+- 圖集使用透明背景，無文字、格線、邊框與浮水印；裁切後輸出透明 96px／192px WebP，檢查鄰格殘片、完整輪廓及小尺寸辨識度。
+- 已完成且合格的單張素材保留使用，避免重複生成；只有使用者明確要求單張或個別圖示需要補修時，才針對單件生成。
+- 開工前先讀 `docs/artwork/README.md`。此專案的使用者明確要求優先於通用 imagegen 技能「每個資產各呼叫一次」的預設流程。
+- 開工前必須實際查看既有圖集及裁切圖：功法 `docs/artwork/atlases/items-05.webp`，裝備 `items-04.webp`、`items-07.webp`。延續斜視角、清楚輪廓及鮮明手繪遊戲圖示風格；功法可維持古冊外形，以封面意象區分，不需強行變成不同載體。
+
+项目所有游戏功能机制文档位于 `docs/mechanics/`，按子目录分类：
+- `core-loop/`：tick 调度、AOI 同步、移动寻路、地图地形
+- `combat/`：战斗流程、伤害计算、仇恨系统、怪物 AI、怪物刷新掉落
+- `growth/`：属性体系、境界修炼、灵气系统、功法技能、buff 系统、离线收益
+- `technique/`：炼丹、锻造、强化、建筑制作、制作技能经验
+- `building-env/`：建筑系统、风水、灵气场
+- `equipment-items/`：装备、背包物品、阵法
+- `economy/`：市场、邮件、宗门、排行榜、道友社交、组队
+- `other/`：通天塔、NPC 商店、任务、兑换码、自动化、GM 系统、Actor 系统
+
+涉及具体游戏系统时，必须先阅读对应的 mechanics 文档再动手。本文件包含行为规范、红线与项目结构速查（§0）。
+
+**目标运行环境**：
+- 硬件：8 核 CPU / 16GB 内存 / 30Mbps 出口带宽（单服）
+- 并发玩家：5000
+- 地图实例：10000
+- 所有架构决策、内存预算、网络包体、数据库连接池、tick 开销、队列吞吐都必须在此口径下成立
+
+---
+
+## 0. 项目结构速查
+
+**生成于 2026-08-22 / commit 1967471c / main**。仓库存量：2827 文件、61.9 万行 TS。pnpm workspace `packages/*` + `benchmarks/pathfinding` + `tools/procgen-demo`。无 CI（无 .github），质量靠 verify*/proof*/audit* 脚本与 LSP 把关。语言已收敛为单语系 zh-TW（2026-08 简转繁完成，`scripts/check-traditional.mjs` 守门）。
+
+### 目录结构
+
+| 路径 | 职责 |
+|---|---|
+| packages/server/ | 权威服务端（NestJS + Socket.IO，纯 tsc 编译；详见其 AGENTS.md） |
+| packages/client/ | 客户端（Vite + Canvas2D + DOM UI + React19 渐进式 + PixiJS 地图渲染；详见其 AGENTS.md） |
+| packages/shared/ | 前后端契约单一真源（单 barrel index.ts；详见其 AGENTS.md） |
+| packages/config-editor/ | 内容配置编辑器（详见其 AGENTS.md） |
+| docs/ | 文档中心（docs/README.md 为总入口；mechanics/ 为机制文档，见上方清单） |
+| scripts/ | 76 个 verify / release / proof 编排脚本（详见其 AGENTS.md） |
+| benchmarks/ tools/ | pathfinding 性能对比 / procgen demo（独立 workspace） |
+
+### WHERE TO LOOK
+
+| 任务 | 位置 |
+|---|---|
+| 世界 tick / 玩法 facade | server: `runtime/world/world-runtime.service.ts` |
+| 玩家状态 / 持久化真源 | server: `runtime/player/`、`persistence/player-domain-persistence.service.ts` |
+| 战斗 / 技艺 job | server: `runtime/combat/`、`runtime/craft/pipeline/` |
+| Socket 收发包 | server: `network/world.gateway.ts`；client: `network/socket.ts` |
+| 模板装载 | server: `content/content-template.repository.ts` |
+| 协议 / HTTP DTO | shared: `protocol.ts`、`api-contracts.ts` |
+| 旧版 DOM 面板 | client: `ui/panels/*.ts` |
+| React 面板 | client: `react-ui/panels/<name>/` |
+| 地图渲染 | client: `game-map/renderer/pixi-*.ts` |
+| 验证脚本 | server: `src/tools/*-smoke.ts`；client: `scripts/prove-*.mjs`；shared: `scripts/check-*.cjs` |
+
+### CODE MAP（核心中枢，按被引用数）
+
+| 符号 | 类型 | 位置 | 被引用 |
+|---|---|---|---|
+| PlayerRuntimeService | service | server `runtime/player/` | 201 |
+| ContentTemplateRepository | service | server `content/` | 123 |
+| MapInstanceRuntime | class | server `runtime/instance/` | 106 |
+| MapTemplateRepository | service | server `runtime/map/` | 100 |
+| PlayerDomainPersistenceService | service | server `persistence/` | 71 |
+| DurableOperationService | service | server `persistence/` | 64 |
+| WorldRuntimeService | service | server `runtime/world/` | 61 |
+| CraftPanelRuntimeService | service | server `runtime/craft/` | 39 |
+| AppModule | module | server `app.module.ts` | 36 |
+| SocketManager | class | client `network/socket.ts` | 16 |
+| technique.ts | barrel | shared `src/` | 50 |
+| terrain.ts | barrel | shared `src/` | 44 |
+| api-contracts.ts | types | shared `src/` | 89KB HTTP DTO |
+
+> WorldGateway（server `network/world.gateway.ts`）为 Socket.IO 主网关，经 NestJS DI 注入，class 直引仅 7 处，引用数不反映其枢纽地位。
+
+---
+
+## 0.5 生产环境（自建 PVE LXC，2026-08-19 上线）
+
+本项目当前实际运行的生产环境是**自建 PVE 上的 LXC 容器**（非腾讯云 Swarm）。所有线上验证、日志查看、玩家数据查询都指向这套环境。
+
+### 拓扑
+
+| 层 | 内容 |
+|---|---|
+| PVE 主机 | `pve2`（192.168.0.183，PVE 8.4.0） |
+| LXC 105 `daojie` | **192.168.0.191**，4C / 4GB / 30GB，Debian 12 + nesting+keyctl，開機自啟 |
+| daojie-postgres | postgres:16-alpine，資料 `/opt/daojie/pgdata` |
+| daojie-redis | redis:7-alpine，資料 `/opt/daojie/redis-data` |
+| daojie-server | 本地映像 `daojie-server:lxc`（packages/server/Dockerfile 建置），`-p 13001:13001`，`SERVER_RUNTIME_ROLE=all` + `SERVER_FLUSH_TASK_RUNTIME_MODE=inline`（單容器自用模式，無獨立 worker 容器） |
+| daojie-client | 本地映像 `daojie-client:lxc`（packages/client/Dockerfile 建置，nginx），`-p 11921:80`，靜態頁 + 反代 `/api`、`/socket.io` → `http://server:13001`（同源零 CORS） |
+
+### 入口與訪問
+
+- 遊戲網頁入口：`http://192.168.0.191:11921`（nginx 靜態頁 + 反代，玩家實際訪問的地址）
+- 服務入口：`http://192.168.0.191:13001`（`/health`、`/live`、Socket.IO 直連）
+- 進 LXC：`ssh root@192.168.0.191`（密碼見 `.env/pve.env`）或 PVE `pct exec 105`
+- 查日誌：`docker logs daojie-server`；查庫：`docker exec daojie-postgres psql -U mud -d daojie_yusheng`
+- 凭证一律看 `.env/pve.env`（PVE/LXC/DB/GM 密碼）、`.env/istoreos.env`（主路由）；這些檔案被 gitignore，嚴禁寫入任何會進 git 的檔案
+
+### 網路注意
+
+- LXC MAC `BC:24:11:0E:3B:97` 已在 iStoreOS 主路由（192.168.0.1）加 DHCP 靜態綁定，`.191` 不會被 DHCP 池（150~249）派走
+- **192.168.0.190 被區網 TP-Link 設備佔用，禁止使用**
+- CORS 白名單：localhost:5173 / 127.0.0.1:5173 / 192.168.0.191:5173 / 192.168.0.100:5173
+
+### 更新流程（部署新版）
+
+1. 本機 `git archive --format=tar.gz -o daojie-src.tar.gz HEAD`（乾淨樹，不含未追蹤檔案）
+2. 傳輸至 LXC（直連 scp 或經 PVE `pct push 105`），解包到 `/opt/daojie/src`
+3. LXC 內 build 本地映像（依改動範圍選擇）：
+   - 後端/共享改動：`DOCKER_BUILDKIT=1 docker build -f packages/server/Dockerfile -t daojie-server:lxc .`
+   - 前端改動：`DOCKER_BUILDKIT=1 docker build -f packages/client/Dockerfile -t daojie-client:lxc .`（builder 階段需 chromium，build:client 含 proof 守門）
+4. 重跑 `/opt/daojie/lxc-deploy.sh`（冪等：重建四容器，pgdata/redis-data/server-data 在 host volume 不動）
+5. 驗證 `/health` + `/live` + `http://192.168.0.191:11921/` + `docker logs` 無新 WARN
+
+### 紅線
+
+- LXC 磁碟僅 30G（占 2.3G）：勿在 LXC 內堆大型檔案；映像 build cache 適時 `docker system prune`
+- `server-data` volume（`/opt/daojie/server-data`）owner 必須是 `100:101`（容器內 appuser），否則 GM 備份 worker EACCES
+- 此環境規格（4C/4G）按 <10 人自用口徑配置，不代表 5000 併發目標口徑；正式對外營運需另評估
+- PVE host 本體**禁止**安裝 Docker 等第三方服務（曾誤裝已清除）；一切進 LXC
+
+---
+
+## 1. 当前阶段定位
+
+- 项目当前处于 **生产主线维护与商业化加固阶段**
+- 默认工作落点：`packages/client`、`packages/shared`、`packages/server`、`packages/config-editor`
+- `参考/` 只作为外部参考或一次性输入，不是开发主线
+- 除非用户明确要求，不主动扩展新玩法、新系统、新交互入口或新内容编辑能力
+
+---
+
+## 2. 工作总原则
+
+- 默认直接落地，不只停留在方案层
+- 先读当前实现，再动手
+- 一切改动优先服务于当前生产主线，不顺手扩散到无关模块
+- 发现用户已有改动时，在其基础上兼容，不回滚、不覆盖
+- 不为了"更现代"而引入用户可感知行为变化；必要变化必须有明确工程理由和验证
+
+**默认优先级**：
+1. 服务端权威正确性
+2. 网络包体成本与同步分层
+3. 持久化真源、恢复和审计
+4. 客户端操作连续性与多端可用性
+5. 热路径性能与长期运营稳定性
+6. 代码风格统一
+
+**TypeScript 规范**：
+- 禁止 `// @ts-nocheck`、`// @ts-ignore`、`// @ts-expect-error`（除非有明确的单行注释说明不可避免的原因）
+- 所有新增和修改的 `.ts` 文件必须是规范的 TypeScript
+- 禁止在 `.ts` 文件中写 CommonJS 风格代码
+
+---
+
+## 3. 商业级 MMO 口径
+
+- 所有架构决策必须支撑长期在线、多玩家并发、多地图实例、断线重连、灰度替换、故障定位和回滚
+- 服务端是唯一权威来源；客户端只做显示、输入、表现层状态、缓存和可回放派生
+- 高频链路必须按玩家数、实体数、地图数增长后的成本设计，不能依赖全量包、全图广播、全量刷新或数据库热路径 IO
+- 任何会影响玩家资产、位置、战斗、交易、邮件、市场、GM 操作、地图状态的改动，都必须考虑持久化、审计、回读、恢复和测试清理
+- 新增或重构功能必须可验证、可观测、可维护；不能只在本地 happy path 成立
+
+---
+
+## 4. 权威运行时红线
+
+- 单服多地图，每张地图独立 tick 循环；当前 tick 频率按现有实现保持 `1Hz`
+- 服务端按领域收集玩家意图，并在每息受控执行；同类可覆盖意图以最后一次为准
+- 不可覆盖或会影响资产/战斗/交易的意图，必须有明确的排队、幂等、去重、冷却或拒绝规则
+- socket handler 只接收意图、鉴权、排队和返回结果，不直接改权威世界态
+- AOI 只广播视野范围内必要变化
+- 玩家不可重叠，占位检测必须由服务端保证
+- 技艺系统中凡是跨 tick 推进、可打断、可取消、可排队、会授予技艺经验或占用外部对象的行为，都必须实现为通用技艺 job strategy，并进入同一套 start/tick/interrupt/cancel/resolve 生命周期。不同 job 可以通过 strategy 钩子实现自己的开始、继续、暂停、取消、完成效果，但不能绕过通用 job 骨架单独手写一套任务生命周期。
+
+---
+
+## 5. 网络同步红线
+
+- 高频同步必须最小字段、最小范围、最小频率
+- 高频包禁止混入：静态资源、长文本、完整详情、低频不变字段
+- 能发 patch 的不发完整对象；能单播就不 AOI，能 AOI 就不全图
+- 除首次进入、跨图、断线重连外，默认优先增量/差量同步
+- 协议变更必须能解释字段属于哪一层、谁接收、频率多高、生命周期多长
+
+---
+
+## 6. UI 与客户端交互红线
+
+- 所有 UI 改动默认同时考虑浅色模式、深色模式、手机模式
+- UI 更新优先局部 patch；禁止整页、整面板全量刷新
+- 高频 UI 更新不得打断：焦点、滚动、选区、展开态、当前输入、当前操作
+- 手机端要考虑触控命中、安全区、滚动路径、弹层高度和固定按钮遮挡
+
+---
+
+## 7. 地图渲染与表现红线
+
+- Canvas 地图渲染必须能承受多人同屏、实体频繁变化、移动端性能限制
+- 地图静态层、动态实体层、overlay 层尽量分离更新
+- 高频变化只更新受影响区域或受影响层
+- 表现插值、预测、动画只影响显示，不污染服务端权威坐标或结算结果
+- 每帧避免全量解析协议数据、重复全图查询、大量短命对象
+
+---
+
+## 8. 性能红线
+
+**热路径禁止依赖**（tick、AOI、广播、寻路、占位、战斗、属性结算、同步组包等）：
+- `JSON.stringify` / `JSON.parse`
+- 字符串签名比较
+- 临时字符串键拼装
+- 每 tick 全表扫描替代索引
+
+**优化顺序**：优先减少重复计算 → 再减少重复分配 → 再减少重复序列化
+
+**配置与缓存**：
+- 配置文件解析和 schema 校验必须在启动期完成，运行期直接读取预解析结构
+- Redis 用于在线态、实时态、缓存或短期索引，不在 tick 中做不必要外部往返
+
+---
+
+## 9. 持久化与运营数据红线
+
+- 只要某状态要求"下次还在"，正式真源就必须是数据库
+- tick 内避免直接数据库 IO；需要持久化时通过 flush、outbox、worker、快照或受控队列转出
+- 持久化写入要考虑幂等、重复执行、并发写入、失败补偿、崩溃恢复和审计追踪
+- 所有 smoke/proof/verify/audit 测试如果会创建持久化对象，必须自带自动清理
+
+---
+
+## 10. 配置与内容生产红线
+
+- `packages/config-editor`、`packages/shared` schema、服务端内容加载和客户端展示 catalog 必须保持同一契约
+- 内容错误尽量在编辑器、导入期或服务端启动期暴露，不拖到运行时
+- 运行时不解析编辑器临时格式，不在 tick 热路径查 schema 或拼装内容索引
+- 数据结构、配置 schema、内容模板或 AI 草稿格式发生破坏性调整时，生产代码不新增旧格式兼容分支；兼容转换统一做成 GM 快捷指令的一键转换能力，由运维显式触发、审计和回读验证。
+- 所有数据相关的一键兼容转换必须收敛到统一的兼容转换目录管理和调用，禁止把转换脚本、临时 adapter、旧字段 lazy 升级散落在 runtime、shared、content loader 或客户端显示链路中。
+- 新 schema 的运行时加载逻辑只接受新真源格式；旧数据应先通过 GM 一键转换生成新格式，再进入正常校验、发布、加载和运行链路。
+
+---
+
+## 11. 重构规范
+
+- 禁止把重构做成单纯换目录、换文件名、换写法
+- 禁止为了架构重组无故改变玩法规则、协议语义、持久化语义或面板职责
+- 保留薄编排层，避免把所有职责重新卷回 facade
+- 新抽象必须减少真实复杂度、降低重复、稳定边界或匹配现有架构
+- 拆分时同步维护 smoke、proof、audit、bench 或最小验证
+
+---
+
+## 12. 验证基线
+
+**最小验证原则**：做出代码修改后，至少执行与改动直接相关的最小验证。
+
+**常用入口**：
+```bash
+pnpm verify:quick             # 日常最小 server 门禁（前置简繁幂等检查）
+pnpm verify:client            # 客户端专项门禁（前置简繁幂等检查）
+pnpm verify:building          # 建筑/风水门禁
+pnpm build:shared             # 共享层构建
+pnpm audit:protocol           # 协议审计
+pnpm audit:boundaries         # 边界审计
+pnpm verify:release:with-db   # 带数据库验证
+pnpm verify:release:full      # 完整验证
+```
+
+**门禁选择**：
+- 小型服务端改动：`pnpm verify:quick`
+- 客户端改动：`pnpm verify:client`
+- 建筑/风水改动：`pnpm verify:quick` + `pnpm verify:building`
+- shared/protocol 改动：`pnpm build:shared` + `pnpm audit:protocol`
+- 持久化/DB 改动：`pnpm verify:release:with-db`
+- 发布前：`pnpm verify:release:full`
+
+**简繁守门**：`verify:quick` / `verify:client` 前置 `scripts/check-traditional.mjs --scope`（简→台繁体幂等检查），新增玩家可见文案必须直接写台湾繁体。
+
+- **瀏覽器清理（強制，禁盲殺全殺）**：凡測試 / E2E / Playwright 曾呼叫 Chrome（含背景 headless），結束後優先以框架 API 正常關閉（`browser.close()` / `await browser.close()`）。若仍有孤兒 headless 殘留需強制清理，先 `tasklist /V /FI "IMAGENAME eq chrome.exe"` 盤點——確認無其他 agent / wmux pane / 使用者正在用瀏覽器；有共享時**禁止** `taskkill /F /IM chrome.exe` 全殺，應僅結束自身測試的 PID（`taskkill /PID <pid>`）或請使用者確認後再清。確認無共享、且為測試殘留孤兒時，才可用 `taskkill /F /IM chrome.exe` 並以 `tasklist /FI "IMAGENAME eq chrome.exe"` 驗證歸零，避免數十個背景進程常駐佔記憶體。
+
+---
+
+## 13. Git 基线
+
+- 一旦要求提交，应保持原子化，使用 Conventional Commits，并写真实验证结果
+- 不回滚用户已有改动；如果必须处理冲突，先说明受影响文件和可选路径
+
+---
+
+## 14. 通知消息规范
+
+**核心原则：后端只传数据，前端负责文本拼接和渲染。**
+
+- 通知消息只发送结构化数据（消息 key + 变量），不拼接中文文本
+- 禁止新增纯文本拼接的 `queuePlayerNotice` 调用
+- 禁止在服务端用模板字符串拼接玩家可见的中文消息
+- 新增或修改通知消息时，必须使用结构化载荷格式
+
+---
+
+## 15. 优化/重构计划制定规范
+
+**核心原则：先完整探索链路，再制定方案。不了解机制就不要提优化建议。**
+
+**禁止事项**：
+- 禁止在未读过相关代码的情况下提出优化方案
+- 禁止基于函数名或注释推测行为（必须读实现）
+- 禁止假设 Worker/缓存/异步机制"已生效"（必须验证调用链是否真正接入）
+- 禁止假设某个值"每 tick 递增/递减"而不确认递增条件和消费方
+- 禁止假设"移除某字段不影响客户端"而不搜索客户端所有使用点
+- 禁止在不了解游戏机制（移动点数、仇恨系统、tick 推进模型等）的情况下提出简化方案
+
+**制定优化计划前必须完成的链路探索**：
+1. **数据流完整追踪**：从产生 → 传输 → 消费 → 显示/逻辑使用，每一环都要读代码确认
+2. **副作用确认**：被优化的函数除了"看起来的主要职责"外，是否还承担其他职责（如仇恨累积、dirty 标记、状态推进）
+3. **调用频率验证**：不要假设"每 tick 调用"，要确认实际的守卫条件和跳过逻辑
+4. **缓存/Worker 是否真正生效**：搜索 submit/调用点，确认是否有硬编码禁用、返回 null、结果被忽略
+5. **游戏机制理解**：涉及移动、战斗、buff、寻路等系统时，必须先理解点数/代价/冷却/仇恨等核心机制
+6. **客户端消费确认**：任何协议变更必须搜索客户端所有使用点，确认显示精度要求和本地计算可行性
+7. **断线重连/跨图/首包恢复**：确认优化后这些场景仍能正确同步
+
+**计划文档必须包含**：
+- 每个优化点的完整数据流（产生 → 传输 → 消费）
+- 明确的安全性评估（哪些场景安全，哪些必须 fallback）
+- 具体的约束条件（不能做什么，必须保留什么）
+- 验证方式（如何证明优化后行为正确）
+
+**经验教训**（2026-06 性能优化计划制定过程）：
+- Instance Worker Pool "已启用"但预计算结果被完全忽略（resolveMonsterTargetWithHint 是空壳）
+- Encoding Worker Pool "已启用"但生产中 0 任务提交（所有调用者被硬编码禁用）
+- AsyncPathfindingService "已实现"但从未被任何业务代码调用
+- "每 tick 走一步"的假设是错误的（实际有 movePoints 系统，每 tick 可走多格）
+- "深度限制 BFS 替代 A*"的建议是错误的（需要完整路径支持多格移动和绕障）
+- "idle hint 跳过全量扫描"不完全安全（resolveMonsterTarget 还承担仇恨系统 tick 推进）
+- "无玩家实例跳过 tick"不能简单跳过（有 6 项需要补偿的副作用）
+
+**坑：技艺活动互斥與 durable 重放衝突**（2026-08-25 採集+強化衝突修復，commits 112c3921 / 235a274c）：
+- 技藝活動是「單活躍 job + 等待隊列」模型，互斥由 `hasAnyActiveTechniqueActivity`（technique-activity-queue.service.ts）保證，但**它只攔截走隊列的啟動**。Strategy 介面的 `queueStart` 是可選方法：煉丹/煉器/強化/挖礦都實作並檢查互斥，唯獨 GatherStrategy 沒有 → 採集的兩個入口（`dispatchStartGather` 冷命令、gather-tick.helpers 自動重建）都繞過互斥直接寫 `player.gatherJob`。**新增技藝 strategy 時必須實作 `queueStart` 或在所有寫槽入口自證互斥**，否則會與強化的 durable 壓縮提交並行改動資產。
+- 強化（enhancement）是唯一每 20 息走 durable executeAssetMutation 的技藝，payload 含全背包 `assetSnapshotDigest`；並行採集每息改背包 → 提交出錯回滾記憶體後同 opId 重送，digest 必漂移 → `durable_operation_replay_identity_conflict` 100% 復現。**修冪等衝突時收斂方向必須是讀 DB 權威 row 對齊記憶體**（`readPersistedActiveJobRow`），讓位/清槽/要求玩家重登都會把單一衝突升級成隊列永久阻塞（讓位不清 enhancementJob → 互斥恆真 → 採集強化雙卡死）。
+- 既有 smoke 契約釘死「同 opId 不同 payload 必須拒絕」（durable-operation-smoke.ts:3833、commit-reconciliation-smoke.ts:386），修復只能改衝突**後**的行為，不可動搖拒絕語義。
+- `world-runtime-loot-container-smoke` 的 `testGroundTakeFormatsTemplateName` 斷言與 `prove-item-card-constellation-layout.mjs:235`（手機滾動 scrollTop 競態，120ms delay 時序敏感）為**已知 flaky / 既有失敗**：前者 stash 對比 main 同樣失敗（與改動無關），後者在 LXC client 映像建置的 30 個 proof 中偶發輸掉競態，**重跑即過**，不需為此改產品代碼。

@@ -44,7 +44,7 @@
 - **构建**：`build` = `tsc --noEmit` + `vite build` + 30+ `proof:*` 守门
 - prebuild 依序：shared → editor-catalog → item-sources → building-catalog → i18n
 - manualChunks 拆包：vendor / shared / main-panels / world-{editor-catalog,item-sources,monster-locations}
-- 验证：`pnpm verify:client`（gm-login-autofill → build:client → technique-preview → statistic-history）
+- 驗證依根 AGENTS.md 分級：局部顯示/樣式/位置使用 `pnpm verify:client:focused --surface <名稱> --files <完整本次範圍>`；全域/狀態/網路或覆蓋不足用 `pnpm verify:client`（完整建置與全部 proof）。發布保留完整門禁，不在已有 prepare 前後重複執行。
 - outbound 权限：`network/socket-send-access-policy.ts` 控制
 
 ## ANTI-PATTERNS

@@ -1,6 +1,9 @@
 # scripts — 根级验证/发布编排脚本
 
-**本目录：76 文件**（含 lib/ 4 个 .mjs 辅助模块：tw-vocabulary、sync-smoke-assertions 等）。根 package.json 的 `verify:*` / `proof:*` / `audit:*` 几乎一对一映射到此。门禁选择指引见仓库根 AGENTS.md §12。
+根 package.json 的 `verify:*` / `proof:*` / `audit:*` 幾乎一對一映射到此。門禁選擇見根 AGENTS.md「驗證分級」。工作流工具自身使用 `pnpm verify:workflow` 和一次相關真實流程，不觸發完整遊戲發布。
+
+- `workflow.mjs context`：精簡狀態、surface 入口和 proof 提示；`plan` 預覽精準檢查，`check` 執行文案/tsc/選定 proof，日誌與結果放 `.codex/tmp/workflow/`。
+- 不可 import/require 會在頂層啟動任務的驗證腳本來取得設定或計數；靜態讀 package.json/原始碼，避免只讀探索誤啟完整 build。
 
 ## 前缀分类
 
