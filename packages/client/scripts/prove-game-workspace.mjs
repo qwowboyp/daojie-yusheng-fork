@@ -216,7 +216,7 @@ const preserveInputExpression = String.raw`
 const verifyAllWorkspacesExpression = String.raw`
   (async () => {
     const expected = [
-      ['character', '角色', ['overview', 'attr']],
+      ['character', '角色', ['overview', 'attr', 'social']],
       ['items', '背包與技藝', ['inventory', 'equipment', 'alchemy', 'forging', 'enhancement', 'transmission', 'building']],
       ['cultivation', '修行', ['technique', 'body-training', 'skill']],
       ['action', '行動與自動設定', ['dialogue', 'utility', 'toggle']],
@@ -1390,7 +1390,7 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assert.equal(menuAndShortcut.scrollPreserved, true, '背包與坊市捷徑往返破壞背包捲動狀態');
   assert.equal(menuAndShortcut.menuOpen, true, '其它選單未正常展開');
   assert.equal(menuAndShortcut.menuLabel, '其它');
-  assert.deepEqual(menuAndShortcut.menuIds, ['social', 'market', 'world', 'system']);
+  assert.deepEqual(menuAndShortcut.menuIds, ['market', 'world', 'system']);
   assert.deepEqual(menuAndShortcut.dockIds, ['character', 'items', 'cultivation', 'action', 'quests']);
   assert.deepEqual(menuAndShortcut.duplicatedEntries, [], '其它不得重複顯示獨立入口');
   const activityEntry = await cdp.evaluate(`(async () => {

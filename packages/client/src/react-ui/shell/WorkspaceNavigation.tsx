@@ -7,7 +7,7 @@ import { mailPanelStore } from '../panels/mail/MailPanel';
 
 const getMailUnread = () => mailPanelStore.getState().summary.unreadCount > 0;
 
-export type WorkspaceId = 'character' | 'items' | 'cultivation' | 'action' | 'quests' | 'social' | 'market' | 'world' | 'system';
+export type WorkspaceId = 'character' | 'items' | 'cultivation' | 'action' | 'quests' | 'market' | 'world' | 'system';
 export type WorkspaceAction = 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'building' | 'settings' | 'tutorial' | 'guided-tour' | 'mail' | 'activity' | 'chronicle' | 'logout';
 
 export interface WorkspaceDefinition {
@@ -19,7 +19,7 @@ export interface WorkspaceDefinition {
 }
 
 export const WORKSPACES: readonly WorkspaceDefinition[] = [
-  { id: 'character', label: '角色', description: '概況・數值', compact: true, tabs: [{ id: 'overview', label: '角色概況', paneId: 'pane-profile' }, { id: 'attr', label: '數值', paneId: 'pane-attr' }] },
+  { id: 'character', label: '角色', description: '概況・數值・社交', compact: true, tabs: [{ id: 'overview', label: '角色概況', paneId: 'pane-profile' }, { id: 'attr', label: '數值', paneId: 'pane-attr' }, { id: 'social', label: '社交', paneId: 'pane-social' }] },
   { id: 'items', label: '背包與技藝', description: '物品・裝備・製作', tabs: [
     { id: 'inventory', label: '背包', paneId: 'pane-inventory' }, { id: 'equipment', label: '裝備', paneId: 'pane-equipment' },
     { id: 'alchemy', label: '煉丹', paneId: 'workspace-alchemy' }, { id: 'forging', label: '煉器', paneId: 'workspace-forging' },
@@ -28,8 +28,7 @@ export const WORKSPACES: readonly WorkspaceDefinition[] = [
   ] },
   { id: 'cultivation', label: '修行', description: '功法・煉體・技能', compact: true, tabs: [{ id: 'technique', label: '功法', paneId: 'pane-technique' }, { id: 'body-training', label: '煉體', paneId: 'pane-body-training' }, { id: 'skill', label: '技能管理', paneId: 'workspace-skill' }] },
   { id: 'action', label: '行動與自動設定', description: '交互・行動・開關', compact: true, tabs: [{ id: 'dialogue', label: '附近交互', paneId: 'workspace-dialogue' }, { id: 'utility', label: '行動', paneId: 'workspace-utility' }, { id: 'toggle', label: '自動設定', paneId: 'workspace-toggle' }] },
-  { id: 'quests', label: '任務', description: '任務進度與獎勵', tabs: [{ id: 'quest', label: '任務', paneId: 'pane-quest' }] },
-  { id: 'social', label: '社交', description: '道友・宗門・飛書', compact: true, tabs: [{ id: 'social', label: '道友', paneId: 'pane-social' }] },
+  { id: 'quests', label: '任務', description: '任務進度與獎勵', compact: true, tabs: [{ id: 'quest', label: '任務', paneId: 'pane-quest' }] },
   { id: 'market', label: '坊市', description: '交易・求購・拍賣', compact: true, tabs: [{ id: 'market', label: '坊市', paneId: 'pane-market' }] },
   { id: 'world', label: '世界', description: '地圖・天機閣', tabs: [{ id: 'map-intel', label: '地圖情報', paneId: 'pane-map-intel' }, { id: 'tianji', label: '天機閣', paneId: 'pane-tianji' }] },
   { id: 'system', label: '系統與協助', description: '設定・百科・史書・引導', compact: true, tabs: [{ id: 'system', label: '系統與協助', paneId: 'pane-system' }] },
@@ -115,23 +114,23 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
   return (
     <nav className="workspace-dock-nav" aria-label="遊戲功能">
       {DOCK_WORKSPACES.map((item) => (
-        <button key={item.id} type="button" className="workspace-dock-button" data-workspace-open={item.id}
+        <button key={item.id} type="button" className="workspace-dock-button" data-workspace-open={item.id} data-has-unread={item.id === 'character' && hasMailUnread} aria-label={item.id === 'character' && hasMailUnread ? '角色，社交有未讀飛書' : undefined}
           aria-controls="game-workspace" aria-expanded={state.activeWorkspace === item.id}
           onPointerDown={(event) => { if (event.button === 0 && !isMobileActiveDock(item.id)) state.onPrepareOpen(item.id); }} onClick={() => toggleDock(item.id)}><NavigationIcon name={item.id} /><span>{item.label}</span></button>
       ))}
       <button type="button" className="workspace-dock-button" data-workspace-action="activity" aria-haspopup="dialog"
         onClick={() => { setMenuOpen(false); state.onAction('activity'); }}><NavigationIcon name="activity" /><span>活動</span></button>
-      <button id="workspace-menu-toggle" type="button" className="workspace-dock-button" data-has-unread={hasMailUnread} aria-label={hasMailUnread ? '其它，社交有未讀飛書' : '其它'} aria-expanded={menuOpen}
+      <button id="workspace-menu-toggle" type="button" className="workspace-dock-button" aria-label="其它" aria-expanded={menuOpen}
         aria-controls="workspace-menu" onClick={() => { if (!menuOpen) requestMobileSurface('menu'); setMenuOpen(!menuOpen); }}><NavigationIcon name="menu" /><span>其它</span></button>
       <div id="workspace-menu" className="workspace-menu" hidden={!menuOpen}>
         {([
           { label: '角色與成長', ids: ['character', 'items', 'cultivation'] },
-          { label: '江湖往來', ids: ['quests', 'social', 'market'] },
+          { label: '江湖往來', ids: ['quests', 'market'] },
           { label: '探索與設定', ids: ['action', 'world', 'system'] },
         ] as const).map((group) => ({ ...group, ids: group.ids.filter((id) => !DOCK_WORKSPACE_IDS.has(id)) }))
           .filter((group) => group.ids.length > 0).map((group) => <section key={group.label} className="workspace-menu-group">
           <h3>{group.label}</h3>
-          {group.ids.map((id) => <button key={id} type="button" data-workspace-open={id} data-has-unread={id === 'social' && hasMailUnread} aria-label={id === 'social' && hasMailUnread ? '社交有未讀飛書' : undefined} aria-controls="game-workspace"
+          {group.ids.map((id) => <button key={id} type="button" data-workspace-open={id} aria-controls="game-workspace"
             aria-expanded={state.activeWorkspace === id} onPointerDown={(event) => { if (event.button === 0) state.onPrepareOpen(id); }}
             onClick={() => open(id)}><span>{state.workspaces.find((entry) => entry.id === id)?.label}</span><small>{state.workspaces.find((entry) => entry.id === id)?.description}</small></button>)}
         </section>)}
