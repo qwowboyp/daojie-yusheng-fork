@@ -271,13 +271,14 @@ const smokeCases = [
   { name: 'flush-task-startup-stall-quarantine', scriptFile: 'flush-task-startup-stall-quarantine-smoke.js', standalone: true },
   { name: 'flush-pool-backpressure', scriptFile: 'flush-pool-backpressure-smoke.js', standalone: true },
   { name: 'flush-independent-persistence', scriptFile: 'flush-independent-persistence-smoke.js', standalone: true },
-  { name: 'snapshot-retirement', scriptFile: 'snapshot-retirement-report-smoke.js', standalone: true },
-  { name: 'map-snapshot-retirement', scriptFile: 'map-snapshot-retirement-report-smoke.js', standalone: true },
-  { name: 'multi-worker-flush-stability', scriptFile: 'multi-worker-flush-stability-report-smoke.js', standalone: true },
-  { name: 'strong-persistence-lease', scriptFile: 'strong-persistence-lease-report-smoke.js', standalone: true },
-  { name: 'player-columnar-schema', scriptFile: 'player-columnar-schema-report-smoke.js', standalone: true },
-  { name: 'player-dirty-domain-coverage', scriptFile: 'player-dirty-domain-coverage-report-smoke.js', standalone: true },
 ];
+const registeredCaseNames = new Set<string>();
+for (const entry of smokeCases) {
+  if (registeredCaseNames.has(entry.name)) {
+    throw new Error(`duplicate smoke case: ${entry.name}`);
+  }
+  registeredCaseNames.add(entry.name);
+}
 const SMOKE_CASE_GROUPS = Object.freeze({
   'auth-session': [
     'auth-bootstrap',

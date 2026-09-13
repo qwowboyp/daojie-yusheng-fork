@@ -176,6 +176,18 @@ async function connectAndMutate(token) {
             protocol: 'mainline',
         },
     });
+    const commandDiagnostics = [];
+    const recordCommandDiagnostic = (event, payload) => {
+        commandDiagnostics.push({
+            event,
+            payload: (0, smoke_payload_1.decodeSmokePayload)(payload),
+        });
+        if (commandDiagnostics.length > 12) {
+            commandDiagnostics.shift();
+        }
+    };
+    socket.on(shared_1.S2C.Error, (payload) => recordCommandDiagnostic(shared_1.S2C.Error, payload));
+    socket.on(shared_1.S2C.Notice, (payload) => recordCommandDiagnostic(shared_1.S2C.Notice, payload));
 /**
  * 记录init会话。
  */
@@ -195,7 +207,7 @@ async function connectAndMutate(token) {
         throw new Error(`invalid init session payload: ${JSON.stringify(initPayload)}`);
     }
     await mapEnter;
-    await ensureTravelToWildlands(socket, playerId, sessionId);
+    await ensureTravelToWildlands(socket, playerId, sessionId, commandDiagnostics);
     await postJson(`/runtime/players/${playerId}/grant-item`, {
         itemId: 'rat_tail',
         count: 3,
@@ -238,28 +250,87 @@ async function connectAndMutate(token) {
     if (spiritStoneSlot < 0) {
         throw new Error('spirit_stone missing before persistence aura mutation');
     }
+    const spiritStone = state.player.inventory.items[spiritStoneSlot];
+    const spiritStoneInstanceId = typeof spiritStone?.itemInstanceId === 'string'
+        ? spiritStone.itemInstanceId.trim()
+        : '';
+    const spiritStoneCountBefore = Math.max(0, Math.trunc(Number(spiritStone?.count) || 0));
+    if (!spiritStoneInstanceId || spiritStoneCountBefore <= 0) {
+        throw new Error(`invalid spirit_stone before persistence aura mutation: ${JSON.stringify(spiritStone)}`);
+    }
+    const auraTarget = {
+        instanceId: state.player.instanceId,
+        x: Number(state.player.x),
+        y: Number(state.player.y),
+    };
+    if (typeof auraTarget.instanceId !== 'string'
+        || !auraTarget.instanceId
+        || state.player.templateId !== 'wildlands'
+        || auraTarget.x !== PERSISTENCE_SMOKE_RESOURCE_TILE.x
+        || auraTarget.y !== PERSISTENCE_SMOKE_RESOURCE_TILE.y) {
+        throw new Error(`unexpected spirit_stone target before use: ${JSON.stringify(auraTarget)}`);
+    }
+    const auraObservationStartedAt = Date.now();
+    const auraBeforeState = await fetchJson(`${baseUrl}/runtime/instances/${auraTarget.instanceId}/tiles/${auraTarget.x}/${auraTarget.y}`);
+    const auraBefore = Number(auraBeforeState.tile?.aura);
+    if (!Number.isFinite(auraBefore)) {
+        throw new Error(`invalid aura before spirit_stone use: ${JSON.stringify(auraBeforeState)}`);
+    }
     let persistedAuraTile = null;
-    socket.emit(shared_1.C2S.UseItem, { itemRef: itemRefAt(state.player, spiritStoneSlot, 'spirit stone') });
-    await waitForCondition(async () => {
+    let lastSpiritStoneUseState = {
+        position: auraTarget,
+        remainingCount: spiritStoneCountBefore,
+        aura: auraBefore,
+    };
+    socket.emit(shared_1.C2S.UseItem, { itemRef: { itemInstanceId: spiritStoneInstanceId } });
+    try {
+        await waitForCondition(async () => {
 /**
  * 记录玩家状态。
  */
-        const playerState = await fetchJson(`${baseUrl}/runtime/players/${playerId}/state`);
+            const playerState = await fetchJson(`${baseUrl}/runtime/players/${playerId}/state`);
 /**
  * 记录tile状态。
  */
-        const tileState = await fetchJson(`${baseUrl}/runtime/instances/${playerState.player.instanceId}/tiles/${playerState.player.x}/${playerState.player.y}`);
-        const stillHasSpiritStone = playerState.player?.inventory?.items?.some((entry) => entry.itemId === 'spirit_stone') ?? false;
-        if ((tileState.tile?.aura ?? 0) >= 100 && !stillHasSpiritStone) {
-            persistedAuraTile = {
-                instanceId: playerState.player.instanceId,
-                x: playerState.player.x,
-                y: playerState.player.y,
+            const tileState = await fetchJson(`${baseUrl}/runtime/instances/${auraTarget.instanceId}/tiles/${auraTarget.x}/${auraTarget.y}`);
+            const currentSpiritStone = playerState.player?.inventory?.items?.find((entry) => entry.itemInstanceId === spiritStoneInstanceId);
+            const remainingCount = currentSpiritStone
+                ? Math.max(0, Math.trunc(Number(currentSpiritStone.count) || 0))
+                : 0;
+            const currentAura = Number(tileState.tile?.aura);
+            // 用正式半衰期與最大息速估計觀察期間的最低餘量，保留完整注入量驗證。
+            const maxElapsedTicks = Math.ceil((Date.now() - auraObservationStartedAt) / 1000
+                * shared_1.MAX_INSTANCE_TICK_SPEED) + 1;
+            const auraRetentionPerTick = 1 - shared_1.TILE_AURA_HALF_LIFE_RATE_SCALED
+                / shared_1.TILE_AURA_HALF_LIFE_RATE_SCALE;
+            const minimumExpectedAura = (auraBefore + 100) * Math.pow(auraRetentionPerTick, maxElapsedTicks);
+            lastSpiritStoneUseState = {
+                position: {
+                    instanceId: playerState.player?.instanceId,
+                    x: playerState.player?.x,
+                    y: playerState.player?.y,
+                },
+                remainingCount,
+                aura: currentAura,
+                minimumExpectedAura,
             };
-            return true;
-        }
-        return false;
-    }, 5000);
+            if (Number.isFinite(currentAura)
+                && currentAura + 1e-8 >= minimumExpectedAura
+                && remainingCount === spiritStoneCountBefore - 1) {
+                persistedAuraTile = auraTarget;
+                return true;
+            }
+            return false;
+        }, 5000);
+    }
+    catch (error) {
+        throw new Error(`spirit_stone use did not commit expected inventory/aura mutation: before=${JSON.stringify({
+            target: auraTarget,
+            itemInstanceId: spiritStoneInstanceId,
+            count: spiritStoneCountBefore,
+            aura: auraBefore,
+        })} last=${JSON.stringify(lastSpiritStoneUseState)} diagnostics=${JSON.stringify(commandDiagnostics)} cause=${error instanceof Error ? error.message : String(error)}`);
+    }
     if (!persistedAuraTile) {
         throw new Error('expected spirit_stone aura target before persistence mutation');
     }
@@ -353,7 +424,7 @@ async function connectAndMutate(token) {
 /**
  * 确保持久化 smoke 的玩家稳定抵达 wildlands。
  */
-async function ensureTravelToWildlands(socket, currentPlayerId, currentSessionId = '') {
+async function ensureTravelToWildlands(socket, currentPlayerId, currentSessionId = '', commandDiagnostics = []) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     let lastTemplateId = '';
@@ -366,6 +437,7 @@ async function ensureTravelToWildlands(socket, currentPlayerId, currentSessionId
         preferredX: PERSISTENCE_SMOKE_RESOURCE_TILE.x,
         preferredY: PERSISTENCE_SMOKE_RESOURCE_TILE.y,
     });
+    let attachedToWildlands = false;
     for (let attempt = 0; attempt < 24; attempt += 1) {
 /**
  * 记录状态。
@@ -377,11 +449,36 @@ async function ensureTravelToWildlands(socket, currentPlayerId, currentSessionId
         if (lastTemplateId === 'wildlands'
             && Number.isFinite(lastX)
             && Number.isFinite(lastY)) {
-            return;
+            attachedToWildlands = true;
+            break;
         }
         await delay(250);
     }
-    throw new Error(`failed to attach player to wildlands near resource tile ${PERSISTENCE_SMOKE_RESOURCE_TILE.x},${PERSISTENCE_SMOKE_RESOURCE_TILE.y}; current=${lastTemplateId} @ (${lastX}, ${lastY})`);
+    if (!attachedToWildlands) {
+        throw new Error(`failed to attach player to wildlands before moving to resource tile ${PERSISTENCE_SMOKE_RESOURCE_TILE.x},${PERSISTENCE_SMOKE_RESOURCE_TILE.y}; current=${lastTemplateId} @ (${lastX}, ${lastY}); diagnostics=${JSON.stringify(commandDiagnostics)}`);
+    }
+    if (lastX === PERSISTENCE_SMOKE_RESOURCE_TILE.x && lastY === PERSISTENCE_SMOKE_RESOURCE_TILE.y) {
+        return;
+    }
+    socket.emit(shared_1.C2S.MoveTo, {
+        x: PERSISTENCE_SMOKE_RESOURCE_TILE.x,
+        y: PERSISTENCE_SMOKE_RESOURCE_TILE.y,
+        allowNearestReachable: false,
+    });
+    try {
+        await waitForCondition(async () => {
+            const state = await fetchJson(`${baseUrl}/runtime/players/${currentPlayerId}/view`);
+            lastTemplateId = state?.view?.instance?.templateId ?? '';
+            lastX = Number(state?.view?.self?.x);
+            lastY = Number(state?.view?.self?.y);
+            return lastTemplateId === 'wildlands'
+                && lastX === PERSISTENCE_SMOKE_RESOURCE_TILE.x
+                && lastY === PERSISTENCE_SMOKE_RESOURCE_TILE.y;
+        }, 20000);
+    }
+    catch (error) {
+        throw new Error(`failed to move player to wildlands resource tile ${PERSISTENCE_SMOKE_RESOURCE_TILE.x},${PERSISTENCE_SMOKE_RESOURCE_TILE.y}; current=${lastTemplateId} @ (${lastX}, ${lastY}); diagnostics=${JSON.stringify(commandDiagnostics)}; cause=${error instanceof Error ? error.message : String(error)}`);
+    }
 }
 /**
  * 处理reconnectandread。
