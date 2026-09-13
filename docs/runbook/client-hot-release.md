@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | 圖片、圖包 manifest、字型等 public 資源 | assets | 準備並驗證產物，增量傳輸及切換 |
 | UI、客戶端程式、前端 catalog 與專用發布工具 | client | 準備並驗證產物，增量傳輸及切換 |
-| 伺服器內容、道具屬性／配方／掉落、shared、協議、根建置設定或未知路徑 | full | 前端專用工具拒絕，按實際影響範圍走對應發布流程 |
+| 伺服器內容、道具屬性／配方／掉落、shared、協議、根建置設定或未知路徑 | full | 預設拒絕；只有完成本節的 full gate、同 commit 服務端先行替換與線上 revision 核對後，才允許協調切換靜態前端 |
 
 新增道具圖示或調整展示介面可以走前端流程；新增道具的權威設定不能只發布圖片。分類 `full` 表示需要進一步檢查伺服器與契約，並不表示需要重建資料庫容器。
 
@@ -50,6 +50,74 @@ python scripts/client-release/remote_publish.py --mode rollback --expected-curre
 ```
 
 Nginx 模板契約有改動時不得沿用一般 publish；需要重新檢查 runtime 導入流程。腳本不會刪除舊版資源或 Docker 快取，清理須另外確認保留版本與相容期限。
+
+## Full-stack 協調發布
+
+這條路徑只負責在服務端已安全更新後切換靜態前端，不會替換 server、Postgres 或 Redis。`--coordinated-full` 不是略過分類或門禁的開關；它必須搭配由同一份 canonical source archive 跑完 `pnpm verify:release:full` 所產生的證據。原本的 `pnpm verify:client`、完整產物 manifest、bundle envelope、CAS、Nginx 契約、不可變圖包、保留舊 chunk、線上 hash 與回復機制仍全部執行。
+
+先從最終乾淨 commit 建立不含工作目錄變更、無 prefix、未壓縮的 canonical archive。full gate 必須在這份 archive 解開的隔離 checkout 執行：
+
+```powershell
+$FULL_COMMIT = git rev-parse HEAD
+git archive --format=tar --output C:/release-evidence/source.tar $FULL_COMMIT
+# 在 source.tar 解開的隔離環境執行，保留開始與完成 UTC 時間及各頂層 gate 結果。
+pnpm verify:release:full
+```
+
+`full-verification.json` 與 `source.tar` 放在同一目錄，schema 固定如下。`gates` 必須完整、同順序且全部為 0；不得把手動宣告 `verified: true` 當成證據。
+
+```json
+{
+  "schemaVersion": 1,
+  "kind": "daojie-full-release-verification",
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "command": "pnpm verify:release:full",
+  "exitCode": 0,
+  "startedAt": "2026-09-13T00:00:00.000Z",
+  "completedAt": "2026-09-13T00:30:00.000Z",
+  "sourceArchive": {
+    "path": "source.tar",
+    "bytes": 12345678,
+    "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+  },
+  "gates": [
+    { "label": "with-db", "exitCode": 0 },
+    { "label": "gm-database-backup-persistence", "exitCode": 0 },
+    { "label": "shadow", "exitCode": 0 },
+    { "label": "gm", "exitCode": 0 }
+  ]
+}
+```
+
+準備工具會重新產生 `git archive --format=tar HEAD`，要求 bytes 與 SHA-256 均等於 report 指向的實際 `source.tar`，並要求 report commit 等於當前 HEAD。成功後 receipt 會保留 report SHA-256、source archive SHA-256、四個 gate 和 `server-before-client` 順序：
+
+```powershell
+node scripts/client-release/plan.mjs --base LIVE_RECEIPT_COMMIT
+node scripts/client-release/prepare.mjs `
+  --base LIVE_RECEIPT_COMMIT `
+  --baseline-manifest LIVE_RECEIPT_JSON `
+  --output .runtime/client-release-artifacts `
+  --coordinated-full `
+  --full-verification C:/release-evidence/full-verification.json
+```
+
+服務端必須由同一份 `source.tar` 建置，且 Docker build 必須明確傳入完整 commit，讓最終映像的 `org.opencontainers.image.revision` 等於 receipt commit：
+
+```bash
+FULL_COMMIT=0123456789abcdef0123456789abcdef01234567
+docker build --build-arg BUILD_CACHEBUST="$FULL_COMMIT" -f packages/server/Dockerfile -t "daojie-server:full-$FULL_COMMIT" .
+```
+
+由部署程序只替換 `daojie-server`，保留既有 client bind mount、Postgres、Redis、網路、環境變數與資料 volume；不可執行會重建四個容器並移除 hot-static 掛載的舊 `lxc-deploy.sh`。先驗證服務端 `/health`、`/live` 和新舊前端對新版服務端的必要相容路徑，再規劃與發布前端：
+
+```powershell
+python scripts/client-release/remote_publish.py --mode plan --bundle BUNDLE --env-file ENV_FILE --known-hosts KNOWN_HOSTS
+python scripts/client-release/remote_publish.py --mode publish --bundle BUNDLE --expected-current CURRENT_ARTIFACT --env-file ENV_FILE --known-hosts KNOWN_HOSTS --execute
+```
+
+`plan` 會顯示 `classification: full` 與 `coordinatedServerCommit`。真正 publish 前，遠端工具會從執行中 server 容器解析其不可變 image ID，再讀該 image 的 OCI revision；revision 不等於 receipt commit、server 未運行，或 `/health`／`/live` 未就緒時都拒絕切換前端。`receipt.baseCommit == current receipt.commit` 的 live-base 條件不變，不能用 adopt 或拆成兩份 receipt 繞過。
+
+若前端切換後需回復，先以精確 CAS 將 client 回復到上一個 artifact，再按服務端既有 server-only 回復流程還原前一個 immutable image；每一步都重新檢查 `/`、`version.json`、Socket.IO、`/health`、`/live` 與三個受保護容器身分。
 
 ## 快取與一致性
 

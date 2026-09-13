@@ -294,6 +294,8 @@ def main(argv: list[str] | None = None) -> int:
                 config_matches = state is None or state.get("sourceNginxTemplateHashes") == template_hashes
                 plan = {"requestedMode": requested_mode, "effectiveMode": effective_mode,
                         "artifactVersion": receipt["artifactVersion"], "current": artifact,
+                        "classification": receipt["classification"],
+                        "coordinatedServerCommit": ((receipt.get("coordinatedFull") or {}).get("serverCommit")),
                         "changedFiles": len(delta["changed"]), "removedFiles": len(delta["removed"]),
                         "changed": delta["changed"], "nginxConfigContractMatches": config_matches}
             else:

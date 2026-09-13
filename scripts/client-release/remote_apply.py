@@ -18,6 +18,7 @@ import sys
 import tempfile
 import time
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from typing import Callable, Iterable
 
@@ -42,6 +43,14 @@ EXPECTED_NGINX_TEMPLATES = {
     "nginx/nginx.conf.template",
     "nginx/default.conf.template",
 }
+FULL_VERIFICATION_KIND = "daojie-full-release-verification"
+FULL_VERIFICATION_COMMAND = "pnpm verify:release:full"
+FULL_VERIFICATION_GATES = (
+    "with-db",
+    "gm-database-backup-persistence",
+    "shadow",
+    "gm",
+)
 
 
 class ReleaseError(RuntimeError):
@@ -104,6 +113,43 @@ def _validate_file_records(value: object, *, prefix: str | None = None) -> list[
     return records
 
 
+def _parse_utc_timestamp(value: object) -> datetime:
+    if not isinstance(value, str) or not value.endswith("Z"):
+        raise ReleaseError("full receipt verification timestamp is not UTC ISO")
+    try:
+        parsed = datetime.fromisoformat(value[:-1] + "+00:00")
+    except ValueError as error:
+        raise ReleaseError("full receipt verification timestamp is invalid") from error
+    if parsed.tzinfo != timezone.utc:
+        raise ReleaseError("full receipt verification timestamp is not UTC")
+    return parsed
+
+
+def _validate_coordinated_full(payload: dict) -> None:
+    coordinated = payload.get("coordinatedFull")
+    if (not isinstance(coordinated, dict) or coordinated.get("serverCommit") != payload["commit"]
+            or coordinated.get("publicationOrder") != "server-before-client"):
+        raise ReleaseError("full receipt is missing the coordinated server-first contract")
+    proof = coordinated.get("fullVerification")
+    if (not isinstance(proof, dict) or proof.get("schemaVersion") != 1
+            or proof.get("kind") != FULL_VERIFICATION_KIND or proof.get("commit") != payload["commit"]
+            or proof.get("command") != FULL_VERIFICATION_COMMAND or proof.get("exitCode") != 0):
+        raise ReleaseError("full receipt verification identity is invalid")
+    if _parse_utc_timestamp(proof.get("startedAt")) > _parse_utc_timestamp(proof.get("completedAt")):
+        raise ReleaseError("full receipt verification timestamps are invalid")
+    gates = proof.get("gates")
+    if (not isinstance(gates, list) or len(gates) != len(FULL_VERIFICATION_GATES)
+            or any(not isinstance(gate, dict) or gate.get("label") != FULL_VERIFICATION_GATES[index]
+                   or gate.get("exitCode") != 0 for index, gate in enumerate(gates))):
+        raise ReleaseError("full receipt verification gate list is incomplete")
+    for name in ("sourceArchive", "report"):
+        record = proof.get(name)
+        if (not isinstance(record, dict) or not isinstance(record.get("bytes"), int)
+                or isinstance(record.get("bytes"), bool) or record["bytes"] < 1
+                or not isinstance(record.get("sha256"), str) or not HEX64.fullmatch(record["sha256"])):
+            raise ReleaseError(f"full receipt {name} evidence is invalid")
+
+
 def validate_receipt(payload: object) -> dict:
     if (not isinstance(payload, dict) or payload.get("schemaVersion") != SCHEMA_VERSION
             or payload.get("kind") not in (RELEASE_KIND, ADOPTED_RELEASE_KIND)):
@@ -121,6 +167,14 @@ def validate_receipt(payload: object) -> dict:
                          else f"adopt-{payload['commit'][:12]}-{build_id}")
     if artifact != expected_artifact:
         raise ReleaseError("artifactVersion is not bound to commit and buildId")
+    classification = payload.get("classification")
+    expected_classifications = ("assets", "client", "full") if payload.get("kind") == RELEASE_KIND else ("adopted-live-client",)
+    if classification not in expected_classifications:
+        raise ReleaseError("invalid receipt classification")
+    if classification == "full":
+        _validate_coordinated_full(payload)
+    elif payload.get("coordinatedFull") is not None:
+        raise ReleaseError("client/assets receipt must not contain coordinatedFull")
     verification = payload.get("verification")
     expected_verification = "pnpm verify:client" if payload.get("kind") == RELEASE_KIND else "adopt-verified-production"
     if (payload.get("verificationPassed") is not True or payload.get("verificationSkipped") is not False
@@ -618,6 +672,31 @@ def docker_inspect(name: str) -> dict:
     return value[0]
 
 
+def validate_coordinated_server_image(receipt: dict, container_info: dict, image_info: dict) -> str | None:
+    if receipt.get("classification") != "full":
+        return None
+    if not (container_info.get("State") or {}).get("Running"):
+        raise ReleaseError("coordinated full publish requires a running server container")
+    image_id = container_info.get("Image")
+    if not isinstance(image_id, str) or not image_id or image_info.get("Id") != image_id:
+        raise ReleaseError("cannot bind the running server container to its immutable image")
+    revision = ((image_info.get("Config") or {}).get("Labels") or {}).get("org.opencontainers.image.revision")
+    if revision != receipt["commit"]:
+        raise ReleaseError("server image OCI revision does not match coordinated full receipt commit")
+    return revision
+
+
+def verify_coordinated_server_ready(receipt: dict, timeout: int) -> dict | None:
+    if receipt.get("classification") != "full":
+        return None
+    container_info = docker_inspect("daojie-server")
+    image_id = container_info.get("Image")
+    image_info = docker_inspect(str(image_id))
+    revision = validate_coordinated_server_image(receipt, container_info, image_info)
+    wait_urls(list(SERVER_READINESS_URLS), timeout)
+    return {"containerId": container_info.get("Id"), "imageId": image_id, "revision": revision}
+
+
 def validate_client_container_contract(info: dict) -> dict:
     host = info.get("HostConfig") or {}
     config = info.get("Config") or {}
@@ -693,6 +772,10 @@ def create_runtime_child_context(receipt: dict, payload_dir: Path, output: Path,
 
 
 PROTECTED_CONTAINERS = ("daojie-server", "daojie-postgres", "daojie-redis")
+SERVER_READINESS_URLS = (
+    "http://127.0.0.1:13001/health",
+    "http://127.0.0.1:13001/live",
+)
 READINESS_URLS = (
     "http://127.0.0.1:11921/",
     "http://127.0.0.1:11921/version.json",
@@ -754,12 +837,14 @@ def validate_bootstrap_identity(info: dict, expected_container: str, expected_im
 
 
 def bootstrap_docker(manager: RemoteReleaseManager, receipt: dict, payload_dir: Path, check_timeout: int,
-                     expected_image: str, adopt_commit: str) -> dict:
+                     expected_image: str, adopt_commit: str, expected_server_id: str | None = None) -> dict:
     if receipt["baseCommit"] != adopt_commit:
         raise ReleaseError("bundle baseCommit must equal the explicit adopt commit")
     if not expected_image.startswith("sha256:") or not HEX64.fullmatch(expected_image[7:]):
         raise ReleaseError("bootstrap expected image must be an exact sha256 digest")
     before = container_ids(("daojie-client",) + PROTECTED_CONTAINERS)
+    if expected_server_id is not None and before["daojie-server"] != expected_server_id:
+        raise ReleaseError("server container changed after coordinated full readiness verification")
     info = docker_inspect("daojie-client")
     contract = validate_bootstrap_identity(info, before["daojie-client"], expected_image)
 
@@ -885,12 +970,17 @@ def main(argv: list[str] | None = None) -> int:
     elif args.mode == "bootstrap":
         if not all((receipt, args.payload_dir, args.expected_image, args.adopt_commit)):
             raise ReleaseError("bootstrap requires receipt, payload, expected-image and adopt-commit")
+        server_evidence = verify_coordinated_server_ready(receipt, args.check_timeout)
         result = bootstrap_docker(manager, receipt, args.payload_dir, args.check_timeout,
-                                  args.expected_image, args.adopt_commit)
+                                  args.expected_image, args.adopt_commit,
+                                  server_evidence["containerId"] if server_evidence else None)
     elif args.mode == "publish":
         if not all((receipt, args.payload_dir, args.expected_current)):
             raise ReleaseError("publish requires receipt, payload and expected current")
+        server_evidence = verify_coordinated_server_ready(receipt, args.check_timeout)
         expected_ids = container_ids(PROTECTED_CONTAINERS)
+        if server_evidence and expected_ids["daojie-server"] != server_evidence["containerId"]:
+            raise ReleaseError("server container changed after coordinated full readiness verification")
         result = manager.publish(receipt, args.payload_dir, args.expected_current,
                                  checked_postcheck(receipt["buildId"], expected_ids, args.check_timeout))
     else:

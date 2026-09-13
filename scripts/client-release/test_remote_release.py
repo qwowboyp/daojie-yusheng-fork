@@ -22,6 +22,7 @@ from remote_apply import (
     sha256_file,
     transform_nginx_templates,
     validate_client_container_contract,
+    validate_coordinated_server_image,
     validate_bootstrap_identity,
     run_checked,
     validate_receipt,
@@ -79,6 +80,33 @@ def make_receipt(site: Path, commit: str, base: str, artifact: str) -> dict:
         "dist": {"files": dist}, "nginx": {"files": nginx}, "nginxTemplates": nginx,
         "files": sorted(dist + nginx, key=lambda item: item["path"]),
         "delta": {"mode": "full", "changed": [item["path"] for item in dist], "removed": []},
+    }
+    return validate_receipt(payload)
+
+
+def make_coordinated_full_receipt(receipt: dict) -> dict:
+    payload = json.loads(json.dumps(receipt))
+    payload["classification"] = "full"
+    payload["coordinatedFull"] = {
+        "serverCommit": payload["commit"],
+        "publicationOrder": "server-before-client",
+        "fullVerification": {
+            "schemaVersion": 1,
+            "kind": "daojie-full-release-verification",
+            "commit": payload["commit"],
+            "command": "pnpm verify:release:full",
+            "exitCode": 0,
+            "startedAt": "2026-09-13T00:00:00.000Z",
+            "completedAt": "2026-09-13T00:10:00.000Z",
+            "gates": [
+                {"label": "with-db", "exitCode": 0},
+                {"label": "gm-database-backup-persistence", "exitCode": 0},
+                {"label": "shadow", "exitCode": 0},
+                {"label": "gm", "exitCode": 0},
+            ],
+            "sourceArchive": {"bytes": 100, "sha256": "1" * 64},
+            "report": {"bytes": 100, "sha256": "2" * 64},
+        },
     }
     return validate_receipt(payload)
 
@@ -163,6 +191,23 @@ class RemoteReleaseTests(unittest.TestCase):
         with self.assertRaisesRegex(ReleaseError, "hash mismatch"):
             self.manager.publish(self.next_receipt, payload, self.adopted["artifactVersion"])
         self.assertEqual(self.manager.current_artifact(), self.adopted["artifactVersion"])
+
+    def test_coordinated_full_requires_matching_running_server_image_revision(self) -> None:
+        receipt = make_coordinated_full_receipt(self.next_receipt)
+        container = {"State": {"Running": True}, "Image": "sha256:" + "d" * 64}
+        matching_image = {
+            "Id": container["Image"],
+            "Config": {"Labels": {"org.opencontainers.image.revision": receipt["commit"]}},
+        }
+        self.assertEqual(validate_coordinated_server_image(receipt, container, matching_image), receipt["commit"])
+        mismatched_image = json.loads(json.dumps(matching_image))
+        mismatched_image["Config"]["Labels"]["org.opencontainers.image.revision"] = COMMIT_C
+        with self.assertRaisesRegex(ReleaseError, "OCI revision"):
+            validate_coordinated_server_image(receipt, container, mismatched_image)
+        self.assertIsNone(validate_coordinated_server_image(self.next_receipt, {}, {}))
+        assets_receipt = json.loads(json.dumps(self.next_receipt))
+        assets_receipt["classification"] = "assets"
+        self.assertEqual(validate_receipt(assets_receipt)["classification"], "assets")
 
     def test_publish_does_not_mutate_hardlinked_current_and_retains_old_chunk(self) -> None:
         old_index = self.site_root / "releases" / self.adopted["artifactVersion"] / "site/index.html"

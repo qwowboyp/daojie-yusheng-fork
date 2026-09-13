@@ -13,24 +13,37 @@ import {
   collectPlan,
   hashFile,
   parseVersionJson,
+  readFullVerificationReport,
   readBaselineManifest,
   readWorktreeState,
 } from './manifest.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
-function parseArgs(argv) {
-  const options = { base: null, ref: 'HEAD', output: null, baselineManifest: null };
+export function parseArgs(argv) {
+  const options = {
+    base: null,
+    ref: 'HEAD',
+    output: null,
+    baselineManifest: null,
+    coordinatedFull: false,
+    fullVerification: null,
+  };
   for (let index = 0; index < argv.length; index += 1) {
     const value = argv[index];
     if (value === '--base') options.base = readOptionValue(argv, ++index, value);
     else if (value === '--ref') options.ref = readOptionValue(argv, ++index, value);
     else if (value === '--output') options.output = readOptionValue(argv, ++index, value);
     else if (value === '--baseline-manifest') options.baselineManifest = readOptionValue(argv, ++index, value);
+    else if (value === '--coordinated-full') options.coordinatedFull = true;
+    else if (value === '--full-verification') options.fullVerification = readOptionValue(argv, ++index, value);
     else throw new Error(`未知參數：${value}`);
   }
   if (!options.base || !options.output || !options.ref) {
-    throw new Error('用法：node prepare.mjs --base <commit-ish> --output <repo外或忽略目錄> [--ref HEAD] [--baseline-manifest <path>]');
+    throw new Error('用法：node prepare.mjs --base <commit-ish> --output <repo外或忽略目錄> [--ref HEAD] [--baseline-manifest <path>] [--coordinated-full --full-verification <report.json>]');
+  }
+  if (options.coordinatedFull !== Boolean(options.fullVerification)) {
+    throw new Error('--coordinated-full 與 --full-verification <report.json> 必須成對使用');
   }
   return options;
 }
@@ -55,6 +68,15 @@ function runVerification() {
   if (result.error) throw result.error;
   if (result.status !== 0) throw new Error(`pnpm verify:client 失敗，exit=${result.status ?? 1}`);
   return { command: 'pnpm verify:client', exitCode: 0, startedAt, completedAt: new Date().toISOString() };
+}
+
+export function assertReleaseMode(plan, options) {
+  if (!plan.eligible && !options.coordinatedFull) {
+    throw new Error(`本次差異屬於 full 發布，缺少 coordinated full 證據，拒絕 client artifact：${plan.blockedPaths.join(', ')}`);
+  }
+  if (plan.eligible && options.coordinatedFull) {
+    throw new Error('--coordinated-full 只適用於 classification=full 的差異');
+  }
 }
 
 async function copyFile(source, destination) {
@@ -103,7 +125,10 @@ async function main() {
   const before = readWorktreeState(repoRoot);
   assertCleanWorktree(before);
   const plan = collectPlan(repoRoot, options);
-  if (!plan.eligible) throw new Error(`本次差異屬於 full 發布，拒絕 client artifact：${plan.blockedPaths.join(', ')}`);
+  assertReleaseMode(plan, options);
+  const fullVerification = options.coordinatedFull
+    ? await readFullVerificationReport(repoRoot, options.fullVerification, plan.commit)
+    : null;
   let outputRoot = await assertAllowedOutput(repoRoot, options.output);
   const baseline = options.baselineManifest ? await readBaselineManifest(path.resolve(options.baselineManifest)) : null;
   assertBaselineMatchesPlan(baseline, plan);
@@ -142,6 +167,7 @@ async function main() {
       version: { ...version, manifestPath: versionFile.path, sha256: versionFile.sha256 },
       verification,
       delta: buildDelta(files, baseline),
+      fullVerification,
     });
     const receiptText = `${JSON.stringify(receipt, null, 2)}\n`;
     const candidateDir = path.join(outputRoot, receipt.artifactVersion);
@@ -181,7 +207,9 @@ async function assertPathDoesNotExist(candidateDir) {
   }
 }
 
-main().catch((error) => {
-  process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
-  process.exit(1);
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((error) => {
+    process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
+    process.exit(1);
+  });
+}

@@ -1,10 +1,21 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { TextDecoder } from 'node:util';
 
 export const CLIENT_RELEASE_SCHEMA_VERSION = 1;
+export const FULL_VERIFICATION_SCHEMA_VERSION = 1;
+export const FULL_VERIFICATION_KIND = 'daojie-full-release-verification';
+export const FULL_VERIFICATION_COMMAND = 'pnpm verify:release:full';
+export const FULL_VERIFICATION_GATES = Object.freeze([
+  'with-db',
+  'gm-database-backup-persistence',
+  'shadow',
+  'gm',
+]);
 
 const DOCUMENT_PREFIX = 'docs/';
 const ROOT_RELEASE_DOCUMENTS = new Set(['AGENTS.md']);
@@ -184,6 +195,127 @@ export async function hashFile(absolutePath, archivePath) {
   return { path: normalizeArchivePath(archivePath), bytes: stat.size, sha256: sha256(await fs.readFile(absolutePath)) };
 }
 
+async function hashLocalFile(absolutePath) {
+  const stat = await fs.lstat(absolutePath);
+  if (!stat.isFile() || stat.isSymbolicLink()) throw new Error(`證據檔案無效或為符號連結：${absolutePath}`);
+  const digest = crypto.createHash('sha256');
+  for await (const chunk of createReadStream(absolutePath)) digest.update(chunk);
+  return { bytes: stat.size, sha256: digest.digest('hex') };
+}
+
+function parseUtcTimestamp(value, label) {
+  const parsed = new Date(value);
+  if (typeof value !== 'string' || Number.isNaN(parsed.valueOf()) || parsed.toISOString() !== value) {
+    throw new Error(`${label} 必須是標準 UTC ISO 時間`);
+  }
+  return parsed;
+}
+
+function validateFullVerificationPayload(payload, expectedCommit) {
+  if (!payload || payload.schemaVersion !== FULL_VERIFICATION_SCHEMA_VERSION || payload.kind !== FULL_VERIFICATION_KIND) {
+    throw new Error('full verification report schema 或 kind 無效');
+  }
+  if (payload.commit !== expectedCommit || !/^[a-f0-9]{40}$/.test(payload.commit ?? '')) {
+    throw new Error('full verification report commit 必須等於目前 HEAD');
+  }
+  if (payload.command !== FULL_VERIFICATION_COMMAND || payload.exitCode !== 0) {
+    throw new Error('full verification report 必須記錄成功的 pnpm verify:release:full');
+  }
+  const startedAt = parseUtcTimestamp(payload.startedAt, 'full verification report startedAt');
+  const completedAt = parseUtcTimestamp(payload.completedAt, 'full verification report completedAt');
+  if (startedAt > completedAt) throw new Error('full verification report 時間順序無效');
+  if (!Array.isArray(payload.gates) || payload.gates.length !== FULL_VERIFICATION_GATES.length) {
+    throw new Error('full verification report gate 清單不完整');
+  }
+  for (let index = 0; index < FULL_VERIFICATION_GATES.length; index += 1) {
+    const gate = payload.gates[index];
+    if (!gate || gate.label !== FULL_VERIFICATION_GATES[index] || gate.exitCode !== 0) {
+      throw new Error(`full verification report gate 無效：${FULL_VERIFICATION_GATES[index]}`);
+    }
+  }
+  const sourceArchive = payload.sourceArchive;
+  if (!sourceArchive || typeof sourceArchive.path !== 'string'
+    || sourceArchive.path.includes('/') || sourceArchive.path.includes('\\') || !sourceArchive.path.endsWith('.tar')
+    || !Number.isSafeInteger(sourceArchive.bytes) || sourceArchive.bytes < 1
+    || !/^[a-f0-9]{64}$/.test(sourceArchive.sha256 ?? '')) {
+    throw new Error('full verification report sourceArchive 證據無效；path 必須是 report 同目錄的 .tar 檔名');
+  }
+  return {
+    schemaVersion: payload.schemaVersion,
+    kind: payload.kind,
+    commit: payload.commit,
+    command: payload.command,
+    exitCode: payload.exitCode,
+    startedAt: payload.startedAt,
+    completedAt: payload.completedAt,
+    gates: payload.gates.map((gate) => ({ label: gate.label, exitCode: gate.exitCode })),
+    sourceArchive: {
+      bytes: sourceArchive.bytes,
+      sha256: sourceArchive.sha256,
+    },
+  };
+}
+
+function validateStoredFullVerification(payload, expectedCommit, label) {
+  if (!payload || payload.schemaVersion !== FULL_VERIFICATION_SCHEMA_VERSION || payload.kind !== FULL_VERIFICATION_KIND
+    || payload.commit !== expectedCommit || payload.command !== FULL_VERIFICATION_COMMAND || payload.exitCode !== 0) {
+    throw new Error(`${label} full verification 身分無效`);
+  }
+  const startedAt = parseUtcTimestamp(payload.startedAt, `${label} full verification startedAt`);
+  const completedAt = parseUtcTimestamp(payload.completedAt, `${label} full verification completedAt`);
+  if (startedAt > completedAt) throw new Error(`${label} full verification 時間順序無效`);
+  if (!Array.isArray(payload.gates) || payload.gates.length !== FULL_VERIFICATION_GATES.length
+    || payload.gates.some((gate, index) => gate?.label !== FULL_VERIFICATION_GATES[index] || gate?.exitCode !== 0)) {
+    throw new Error(`${label} full verification gate 清單無效`);
+  }
+  for (const [name, record] of [['sourceArchive', payload.sourceArchive], ['report', payload.report]]) {
+    if (!record || !Number.isSafeInteger(record.bytes) || record.bytes < 1 || !/^[a-f0-9]{64}$/.test(record.sha256 ?? '')) {
+      throw new Error(`${label} full verification ${name} 雜湊證據無效`);
+    }
+  }
+}
+
+export async function readFullVerificationReport(repoRoot, reportPath, expectedCommit) {
+  if (!reportPath) throw new Error('--coordinated-full 必須搭配 --full-verification <report.json>');
+  const resolvedReport = path.resolve(reportPath);
+  const reportStat = await fs.lstat(resolvedReport);
+  if (!reportStat.isFile() || reportStat.isSymbolicLink()) throw new Error(`full verification report 無效或為符號連結：${resolvedReport}`);
+  const reportSource = await fs.readFile(resolvedReport);
+  const reportRecord = { bytes: reportSource.byteLength, sha256: sha256(reportSource) };
+  let payload;
+  try {
+    payload = JSON.parse(reportSource.toString('utf8'));
+  } catch (error) {
+    throw new Error(`full verification report 不是有效 JSON：${error instanceof Error ? error.message : String(error)}`);
+  }
+  const verification = validateFullVerificationPayload(payload, expectedCommit);
+  const sourceArchivePath = path.join(path.dirname(resolvedReport), payload.sourceArchive.path);
+  const sourceArchiveRecord = await hashLocalFile(sourceArchivePath);
+  if (sourceArchiveRecord.bytes !== verification.sourceArchive.bytes
+    || sourceArchiveRecord.sha256 !== verification.sourceArchive.sha256) {
+    throw new Error('full verification report 的 sourceArchive bytes/SHA256 與實際檔案不一致');
+  }
+
+  const canonicalDir = await fs.mkdtemp(path.join(os.tmpdir(), 'daojie-canonical-git-archive-'));
+  const canonicalArchive = path.join(canonicalDir, 'source.tar');
+  try {
+    const result = spawnSync('git', ['archive', '--format=tar', '--output', canonicalArchive, expectedCommit], {
+      cwd: repoRoot,
+      encoding: 'utf8',
+      shell: false,
+    });
+    if (result.error) throw result.error;
+    if (result.status !== 0) throw new Error(`git archive 失敗：${result.stderr.trim() || result.stdout.trim()}`);
+    const canonicalRecord = await hashLocalFile(canonicalArchive);
+    if (canonicalRecord.bytes !== sourceArchiveRecord.bytes || canonicalRecord.sha256 !== sourceArchiveRecord.sha256) {
+      throw new Error('full verification sourceArchive 不是目前 HEAD 的 canonical git archive');
+    }
+  } finally {
+    await fs.rm(canonicalDir, { recursive: true, force: true });
+  }
+  return { ...verification, report: reportRecord };
+}
+
 export function parseVersionJson(source) {
   let parsed;
   try { parsed = JSON.parse(source); } catch { throw new Error('dist/version.json 不是有效 JSON'); }
@@ -224,10 +356,12 @@ export async function readBaselineManifest(manifestPath) {
   return parsed;
 }
 
-export function buildReceipt({ plan, files, distFiles, nginxFiles, version, verification, delta }) {
+export function buildReceipt({ plan, files, distFiles, nginxFiles, version, verification, delta, fullVerification = null }) {
   const sortedFiles = [...files].sort(compareManifestEntries);
-  if (plan?.eligible !== true || (plan.classification !== 'client' && plan.classification !== 'assets')) {
-    throw new Error('receipt 只能由 eligible client/assets plan 建立');
+  const isCoordinatedFull = plan?.classification === 'full' && fullVerification?.commit === plan.commit;
+  const isClientOnly = plan?.eligible === true && (plan.classification === 'client' || plan.classification === 'assets');
+  if (!isClientOnly && !isCoordinatedFull) {
+    throw new Error('receipt 只能由 eligible client/assets plan 或具完整證據的 coordinated full plan 建立');
   }
   if (verification?.command !== 'pnpm verify:client' || verification?.exitCode !== 0) {
     throw new Error('receipt 必須記錄本次成功完成的 pnpm verify:client');
@@ -249,6 +383,13 @@ export function buildReceipt({ plan, files, distFiles, nginxFiles, version, veri
     nginxTemplates: [...nginxFiles].sort(compareManifestEntries),
     files: sortedFiles,
     delta,
+    ...(isCoordinatedFull ? {
+      coordinatedFull: {
+        serverCommit: plan.commit,
+        publicationOrder: 'server-before-client',
+        fullVerification,
+      },
+    } : null),
   };
   validateReceipt(receipt, 'receipt');
   return receipt;
@@ -271,6 +412,18 @@ function validateReceipt(receipt, label) {
   if (receipt.buildId !== version.buildId) throw new Error(`${label} buildId 與 version.buildId 不一致`);
   const expectedArtifactVersion = `client-${receipt.commit.slice(0, 12)}-${version.buildId}`;
   if (receipt.artifactVersion !== expectedArtifactVersion) throw new Error(`${label} artifactVersion 與 commit/buildId 不一致`);
+  if (!['assets', 'client', 'full'].includes(receipt.classification)) {
+    throw new Error(`${label} classification 無效`);
+  }
+  if (receipt.classification === 'full') {
+    const coordinated = receipt.coordinatedFull;
+    if (!coordinated || coordinated.serverCommit !== receipt.commit || coordinated.publicationOrder !== 'server-before-client') {
+      throw new Error(`${label} 缺少 coordinated full server-first 契約`);
+    }
+    validateStoredFullVerification(coordinated.fullVerification, receipt.commit, label);
+  } else if (receipt.coordinatedFull !== undefined) {
+    throw new Error(`${label} client/assets receipt 不得包含 coordinatedFull`);
+  }
   if (receipt.verificationPassed !== true || receipt.verificationSkipped !== false
     || receipt.verification?.command !== 'pnpm verify:client' || receipt.verification?.exitCode !== 0) {
     throw new Error(`${label} 缺少成功的 pnpm verify:client 證據`);

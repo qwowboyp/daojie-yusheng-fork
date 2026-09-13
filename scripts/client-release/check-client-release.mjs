@@ -15,9 +15,12 @@ import {
   normalizeArchivePath,
   parseGitPathList,
   parseVersionJson,
+  readFullVerificationReport,
+  resolveGitCommit,
   readBaselineManifest,
   sha256,
 } from './manifest.mjs';
+import { assertReleaseMode, parseArgs as parsePrepareArgs } from './prepare.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -143,6 +146,101 @@ async function testReceiptAndOutputBoundary() {
   );
 }
 
+async function testCoordinatedFullVerification() {
+  assert.throws(
+    () => parsePrepareArgs(['--base', 'HEAD~1', '--output', 'out', '--coordinated-full']),
+    /必須成對使用/,
+  );
+  const fullPlan = {
+    commit: resolveGitCommit(repoRoot, 'HEAD'),
+    baseCommit: 'b'.repeat(40),
+    classification: 'full',
+    eligible: false,
+    blockedPaths: ['packages/server/example.ts'],
+  };
+  assert.throws(() => assertReleaseMode(fullPlan, { coordinatedFull: false }), /缺少 coordinated full 證據/);
+  assert.throws(() => assertReleaseMode(fullPlan, { coordinatedFull: false }), /缺少 coordinated full 證據/);
+  const receiptArgs = {
+    plan: fullPlan,
+    files: [],
+    distFiles: [],
+    nginxFiles: [],
+    version: {
+      buildId: 'fullproof',
+      builtAt: '2026-09-13T00:00:30.000Z',
+      manifestPath: 'dist/version.json',
+      sha256: '1'.repeat(64),
+    },
+    verification: {
+      command: 'pnpm verify:client',
+      exitCode: 0,
+      startedAt: '2026-09-13T00:00:00.000Z',
+      completedAt: '2026-09-13T00:01:00.000Z',
+    },
+    delta: { mode: 'full', changed: [], removed: [] },
+  };
+  assert.throws(() => buildReceipt(receiptArgs), /完整證據/);
+
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'daojie-full-verification-'));
+  try {
+    const archivePath = path.join(tempRoot, 'source.tar');
+    const archiveResult = spawnSync('git', ['archive', '--format=tar', '--output', archivePath, fullPlan.commit], {
+      cwd: repoRoot,
+      encoding: 'utf8',
+      shell: false,
+    });
+    assert.equal(archiveResult.status, 0, archiveResult.stderr || archiveResult.stdout);
+    const archiveBytes = await fs.readFile(archivePath);
+    const baseReport = {
+      schemaVersion: 1,
+      kind: 'daojie-full-release-verification',
+      commit: fullPlan.commit,
+      command: 'pnpm verify:release:full',
+      exitCode: 0,
+      startedAt: '2026-09-13T00:00:00.000Z',
+      completedAt: '2026-09-13T00:10:00.000Z',
+      sourceArchive: { path: 'source.tar', bytes: archiveBytes.byteLength, sha256: sha256(archiveBytes) },
+      gates: [
+        { label: 'with-db', exitCode: 0 },
+        { label: 'gm-database-backup-persistence', exitCode: 0 },
+        { label: 'shadow', exitCode: 0 },
+        { label: 'gm', exitCode: 0 },
+      ],
+    };
+    const reportPath = path.join(tempRoot, 'report.json');
+    const verifyReport = async (report) => {
+      await fs.writeFile(reportPath, `${JSON.stringify(report)}\n`, 'utf8');
+      return readFullVerificationReport(repoRoot, reportPath, fullPlan.commit);
+    };
+    await assert.rejects(() => verifyReport({ ...baseReport, commit: 'a'.repeat(40) }), /commit 必須等於/);
+    await assert.rejects(() => verifyReport({ ...baseReport, exitCode: 1 }), /成功的 pnpm verify:release:full/);
+    await assert.rejects(() => verifyReport({ ...baseReport, gates: baseReport.gates.slice(0, -1) }), /gate 清單不完整/);
+    await assert.rejects(() => verifyReport({
+      ...baseReport,
+      sourceArchive: { ...baseReport.sourceArchive, sha256: 'f'.repeat(64) },
+    }), /與實際檔案不一致/);
+    const fullVerification = await verifyReport(baseReport);
+    assert.equal(fullVerification.commit, fullPlan.commit);
+    assert.equal(fullVerification.report.sha256.length, 64);
+    const versionFile = { path: 'dist/version.json', bytes: 2, sha256: '1'.repeat(64) };
+    const nginxFiles = [
+      { path: 'nginx/default.conf.template', bytes: 3, sha256: '2'.repeat(64) },
+      { path: 'nginx/nginx.conf.template', bytes: 4, sha256: '3'.repeat(64) },
+    ];
+    const fullReceipt = buildReceipt({
+      ...receiptArgs,
+      files: [versionFile, ...nginxFiles],
+      distFiles: [versionFile],
+      nginxFiles,
+      fullVerification,
+    });
+    assert.equal(fullReceipt.classification, 'full');
+    assert.equal(fullReceipt.coordinatedFull.serverCommit, fullPlan.commit);
+  } finally {
+    await fs.rm(tempRoot, { recursive: true, force: true });
+  }
+}
+
 async function testI18nGeneratorNormalizesCheckoutLineEndings() {
   const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'daojie-i18n-newlines-'));
   try {
@@ -190,6 +288,7 @@ testConservativeClassification();
 testPureSafetyAndDrift();
 await testManifestAndDelta();
 await testReceiptAndOutputBoundary();
+await testCoordinatedFullVerification();
 await testI18nGeneratorNormalizesCheckoutLineEndings();
 await testDockerfileToolchainCacheBoundary();
 process.stdout.write('client release helper checks passed\n');
