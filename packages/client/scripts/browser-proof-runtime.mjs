@@ -144,7 +144,7 @@ async function resolvePageTarget(port) {
   }, 'Chrome 页面目标');
 }
 
-export async function withClientBrowserProof({ viewport, profilePrefix }, run) {
+export async function withClientBrowserProof({ viewport, profilePrefix, configureViteServer }, run) {
   let viteServer = null;
   let chrome = null;
   let cdp = null;
@@ -156,6 +156,7 @@ export async function withClientBrowserProof({ viewport, profilePrefix }, run) {
       logLevel: 'silent',
       server: { host: '127.0.0.1', port: 0, strictPort: false },
     });
+    configureViteServer?.(viteServer);
     await viteServer.listen();
     const address = viteServer.httpServer?.address();
     assert(address && typeof address === 'object', 'Vite proof 服务未取得本地端口');
