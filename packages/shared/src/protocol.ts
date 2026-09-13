@@ -331,6 +331,8 @@ export const S2C = {
   MarketItemBook: 'n:s:marketItemBook',
   MarketTradeHistory: 'n:s:marketTradeHistory',
   InventoryPage: 'n:s:inventoryPage',
+  ShenxingDestinations: 'n:s:shenxingDestinations',
+  ShenxingResult: 'n:s:shenxingResult',
   SectApplicationPage: 'n:s:sectApplicationPage',
   SectDirectory: 'n:s:sectDirectory',
   TechniquePage: 'n:s:techniquePage',
@@ -586,6 +588,8 @@ export interface S2C_PayloadMap extends Record<S2C_EventName, unknown> {
   [S2C.MarketItemBook]: ResponsePayloads.S2C_MarketItemBook;
   [S2C.MarketTradeHistory]: ResponsePayloads.S2C_MarketTradeHistory;
   [S2C.InventoryPage]: ResponsePayloads.S2C_InventoryPage;
+  [S2C.ShenxingDestinations]: ResponsePayloads.S2C_ShenxingDestinations;
+  [S2C.ShenxingResult]: ResponsePayloads.S2C_ShenxingResult;
   [S2C.SectApplicationPage]: ResponsePayloads.S2C_SectApplicationPage;
   [S2C.SectDirectory]: ResponsePayloads.S2C_SectDirectory;
   [S2C.TechniquePage]: ResponsePayloads.S2C_TechniquePage;

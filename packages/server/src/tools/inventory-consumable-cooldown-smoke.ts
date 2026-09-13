@@ -1,6 +1,6 @@
 import * as assert from 'node:assert/strict';
 import { BadRequestException } from '@nestjs/common';
-import { resolveTechniqueStandardMaxHpRecoveryAmount } from '@mud/shared';
+import { resolveTechniqueStandardMaxHpRecoveryAmount, SHENXING_PILL_TIERS } from '@mud/shared';
 import { ContentTemplateRepository } from '../content/content-template.repository';
 import { PlayerRuntimeService } from '../runtime/player/player-runtime.service';
 import { WorldRuntimeUseItemService } from '../runtime/world/world-runtime-use-item.service';
@@ -154,6 +154,73 @@ service.players.set(specialPlayerId, specialPlayer);
 service.useItem(specialPlayerId, 0);
 assert.deepEqual(specialPlayer.inventory.cooldowns ?? [], [], '显式 cooldown 的非恢复特殊药也不应写入冷却');
 
+const realmBuffPlayerId = 'player:realm-pill-family-smoke';
+const foundationArcane = repo.createItem('pill.realm.foundation.arcane_surge', 2);
+const goldenCoreArcane = repo.createItem('pill.realm.golden_core.arcane_surge', 1);
+const foundationIronGuard = repo.createItem('pill.realm.foundation.iron_guard', 1);
+const realmBuffPlayer: any = {
+  ...player,
+  playerId: realmBuffPlayerId,
+  inventory: {
+    revision: 1,
+    capacity: 20,
+    items: [foundationArcane, goldenCoreArcane, foundationIronGuard],
+  },
+  buffs: { revision: 1, buffs: [] },
+};
+service.players.set(realmBuffPlayerId, realmBuffPlayer);
+service.useItem(realmBuffPlayerId, 0);
+let arcaneBuff = realmBuffPlayer.buffs.buffs.find(
+  (entry: any) => entry.buffId === 'item_buff.realm_arcane_surge',
+);
+assert.equal(arcaneBuff?.realmLv, foundationArcane.level, '築基丹 Buff 來源境界必須取 item.level');
+assert.equal(arcaneBuff?.duration, 120, '築基丹初次使用應寫入正式內容的 120 息時長');
+assert.equal(arcaneBuff?.remainingTicks, 121, '初次 Buff 應保留完整 120 息，不提前消耗當前息');
+
+service.useItem(realmBuffPlayerId, 1);
+arcaneBuff = realmBuffPlayer.buffs.buffs.find(
+  (entry: any) => entry.buffId === 'item_buff.realm_arcane_surge',
+);
+assert.equal(
+  realmBuffPlayer.buffs.buffs.filter((entry: any) => entry.buffId === 'item_buff.realm_arcane_surge').length,
+  1,
+  '築基玄元丹再服金丹玄元丹，同族 Buff 只能保留一層',
+);
+assert.equal(arcaneBuff?.realmLv, goldenCoreArcane.level, '跨境界替換後來源境界必須更新為金丹 item.level');
+assert.equal(arcaneBuff?.duration, 150, '跨境界替換必須刷新為金丹正式時長，不可與舊時長累加');
+assert.equal(arcaneBuff?.remainingTicks, 151, '跨境界替換後應由完整 150 息重新開始');
+assert.equal(arcaneBuff?.stats?.spellAtk, 11, '跨境界替換後應使用金丹玄元丹數值');
+
+service.useItem(realmBuffPlayerId, 1);
+assert.deepEqual(
+  realmBuffPlayer.buffs.buffs.map((entry: any) => entry.buffId).sort(),
+  ['item_buff.realm_arcane_surge', 'item_buff.realm_iron_guard'],
+  '玄元丹與金剛丹屬不同家族，兩者 Buff 必須共存',
+);
+const ironGuardBuff = realmBuffPlayer.buffs.buffs.find(
+  (entry: any) => entry.buffId === 'item_buff.realm_iron_guard',
+);
+assert.equal(ironGuardBuff?.realmLv, foundationIronGuard.level, '異族 Buff 來源境界也必須取各自 item.level');
+
+service.useItem(realmBuffPlayerId, 0);
+arcaneBuff = realmBuffPlayer.buffs.buffs.find(
+  (entry: any) => entry.buffId === 'item_buff.realm_arcane_surge',
+);
+assert.equal(
+  realmBuffPlayer.buffs.buffs.filter((entry: any) => entry.buffId === 'item_buff.realm_arcane_surge').length,
+  1,
+  '重服低階同族丹後仍只能保留一層',
+);
+assert.equal(arcaneBuff?.realmLv, foundationArcane.level, '重服低階丹必須把來源境界替換回築基 item.level');
+assert.equal(arcaneBuff?.duration, 120, '重服低階丹應刷新為 120 息，不保留高階時長');
+assert.equal(arcaneBuff?.remainingTicks, 121, '重服低階丹不可累加先前高階丹剩餘時間');
+assert.equal(arcaneBuff?.stats?.spellAtk, 9, '重服低階丹後不可殘留高階玄元丹數值');
+assert.equal(
+  realmBuffPlayer.buffs.buffs.some((entry: any) => entry.buffId === 'item_buff.realm_iron_guard'),
+  true,
+  '替換玄元丹時不可移除不同家族的金剛丹 Buff',
+);
+
 const legacyPlayerId = 'player:legacy-consumable-cooldown-smoke';
 const legacyPlayer: any = {
   ...player,
@@ -185,6 +252,61 @@ assert.throws(
   () => service.useItem(legacyPlayerId, 0),
   (error: unknown) => error instanceof BadRequestException && /冷卻中/.test(error.message),
   '缺少 type 的旧瞬回药实例也必须被冷却拦截',
+);
+
+const shenxingPlayerId = 'player:shenxing-shared-cooldown-smoke';
+const lowShenxing = {
+  itemId: SHENXING_PILL_TIERS[0].itemId,
+  itemInstanceId: 'shenxing:low',
+  count: 1,
+  level: SHENXING_PILL_TIERS[0].minRealmLv,
+};
+const highShenxing = {
+  itemId: SHENXING_PILL_TIERS[8].itemId,
+  itemInstanceId: 'shenxing:high',
+  count: 1,
+  level: SHENXING_PILL_TIERS[8].minRealmLv,
+};
+const shenxingPlayer: any = {
+  ...player,
+  playerId: shenxingPlayerId,
+  lifeElapsedTicks: 100,
+  inventory: {
+    revision: 1,
+    capacity: 20,
+    items: [lowShenxing, highShenxing],
+  },
+  buffs: { revision: 1, buffs: [] },
+};
+service.players.set(shenxingPlayerId, shenxingPlayer);
+service.markConsumableItemCooldown(shenxingPlayerId, lowShenxing);
+assert.equal(
+  service.getConsumableItemCooldownRemainingTicks(shenxingPlayerId, highShenxing),
+  SHENXING_PILL_TIERS[0].cooldownTicks,
+  '先服低階丹後查高階丹，必須沿用已服丹的完整共用冷卻',
+);
+assert.equal(
+  shenxingPlayer.inventory.cooldowns.length === 2
+    && shenxingPlayer.inventory.cooldowns.every(
+      (entry: any) => entry.cooldown === SHENXING_PILL_TIERS[0].cooldownTicks,
+    ),
+  true,
+  '所有神行丹的背包投影必須顯示同一個實際共用冷卻',
+);
+shenxingPlayer.buffs = { revision: 1, buffs: [] };
+shenxingPlayer.inventory.consumableCooldownStartedAtByGroup = {};
+service.markConsumableItemCooldown(shenxingPlayerId, highShenxing);
+assert.equal(
+  service.getConsumableItemCooldownRemainingTicks(shenxingPlayerId, lowShenxing),
+  SHENXING_PILL_TIERS[8].cooldownTicks,
+  '先服高階丹後查低階丹，不可改用低階丹自身的較長冷卻重算',
+);
+assert.equal(
+  shenxingPlayer.inventory.cooldowns.every(
+    (entry: any) => entry.cooldown === SHENXING_PILL_TIERS[8].cooldownTicks,
+  ),
+  true,
+  '高階丹啟動的短冷卻不得被任一品階查詢刪除或改長',
 );
 
 async function main() {

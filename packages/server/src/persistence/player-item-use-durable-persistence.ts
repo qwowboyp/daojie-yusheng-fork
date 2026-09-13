@@ -1,7 +1,10 @@
 import type { PoolClient } from 'pg';
+import { SHENXING_COOLDOWN_BUFF_ID, SHENXING_COOLDOWN_SOURCE_SKILL_ID } from '@mud/shared';
 
 const PLAYER_MAP_UNLOCK_TABLE = 'player_map_unlock';
 const PLAYER_WORLD_ANCHOR_TABLE = 'player_world_anchor';
+const PLAYER_POSITION_CHECKPOINT_TABLE = 'player_position_checkpoint';
+const PLAYER_PERSISTENT_BUFF_STATE_TABLE = 'player_persistent_buff_state';
 const PLAYER_RECOVERY_WATERMARK_TABLE = 'player_recovery_watermark';
 
 interface RespawnPointSnapshot {
@@ -9,6 +12,25 @@ interface RespawnPointSnapshot {
   instanceId: string | null;
   x: number;
   y: number;
+}
+
+interface PlayerPlacementSnapshot {
+  templateId: string;
+  instanceId: string;
+  x: number;
+  y: number;
+  facing: number;
+}
+
+interface PersistentCooldownBuffSnapshot {
+  buffId: string;
+  sourceSkillId: string;
+  realmLv: number;
+  remainingTicks: number;
+  duration: number;
+  stacks: 1;
+  maxStacks: 1;
+  rawPayload: Record<string, unknown>;
 }
 
 export type DurablePlayerItemUseSourceMutation =
@@ -25,6 +47,14 @@ export type DurablePlayerItemUseSourceMutation =
       playerId: string;
       expectedRespawn: RespawnPointSnapshot;
       nextRespawn: RespawnPointSnapshot;
+    }
+  | {
+      kind: 'player_item_use';
+      action: 'shenxing_travel';
+      playerId: string;
+      expectedPlacement: PlayerPlacementSnapshot;
+      nextPlacement: PlayerPlacementSnapshot;
+      cooldownBuff: PersistentCooldownBuffSnapshot;
     };
 
 export function normalizeDurablePlayerItemUseSourceMutation(
@@ -68,6 +98,22 @@ export function normalizeDurablePlayerItemUseSourceMutation(
       nextRespawn,
     };
   }
+  if (value.action === 'shenxing_travel') {
+    const expectedPlacement = normalizePlacement(value.expectedPlacement);
+    const nextPlacement = normalizePlacement(value.nextPlacement);
+    const cooldownBuff = normalizeCooldownBuff(value.cooldownBuff);
+    if (!expectedPlacement || !nextPlacement || !cooldownBuff || isSamePlacement(expectedPlacement, nextPlacement)) {
+      return null;
+    }
+    return {
+      kind: 'player_item_use',
+      action: 'shenxing_travel',
+      playerId,
+      expectedPlacement,
+      nextPlacement,
+      cooldownBuff,
+    };
+  }
   return null;
 }
 
@@ -80,7 +126,111 @@ export async function persistDurablePlayerItemUseSourceMutation(
     await persistMapUnlockMutation(client, mutation, persistenceVersion);
     return;
   }
+  if (mutation.action === 'shenxing_travel') {
+    await persistShenxingTravelMutation(client, mutation, persistenceVersion);
+    return;
+  }
   await persistRespawnBindMutation(client, mutation, persistenceVersion);
+}
+
+async function persistShenxingTravelMutation(
+  client: PoolClient,
+  mutation: Extract<DurablePlayerItemUseSourceMutation, { action: 'shenxing_travel' }>,
+  persistenceVersion: number,
+): Promise<void> {
+  const checkpoint = await client.query<{
+    instance_id?: unknown;
+    x?: unknown;
+    y?: unknown;
+    facing?: unknown;
+  }>(
+    `SELECT instance_id, x, y, facing
+       FROM ${PLAYER_POSITION_CHECKPOINT_TABLE}
+      WHERE player_id = $1
+      FOR UPDATE`,
+    [mutation.playerId],
+  );
+  const currentPlacement = normalizePlacement({
+    templateId: mutation.expectedPlacement.templateId,
+    instanceId: checkpoint.rows[0]?.instance_id,
+    x: checkpoint.rows[0]?.x,
+    y: checkpoint.rows[0]?.y,
+    facing: checkpoint.rows[0]?.facing,
+  });
+  // 同一 session fence 下，普通移動可能尚未把座標 checkpoint 刷盤；跨圖實例不可漂移。
+  if (!currentPlacement || currentPlacement.instanceId !== mutation.expectedPlacement.instanceId) {
+    throw new Error('player_shenxing_placement_snapshot_changed');
+  }
+  const updatedCheckpoint = await client.query(
+    `UPDATE ${PLAYER_POSITION_CHECKPOINT_TABLE}
+        SET instance_id = $2,
+            x = $3,
+            y = $4,
+            facing = $5,
+            checkpoint_kind = 'shenxing',
+            updated_at = now()
+      WHERE player_id = $1`,
+    [
+      mutation.playerId,
+      mutation.nextPlacement.instanceId,
+      mutation.nextPlacement.x,
+      mutation.nextPlacement.y,
+      mutation.nextPlacement.facing,
+    ],
+  );
+  if ((updatedCheckpoint.rowCount ?? 0) !== 1) {
+    throw new Error('player_position_checkpoint_missing');
+  }
+  const updatedAnchor = await client.query(
+    `UPDATE ${PLAYER_WORLD_ANCHOR_TABLE}
+        SET last_safe_template_id = $2,
+            last_safe_instance_id = $3,
+            last_safe_x = $4,
+            last_safe_y = $5,
+            last_transfer_at = $6,
+            updated_at = now()
+      WHERE player_id = $1`,
+    [
+      mutation.playerId,
+      mutation.nextPlacement.templateId,
+      mutation.nextPlacement.instanceId,
+      mutation.nextPlacement.x,
+      mutation.nextPlacement.y,
+      persistenceVersion,
+    ],
+  );
+  if ((updatedAnchor.rowCount ?? 0) !== 1) {
+    throw new Error('player_world_anchor_missing');
+  }
+  const cooldown = mutation.cooldownBuff;
+  await client.query(
+    `INSERT INTO ${PLAYER_PERSISTENT_BUFF_STATE_TABLE}(
+       player_id, buff_id, source_skill_id, source_caster_id, realm_lv,
+       remaining_ticks, duration, stacks, max_stacks, sustain_ticks_elapsed,
+       raw_payload, updated_at
+     ) VALUES ($1, $2, $3, NULL, $4, $5, $6, 1, 1, NULL, $7::jsonb, now())
+     ON CONFLICT (player_id, buff_id, source_skill_id)
+     DO UPDATE SET
+       source_caster_id = NULL,
+       realm_lv = EXCLUDED.realm_lv,
+       remaining_ticks = EXCLUDED.remaining_ticks,
+       duration = EXCLUDED.duration,
+       stacks = 1,
+       max_stacks = 1,
+       sustain_ticks_elapsed = NULL,
+       raw_payload = EXCLUDED.raw_payload,
+       updated_at = now()`,
+    [
+      mutation.playerId,
+      cooldown.buffId,
+      cooldown.sourceSkillId,
+      cooldown.realmLv,
+      cooldown.remainingTicks,
+      cooldown.duration,
+      JSON.stringify(cooldown.rawPayload),
+    ],
+  );
+  await upsertShenxingWatermarks(client, mutation.playerId, persistenceVersion);
 }
 
 async function persistMapUnlockMutation(
@@ -175,6 +325,25 @@ async function upsertPlayerItemUseWatermark(
   );
 }
 
+async function upsertShenxingWatermarks(
+  client: PoolClient,
+  playerId: string,
+  persistenceVersion: number,
+): Promise<void> {
+  await client.query(
+    `INSERT INTO ${PLAYER_RECOVERY_WATERMARK_TABLE}(
+       player_id, anchor_version, position_checkpoint_version, buff_version, updated_at
+     ) VALUES ($1, $2, $2, $2, now())
+     ON CONFLICT (player_id)
+     DO UPDATE SET
+       anchor_version = GREATEST(${PLAYER_RECOVERY_WATERMARK_TABLE}.anchor_version, EXCLUDED.anchor_version),
+       position_checkpoint_version = GREATEST(${PLAYER_RECOVERY_WATERMARK_TABLE}.position_checkpoint_version, EXCLUDED.position_checkpoint_version),
+       buff_version = GREATEST(${PLAYER_RECOVERY_WATERMARK_TABLE}.buff_version, EXCLUDED.buff_version),
+       updated_at = now()`,
+    [playerId, persistenceVersion],
+  );
+}
+
 function normalizeRespawnPoint(value: unknown): RespawnPointSnapshot | null {
   if (!isRecord(value)) {
     return null;
@@ -184,6 +353,45 @@ function normalizeRespawnPoint(value: unknown): RespawnPointSnapshot | null {
   const x = normalizeInteger(value.x);
   const y = normalizeInteger(value.y);
   return !templateId || x === null || y === null ? null : { templateId, instanceId, x, y };
+}
+
+function normalizePlacement(value: unknown): PlayerPlacementSnapshot | null {
+  if (!isRecord(value)) return null;
+  const templateId = normalizeRequiredString(value.templateId);
+  const instanceId = normalizeRequiredString(value.instanceId);
+  const x = normalizeInteger(value.x);
+  const y = normalizeInteger(value.y);
+  const facing = normalizeInteger(value.facing);
+  return !templateId || !instanceId || x === null || y === null || facing === null
+    ? null
+    : { templateId, instanceId, x, y, facing };
+}
+
+function normalizeCooldownBuff(value: unknown): PersistentCooldownBuffSnapshot | null {
+  if (!isRecord(value)) return null;
+  const buffId = normalizeRequiredString(value.buffId);
+  const sourceSkillId = normalizeRequiredString(value.sourceSkillId);
+  const realmLv = normalizeInteger(value.realmLv);
+  const remainingTicks = normalizeInteger(value.remainingTicks);
+  const duration = normalizeInteger(value.duration);
+  if (buffId !== SHENXING_COOLDOWN_BUFF_ID || sourceSkillId !== SHENXING_COOLDOWN_SOURCE_SKILL_ID
+    || realmLv === null || realmLv < 1 || duration === null || duration < 1
+    || remainingTicks === null || remainingTicks !== duration + 1) {
+    return null;
+  }
+  const rawPayload = isRecord(value.rawPayload) ? { ...value.rawPayload } : null;
+  if (!rawPayload || rawPayload.buffId !== buffId || rawPayload.sourceSkillId !== sourceSkillId) {
+    return null;
+  }
+  return { buffId, sourceSkillId, realmLv, remainingTicks, duration, stacks: 1, maxStacks: 1, rawPayload };
+}
+
+function isSamePlacement(left: PlayerPlacementSnapshot, right: PlayerPlacementSnapshot): boolean {
+  return left.templateId === right.templateId
+    && left.instanceId === right.instanceId
+    && left.x === right.x
+    && left.y === right.y
+    && left.facing === right.facing;
 }
 
 function isSameRespawnPoint(left: RespawnPointSnapshot, right: RespawnPointSnapshot): boolean {

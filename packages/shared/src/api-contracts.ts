@@ -22,7 +22,7 @@ import type { ConsumableBuffDef, EquipmentEffectDef, EquipSlot, ItemStack, ItemT
 import type { CraftEffectStatsPatch } from './craft-effect-stats';
 import type { PlayerState } from './player-runtime-types';
 import type { SkillDef, TemporaryBuffState } from './skill-types';
-import type { GameTimeState, MapRouteDomain, MapTimeConfig, MonsterAggroMode, MonsterTier, PortalRouteDomain, VisibleTile } from './world-core-types';
+import type { GameTimeState, MapRouteDomain, MapTimeConfig, MonsterAggroMode, MonsterTier, PortalRouteDomain, ShenxingDestinationCategory, VisibleTile } from './world-core-types';
 import type { GmPerformanceSnapshot } from './gm-runtime-types';
 import type { InteractableKind, StructureType, SurfaceType, TerrainType } from './map-layer-types';
 
@@ -3572,6 +3572,8 @@ export interface GmMapDocument {
  */
 
   routeDomain?: MapRouteDomain;
+  /** 神行丹公共目的地分類；缺省表示不可透過神行丹抵達。 */
+  shenxingCategory?: ShenxingDestinationCategory;
   /**
  * mapLv：mapLv相关字段。
  */
@@ -3739,6 +3741,7 @@ export interface GmMapSummary {
  */
 
   routeDomain?: MapRouteDomain;
+  shenxingCategory?: ShenxingDestinationCategory;
   /**
  * description：description相关字段。
  */

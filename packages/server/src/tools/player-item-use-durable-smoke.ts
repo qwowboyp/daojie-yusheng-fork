@@ -1,4 +1,9 @@
 import { Pool } from 'pg';
+import {
+  SHENXING_COOLDOWN_BUFF_ID,
+  SHENXING_COOLDOWN_SOURCE_SKILL_ID,
+  SHENXING_PILL_TIERS,
+} from '@mud/shared';
 
 import { resolveServerDatabaseUrl } from '../config/env-alias';
 import { DatabasePoolProvider } from '../persistence/database-pool.provider';
@@ -17,7 +22,7 @@ async function main(): Promise<void> {
       ok: true,
       skipped: true,
       reason: 'SERVER_DATABASE_URL/DATABASE_URL missing',
-      answers: 'with-db 下验证地图解锁与复活点绑定道具会把来源状态、背包、watermark、outbox 和双资产审计放进同一事务。',
+      answers: 'with-db 下驗證地圖解鎖、復活點綁定與神行傳送會把來源狀態、背包、位置、共享冷卻、watermark、outbox 和雙資產審計放進同一事務。',
       excludes: '当前无数据库，不证明真实事务、CAS 回滚或幂等重放。',
     }, null, 2));
     return;
@@ -28,8 +33,10 @@ async function main(): Promise<void> {
   const runtimeOwnerId = `runtime:${playerId}:1`;
   const mapOperationId = `op:${playerId}:map-unlock`;
   const respawnOperationId = `op:${playerId}:respawn-bind`;
+  const shenxingOperationId = `op:${playerId}:shenxing`;
   const mapItemInstanceId = '00000000-0000-4000-8000-000000000051';
   const respawnItemInstanceId = '00000000-0000-4000-8000-000000000052';
+  const shenxingItemInstanceId = '00000000-0000-4000-8000-000000000053';
   const provider = new DatabasePoolProvider();
   const durable = new DurableOperationService({ getNodeId: () => 'node:player-item-use-smoke' } as never, provider);
   const playerPersistence = new PlayerDomainPersistenceService(null, provider, null);
@@ -63,13 +70,14 @@ async function main(): Promise<void> {
       items: [
         { itemId: 'map_scroll', count: 1, itemInstanceId: mapItemInstanceId },
         { itemId: 'respawn_stone', count: 1, itemInstanceId: respawnItemInstanceId },
+        { itemId: SHENXING_PILL_TIERS[0].itemId, count: 1, itemInstanceId: shenxingItemInstanceId },
       ],
       lockedItems: [],
     };
     await playerPersistence.savePlayerSnapshotProjectionDomains(
       playerId,
       snapshot,
-      ['world_anchor', 'map_unlock', 'inventory'],
+      ['world_anchor', 'position_checkpoint', 'buff', 'map_unlock', 'inventory'],
       {
         allowInventoryEmptyOverwrite: true,
         expectedRuntimeOwnerId: runtimeOwnerId,
@@ -105,9 +113,12 @@ async function main(): Promise<void> {
     if (!unsafeEmptyOverwriteRejected) {
       throw new Error('expected unsafe empty inventory overwrite rejection');
     }
-    await assertInventory(pool, playerId, ['map_scroll', 'respawn_stone']);
+    await assertInventory(pool, playerId, ['map_scroll', 'respawn_stone', SHENXING_PILL_TIERS[0].itemId]);
 
-    const respawnInventory = [durableInventoryItem('respawn_stone', respawnItemInstanceId)];
+    const respawnInventory = [
+      durableInventoryItem('respawn_stone', respawnItemInstanceId),
+      durableInventoryItem(SHENXING_PILL_TIERS[0].itemId, shenxingItemInstanceId),
+    ];
     const mapResult = await durable.grantInventoryItems({
       operationId: mapOperationId,
       playerId,
@@ -174,7 +185,7 @@ async function main(): Promise<void> {
     if (!staleMapRejected) {
       throw new Error('expected stale map unlock snapshot rejection');
     }
-    await assertInventory(pool, playerId, ['respawn_stone']);
+    await assertInventory(pool, playerId, ['respawn_stone', SHENXING_PILL_TIERS[0].itemId]);
 
     const expectedRespawn = {
       templateId: 'yunlai_town',
@@ -196,8 +207,8 @@ async function main(): Promise<void> {
       sourceType: 'item_respawn_bind',
       sourceRefId: respawnItemInstanceId,
       inventoryAction: 'remove',
-      grantedItems: respawnInventory,
-      nextInventoryItems: [],
+      grantedItems: [durableInventoryItem('respawn_stone', respawnItemInstanceId)],
+      nextInventoryItems: [durableInventoryItem(SHENXING_PILL_TIERS[0].itemId, shenxingItemInstanceId)],
       sourceMutation: {
         kind: 'player_item_use',
         action: 'bind_respawn',
@@ -208,6 +219,58 @@ async function main(): Promise<void> {
     });
     if (!respawnResult.ok || respawnResult.alreadyCommitted) {
       throw new Error(`unexpected respawn bind result: ${JSON.stringify(respawnResult)}`);
+    }
+    await assertInventory(pool, playerId, [SHENXING_PILL_TIERS[0].itemId]);
+
+    const shenxingTier = SHENXING_PILL_TIERS[0];
+    const shenxingMutation = {
+      kind: 'player_item_use' as const,
+      action: 'shenxing_travel' as const,
+      playerId,
+      expectedPlacement: { ...snapshot.placement },
+      nextPlacement: {
+        templateId: 'bamboo_forest',
+        instanceId: 'public:bamboo_forest',
+        x: 7,
+        y: 9,
+        facing: snapshot.placement.facing,
+      },
+      cooldownBuff: {
+        buffId: SHENXING_COOLDOWN_BUFF_ID,
+        sourceSkillId: SHENXING_COOLDOWN_SOURCE_SKILL_ID,
+        realmLv: 1,
+        remainingTicks: shenxingTier.cooldownTicks + 1,
+        duration: shenxingTier.cooldownTicks,
+        stacks: 1 as const,
+        maxStacks: 1 as const,
+        rawPayload: {
+          buffId: SHENXING_COOLDOWN_BUFF_ID,
+          sourceSkillId: SHENXING_COOLDOWN_SOURCE_SKILL_ID,
+          realmLv: 1,
+          remainingTicks: shenxingTier.cooldownTicks + 1,
+          duration: shenxingTier.cooldownTicks,
+          stacks: 1,
+          maxStacks: 1,
+          cooldownExpiresAtMs: now + shenxingTier.cooldownTicks * 1000,
+        },
+      },
+    };
+    const shenxingInput = {
+      operationId: shenxingOperationId,
+      playerId,
+      expectedRuntimeOwnerId: runtimeOwnerId,
+      expectedSessionEpoch: 7,
+      sourceType: 'item_shenxing_travel',
+      sourceRefId: `${shenxingTier.itemId}:${shenxingItemInstanceId}`,
+      inventoryAction: 'remove' as const,
+      grantedItems: [durableInventoryItem(shenxingTier.itemId, shenxingItemInstanceId)],
+      nextInventoryItems: [],
+      sourceMutation: shenxingMutation,
+    };
+    const shenxingResult = await durable.grantInventoryItems(shenxingInput);
+    const shenxingReplay = await durable.grantInventoryItems(shenxingInput);
+    if (!shenxingResult.ok || shenxingResult.alreadyCommitted || !shenxingReplay.alreadyCommitted) {
+      throw new Error(`unexpected shenxing durable replay: ${JSON.stringify({ shenxingResult, shenxingReplay })}`);
     }
     await assertInventory(pool, playerId, []);
 
@@ -221,8 +284,20 @@ async function main(): Promise<void> {
     ))[0];
     const watermark = (await queryRows(
       pool,
-      'SELECT inventory_version, map_unlock_version, anchor_version FROM player_recovery_watermark WHERE player_id = $1',
+      'SELECT inventory_version, map_unlock_version, anchor_version, position_checkpoint_version, buff_version FROM player_recovery_watermark WHERE player_id = $1',
       [playerId],
+    ))[0];
+    const checkpoint = (await queryRows(
+      pool,
+      'SELECT instance_id, x, y, facing, checkpoint_kind FROM player_position_checkpoint WHERE player_id = $1',
+      [playerId],
+    ))[0];
+    const cooldownBuff = (await queryRows(
+      pool,
+      `SELECT buff_id, source_skill_id, remaining_ticks, duration, stacks, max_stacks
+         FROM player_persistent_buff_state
+        WHERE player_id = $1 AND buff_id = $2`,
+      [playerId, SHENXING_COOLDOWN_BUFF_ID],
     ))[0];
     const auditRows = await queryRows(
       pool,
@@ -237,19 +312,40 @@ async function main(): Promise<void> {
       || anchor?.respawn_instance_id !== nextRespawn.instanceId
       || Number(anchor?.respawn_x) !== nextRespawn.x
       || Number(anchor?.respawn_y) !== nextRespawn.y
-      || anchor?.last_safe_template_id !== snapshot.placement.templateId
-      || anchor?.last_safe_instance_id !== snapshot.placement.instanceId
-      || Number(anchor?.last_safe_x) !== snapshot.placement.x
-      || Number(anchor?.last_safe_y) !== snapshot.placement.y
+      || anchor?.last_safe_template_id !== shenxingMutation.nextPlacement.templateId
+      || anchor?.last_safe_instance_id !== shenxingMutation.nextPlacement.instanceId
+      || Number(anchor?.last_safe_x) !== shenxingMutation.nextPlacement.x
+      || Number(anchor?.last_safe_y) !== shenxingMutation.nextPlacement.y
     ) {
       throw new Error(`unexpected respawn anchor row: ${JSON.stringify(anchor)}`);
+    }
+    if (
+      checkpoint?.instance_id !== shenxingMutation.nextPlacement.instanceId
+      || Number(checkpoint?.x) !== shenxingMutation.nextPlacement.x
+      || Number(checkpoint?.y) !== shenxingMutation.nextPlacement.y
+      || Number(checkpoint?.facing) !== shenxingMutation.nextPlacement.facing
+      || checkpoint?.checkpoint_kind !== 'shenxing'
+    ) {
+      throw new Error(`unexpected shenxing checkpoint row: ${JSON.stringify(checkpoint)}`);
+    }
+    if (
+      cooldownBuff?.buff_id !== SHENXING_COOLDOWN_BUFF_ID
+      || cooldownBuff?.source_skill_id !== SHENXING_COOLDOWN_SOURCE_SKILL_ID
+      || Number(cooldownBuff?.remaining_ticks) !== shenxingTier.cooldownTicks + 1
+      || Number(cooldownBuff?.duration) !== shenxingTier.cooldownTicks
+      || Number(cooldownBuff?.stacks) !== 1
+      || Number(cooldownBuff?.max_stacks) !== 1
+    ) {
+      throw new Error(`unexpected shenxing cooldown row: ${JSON.stringify(cooldownBuff)}`);
     }
     if (
       Number(watermark?.inventory_version) <= 0
       || Number(watermark?.map_unlock_version) <= 0
       || Number(watermark?.anchor_version) <= 0
-      || auditRows.filter((row) => row.asset_type === 'inventory').length !== 2
-      || auditRows.filter((row) => row.asset_type === 'player_item_use').length !== 2
+      || Number(watermark?.position_checkpoint_version) <= 0
+      || Number(watermark?.buff_version) <= 0
+      || auditRows.filter((row) => row.asset_type === 'inventory').length !== 3
+      || auditRows.filter((row) => row.asset_type === 'player_item_use').length !== 3
     ) {
       throw new Error(`unexpected durable item-use metadata: watermark=${JSON.stringify(watermark)} audit=${JSON.stringify(auditRows)}`);
     }
@@ -257,11 +353,13 @@ async function main(): Promise<void> {
     console.log(JSON.stringify({
       ok: true,
       case: 'player-item-use-durable',
-      answers: '真实 PostgreSQL 已证明地图解锁与复活点绑定会把来源 CAS、背包后态、对应 domain watermark、outbox 和双资产审计同事务提交；精确重放不重复，来源快照变化整笔回滚，未验证的空背包覆盖会拒绝，最后一件已核对道具可合法消耗，复活绑定不覆盖 last-safe 落点。',
+      answers: '真实 PostgreSQL 已证明地图解锁、复活点绑定与神行传送会把来源 CAS、背包、位置、last-safe、共享冷却、watermark、outbox 和双资产审计同事务提交；精确重放不重复。',
       excludes: '不证明客户端网络断线、真实 tick 并发或功法书重复残卷产品语义。',
       mapResult,
       mapReplay,
       respawnResult,
+      shenxingResult,
+      shenxingReplay,
     }, null, 2));
   } finally {
     await cleanup(pool, playerId).catch(() => undefined);
@@ -295,6 +393,8 @@ async function cleanup(pool: Pool, playerId: string): Promise<void> {
   await pool.query('DELETE FROM player_inventory_item WHERE player_id = $1', [playerId]).catch(() => undefined);
   await pool.query('DELETE FROM player_map_unlock WHERE player_id = $1', [playerId]).catch(() => undefined);
   await pool.query('DELETE FROM player_world_anchor WHERE player_id = $1', [playerId]).catch(() => undefined);
+  await pool.query('DELETE FROM player_position_checkpoint WHERE player_id = $1', [playerId]).catch(() => undefined);
+  await pool.query('DELETE FROM player_persistent_buff_state WHERE player_id = $1', [playerId]).catch(() => undefined);
   await pool.query('DELETE FROM player_recovery_watermark WHERE player_id = $1', [playerId]).catch(() => undefined);
   await pool.query('DELETE FROM player_presence WHERE player_id = $1', [playerId]).catch(() => undefined);
 }

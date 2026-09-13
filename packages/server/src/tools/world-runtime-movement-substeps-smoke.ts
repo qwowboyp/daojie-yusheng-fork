@@ -94,18 +94,23 @@ function testFlatTerrainCadenceAndLogicalTickIsolation(): void {
   const tooEarly = instance.advancePlayerMovement(player.playerId, 1100, 1);
   assert.equal(tooEarly.moved, false);
   assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 0, y: 1 });
-  assert.equal(player.movePoints, 20);
+  assert.equal(player.movePoints, 10, '基礎移速每秒一格，每 100ms 補十點');
 
-  const firstStep = instance.advancePlayerMovement(player.playerId, 1500, 1);
+  for (let nowMs = 1200; nowMs < 2000; nowMs += 100) {
+    assert.equal(instance.advancePlayerMovement(player.playerId, nowMs, 1).moved, false);
+  }
+  const firstStep = instance.advancePlayerMovement(player.playerId, 2000, 1);
   assert.equal(firstStep.moved, true);
   assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 1, y: 1 });
   assert.equal(instance.tick, beforeTick);
   assert.equal(instance.hasPendingCommand(player.playerId), true);
-  assert.equal(instance.getPlayerMovementMetadata(player.playerId)?.durationMs, 500);
+  assert.equal(instance.getPlayerMovementMetadata(player.playerId)?.durationMs, 1000);
   assert.equal(firstStep.affectedPlayerIds.has('player:observer'), true);
 
-  assert.equal(instance.advancePlayerMovement(player.playerId, 1600, 1).moved, false);
-  const secondStep = instance.advancePlayerMovement(player.playerId, 2000, 1);
+  for (let nowMs = 2100; nowMs < 3000; nowMs += 100) {
+    assert.equal(instance.advancePlayerMovement(player.playerId, nowMs, 1).moved, false);
+  }
+  const secondStep = instance.advancePlayerMovement(player.playerId, 3000, 1);
   assert.equal(secondStep.moved, true);
   assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 2, y: 1 });
   assert.equal(instance.hasPendingCommand(player.playerId), false);
@@ -124,12 +129,12 @@ function testMonsterTraversalIsAtomicAndBudgetSafe(): void {
   assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 2, y: 1 });
   assert.equal(player.movePoints, 199);
 
-  const committed = instance.advancePlayerMovement(player.playerId, 3005, 1);
+  const committed = instance.advancePlayerMovement(player.playerId, 3010, 1);
   assert.equal(committed.moved, true);
   assert.deepEqual(instance.getPlayerPosition(player.playerId), { x: 4, y: 1 });
   assert.equal(player.movePoints, 0);
   assert.equal(instance.hasPendingCommand(player.playerId), false);
-  assert.equal(instance.getPlayerMovementMetadata(player.playerId)?.durationMs, 1000);
+  assert.equal(instance.getPlayerMovementMetadata(player.playerId)?.durationMs, 1000, '跨怪原子段的表現時長仍受一秒上限約束');
 }
 
 function testFullTickCannotDoubleConsumeMovement(): void {
@@ -152,7 +157,8 @@ function testFullTickCannotDoubleConsumeMovement(): void {
 function testHighSpeedCapAndPathBoundary(): void {
   const instance = createInstance();
   const player = connectPlayer(instance, 'player:high-speed', 0, 1);
-  instance.setPlayerMoveSpeed(player.playerId, 1800);
+  // 用明確超過軟衰減後上限的移速，驗證每秒二十格硬上限。
+  instance.setPlayerMoveSpeed(player.playerId, 100_000);
   resetMovementClock(player, 1000);
   player.movementWindowStartedAtMs = 1001;
   enqueuePath(instance, player.playerId, Array.from({ length: 20 }, (_, index) => ({ x: index + 1, y: 1 })));
@@ -164,7 +170,7 @@ function testHighSpeedCapAndPathBoundary(): void {
 
   const heldDirection = createInstance();
   const heldPlayer = connectPlayer(heldDirection, 'player:held-direction', 0, 1);
-  heldDirection.setPlayerMoveSpeed(heldPlayer.playerId, 1800);
+  heldDirection.setPlayerMoveSpeed(heldPlayer.playerId, 100_000);
   resetMovementClock(heldPlayer, 2500);
   assert.equal(heldDirection.enqueueMove({
     playerId: heldPlayer.playerId,
@@ -177,7 +183,7 @@ function testHighSpeedCapAndPathBoundary(): void {
 
   const accelerated = createInstance();
   const acceleratedPlayer = connectPlayer(accelerated, 'player:accelerated', 0, 1);
-  accelerated.setPlayerMoveSpeed(acceleratedPlayer.playerId, 1800);
+  accelerated.setPlayerMoveSpeed(acceleratedPlayer.playerId, 100_000);
   resetMovementClock(acceleratedPlayer, 3000);
   acceleratedPlayer.movementTickSpeed = 10;
   enqueuePath(accelerated, acceleratedPlayer.playerId, Array.from({ length: 20 }, (_, index) => ({ x: index + 1, y: 1 })));
@@ -201,7 +207,7 @@ function testHighSpeedCapAndPathBoundary(): void {
 
   const portalInstance = createInstance();
   const portalPlayer = connectPlayer(portalInstance, 'player:auto-portal', 0, 1);
-  portalInstance.setPlayerMoveSpeed(portalPlayer.playerId, 1800);
+  portalInstance.setPlayerMoveSpeed(portalPlayer.playerId, 100_000);
   resetMovementClock(portalPlayer, 5000);
   portalInstance.addRuntimePortal({
     id: 'portal:auto-middle',
@@ -230,7 +236,7 @@ function testPauseAndSpeedChangesDoNotCreateMovementDebt(): void {
   assert.equal(pausedInstance.advancePlayerMovement(pausedPlayer.playerId, 1600, 1).moved, false);
   assert.equal(pausedPlayer.movePoints, 0, '恢复首帧不得补发暂停期间移动点数');
   pausedInstance.advancePlayerMovement(pausedPlayer.playerId, 1700, 1);
-  assert.equal(pausedPlayer.movePoints, 20, '恢复后只按真实活动时间补点');
+  assert.equal(pausedPlayer.movePoints, 10, '恢復後只按真實活動時間補點');
 
   const acceleratedInstance = createInstance();
   const acceleratedPlayer = connectPlayer(acceleratedInstance, 'player:speed-clock', 0, 1);
@@ -240,7 +246,7 @@ function testPauseAndSpeedChangesDoNotCreateMovementDebt(): void {
   assert.equal(acceleratedInstance.advancePlayerMovement(acceleratedPlayer.playerId, 2500, 10).moved, false);
   assert.equal(acceleratedPlayer.movePoints, 0, '倍率切换首帧不得以新倍率回算旧区间');
   assert.equal(acceleratedInstance.advancePlayerMovement(acceleratedPlayer.playerId, 2600, 10).moved, true);
-  assert.deepEqual(acceleratedInstance.getPlayerPosition(acceleratedPlayer.playerId), { x: 2, y: 1 });
+  assert.deepEqual(acceleratedInstance.getPlayerPosition(acceleratedPlayer.playerId), { x: 1, y: 1 });
 }
 
 async function testGuardsPrecedeDispatchAndMovementInterruptsCast(): Promise<void> {

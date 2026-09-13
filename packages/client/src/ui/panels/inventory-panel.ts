@@ -97,10 +97,13 @@ import {
   InventoryFormationDialogController,
   type FormationRangePreviewPayload,
 } from './inventory-formation-dialog';
+import { openShenxingTravelPanel } from '../../react-ui/panels/inventory/mount-shenxing-travel-panel';
 
 type UseItemOptions = {
   sectName?: string;
   sectMark?: string;
+  requestId?: string;
+  targetMapId?: string;
 };
 
 type InventoryCellRibbon = {
@@ -780,6 +783,14 @@ export class InventoryPanel {
     }
     if (this.isFormationDiskItem(item)) {
       this.openFormationDialog(slotIndex);
+      return;
+    }
+    if (item.useBehavior === 'shenxing_travel') {
+      if (!itemInstanceId) {
+        this.repairMissingInventoryItemInstanceIds();
+        return;
+      }
+      openShenxingTravelPanel(itemInstanceId, item.name, (useOptions) => this.onUseItem?.(itemInstanceId, 1, useOptions));
       return;
     }
     if (this.isSectFoundingTokenItem(item)) {
@@ -2336,6 +2347,7 @@ export class InventoryPanel {
       && item.count > 1
       && !this.isFormationDiskItem(item)
       && !this.isSectFoundingTokenItem(item)
+      && item.useBehavior !== 'shenxing_travel'
       && item.itemId !== MERIT_ITEM_ID;
   }
 

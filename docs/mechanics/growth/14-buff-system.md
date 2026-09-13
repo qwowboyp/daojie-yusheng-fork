@@ -70,6 +70,12 @@ isPillBuff = sourceSkillId.startsWith('item:')
 
 丹药 buff 和普通 buff 的百分比加成分层独立计算。
 
+### 境界增益丹同族替換
+
+境界增益丹跨境共用六個 buff ID：`item_buff.realm_martial_edge`、`arcane_surge`、`iron_guard`、`veil_guard`、`hawk_eye`、`mist_step`。每個模板都設定 `maxStacks = 1`，重服同族丹不會增加效果層數；不同境界丹重服時，既有執行期以相同 `buffId` 找到實例並更新其 prototype，因此新丹的數值覆蓋前一枚。
+
+境界增益丹重服同族時，以新丹的效果及單次持續時間替換，`realmLv` 取丹藥模板等級；高境界角色服用低階丹也只取得該丹品階的數值。六種不同族的效果可同時存在。此規則僅適用境界增益丹，其他既有消耗品維持原本持續時間規則。
+
 ## Buff 投影
 
 源文件: `packages/server/src/runtime/player/player-buff-projection.helpers.ts`

@@ -494,6 +494,7 @@ export class MapTemplateRepository {
             width,
             height,
             routeDomain: normalizeRouteDomain(document.routeDomain),
+            shenxingCategory: document.shenxingCategory,
             legacyTileRows: document.tiles.slice(),
             terrainRows: document.terrainRows?.map((row) => row.slice()) ?? [],
             surfaceRows: document.surfaceRows?.map((row) => row.slice()) ?? [],

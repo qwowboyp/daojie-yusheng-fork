@@ -55,5 +55,165 @@
     "maxStack": 99,
     "grade": "mystic",
     "useBehavior": "open_technique_generation"
+  },
+  {
+    "itemId": "pill.realm.foundation.martial_edge",
+    "name": "築基破軍丹",
+    "type": "consumable",
+    "grade": "mystic",
+    "level": 31,
+    "desc": "築基修士淬鍊用的破軍丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_martial_edge",
+        "name": "破軍丹·築基",
+        "desc": "物攻提升 9%、暴擊提升 4%，持續 120 息。同族丹效不疊層。",
+        "shortMark": "攻",
+        "duration": 120,
+        "maxStacks": 1,
+        "stats": {
+          "physAtk": 9,
+          "crit": 4
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "濕地青玉與荷露；裂紋赤金雙丸，表面嵌一枚斷戟形金片"
+  },
+  {
+    "itemId": "pill.realm.foundation.arcane_surge",
+    "name": "築基玄元丹",
+    "type": "consumable",
+    "grade": "mystic",
+    "level": 31,
+    "desc": "築基修士淬鍊用的玄元丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_arcane_surge",
+        "name": "玄元丹·築基",
+        "desc": "法攻提升 9%、每息靈力輸出上限提升 4%，持續 120 息。同族丹效不疊層。",
+        "shortMark": "元",
+        "duration": 120,
+        "maxStacks": 1,
+        "stats": {
+          "spellAtk": 9,
+          "maxQiOutputPerTick": 4
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "濕地青玉與荷露；旋渦藍紫珠，半透明核心浮著一道靈流"
+  },
+  {
+    "itemId": "pill.realm.foundation.iron_guard",
+    "name": "築基金剛丹",
+    "type": "consumable",
+    "grade": "mystic",
+    "level": 35,
+    "desc": "築基修士淬鍊用的金剛丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_iron_guard",
+        "name": "金剛丹·築基",
+        "desc": "物防提升 9%、化解提升 4%，持續 120 息。同族丹效不疊層。",
+        "shortMark": "剛",
+        "duration": 120,
+        "maxStacks": 1,
+        "stats": {
+          "physDef": 9,
+          "resolvePower": 4
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "濕地青玉與荷露；龜甲褐金丸，外殼有明顯分節與厚重邊緣"
+  },
+  {
+    "itemId": "pill.realm.foundation.veil_guard",
+    "name": "築基玄甲丹",
+    "type": "consumable",
+    "grade": "mystic",
+    "level": 35,
+    "desc": "築基修士淬鍊用的玄甲丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_veil_guard",
+        "name": "玄甲丹·築基",
+        "desc": "法防提升 9%、抗暴提升 4%，持續 120 息。同族丹效不疊層。",
+        "shortMark": "甲",
+        "duration": 120,
+        "maxStacks": 1,
+        "stats": {
+          "spellDef": 9,
+          "antiCrit": 4
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "濕地青玉與荷露；半透明青玉護珠，內封六角護符"
+  },
+  {
+    "itemId": "pill.realm.foundation.hawk_eye",
+    "name": "築基明瞳丹",
+    "type": "consumable",
+    "grade": "mystic",
+    "level": 39,
+    "desc": "築基修士淬鍊用的明瞳丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_hawk_eye",
+        "name": "明瞳丹·築基",
+        "desc": "命中提升 9%、破招提升 4%，持續 120 息。同族丹效不疊層。",
+        "shortMark": "瞳",
+        "duration": 120,
+        "maxStacks": 1,
+        "stats": {
+          "hit": 9,
+          "breakPower": 4
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "濕地青玉與荷露；瞳孔琥珀丸，黑金虹膜環繞一點高光"
+  },
+  {
+    "itemId": "pill.realm.foundation.mist_step",
+    "name": "築基幻影丹",
+    "type": "consumable",
+    "grade": "mystic",
+    "level": 39,
+    "desc": "築基修士淬鍊用的幻影丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_mist_step",
+        "name": "幻影丹·築基",
+        "desc": "閃避提升 9%、移速提升 4%，持續 120 息。同族丹效不疊層。",
+        "shortMark": "影",
+        "duration": 120,
+        "maxStacks": 1,
+        "stats": {
+          "dodge": 9,
+          "moveSpeed": 4
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "濕地青玉與荷露；羽紋銀霧丸，拖著分離的薄霧尾痕"
+  },
+  {
+    "itemId": "pill.realm.foundation.swiftwind",
+    "name": "築基神行丹",
+    "type": "consumable",
+    "grade": "mystic",
+    "level": 31,
+    "useBehavior": "shenxing_travel",
+    "desc": "築基行旅丹，啟動神行後可前往已收錄的城鎮或野外地圖；不可進入副本、塔、私人或測試地圖。",
+    "artDirection": "濕地青玉與荷露；螺旋翼紋青白丸，外圈有獨立風環與折紙般的雲翼"
   }
 ]

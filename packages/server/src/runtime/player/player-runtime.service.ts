@@ -11,7 +11,7 @@
 import { Inject, BadRequestException, Injectable, Logger, NotFoundException, Optional, ServiceUnavailableException } from '@nestjs/common';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { ARTIFACT_SLOTS, ARTIFACT_UNLOCK_REALM_LV, ATTR_KEYS, ATTR_TO_NUMERIC_WEIGHTS, ATTR_TO_PERCENT_NUMERIC_WEIGHTS, AUTO_IDLE_CULTIVATION_DELAY_TICKS, BODY_TRAINING_FOUNDATION_EXP_MULTIPLIER, DEFAULT_BASE_ATTRS, DEFAULT_BONE_AGE_YEARS, DEFAULT_COMBAT_ATTACK_INTENSITY, DEFAULT_INSTANT_CONSUMABLE_COOLDOWN_TICKS, DEFAULT_INVENTORY_CAPACITY, DEFAULT_PLAYER_REALM_STAGE, Direction, EQUIP_SLOTS, PLAYER_REALM_CONFIG, PLAYER_REALM_ORDER, RETURN_TO_SPAWN_ACTION_ID, RETURN_TO_SPAWN_COOLDOWN_TICKS, TECHNIQUE_ACTIVITY_QUEUE_MAX_LENGTH, TechniqueRealm, addItemStackMergeCount, calculateTechniqueComprehensionProgressGain, calculateTechniqueComprehensionRequiredProgress, canMergeItemStack, cloneCraftEffectStats, coalesceItemStackList, compileValueStatsToActualStats, computeCraftSkillExpGain, createItemStackSignature, enforceSkillEnabledLimit, findMergeableItemStackIndex, getBodyTrainingExpToNext, getTechniqueMaxLevel, isCreatedTechniqueId, isTechniqueAggregationId, isTechniqueFullyMastered, mergeItemStackInto, normalizeBodyTrainingState, normalizeCombatAttackIntensity, normalizeHorizontalFacing, normalizeTechniqueStrengthPercent, percentModifierToMultiplier, resolveArtifactMaxQi, resolvePlayerFacingContentName, resolvePlayerSkillSlotLimit, resolveSkillRequiresTarget, resolveTechniqueStandardMaxHpRecoveryAmount, resolveTechniqueStandardMaxQiRecoveryAmount, signedRatioValue } from '@mud/shared';
+import { ARTIFACT_SLOTS, ARTIFACT_UNLOCK_REALM_LV, ATTR_KEYS, ATTR_TO_NUMERIC_WEIGHTS, ATTR_TO_PERCENT_NUMERIC_WEIGHTS, AUTO_IDLE_CULTIVATION_DELAY_TICKS, BODY_TRAINING_FOUNDATION_EXP_MULTIPLIER, DEFAULT_BASE_ATTRS, DEFAULT_BONE_AGE_YEARS, DEFAULT_COMBAT_ATTACK_INTENSITY, DEFAULT_INSTANT_CONSUMABLE_COOLDOWN_TICKS, DEFAULT_INVENTORY_CAPACITY, DEFAULT_PLAYER_REALM_STAGE, Direction, EQUIP_SLOTS, PLAYER_REALM_CONFIG, PLAYER_REALM_ORDER, RETURN_TO_SPAWN_ACTION_ID, RETURN_TO_SPAWN_COOLDOWN_TICKS, SHENXING_COOLDOWN_GROUP, TECHNIQUE_ACTIVITY_QUEUE_MAX_LENGTH, TechniqueRealm, addItemStackMergeCount, calculateTechniqueComprehensionProgressGain, calculateTechniqueComprehensionRequiredProgress, canMergeItemStack, cloneCraftEffectStats, coalesceItemStackList, compileValueStatsToActualStats, computeCraftSkillExpGain, createItemStackSignature, enforceSkillEnabledLimit, findMergeableItemStackIndex, getBodyTrainingExpToNext, getShenxingPillTier, getTechniqueMaxLevel, isCreatedTechniqueId, isTechniqueAggregationId, isTechniqueFullyMastered, mergeItemStackInto, normalizeBodyTrainingState, normalizeCombatAttackIntensity, normalizeHorizontalFacing, normalizeTechniqueStrengthPercent, percentModifierToMultiplier, resolveArtifactMaxQi, resolvePlayerFacingContentName, resolvePlayerSkillSlotLimit, resolveSkillRequiresTarget, resolveTechniqueStandardMaxHpRecoveryAmount, resolveTechniqueStandardMaxQiRecoveryAmount, signedRatioValue } from '@mud/shared';
 import type { TechniqueTransmissionStatusView } from '@mud/shared';
 import { assignItemInstanceIdIfNeeded, compareItemInstanceId, isItemInstanceIdHardCheckEnabled } from '../world/item-instance-id.helpers';
 import { isNativeGmBotPlayerId } from '../../http/native/native-gm.constants';
@@ -2025,6 +2025,33 @@ export class PlayerRuntimeService {
         this.bumpPersistentRevision(player);
         this.recordAssetStatisticMutation(player, statisticBefore);
         return player;
+    }
+
+    getConsumableItemCooldownRemainingTicks(playerId, item) {
+        const player = this.getPlayerOrThrow(playerId);
+        return getConsumableItemCooldownRemainingTicks(player, item, resolvePlayerRuntimeTick(player));
+    }
+
+    markConsumableItemCooldown(playerId, item) {
+        const player = this.getPlayerOrThrow(playerId);
+        markConsumableItemCooldown(player, item, resolvePlayerRuntimeTick(player));
+        return player;
+    }
+
+    buildConsumableCooldownBuffSnapshot(item) {
+        const tier = getShenxingPillTier(item?.itemId);
+        if (!tier) return null;
+        const buff = buildPersistentConsumableCooldownBuff(SHENXING_COOLDOWN_GROUP, tier.cooldownTicks);
+        return {
+            buffId: buff.buffId,
+            sourceSkillId: buff.sourceSkillId,
+            realmLv: buff.realmLv,
+            remainingTicks: buff.remainingTicks,
+            duration: buff.duration,
+            stacks: 1,
+            maxStacks: 1,
+            rawPayload: materializeRuntimeTemporaryBuff(buff),
+        };
     }
     /**
  * replaceWalletBalances：用已提交的钱包快照替换运行态。
@@ -4813,6 +4840,27 @@ export class PlayerRuntimeService {
 
         const player = this.getPlayerOrThrow(playerId);
 
+        if (isRealmPillFamilyBuff(buff)) {
+            const previousFamilyBuffs = player.buffs.buffs.filter((entry) => entry?.buffId === buff.buffId);
+            const affectsAttributes = previousFamilyBuffs.some((entry) => doesBuffAffectAttributeProjection(player, entry))
+                || doesBuffAffectAttributeProjection(player, buff);
+            const affectsVitalCapacity = previousFamilyBuffs.some((entry) => doesBuffAffectVitalCapacityProjection(player, entry))
+                || doesBuffAffectVitalCapacityProjection(player, buff);
+            player.buffs.buffs = player.buffs.buffs.filter((entry) => entry?.buffId !== buff.buffId);
+            player.buffs.buffs.push(createRuntimeTemporaryBuff({ ...buff, stacks: 1, maxStacks: 1 }));
+            player.buffs.buffs.sort((left, right) => String(left.buffId ?? '').localeCompare(String(right.buffId ?? ''), 'zh-Hant-TW'));
+            player.buffs.revision += 1;
+            if (affectsAttributes) {
+                this.playerAttributesService.recalculate(player, 'buff');
+                if (affectsVitalCapacity) {
+                    this.playerAttributesService.ensureFresh?.(player);
+                }
+            }
+            markPlayerDirtyDomains(player, affectsAttributes ? ['buff', 'attr'] : ['buff']);
+            this.bumpPersistentRevision(player);
+            return player;
+        }
+
         const existing = player.buffs.buffs.find((entry) => entry.buffId === buff.buffId);
         let changed = false;
         let attrRelevantChanged = false;
@@ -7050,8 +7098,10 @@ export class PlayerRuntimeService {
             consumed = true;
         }
         if (Array.isArray(item.consumeBuffs) && item.consumeBuffs.length > 0) {
-            const sourceRealmLv = Math.max(1, Math.floor(player.realm?.realmLv ?? 1));
             for (const buff of item.consumeBuffs) {
+                const sourceRealmLv = isRealmPillFamilyBuff(buff)
+                    ? Math.max(1, Math.floor(Number(item.level) || 1))
+                    : Math.max(1, Math.floor(player.realm?.realmLv ?? 1));
                 this.applyTemporaryBuff(player.playerId, toConsumableTemporaryBuff(item, buff, sourceRealmLv));
             }
             consumed = true;
@@ -11265,6 +11315,9 @@ function buildPersistentConsumableCooldownBuff(group, cooldown) {
         infiniteDuration: false,
         persistOnDeath: true,
         persistOnReturnToSpawn: true,
+        ...(group === SHENXING_COOLDOWN_GROUP
+            ? { cooldownExpiresAtMs: Date.now() + cooldown * 1000 }
+            : {}),
     };
 }
 
@@ -11280,6 +11333,14 @@ function restoreConsumableCooldownStateFromPersistentBuffs(player) {
     for (const buff of Array.isArray(player.buffs?.buffs) ? player.buffs.buffs : []) {
         const group = resolveConsumableCooldownBuffGroup(buff);
         const duration = Math.max(0, Math.trunc(Number(buff?.duration) || 0));
+        const expiresAtMs = Number(buff?.cooldownExpiresAtMs);
+        if (group === SHENXING_COOLDOWN_GROUP && Number.isFinite(expiresAtMs)) {
+            const wallRemainingTicks = Math.max(0, Math.ceil((expiresAtMs - Date.now()) / 1000));
+            buff.remainingTicks = Math.min(
+                Math.max(0, Math.trunc(Number(buff?.remainingTicks) || 0)),
+                wallRemainingTicks > 0 ? wallRemainingTicks + 1 : 0,
+            );
+        }
         const remainingTicks = Math.max(0, Math.trunc(Number(buff?.remainingTicks) || 0));
         if (!group || duration <= 0 || remainingTicks <= 0) {
             continue;
@@ -11310,7 +11371,7 @@ function resolveConsumableCooldownBuffGroup(buff) {
 }
 
 function normalizeConsumableCooldownGroup(value) {
-    return value === 'hp' || value === 'qi' ? value : null;
+    return value === 'hp' || value === 'qi' || value === SHENXING_COOLDOWN_GROUP ? value : null;
 }
 
 function getConsumableItemCooldownRemainingTicks(player, item, currentTick) {
@@ -11321,6 +11382,15 @@ function getConsumableItemCooldownRemainingTicks(player, item, currentTick) {
     const groups = resolveConsumableItemCooldownGroups(item);
     if (groups.length === 0) {
         return 0;
+    }
+    if (groups.includes(SHENXING_COOLDOWN_GROUP)) {
+        const active = resolvePersistentConsumableCooldown(player, SHENXING_COOLDOWN_GROUP, currentTick);
+        if (!active) {
+            const staleState = getConsumableCooldownState(player);
+            if (staleState) delete staleState[SHENXING_COOLDOWN_GROUP];
+            return 0;
+        }
+        return active.remainingTicks;
     }
     const state = getConsumableCooldownState(player);
     if (!state) {
@@ -11352,7 +11422,12 @@ function syncConsumableInventoryCooldownProjection(player, currentTick) {
     const state = getConsumableCooldownState(player);
     const normalizedCurrentTick = Math.max(0, Math.trunc(Number(currentTick) || 0));
     inventory.serverTick = normalizedCurrentTick;
-    if (!state) {
+    const shenxingCooldown = resolvePersistentConsumableCooldown(
+        player,
+        SHENXING_COOLDOWN_GROUP,
+        normalizedCurrentTick,
+    );
+    if (!state && !shenxingCooldown) {
         inventory.cooldowns = [];
         return;
     }
@@ -11366,6 +11441,17 @@ function syncConsumableInventoryCooldownProjection(player, currentTick) {
         if (cooldown <= 0 || groups.length === 0) {
             continue;
         }
+        if (groups.includes(SHENXING_COOLDOWN_GROUP)) {
+            if (shenxingCooldown) {
+                cooldownsByItemId.set(item.itemId, {
+                    itemId: item.itemId,
+                    cooldown: shenxingCooldown.duration,
+                    startedAtTick: shenxingCooldown.startedAtTick,
+                });
+            }
+            continue;
+        }
+        if (!state) continue;
         let selectedStartedAtTick = null;
         let maxRemaining = 0;
         for (const group of groups) {
@@ -11395,9 +11481,30 @@ function syncConsumableInventoryCooldownProjection(player, currentTick) {
         .sort((left, right) => left.itemId.localeCompare(right.itemId, 'zh-Hans-CN'));
 }
 
+function resolvePersistentConsumableCooldown(player, group, currentTick) {
+    const normalizedGroup = normalizeConsumableCooldownGroup(group);
+    if (!normalizedGroup) return null;
+    const buff = (Array.isArray(player?.buffs?.buffs) ? player.buffs.buffs : [])
+        .find((entry) => resolveConsumableCooldownBuffGroup(entry) === normalizedGroup);
+    const duration = Math.max(0, Math.trunc(Number(buff?.duration) || 0));
+    const remainingTicks = Math.max(0, Math.trunc(Number(buff?.remainingTicks) || 0) - 1);
+    if (!buff || duration <= 0 || remainingTicks <= 0) return null;
+    const elapsedTicks = Math.max(0, duration - Math.min(duration, remainingTicks));
+    const normalizedCurrentTick = Math.max(0, Math.trunc(Number(currentTick) || 0));
+    return {
+        duration,
+        remainingTicks,
+        startedAtTick: Math.max(0, normalizedCurrentTick - elapsedTicks),
+    };
+}
+
 function resolveConsumableItemCooldownTicks(item) {
     if (!item) {
         return 0;
+    }
+    const shenxingTier = getShenxingPillTier(item.itemId);
+    if (shenxingTier) {
+        return shenxingTier.cooldownTicks;
     }
     const hasCooldownEffect = hasConsumableRecoveryCooldownEffect(item);
     if (!hasCooldownEffect) {
@@ -11414,6 +11521,10 @@ function resolveConsumableItemCooldownGroups(item) {
         return [];
     }
     const groups = [];
+    if (getShenxingPillTier(item.itemId)) {
+        groups.push(SHENXING_COOLDOWN_GROUP);
+        return groups;
+    }
     if (hasHpConsumableEffect(item)) {
         groups.push('hp');
     }
@@ -12970,6 +13081,10 @@ function isConsumableBuffSource(buff) {
     const sourceSkillId = typeof buff?.sourceSkillId === 'string' ? buff.sourceSkillId : '';
     const buffId = typeof buff?.buffId === 'string' ? buff.buffId : '';
     return sourceSkillId.startsWith('item:') || sourceSkillId.startsWith('pill.') || buffId.startsWith('item_buff.');
+}
+
+function isRealmPillFamilyBuff(buff) {
+    return typeof buff?.buffId === 'string' && buff.buffId.startsWith('item_buff.realm_');
 }
 /**
  * cloneRuntimeAttrState：构建运行态Attr状态。

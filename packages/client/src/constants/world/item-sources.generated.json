@@ -16264,6 +16264,36 @@
       "mapLv": 39
     }
   ],
+  "mat.ascension_cloudstep_orchid": [
+    {
+      "kind": "search",
+      "mapId": "lg_ascension_gate",
+      "mapName": "天門遺址",
+      "landmarkId": "lg_ascension_cloudstep_orchid",
+      "landmarkName": "雲階蘭",
+      "navigationX": 11,
+      "navigationY": 17,
+      "mode": "direct",
+      "chance": 1,
+      "count": 1,
+      "mapLv": 127
+    }
+  ],
+  "mat.ascension_starfold_crystal": [
+    {
+      "kind": "mining",
+      "mapId": "lg_ascension_gate",
+      "mapName": "天門遺址",
+      "landmarkId": "lg_ascension_starfold_crystal",
+      "landmarkName": "摺星晶",
+      "navigationX": 24,
+      "navigationY": 17,
+      "mode": "direct",
+      "chance": 1,
+      "count": 1,
+      "mapLv": 127
+    }
+  ],
   "mat.bearingroot_ginseng": [
     {
       "kind": "search",
@@ -18640,6 +18670,573 @@
       "mapName": "炼丹",
       "recipeId": "alchemy.pill.qinglin_qi_restore",
       "recipeName": "青霖回元丹丹方"
+    }
+  ],
+  "pill.realm.ascension.arcane_surge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.ascension.arcane_surge",
+      "recipeName": "飛昇玄元丹丹方"
+    }
+  ],
+  "pill.realm.ascension.hawk_eye": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.ascension.hawk_eye",
+      "recipeName": "飛昇明瞳丹丹方"
+    }
+  ],
+  "pill.realm.ascension.iron_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.ascension.iron_guard",
+      "recipeName": "飛昇金剛丹丹方"
+    }
+  ],
+  "pill.realm.ascension.martial_edge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.ascension.martial_edge",
+      "recipeName": "飛昇破軍丹丹方"
+    }
+  ],
+  "pill.realm.ascension.mist_step": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.ascension.mist_step",
+      "recipeName": "飛昇幻影丹丹方"
+    }
+  ],
+  "pill.realm.ascension.swiftwind": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.ascension.swiftwind",
+      "recipeName": "飛昇神行丹丹方"
+    }
+  ],
+  "pill.realm.ascension.veil_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.ascension.veil_guard",
+      "recipeName": "飛昇玄甲丹丹方"
+    }
+  ],
+  "pill.realm.body_integration.arcane_surge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.body_integration.arcane_surge",
+      "recipeName": "合體玄元丹丹方"
+    }
+  ],
+  "pill.realm.body_integration.hawk_eye": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.body_integration.hawk_eye",
+      "recipeName": "合體明瞳丹丹方"
+    }
+  ],
+  "pill.realm.body_integration.iron_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.body_integration.iron_guard",
+      "recipeName": "合體金剛丹丹方"
+    }
+  ],
+  "pill.realm.body_integration.martial_edge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.body_integration.martial_edge",
+      "recipeName": "合體破軍丹丹方"
+    }
+  ],
+  "pill.realm.body_integration.mist_step": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.body_integration.mist_step",
+      "recipeName": "合體幻影丹丹方"
+    }
+  ],
+  "pill.realm.body_integration.swiftwind": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.body_integration.swiftwind",
+      "recipeName": "合體神行丹丹方"
+    }
+  ],
+  "pill.realm.body_integration.veil_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.body_integration.veil_guard",
+      "recipeName": "合體玄甲丹丹方"
+    }
+  ],
+  "pill.realm.foundation.arcane_surge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.foundation.arcane_surge",
+      "recipeName": "築基玄元丹丹方"
+    }
+  ],
+  "pill.realm.foundation.hawk_eye": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.foundation.hawk_eye",
+      "recipeName": "築基明瞳丹丹方"
+    }
+  ],
+  "pill.realm.foundation.iron_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.foundation.iron_guard",
+      "recipeName": "築基金剛丹丹方"
+    }
+  ],
+  "pill.realm.foundation.martial_edge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.foundation.martial_edge",
+      "recipeName": "築基破軍丹丹方"
+    }
+  ],
+  "pill.realm.foundation.mist_step": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.foundation.mist_step",
+      "recipeName": "築基幻影丹丹方"
+    }
+  ],
+  "pill.realm.foundation.swiftwind": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.foundation.swiftwind",
+      "recipeName": "築基神行丹丹方"
+    }
+  ],
+  "pill.realm.foundation.veil_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.foundation.veil_guard",
+      "recipeName": "築基玄甲丹丹方"
+    }
+  ],
+  "pill.realm.golden_core.arcane_surge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.golden_core.arcane_surge",
+      "recipeName": "金丹玄元丹丹方"
+    }
+  ],
+  "pill.realm.golden_core.hawk_eye": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.golden_core.hawk_eye",
+      "recipeName": "金丹明瞳丹丹方"
+    }
+  ],
+  "pill.realm.golden_core.iron_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.golden_core.iron_guard",
+      "recipeName": "金丹金剛丹丹方"
+    }
+  ],
+  "pill.realm.golden_core.martial_edge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.golden_core.martial_edge",
+      "recipeName": "金丹破軍丹丹方"
+    }
+  ],
+  "pill.realm.golden_core.mist_step": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.golden_core.mist_step",
+      "recipeName": "金丹幻影丹丹方"
+    }
+  ],
+  "pill.realm.golden_core.swiftwind": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.golden_core.swiftwind",
+      "recipeName": "金丹神行丹丹方"
+    }
+  ],
+  "pill.realm.golden_core.veil_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.golden_core.veil_guard",
+      "recipeName": "金丹玄甲丹丹方"
+    }
+  ],
+  "pill.realm.great_vehicle.arcane_surge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.great_vehicle.arcane_surge",
+      "recipeName": "大乘玄元丹丹方"
+    }
+  ],
+  "pill.realm.great_vehicle.hawk_eye": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.great_vehicle.hawk_eye",
+      "recipeName": "大乘明瞳丹丹方"
+    }
+  ],
+  "pill.realm.great_vehicle.iron_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.great_vehicle.iron_guard",
+      "recipeName": "大乘金剛丹丹方"
+    }
+  ],
+  "pill.realm.great_vehicle.martial_edge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.great_vehicle.martial_edge",
+      "recipeName": "大乘破軍丹丹方"
+    }
+  ],
+  "pill.realm.great_vehicle.mist_step": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.great_vehicle.mist_step",
+      "recipeName": "大乘幻影丹丹方"
+    }
+  ],
+  "pill.realm.great_vehicle.swiftwind": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.great_vehicle.swiftwind",
+      "recipeName": "大乘神行丹丹方"
+    }
+  ],
+  "pill.realm.great_vehicle.veil_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.great_vehicle.veil_guard",
+      "recipeName": "大乘玄甲丹丹方"
+    }
+  ],
+  "pill.realm.nascent_soul.arcane_surge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.nascent_soul.arcane_surge",
+      "recipeName": "元嬰玄元丹丹方"
+    }
+  ],
+  "pill.realm.nascent_soul.hawk_eye": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.nascent_soul.hawk_eye",
+      "recipeName": "元嬰明瞳丹丹方"
+    }
+  ],
+  "pill.realm.nascent_soul.iron_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.nascent_soul.iron_guard",
+      "recipeName": "元嬰金剛丹丹方"
+    }
+  ],
+  "pill.realm.nascent_soul.martial_edge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.nascent_soul.martial_edge",
+      "recipeName": "元嬰破軍丹丹方"
+    }
+  ],
+  "pill.realm.nascent_soul.mist_step": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.nascent_soul.mist_step",
+      "recipeName": "元嬰幻影丹丹方"
+    }
+  ],
+  "pill.realm.nascent_soul.swiftwind": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.nascent_soul.swiftwind",
+      "recipeName": "元嬰神行丹丹方"
+    }
+  ],
+  "pill.realm.nascent_soul.veil_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.nascent_soul.veil_guard",
+      "recipeName": "元嬰玄甲丹丹方"
+    }
+  ],
+  "pill.realm.spirit_transformation.arcane_surge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.spirit_transformation.arcane_surge",
+      "recipeName": "化神玄元丹丹方"
+    }
+  ],
+  "pill.realm.spirit_transformation.hawk_eye": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.spirit_transformation.hawk_eye",
+      "recipeName": "化神明瞳丹丹方"
+    }
+  ],
+  "pill.realm.spirit_transformation.iron_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.spirit_transformation.iron_guard",
+      "recipeName": "化神金剛丹丹方"
+    }
+  ],
+  "pill.realm.spirit_transformation.martial_edge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.spirit_transformation.martial_edge",
+      "recipeName": "化神破軍丹丹方"
+    }
+  ],
+  "pill.realm.spirit_transformation.mist_step": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.spirit_transformation.mist_step",
+      "recipeName": "化神幻影丹丹方"
+    }
+  ],
+  "pill.realm.spirit_transformation.swiftwind": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.spirit_transformation.swiftwind",
+      "recipeName": "化神神行丹丹方"
+    }
+  ],
+  "pill.realm.spirit_transformation.veil_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.spirit_transformation.veil_guard",
+      "recipeName": "化神玄甲丹丹方"
+    }
+  ],
+  "pill.realm.tribulation.arcane_surge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.tribulation.arcane_surge",
+      "recipeName": "渡劫玄元丹丹方"
+    }
+  ],
+  "pill.realm.tribulation.hawk_eye": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.tribulation.hawk_eye",
+      "recipeName": "渡劫明瞳丹丹方"
+    }
+  ],
+  "pill.realm.tribulation.iron_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.tribulation.iron_guard",
+      "recipeName": "渡劫金剛丹丹方"
+    }
+  ],
+  "pill.realm.tribulation.martial_edge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.tribulation.martial_edge",
+      "recipeName": "渡劫破軍丹丹方"
+    }
+  ],
+  "pill.realm.tribulation.mist_step": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.tribulation.mist_step",
+      "recipeName": "渡劫幻影丹丹方"
+    }
+  ],
+  "pill.realm.tribulation.swiftwind": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.tribulation.swiftwind",
+      "recipeName": "渡劫神行丹丹方"
+    }
+  ],
+  "pill.realm.tribulation.veil_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.tribulation.veil_guard",
+      "recipeName": "渡劫玄甲丹丹方"
+    }
+  ],
+  "pill.realm.void_refinement.arcane_surge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.void_refinement.arcane_surge",
+      "recipeName": "煉虛玄元丹丹方"
+    }
+  ],
+  "pill.realm.void_refinement.hawk_eye": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.void_refinement.hawk_eye",
+      "recipeName": "煉虛明瞳丹丹方"
+    }
+  ],
+  "pill.realm.void_refinement.iron_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.void_refinement.iron_guard",
+      "recipeName": "煉虛金剛丹丹方"
+    }
+  ],
+  "pill.realm.void_refinement.martial_edge": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.void_refinement.martial_edge",
+      "recipeName": "煉虛破軍丹丹方"
+    }
+  ],
+  "pill.realm.void_refinement.mist_step": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.void_refinement.mist_step",
+      "recipeName": "煉虛幻影丹丹方"
+    }
+  ],
+  "pill.realm.void_refinement.swiftwind": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.void_refinement.swiftwind",
+      "recipeName": "煉虛神行丹丹方"
+    }
+  ],
+  "pill.realm.void_refinement.veil_guard": [
+    {
+      "kind": "alchemy",
+      "mapId": "crafting",
+      "mapName": "炼丹",
+      "recipeId": "alchemy.pill.realm.void_refinement.veil_guard",
+      "recipeName": "煉虛玄甲丹丹方"
     }
   ],
   "pill.shatter_spirit": [

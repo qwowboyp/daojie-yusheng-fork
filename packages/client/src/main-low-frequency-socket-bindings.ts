@@ -7,6 +7,7 @@ import { S2C, type ServerToClientEventPayload } from '@mud/shared';
 import type { SocketManager } from './network/socket';
 import { bindTechniqueActivityPanelEvents } from './technique-activity-client.helpers';
 import { contentResolver } from './content/content-resolver';
+import { closeShenxingTravelPanel, receiveShenxingDestinations, receiveShenxingResult } from './react-ui/panels/inventory/mount-shenxing-travel-panel';
 /**
  * MainLowFrequencySocketBindingsOptions：统一结构类型，保证协议与运行时一致性。
  */
@@ -272,6 +273,8 @@ export function bindMainLowFrequencySocketEvents(options: MainLowFrequencySocket
   options.socket.on(S2C.MarketItemBook, options.onMarketItemBook);
   options.socket.on(S2C.MarketTradeHistory, options.onMarketTradeHistory);
   options.socket.on(S2C.InventoryPage, options.onInventoryPage);
+  options.socket.on(S2C.ShenxingDestinations, receiveShenxingDestinations);
+  options.socket.on(S2C.ShenxingResult, receiveShenxingResult);
   options.socket.on(S2C.SectApplicationPage, options.onSectApplicationPage);
   options.socket.on(S2C.TechniquePage, options.onTechniquePage);
   options.socket.on(S2C.TechniqueTransmissionStatuses, options.onTechniqueTransmissionStatuses);
@@ -291,6 +294,7 @@ export function bindMainLowFrequencySocketEvents(options: MainLowFrequencySocket
   options.socket.onConnectError(options.onConnectError);
   options.socket.onDisconnect((...args) => {
     contentResolver.clearDynamicCache();
+    closeShenxingTravelPanel();
     options.onDisconnect(...args);
   });
 

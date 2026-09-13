@@ -26,6 +26,7 @@ const RUNTIME_BUFF_PROTOTYPE_KEYS = [
   'expireWithBuffId',
   'sourceCasterId',
   'tickEffects',
+  'cooldownExpiresAtMs',
 ];
 
 export function createRuntimeTemporaryBuff(source: RuntimeTemporaryBuffSource): RuntimeTemporaryBuffSource {
@@ -92,6 +93,7 @@ export function materializeRuntimeTemporaryBuff(source: RuntimeTemporaryBuffSour
     persistOnReturnToSpawn: source.persistOnReturnToSpawn,
     sourceCasterId: source.sourceCasterId,
     tickEffects: source.tickEffects,
+    cooldownExpiresAtMs: source.cooldownExpiresAtMs,
   });
 }
 
@@ -125,6 +127,7 @@ function createRuntimeTemporaryBuffPrototype(source: RuntimeTemporaryBuffSource)
     expireWithBuffId: source.expireWithBuffId,
     sourceCasterId: source.sourceCasterId,
     tickEffects: source.tickEffects,
+    cooldownExpiresAtMs: source.cooldownExpiresAtMs,
     toJSON() {
       return materializeRuntimeTemporaryBuff(this);
     },

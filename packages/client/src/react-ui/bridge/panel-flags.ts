@@ -12,6 +12,7 @@ const STORAGE_KEY = 'mud:react-panel-flags';
 
 /** 所有可迁移的面板 ID */
 export type ReactPanelId =
+  | 'shenxing-travel'
   | 'item-sources'
   | 'workspace-navigation'
   | 'changelog'
@@ -34,6 +35,7 @@ export type ReactPanelId =
 
 /** 默认启用 React 版本的面板（迁移完成后加入） */
 const DEFAULT_ENABLED: Set<ReactPanelId> = new Set([
+  'shenxing-travel',
   'item-sources',
   'workspace-navigation',
   'action',
@@ -81,6 +83,7 @@ function loadFlags(): Map<ReactPanelId, boolean> {
     const paramValue = params.get('react-panel');
     if (paramValue === 'all') {
       const allPanels: ReactPanelId[] = [
+        'shenxing-travel',
         'workspace-navigation',
         'changelog', 'world', 'loot', 'equipment', 'tutorial',
         'body-training', 'quest', 'gm', 'settings',

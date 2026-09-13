@@ -15,6 +15,7 @@ import type { TechniqueCategory } from './cultivation-types';
 import type { ArtifactSlotUpdateEntry, InventorySlotUpdateEntry, EquipmentSlotUpdateEntry, MarketListingPageEntry, MarketOwnOrderSyncEntry, MarketStorageSyncEntry, SyncedInventoryCooldownState, SyncedInventorySnapshot, SyncedLootWindowState, SyncedNpcShopView } from './synced-panel-types';
 import type { InventoryPageFilterView, TechniquePageCategoryFilterView, TechniquePageStatusFilterView } from './client-service-request-types';
 import type { TechniqueUpdateEntryView } from './panel-update-types';
+import type { ShenxingDestinationCategory } from './world-core-types';
 
 /** 兑换码请求的可机读失败类型，由客户端负责拼接展示文本。 */
 export type RedeemCodesResultErrorCode = 'request_rejected' | 'execution_failed';
@@ -85,6 +86,48 @@ export interface InventoryUpdateView {
  */
 
   serverTick?: number;
+}
+
+export interface ShenxingDestinationView {
+  mapId: string;
+  name: string;
+  mapLv: number;
+  category: ShenxingDestinationCategory;
+}
+
+/** 神行丹首次使用時回傳的權威目的地清單。 */
+export interface ShenxingDestinationsView {
+  requestId: string;
+  itemInstanceId: string;
+  itemId: string;
+  cooldownTicks: number;
+  cooldownRemainingTicks: number;
+  destinations: ShenxingDestinationView[];
+}
+
+export type ShenxingResultCode =
+  | 'travel_succeeded'
+  | 'request_invalid'
+  | 'item_missing'
+  | 'item_changed'
+  | 'realm_too_low'
+  | 'cooldown_active'
+  | 'destination_invalid'
+  | 'destination_forbidden'
+  | 'destination_unavailable'
+  | 'placement_unavailable'
+  | 'asset_commit_unavailable'
+  | 'asset_commit_failed'
+  | 'transfer_failed';
+
+/** 神行丹確認結果；失敗也必定回傳，以解除客戶端 pending。 */
+export interface ShenxingResultView {
+  requestId: string;
+  status: 'success' | 'rejected';
+  code: ShenxingResultCode;
+  targetMapId?: string;
+  targetMapName?: string;
+  cooldownTicks?: number;
 }
 
 /** 背包分页条目，slotIndex 保留服务端原始背包槽位。 */
