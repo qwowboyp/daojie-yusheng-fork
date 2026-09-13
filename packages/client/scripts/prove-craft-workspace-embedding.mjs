@@ -219,12 +219,18 @@ async function runCase(entry) {
         document.documentElement.dataset.colorMode = 'dark';
         await new Promise((resolve) => requestAnimationFrame(resolve));
         const realmTabs = pane.querySelector('[data-alchemy-realm-tabs="true"]');
+        const activeRealmTab = realmTabs.querySelector('.alchemy-category-btn.active');
+        // 低資源瀏覽器的顏色過渡可能跨多幀，等待原本要求的最終色值。
+        const themeDeadline = performance.now() + 3000;
+        while (getComputedStyle(activeRealmTab).color !== 'rgb(246, 238, 224)' && performance.now() < themeDeadline) {
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
         return {
           foundation,
           goldenCore,
           ascension,
           darkRealmBackground: getComputedStyle(realmTabs).backgroundColor,
-          darkRealmText: getComputedStyle(realmTabs.querySelector('.alchemy-category-btn.active')).color,
+          darkRealmText: getComputedStyle(activeRealmTab).color,
           realmTabsOverflow: realmTabs.scrollWidth > realmTabs.clientWidth,
         };
       })()
