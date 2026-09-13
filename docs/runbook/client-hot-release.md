@@ -24,6 +24,15 @@
 
 ## 使用方式
 
+### 先預檢，再執行完整門禁
+
+1. 開工先讀線上 receipt、current 與受保護容器身分。從實際 live commit 建立候選，先跑範圍分類；不要在建置後才發現混入 server/shared 改動。若 main 已等於 live，只維護一份候選。
+2. 在建立 worktree 時確認該環境的行尾設定。Nginx 範本和固定圖包以位元組雜湊作契約，LF 與 CRLF 會不同；一次核對所有 Nginx 範本及未修改的 public 靜態檔案，不能只確認 Git diff 沒變。相同圖包版本的內容必須與既有 immutable snapshot 完全一致，不可改遠端 receipt 或快照來遷就新包。
+3. 首次建置前先執行既有 prebuild 生成步驟，確認 tracked 生成檔的正規化 blob 與索引相同，再刷新這些檔案的索引狀態。生成器會將 checkout 的 CRLF 改寫為 LF，即使內容相同，也可能使穩定工作樹檢查失敗；若 blob 不同，必須先處理實際內容差異。日誌、截圖、下載的 receipt 和產物統一放在候選的 `.runtime/`。用 `git check-ignore` 實際確認，不假設 `.tmp/` 受忽略；輸出版本目錄不得覆寫既有候選。
+4. 程式與驗收案例由同一負責者整合；Git 專員只處理明確檔案的提交與推送。語意衝突須回到程式負責者，不能選用整份舊檔解衝突。
+5. 先完成相關型別與互動檢查，確認多端截圖，再提交穩定候選。直接讓 `prepare` 跑一次完整 `verify:client`，不要先獨立跑同一套完整門禁再立即交給 `prepare` 重跑。必要失敗修正後仍須重跑原本門禁，不可略過。
+6. 發布前比對 receipt 的全部靜態檔案及 Nginx 契約，確認僅有預期差異，再做遠端 plan 與精確 CAS publish。既有成功證據可直接引用；不要由不同代理重複執行同一檢查。將成功結果、雜湊核驗數、健康狀態與回復目標寫入實際存在的發布紀錄。
+
 在已提交的乾淨 checkout 執行；`BASE` 必須是目前線上 receipt 記錄的來源提交，不能只憑時間或 `buildId` 猜測。`version.json` 的 buildId 由建置時間產生，提交身分以 receipt 的完整 commit 為準。
 
 ```powershell

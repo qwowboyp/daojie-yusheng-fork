@@ -346,7 +346,7 @@ export class SidePanel {
         return;
       }
       const aliases: Record<string, string> = {
-        'mobile-overview': 'overview', 'mobile-attrs': 'attr', 'mobile-bag': 'inventory',
+        'mobile-overview': 'attr', 'mobile-attrs': 'attr', 'mobile-bag': 'inventory',
         'mobile-action': 'dialogue', action: 'dialogue', crafting: 'alchemy', 'mobile-world': 'map-intel', intel: 'map-intel',
       };
       tabName = aliases[tabName] ?? tabName;

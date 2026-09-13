@@ -24,7 +24,7 @@ const fixtureExpression = String.raw`
     const calls = [];
     const player = {
       id: 'workspace-proof-player', mapId: 'starter_village', realmLv: 30, level: 30,
-      name: '驗證玩家長名', displayName: '驗證玩家長名',
+      name: '驗證玩家長名', displayName: '仙',
       realm: { realmLv: 30, stage: 'qi_refining', displayName: '煉氣境', review: '初窺門徑', progress: 660, progressToNext: 1000,
         breakthroughReady: true, breakthrough: { canBreakthrough: true, targetDisplayName: '築基境' } }, foundation: 18, qi: 66000,
       x: 14, y: 22, viewRange: 12, hp: 680000, maxHp: 1000000, numericStats: { maxQi: 400000 },
@@ -216,7 +216,7 @@ const preserveInputExpression = String.raw`
 const verifyAllWorkspacesExpression = String.raw`
   (async () => {
     const expected = [
-      ['character', '角色', ['overview', 'attr', 'social']],
+      ['character', '角色', ['attr', 'social']],
       ['items', '背包與技藝', ['inventory', 'equipment', 'alchemy', 'forging', 'enhancement', 'transmission', 'building']],
       ['cultivation', '修行', ['technique', 'body-training', 'skill']],
       ['action', '行動與自動設定', ['dialogue', 'utility', 'toggle']],
@@ -735,7 +735,8 @@ const verifyHudRowsExpression = String.raw`
     proof.hud.update(proof.player, { mapName: '驗證山谷', mapDanger: '練氣一層 LV19', titleLabel: '築基修士', showRealmAction: true, realmActionLabel: '突破' });
     const { createMainUiStateSource } = await import('/src/main-ui-state-source.ts');
     const mapLabelSource = createMainUiStateSource({
-      getPlayer: () => null,
+      getPlayer: () => proof.player,
+      hud: { update() {} },
       mapRuntime: { getMapMeta: () => ({ name: '厚脈嶺', mapLv: 19 }) },
       mapNameEl: document.querySelector('#map-map-name .map-map-name-text'),
     });
@@ -760,12 +761,12 @@ const verifyHudRowsExpression = String.raw`
         barHeight: Math.max(meter.getBoundingClientRect().height, Number.parseFloat(meterStyle.height) || 0) };
     };
     const rows = {
-      name: text('#hud-name'), level: text('#hud-realm-level'), position: text('#hud-pos'), realm: text('#hud-realm'), map: text('#map-map-name .map-map-name-text'), profileMap: text('#hud-profile-map'), title: text('#hud-title'),
+      name: text('#hud-name'), level: text('#hud-realm-level'), position: text('#hud-pos'), realm: text('#hud-realm'), map: text('#map-map-name .map-map-name-text'), ageLifespan: text('#hud-age-lifespan'), realmSummary: text('.hud-realm-main'), title: text('#hud-title'),
       realmReview: text('#hud-realm-sub'), cultivate: text('#hud-cultivate'),
     };
     const nameNode = document.getElementById('hud-name');
     const levelNode = document.getElementById('hud-realm-level');
-    const profileRows = [...document.querySelectorAll('#workspace-profile-content .hud-row')].map((row) => row.textContent?.trim() ?? '');
+    const hasProfilePane = Boolean(document.getElementById('pane-profile') || document.getElementById('workspace-tab-overview'));
     const breakthrough = document.getElementById('hud-breakthrough');
     const hp = resource('#hud-hp-text', '#hud-hp-bar');
     const qi = resource('#hud-qi-text', '#hud-qi-bar');
@@ -779,7 +780,7 @@ const verifyHudRowsExpression = String.raw`
       levelInName: nameNode instanceof HTMLElement && levelNode instanceof HTMLElement && nameNode.contains(levelNode),
       levelTop: levelNode instanceof HTMLElement ? levelNode.getBoundingClientRect().top : -1,
       nameTop: nameNode instanceof HTMLElement ? nameNode.getBoundingClientRect().top : -1,
-      profileRows };
+      hasProfilePane };
     if (expandToggle instanceof HTMLButtonElement && !wasExpanded) {
       expandToggle.click();
       await proof.nextPaint();
@@ -1339,14 +1340,14 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   const hudRows = await cdp.evaluate(verifyHudRowsExpression);
   assert(hudRows.rows.name.includes('驗證玩家長名'), 'HUD 五行缺少玩家名稱');
   assert.match(hudRows.rows.level, /lv\s*30/i, `HUD 未顯示 LV30：${hudRows.rows.level}`);
-  assert.equal(hudRows.rows.position, '(14, 22)', `HUD 名稱列未於等級後顯示座標：${hudRows.rows.position}`);
+  assert.equal(hudRows.rows.position, '', 'HUD 名稱列仍顯示座標');
   assert.equal(hudRows.levelInName, true, 'HUD LV30 未位於玩家名稱列');
   assert(Math.abs(hudRows.levelTop - hudRows.nameTop) < 48, 'HUD LV30 未與玩家名稱保持同列');
   assert.notEqual(hudRows.rows.realm, '', 'HUD 缺少境界主字');
-  assert.match(hudRows.rows.realm, /15載113日\/900載/, `HUD 境界列未合併歲壽：${hudRows.rows.realm}`);
-  assert.equal(hudRows.rows.map, '厚脈嶺 練氣一層 LV19', `角色資訊下方的地圖標籤未顯示境界：${hudRows.rows.map}`);
-  assert.equal(hudRows.rows.profileMap, '驗證山谷', `人物概況地圖重複推薦境界：${hudRows.rows.profileMap}`);
-  assert.equal(hudRows.profileRows.some((row) => row.includes('位置')), false, `人物概況仍顯示位置：${hudRows.profileRows.join(' | ')}`);
+  assert.equal(hudRows.rows.ageLifespan, '15載113日/900載');
+  assert.match(hudRows.rows.realmSummary, /煉氣境\s+築基修士\s+15載113日\/900載/, '境界、稱號、歲壽順序錯誤');
+  assert.equal(hudRows.rows.map, '厚脈嶺 練氣一層 LV19 (14, 22)', `角色資訊下方的地圖標籤未顯示境界：${hudRows.rows.map}`);
+  assert.equal(hudRows.hasProfilePane, false, '角色概況分頁仍存在');
   assert.notEqual(hudRows.rows.title, '', 'HUD 缺少境界稱號小字');
   assert.notEqual(hudRows.rows.realmReview, '', 'HUD 缺少境界評語小字');
   assert.match(hudRows.rows.cultivate, /^修為：660 \/ 1000$/, 'HUD 未使用精簡修為 current/max 格式');

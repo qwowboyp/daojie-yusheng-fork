@@ -51,7 +51,7 @@ await withClientBrowserProof({ viewport: { width: 1440, height: 900 }, profilePr
       assert.match(social.label, /2 封未讀/);
       assert.equal(social.dotWidth, '8px');
       assert.notEqual(social.dotColor, 'rgba(0, 0, 0, 0)');
-      await cdp.evaluate(`document.getElementById('workspace-tab-overview').click(); window.__mailNavigation.updateSummary({ unreadCount: 0, claimableCount: 0, revision: 2 }); true`);
+      await cdp.evaluate(`document.getElementById('workspace-tab-attr').click(); window.__mailNavigation.updateSummary({ unreadCount: 0, claimableCount: 0, revision: 2 }); true`);
       await delay(60);
       await cdp.evaluate(`document.getElementById('workspace-tab-social').click(); true`);
       await delay(60);

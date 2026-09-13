@@ -797,15 +797,6 @@
       text-transform: uppercase;
       white-space: nowrap;
     }
-    #hud .react-hud-status-host .hud-identity .hud-name-position {
-      flex: 0 0 auto;
-      color: var(--ink-grey);
-      font-family: var(--font-role-body);
-      font-size: var(--font-size-role-body-13);
-      font-weight: var(--font-weight-role-label);
-      letter-spacing: 0;
-      white-space: nowrap;
-    }
     #hud .react-hud-status-host .hud-identity .hud-expand-toggle {
       margin-left: auto;
       flex: 0 0 auto;
@@ -846,6 +837,7 @@
     }
     #hud .react-hud-status-host .hud-mobile-scroll .hud-realm-main {
       flex-direction: row;
+      flex-wrap: wrap;
       align-items: baseline;
       justify-content: flex-start;
       padding: 0;
@@ -869,11 +861,18 @@
     }
     #hud .react-hud-status-host .hud-mobile-scroll .hud-title {
       display: inline;
+      font-weight: 700;
       font-size: 12px;
       line-height: 1.2;
       white-space: normal;
       writing-mode: horizontal-tb;
       letter-spacing: 0;
+    }
+    #hud .react-hud-status-host .hud-mobile-scroll .hud-age-lifespan {
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--ink-dark);
+      white-space: nowrap;
     }
     #hud .react-hud-status-host .hud-mobile-scroll .hud-progress-shell {
       margin-top: 2px;

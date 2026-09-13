@@ -325,7 +325,7 @@ export function createMainUiStateSource(options: MainUiStateSourceOptions) {
       const player = options.getPlayer();
       const mapName = options.mapRuntime.getMapMeta()?.name ?? t('hud.map-name.unknown');
       const mapDanger = this.resolveMapDanger();
-      const mapLabel = `${mapName} ${mapDanger}`;
+      const mapLabel = `${mapName} ${mapDanger}${player ? ` (${player.x}, ${player.y})` : ''}`;
       if (options.mapNameEl && options.mapNameEl.textContent !== mapLabel) {
         options.mapNameEl.textContent = mapLabel;
       }

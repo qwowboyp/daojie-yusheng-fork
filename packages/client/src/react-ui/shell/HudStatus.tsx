@@ -4,7 +4,7 @@
  * 维护时应把它视为前端表现层：只组织视图和用户意图，不保存会与主运行态冲突的真源。
  */
 import { StrictMode, memo, useCallback, useEffect, useState } from 'react';
-import { createPortal, flushSync } from 'react-dom';
+import { flushSync } from 'react-dom';
 import { createRoot, type Root } from 'react-dom/client';
 import { t } from '../../ui/i18n';
 import { requestMobileSurface, subscribeMobileSurface } from '../../ui/mobile-surface';
@@ -14,10 +14,7 @@ import { useExternalStoreSnapshot } from '../hooks/use-external-store-snapshot';
 export interface ReactHudStatusState {
   name: string;
   title: string;
-  profileMap: string;
-  position: string;
-  objective: string;
-  threat: string;
+  ageLifespan: string;
   realmLabel: string;
   realmLevelLabel: string;
   realmReviewLabel: string;
@@ -35,10 +32,7 @@ export interface ReactHudStatusState {
 const DEFAULT_HUD_STATUS: ReactHudStatusState = {
   name: t('shell.name', undefined),
   title: t('shell.title', undefined),
-  profileMap: '-',
-  position: '(0, 0)',
-  objective: t('shell.objective', undefined),
-  threat: t('shell.threat', undefined),
+  ageLifespan: '-',
   realmLabel: '-',
   realmLevelLabel: '',
   realmReviewLabel: '-',
@@ -159,13 +153,6 @@ const HudStatusView = memo(function HudStatusView() {
   const state = useExternalStoreSnapshot(hudStatusStore);
   const [expanded, setExpanded] = useState(false);
   useEffect(() => subscribeMobileSurface('hud', () => setExpanded(false)), []);
-  const profileHost = document.getElementById('workspace-profile-content');
-  const profile = (
-    <div className="hud-grid">
-      <HudRow label={t('shell.hud-label-map', undefined)} value={state.profileMap} id="hud-profile-map" />
-      <HudRow label="歲／壽" value={`${state.objective}/${state.threat}`} id="hud-age-lifespan" />
-    </div>
-  );
   return (
     <>
       <div
@@ -176,7 +163,6 @@ const HudStatusView = memo(function HudStatusView() {
         <div className="hud-name" id="hud-name">
           <span className="hud-name-text">{state.name}</span>
           <span className="hud-name-level" id="hud-realm-level">{state.realmLevelLabel}</span>
-          <span className="hud-name-position" id="hud-pos">{state.position}</span>
         </div>
         <button className="hud-expand-toggle" type="button" aria-expanded={expanded} aria-controls="hud-summary-details"
           aria-label={expanded ? '收合人物資訊' : '展開人物資訊'}
@@ -197,10 +183,11 @@ const HudStatusView = memo(function HudStatusView() {
             <div className="hud-realm-main">
               <div className="hud-realm-heading">
                 <div className="hud-realm-value" id="hud-realm">{state.realmLabel}</div>
-              </div>
+              </div>{' '}
               <div className="hud-realm-sub" id="hud-realm-sub">
-                <span className="hud-title" id="hud-title">{state.title}</span>
-              </div>
+                <strong className="hud-title" id="hud-title">{state.title}</strong>
+              </div>{' '}
+              <span className="hud-age-lifespan" id="hud-age-lifespan">{state.ageLifespan}</span>
             </div>
             <div className="hud-progress-shell">
               <div className="hud-progress-track">
@@ -239,7 +226,6 @@ const HudStatusView = memo(function HudStatusView() {
           />
         </div>
 
-        {profileHost ? createPortal(profile, profileHost) : profile}
       </div>
     </>
   );
@@ -311,15 +297,6 @@ const HudResource = memo(function HudResource({
           <span className="hud-resource-text" id={textId}>{text}</span>
         </div>
       </div>
-    </div>
-  );
-});
-
-const HudRow = memo(function HudRow({ label, value, id }: { label: string; value: string; id: string }) {
-  return (
-    <div className="hud-row">
-      <span className="hud-label">{label}</span>
-      <span className="hud-value" id={id}>{value}</span>
     </div>
   );
 });

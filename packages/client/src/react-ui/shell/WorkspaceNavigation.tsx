@@ -19,7 +19,7 @@ export interface WorkspaceDefinition {
 }
 
 export const WORKSPACES: readonly WorkspaceDefinition[] = [
-  { id: 'character', label: '角色', description: '概況・數值・社交', compact: true, tabs: [{ id: 'overview', label: '角色概況', paneId: 'pane-profile' }, { id: 'attr', label: '數值', paneId: 'pane-attr' }, { id: 'social', label: '社交', paneId: 'pane-social' }] },
+  { id: 'character', label: '角色', description: '數值・社交', compact: true, tabs: [{ id: 'attr', label: '數值', paneId: 'pane-attr' }, { id: 'social', label: '社交', paneId: 'pane-social' }] },
   { id: 'items', label: '背包與技藝', description: '物品・裝備・製作', tabs: [
     { id: 'inventory', label: '背包', paneId: 'pane-inventory' }, { id: 'equipment', label: '裝備', paneId: 'pane-equipment' },
     { id: 'alchemy', label: '煉丹', paneId: 'workspace-alchemy' }, { id: 'forging', label: '煉器', paneId: 'workspace-forging' },

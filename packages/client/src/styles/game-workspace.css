@@ -51,7 +51,7 @@
 }
 #game-shell[data-workspace-mode="true"] #layout-left .section-shell { display: none; }
 
-/* 持續狀態不占據固定欄。人物詳情由同一 HUD store 投射至概況頁。 */
+/* 持續狀態不占據固定欄，角色資訊集中於左上角 HUD。 */
 #game-shell[data-workspace-mode="true"] #hud {
   position: absolute;
   top: max(12px, env(safe-area-inset-top, 0px));
@@ -308,10 +308,6 @@
 .workspace-section-title { margin: 0 0 16px; font-size: 18px; font-weight: 600; }
 .workspace-action-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .workspace-action-grid button { min-height: 72px; border-color: var(--wash-ink); text-align: left; background: var(--surface-muted); }
-#workspace-profile-content .hud-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-#workspace-profile-content .hud-row { padding: 16px; border: 1px solid var(--wash-ink); border-radius: 6px; }
-#workspace-profile-content .hud-label { display: block; font-size: 14px; margin-bottom: 8px; }
-#workspace-profile-content .hud-value { font-size: 16px; }
 #workspace-system-content .hud-link-actions,
 #workspace-system-content .hud-corner-actions {
   position: static;
@@ -435,7 +431,6 @@
 .workspace-title { min-width: 0; overflow-wrap: anywhere; }
 @container workspace-body (max-width: 520px) {
   .workspace-action-grid,
-  #workspace-profile-content .hud-grid,
   #workspace-system-content .hud-link-actions,
   #workspace-system-content .hud-corner-actions { grid-template-columns: minmax(0, 1fr); }
 }
