@@ -274,7 +274,7 @@ async function main(): Promise<void> {
         operationId: `${shenxingOperationId}:stale`,
         sourceMutation: {
           ...shenxingMutation,
-          expectedPlacement: { ...snapshot.placement, x: snapshot.placement.x + 1 },
+          expectedPlacement: { ...snapshot.placement, instanceId: 'public:stale-source-instance' },
         },
       });
     } catch (error) {
