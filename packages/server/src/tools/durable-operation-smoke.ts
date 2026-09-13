@@ -600,7 +600,7 @@ async function main(): Promise<void> {
       throw new Error(`unexpected runtime durable claim result: ${JSON.stringify(runtimeResult)}`);
     }
     const runtimeReplayResult = await mailRuntime.claimAttachments(runtimePlayerId, [runtimeMailId]);
-    if (runtimeReplayResult.ok || !String(runtimeReplayResult.message ?? '').includes('当前没有可领取附件的邮件')) {
+    if (runtimeReplayResult.ok || !String(runtimeReplayResult.message ?? '').includes('當前沒有可領取附件的郵件')) {
       throw new Error(`expected runtime replay to observe claimed mailbox state, got ${JSON.stringify(runtimeReplayResult)}`);
     }
     const runtimeSummary = await mailRuntime.getSummary(runtimePlayerId);

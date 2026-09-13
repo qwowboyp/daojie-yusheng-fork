@@ -9,6 +9,7 @@ async function main(): Promise<void> {
   const durableCalls: Array<Record<string, unknown>> = [];
   const sellerPlayer = {
     playerId: sellerId,
+    sessionId: 'socket:market-sell-seller',
     runtimeOwnerId: 'runtime:seller',
     sessionEpoch: 11,
     instanceId: 'instance:market-sell',
@@ -17,6 +18,7 @@ async function main(): Promise<void> {
   };
   const buyerPlayer = {
     playerId: buyerId,
+    sessionId: 'socket:market-sell-buyer',
     runtimeOwnerId: 'runtime:buyer',
     sessionEpoch: 5,
     instanceId: 'instance:market-sell',

@@ -49,6 +49,7 @@ assert.equal(delta.mid, view.instance.templateId, '全量世界包必须携带�
 assert.equal(delta.iid, view.instance.instanceId, '全量世界包必须携带实例 ID');
 assert.deepEqual(delta.bd, [{
   id: 'build:meditation-mat',
+  di: 'meditation_mat',
   x: 1,
   y: 1,
   n: '蒲团',

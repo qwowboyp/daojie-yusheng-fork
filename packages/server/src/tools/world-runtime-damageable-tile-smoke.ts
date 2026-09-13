@@ -227,32 +227,32 @@ function testDamagedFacilityBuildingShowsHpBarPayload() {
   const placed = instance.placeBuildingInstance({
     buildingId: 'building:scripture:hp-bar',
     defId: 'scripture_platform',
-    x: 1,
-    y: 1,
+    x: 2,
+    y: 2,
     state: 'active',
   });
   assert.equal(placed.ok, true);
 
-  const combat = instance.getTileCombatState(1, 1);
+  const combat = instance.getTileCombatState(2, 2);
   assert.equal(combat?.building, true);
   assert.equal(combat?.buildingId, 'building:scripture:hp-bar');
   assert.equal(combat?.targetName, '藏經臺');
   assert.equal(combat?.maxHp, 120);
 
-  const damaged = instance.damageTile(1, 1, 1);
+  const damaged = instance.damageTile(2, 2, 1);
   assert.equal(damaged?.building, true);
   assert.equal(damaged?.hp, 119);
 
   const snapshotService = createSnapshotService(instance);
-  const tile = snapshotService.buildTileSyncState(template, 'instance:tile-smoke', 1, 1);
+  const tile = snapshotService.buildTileSyncState(template, 'instance:tile-smoke', 2, 2);
   assert.equal(tile?.hpVisible, true);
   assert.equal(tile?.maxHp, 120);
   assert.equal(tile?.hp, 119);
 
-  const destroyed = instance.damageTile(1, 1, 120);
+  const destroyed = instance.damageTile(2, 2, 120);
   assert.equal(destroyed?.destroyed, true);
   assert.equal(instance.buildingById.has('building:scripture:hp-bar'), false);
-  assert.equal(instance.getTileCombatState(1, 1)?.building, undefined);
+  assert.equal(instance.getTileCombatState(2, 2)?.building, undefined);
 }
 
 function testObservedDamageableTileDetailIncludesHpAndOmitsZeroAura() {
@@ -431,19 +431,19 @@ function testTerrainStabilizerAddsHpRecoveryToDamageableTileTypes() {
   const placed = instance.placeBuildingInstance({
     buildingId: 'building:stabilizer:recovery',
     defId: 'scripture_platform',
-    x: 1,
-    y: 1,
+    x: 2,
+    y: 2,
     state: 'active',
   });
   assert.equal(placed.ok, true);
-  const buildingDamage = instance.damageTile(1, 1, 10);
+  const buildingDamage = instance.damageTile(2, 2, 10);
   assert.equal(buildingDamage?.building, true);
-  const buildingDamagedHp = instance.getTileCombatState(1, 1)?.hp ?? 0;
+  const buildingDamagedHp = instance.getTileCombatState(2, 2)?.hp ?? 0;
 
   const terrainStabilizerChecker = (x: number, y: number) => (
     (x === 1 && y === 0)
     || (x === 2 && y === 1)
-    || (x === 1 && y === 1)
+    || (x === 2 && y === 2)
   );
   Object.defineProperty(terrainStabilizerChecker, 'hasTerrainStabilizer', {
     value: true,
@@ -460,7 +460,7 @@ function testTerrainStabilizerAddsHpRecoveryToDamageableTileTypes() {
 
   const buildingMaxHp = buildingDamage?.maxHp ?? 120;
   const buildingRecover = Math.max(1, Math.floor(buildingMaxHp * TERRAIN_REGEN_RATE_PER_TICK));
-  assert.equal(instance.getTileCombatState(1, 1)?.hp, buildingDamagedHp + buildingRecover);
+  assert.equal(instance.getTileCombatState(2, 2)?.hp, buildingDamagedHp + buildingRecover);
 }
 
 function testDestroyedTileDoesNotRespawnUnderUnit() {
@@ -702,7 +702,7 @@ function testRuntimeTileDropsEnterInventoryAndStructuredNotice() {
   assert.deepEqual(log[2], [
     'queuePlayerNotice',
     'player:tile-drop',
-    '获得 碎石 x2、灵石 x3',
+    '獲得 碎石 x2、灵石 x3',
     'loot',
     {
       key: 'notice.loot.tile-drop-inventory',

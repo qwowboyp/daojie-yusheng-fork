@@ -26,6 +26,7 @@ import {
  * 用于快速校验事件名是否合法的上行事件集合。
  */
 var C2S_SET = new Set(Object.values(C2S));
+const auditRedeemGroupNames = new Set<string>();
 /**
  * 用于快速校验事件名是否合法的下行事件集合。
  */
@@ -224,7 +225,7 @@ var STATIC_S2C_SURFACE_CHECKS = [
     label: 'world-sync-protocol service emits',
     relativePath: 'packages/server/src/network/world-sync-protocol.service.ts',
     qualifierName: 'S2C',
-    expectedMembers: ['Bootstrap', 'InitSession', 'LootWindowUpdate', 'MapEnter', 'MapStatic', 'Notice', 'Quests', 'Realm', 'SyncEnvelope', 'WorldDelta'],
+    expectedMembers: ['AvailableQuests', 'Bootstrap', 'InitSession', 'LootWindowUpdate', 'MapEnter', 'MapStatic', 'Notice', 'Quests', 'Realm', 'SyncEnvelope', 'WorldDelta'],
   },
   {
     label: 'world-client-event service emits',
@@ -729,7 +730,6 @@ async function registerAndLoginPlayer(baseUrl, suffix) {
   if (!payload?.sub || typeof login?.accessToken !== 'string') {
     throw new Error('unexpected login payload: ' + JSON.stringify(login));
   }
-  await ensureNativeDocsForAccessToken(login.accessToken);
 /**
  * 记录玩家ID。
  */
@@ -743,162 +743,6 @@ async function registerAndLoginPlayer(baseUrl, suffix) {
     accessToken: login.accessToken,
     playerId: playerId,
   };
-}
-/**
- * 在带库审计中，确保 access token 对应账号已有 主线 identity/snapshot 真源文档。
- */
-async function ensureNativeDocsForAccessToken(token) {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-  if (!HAS_DATABASE || typeof token !== 'string' || !token.trim()) {
-    return;
-  }
-/**
- * 记录payload。
- */
-  var payload = parseJwtPayload(token);
-/**
- * 记录用户ID。
- */
-  var tokenUserId = typeof payload?.sub === 'string' ? payload.sub.trim() : '';
-/**
- * 记录玩家ID。
- */
-  var tokenPlayerId = normalizeMainlinePlayerId(typeof payload?.playerId === 'string' ? payload.playerId.trim() : '');
-/**
- * 记录用户名。
- */
-  var tokenUsername = typeof payload?.username === 'string' ? payload.username.trim() : '';
-/**
- * 记录显示名。
- */
-  var tokenDisplayName = typeof payload?.displayName === 'string' ? payload.displayName.trim() : '';
-/**
- * 记录角色名。
- */
-  var tokenPlayerName = typeof payload?.playerName === 'string' ? payload.playerName.trim() : tokenDisplayName;
-  if (!tokenUserId) {
-    return;
-  }
-  var pool = new Pool({
-    connectionString: SERVER_DATABASE_URL,
-  });
-  try {
-    if (!tokenPlayerId) {
-      var playerResult = await pool.query('SELECT id, name FROM players WHERE "userId" = $1::uuid LIMIT 1', [tokenUserId]);
-      var playerRow = Array.isArray(playerResult?.rows) ? playerResult.rows[0] : null;
-      tokenPlayerId = normalizeMainlinePlayerId(typeof playerRow?.id === 'string' ? playerRow.id.trim() : tokenPlayerId);
-      if (!tokenPlayerName) {
-        tokenPlayerName = typeof playerRow?.name === 'string' ? playerRow.name.trim() : tokenPlayerName;
-      }
-    }
-    if (!tokenUsername || !tokenDisplayName) {
-      var userResult = await pool.query('SELECT username, "displayName" FROM users WHERE id = $1::uuid LIMIT 1', [tokenUserId]);
-      var userRow = Array.isArray(userResult?.rows) ? userResult.rows[0] : null;
-      if (!tokenUsername) {
-        tokenUsername = typeof userRow?.username === 'string' ? userRow.username.trim() : tokenUsername;
-      }
-      if (!tokenDisplayName) {
-        tokenDisplayName = typeof userRow?.displayName === 'string' ? userRow.displayName.trim() : tokenDisplayName;
-      }
-    }
-    if (!tokenPlayerName) {
-      tokenPlayerName = tokenDisplayName;
-    }
-    if (!tokenPlayerId || !tokenUsername || !tokenDisplayName || !tokenPlayerName) {
-      return;
-    }
-    await pool.query(`
-      INSERT INTO persistent_documents(scope, key, payload, "updatedAt")
-      VALUES ($1, $2, $3::jsonb, now())
-      ON CONFLICT (scope, key)
-      DO UPDATE SET payload = EXCLUDED.payload, "updatedAt" = now()
-    `, ['server_player_identities_v1', tokenUserId, JSON.stringify({
-      version: 1,
-      userId: tokenUserId,
-      username: tokenUsername,
-      displayName: tokenDisplayName,
-      playerId: tokenPlayerId,
-      playerName: tokenPlayerName,
-      persistedSource: 'token_seed',
-      updatedAt: Date.now(),
-    })]);
-    await pool.query(`
-      INSERT INTO persistent_documents(scope, key, payload, "updatedAt")
-      VALUES ($1, $2, $3::jsonb, now())
-      ON CONFLICT (scope, key)
-      DO UPDATE SET payload = EXCLUDED.payload, "updatedAt" = now()
-    `, ['server_player_snapshots_v1', tokenPlayerId, JSON.stringify({
-      version: 1,
-      savedAt: Date.now(),
-      placement: {
-        templateId: 'yunlai_town',
-        x: 32,
-        y: 5,
-        facing: 1,
-      },
-      vitals: {
-        hp: 100,
-        maxHp: 100,
-        qi: 0,
-        maxQi: 100,
-      },
-      progression: {
-        foundation: 0,
-        combatExp: 0,
-        bodyTraining: null,
-        boneAgeBaseYears: 18,
-        lifeElapsedTicks: 0,
-        lifespanYears: null,
-        realm: null,
-        heavenGate: null,
-        spiritualRoots: null,
-      },
-      unlockedMapIds: ['yunlai_town'],
-      inventory: {
-        revision: 1,
-        capacity: 24,
-        items: [],
-      },
-      equipment: {
-        revision: 1,
-        slots: [],
-      },
-      techniques: {
-        revision: 1,
-        techniques: [],
-        cultivatingTechId: null,
-      },
-      buffs: {
-        revision: 1,
-        buffs: [],
-      },
-      quests: {
-        revision: 1,
-        entries: [],
-      },
-      combat: {
-        autoBattle: false,
-        autoRetaliate: true,
-        autoBattleStationary: false,
-        combatTargetId: null,
-        combatTargetLocked: false,
-        allowAoePlayerHit: false,
-        autoIdleCultivation: true,
-        autoSwitchCultivation: false,
-        senseQiActive: false,
-        autoBattleSkills: [],
-      },
-      pendingLogbookMessages: [],
-      runtimeBonuses: [],
-      __snapshotMeta: {
-        persistedSource: 'token_seed',
-        seededAt: Date.now(),
-      },
-    })]);
-  } finally {
-    await pool.end().catch(function () { return undefined; });
-  }
 }
 
 async function waitForPresenceSessionFence(playerId, input, timeoutMs) {
@@ -2065,11 +1909,13 @@ async function redeemCodesCase(runtime) {
 /**
  * 记录created。
  */
+  const groupName = pid('protocol_audit_redeem');
+  auditRedeemGroupNames.add(groupName);
   var created = await requestJson(runtime.baseUrl, '/api/gm/redeem-code-groups', {
     method: 'POST',
     token: gmToken,
     body: {
-      name: '协议审计兑换码',
+      name: groupName,
       rewards: [{ itemId: 'spirit_stone', count: 4 }],
       count: 1,
     },
@@ -2112,6 +1958,33 @@ async function redeemCodesCase(runtime) {
 /**
  * 处理GMcase。
  */
+async function cleanupAuditRedeemGroups(): Promise<void> {
+  if (!HAS_DATABASE || auditRedeemGroupNames.size === 0) return;
+  const pool = new Pool({ connectionString: SERVER_DATABASE_URL });
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    for (const name of auditRedeemGroupNames) {
+      const groups = await client.query(
+        'SELECT group_id FROM server_redeem_code_group WHERE name = $1 FOR UPDATE', [name],
+      );
+      if (groups.rowCount > 1) throw new Error('audit redeem fixture name is not unique');
+      for (const row of groups.rows) {
+        await client.query('DELETE FROM server_redeem_code WHERE group_id = $1', [row.group_id]);
+        await client.query('DELETE FROM server_redeem_code_group WHERE group_id = $1 AND name = $2', [row.group_id, name]);
+      }
+    }
+    await client.query('COMMIT');
+    auditRedeemGroupNames.clear();
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+    await pool.end();
+  }
+}
+
 async function gmCase(runtime) {
 /**
  * 记录认证。
@@ -2447,7 +2320,11 @@ async function lootCase(runtime) {
   await lib.waitForState(runtime.api, dropperId, function (player) { return player.x !== dropperState.x || player.y !== dropperState.y; }, 5000, "lootDropperMoveAway");
   looter.emit(C2S.MoveTo, { x: dropperState.x, y: dropperState.y, allowNearestReachable: false });
   await lib.waitForState(runtime.api, looterId, function (player) { return player.x === dropperState.x && player.y === dropperState.y; }, 5000, "lootMoveTo");
-  looter.emit(C2S.TakeGround, { sourceId: pile.sourceId, itemKey: "rat_tail" });
+  var droppedItem = pile.items.find(function (entry) { return entry.itemId === "rat_tail"; });
+  if (typeof droppedItem?.itemKey !== 'string' || !droppedItem.itemKey.trim()) {
+    throw new Error('lootCase missing exact ground itemKey for rat_tail');
+  }
+  looter.emit(C2S.TakeGround, { sourceId: pile.sourceId, itemKey: droppedItem.itemKey });
   await lib.waitForState(runtime.api, looterId, function (player) { return count(player, "rat_tail") >= count(looterState, "rat_tail") + 2; }, 5000, "takeGround");
 }
 /**
@@ -2891,7 +2768,12 @@ async function main() {
     }
   }
   finally {
-    await lib.stopServer(server);
+    try {
+      await lib.stopServer(server);
+    } finally {
+      // 等待隔離服務停止後才清除本次建立的碼組，避免關機持久化重新寫回。
+      await cleanupAuditRedeemGroups();
+    }
   }
 /**
  * 汇总c2s行数据。

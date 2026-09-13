@@ -78,7 +78,6 @@ export class ServerLifecycleCoordinatorService implements OnApplicationBootstrap
   async onModuleDestroy(): Promise<void> {
     this.stopped = true;
     this.startupBarrierService.closeForDrain();
-    this.schedulerManagerService?.stop('module_destroy');
     this.startupStatusService.markDraining('module_destroy');
   }
 
@@ -104,12 +103,31 @@ export class ServerLifecycleCoordinatorService implements OnApplicationBootstrap
     }
     this.startupBarrierService.closeTraffic();
     this.schedulerManagerService?.refreshBarrierSnapshot();
+    this.schedulerManagerService?.stop(`drain:${reason}`);
     this.startupStatusService.markDraining(reason);
     this.drainPromise = (async () => {
-      if (!this.worldShutdownDrainService) {
-        throw new Error('world_shutdown_drain_service_unavailable');
+      let worldResult: ShutdownResultSnapshot | null = null;
+      let worldFailure: unknown = null;
+      try {
+        if (!this.worldShutdownDrainService) {
+          throw new Error('world_shutdown_drain_service_unavailable');
+        }
+        worldResult = await this.worldShutdownDrainService.drain(reason);
+      } catch (error) {
+        worldFailure = error;
       }
-      return await this.worldShutdownDrainService.drain(reason);
+      try {
+        await this.schedulerManagerService?.drainForShutdown(`drain:${reason}`);
+      } catch (schedulerFailure) {
+        if (worldFailure) {
+          throw new AggregateError([worldFailure, schedulerFailure], 'world_and_scheduler_shutdown_drain_failed');
+        }
+        throw schedulerFailure;
+      }
+      if (worldFailure) {
+        throw worldFailure;
+      }
+      return worldResult as ShutdownResultSnapshot;
     })().catch((error) => {
       this.startupStatusService.markFailed(error, 'draining');
       this.logger.error(`关闭链路执行失败：${reason}`, error instanceof Error ? error.stack : String(error));

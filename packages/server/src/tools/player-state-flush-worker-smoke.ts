@@ -11,6 +11,7 @@ import { Pool } from 'pg';
 import { Direction } from '@mud/shared';
 
 import { AppModule } from '../app.module';
+import { ServerLifecycleCoordinatorService } from '../lifecycle/server-lifecycle-coordinator.service';
 import { resolveServerDatabaseUrl } from '../config/env-alias';
 import { FlushWakeupService } from '../persistence/flush-wakeup.service';
 import { PlayerFlushLedgerService } from '../persistence/player-flush-ledger.service';
@@ -131,12 +132,26 @@ async function main(): Promise<void> {
       ),
     );
   } finally {
-    await cleanupRows(pool, [playerId]).catch(() => undefined);
-    await app.close().catch(() => undefined);
-    await pool.end().catch(() => undefined);
+    const cleanupErrors: unknown[] = [];
+    // 先完成正式 drain，避免清除測試資料後又被最後一次 flush 寫回。
+    for (const cleanup of [
+      () => app.get(ServerLifecycleCoordinatorService).drain('player-state-flush-worker-smoke'),
+      () => app.close(),
+      () => cleanupRows(pool, [playerId]),
+      () => pool.end(),
+    ]) {
+      try {
+        await cleanup();
+      } catch (error) {
+        cleanupErrors.push(error);
+      }
+    }
     restoreEnv('SERVER_RUNTIME_ROLE', previousRole);
     restoreEnv('SERVER_FLUSH_TASK_RUNTIME_MODE', previousMode);
     BackgroundWorkerRuntimeService.prototype.startForLifecycleCoordinator = originalWorkerStart;
+    if (cleanupErrors.length > 0) {
+      throw new AggregateError(cleanupErrors, 'worker smoke 關閉或測試資料清理失敗');
+    }
   }
 }
 

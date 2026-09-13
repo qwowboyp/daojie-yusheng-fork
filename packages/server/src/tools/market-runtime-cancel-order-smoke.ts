@@ -33,6 +33,9 @@ async function main(): Promise<void> {
       snapshot(requestedPlayerId: string) {
         return runtimePlayers.has(requestedPlayerId) ? structuredClone(runtimePlayers.get(requestedPlayerId)) : null;
       },
+      getPlayer(requestedPlayerId: string) {
+        return runtimePlayers.get(requestedPlayerId) ?? null;
+      },
       describePersistencePresence(requestedPlayerId: string) {
         const player = runtimePlayers.get(requestedPlayerId);
         if (!player) {
@@ -68,6 +71,31 @@ async function main(): Promise<void> {
         runtimePlayer.inventory.items = items.map((entry) => ({ ...entry }));
         return runtimePlayer;
       },
+      replaceWalletBalances(requestedPlayerId: string, balances: Array<Record<string, unknown>>) {
+        const player = runtimePlayers.get(requestedPlayerId);
+        if (!player) {
+          throw new Error(`unexpected replaceWalletBalances args: ${requestedPlayerId}`);
+        }
+        player.wallet.balances = balances.map((entry) => ({ ...entry }));
+        return player;
+      },
+      canReceiveInventoryItem() {
+        return true;
+      },
+      receiveInventoryItem(requestedPlayerId: string, item: Record<string, unknown>) {
+        const player = runtimePlayers.get(requestedPlayerId);
+        if (!player) {
+          throw new Error(`unexpected receiveInventoryItem args: ${requestedPlayerId}`);
+        }
+        const normalizedCount = Math.max(1, Math.trunc(Number(item?.count ?? 1)));
+        const existing = player.inventory.items.find((entry) => entry.itemId === item.itemId);
+        if (existing) {
+          existing.count = Number(existing.count ?? 0) + normalizedCount;
+        } else {
+          player.inventory.items.push({ ...item, count: normalizedCount });
+        }
+        return player;
+      },
       creditWallet() {
         throw new Error('sell-side durable cancel should not credit wallet in runtime fallback path');
       },
@@ -86,7 +114,7 @@ async function main(): Promise<void> {
       isEnabled() {
         return true;
       },
-      async settleMarketCancelOrder(input: Record<string, unknown>) {
+      async settleMarketMutation(input: Record<string, unknown>) {
         durableCalls.push({ ...input });
         return { ok: true, alreadyCommitted: false };
       },
@@ -158,7 +186,9 @@ async function main(): Promise<void> {
   assert.equal(durableCalls[0]?.expectedInstanceId, 'instance:market-cancel');
   assert.equal(durableCalls[0]?.expectedAssignedNodeId, 'node:market-cancel');
   assert.equal(durableCalls[0]?.expectedOwnershipEpoch, 19);
-  assert.equal(durableCalls[0]?.side, 'sell');
+  assert.equal(durableCalls[0]?.operationType, 'market_cancel_order');
+  assert.equal((durableCalls[0]?.payload as Record<string, unknown> | undefined)?.orderId, 'order:sell:cancel:1');
+  assert.equal((durableCalls[0]?.payload as Record<string, unknown> | undefined)?.side, 'sell');
   assert.equal(runtimePlayer.inventory.items[0]?.itemId, 'rat_tail');
   assert.equal(runtimePlayer.inventory.items[0]?.count ?? 0, 2);
   assert.equal((service as unknown as { openOrders: Array<Record<string, unknown>> }).openOrders.length, 0);

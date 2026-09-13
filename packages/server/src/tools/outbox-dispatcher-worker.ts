@@ -8,6 +8,7 @@ import { dirname, isAbsolute, resolve as resolvePath } from 'node:path';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from '../app.module';
+import { ServerLifecycleCoordinatorService } from '../lifecycle/server-lifecycle-coordinator.service';
 import { resolveServerDatabaseUrl } from '../config/env-alias';
 import { OutboxEventConsumerRegistryService } from '../persistence/outbox-event-consumer-registry.service';
 import { OutboxDispatcherRuntimeService } from '../persistence/outbox-dispatcher-runtime.service';
@@ -91,7 +92,11 @@ async function main(): Promise<void> {
       ),
     );
   } finally {
-    await app.close().catch(() => undefined);
+    try {
+      await app.get(ServerLifecycleCoordinatorService).drain('outbox-dispatcher-worker');
+    } finally {
+      await app.close();
+    }
   }
 }
 

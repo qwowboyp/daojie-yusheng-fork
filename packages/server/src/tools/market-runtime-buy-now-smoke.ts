@@ -327,7 +327,7 @@ async function main(): Promise<void> {
 
   const overCapLevel = MARKET_MAX_ENHANCE_LEVEL + 1;
   const overCapBuyOrderResult = await service.createBuyOrder(buyerId, { itemKey: `iron_sword#${overCapLevel}`, quantity: 1, unitPrice: 8 });
-  assert.equal(overCapBuyOrderResult.notices.some((entry) => String(entry.text ?? '').includes(`+${MARKET_MAX_ENHANCE_LEVEL} 及以下装备求购`)), true);
+  assert.equal(overCapBuyOrderResult.notices.some((entry) => String(entry.text ?? '').includes(`+${MARKET_MAX_ENHANCE_LEVEL} 及以下裝備求購`)), true);
 
   sellerPlayer.inventory.items = [{ itemId: 'iron_sword', count: 1, name: '铁剑', type: 'equipment', enhanceLevel: overCapLevel, itemInstanceId: 'seller-over-cap-sword' }];
   const overCapMarketSellOrderResult = await service.createSellOrder(sellerId, { itemRef: { itemInstanceId: 'seller-over-cap-sword' }, quantity: 1, unitPrice: 8, listingMode: 'market' });

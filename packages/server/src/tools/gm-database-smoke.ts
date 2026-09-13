@@ -911,7 +911,7 @@ async function main() {
     finally {
         await stopServer(server);
     }
-    server = await startServer({ maintenance: true });
+    server = await startServer({ maintenance: true, supervised: true });
     try {
         await waitForHealth({ expectedStatus: 503, expectMaintenance: true });
 /**
@@ -1103,7 +1103,7 @@ async function main() {
     }
     finally {
         await stopServer(server);
-        await resetGmAuthPasswordRecord().catch(() => undefined);
+        await resetGmAuthPasswordRecordWithRetry();
         await node_fs_1.promises.rm(backupDirectory, { recursive: true, force: true }).catch(() => undefined);
     }
 }
@@ -1127,6 +1127,12 @@ async function startServer(options) {
             SERVER_RUNTIME_HTTP: '1',
             SERVER_ALLOW_LEGACY_HTTP_COMPAT: '1',
             SERVER_GM_DATABASE_BACKUP_DIR: backupDirectory,
+            ...(options.supervised
+                ? {
+                    SERVER_PROCESS_SUPERVISOR_ENABLED: '1',
+                    SERVER_PROCESS_SUPERVISOR_JOURNAL_PATH: (0, node_path_1.join)(backupDirectory, 'process-supervisor.jsonl'),
+                }
+                : { SERVER_PROCESS_SUPERVISOR_ENABLED: '0' }),
             ...(0, smoke_live_db_lease_guard_1.resolveSmokeServerNodeEnv)(databaseUrl, process.env.SERVER_NODE_ID),
             SERVER_FORCE_RECLAIM_STALE_LEASES: (0, smoke_live_db_lease_guard_1.resolveSmokeForceReclaimEnv)(databaseUrl),
             ...(options.maintenance
@@ -1694,6 +1700,48 @@ async function stopServerHard(child) {
             resolve();
         });
     });
+}
+
+async function resetGmAuthPasswordRecordWithRetry() {
+    await waitForCondition(async () => {
+        try {
+            await resetGmAuthPasswordRecord();
+            return true;
+        }
+        catch (error) {
+            if (isTransientDatabaseConnectionError(error)) {
+                return false;
+            }
+            throw error;
+        }
+    }, 15000, 500);
+}
+
+function isTransientDatabaseConnectionError(error) {
+    const code = resolveNestedErrorCode(error);
+    return code === 'ECONNREFUSED'
+        || code === 'ECONNRESET'
+        || code === 'ETIMEDOUT'
+        || code === 'UND_ERR_SOCKET'
+        || code === 'UND_ERR_CONNECT_TIMEOUT'
+        || code === '57P01'
+        || code === '57P02'
+        || code === '57P03'
+        || code.startsWith('08');
+}
+
+function resolveNestedErrorCode(error) {
+    let current = error;
+    for (let depth = 0; depth < 3; depth += 1) {
+        if (!current || typeof current !== 'object') {
+            return '';
+        }
+        if (typeof current.code === 'string') {
+            return current.code;
+        }
+        current = current.cause;
+    }
+    return '';
 }
 /**
  * 等待for健康状态。
@@ -2527,6 +2575,9 @@ async function waitForRestoreSettledAfterPreservedPassword(jobId, token, expecte
             const message = error instanceof Error ? error.message : String(error);
             if (message.includes('GET /api/gm/database/state -> 401')) {
                 return resolveCompletedRestoreState(await readPersistedDatabaseJobState(), jobId);
+            }
+            if (isTransientDatabaseConnectionError(error)) {
+                return false;
             }
             throw error;
         }

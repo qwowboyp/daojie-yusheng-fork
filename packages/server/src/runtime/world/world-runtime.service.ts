@@ -87,107 +87,10 @@ import { RuntimeEventBusService } from '../event-bus/runtime-event-bus.service';
 import '../instance/map-instance.runtime';
 import { MapTemplateRepository } from '../map/map-template.repository';
 import { PlayerRuntimeService } from '../player/player-runtime.service';
-import * as world_runtime_normalization_helpers_1 from './world-runtime.normalization.helpers';
-import * as world_runtime_observation_helpers_1 from './query/world-runtime.observation.helpers';
-import * as world_runtime_path_planning_helpers_1 from './world-runtime.path-planning.helpers';
 import { buildCurrentRoomSummaryPatch, buildFengShuiObserveView, dispatchStartBuildingConstruction, dispatchStartBuildingDeconstruction, handleBuildDeconstructIntent, handleBuildPlaceIntent, handleGmBuildDeconstruct, handleRoomSetRoleIntent, handleStartBuildingConstruction, interruptBuildingConstruction, listBuildingOperationAudit, tickBuildingConstruction } from './world-runtime-building.service';
 import { claimRecoverableCatalogInstances, destroyManagedInstance, fenceInstanceRuntime, getInstanceLeaseStatus, getInstancePlayerAttachReadiness, hydratePersistentInstanceSnapshot, isInstanceLeaseWritable, migrateInstanceToNode, migratePlayerToNode, rebuildPersistentInstance, releaseLocalInstanceLeasesForShutdown, syncAllInstanceLeases, syncInstanceLease, unfreezeInstanceWriting } from './world-runtime-instance-lease.helpers';
 import { WorldRuntimeInstanceLeaseReadinessService } from './world-runtime-instance-lease-readiness.service';
-const {
-    buildPublicInstanceId,
-    parseRuntimeInstanceDescriptor,
-    normalizeRuntimeInstancePersistentPolicy,
-    formatItemStackLabel,
-    formatItemListSummary,
-    cloneCombatEffect,
-    buildContainerSourceId,
-    isContainerSourceId,
-    parseContainerSourceId,
-    createSyncedItemStackSignature,
-    compareStableKeys,
-    serializeStableComparableValue,
-    groupContainerLootRows,
-    hasHiddenContainerEntries,
-    buildContainerWindowItems,
-    cloneInventorySimulation,
-    canReceiveContainerEntries,
-    applyContainerEntriesToInventorySimulation,
-    canReceiveContainerRow,
-    removeContainerRowEntries,
-    buildNpcQuestProgressText,
-    canReceiveItemStack,
-    toQuestRewardItem,
-    roundDurationMs,
-    pushDurationMetric,
-    summarizeDurations,
-    normalizeQuestLine,
-    normalizeQuestObjectiveType,
-    normalizeQuestRequired,
-    resolveQuestTargetLabel,
-    buildQuestRewardText,
-    cloneQuestState,
-    compareQuestViews,
-    compareStableStrings,
-    parseDirection,
-    normalizeSlotIndex,
-    normalizeEquipSlot,
-    normalizeTechniqueId,
-    normalizeShopQuantity,
-    normalizePositiveCount,
-    normalizeCoordinate,
-    normalizeRollCount,
-    findPlayerSkill,
-    isHostileSkill,
-    getSkillEffectColor,
-    resolveRuntimeSkillRange,
-    resolveAutoBattleSkillQiCost,
-} = world_runtime_normalization_helpers_1;
 const INSTANCE_LEASE_RENEW_SKEW_MS = 5_000;
-const {
-    createTileCombatAttributes,
-    createTileCombatNumericStats,
-    createTileCombatRatioDivisors,
-    computeResolvedDamage,
-    formatCombatDamageBreakdown,
-    formatCombatActionClause,
-    formatCombatDamageType,
-    resolveObservedDropChance,
-    compareStableText,
-    buildObservationInsight,
-    computeObservationProgress,
-    resolveObservationClarity,
-    buildObservationVerdict,
-    formatCurrentMaxObservation,
-    buildPortalDisplayName,
-    buildPortalKindLabel,
-} = world_runtime_observation_helpers_1;
-const {
-    chebyshevDistance,
-    isInBounds,
-    selectNearestPortal,
-    buildGoalPoints,
-    buildGoalPointsFromTemplate,
-    buildAdjacentGoalPoints,
-    dedupeGoalPoints,
-    decodeClientPathHint,
-    resolveInitialRunLength,
-    buildPathingBlockMask,
-    computePathCost,
-    buildCoordKey,
-    resolvePreferredClientPathHint,
-    findOptimalPathOnMap,
-    findNextDirectionOnMap,
-    findPathPointsOnMap,
-    reconstructPathPoints,
-    pushPathNode,
-    popPathNode,
-    directionFromStep,
-    buildAutoBattleGoalPoints,
-    DIRECTION_OFFSET,
-} = world_runtime_path_planning_helpers_1;
-
-const DEFAULT_PLAYER_RESPAWN_MAP_ID = 'yunlai_town';
-const TICK_METRIC_WINDOW_SIZE = 60;
 
 @Injectable()
 export class WorldRuntimeService {

@@ -247,7 +247,7 @@ async function main(): Promise<void> {
   assert.equal(
     log.some((entry) => Array.isArray(entry)
       && entry[0] === 'warn'
-      && String(entry[1]).includes(`离线挂机通天塔实例按需物化异常：${failedTowerInstanceId}`)),
+      && String(entry[1]).includes(`離線掛機通天塔實例按需物化異常：${failedTowerInstanceId}`)),
     true,
     '单层物化异常必须被批次内隔离并记录，不能中断其他塔层恢复',
   );

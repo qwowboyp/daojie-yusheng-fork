@@ -73,7 +73,7 @@ async function main(): Promise<void> {
 
     const workerRow = await waitForOutboxStatus(pool, eventId, 'delivered');
     assert.equal(workerRow?.status, 'delivered');
-    assert.ok(String(workerRow?.claimed_by ?? '').startsWith('outbox-dispatcher:'), `expected worker claim id to use outbox-dispatcher prefix, got ${workerRow?.claimed_by ?? 'null'}`);
+    const workerClaimOwner = await verifyDeliveredClaim(pool, eventId, workerRow);
 
     await seedOutboxRow({
       pool,
@@ -101,8 +101,8 @@ async function main(): Promise<void> {
     assert.equal(deliveredRowA?.status, 'delivered');
     assert.equal(deliveredRowB?.status, 'delivered');
     const claimers = new Set([
-      String(deliveredRowA?.claimed_by ?? ''),
-      String(deliveredRowB?.claimed_by ?? ''),
+      await verifyDeliveredClaim(pool, eventIdB, deliveredRowA),
+      await verifyDeliveredClaim(pool, eventIdC, deliveredRowB),
     ]);
     assert.ok(claimers.size >= 1 && claimers.size <= 2, `expected one or two outbox workers to claim ready rows, got ${Array.from(claimers).join(',')}`);
     assert.ok(Array.from(claimers).every((claimer) => claimer.startsWith('outbox-dispatcher:')));
@@ -156,20 +156,17 @@ async function main(): Promise<void> {
           ok: true,
           workerStatus: result.status,
           deliveredRowStatus: workerRow?.status,
-          claimedBy: workerRow?.claimed_by,
+          claimedBy: workerClaimOwner,
           multiWorkerStatuses: {
             workerA: workerA.status,
             workerB: workerB.status,
           },
-          multiWorkerClaimedBy: [
-            deliveredRowA?.claimed_by ?? null,
-            deliveredRowB?.claimed_by ?? null,
-          ],
+          multiWorkerClaimedBy: [...claimers],
           registryDeliveredStatus: registryRow?.status ?? null,
           consumerDeliveredStatus: consumerRow?.status ?? null,
           workerStdout: result.stdout?.trim() ?? '',
-          answers: 'with-db 下已验证 outbox worker 可作为独立进程单轮认领 ready 事件，并可由两个独立 worker 进程并发处理同一前缀下的 ready 事件且不重复 delivered；当前 worker 默认会从 AppModule 取 formal registry provider 处理内建 topic，也支持通过 SERVER_OUTBOX_CONSUMER_MODULE 挂接外部真实 consumer，并在 consumer 抛错时通过 markFailed 推进 retry/dead-letter',
-          excludes: '不证明真实跨机网络分区或下游消费者业务幂等，只证明共享数据库前提下的独立 worker 进程认领、不重复 delivered、AppModule registry wiring、外部 consumer 挂接与失败回收',
+          answers: 'with-db 已驗證獨立 outbox worker 單輪認領 ready 事件、兩個 worker 依序處理同一前綴事件、完成後釋放事件租約並保留 consumer 去重結果；亦驗證 AppModule registry 與外部 consumer 接入',
+          excludes: '不證明並行競爭、跨機網路分區、下游業務冪等或 consumer 失敗重試；僅涵蓋本測試實際執行的成功投遞與認領回收',
           completionMapping: 'release:proof:with-db.outbox-dispatcher-worker',
         },
         null,
@@ -298,7 +295,21 @@ async function waitForOutboxPredicate(
 }
 
 async function cleanupOutboxRows(pool: Pool, eventIds: string[]): Promise<void> {
+  await pool.query('DELETE FROM outbox_consumer_dedupe WHERE event_id = ANY($1::varchar[])', [eventIds]);
   await pool.query(`DELETE FROM ${OUTBOX_EVENT_TABLE} WHERE event_id = ANY($1::varchar[])`, [eventIds]);
+}
+
+async function verifyDeliveredClaim(pool: Pool, eventId: string, row: Record<string, unknown> | null): Promise<string> {
+  assert.equal(row?.status, 'delivered');
+  assert.equal(row?.claimed_by, null, '完成投遞必須釋放事件認領');
+  assert.equal(row?.claim_until, null, '完成投遞必須釋放事件租約');
+  const result = await pool.query('SELECT state, claimed_by, claim_until FROM outbox_consumer_dedupe WHERE event_id = $1', [eventId]);
+  assert.equal(result.rowCount, 1, '每個事件保留一筆 consumer 去重結果');
+  assert.equal(result.rows[0].state, 'delivered');
+  assert.equal(result.rows[0].claim_until, null);
+  const claimOwner = String(result.rows[0].claimed_by ?? '');
+  assert.ok(claimOwner.startsWith('outbox-dispatcher:'), '去重結果應保留正式 worker 的認領者');
+  return claimOwner;
 }
 
 function sleep(ms: number): Promise<void> {

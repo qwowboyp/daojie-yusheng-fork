@@ -41,6 +41,7 @@ type WorldSessionBootstrapSmokeDependencies = {
     worldPlayerSnapshotService?: unknown;
     worldGmAuthService?: unknown;
     playerRuntimeService?: unknown;
+    partyRuntimeService?: unknown;
     mailRuntimeService?: unknown;
     activityRuntimeService?: unknown;
     worldRuntimeService?: unknown;
@@ -55,7 +56,7 @@ type WorldSessionBootstrapSmokeDependencies = {
 function createWorldSessionBootstrapServiceForSmoke(
     dependencies: WorldSessionBootstrapSmokeDependencies = {},
 ): any {
-    return new world_session_bootstrap_service_1.WorldSessionBootstrapService(
+    const service = new world_session_bootstrap_service_1.WorldSessionBootstrapService(
         (dependencies.worldPlayerAuthService ?? null) as never,
         (dependencies.worldPlayerSnapshotService ?? null) as never,
         (dependencies.worldGmAuthService ?? null) as never,
@@ -67,6 +68,10 @@ function createWorldSessionBootstrapServiceForSmoke(
         (dependencies.worldSyncService ?? null) as never,
         (dependencies.worldClientEventService ?? null) as never,
     );
+    service.partyRuntimeService = dependencies.partyRuntimeService ?? {
+        restorePlayerMembership: async () => undefined,
+    };
+    return service;
 }
 
 (0, smoke_timeout_1.installSmokeTimeout)(__filename);
@@ -1326,7 +1331,7 @@ async function verifyHelloAuthBootstrapForbiddenContract() {
     if (emittedErrors.length !== 1 || emittedErrors[0]?.code !== 'AUTH_FAIL') {
         throw new Error(`expected hello auth bootstrap forbidden contract to emit AUTH_FAIL, got ${JSON.stringify(emittedErrors)}`);
     }
-    if (!String(emittedErrors[0]?.message ?? '').includes('mainline 协议仅允许 主线真源身份')) {
+    if (!String(emittedErrors[0]?.message ?? '').includes('mainline 協議僅允許 主線真源身份')) {
         throw new Error(`expected hello auth bootstrap forbidden contract to expose current authenticated hello guard message, got ${JSON.stringify(emittedErrors)}`);
     }
     if (typeof client.data.playerId === 'string' && client.data.playerId.trim()) {
@@ -1467,7 +1472,7 @@ async function verifyImplicitLegacyProtocolEntryContract() {
     if (emittedErrors.length !== 1 || emittedErrors[0]?.code !== 'LEGACY_PROTOCOL_DISABLED') {
         throw new Error(`expected implicit legacy protocol entry to emit LEGACY_PROTOCOL_DISABLED, got ${JSON.stringify(emittedErrors)}`);
     }
-    if (!String(emittedErrors[0]?.message ?? '').includes('legacy 握手连接不能进入 mainline hello 链路')) {
+    if (!String(emittedErrors[0]?.message ?? '').includes('legacy 握手連接不能進入 mainline hello 鏈路')) {
         throw new Error(`expected implicit legacy protocol entry to expose current legacy hello guard message, got ${JSON.stringify(emittedErrors)}`);
     }
     if (implicitLegacyClient.data.protocol !== 'legacy') {
@@ -2355,25 +2360,23 @@ async function verifyAuthenticatedSessionContract(token, expectedIdentity, expec
         if (secondInit.resumed === true) {
             throw new Error(`expected authenticated replacement to avoid resumed=true while previous socket is still connected, got ${JSON.stringify(secondInit)}`);
         }
+        const connectedSessionReuseExpected = shouldExpectConnectedSessionReuse(identitySource);
+        if (connectedSessionReuseExpected && secondInit.sid !== firstInit.sid) {
+            throw new Error(`expected authenticated replacement to reuse connected sid=${firstInit.sid}, got ${JSON.stringify(secondInit)}`);
+        }
+        if (!connectedSessionReuseExpected && secondInit.sid === firstInit.sid) {
+            throw new Error(`expected authenticated replacement to rotate connected sid=${firstInit.sid}, got ${JSON.stringify(secondInit)}`);
+        }
         secondRuntimeFence = await readRuntimeSessionFence();
         if (DATABASE_ENABLED && secondRuntimeFence) {
             await waitForPresenceSessionFence(expectedPlayerId, secondRuntimeFence, 5000);
         }
         if (firstRuntimeFence && secondRuntimeFence) {
-            if (secondInit.sid === firstInit.sid) {
-                if (secondRuntimeFence.runtimeOwnerId !== firstRuntimeFence.runtimeOwnerId) {
-                    throw new Error(`expected authenticated replacement with reused sid to keep runtimeOwnerId, got first=${firstRuntimeFence.runtimeOwnerId} second=${secondRuntimeFence.runtimeOwnerId}`);
-                }
-                if (secondRuntimeFence.sessionEpoch !== firstRuntimeFence.sessionEpoch) {
-                    throw new Error(`expected authenticated replacement with reused sid to keep sessionEpoch, got first=${firstRuntimeFence.sessionEpoch} second=${secondRuntimeFence.sessionEpoch}`);
-                }
-            } else {
-                if (secondRuntimeFence.runtimeOwnerId === firstRuntimeFence.runtimeOwnerId) {
-                    throw new Error(`expected authenticated replacement to rotate runtimeOwnerId after sid rotation, got first=${firstRuntimeFence.runtimeOwnerId} second=${secondRuntimeFence.runtimeOwnerId}`);
-                }
-                if (secondRuntimeFence.sessionEpoch <= firstRuntimeFence.sessionEpoch) {
-                    throw new Error(`expected authenticated replacement to bump sessionEpoch after sid rotation, got first=${firstRuntimeFence.sessionEpoch} second=${secondRuntimeFence.sessionEpoch}`);
-                }
+            if (secondRuntimeFence.runtimeOwnerId === firstRuntimeFence.runtimeOwnerId) {
+                throw new Error(`expected authenticated replacement to rotate runtimeOwnerId, got first=${firstRuntimeFence.runtimeOwnerId} second=${secondRuntimeFence.runtimeOwnerId}`);
+            }
+            if (secondRuntimeFence.sessionEpoch <= firstRuntimeFence.sessionEpoch) {
+                throw new Error(`expected authenticated replacement to bump sessionEpoch, got first=${firstRuntimeFence.sessionEpoch} second=${secondRuntimeFence.sessionEpoch}`);
             }
         }
         third = createProtocolSocket(token, { sessionId: `${secondInit.sid}:stale` });
@@ -2398,20 +2401,11 @@ async function verifyAuthenticatedSessionContract(token, expectedIdentity, expec
             await waitForPresenceSessionFence(expectedPlayerId, thirdRuntimeFence, 5000);
         }
         if (secondRuntimeFence && thirdRuntimeFence) {
-            if (staleRequestedInit.sid === secondInit.sid) {
-                if (thirdRuntimeFence.runtimeOwnerId !== secondRuntimeFence.runtimeOwnerId) {
-                    throw new Error(`expected authenticated stale-request reconnect with reused sid to keep runtimeOwnerId, got second=${secondRuntimeFence.runtimeOwnerId} third=${thirdRuntimeFence.runtimeOwnerId}`);
-                }
-                if (thirdRuntimeFence.sessionEpoch !== secondRuntimeFence.sessionEpoch) {
-                    throw new Error(`expected authenticated stale-request reconnect with reused sid to keep sessionEpoch, got second=${secondRuntimeFence.sessionEpoch} third=${thirdRuntimeFence.sessionEpoch}`);
-                }
-            } else {
-                if (thirdRuntimeFence.runtimeOwnerId === secondRuntimeFence.runtimeOwnerId) {
-                    throw new Error(`expected authenticated stale-request replacement to rotate runtimeOwnerId after sid rotation, got second=${secondRuntimeFence.runtimeOwnerId} third=${thirdRuntimeFence.runtimeOwnerId}`);
-                }
-                if (thirdRuntimeFence.sessionEpoch <= secondRuntimeFence.sessionEpoch) {
-                    throw new Error(`expected authenticated stale-request replacement to bump sessionEpoch after sid rotation, got second=${secondRuntimeFence.sessionEpoch} third=${thirdRuntimeFence.sessionEpoch}`);
-                }
+            if (thirdRuntimeFence.runtimeOwnerId === secondRuntimeFence.runtimeOwnerId) {
+                throw new Error(`expected authenticated stale-request replacement to rotate runtimeOwnerId, got second=${secondRuntimeFence.runtimeOwnerId} third=${thirdRuntimeFence.runtimeOwnerId}`);
+            }
+            if (thirdRuntimeFence.sessionEpoch <= secondRuntimeFence.sessionEpoch) {
+                throw new Error(`expected authenticated stale-request replacement to bump sessionEpoch, got second=${secondRuntimeFence.sessionEpoch} third=${thirdRuntimeFence.sessionEpoch}`);
             }
         }
         third.close();
@@ -2987,7 +2981,7 @@ async function verifyAuthenticatedSnapshotRecoveryNoticeContract() {
             persistUntilAck: true,
         };
     }
-    const tokenSeedNotice = await runNoticeCase('token_seed', '首次以主线真源入场');
+    const tokenSeedNotice = await runNoticeCase('token_seed', '首次以主線真源入場');
     return {
         tokenSeedNotice,
     };
@@ -4002,7 +3996,7 @@ async function verifyTokenSeedNativeStarterBootstrapProof() {
         if (!recoveryNotice
             || recoveryNotice.kind !== 'system'
             || recoveryNotice.persistUntilAck !== true
-            || !String(recoveryNotice.text ?? '').includes('首次以主线真源入场')) {
+            || !String(recoveryNotice.text ?? '').includes('首次以主線真源入場')) {
             throw new Error(`expected token-seed native starter bootstrap to emit persistent system recovery notice, got ${JSON.stringify(bootstrap.noticeItems ?? null)}`);
         }
         return {

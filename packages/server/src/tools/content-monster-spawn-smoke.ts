@@ -63,7 +63,8 @@ function main() {
   }
 
   const rootMapMonsters = repository.createRuntimeMonstersForMap('cleft_blade_plain');
-  assert.equal(rootMapMonsters.length, 37, 'root map fallback should follow main spawn population semantics');
+  // 現行裂刃原配置十組凡血刷新點（每組六隻）與一隻守門首領。
+  assert.equal(rootMapMonsters.length, 61, 'root map fallback should follow main spawn population semantics');
 
   const yunlaiMonsters = repository.createRuntimeMonstersForMap('yunlai_town');
   assert.equal(yunlaiMonsters.length, 24, 'ordinary yunlai spawns should use main maxAlive population');
@@ -327,20 +328,19 @@ function assertHuanlingZhenrenInitialWoundedBuff(
 
 function assertHuanlingZhenrenSkillOrderAndCastConfig() {
   const currentMonsterContentPath = resolveProjectPath('packages', 'server', 'data', 'content', 'monsters', '破败洞府.json');
-  const referenceMonsterContentPath = resolveProjectPath('参考', 'main-packages-ref', 'packages', 'server', 'data', 'content', 'monsters', '破败洞府.json');
   const currentTechniquePath = resolveProjectPath('packages', 'server', 'data', 'content', 'techniques', '凡人期', '术法', '地阶.json');
-  const referenceTechniquePath = resolveProjectPath('参考', 'main-packages-ref', 'packages', 'server', 'data', 'content', 'techniques', '凡人期', '术法', '地阶.json');
 
   const currentHuanling = JSON.parse(fs.readFileSync(currentMonsterContentPath, 'utf-8'))
     .find((entry) => entry.id === 'm_huanling_zhenren');
-  const referenceHuanling = JSON.parse(fs.readFileSync(referenceMonsterContentPath, 'utf-8'))
-    .find((entry) => entry.id === 'm_huanling_zhenren');
   assert.ok(currentHuanling, 'current content should include 重伤的唤灵真人');
-  assert.ok(referenceHuanling, 'reference main should include 重伤的唤灵真人');
   assert.deepEqual(
     currentHuanling.skills,
-    referenceHuanling.skills,
-    '重伤的唤灵真人 skill order should stay aligned with reference main',
+    [
+      'skill.huanling_difu_chenyin', 'skill.huanling_liefu_waihuan', 'skill.huanling_suogong_neihuan',
+      'skill.huanling_xingluo_canpan', 'skill.huanling_ronghe_guanmai', 'skill.huanling_lieqi_zhixian',
+      'skill.huanling_candan_faxiang', 'skill.huanling_duanhun_ding', 'skill.huanling_canpo_zhang',
+    ],
+    '重傷的喚靈真人應維持正式技能順序，基礎掌法最後施放',
   );
   assert.equal(
     currentHuanling.skills[currentHuanling.skills.length - 1],
@@ -349,7 +349,6 @@ function assertHuanlingZhenrenSkillOrderAndCastConfig() {
   );
 
   const currentSkills = flattenTechniqueSkills(JSON.parse(fs.readFileSync(currentTechniquePath, 'utf-8')));
-  const referenceSkills = flattenTechniqueSkills(JSON.parse(fs.readFileSync(referenceTechniquePath, 'utf-8')));
   for (const skillId of currentHuanling.skills) {
     const currentSkill = currentSkills.get(skillId);
     assert.ok(currentSkill, `${skillId} should resolve from current 地阶 technique content`);
@@ -363,14 +362,12 @@ function assertHuanlingZhenrenSkillOrderAndCastConfig() {
   }
 
   const currentCanpo = currentSkills.get('skill.huanling_canpo_zhang');
-  const referenceCanpo = referenceSkills.get('skill.huanling_canpo_zhang');
   assert.ok(currentCanpo, 'current content should include 残魄掌');
-  assert.ok(referenceCanpo, 'reference main should include 残魄掌');
   assert.equal(currentCanpo.name, '殘魄掌', '残魄掌 display name should stay stable');
   assert.equal(resolveRawCooldown(currentCanpo), 0, '残魄掌 should remain a zero-cooldown fallback');
   assert.equal(resolveRawRange(currentCanpo), 5, '残魄掌 should keep reference range 5');
-  assert.deepEqual(resolveRawTargeting(currentCanpo), resolveRawTargeting(referenceCanpo), '残魄掌 targeting should stay aligned with reference main');
-  assert.deepEqual(resolveRawMonsterCast(currentCanpo), resolveRawMonsterCast(referenceCanpo), '残魄掌 monsterCast warning config should stay aligned with reference main');
+  assert.deepEqual(resolveRawTargeting(currentCanpo), { shape: 'single', maxTargets: 1 }, '殘魄掌應維持單體目標契約');
+  assert.deepEqual(resolveRawMonsterCast(currentCanpo), { windupTicks: 1, warningColor: '#dca06a' }, '殘魄掌應維持一息預警與指定色彩');
 }
 
 function resolveRawCooldown(skill) {

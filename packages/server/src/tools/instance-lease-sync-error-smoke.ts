@@ -207,7 +207,7 @@ async function verifyMissingCatalogLeaseIsReclaimed() {
     async replayInstanceFlushPayloadsBeforeOwnershipChange(targetInstanceId, ownershipEpoch) {
       assert.equal(targetInstanceId, 'tower:tongtian:layer:31');
       assert.equal(ownershipEpoch, 20);
-      assert.equal(instance.meta.runtimeStatus, 'stopped');
+      assert.equal(instance.meta.runtimeStatus, 'ownership_transition');
     },
     getInstanceRuntime(instanceId) {
       return instanceId === 'tower:tongtian:layer:31' ? instance : null;
@@ -291,7 +291,7 @@ async function verifyLocalLeaseSyncFailureDegrades() {
     async replayInstanceFlushPayloadsBeforeOwnershipChange(targetInstanceId, ownershipEpoch) {
       assert.equal(targetInstanceId, 'tower:tongtian:layer:30');
       assert.equal(ownershipEpoch, 7);
-      assert.equal(instance.meta.runtimeStatus, 'stopped');
+      assert.equal(instance.meta.runtimeStatus, 'ownership_transition');
     },
     worldRuntimeInstanceStateService: {
       deleteInstanceRuntime() {

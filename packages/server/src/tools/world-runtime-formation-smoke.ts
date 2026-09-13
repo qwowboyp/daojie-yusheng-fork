@@ -251,7 +251,7 @@ async function main() {
   assert.equal(formation.qiCost, 16900);
   assert.equal(notices[notices.length - 1]?.structured?.key, "notice.formation.deployed");
   assert.deepEqual(notices[notices.length - 1]?.structured?.vars, {
-    formationName: "聚灵阵",
+    formationName: "聚靈陣",
     radius: 2,
     effectValue: "42萬",
     qiBudget: "2024",
@@ -503,7 +503,7 @@ async function main() {
   }, deps);
   assert.equal(notices[notices.length - 1]?.structured?.key, "notice.formation.refilled");
   assert.deepEqual(notices[notices.length - 1]?.structured?.vars, {
-    formationName: "聚灵阵",
+    formationName: "聚靈陣",
     spiritStoneCount: "1",
     qiAmount: "100",
   });
@@ -526,7 +526,7 @@ async function main() {
   const maintenanceStart = maintenancePipeline.start(player, "formation", { formationInstanceId: formation.id }, maintenanceCtx);
   assert.equal(maintenanceStart.ok, true);
   assert.equal(maintenanceStart.messages?.[0]?.key, "notice.craft.formation.start");
-  assert.deepEqual(maintenanceStart.messages?.[0]?.vars, { formationName: "聚灵阵" });
+  assert.deepEqual(maintenanceStart.messages?.[0]?.vars, { formationName: "聚靈陣" });
   assert.equal(player.formationJob?.formationInstanceId, formation.id);
   const auraBeforeMaintenance = service.getFormationCombatState(instanceId, formation.id).remainingAuraBudget;
   const qiBeforeMaintenance = player.qi;
@@ -739,7 +739,7 @@ async function main() {
   const projectedBarrier = barrierDelta.fmn.find((entry) => entry.id === barrierFormation.id);
   assert.equal(projectedBarrier.bd, 1);
   assert.equal(projectedBarrier.sh, "square");
-  assert.equal(projectedBarrier.n, "太玄封界阵");
+  assert.equal(projectedBarrier.n, "太玄封界陣");
   assert.equal(projectedBarrier.ch, "玄");
   assert.equal(projectedBarrier.bch, "封");
   assert.equal(projectedBarrier.bc, "#67e8f9");
@@ -755,8 +755,8 @@ async function main() {
   }, deps);
   assert.equal(notices[notices.length - 1]?.structured?.key, "notice.formation.active-set");
   assert.deepEqual(notices[notices.length - 1]?.structured?.vars, {
-    formationName: "太玄封界阵",
-    stateLabel: "关闭",
+    formationName: "太玄封界陣",
+    stateLabel: "關閉",
   });
   assert.equal(service.isBoundaryBarrierBlocked(instanceId, boundaryX, boundaryY), false);
   const inactiveBarrierDelta = buildFullWorldDelta({
@@ -790,8 +790,8 @@ async function main() {
   }, deps);
   assert.equal(notices[notices.length - 1]?.structured?.key, "notice.formation.active-set");
   assert.deepEqual(notices[notices.length - 1]?.structured?.vars, {
-    formationName: "太玄封界阵",
-    stateLabel: "开启",
+    formationName: "太玄封界陣",
+    stateLabel: "開啟",
   });
   assert.equal(service.isBoundaryBarrierBlocked(instanceId, boundaryX, boundaryY), true);
   const beforeBoundaryDamage = service.getFormationCombatState(instanceId, barrierFormation.id).remainingAuraBudget;
@@ -897,7 +897,7 @@ async function main() {
   const spawnTemplateRepository = new MapTemplateRepository();
   spawnTemplateRepository.registerRuntimeMapTemplate({
     id: "formation_guard_spawn",
-    name: "护宗大阵落点测试",
+    name: "護宗大陣落点测试",
     width: 12,
     height: 12,
     tiles: Array.from({ length: 12 }, () => "............"),
@@ -917,7 +917,7 @@ async function main() {
     kind: "public",
     persistent: true,
     createdAt: Date.now(),
-    displayName: "护宗大阵落点测试",
+    displayName: "護宗大陣落点测试",
     linePreset: "real",
     lineIndex: 1,
     instanceOrigin: "smoke",
@@ -944,7 +944,7 @@ async function main() {
   });
   assert.notDeepEqual({ x: outsiderSpawn.x, y: outsiderSpawn.y }, { x: 9, y: 8 });
   const guardianProjection = service.listRuntimeFormations(instanceId).find((entry) => entry.id === guardian.id);
-  assert.equal(guardianProjection.name, "护宗大阵");
+  assert.equal(guardianProjection.name, "護宗大陣");
   assert.equal(guardianProjection.ownerSectId, "sect:smoke");
   assert.equal(guardianProjection.eyeInstanceId, "sect:smoke:inner");
   assert.equal(guardianProjection.showText, false);
@@ -1034,7 +1034,7 @@ async function main() {
   service.applyDamageToFormation("sect:smoke:inner", guardian.id, 999999999999, outsiderPlayerId, deps);
   assert.equal(notices[notices.length - 1]?.structured?.key, "notice.formation.eye-qi-depleted");
   assert.deepEqual(notices[notices.length - 1]?.structured?.vars, {
-    formationName: "护宗大阵",
+    formationName: "護宗大陣",
   });
   const damagedGuardian = service.findFormationInInstance(instanceId, guardian.id);
   assert.equal(damagedGuardian.id, guardian.id);
@@ -1050,7 +1050,7 @@ async function main() {
   }, deps);
   assert.equal(notices[notices.length - 1]?.structured?.key, "notice.formation.injected");
   assert.deepEqual(notices[notices.length - 1]?.structured?.vars, {
-    formationName: "护宗大阵",
+    formationName: "護宗大陣",
     spiritStoneCount: "7",
     qiAmount: "700",
   });

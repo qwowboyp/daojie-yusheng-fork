@@ -1146,10 +1146,10 @@ async function registerAndLoginPlayer() {
         }
         catch (error) {
             const message = error instanceof Error ? error.message : String(error);
-            if (!message.includes('显示名称已存在')
-                && !message.includes('账号已存在')
-                && !message.includes('角色名已存在')
-                && !message.includes('称号已存在')) {
+            if (!message.includes('顯示名稱已存在')
+                && !message.includes('帳號已存在')
+                && !message.includes('角色名稱已存在')
+                && !message.includes('稱號已存在')) {
                 throw error;
             }
         }

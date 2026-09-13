@@ -34,7 +34,7 @@ async function main(): Promise<void> {
   assert.equal(calculateMonthCardNextPool(-100), MERIT_MONTH_CARD_POOL_GRANT);
   assert.equal(
     normalizeActivityError(new Error('connect ECONNREFUSED internal-activity-db:5432')).message,
-    '活动服务暂不可用，请稍后重试',
+    '活動服務暫不可用，請稍後重試',
   );
 
   const activationCalls: Array<{ playerId: string; nowMs: number; poolGrant: number }> = [];
@@ -116,7 +116,7 @@ async function verifyActivityGatewayErrorNormalization(): Promise<void> {
   await helper.handleRequestActivityStatus({} as never, undefined);
   assert.deepEqual(emittedErrors, [{
     code: 'REQUEST_ACTIVITY_STATUS_FAILED',
-    message: '活动服务暂不可用，请稍后重试',
+    message: '活動服務暫不可用，請稍後重試',
   }]);
 }
 

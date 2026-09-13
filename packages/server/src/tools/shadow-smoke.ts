@@ -294,7 +294,7 @@ async function main() {
         },
         health: {
             ready: resolveShadowHealthReady(health),
-            maintenance: health.readiness.maintenance?.active ?? false,
+            maintenance: health.readiness?.maintenance?.active ?? null,
         },
         adminRead: {
             currentMap: {
@@ -454,7 +454,11 @@ function resolveShadowHealthReady(payload) {
  * 处理fetch玩家状态。
  */
 async function fetchPlayerState(playerIdValue) {
-    return fetchJson(`/runtime/players/${playerIdValue}/state`);
+    const runtimeToken = process.env.SERVER_RUNTIME_ADMIN_TOKEN?.trim()
+        || process.env.SERVER_RUNTIME_HTTP_TOKEN?.trim();
+    return fetchJson(`/runtime/players/${playerIdValue}/state`, {
+        headers: runtimeToken ? { 'x-runtime-admin-token': runtimeToken } : {},
+    });
 }
 /**
  * 处理fetchGM地图运行态。

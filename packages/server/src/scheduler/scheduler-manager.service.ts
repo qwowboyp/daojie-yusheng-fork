@@ -24,6 +24,8 @@ export class SchedulerManagerService implements OnModuleInit, OnModuleDestroy {
   private persistTimer: NodeJS.Timeout | null = null;
   private persistInFlight: Promise<void> | null = null;
   private persistRequested = false;
+  private shutdownStarted = false;
+  private shutdownDrainPromise: Promise<void> | null = null;
 
   constructor(
     private readonly registry: SchedulerRegistryService,
@@ -40,9 +42,11 @@ export class SchedulerManagerService implements OnModuleInit, OnModuleDestroy {
     this.logger.log('调度管理器已注册，等待启动链路编排器初始化');
   }
 
-  async onModuleDestroy(): Promise<void> {
-    this.stop('module_destroy');
-    await this.persistSnapshotNow();
+  onModuleDestroy(): void {
+    this.shutdownStarted = true;
+    this.cancelPersistTimer();
+    this.persistRequested = false;
+    this.markStopping('module_destroy', false);
   }
 
   async initialize(input?: { barrier?: SchedulerBarrierSnapshot | null }): Promise<SchedulerSnapshot> {
@@ -57,9 +61,28 @@ export class SchedulerManagerService implements OnModuleInit, OnModuleDestroy {
   }
 
   stop(reason = 'stop'): SchedulerSnapshot {
+    return this.markStopping(reason, !this.shutdownStarted);
+  }
+
+  /** 停止接收新任务，并在共享数据库池销毁前持久化最后一个已完成任务结果。 */
+  drainForShutdown(reason = 'shutdown'): Promise<void> {
+    if (this.shutdownDrainPromise) {
+      return this.shutdownDrainPromise;
+    }
+    this.shutdownStarted = true;
+    this.cancelPersistTimer();
+    this.markStopping(reason, false);
+    this.persistRequested = true;
+    this.shutdownDrainPromise = this.persistSnapshotNow({ throwOnFailure: true });
+    return this.shutdownDrainPromise;
+  }
+
+  private markStopping(reason: string, persist: boolean): SchedulerSnapshot {
     this.state.markStopping();
     this.refreshBarrierSnapshot();
-    this.schedulePersistSnapshot();
+    if (persist) {
+      this.schedulePersistSnapshot();
+    }
     this.logger.log(`调度管理器已进入停止状态：${reason}`);
     return this.getSnapshot();
   }
@@ -151,7 +174,7 @@ export class SchedulerManagerService implements OnModuleInit, OnModuleDestroy {
   }
 
   private schedulePersistSnapshot(): void {
-    if (!this.statePersistenceService) return;
+    if (!this.statePersistenceService || this.shutdownStarted) return;
     this.persistRequested = true;
     if (this.persistTimer || this.persistInFlight) return;
     this.persistTimer = setTimeout(() => {
@@ -165,7 +188,7 @@ export class SchedulerManagerService implements OnModuleInit, OnModuleDestroy {
    * 同一进程只允许一个 scheduler snapshot UPSERT 在途；并发请求只保留最新快照。
    * 失败后延迟重试，避免数据库锁竞争时形成每秒告警和连接池请求风暴。
    */
-  private async persistSnapshotNow(): Promise<void> {
+  private async persistSnapshotNow(input?: { throwOnFailure?: boolean }): Promise<void> {
     if (!this.statePersistenceService) return;
     this.persistRequested = true;
     if (this.persistTimer) {
@@ -185,6 +208,9 @@ export class SchedulerManagerService implements OnModuleInit, OnModuleDestroy {
         } catch (error: unknown) {
           this.logger.warn(`调度器状态持久化失败：${error instanceof Error ? error.message : String(error)}`);
           this.persistRequested = true;
+          if (input?.throwOnFailure === true) {
+            throw error;
+          }
           break;
         }
       }
@@ -200,6 +226,12 @@ export class SchedulerManagerService implements OnModuleInit, OnModuleDestroy {
         this.schedulePersistSnapshot();
       }
     }
+  }
+
+  private cancelPersistTimer(): void {
+    if (!this.persistTimer) return;
+    clearTimeout(this.persistTimer);
+    this.persistTimer = null;
   }
 }
 

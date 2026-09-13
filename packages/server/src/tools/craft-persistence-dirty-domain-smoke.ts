@@ -5,6 +5,7 @@ import { resolve } from 'node:path';
 import { CraftPanelRuntimeService } from '../runtime/craft/craft-panel-runtime.service';
 
 const TEST_REALM_EXP_TO_NEXT = 10000;
+process.env.SERVER_FLUSH_TASK_RUNTIME_MODE = 'inline';
 
 function createRuntimeHarness(playerStore: Map<string, ReturnType<typeof createPlayer>>) {
   return {
@@ -221,10 +222,6 @@ function assertDomains(player: { dirtyDomains: Set<string> }, expected: string[]
   }
 }
 
-function assertPersistenceVersionSeed(value: number | null | undefined): asserts value is number {
-  assert.ok(Number.isSafeInteger(value) && Number(value) > 0, `expected positive safe version seed, got ${String(value)}`);
-}
-
 function testSaveAlchemyPresetDirtyDomain() {
   const { service, playerStore, alchemyPresetWrites, activeJobWrites } = createService();
   const player = createPlayer();
@@ -237,10 +234,21 @@ function testSaveAlchemyPresetDirtyDomain() {
   });
 
   assert.equal(result.ok, true);
+  assert.equal(player.alchemyPresets.length, 1);
+  const savedPreset = player.alchemyPresets[0] as {
+    presetId: string;
+    recipeId: string;
+    name: string;
+    ingredients: Array<{ itemId: string; count: number }>;
+    updatedAt: number;
+  };
+  assert.equal(savedPreset.presetId.startsWith('alchemy:qi_pill:'), true);
+  assert.equal(savedPreset.recipeId, 'qi_pill');
+  assert.equal(savedPreset.name, '补气预设');
+  assert.deepEqual(savedPreset.ingredients, [{ itemId: 'moondew_grass', count: 1 }]);
+  assert.equal(Number.isSafeInteger(savedPreset.updatedAt), true);
   assertDomains(player, ['alchemy_preset'], ['snapshot']);
-  assert.equal(alchemyPresetWrites.length, 1);
-  assert.equal(alchemyPresetWrites[0].playerId, player.playerId);
-  assertPersistenceVersionSeed(alchemyPresetWrites[0].versionSeed);
+  assert.equal(alchemyPresetWrites.length, 0, '統一 flush consumer 模式只標 dirty，不得走舊分域直寫');
   assert.equal(activeJobWrites.length, 0);
 }
 
@@ -268,10 +276,7 @@ function testTickAlchemyMarksActiveJob() {
 
   assertDomains(player, ['active_job'], ['snapshot']);
   assert.equal(player.alchemyJob?.jobVersion, 3);
-  assert.equal(activeJobWrites.length, 1);
-  assert.equal(activeJobWrites[0].playerId, player.playerId);
-  assertPersistenceVersionSeed(activeJobWrites[0].versionSeed);
-  assert.equal((activeJobWrites[0].row as Record<string, unknown> | null)?.jobVersion, 3);
+  assert.equal(activeJobWrites.length, 0, '統一 flush consumer 模式只標 dirty，不得走舊 active job 直寫');
 }
 
 function testAlchemyCompletionConsumesOneBatchResources() {
@@ -317,9 +322,7 @@ function testAlchemyCompletionConsumesOneBatchResources() {
   assert.deepEqual(runtimeHarness.walletDebits, []);
   assert.equal(player.alchemyJob?.completedCount, 1);
   assert.equal(player.alchemyJob?.jobVersion, 3);
-  assert.equal(activeJobWrites.length, 1);
-  assert.equal(activeJobWrites[0].playerId, player.playerId);
-  assert.equal((activeJobWrites[0].row as Record<string, unknown> | null)?.jobVersion, 3);
+  assert.equal(activeJobWrites.length, 0, '統一 flush consumer 模式只標 dirty，不得走舊 active job 直寫');
 }
 
 function testTickEnhancementMarksDomains() {
@@ -352,13 +355,8 @@ function testTickEnhancementMarksDomains() {
 
   assertDomains(player, ['inventory', 'active_job', 'enhancement_record', 'profession', 'wallet'], ['snapshot']);
   assert.deepEqual(runtimeHarness.walletDebits, [[player.playerId, 'spirit_stone', spiritStoneCost]]);
-  assert.equal(enhancementRecordWrites.length, 1);
-  assert.equal(enhancementRecordWrites[0].playerId, player.playerId);
-  assertPersistenceVersionSeed(enhancementRecordWrites[0].versionSeed);
-  assert.equal(activeJobWrites.length, 1);
-  assert.equal(activeJobWrites[0].playerId, player.playerId);
-  assertPersistenceVersionSeed(activeJobWrites[0].versionSeed);
-  assert.equal(activeJobWrites[0].row, null);
+  assert.equal(enhancementRecordWrites.length, 0, '統一 flush consumer 模式只標 dirty，不得走舊強化記錄直寫');
+  assert.equal(activeJobWrites.length, 0, '統一 flush consumer 模式只標 dirty，不得走舊 active job 直寫');
 }
 
 function testActiveJobVersionBumpHasSingleImplementation() {

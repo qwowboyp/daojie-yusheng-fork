@@ -166,10 +166,49 @@ async function main(): Promise<void> {
   for (let index = 0; index < 20; index += 1) {
     assert.equal(await coalescedManager.runTask('coalesced-task', async () => 1), 1);
   }
-  await coalescedManager.onModuleDestroy();
+  let releaseLastRun: (() => void) | null = null;
+  let markLastRunEntered: (() => void) | null = null;
+  const lastRunEntered = new Promise<void>((resolve) => { markLastRunEntered = resolve; });
+  const lastRun = coalescedManager.runTask('coalesced-task', async () => {
+    markLastRunEntered?.();
+    await new Promise<void>((resolve) => { releaseLastRun = resolve; });
+    return 4;
+  });
+  await lastRunEntered;
+  coalescedManager.stop('shutdown_test');
+  assert.equal(await coalescedManager.runTask('coalesced-task', async () => 1), 0, '停止后不得接收新任务');
+  releaseLastRun?.();
+  assert.equal(await lastRun, 4);
+  const firstDrain = coalescedManager.drainForShutdown('shutdown_test');
+  const secondDrain = coalescedManager.drainForShutdown('shutdown_test_duplicate');
+  assert.equal(firstDrain, secondDrain, '并行 shutdown drain 必须复用同一单飞 Promise');
+  await Promise.all([firstDrain, secondDrain]);
+  const saveCallsAfterDrain = saveCalls;
+  coalescedManager.onModuleDestroy();
   assert.equal(maxConcurrentWrites, 1, '调度器快照写入必须保持单飞');
   assert.ok(saveCalls <= 3, `高频状态变化应合并写入，实际 saveCalls=${saveCalls}`);
-  assert.equal(persistedRunCounts.at(-1), 20, '销毁前必须持久化最新状态');
+  assert.equal(persistedRunCounts.at(-1), 21, 'shutdown drain 必须持久化停止前最后完成的任务结果');
+  assert.equal(saveCalls, saveCallsAfterDrain, 'onModuleDestroy 不得在连接池并行销毁时再次写入');
+
+  let failFinalSave = false;
+  const failingPersistence = {
+    loadSnapshot: async () => null,
+    saveSnapshot: async () => {
+      if (failFinalSave) throw new Error('scheduler_final_snapshot_failed');
+    },
+  } as never;
+  const failingManager = new SchedulerManagerService(
+    new SchedulerRegistryService(),
+    new SchedulerStateService(),
+    undefined,
+    failingPersistence,
+    new StartupBarrierService(),
+  );
+  await failingManager.initialize();
+  failFinalSave = true;
+  await assert.rejects(() => failingManager.drainForShutdown('failure_test'), /scheduler_final_snapshot_failed/);
+  assert.equal((failingManager as unknown as { persistTimer: NodeJS.Timeout | null }).persistTimer, null, 'final snapshot 失败后不得排重试 timer');
+  failingManager.onModuleDestroy();
 
   console.log(JSON.stringify({
     ok: true,
