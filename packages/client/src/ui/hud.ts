@@ -174,17 +174,16 @@ export class HUD {
     this.setText(this.nameDiv, 'name', player.displayName ?? player.name);
     this.setText(this.titleDiv, 'title', meta?.titleLabel ?? t('hud.title.default', undefined));
     this.setText(this.posDiv, 'pos', `(${player.x}, ${player.y})`);
-    this.setText(
-      this.mapDiv,
-      'map',
-      meta?.mapDanger ? `${meta.mapName ?? '未知地域'} · ${meta.mapDanger}` : (meta?.mapName ?? '未知地域'),
-    );
-    this.setText(this.objectiveDiv, 'objective', meta?.boneAgeLabel ?? this.buildBoneAgeLabel(player));
-    this.setText(this.threatDiv, 'threat', meta?.lifespanLabel ?? this.buildLifespanLabel(player));
+    const mapName = meta?.mapName ?? '未知地域';
+    const ageLabel = meta?.boneAgeLabel ?? this.buildBoneAgeLabel(player);
+    const lifespanLabel = meta?.lifespanLabel ?? this.buildLifespanLabel(player);
+    this.setText(this.mapDiv, 'map', this.buildMapLabel(mapName, meta?.mapDanger));
+    this.setText(this.objectiveDiv, 'objective', ageLabel);
+    this.setText(this.threatDiv, 'threat', lifespanLabel);
 
     const realmLabel = meta?.realmLabel ?? player.realm?.displayName ?? player.realmName ?? player.realmStage ?? '-';
     const realmLevelLabel = this.buildRealmLevelLabel(player);
-    this.setText(this.realmValue, 'realm', realmLabel);
+    this.setText(this.realmValue, 'realm', this.buildRealmSummaryLabel(realmLabel, ageLabel, lifespanLabel));
     this.setText(this.realmLevel, 'realm-level', realmLevelLabel);
     const realmReviewLabel = meta?.realmReviewLabel ?? player.realm?.review ?? player.realmReview ?? '-';
     this.setText(this.realmSub, 'realm-sub', realmReviewLabel);
@@ -240,7 +239,11 @@ export class HUD {
   }
 
   private buildReactHudStatus(player: PlayerState, meta?: HUDMeta): ReactHudStatusState {
-    const realmLabel = meta?.realmLabel ?? player.realm?.displayName ?? player.realmName ?? player.realmStage ?? '-';
+    const baseRealmLabel = meta?.realmLabel ?? player.realm?.displayName ?? player.realmName ?? player.realmStage ?? '-';
+    const ageLabel = meta?.boneAgeLabel ?? this.buildBoneAgeLabel(player);
+    const lifespanLabel = meta?.lifespanLabel ?? this.buildLifespanLabel(player);
+    const mapName = meta?.mapName ?? '未知地域';
+    const realmLabel = this.buildRealmSummaryLabel(baseRealmLabel, ageLabel, lifespanLabel);
     const realmLevelLabel = this.buildRealmLevelLabel(player);
     const realmReviewLabel = meta?.realmReviewLabel ?? player.realm?.review ?? player.realmReview ?? '-';
     const breakthroughPreview = player.realm?.breakthrough;
@@ -263,9 +266,9 @@ export class HUD {
       name: player.displayName ?? player.name,
       title: meta?.titleLabel ?? t('hud.title.default', undefined),
       position: `(${player.x}, ${player.y})`,
-      map: meta?.mapDanger ? `${meta.mapName ?? '未知地域'} · ${meta.mapDanger}` : (meta?.mapName ?? '未知地域'),
-      objective: meta?.boneAgeLabel ?? this.buildBoneAgeLabel(player),
-      threat: meta?.lifespanLabel ?? this.buildLifespanLabel(player),
+      profileMap: mapName,
+      objective: ageLabel,
+      threat: lifespanLabel,
       realmLabel,
       realmLevelLabel,
       realmReviewLabel,
@@ -298,6 +301,14 @@ export class HUD {
       return '';
     }
     return `lv${formatDisplayInteger(Math.floor(realmLv))}`;
+  }
+
+  private buildMapLabel(mapName: string, mapRecommendation?: string): string {
+    return mapRecommendation ? `${mapName} ${mapRecommendation}` : mapName;
+  }
+
+  private buildRealmSummaryLabel(realmLabel: string, ageLabel: string, lifespanLabel: string): string {
+    return `${realmLabel} ${ageLabel}/${lifespanLabel}`;
   }
 
   private buildCultivate(player: PlayerState): { text: string; width: string } {

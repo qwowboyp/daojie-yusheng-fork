@@ -123,12 +123,19 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
   });
 
   if (documentRef.getElementById('game-shell')?.dataset.workspaceMode === 'true') {
+    panelContext.buildingFengShuiStateSource.configureWorkspaceNavigation(() => modules.sidePanel.switchTab('building'));
     modules.craftWorkbenchModal.configureWorkspaceNavigation({
       open: (mode) => modules.sidePanel.switchTab(mode),
       resolveBody: (mode) => documentRef.getElementById(`workspace-${mode}`),
     });
   }
+  modules.socialPanel.setMailOpenHandler(() => panelContext.mailStateSource.open());
   modules.sidePanel.setWorkspaceContentHandler((tab, pane) => {
+    if (tab === 'building' && pane) {
+      panelContext.buildingFengShuiStateSource.showBuildingWorkspace(pane, () => modules.sidePanel.closeWorkspace(false));
+    } else {
+      panelContext.buildingFengShuiStateSource.hideBuildingWorkspace();
+    }
     if (pane && (tab === 'alchemy' || tab === 'forging' || tab === 'enhancement' || tab === 'transmission')) {
       modules.actionPanel.hideWorkspaceSection();
       modules.craftWorkbenchModal.showWorkspaceMode(tab, pane);
@@ -149,7 +156,7 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
       case 'enhancement': modules.craftWorkbenchModal.openEnhancement(); break;
       case 'transmission': modules.craftWorkbenchModal.openTransmission(); break;
       case 'building': panelContext.buildingFengShuiStateSource.openBuildingPanel(); break;
-      case 'mail': documentRef.getElementById('hud-open-mail')?.click(); break;
+      case 'mail': panelContext.mailStateSource.open(); break;
       case 'activity':
         // 活動是焦點視窗；先收起工作區的背景攔截層，才會讓詳情宿主維持僅真實地圖畫布可背景關閉的契約。
         modules.sidePanel.closeWorkspace(false);

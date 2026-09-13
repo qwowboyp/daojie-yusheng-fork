@@ -86,8 +86,8 @@ await withClientBrowserProof(
         directTabs: document.querySelectorAll('.social-feature-tab').length,
         embeddedPanes: document.querySelectorAll('#pane-party, [id^="pane-social-"]').length };
     })()`);
-    assert.equal(launcher.count, 7, '道友面板缺少既有功能入口');
-    for (const label of ['隊伍', '宗門總覽', '道友名錄', '道友申請', '附近修士', '線上修士', '私聊']) {
+    assert.equal(launcher.count, 8, '社交面板缺少功能入口');
+    for (const label of ['飛書', '隊伍', '宗門總覽', '道友名錄', '道友申請', '附近修士', '線上修士', '私聊']) {
       assert.equal(launcher.labels.some((text) => text.includes(label)), true, `缺少${label}按钮`);
     }
     assert.equal(launcher.directTabs, 0, '五项仍被错误放进右侧 Tab');
