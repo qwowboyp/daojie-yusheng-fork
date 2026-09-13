@@ -169,8 +169,8 @@ async function main(): Promise<void> {
         sourceType: 'item_map_unlock',
         sourceRefId: respawnItemInstanceId,
         inventoryAction: 'remove',
-        grantedItems: respawnInventory,
-        nextInventoryItems: [],
+        grantedItems: [durableInventoryItem('respawn_stone', respawnItemInstanceId)],
+        nextInventoryItems: [durableInventoryItem(SHENXING_PILL_TIERS[0].itemId, shenxingItemInstanceId)],
         sourceMutation: {
           kind: 'player_item_use',
           action: 'unlock_maps',
@@ -267,6 +267,30 @@ async function main(): Promise<void> {
       nextInventoryItems: [],
       sourceMutation: shenxingMutation,
     };
+    let stalePlacementRejected = false;
+    try {
+      await durable.grantInventoryItems({
+        ...shenxingInput,
+        operationId: `${shenxingOperationId}:stale`,
+        sourceMutation: {
+          ...shenxingMutation,
+          expectedPlacement: { ...snapshot.placement, x: snapshot.placement.x + 1 },
+        },
+      });
+    } catch (error) {
+      stalePlacementRejected = error instanceof Error
+        && error.message.includes('player_shenxing_placement_snapshot_changed');
+    }
+    if (!stalePlacementRejected) {
+      throw new Error('expected stale shenxing placement rejection');
+    }
+    await assertInventory(pool, playerId, [SHENXING_PILL_TIERS[0].itemId]);
+    const rejectedCooldown = await queryRows(pool,
+      'SELECT buff_id FROM player_persistent_buff_state WHERE player_id = $1 AND buff_id = $2',
+      [playerId, SHENXING_COOLDOWN_BUFF_ID]);
+    if (rejectedCooldown.length !== 0) {
+      throw new Error('rejected shenxing placement must not persist a cooldown');
+    }
     const shenxingResult = await durable.grantInventoryItems(shenxingInput);
     const shenxingReplay = await durable.grantInventoryItems(shenxingInput);
     if (!shenxingResult.ok || shenxingResult.alreadyCommitted || !shenxingReplay.alreadyCommitted) {
@@ -294,7 +318,7 @@ async function main(): Promise<void> {
     ))[0];
     const cooldownBuff = (await queryRows(
       pool,
-      `SELECT buff_id, source_skill_id, remaining_ticks, duration, stacks, max_stacks
+      `SELECT buff_id, source_skill_id, remaining_ticks, duration, stacks, max_stacks, raw_payload
          FROM player_persistent_buff_state
         WHERE player_id = $1 AND buff_id = $2`,
       [playerId, SHENXING_COOLDOWN_BUFF_ID],
@@ -335,9 +359,12 @@ async function main(): Promise<void> {
       || Number(cooldownBuff?.duration) !== shenxingTier.cooldownTicks
       || Number(cooldownBuff?.stacks) !== 1
       || Number(cooldownBuff?.max_stacks) !== 1
+      || Number(cooldownBuff?.raw_payload?.cooldownExpiresAtMs) !== now + shenxingTier.cooldownTicks * 1000
     ) {
       throw new Error(`unexpected shenxing cooldown row: ${JSON.stringify(cooldownBuff)}`);
     }
+    const outboxRows = await queryRows(pool,
+      'SELECT operation_id FROM outbox_event WHERE partition_key = $1 ORDER BY operation_id', [playerId]);
     if (
       Number(watermark?.inventory_version) <= 0
       || Number(watermark?.map_unlock_version) <= 0
@@ -346,6 +373,7 @@ async function main(): Promise<void> {
       || Number(watermark?.buff_version) <= 0
       || auditRows.filter((row) => row.asset_type === 'inventory').length !== 3
       || auditRows.filter((row) => row.asset_type === 'player_item_use').length !== 3
+      || outboxRows.length !== 3
     ) {
       throw new Error(`unexpected durable item-use metadata: watermark=${JSON.stringify(watermark)} audit=${JSON.stringify(auditRows)}`);
     }
