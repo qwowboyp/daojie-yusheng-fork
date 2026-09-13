@@ -14,24 +14,24 @@ const alchemyPath = `${contentRoot}/alchemy/recipes.json`;
 const sourceNodesPath = `${contentRoot}/resource-nodes.json`;
 
 const families = [
-  ['martial_edge', '破軍丹', '攻', (n) => ({ physAtk: n, crit: Math.max(3, Math.floor(n / 2)) }), '裂紋赤金雙丸，表面嵌一枚斷戟形金片'],
-  ['arcane_surge', '玄元丹', '元', (n) => ({ spellAtk: n, maxQiOutputPerTick: Math.max(3, Math.floor(n / 2)) }), '旋渦藍紫珠，半透明核心浮著一道靈流'],
-  ['iron_guard', '金剛丹', '剛', (n) => ({ physDef: n, resolvePower: Math.max(3, Math.floor(n / 2)) }), '龜甲褐金丸，外殼有明顯分節與厚重邊緣'],
-  ['veil_guard', '玄甲丹', '甲', (n) => ({ spellDef: n, antiCrit: Math.max(3, Math.floor(n / 2)) }), '半透明青玉護珠，內封六角護符'],
-  ['hawk_eye', '明瞳丹', '瞳', (n) => ({ hit: n, breakPower: Math.max(3, Math.floor(n / 2)) }), '瞳孔琥珀丸，黑金虹膜環繞一點高光'],
-  ['mist_step', '幻影丹', '影', (n) => ({ dodge: n, moveSpeed: Math.max(3, Math.floor(n / 2)) }), '羽紋銀霧丸，拖著分離的薄霧尾痕'],
+  ['martial_edge', '破軍丹', '攻', (n) => ({ physAtk: n, crit: Math.round(n * 0.75) }), '裂紋赤金雙丸，表面嵌一枚斷戟形金片'],
+  ['arcane_surge', '玄元丹', '元', (n) => ({ spellAtk: n, maxQiOutputPerTick: Math.round(n * 0.75) }), '旋渦藍紫珠，半透明核心浮著一道靈流'],
+  ['iron_guard', '金剛丹', '剛', (n) => ({ physDef: n, resolvePower: Math.round(n * 0.75) }), '龜甲褐金丸，外殼有明顯分節與厚重邊緣'],
+  ['veil_guard', '玄甲丹', '甲', (n) => ({ spellDef: n, antiCrit: Math.round(n * 0.75) }), '半透明青玉護珠，內封六角護符'],
+  ['hawk_eye', '明瞳丹', '瞳', (n) => ({ hit: n, breakPower: Math.round(n * 0.75) }), '瞳孔琥珀丸，黑金虹膜環繞一點高光'],
+  ['mist_step', '幻影丹', '影', (n) => ({ dodge: n, moveSpeed: Math.round(n * 0.75) }), '羽紋銀霧丸，拖著分離的薄霧尾痕'],
 ];
 
 const realms = [
-  { key: 'foundation', name: '築基', level: 31, grade: 'mystic', duration: 120, bonus: 9, maps: ['foundation_qinglin_marsh'], visual: '濕地青玉與荷露' },
-  { key: 'golden_core', name: '金丹', level: 43, grade: 'heaven', duration: 150, bonus: 11, maps: ['lg_golden_core_xinjin_slope', 'lg_golden_core_molten_channel', 'lg_golden_core_hanging_lamps', 'lg_golden_core_sky_mending_furnace'], visual: '燈芯灰燼與熔金' },
-  { key: 'nascent_soul', name: '元嬰', level: 55, grade: 'heaven', duration: 180, bonus: 13, maps: ['lg_nascent_soul_m1_entry', 'lg_nascent_soul_m2_entry', 'lg_nascent_soul_m3_entry', 'lg_nascent_soul_m4_entry'], visual: '潮音貝殼與月白水紋' },
-  { key: 'spirit_transformation', name: '化神', level: 67, grade: 'spirit', duration: 210, bonus: 15, maps: ['lg_spirit_transformation_m1_entry', 'lg_spirit_transformation_m2_entry', 'lg_spirit_transformation_m3_entry', 'lg_spirit_transformation_m4_entry'], visual: '神木琥珀與幽綠火星' },
-  { key: 'void_refinement', name: '煉虛', level: 79, grade: 'spirit', duration: 240, bonus: 17, maps: ['lg_void_refinement_m1_entry', 'lg_void_refinement_m2_entry', 'lg_void_refinement_m3_entry', 'lg_void_refinement_m4_entry'], visual: '裂空晶面與深靛星砂' },
-  { key: 'body_integration', name: '合體', level: 91, grade: 'saint', duration: 270, bonus: 19, maps: ['lg_body_integration_m1_entry', 'lg_body_integration_m2_entry', 'lg_body_integration_m3_entry', 'lg_body_integration_m4_entry'], visual: '骨金合鑄與朱紅脈絡' },
-  { key: 'great_vehicle', name: '大乘', level: 103, grade: 'saint', duration: 300, bonus: 21, maps: ['lg_great_vehicle_m1_entry', 'lg_great_vehicle_m2_entry', 'lg_great_vehicle_m3_entry', 'lg_great_vehicle_m4_entry'], visual: '雷紋蓮座與白金流光' },
-  { key: 'tribulation', name: '渡劫', level: 115, grade: 'emperor', duration: 330, bonus: 23, maps: ['lg_tribulation_m1_entry', 'lg_tribulation_m2_entry', 'lg_tribulation_m3_entry', 'lg_tribulation_m4_entry'], visual: '焦木雷痕與熾白電弧' },
-  { key: 'ascension', name: '飛昇', level: 127, grade: 'emperor', duration: 360, bonus: 25, maps: ['lg_ascension_gate'], visual: '雲階星塵與虹彩天光' },
+  { key: 'foundation', name: '築基', level: 31, grade: 'mystic', duration: 4800, bonus: 40, maps: ['foundation_qinglin_marsh'], visual: '濕地青玉與荷露' },
+  { key: 'golden_core', name: '金丹', level: 43, grade: 'heaven', duration: 6000, bonus: 60, maps: ['lg_golden_core_xinjin_slope', 'lg_golden_core_molten_channel', 'lg_golden_core_hanging_lamps', 'lg_golden_core_sky_mending_furnace'], visual: '燈芯灰燼與熔金' },
+  { key: 'nascent_soul', name: '元嬰', level: 55, grade: 'heaven', duration: 7200, bonus: 90, maps: ['lg_nascent_soul_m1_entry', 'lg_nascent_soul_m2_entry', 'lg_nascent_soul_m3_entry', 'lg_nascent_soul_m4_entry'], visual: '潮音貝殼與月白水紋' },
+  { key: 'spirit_transformation', name: '化神', level: 67, grade: 'spirit', duration: 8400, bonus: 135, maps: ['lg_spirit_transformation_m1_entry', 'lg_spirit_transformation_m2_entry', 'lg_spirit_transformation_m3_entry', 'lg_spirit_transformation_m4_entry'], visual: '神木琥珀與幽綠火星' },
+  { key: 'void_refinement', name: '煉虛', level: 79, grade: 'spirit', duration: 9600, bonus: 200, maps: ['lg_void_refinement_m1_entry', 'lg_void_refinement_m2_entry', 'lg_void_refinement_m3_entry', 'lg_void_refinement_m4_entry'], visual: '裂空晶面與深靛星砂' },
+  { key: 'body_integration', name: '合體', level: 91, grade: 'saint', duration: 10800, bonus: 300, maps: ['lg_body_integration_m1_entry', 'lg_body_integration_m2_entry', 'lg_body_integration_m3_entry', 'lg_body_integration_m4_entry'], visual: '骨金合鑄與朱紅脈絡' },
+  { key: 'great_vehicle', name: '大乘', level: 103, grade: 'saint', duration: 12000, bonus: 450, maps: ['lg_great_vehicle_m1_entry', 'lg_great_vehicle_m2_entry', 'lg_great_vehicle_m3_entry', 'lg_great_vehicle_m4_entry'], visual: '雷紋蓮座與白金流光' },
+  { key: 'tribulation', name: '渡劫', level: 115, grade: 'emperor', duration: 13200, bonus: 675, maps: ['lg_tribulation_m1_entry', 'lg_tribulation_m2_entry', 'lg_tribulation_m3_entry', 'lg_tribulation_m4_entry'], visual: '焦木雷痕與熾白電弧' },
+  { key: 'ascension', name: '飛昇', level: 127, grade: 'emperor', duration: 14400, bonus: 1000, maps: ['lg_ascension_gate'], visual: '雲階星塵與虹彩天光' },
 ];
 
 const shenxingVisual = '螺旋翼紋青白丸，外圈有獨立風環與折紙般的雲翼';

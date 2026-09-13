@@ -67,13 +67,13 @@
       {
         "buffId": "item_buff.realm_martial_edge",
         "name": "破軍丹·築基",
-        "desc": "物攻提升 9%、暴擊提升 4%，持續 120 息。同族丹效不疊層。",
+        "desc": "物攻提升 40%、暴擊提升 30%，持續 4800 息。同族丹效不疊層。",
         "shortMark": "攻",
-        "duration": 120,
+        "duration": 4800,
         "maxStacks": 1,
         "stats": {
-          "physAtk": 9,
-          "crit": 4
+          "physAtk": 40,
+          "crit": 30
         },
         "statMode": "percent",
         "color": "#d6b567"
@@ -92,13 +92,13 @@
       {
         "buffId": "item_buff.realm_arcane_surge",
         "name": "玄元丹·築基",
-        "desc": "法攻提升 9%、每息靈力輸出上限提升 4%，持續 120 息。同族丹效不疊層。",
+        "desc": "法攻提升 40%、每息靈力輸出上限提升 30%，持續 4800 息。同族丹效不疊層。",
         "shortMark": "元",
-        "duration": 120,
+        "duration": 4800,
         "maxStacks": 1,
         "stats": {
-          "spellAtk": 9,
-          "maxQiOutputPerTick": 4
+          "spellAtk": 40,
+          "maxQiOutputPerTick": 30
         },
         "statMode": "percent",
         "color": "#d6b567"
@@ -117,13 +117,13 @@
       {
         "buffId": "item_buff.realm_iron_guard",
         "name": "金剛丹·築基",
-        "desc": "物防提升 9%、化解提升 4%，持續 120 息。同族丹效不疊層。",
+        "desc": "物防提升 40%、化解提升 30%，持續 4800 息。同族丹效不疊層。",
         "shortMark": "剛",
-        "duration": 120,
+        "duration": 4800,
         "maxStacks": 1,
         "stats": {
-          "physDef": 9,
-          "resolvePower": 4
+          "physDef": 40,
+          "resolvePower": 30
         },
         "statMode": "percent",
         "color": "#d6b567"
@@ -142,13 +142,13 @@
       {
         "buffId": "item_buff.realm_veil_guard",
         "name": "玄甲丹·築基",
-        "desc": "法防提升 9%、抗暴提升 4%，持續 120 息。同族丹效不疊層。",
+        "desc": "法防提升 40%、抗暴提升 30%，持續 4800 息。同族丹效不疊層。",
         "shortMark": "甲",
-        "duration": 120,
+        "duration": 4800,
         "maxStacks": 1,
         "stats": {
-          "spellDef": 9,
-          "antiCrit": 4
+          "spellDef": 40,
+          "antiCrit": 30
         },
         "statMode": "percent",
         "color": "#d6b567"
@@ -167,13 +167,13 @@
       {
         "buffId": "item_buff.realm_hawk_eye",
         "name": "明瞳丹·築基",
-        "desc": "命中提升 9%、破招提升 4%，持續 120 息。同族丹效不疊層。",
+        "desc": "命中提升 40%、破招提升 30%，持續 4800 息。同族丹效不疊層。",
         "shortMark": "瞳",
-        "duration": 120,
+        "duration": 4800,
         "maxStacks": 1,
         "stats": {
-          "hit": 9,
-          "breakPower": 4
+          "hit": 40,
+          "breakPower": 30
         },
         "statMode": "percent",
         "color": "#d6b567"
@@ -192,13 +192,13 @@
       {
         "buffId": "item_buff.realm_mist_step",
         "name": "幻影丹·築基",
-        "desc": "閃避提升 9%、移速提升 4%，持續 120 息。同族丹效不疊層。",
+        "desc": "閃避提升 40%、移速提升 30%，持續 4800 息。同族丹效不疊層。",
         "shortMark": "影",
-        "duration": 120,
+        "duration": 4800,
         "maxStacks": 1,
         "stats": {
-          "dodge": 9,
-          "moveSpeed": 4
+          "dodge": 40,
+          "moveSpeed": 30
         },
         "statMode": "percent",
         "color": "#d6b567"

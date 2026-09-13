@@ -32,6 +32,28 @@ function loadAllContentItems(relativePath = 'packages/server/data/content/items'
 }
 const items = loadAllContentItems();
 const itemById = new Map(items.map((item) => [item.itemId, item]));
+// 對照既有同類戰鬥丹，不能只驗證新內容彼此一致而漏掉高階反而較弱。
+const earlyCombatBuffs = items.filter((item) => item.level <= 30)
+  .flatMap((item) => item.consumeBuffs ?? [])
+  .filter((buff) => buff.statMode === 'percent' && !buff.infiniteDuration && !buff.sustainCost);
+for (const family of families) {
+  const foundation = itemById.get(`pill.realm.foundation.${family}`).consumeBuffs[0];
+  for (const [stat, value] of Object.entries(foundation.stats)) {
+    const comparable = earlyCombatBuffs.filter((buff) => Number(buff.stats?.[stat]) > 0);
+    for (const oldBuff of comparable) {
+      assert.ok(value >= oldBuff.stats[stat] * 1.3, `${family}/${stat} 築基藥力至少高於既有低境丹三成`);
+      assert.ok(foundation.duration >= oldBuff.duration, `${family} 不得比既有同效果低境丹短效`);
+    }
+  }
+  for (let index = 1; index < realms.length; index++) {
+    const previous = itemById.get(`pill.realm.${realms[index - 1][0]}.${family}`).consumeBuffs[0];
+    const current = itemById.get(`pill.realm.${realms[index][0]}.${family}`).consumeBuffs[0];
+    for (const stat of Object.keys(previous.stats)) {
+      assert.ok(current.stats[stat] >= previous.stats[stat] * 1.45, `${family}/${stat} 跨境藥力成長不足`);
+    }
+    assert.ok(current.duration >= previous.duration + 1200, `${family} 跨境持續時間不足`);
+  }
+}
 const recipes = read('packages/server/data/content/alchemy/recipes.json');
 const recipeByOutput = new Map(recipes.map((recipe) => [recipe.outputItemId, recipe]));
 assert.equal(expectedIds.length, 63);

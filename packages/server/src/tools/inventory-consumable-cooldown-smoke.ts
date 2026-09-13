@@ -161,6 +161,7 @@ const foundationIronGuard = repo.createItem('pill.realm.foundation.iron_guard', 
 const realmBuffPlayer: any = {
   ...player,
   playerId: realmBuffPlayerId,
+  realm: { realmLv: 54 },
   inventory: {
     revision: 1,
     capacity: 20,
@@ -173,9 +174,9 @@ service.useItem(realmBuffPlayerId, 0);
 let arcaneBuff = realmBuffPlayer.buffs.buffs.find(
   (entry: any) => entry.buffId === 'item_buff.realm_arcane_surge',
 );
-assert.equal(arcaneBuff?.realmLv, foundationArcane.level, '築基丹 Buff 來源境界必須取 item.level');
-assert.equal(arcaneBuff?.duration, 120, '築基丹初次使用應寫入正式內容的 120 息時長');
-assert.equal(arcaneBuff?.remainingTicks, 121, '初次 Buff 應保留完整 120 息，不提前消耗當前息');
+assert.equal(arcaneBuff?.realmLv, realmBuffPlayer.realm.realmLv, '高子階服用築基丹應與既有丹藥一樣按服用境界計算');
+assert.equal(arcaneBuff?.duration, 4800, '築基丹初次使用應寫入正式內容的 4800 息時長');
+assert.equal(arcaneBuff?.remainingTicks, 4801, '初次 Buff 應保留完整 4800 息，不提前消耗當前息');
 
 service.useItem(realmBuffPlayerId, 1);
 arcaneBuff = realmBuffPlayer.buffs.buffs.find(
@@ -186,10 +187,10 @@ assert.equal(
   1,
   '築基玄元丹再服金丹玄元丹，同族 Buff 只能保留一層',
 );
-assert.equal(arcaneBuff?.realmLv, goldenCoreArcane.level, '跨境界替換後來源境界必須更新為金丹 item.level');
-assert.equal(arcaneBuff?.duration, 150, '跨境界替換必須刷新為金丹正式時長，不可與舊時長累加');
-assert.equal(arcaneBuff?.remainingTicks, 151, '跨境界替換後應由完整 150 息重新開始');
-assert.equal(arcaneBuff?.stats?.spellAtk, 11, '跨境界替換後應使用金丹玄元丹數值');
+assert.equal(arcaneBuff?.realmLv, realmBuffPlayer.realm.realmLv, '跨品階替換仍按服用者境界計算，不額外削弱藥力');
+assert.equal(arcaneBuff?.duration, 6000, '跨境界替換必須刷新為金丹正式時長，不可與舊時長累加');
+assert.equal(arcaneBuff?.remainingTicks, 6001, '跨境界替換後應由完整 6000 息重新開始');
+assert.equal(arcaneBuff?.stats?.spellAtk, 60, '跨境界替換後應使用金丹玄元丹數值');
 
 service.useItem(realmBuffPlayerId, 1);
 assert.deepEqual(
@@ -200,7 +201,7 @@ assert.deepEqual(
 const ironGuardBuff = realmBuffPlayer.buffs.buffs.find(
   (entry: any) => entry.buffId === 'item_buff.realm_iron_guard',
 );
-assert.equal(ironGuardBuff?.realmLv, foundationIronGuard.level, '異族 Buff 來源境界也必須取各自 item.level');
+assert.equal(ironGuardBuff?.realmLv, realmBuffPlayer.realm.realmLv, '異族丹也應使用服用者境界');
 
 service.useItem(realmBuffPlayerId, 0);
 arcaneBuff = realmBuffPlayer.buffs.buffs.find(
@@ -211,10 +212,10 @@ assert.equal(
   1,
   '重服低階同族丹後仍只能保留一層',
 );
-assert.equal(arcaneBuff?.realmLv, foundationArcane.level, '重服低階丹必須把來源境界替換回築基 item.level');
-assert.equal(arcaneBuff?.duration, 120, '重服低階丹應刷新為 120 息，不保留高階時長');
-assert.equal(arcaneBuff?.remainingTicks, 121, '重服低階丹不可累加先前高階丹剩餘時間');
-assert.equal(arcaneBuff?.stats?.spellAtk, 9, '重服低階丹後不可殘留高階玄元丹數值');
+assert.equal(arcaneBuff?.realmLv, realmBuffPlayer.realm.realmLv, '重服低階丹以數值區分品階，不增加獨有的境界衰減');
+assert.equal(arcaneBuff?.duration, 4800, '重服低階丹應刷新為 4800 息，不保留高階時長');
+assert.equal(arcaneBuff?.remainingTicks, 4801, '重服低階丹不可累加先前高階丹剩餘時間');
+assert.equal(arcaneBuff?.stats?.spellAtk, 40, '重服低階丹後不可殘留高階玄元丹數值');
 assert.equal(
   realmBuffPlayer.buffs.buffs.some((entry: any) => entry.buffId === 'item_buff.realm_iron_guard'),
   true,

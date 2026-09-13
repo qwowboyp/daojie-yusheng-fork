@@ -7099,9 +7099,7 @@ export class PlayerRuntimeService {
         }
         if (Array.isArray(item.consumeBuffs) && item.consumeBuffs.length > 0) {
             for (const buff of item.consumeBuffs) {
-                const sourceRealmLv = isRealmPillFamilyBuff(buff)
-                    ? Math.max(1, Math.floor(Number(item.level) || 1))
-                    : Math.max(1, Math.floor(player.realm?.realmLv ?? 1));
+                const sourceRealmLv = Math.max(1, Math.floor(player.realm?.realmLv ?? 1));
                 this.applyTemporaryBuff(player.playerId, toConsumableTemporaryBuff(item, buff, sourceRealmLv));
             }
             consumed = true;
