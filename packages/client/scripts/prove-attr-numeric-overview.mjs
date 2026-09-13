@@ -53,16 +53,25 @@ const initialize = String.raw`(async () => {
 for (const renderer of ['react', 'legacy']) {
   await withClientBrowserProof({ viewport: viewports[0], profilePrefix: `attr-numeric-${renderer}-` }, async (cdp) => {
     await cdp.evaluate(`localStorage.setItem('mud:react-panel-flags', JSON.stringify({ attr: ${renderer === 'react'} })); location.reload(); true`);
-    await waitFor(() => cdp.evaluate(`document.readyState === 'complete'`), `${renderer} 頁面初始化`);
+    await waitFor(() => cdp.evaluate(`document.readyState === 'complete' && document.getElementById('game-shell')?.dataset.workspaceMode === 'true'`), `${renderer} 工作區初始化`);
     assert.equal(await cdp.evaluate(initialize), true);
     for (const viewport of viewports) {
       await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: viewport.touch, maxTouchPoints: 5 });
       await cdp.send('Emulation.setDeviceMetricsOverride', { width: viewport.width, height: viewport.height, screenWidth: viewport.width, screenHeight: viewport.height, deviceScaleFactor: 1, mobile: false });
       for (const theme of ['light', 'dark']) {
-        const result = await cdp.evaluate(`(async () => {
+        await cdp.evaluate(`(async () => {
           const { updateUiColorMode } = await import('/src/ui/ui-style-config.ts');
           updateUiColorMode('${theme}');
           await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        })()`);
+        // 等待正式工作區完成響應式布局；不強制改寫可見性或重送開啟操作。
+        await waitFor(() => cdp.evaluate(`(() => {
+          const overview = document.querySelector('#pane-attr [data-attr-pane="numeric"]');
+          if (!overview) return false;
+          const rect = overview.getBoundingClientRect();
+          return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < innerHeight;
+        })()`), `${renderer}/${viewport.name}/${theme} 數值頁可見`, 3000);
+        const result = await cdp.evaluate(`(() => {
           const root = document.getElementById('pane-attr');
           const overview = root.querySelector('[data-attr-pane="numeric"]');
           const sections = [...overview.querySelectorAll('[data-attr-section]')].map(node => node.dataset.attrSection);
