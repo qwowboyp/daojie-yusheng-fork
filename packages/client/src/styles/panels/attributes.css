@@ -34,185 +34,6 @@
       gap: 14px;
     }
 
-    .attr-radar-shell {
-      display: grid;
-      gap: 12px;
-      padding: 12px;
-      border: 1px solid var(--wash-ink);
-      background: var(--surface-gradient-pane);
-    }
-
-    .attr-radar-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .attr-radar-title {
-      font-family: var(--font-role-title);
-      font-size: var(--font-size-role-title-16);
-      color: var(--ink-black);
-    }
-
-    .attr-radar-scale {
-      font-size: var(--font-size-11);
-      color: var(--ink-grey);
-    }
-
-    .attr-radar {
-      width: 100%;
-      max-width: 320px;
-      margin: 0 auto;
-      display: block;
-      overflow: visible;
-    }
-
-    .attr-radar-body {
-      position: relative;
-    }
-
-    .attr-radar-floating-stat {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      z-index: 1;
-      display: inline-grid;
-      grid-template-columns: 24px minmax(0, max-content);
-      align-items: center;
-      gap: 7px;
-      min-width: 64px;
-      height: 30px;
-      padding: 0;
-      color: var(--ink-grey);
-      font-size: var(--font-size-12);
-      line-height: 1;
-      cursor: help;
-      transition: color 0.16s ease, text-shadow 0.16s ease, transform 0.16s ease;
-    }
-
-    .attr-radar-floating-stat:hover,
-
-    .attr-radar-floating-stat:focus-visible {
-      color: var(--stamp-red);
-      text-shadow: 0 1px 8px rgba(124, 37, 31, 0.22);
-      outline: none;
-    }
-
-    .attr-radar-floating-icon {
-      width: 22px;
-      height: 22px;
-      justify-self: center;
-      align-self: center;
-      background-image: url('/assets/attr-icons/attribute-icons-atlas.png');
-      background-repeat: no-repeat;
-      background-size: 176px 154px;
-      background-position:
-        calc(var(--attr-icon-col) * -22px)
-        calc(var(--attr-icon-row) * -22px);
-      filter: drop-shadow(0 2px 4px rgba(58, 38, 24, 0.16));
-      pointer-events: none;
-    }
-
-    .attr-radar-floating-label {
-      display: none;
-    }
-
-    .attr-radar-floating-value {
-      display: flex;
-      align-items: center;
-      height: 24px;
-      font-size: var(--font-size-14);
-      font-weight: var(--font-weight-strong);
-      color: var(--ink-black);
-      line-height: 24px;
-      white-space: nowrap;
-    }
-
-    .attr-radar-floating-stat[data-radar-summary-card="rootFoundation"] .attr-radar-floating-value {
-      transform: translateY(2px);
-    }
-
-    .attr-radar-ring {
-      fill: none;
-      stroke: var(--radar-grid-stroke);
-      stroke-width: 1;
-    }
-
-    .attr-radar-axis {
-      stroke: var(--radar-grid-stroke-strong);
-      stroke-width: 1;
-    }
-
-    .attr-radar-area {
-      fill: rgba(124, 37, 31, 0.14);
-      stroke: rgba(124, 37, 31, 0.78);
-      stroke-width: 2;
-    }
-
-    .attr-radar-node circle {
-      fill: var(--stamp-red);
-      stroke: rgba(255,255,255,0.9);
-      stroke-width: 1.5;
-    }
-
-    .attr-radar-label {
-      display: none;
-    }
-
-    .attr-radar-value {
-      display: none;
-    }
-
-    .attr-radar-icon-node {
-      position: absolute;
-      z-index: 2;
-      display: inline-grid;
-      grid-template-columns: 24px minmax(0, max-content);
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      min-width: 64px;
-      height: 32px;
-      padding: 0;
-      transform: translate(-50%, -50%);
-      cursor: help;
-      pointer-events: auto;
-    }
-
-    .attr-radar-icon-node:hover,
-
-    .attr-radar-icon-node:focus-visible {
-      text-shadow: 0 1px 8px rgba(124, 37, 31, 0.2);
-      outline: none;
-    }
-
-    .attr-radar-icon {
-      width: 22px;
-      height: 22px;
-      justify-self: center;
-      align-self: center;
-      background-image: url('/assets/attr-icons/attribute-icons-atlas.png');
-      background-repeat: no-repeat;
-      background-size: 176px 154px;
-      background-position:
-        calc(var(--attr-icon-col) * -22px)
-        calc(var(--attr-icon-row) * -22px);
-      filter: drop-shadow(0 2px 4px rgba(58, 38, 24, 0.16));
-      pointer-events: none;
-    }
-
-    .attr-radar-icon-value {
-      display: flex;
-      align-items: center;
-      height: 22px;
-      font-size: var(--font-size-12);
-      font-weight: var(--font-weight-strong);
-      line-height: 22px;
-      color: var(--ink-black);
-      white-space: nowrap;
-    }
-
     .attr-note {
       font-size: var(--font-size-12);
       line-height: 1.55;
@@ -248,6 +69,28 @@
 
     .attr-grid.wide {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .attr-numeric-sections {
+      display: grid;
+      gap: 16px;
+    }
+
+    .attr-numeric-section {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .attr-numeric-section-title {
+      margin: 0;
+      color: var(--ink-black);
+      font-size: var(--font-size-13);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .attr-numeric-section .attr-mini[data-tooltip-key="root-summary"] {
+      grid-column: 1 / -1;
     }
 
     .attr-mini {
@@ -299,7 +142,14 @@
     }
 
     .attr-mini-label {
-      display: none;
+      display: block;
+      min-width: 0;
+      overflow: hidden;
+      color: var(--ink-grey);
+      font-size: var(--font-size-11);
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .attr-mini-value {
@@ -737,6 +587,9 @@
     }
 
     @media (max-width: 720px) {
+      #game-workspace .attr-numeric-section .attr-grid.wide {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
       .attr-grid.wide,
       .attr-special-detail-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));

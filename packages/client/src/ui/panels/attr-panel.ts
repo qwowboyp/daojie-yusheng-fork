@@ -859,6 +859,11 @@ export interface AttrNumericPaneSnapshot {
  */
 
   cards: AttrNumericCardSnapshot[];
+  sections?: Array<{
+    key: string;
+    title: string | null;
+    cards: AttrNumericCardSnapshot[];
+  }>;
   actions?: AttrPaneActionSnapshot[];
 }
 
@@ -981,7 +986,7 @@ export class AttrPanel {
   /** pane：pane。 */
   private pane = document.getElementById('pane-attr')!;
   /** activeTab：活跃Tab。 */
-  private activeTab: AttrTab = 'base';
+  private activeTab: AttrTab = 'numeric';
   /** tooltip：提示。 */
   private tooltip = new FloatingTooltip('floating-tooltip attr-tooltip');
   /** lastSnapshot：last快照。 */
@@ -1298,13 +1303,7 @@ export class AttrPanel {
 
     return {
       panes: {
-        base: this.buildBaseRadarSnapshot(base, final, bonuses, specialStats),
-        root: stats && ratioDivisors
-          ? this.buildRootRadarSnapshot(stats, ratioDivisors, bonuses)
-        : { kind: 'placeholder', message: '靈根未明' },
-        vein: stats
-          ? this.buildVeinPaneSnapshot(stats, bonuses)
-          : { kind: 'placeholder', message: '靈脈未察' },
+        numeric: this.buildNumericOverviewPaneSnapshot(base, final, bonuses, stats, ratioDivisors, specialStats),
         combat: this.buildNumericPaneSnapshot('鬥法數值', stats, ratioDivisors, {
           keys: ['maxHp', 'physAtk', 'spellAtk', 'physDef', 'spellDef', 'hit', 'dodge', 'crit', 'antiCrit', 'critDamage', 'breakPower', 'resolvePower', 'actionsPerTurn'],
           ratioKeys: [],
@@ -1341,34 +1340,73 @@ export class AttrPanel {
     };
   }
 
-  /** buildBaseRadarSnapshot：构建基础Radar快照。 */
-  private buildBaseRadarSnapshot(
+  /** buildNumericOverviewPaneSnapshot：建構六維、靈根與靈脈的精簡數值總覽。 */
+  private buildNumericOverviewPaneSnapshot(
     base: Attributes,
     final: Attributes,
     bonuses: AttrBonus[],
+    stats?: NumericStats,
+    ratioDivisors?: NumericRatioDivisors,
     specialStats?: PlayerSpecialStats,
-  ): AttrRadarPaneSnapshot {
-    const maxValue = Math.max(20, ...ATTR_KEYS.map((key) => final[key]));
-    const radarMax = Math.ceil(maxValue / 5) * 5 || 20;
-    const entries: RadarEntry[] = ATTR_KEYS.map((key, index) => {
+  ): AttrNumericPaneSnapshot {
+    const attributeCards = ATTR_KEYS.map((key) => {
       const finalValue = final[key];
       const baseValue = base[key];
       const roundedValue = Math.round(finalValue);
       return {
         label: ATTR_KEY_LABELS[key],
         key,
-        value: finalValue,
-        valueLabel: formatDisplayInteger(roundedValue),
+        value: formatDisplayInteger(roundedValue),
         tooltipTitle: ATTR_KEY_LABELS[key],
         tooltipDetail: buildAttributeBreakdownLines(key, baseValue, finalValue, bonuses, specialStats).join('\n'),
-        color: ATTR_COLORS[index % ATTR_COLORS.length],
       };
     });
-
-    const snapshot = this.buildRadarPaneSnapshot('六維輪圖', radarMax, entries, 'base');
-    snapshot.summaryCards = this.buildRootFoundationSummaryCards(specialStats);
-    snapshot.cards = this.buildBaseSpecialStatCards(specialStats);
-    return snapshot;
+    const foundationCards = [
+      ...this.buildRootFoundationSummaryCards(specialStats),
+      ...this.buildBaseSpecialStatCards(specialStats),
+    ];
+    const sections: AttrNumericPaneSnapshot['sections'] = [{
+      key: 'attributes',
+      title: '六維',
+      cards: [...attributeCards, ...foundationCards],
+    }];
+    if (!stats || !ratioDivisors) {
+      return { kind: 'numeric', title: '數值', cards: [...attributeCards, ...foundationCards], sections };
+    }
+    const roots = this.resolveDisplaySpiritualRoots(stats, bonuses);
+    const rootName = describeSpiritualRoots(roots);
+    const rootCards: AttrNumericCardSnapshot[] = [{
+      key: 'root-summary',
+      label: '靈根品相',
+      value: rootName.name,
+      tooltipTitle: rootName.name,
+      tooltipDetail: [rootName.meta, rootName.desc].filter(Boolean).join('\n'),
+    }, ...ELEMENT_KEYS.map((key) => {
+      const rootValue = Math.round(stats.elementDamageBonus[key]);
+      const reductionDivisor = ratioDivisors.elementDamageReduce[key] || 100;
+      const label = `${ELEMENT_KEY_LABELS[key]}靈根`;
+      return {
+        key: `root-${key}`,
+        label,
+        value: formatDisplayInteger(rootValue),
+        tooltipTitle: label,
+        tooltipDetail: [
+          `當前：${formatDisplayInteger(rootValue)} 點`,
+          `${ELEMENT_KEY_LABELS[key]}屬性傷害增幅：${formatDisplayPercent(rootValue)}`,
+          `${ELEMENT_KEY_LABELS[key]}屬性實際減傷：${formatRatioPercent(stats.elementDamageReduce[key], reductionDivisor)}`,
+          `${ELEMENT_KEY_LABELS[key]}屬性靈氣吸收效率：${formatDisplayPercent(getSpiritualRootAbsorptionRate(rootValue), { maximumFractionDigits: 2 })}`,
+        ].join('\n'),
+      };
+    })];
+    const veinSnapshot = this.buildVeinPaneSnapshot(stats, bonuses);
+    sections.push({ key: 'roots', title: '靈根', cards: rootCards });
+    sections.push({ key: 'veins', title: '靈脈', cards: veinSnapshot.cards });
+    return {
+      kind: 'numeric',
+      title: '數值',
+      cards: sections.flatMap((section) => section.cards),
+      sections,
+    };
   }  
   /**
  * buildRootRadarSnapshot：构建并返回目标对象。
@@ -1924,9 +1962,7 @@ export class AttrPanel {
     preserveSelection(this.pane, () => {
       replaceElementHtml(this.pane, `<div class="attr-layout">
         <div class="action-tab-bar">${this.renderTabs()}</div>
-        <div class="action-tab-pane ${this.activeTab === 'base' ? 'active' : ''}" data-attr-pane="base">${this.renderPane(snapshot.panes.base)}</div>
-        <div class="action-tab-pane ${this.activeTab === 'root' ? 'active' : ''}" data-attr-pane="root">${this.renderPane(snapshot.panes.root)}</div>
-        <div class="action-tab-pane ${this.activeTab === 'vein' ? 'active' : ''}" data-attr-pane="vein">${this.renderPane(snapshot.panes.vein)}</div>
+        <div class="action-tab-pane ${this.activeTab === 'numeric' ? 'active' : ''}" data-attr-pane="numeric">${this.renderPane(snapshot.panes.numeric)}</div>
         <div class="action-tab-pane ${this.activeTab === 'combat' ? 'active' : ''}" data-attr-pane="combat">${this.renderPane(snapshot.panes.combat)}</div>
         <div class="action-tab-pane ${this.activeTab === 'qi' ? 'active' : ''}" data-attr-pane="qi">${this.renderPane(snapshot.panes.qi)}</div>
         <div class="action-tab-pane ${this.activeTab === 'special' ? 'active' : ''}" data-attr-pane="special">${this.renderPane(snapshot.panes.special)}</div>
@@ -2080,13 +2116,20 @@ export class AttrPanel {
             ${snapshot.actions.map((action) => `<button class="small-btn" data-attr-pane-action="${escapeHtml(action.key)}" type="button">${escapeHtml(action.label)}</button>`).join('')}
           </div>` : ''}
         </div>
-        <div class="attr-grid wide">
-          ${snapshot.cards.map((card) => renderAttrMiniCard(card, {
-            cardAttr: 'data-numeric-card',
-            labelAttr: 'data-numeric-label',
-            valueAttr: 'data-numeric-value',
-            subAttr: 'data-numeric-sub',
-          })).join('')}
+        <div class="attr-numeric-sections">
+          ${(snapshot.sections ?? [{ key: 'values', title: null, cards: snapshot.cards }]).map((section) => `
+            <section class="attr-numeric-section" data-attr-section="${escapeHtml(section.key)}">
+              ${section.title ? `<h3 class="attr-numeric-section-title">${escapeHtml(section.title)}</h3>` : ''}
+              <div class="attr-grid wide">
+                ${section.cards.map((card) => renderAttrMiniCard(card, {
+                  cardAttr: 'data-numeric-card',
+                  labelAttr: 'data-numeric-label',
+                  valueAttr: 'data-numeric-value',
+                  subAttr: 'data-numeric-sub',
+                })).join('')}
+              </div>
+            </section>
+          `).join('')}
         </div>
       </div>`;
     }
@@ -2422,7 +2465,7 @@ export class AttrPanel {
   private buildStructureKey(snapshot: AttrPanelSnapshot): string {
     const entries = Object.entries(snapshot.panes).map(([tab, pane]) => {
       if (pane.kind === 'numeric') {
-        return [tab, { kind: pane.kind, cards: pane.cards.map((card) => card.key), actions: pane.actions?.map((action) => action.key) ?? [] }];
+        return [tab, { kind: pane.kind, cards: pane.cards.map((card) => card.key), sections: pane.sections?.map((section) => [section.key, section.cards.map((card) => card.key)]) ?? [], actions: pane.actions?.map((action) => action.key) ?? [] }];
       }
       if (pane.kind === 'radar') {
         return [tab, {

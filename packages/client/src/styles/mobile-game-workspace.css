@@ -7,6 +7,7 @@
 @media (min-width: 769px) and (max-width: 920px) and (pointer: fine) {
   #game-workspace { left: 12px; right: 12px; top: 12px; width: auto; }
   #game-workspace[data-compact="true"] { left: auto; top: auto; width: min(520px, calc(100% - 24px)); }
+  #game-workspace[data-workspace="quests"] { width: min(480px, calc(100% - 24px)); }
 }
 
 @media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
@@ -57,7 +58,7 @@
   #map-minimap-open::after { content: '展開輿圖'; font-size: 13px; }
 
   #game-dock { left: var(--mobile-left); right: var(--mobile-right); bottom: var(--mobile-bottom); max-width: none; }
-  .workspace-dock-nav { width: 100%; height: 60px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; padding: 2px; border-radius: 14px; }
+  .workspace-dock-nav { width: 100%; height: 60px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; padding: 2px; border-radius: 14px; }
   .workspace-dock-nav > button { min-width: 0; min-height: 52px; padding: 4px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border-color: transparent; border-radius: 10px; font-size: 12px; line-height: 1.2; }
   .workspace-dock-nav > button[aria-expanded="true"] { color: var(--stamp-red); background: var(--surface-muted); }
   .workspace-menu { width: min(390px, 100%); bottom: calc(100% + 8px); max-height: min(310px, 43dvh); overflow: auto; border-radius: 14px; }
@@ -114,6 +115,7 @@
   #game-workspace { left: var(--mobile-left); right: var(--mobile-right); top: var(--mobile-top); bottom: calc(var(--mobile-bottom) + 68px); width: auto; border-radius: 14px; }
   #game-workspace[data-compact="true"] { left: auto; width: min(520px, calc(100% - var(--mobile-left) - var(--mobile-right))); top: auto; height: min(430px, calc(100% - 160px)); }
   #game-workspace[data-workspace="cultivation"] { height: min(560px, calc(100% - 160px)); }
+  #game-workspace[data-workspace="quests"] { height: min(400px, calc(100% - 160px)); }
   #game-workspace[data-workspace="system"] { height: min(300px, calc(100% - 160px)); }
   .workspace-header { padding: 10px 12px 0; gap: 4px; }
   .workspace-title { font-size: 18px; }
@@ -165,4 +167,8 @@
   #game-shell[data-workspace-mode="true"] .map-side-tool-center { top: var(--mobile-top); right: calc(var(--mobile-right) + 100px); }
   #game-shell[data-workspace-mode="true"] #map-tick-rate { top: calc(var(--mobile-top) + 68px); right: calc(var(--mobile-right) + 100px); }
   #game-shell[data-workspace-mode="true"] .map-minimap-shell { top: calc(var(--mobile-top) + 108px); right: calc(var(--mobile-right) + 100px); }
+}
+
+@media (max-width: 349px) {
+  #game-dock { left: max(2px, env(safe-area-inset-left, 0px)); right: max(2px, env(safe-area-inset-right, 0px)); }
 }

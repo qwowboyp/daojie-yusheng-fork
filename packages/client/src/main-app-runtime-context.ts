@@ -150,7 +150,11 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
       case 'transmission': modules.craftWorkbenchModal.openTransmission(); break;
       case 'building': panelContext.buildingFengShuiStateSource.openBuildingPanel(); break;
       case 'mail': documentRef.getElementById('hud-open-mail')?.click(); break;
-      case 'activity': documentRef.getElementById('hud-open-activity')?.click(); break;
+      case 'activity':
+        // 活動是焦點視窗；先收起工作區的背景攔截層，才會讓詳情宿主維持僅真實地圖畫布可背景關閉的契約。
+        modules.sidePanel.closeWorkspace(false);
+        documentRef.getElementById('hud-open-activity')?.click();
+        break;
       case 'chronicle': documentRef.getElementById('hud-open-chronicle')?.click(); break;
     }
   });

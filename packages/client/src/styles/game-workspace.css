@@ -216,9 +216,9 @@
   right: 0;
   bottom: calc(100% + 10px);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
-  width: min(390px, calc(100vw - 24px));
+  width: min(340px, calc(100vw - 24px));
   max-height: min(310px, calc(100dvh - 104px));
   overflow: auto;
   padding: 10px;
@@ -257,6 +257,7 @@
 #game-workspace.hidden { display: none; }
 #game-workspace[data-compact="true"] { width: min(520px, calc(100% - 32px)); height: min(480px, calc(100% - 112px)); top: auto; }
 #game-workspace[data-workspace="cultivation"] { width: min(640px, calc(100% - 32px)); height: min(540px, calc(100% - 112px)); }
+#game-workspace[data-workspace="quests"] { width: min(480px, calc(100% - 32px)); height: min(420px, calc(100% - 112px)); }
 #game-workspace[data-workspace="system"] { height: min(320px, calc(100% - 112px)); }
 #game-workspace[data-workspace="market"],
 #game-workspace[data-workspace="social"] { height: min(400px, calc(100% - 112px)); }

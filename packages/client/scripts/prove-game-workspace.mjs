@@ -215,7 +215,7 @@ const preserveInputExpression = String.raw`
 const verifyAllWorkspacesExpression = String.raw`
   (async () => {
     const expected = [
-      ['character', '人物', ['overview', 'attr']],
+      ['character', '角色', ['overview', 'attr']],
       ['items', '背包與技藝', ['inventory', 'equipment', 'alchemy', 'forging', 'enhancement', 'transmission', 'building']],
       ['cultivation', '修行', ['technique', 'body-training', 'skill']],
       ['action', '行動與自動設定', ['dialogue', 'utility', 'toggle']],
@@ -228,7 +228,7 @@ const verifyAllWorkspacesExpression = String.raw`
     for (const [id, title, tabs] of expected) {
       menu.click();
       await window.__gameWorkspaceProof.nextPaint();
-      const entry = document.querySelector((['items', 'cultivation', 'action', 'quests'].includes(id) ? '#game-dock .workspace-dock-nav > ' : '#workspace-menu ') + '[data-workspace-open="' + id + '"]');
+      const entry = document.querySelector((['character', 'items', 'cultivation', 'action', 'quests'].includes(id) ? '#game-dock .workspace-dock-nav > ' : '#workspace-menu ') + '[data-workspace-open="' + id + '"]');
       if (!(entry instanceof HTMLButtonElement)) throw new Error('其它缺少分類：' + id);
       if (id === 'action' && (!entry.getClientRects().length || entry.textContent !== '行動')) throw new Error('右下角缺少可見行動入口');
       entry.click();
@@ -298,6 +298,7 @@ const verifyWorkspaceMenuAndShortcutExpression = String.raw`
       menuOpen: menuWasOpen,
       menuLabel: menu.textContent,
       menuIds,
+      dockIds,
       duplicatedEntries: menuIds.filter((id) => dockIds.includes(id)),
       menuBounded: !!menuRect && menuRect.left >= 0 && menuRect.top >= 0 && menuRect.right <= innerWidth && menuRect.bottom <= innerHeight,
       menuEntrySizes: entries.map((rect) => ({ width: rect.width, height: rect.height })),
@@ -319,11 +320,12 @@ const measureWorkspaceCompactnessExpression = String.raw`
       return { compact: workspace?.dataset.compact, width: rect?.width ?? 0, height: rect?.height ?? 0 };
     };
     const items = await open('items');
+    const quests = await open('quests');
     const menu = document.getElementById('workspace-menu-toggle');
     if (!(menu instanceof HTMLButtonElement)) throw new Error('缺少其它選單');
     menu.click(); await paint();
     const system = await open('system');
-    return { items, system };
+    return { items, quests, system };
   })()
 `;
 
@@ -950,6 +952,7 @@ const verifyMobileSurfaceExpression = String.raw`
       centerMapHit: centerElement === canvas || centerElement instanceof HTMLElement && (centerElement === stage || stage.contains(centerElement)),
       centerCoveredBy: visiblePanels,
       dockCount: dockButtons.length,
+      dockMinWidth: Math.min(...dockButtons.map((button) => button.getBoundingClientRect().width)),
       dockMinHeight: Math.min(...dockButtons.map((button) => button.getBoundingClientRect().height)),
       touchTargets: ['#mobile-map-tools-toggle', '#workspace-chat-toggle', '.chat-action-toggle', '#floating-interaction-list [data-floating-list-collapse="true"]'].map((selector) => {
         const node = document.querySelector(selector); return { selector, height: node instanceof HTMLElement ? node.getBoundingClientRect().height : 0, visible: node instanceof HTMLElement && Boolean(node.getClientRects().length) };
@@ -1363,7 +1366,8 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assert.equal(menuAndShortcut.scrollPreserved, true, '背包與坊市捷徑往返破壞背包捲動狀態');
   assert.equal(menuAndShortcut.menuOpen, true, '其它選單未正常展開');
   assert.equal(menuAndShortcut.menuLabel, '其它');
-  assert.deepEqual(menuAndShortcut.menuIds, ['character', 'social', 'market', 'world', 'system']);
+  assert.deepEqual(menuAndShortcut.menuIds, ['social', 'market', 'world', 'system']);
+  assert.deepEqual(menuAndShortcut.dockIds, ['character', 'items', 'cultivation', 'action', 'quests']);
   assert.deepEqual(menuAndShortcut.duplicatedEntries, [], '其它不得重複顯示獨立入口');
   const activityEntry = await cdp.evaluate(`(async () => {
     const entry = document.querySelector('#game-dock [data-workspace-action="activity"]');
@@ -1372,9 +1376,9 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
     const { detailModalHost } = await import('/src/ui/detail-modal-host.ts');
     const opened = detailModalHost.isOpenFor('activity-panel');
     detailModalHost.close('activity-panel');
-    return { opened, label: entry.textContent, menuClosed: document.getElementById('workspace-menu').hidden };
+    return { opened, label: entry.textContent, menuClosed: document.getElementById('workspace-menu').hidden, workspaceClosed: document.getElementById('game-workspace').hidden };
   })()`);
-  assert.deepEqual(activityEntry, { opened: true, label: '活動', menuClosed: true }, '右下角活動按鈕必須開啟正式活動視窗並收起其它選單');
+  assert.deepEqual(activityEntry, { opened: true, label: '活動', menuClosed: true, workspaceClosed: true }, '右下角活動按鈕必須開啟正式活動視窗並收起其它選單');
   assert.equal(menuAndShortcut.menuBounded, true, '其它選單超出目前視口');
   assert(menuAndShortcut.menuEntrySizes.every((entry) => entry.width > 0 && entry.height >= 40),
     `其它選單入口尺寸不足：${JSON.stringify(menuAndShortcut.menuEntrySizes)}`);
@@ -1653,7 +1657,8 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
     '手機主畫面沒有真實地圖 canvas backbuffer');
   assert.equal(mobileSurface.base.canvas.rendered, true, `手機主畫面地圖 backbuffer 為空白：${mobileSurface.base.canvas.renderedPixel}`);
   assert.equal(mobileSurface.base.centerCoveredBy.length, 0, `手機中央角色區被面板覆蓋：${mobileSurface.base.centerCoveredBy.join(',')}`);
-  assert.equal(mobileSurface.base.dockCount, 6, `手機底部 dock 項目數錯誤：${mobileSurface.base.dockCount}`);
+  assert.equal(mobileSurface.base.dockCount, 7, `手機底部 dock 項目數錯誤：${mobileSurface.base.dockCount}`);
+  assert(mobileSurface.base.dockMinWidth >= 44, '手機底部 dock 觸控寬度不足 44px');
   assert(mobileSurface.base.dockMinHeight >= 44, '手機底部 dock 觸控高度不足 44px');
   for (const target of mobileSurface.base.touchTargets) {
     assert.equal(target.visible, true, `手機觸控入口不可見：${target.selector}`);
@@ -1729,7 +1734,7 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   const landscapeSurface = await cdp.evaluate(verifyMobileSurfaceExpression);
   assert.equal(landscapeSurface.base.viewport.width, LANDSCAPE.width, '844x390 touch 視口未同步');
   assert(landscapeSurface.base.canvas.width > 0 && landscapeSurface.base.canvas.height > 0, '844x390 touch 沒有真實地圖 canvas');
-  assert.equal(landscapeSurface.base.dockCount, 6, '844x390 touch 底部 dock 項目數錯誤');
+  assert.equal(landscapeSurface.base.dockCount, 7, '844x390 touch 底部 dock 項目數錯誤');
   const nearbyOpen = await cdp.evaluate(verifyMobileInteractionExpression);
   assert.equal(nearbyOpen.expanded, true, '844x390 touch 附近行動無法展開');
   assert.equal(nearbyOpen.executed, true, '844x390 touch 附近行動無法執行');
@@ -1757,6 +1762,28 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   await setViewport(cdp, DESKTOP, { touch: false });
   await setViewport(cdp, SQUARE_DESKTOP, { touch: false });
   const squareCompactness = await cdp.evaluate(measureWorkspaceCompactnessExpression);
+  for (const viewport of [SQUARE_DESKTOP, PHONE, { width: 320, height: 667 }]) {
+    await setViewport(cdp, viewport, { touch: viewport.width <= 390 });
+    const questSurface = await cdp.evaluate(`(async () => {
+      document.querySelector('#game-dock [data-workspace-open="quests"]').click();
+      await window.__gameWorkspaceProof.nextPaint();
+      const pane = document.getElementById('pane-quest');
+      const workspace = document.getElementById('game-workspace');
+      const rect = workspace.getBoundingClientRect();
+      return { visible: !workspace.hidden && rect.height > 0, text: pane?.textContent,
+        overflow: pane ? pane.scrollWidth > pane.clientWidth + 1 : true,
+        minDockWidth: Math.min(...[...document.querySelectorAll('#game-dock .workspace-dock-button')].map(node => node.getBoundingClientRect().width)) };
+    })()`);
+    assert(questSurface.visible && /初入道途/.test(questSurface.text), '精簡任務必須顯示任務內容');
+    assert.equal(questSurface.overflow, false, '精簡任務不得橫向溢出');
+    if (viewport.width <= 390) assert(questSurface.minDockWidth >= 44, '窄手機 dock 命中寬度不足 44px');
+    await captureWorkspace(cdp, `quests-compact-${viewport.width}.png`);
+    await cdp.evaluate(`document.querySelector('.workspace-close').click(); true`);
+  }
+  await setViewport(cdp, SQUARE_DESKTOP, { touch: false });
+  assert.equal(squareCompactness.quests.compact, 'true', '任務未套用精簡視窗');
+  assert(squareCompactness.quests.width <= 480 && squareCompactness.quests.height <= 420, '任務視窗超過精簡尺寸');
+  assert(squareCompactness.quests.height < squareCompactness.items.height, '任務視窗應小於背包');
   assert.equal(squareCompactness.items.compact, 'false', '900x900 背包工作窗錯誤套用 compact 版型');
   assert.equal(squareCompactness.system.compact, 'true', '900x900 系統工作窗未套用 compact 版型');
   assert(squareCompactness.items.width > squareCompactness.system.width,
