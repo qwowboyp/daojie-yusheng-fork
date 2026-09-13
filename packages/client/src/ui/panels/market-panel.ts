@@ -563,7 +563,6 @@ export class MarketPanel {
       onOpenTransmission: () => this.openTransmissionFromPane(),
       onOpenHeavenlyDaoShop: () => this.openHeavenlyDaoShopFromPane(),
       onOpenSpiritStoneShop: () => this.openSpiritStoneShopFromPane(),
-      onOpenVendorRecycle: () => this.openVendorRecycleFromPane(),
       onOpenTechniqueGeneration: () => this.callbacks?.onOpenTechniqueGeneration?.(),
     });
     this.renderPane();
@@ -1991,7 +1990,7 @@ export class MarketPanel {
     buttonNode.disabled = invalidTotal || insufficientCurrency;
   }
 
-  private openVendorRecycleFromPane(): void {
+  openVendorRecycleFromInventory(): void {
     if (!this.requestMarketBootstrap()) {
       this.callbacks?.onRequestMarket();
     }

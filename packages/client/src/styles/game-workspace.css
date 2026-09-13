@@ -186,6 +186,17 @@
 .workspace-menu button:hover,
 .workspace-tab:hover,
 .workspace-action-grid button:hover { background: var(--highlight); }
+.workspace-dock-button[data-workspace-action="activity"] { position: relative; }
+.workspace-dock-button[data-has-unread="true"]::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--stamp-red);
+}
 .workspace-dock-nav button[aria-expanded="true"],
 .workspace-dock-nav button[aria-pressed="true"],
 .workspace-tab[aria-selected="true"] {

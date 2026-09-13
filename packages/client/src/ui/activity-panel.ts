@@ -346,13 +346,11 @@ export class ActivityPanel {
   }
 
   private syncBadge(): void {
-    const button = document.getElementById('hud-open-activity');
-    if (!(button instanceof HTMLButtonElement)) {
-      return;
-    }
     const hasRedDot = this.status?.hasRedDot === true;
-    button.classList.toggle('has-unread', hasRedDot);
-    button.dataset.hasUnread = hasRedDot ? 'true' : 'false';
+    for (const button of document.querySelectorAll<HTMLButtonElement>('#hud-open-activity, #game-dock [data-workspace-action="activity"]')) {
+      button.classList.toggle('has-unread', hasRedDot);
+      button.dataset.hasUnread = hasRedDot ? 'true' : 'false';
+    }
   }
 }
 

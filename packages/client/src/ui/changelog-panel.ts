@@ -5,7 +5,11 @@
  */
 import { detailModalHost } from './detail-modal-host';
 import { t } from './i18n';
-import { CHANGELOG_ENTRIES, getLatestChangelogEntry } from './changelog-data';
+import {
+  CHANGELOG_ENTRIES,
+  getLatestChangelogEntry,
+  getLatestChangelogVersion,
+} from './changelog-data';
 import {
   mountReactChangelogPanel,
   shouldUseReactChangelogPanel,
@@ -16,6 +20,8 @@ import {
 export class ChangelogPanel {
   /** MODAL_OWNER：弹窗OWNER。 */
   private static readonly MODAL_OWNER = 'changelog-panel';  
+  private static readonly LOGIN_SEEN_STORAGE_PREFIX = 'mud:changelog-login-seen:v1:';
+  private readonly loginSeenVersions = new Set<string>();
   /**
  * 构造器：初始化 当前 实例并建立基础状态。
  * @returns 无返回值，完成实例初始化。
@@ -47,6 +53,44 @@ export class ChangelogPanel {
         : undefined,
       onClose: useReactPanel ? unmountReactChangelogPanel : undefined,
     });
+  }
+
+  /**
+   * 在角色完成登入後，僅對該玩家首次看見的最新史書版本開啟視窗。
+   * localStorage 不可用時保留本頁記憶去重，避免重連重複打斷玩家。
+   */
+  openForFirstLoginAfterUpdate(playerId: string | null | undefined, windowRef: Window = window): boolean {
+    const normalizedPlayerId = typeof playerId === 'string' ? playerId.trim() : '';
+    const version = getLatestChangelogVersion();
+    if (!normalizedPlayerId || !version) {
+      return false;
+    }
+    const storageKey = `${ChangelogPanel.LOGIN_SEEN_STORAGE_PREFIX}${encodeURIComponent(normalizedPlayerId)}`;
+    const sessionKey = `${storageKey}:${version}`;
+    if (this.loginSeenVersions.has(sessionKey)) {
+      return false;
+    }
+
+    try {
+      if (windowRef.localStorage.getItem(storageKey) === version) {
+        this.loginSeenVersions.add(sessionKey);
+        return false;
+      }
+    } catch {
+      // 瀏覽器拒絕本地存儲時，仍以本頁記憶避免同一登入階段重複彈出。
+    }
+
+    this.open();
+    if (!detailModalHost.isOpenFor(ChangelogPanel.MODAL_OWNER)) {
+      return false;
+    }
+    this.loginSeenVersions.add(sessionKey);
+    try {
+      windowRef.localStorage.setItem(storageKey, version);
+    } catch {
+      // 史書只是本機提示；存儲失敗不能阻塞登入。
+    }
+    return true;
   }
 
   /** buildSubtitle：构建Subtitle。 */

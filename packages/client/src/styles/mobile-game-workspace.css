@@ -57,7 +57,7 @@
   #map-minimap-open::after { content: '展開輿圖'; font-size: 13px; }
 
   #game-dock { left: var(--mobile-left); right: var(--mobile-right); bottom: var(--mobile-bottom); max-width: none; }
-  .workspace-dock-nav { width: 100%; height: 60px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; padding: 2px; border-radius: 14px; }
+  .workspace-dock-nav { width: 100%; height: 60px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; padding: 2px; border-radius: 14px; }
   .workspace-dock-nav > button { min-width: 0; min-height: 52px; padding: 4px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border-color: transparent; border-radius: 10px; font-size: 12px; line-height: 1.2; }
   .workspace-dock-nav > button[aria-expanded="true"] { color: var(--stamp-red); background: var(--surface-muted); }
   .workspace-menu { width: min(390px, 100%); bottom: calc(100% + 8px); max-height: min(310px, 43dvh); overflow: auto; border-radius: 14px; }
