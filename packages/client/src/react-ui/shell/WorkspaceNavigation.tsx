@@ -19,7 +19,7 @@ export interface WorkspaceDefinition {
 }
 
 export const WORKSPACES: readonly WorkspaceDefinition[] = [
-  { id: 'character', label: '角色', description: '概況・屬性・社交', compact: true, tabs: [{ id: 'overview', label: '角色概況', paneId: 'pane-profile' }, { id: 'attr', label: '屬性', paneId: 'pane-attr' }, { id: 'social', label: '社交', paneId: 'pane-social' }] },
+  { id: 'character', label: '角色', description: '概況・數值・社交', compact: true, tabs: [{ id: 'overview', label: '角色概況', paneId: 'pane-profile' }, { id: 'attr', label: '數值', paneId: 'pane-attr' }, { id: 'social', label: '社交', paneId: 'pane-social' }] },
   { id: 'items', label: '背包與技藝', description: '物品・裝備・製作', tabs: [
     { id: 'inventory', label: '背包', paneId: 'pane-inventory' }, { id: 'equipment', label: '裝備', paneId: 'pane-equipment' },
     { id: 'alchemy', label: '煉丹', paneId: 'workspace-alchemy' }, { id: 'forging', label: '煉器', paneId: 'workspace-forging' },
@@ -80,7 +80,7 @@ export function mountWorkspaceNavigation(dock: HTMLElement, controls: HTMLElemen
   };
 }
 
-const DOCK_WORKSPACES = [{ id: 'items', label: '背包' }, { id: 'cultivation', label: '修行' }, { id: 'action', label: '行動' }, { id: 'quests', label: '任務' }] as const;
+const DOCK_WORKSPACES = [{ id: 'character', label: '角色' }, { id: 'items', label: '背包' }, { id: 'cultivation', label: '修行' }, { id: 'action', label: '行動' }, { id: 'quests', label: '任務' }] as const;
 const DOCK_WORKSPACE_IDS = new Set<WorkspaceId>(DOCK_WORKSPACES.map((entry) => entry.id));
 
 function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigationState; registerCloseMenu: (handler: () => boolean) => void }) {
@@ -114,22 +114,23 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
   return (
     <nav className="workspace-dock-nav" aria-label="遊戲功能">
       {DOCK_WORKSPACES.map((item) => (
-        <button key={item.id} type="button" className="workspace-dock-button" data-workspace-open={item.id}
+        <button key={item.id} type="button" className="workspace-dock-button" data-workspace-open={item.id} data-has-unread={item.id === 'character' && hasMailUnread} aria-label={item.id === 'character' && hasMailUnread ? '角色，社交有未讀飛書' : undefined}
           aria-controls="game-workspace" aria-expanded={state.activeWorkspace === item.id}
           onPointerDown={(event) => { if (event.button === 0 && !isMobileActiveDock(item.id)) state.onPrepareOpen(item.id); }} onClick={() => toggleDock(item.id)}><NavigationIcon name={item.id} /><span>{item.label}</span></button>
       ))}
       <button type="button" className="workspace-dock-button" data-workspace-action="activity" aria-haspopup="dialog"
         onClick={() => { setMenuOpen(false); state.onAction('activity'); }}><NavigationIcon name="activity" /><span>活動</span></button>
-      <button id="workspace-menu-toggle" type="button" className="workspace-dock-button" data-has-unread={hasMailUnread} aria-label={hasMailUnread ? '其它，社交有未讀飛書' : '其它'} aria-expanded={menuOpen}
+      <button id="workspace-menu-toggle" type="button" className="workspace-dock-button" aria-label="其它" aria-expanded={menuOpen}
         aria-controls="workspace-menu" onClick={() => { if (!menuOpen) requestMobileSurface('menu'); setMenuOpen(!menuOpen); }}><NavigationIcon name="menu" /><span>其它</span></button>
       <div id="workspace-menu" className="workspace-menu" hidden={!menuOpen}>
         {([
           { label: '角色與成長', ids: ['character', 'items', 'cultivation'] },
           { label: '江湖往來', ids: ['quests', 'market'] },
           { label: '探索與設定', ids: ['action', 'world', 'system'] },
-        ] as const).map((group) => <section key={group.label} className="workspace-menu-group">
+        ] as const).map((group) => ({ ...group, ids: group.ids.filter((id) => !DOCK_WORKSPACE_IDS.has(id)) }))
+          .filter((group) => group.ids.length > 0).map((group) => <section key={group.label} className="workspace-menu-group">
           <h3>{group.label}</h3>
-          {group.ids.filter((id) => !DOCK_WORKSPACE_IDS.has(id)).map((id) => <button key={id} type="button" data-workspace-open={id} data-has-unread={id === 'character' && hasMailUnread} aria-label={id === 'character' && hasMailUnread ? '角色，社交有未讀飛書' : undefined} aria-controls="game-workspace"
+          {group.ids.map((id) => <button key={id} type="button" data-workspace-open={id} aria-controls="game-workspace"
             aria-expanded={state.activeWorkspace === id} onPointerDown={(event) => { if (event.button === 0) state.onPrepareOpen(id); }}
             onClick={() => open(id)}><span>{state.workspaces.find((entry) => entry.id === id)?.label}</span><small>{state.workspaces.find((entry) => entry.id === id)?.description}</small></button>)}
         </section>)}
@@ -140,6 +141,7 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
 
 function NavigationIcon({ name }: { name: string }) {
   const paths: Record<string, string> = {
+    character: 'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM4 21v-2a8 8 0 0 1 16 0v2',
     items: 'M7 8V6a5 5 0 0 1 10 0v2M5 8h14l1 13H4L5 8Zm4 5h6',
     cultivation: 'M12 3c-1 5-7 6-7 12a7 7 0 0 0 14 0c0-3-2-6-3-7 0 4-2 5-3 5 1-4 0-7-1-10Z',
     craft: 'm4 20 8-8m-5-7 3-3 12 12-3 3L7 5Zm-4 8 4 4',

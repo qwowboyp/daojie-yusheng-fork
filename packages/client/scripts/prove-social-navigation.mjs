@@ -84,6 +84,6 @@ await withClientBrowserProof({ viewport: { width: 1440, height: 900 }, profilePr
     }
   }
   await cdp.evaluate(`window.__mailNavigation.clear(); true`);
-  assert.equal(await cdp.evaluate(`document.getElementById('workspace-menu-toggle').dataset.hasUnread`), 'false');
+  assert.equal(await cdp.evaluate(`document.querySelector('[data-workspace-open=\"character\"]').dataset.hasUnread`), 'false');
 });
 console.log('social navigation proof: PASS');
