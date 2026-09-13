@@ -1,7 +1,7 @@
 /**
- * 本文件属于运行时图包资源 URL 边界，负责把 manifest 版本收敛为静态资源缓存版本。
+ * 本文件属于运行时图包资源 URL 边界，负责按资源来源选择静态资源缓存版本。
  *
- * 维护时保持调用方无感知：manifest 继续控制图包版本，渲染层只消费已版本化的图片 URL。
+ * 维护时保持调用方无感知：图包资源沿用 manifest 版本，建築美術沿用 client build 版本。
  */
 
 const RUNTIME_IMAGE_PACK_VERSION_PARAM = 'v';
@@ -21,7 +21,7 @@ export function normalizeRuntimeImagePackVersion(value: unknown): string {
 export function resolveRuntimeImagePackAssetUrl(manifestUrl: string, src: string, version: string): string {
   const trimmedSrc = src.trim();
   const resolvedUrl = resolveRuntimeImagePackRawAssetUrl(manifestUrl, trimmedSrc);
-  return appendRuntimeImagePackVersion(resolvedUrl, version);
+  return appendRuntimeImagePackVersion(resolvedUrl, resolveRuntimeImagePackAssetVersion(resolvedUrl, version));
 }
 
 function resolveRuntimeImagePackRawAssetUrl(manifestUrl: string, src: string): string {
@@ -33,6 +33,25 @@ function resolveRuntimeImagePackRawAssetUrl(manifestUrl: string, src: string): s
   } catch {
     const base = manifestUrl.slice(0, manifestUrl.lastIndexOf('/') + 1);
     return `${base}${src}`;
+  }
+}
+
+/** 建築美術由 client build snapshot 管理；圖包內其他資源仍沿用 manifest 修訂。 */
+function resolveRuntimeImagePackAssetVersion(url: string, manifestVersion: string): string {
+  if (!isBuildingArtAssetUrl(url)) {
+    return manifestVersion;
+  }
+  return __APP_BUILD_ID__;
+}
+
+function isBuildingArtAssetUrl(url: string): boolean {
+  if (/^(?:data|blob):/i.test(url)) {
+    return false;
+  }
+  try {
+    return new URL(url, window.location.href).pathname.startsWith('/assets/building-art/');
+  } catch {
+    return url.split(/[?#]/, 1)[0]?.startsWith('/assets/building-art/') === true;
   }
 }
 
