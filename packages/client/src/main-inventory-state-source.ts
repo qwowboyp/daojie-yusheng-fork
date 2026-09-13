@@ -37,7 +37,7 @@ type MainInventoryStateSourceOptions = {
  * marketStateSource：坊市状态来源相关字段。
  */
 
-  marketStateSource: Pick<MainMarketStateSource, 'initFromPlayer' | 'syncInventory' | 'syncPlayerContext' | 'clear' | 'openHeavenlyDaoShopFromInventory'>;
+  marketStateSource: Pick<MainMarketStateSource, 'initFromPlayer' | 'syncInventory' | 'syncPlayerContext' | 'clear' | 'openHeavenlyDaoShopFromInventory' | 'openVendorRecycleFromInventory'>;
   /**
  * npcShopModal：NPCShop弹层相关字段。
  */
@@ -142,6 +142,7 @@ export function createMainInventoryStateSource(options: MainInventoryStateSource
     (payload) => options.sendCreateFormation(payload),
     (payload) => options.previewFormationRange?.(payload),
     (payload) => options.sendRequestInventoryPage(payload),
+    () => options.marketStateSource.openVendorRecycleFromInventory(),
   );
 
   return {

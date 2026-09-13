@@ -141,6 +141,9 @@ export function createMainMarketStateSource(options: MainMarketStateSourceOption
     openHeavenlyDaoShopFromInventory(): void {
       marketPanel.openHeavenlyDaoShopFromInventory();
     },
+    openVendorRecycleFromInventory(): void {
+      marketPanel.openVendorRecycleFromInventory();
+    },
     /**
  * handleMarketUpdate：处理坊市Update并更新相关状态。
  * @param data S2C_MarketUpdate 原始数据。

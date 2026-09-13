@@ -110,6 +110,7 @@ interface InventoryPanelCallbacks {
   onFilterChange: ((filter: InventoryFilter) => void) | null;
   onSortInventory: (() => void) | null;
   onOpenBulkDiscard: (() => void) | null;
+  onOpenVendorRecycle: (() => void) | null;
   onRequestLoadMore: ((scrollTarget: HTMLElement) => void) | null;
   onPageChange: ((direction: 'prev' | 'next') => void) | null;
   onSearchChange: ((value: string) => void) | null;
@@ -121,6 +122,7 @@ const callbacks: InventoryPanelCallbacks = {
   onFilterChange: null,
   onSortInventory: null,
   onOpenBulkDiscard: null,
+  onOpenVendorRecycle: null,
   onRequestLoadMore: null,
   onPageChange: null,
   onSearchChange: null,
@@ -174,6 +176,9 @@ export const InventoryPanel = memo(function InventoryPanel() {
           </button>
           <button className="small-btn danger" type="button" onClick={() => callbacks.onOpenBulkDiscard?.()}>
             一鍵丟棄
+          </button>
+          <button className="small-btn" type="button" onClick={() => callbacks.onOpenVendorRecycle?.()}>
+            回收商
           </button>
         </div>
       </div>

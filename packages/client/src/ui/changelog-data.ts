@@ -31,5 +31,14 @@ export function getLatestChangelogEntry(): ChangelogEntry | null {
   return CHANGELOG_ENTRIES[0] ?? null;
 }
 
-
+/**
+ * 以最新一則史書的玩家可見內容作為版本識別；新增或改寫最新記載時會自然形成新版本。
+ */
+export function getLatestChangelogVersion(): string | null {
+  const latest = getLatestChangelogEntry();
+  if (!latest) {
+    return null;
+  }
+  return JSON.stringify([latest.updatedAt, latest.summary, latest.items]);
+}
 

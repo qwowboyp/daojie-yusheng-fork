@@ -242,6 +242,7 @@ export class InventoryPanel {
   /** onUseItem：on使用物品。 */
   private onUseItem: ((itemInstanceId: string, count?: number, options?: UseItemOptions) => void) | null = null;
   private onOpenHeavenlyDaoShop: (() => void) | null = null;
+  private onOpenVendorRecycle: (() => void) | null = null;
   private onRepairInventoryItemInstanceIds: (() => void) | null = null;
   private onRequestInventoryPage: ((payload: C2S_RequestInventoryPage) => boolean) | null = null;
   /** onDropItem：on掉落物品。 */
@@ -387,6 +388,7 @@ export class InventoryPanel {
       onFilterChange: (filter) => this.handleReactFilterChange(filter),
       onSortInventory: () => this.onSortInventory?.(),
       onOpenBulkDiscard: () => this.openBulkDiscardModal(),
+      onOpenVendorRecycle: () => this.onOpenVendorRecycle?.(),
       onRequestLoadMore: (scrollTarget) => this.maybeLoadMoreVisibleItems(scrollTarget),
       onPageChange: (direction) => this.requestAdjacentInventoryPage(direction),
       onSearchChange: (value) => this.handleInventorySearchInput(value),
@@ -487,6 +489,7 @@ export class InventoryPanel {
     onCreateFormation?: (payload: FormationCreatePayload) => void,
     onPreviewFormationRange?: (payload: FormationRangePreviewPayload) => void,
     onRequestInventoryPage?: (payload: C2S_RequestInventoryPage) => boolean,
+    onOpenVendorRecycle?: () => void,
   ): void {
     this.onUseItem = onUse;
     this.onOpenHeavenlyDaoShop = onOpenHeavenlyDaoShop;
@@ -499,6 +502,7 @@ export class InventoryPanel {
     this.onCreateFormation = onCreateFormation ?? null;
     this.onPreviewFormationRange = onPreviewFormationRange ?? null;
     this.onRequestInventoryPage = onRequestInventoryPage ?? null;
+    this.onOpenVendorRecycle = onOpenVendorRecycle ?? null;
   }
 
   /** 更新背包数据并刷新列表与弹层 */
@@ -990,6 +994,11 @@ export class InventoryPanel {
         return;
       }
 
+      if (target.closest('[data-open-vendor-recycle]')) {
+        this.onOpenVendorRecycle?.();
+        return;
+      }
+
       const pageButton = target.closest<HTMLElement>('[data-inventory-page-action]');
       if (pageButton) {
         const action = pageButton.dataset.inventoryPageAction;
@@ -1262,6 +1271,7 @@ export class InventoryPanel {
       searchInput,
       createSmallBtn(t('inventory.action.sort', undefined), { dataset: { sortInventory: 'true' } }),
       createSmallBtn('一鍵丟棄', { className: 'danger', dataset: { bulkDiscardInventory: 'true' } }),
+      createSmallBtn('回收商', { dataset: { openVendorRecycle: 'true' } }),
     );
     head.append(controls);
 

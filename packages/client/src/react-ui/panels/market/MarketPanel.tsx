@@ -15,7 +15,6 @@ interface MarketPanelCallbacks {
   onOpenTransmission: (() => void) | null;
   onOpenHeavenlyDaoShop: (() => void) | null;
   onOpenSpiritStoneShop: (() => void) | null;
-  onOpenVendorRecycle: (() => void) | null;
   onOpenTechniqueGeneration: (() => void) | null;
 }
 
@@ -25,7 +24,6 @@ const callbacks: MarketPanelCallbacks = {
   onOpenTransmission: null,
   onOpenHeavenlyDaoShop: null,
   onOpenSpiritStoneShop: null,
-  onOpenVendorRecycle: null,
   onOpenTechniqueGeneration: null,
 };
 
@@ -56,10 +54,6 @@ export const MarketPanel = memo(function MarketPanel() {
     callbacks.onOpenSpiritStoneShop?.();
   }, []);
 
-  const handleOpenVendorRecycle = useCallback(() => {
-    callbacks.onOpenVendorRecycle?.();
-  }, []);
-
   const handleOpenTechniqueGeneration = useCallback(() => {
     callbacks.onOpenTechniqueGeneration?.();
   }, []);
@@ -83,9 +77,6 @@ export const MarketPanel = memo(function MarketPanel() {
           </button>
           <button className="small-btn" type="button" onClick={handleOpenSpiritStoneShop}>
             靈石商店
-          </button>
-          <button className="small-btn" type="button" onClick={handleOpenVendorRecycle}>
-            回收商
           </button>
           <button className="small-btn" type="button" onClick={handleOpenTechniqueGeneration}>
             悟道

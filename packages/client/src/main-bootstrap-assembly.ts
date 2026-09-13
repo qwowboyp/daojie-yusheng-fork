@@ -590,6 +590,7 @@ type MainBootstrapAssemblyOptions = {
 
 
 export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
+  let changelogPanel: ChangelogPanel | null = null;
   const techniqueActivityPanelHandlers: {
     [K in ClientTechniqueActivityKind]:
       K extends 'enhancement' ? MainDetailStateSource['handleEnhancementPanel'] : MainDetailStateSource['handleAlchemyPanel'];
@@ -627,7 +628,7 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
     startClientVersionReload,
     onBeforeVersionReload: () => options.runtimeMonitorSource.handleVersionReloadBefore(),
     createChangelogPanel: () => {
-      new ChangelogPanel();
+      changelogPanel = new ChangelogPanel();
     },
     createTutorialPanel: () => {
       new TutorialPanel();
@@ -757,6 +758,7 @@ export function bootstrapMainApp(options: MainBootstrapAssemblyOptions): void {
       options.connectionStateSource.handleBootstrapReady();
       options.loginUI.hide();
       completeOfflineGainBlockingConfirmation();
+      changelogPanel?.openForFirstLoginAfterUpdate(data.self?.id, options.windowRef);
       // 初次登入：按落點地圖切換 BGM（mapGroupId 資訊待 MapStatic 精確化）
       setMapBgm(data.self?.mapId);
     },

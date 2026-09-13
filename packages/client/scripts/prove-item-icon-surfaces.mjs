@@ -91,6 +91,7 @@ const mountFixture = String.raw`
       onVendorRecycleItem() {}, onCancelOrder() {}, onClaimStorage() {},
     });
     marketPanel.syncInventory(inventory);
+    inventoryPanel.setCallbacks(...Array.from({ length: 11 }, () => () => {}), () => marketPanel.openVendorRecycleFromInventory());
     marketPanel.updateMarket(marketUpdate);
     marketPanel.updateListings(marketListings);
     marketPanel.updateAuctionListings(auction());
@@ -120,10 +121,10 @@ const openSurface = (surface) => String.raw`
       if (close instanceof HTMLElement) close.click(); else modal.click();
     }
     await new Promise((resolve) => requestAnimationFrame(resolve));
-    if (${JSON.stringify(surface)} === 'inventory') {
+    if (['inventory', 'recycle'].includes(${JSON.stringify(surface)})) {
       const launcher = document.querySelector('#game-dock [data-workspace-open="items"]');
       if (!(launcher instanceof HTMLButtonElement)) throw new Error('正式背包 workspace 入口不存在');
-      launcher.click();
+      if (launcher.getAttribute('aria-expanded') !== 'true') launcher.click();
       window.__itemArtProof.inventoryPanel.update(window.__itemArtProof.inventory);
       for (let index = 0; index < 12 && !document.querySelector('#pane-inventory [data-open-item]'); index += 1) {
         await new Promise((resolve) => requestAnimationFrame(resolve));
@@ -135,6 +136,14 @@ const openSurface = (surface) => String.raw`
       }
       const first = document.querySelector('#pane-inventory [data-open-item]');
       if (!(first instanceof HTMLElement)) throw new Error('正式 React 背包沒有產生道具格');
+      if (${JSON.stringify(surface)} === 'recycle') {
+        const controls = [...document.querySelectorAll('#pane-inventory .inventory-panel-controls button')];
+        const recycle = controls.find((entry) => entry.textContent?.trim() === '回收商');
+        if (!(recycle instanceof HTMLButtonElement) || recycle.previousElementSibling?.textContent?.trim() !== '一鍵丟棄') throw new Error('回收商必須位於背包一鍵丟棄後方');
+        const bounds = recycle.getBoundingClientRect();
+        if (bounds.width < 44 || bounds.height < 40 || bounds.left < 0 || bounds.right > innerWidth) throw new Error('回收商入口尺寸或位置不適合觸控');
+        recycle.click();
+      }
     } else {
       const menuToggle = document.getElementById('workspace-menu-toggle');
       if (!(menuToggle instanceof HTMLButtonElement)) throw new Error('正式 workspace 全部功能入口不存在');
@@ -145,6 +154,7 @@ const openSurface = (surface) => String.raw`
       launcher.click();
       await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       const labels = { market: '坊市', auction: '拍賣行', heavenly: '天道商店', 'spirit-shop': '靈石商店', recycle: '回收商' };
+      if ([...document.querySelectorAll('[data-react-panel="market"] button')].some((entry) => entry.textContent?.trim() === '回收商')) throw new Error('坊市不得重複顯示回收商');
       const wanted = labels[${JSON.stringify(surface)}];
       const button = [...document.querySelectorAll('[data-react-panel="market"] button')].find((entry) => entry.textContent?.trim() === wanted);
       if (!(button instanceof HTMLButtonElement)) throw new Error('正式市場入口不存在：' + wanted);
