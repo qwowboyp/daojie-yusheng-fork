@@ -117,7 +117,7 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
       ))}
       <button type="button" className="workspace-dock-button" data-workspace-action="activity" aria-haspopup="dialog"
         onClick={() => { setMenuOpen(false); state.onAction('activity'); }}><NavigationIcon name="activity" /><span>活動</span></button>
-      <button id="workspace-menu-toggle" type="button" className="workspace-dock-button" aria-expanded={menuOpen}
+      <button id="workspace-menu-toggle" type="button" className="workspace-dock-button" data-has-unread={false} aria-label="其它" aria-expanded={menuOpen}
         aria-controls="workspace-menu" onClick={() => { if (!menuOpen) requestMobileSurface('menu'); setMenuOpen(!menuOpen); }}><NavigationIcon name="menu" /><span>其它</span></button>
       <div id="workspace-menu" className="workspace-menu" hidden={!menuOpen}>
         {([
