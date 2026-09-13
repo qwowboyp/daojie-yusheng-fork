@@ -797,9 +797,30 @@
       text-transform: uppercase;
       white-space: nowrap;
     }
+    #hud .react-hud-status-host .hud-identity .hud-name-position {
+      flex: 0 0 auto;
+      color: var(--ink-grey);
+      font-family: var(--font-role-body);
+      font-size: var(--font-size-role-body-13);
+      font-weight: var(--font-weight-role-label);
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
     #hud .react-hud-status-host .hud-identity .hud-expand-toggle {
       margin-left: auto;
       flex: 0 0 auto;
+    }
+    #game-shell[data-workspace-mode="true"] #hud .react-hud-status-host .hud-expand-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid var(--wash-ink);
+      border-radius: 6px;
+      background: var(--surface-muted);
+      color: var(--ink-dark);
     }
     #hud .react-hud-status-host .hud-mobile-scroll {
       display: contents;
@@ -808,6 +829,9 @@
       grid-column: 1;
       grid-row: 2;
       min-width: 0;
+    }
+    #game-shell[data-workspace-mode="true"] #hud .react-hud-status-host .hud-identity[data-hud-expanded="false"] + .hud-mobile-scroll > .hud-top-row {
+      display: none;
     }
     #hud .react-hud-status-host .hud-mobile-scroll .hud-realm-block {
       min-width: 0;

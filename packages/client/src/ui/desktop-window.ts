@@ -15,6 +15,7 @@ export type DesktopWindowOptions = {
   minHeight: number;
   isCollapsed?: () => boolean;
   drag?: boolean;
+  resizable?: boolean;
   onResize?: () => void;
 };
 
@@ -88,6 +89,17 @@ function writeStorage(storageKey: string, geometry: Geometry): void {
   }
 }
 
+function writePositionStorage(storageKey: string, geometry: Pick<Geometry, 'left' | 'top'>): void {
+  try {
+    window.localStorage.setItem(`desktop-window:${storageKey}`, JSON.stringify({
+      left: geometry.left,
+      top: geometry.top,
+    }));
+  } catch {
+    // 儲存空間不可用時維持本次頁面工作階段的位置。
+  }
+}
+
 function readStyleNumber(value: string): number | null {
   const parsed = Number.parseFloat(value);
   return Number.isFinite(parsed) ? parsed : null;
@@ -148,6 +160,7 @@ export function bindDesktopWindow(
   options: DesktopWindowOptions,
 ): DesktopWindowController {
   const dragEnabled = options.drag !== false;
+  const resizeEnabled = options.resizable !== false;
   const originalInline = Object.fromEntries(FRAME_PROPERTIES.map((property) => [property, element.style[property]])) as Record<FrameProperty, string>;
   const resizeGrip = document.createElement('button');
   resizeGrip.type = 'button';
@@ -162,7 +175,9 @@ export function bindDesktopWindow(
   resizeGrip.style.width = '24px';
   resizeGrip.style.height = '24px';
   resizeGrip.style.cursor = 'nwse-resize';
-  element.appendChild(resizeGrip);
+  if (resizeEnabled) {
+    element.appendChild(resizeGrip);
+  }
 
   let active = false;
   let activeStorageKey: string | null = null;
@@ -195,8 +210,10 @@ export function bindDesktopWindow(
       pointerState = null;
     } else {
       active = true;
-      setFrameProperty(element, 'maxWidth', 'none');
-      setFrameProperty(element, 'maxHeight', 'none');
+      if (resizeEnabled) {
+        setFrameProperty(element, 'maxWidth', 'none');
+        setFrameProperty(element, 'maxHeight', 'none');
+      }
       if (dragEnabled) {
         setFrameProperty(element, 'position', 'fixed');
         setFrameProperty(element, 'margin', '0');
@@ -223,6 +240,15 @@ export function bindDesktopWindow(
     return clamped;
   };
 
+  const applyPosition = (geometry: Geometry): Geometry => {
+    const clamped = clampGeometry(element, geometry, options.minWidth, options.minHeight);
+    setFrameProperty(element, 'left', `${clamped.left}px`);
+    setFrameProperty(element, 'top', `${clamped.top}px`);
+    setFrameProperty(element, 'right', 'auto');
+    setFrameProperty(element, 'bottom', 'auto');
+    return clamped;
+  };
+
   const updateCollapsedState = (): void => {
     const nextCollapsed = options.isCollapsed?.() ?? false;
     const wasCollapsed = collapsed;
@@ -239,7 +265,7 @@ export function bindDesktopWindow(
     collapsed = nextCollapsed;
     element.dataset.desktopWindowCollapsed = nextCollapsed ? 'true' : 'false';
     element.classList.toggle('desktop-window--collapsed', nextCollapsed);
-    resizeGrip.hidden = !active || nextCollapsed;
+    resizeGrip.hidden = !resizeEnabled || !active || nextCollapsed;
     if (nextCollapsed) {
       setFrameProperty(element, 'height', 'auto');
       setFrameProperty(element, 'minHeight', '0px');
@@ -272,16 +298,28 @@ export function bindDesktopWindow(
       expandedSize = null;
       collapsed = false;
       const stored = storageKey ? readStorage(storageKey) : {};
-      const restored: Geometry = {
-        left: stored.left ?? defaultGeometry.left,
-        top: stored.top ?? defaultGeometry.top,
-        width: stored.width ?? defaultGeometry.width,
-        height: stored.height ?? defaultGeometry.height,
-      };
-      collapsed = options.isCollapsed?.() ?? false;
-      // 初始收合時尚未量到完整內容，展開後再從 CSS 取得預設高度。
-      if (collapsed && stored.height !== undefined) expandedSize = { width: restored.width, height: restored.height };
-      applyGeometry(restored, dragEnabled);
+      if (resizeEnabled) {
+        const restored: Geometry = {
+          left: stored.left ?? defaultGeometry.left,
+          top: stored.top ?? defaultGeometry.top,
+          width: stored.width ?? defaultGeometry.width,
+          height: stored.height ?? defaultGeometry.height,
+        };
+        collapsed = options.isCollapsed?.() ?? false;
+        // 初始收合時尚未量到完整內容，展開後再從 CSS 取得預設高度。
+        if (collapsed && stored.height !== undefined) expandedSize = { width: restored.width, height: restored.height };
+        applyGeometry(restored, dragEnabled);
+      } else if (dragEnabled) {
+        applyPosition({
+          ...defaultGeometry,
+          left: stored.left ?? defaultGeometry.left,
+          top: stored.top ?? defaultGeometry.top,
+        });
+      }
+    }
+    if (!resizeEnabled) {
+      resizeGrip.hidden = true;
+      return;
     }
     const current = readLogicalGeometry(element);
     const clamped = applyGeometry(current, false);
@@ -309,7 +347,10 @@ export function bindDesktopWindow(
     const resized = element.classList.contains('desktop-window--resizing');
     const current = readLogicalGeometry(element);
     const finalGeometry = collapsed && expandedSize ? { ...current, ...expandedSize } : current;
-    if (activeStorageKey) writeStorage(activeStorageKey, finalGeometry);
+    if (activeStorageKey) {
+      if (resizeEnabled) writeStorage(activeStorageKey, finalGeometry);
+      else writePositionStorage(activeStorageKey, finalGeometry);
+    }
     pointerState = null;
     element.classList.remove('desktop-window--dragging', 'desktop-window--resizing');
     if (resized) options.onResize?.();
@@ -319,7 +360,7 @@ export function bindDesktopWindow(
     if (!active || shouldUseMobileUi(window) || event.button !== 0) return;
     const target = event.target;
     if (!(target instanceof Element)) return;
-    if (target.closest('.desktop-window-resize')) {
+    if (resizeEnabled && target.closest('.desktop-window-resize')) {
       if (collapsed) return;
       const point = pointerToLogical(event);
       const geometry = readLogicalGeometry(element);
@@ -351,14 +392,16 @@ export function bindDesktopWindow(
       resizeGeometry({ ...geometry, width: pointerState.startWidth + point.x - pointerState.startX,
         height: pointerState.startHeight + point.y - pointerState.startY });
     } else {
-      applyGeometry({ ...geometry, left: pointerState.startLeft + point.x - pointerState.startX,
+      const nextGeometry = { ...geometry, left: pointerState.startLeft + point.x - pointerState.startX,
         top: pointerState.startTop + point.y - pointerState.startY,
-        width: pointerState.startWidth, height: pointerState.startHeight }, true);
+        width: pointerState.startWidth, height: pointerState.startHeight };
+      if (resizeEnabled) applyGeometry(nextGeometry, true);
+      else applyPosition(nextGeometry);
     }
   };
 
   const onKeyDown = (event: KeyboardEvent): void => {
-    if (!active || collapsed) return;
+    if (!resizeEnabled || !active || collapsed) return;
     let widthDelta = 0;
     let heightDelta = 0;
     if (event.key === 'ArrowRight') widthDelta = KEYBOARD_RESIZE_STEP;
@@ -373,7 +416,7 @@ export function bindDesktopWindow(
   };
 
   const onKeyUp = (event: KeyboardEvent): void => {
-    if (!active || !activeStorageKey || !['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'].includes(event.key)) return;
+    if (!resizeEnabled || !active || !activeStorageKey || !['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'].includes(event.key)) return;
     const current = readLogicalGeometry(element);
     const geometry = collapsed && expandedSize ? { ...current, ...expandedSize } : current;
     writeStorage(activeStorageKey, geometry);
@@ -386,8 +429,10 @@ export function bindDesktopWindow(
   element.addEventListener('pointermove', onPointerMove);
   element.addEventListener('pointerup', onPointerUp);
   element.addEventListener('pointercancel', onPointerUp);
-  resizeGrip.addEventListener('keydown', onKeyDown);
-  resizeGrip.addEventListener('keyup', onKeyUp);
+  if (resizeEnabled) {
+    resizeGrip.addEventListener('keydown', onKeyDown);
+    resizeGrip.addEventListener('keyup', onKeyUp);
+  }
   window.addEventListener('resize', onResize);
   window.addEventListener(RESPONSIVE_VIEWPORT_CHANGE_EVENT, onResponsiveChange);
   refresh();
@@ -401,8 +446,10 @@ export function bindDesktopWindow(
       element.removeEventListener('pointermove', onPointerMove);
       element.removeEventListener('pointerup', onPointerUp);
       element.removeEventListener('pointercancel', onPointerUp);
-      resizeGrip.removeEventListener('keydown', onKeyDown);
-      resizeGrip.removeEventListener('keyup', onKeyUp);
+      if (resizeEnabled) {
+        resizeGrip.removeEventListener('keydown', onKeyDown);
+        resizeGrip.removeEventListener('keyup', onKeyUp);
+      }
       resizeGrip.remove();
       restoreOriginalInline();
       element.classList.remove('desktop-window--active', 'desktop-window--dragging', 'desktop-window--resizing', 'desktop-window--collapsed');

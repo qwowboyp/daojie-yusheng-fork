@@ -1,10 +1,13 @@
-import { StrictMode, useEffect, useState, type KeyboardEvent } from 'react';
-import { createRoot, type Root } from 'react-dom/client';
+import { StrictMode, useEffect, useState, useSyncExternalStore, type KeyboardEvent } from 'react';
+import { createRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
 import { requestMobileSurface, subscribeMobileSurface } from '../../ui/mobile-surface';
 import { shouldUseMobileUi } from '../../ui/responsive-viewport';
+import { mailPanelStore } from '../panels/mail/MailPanel';
 
-export type WorkspaceId = 'character' | 'items' | 'cultivation' | 'action' | 'quests' | 'social' | 'market' | 'world' | 'system';
+const getMailUnread = () => mailPanelStore.getState().summary.unreadCount > 0;
+
+export type WorkspaceId = 'character' | 'items' | 'cultivation' | 'action' | 'quests' | 'market' | 'world' | 'system';
 export type WorkspaceAction = 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'building' | 'settings' | 'tutorial' | 'guided-tour' | 'mail' | 'activity' | 'chronicle' | 'logout';
 
 export interface WorkspaceDefinition {
@@ -16,7 +19,7 @@ export interface WorkspaceDefinition {
 }
 
 export const WORKSPACES: readonly WorkspaceDefinition[] = [
-  { id: 'character', label: '角色', description: '概況・數值', compact: true, tabs: [{ id: 'overview', label: '角色概況', paneId: 'pane-profile' }, { id: 'attr', label: '數值', paneId: 'pane-attr' }] },
+  { id: 'character', label: '角色', description: '概況・屬性・社交', compact: true, tabs: [{ id: 'overview', label: '角色概況', paneId: 'pane-profile' }, { id: 'attr', label: '屬性', paneId: 'pane-attr' }, { id: 'social', label: '社交', paneId: 'pane-social' }] },
   { id: 'items', label: '背包與技藝', description: '物品・裝備・製作', tabs: [
     { id: 'inventory', label: '背包', paneId: 'pane-inventory' }, { id: 'equipment', label: '裝備', paneId: 'pane-equipment' },
     { id: 'alchemy', label: '煉丹', paneId: 'workspace-alchemy' }, { id: 'forging', label: '煉器', paneId: 'workspace-forging' },
@@ -26,10 +29,9 @@ export const WORKSPACES: readonly WorkspaceDefinition[] = [
   { id: 'cultivation', label: '修行', description: '功法・煉體・技能', compact: true, tabs: [{ id: 'technique', label: '功法', paneId: 'pane-technique' }, { id: 'body-training', label: '煉體', paneId: 'pane-body-training' }, { id: 'skill', label: '技能管理', paneId: 'workspace-skill' }] },
   { id: 'action', label: '行動與自動設定', description: '交互・行動・開關', compact: true, tabs: [{ id: 'dialogue', label: '附近交互', paneId: 'workspace-dialogue' }, { id: 'utility', label: '行動', paneId: 'workspace-utility' }, { id: 'toggle', label: '自動設定', paneId: 'workspace-toggle' }] },
   { id: 'quests', label: '任務', description: '任務進度與獎勵', compact: true, tabs: [{ id: 'quest', label: '任務', paneId: 'pane-quest' }] },
-  { id: 'social', label: '社交', description: '道友・宗門・飛書', compact: true, tabs: [{ id: 'social', label: '道友', paneId: 'pane-social' }] },
   { id: 'market', label: '坊市', description: '交易・求購・拍賣', compact: true, tabs: [{ id: 'market', label: '坊市', paneId: 'pane-market' }] },
-  { id: 'world', label: '世界', description: '地圖・天機閣・史書', tabs: [{ id: 'map-intel', label: '地圖情報', paneId: 'pane-map-intel' }, { id: 'tianji', label: '天機閣', paneId: 'pane-tianji' }] },
-  { id: 'system', label: '系統與協助', description: '設定・百科・引導', compact: true, tabs: [{ id: 'system', label: '系統與協助', paneId: 'pane-system' }] },
+  { id: 'world', label: '世界', description: '地圖・天機閣', tabs: [{ id: 'map-intel', label: '地圖情報', paneId: 'pane-map-intel' }, { id: 'tianji', label: '天機閣', paneId: 'pane-tianji' }] },
+  { id: 'system', label: '系統與協助', description: '設定・百科・史書・引導', compact: true, tabs: [{ id: 'system', label: '系統與協助', paneId: 'pane-system' }] },
 ];
 
 export interface WorkspaceNavigationState {
@@ -78,10 +80,11 @@ export function mountWorkspaceNavigation(dock: HTMLElement, controls: HTMLElemen
   };
 }
 
-const DOCK_WORKSPACES = [{ id: 'character', label: '角色' }, { id: 'items', label: '背包' }, { id: 'cultivation', label: '修行' }, { id: 'action', label: '行動' }, { id: 'quests', label: '任務' }] as const;
+const DOCK_WORKSPACES = [{ id: 'items', label: '背包' }, { id: 'cultivation', label: '修行' }, { id: 'action', label: '行動' }, { id: 'quests', label: '任務' }] as const;
 const DOCK_WORKSPACE_IDS = new Set<WorkspaceId>(DOCK_WORKSPACES.map((entry) => entry.id));
 
 function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigationState; registerCloseMenu: (handler: () => boolean) => void }) {
+  const hasMailUnread = useSyncExternalStore(mailPanelStore.subscribe, getMailUnread, getMailUnread);
   const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => subscribeMobileSurface('menu', () => setMenuOpen(false)), []);
   useEffect(() => {
@@ -117,17 +120,16 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
       ))}
       <button type="button" className="workspace-dock-button" data-workspace-action="activity" aria-haspopup="dialog"
         onClick={() => { setMenuOpen(false); state.onAction('activity'); }}><NavigationIcon name="activity" /><span>活動</span></button>
-      <button id="workspace-menu-toggle" type="button" className="workspace-dock-button" aria-expanded={menuOpen}
+      <button id="workspace-menu-toggle" type="button" className="workspace-dock-button" data-has-unread={hasMailUnread} aria-label={hasMailUnread ? '其它，社交有未讀飛書' : '其它'} aria-expanded={menuOpen}
         aria-controls="workspace-menu" onClick={() => { if (!menuOpen) requestMobileSurface('menu'); setMenuOpen(!menuOpen); }}><NavigationIcon name="menu" /><span>其它</span></button>
       <div id="workspace-menu" className="workspace-menu" hidden={!menuOpen}>
         {([
-          { label: '人物與成長', ids: ['character', 'items', 'cultivation'] },
-          { label: '江湖往來', ids: ['quests', 'social', 'market'] },
+          { label: '角色與成長', ids: ['character', 'items', 'cultivation'] },
+          { label: '江湖往來', ids: ['quests', 'market'] },
           { label: '探索與設定', ids: ['action', 'world', 'system'] },
-        ] as const).map((group) => ({ ...group, ids: group.ids.filter((id) => !DOCK_WORKSPACE_IDS.has(id)) }))
-          .filter((group) => group.ids.length > 0).map((group) => <section key={group.label} className="workspace-menu-group">
+        ] as const).map((group) => <section key={group.label} className="workspace-menu-group">
           <h3>{group.label}</h3>
-          {group.ids.map((id) => <button key={id} type="button" data-workspace-open={id} aria-controls="game-workspace"
+          {group.ids.filter((id) => !DOCK_WORKSPACE_IDS.has(id)).map((id) => <button key={id} type="button" data-workspace-open={id} data-has-unread={id === 'character' && hasMailUnread} aria-label={id === 'character' && hasMailUnread ? '角色，社交有未讀飛書' : undefined} aria-controls="game-workspace"
             aria-expanded={state.activeWorkspace === id} onPointerDown={(event) => { if (event.button === 0) state.onPrepareOpen(id); }}
             onClick={() => open(id)}><span>{state.workspaces.find((entry) => entry.id === id)?.label}</span><small>{state.workspaces.find((entry) => entry.id === id)?.description}</small></button>)}
         </section>)}
@@ -138,7 +140,6 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
 
 function NavigationIcon({ name }: { name: string }) {
   const paths: Record<string, string> = {
-    character: 'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM4 21v-2a8 8 0 0 1 16 0v2',
     items: 'M7 8V6a5 5 0 0 1 10 0v2M5 8h14l1 13H4L5 8Zm4 5h6',
     cultivation: 'M12 3c-1 5-7 6-7 12a7 7 0 0 0 14 0c0-3-2-6-3-7 0 4-2 5-3 5 1-4 0-7-1-10Z',
     craft: 'm4 20 8-8m-5-7 3-3 12 12-3 3L7 5Zm-4 8 4 4',
@@ -164,6 +165,7 @@ function MobileMapTools() {
 }
 
 function WorkspaceHeader({ state }: { state: WorkspaceNavigationState }) {
+  const hasMailUnread = useSyncExternalStore(mailPanelStore.subscribe, getMailUnread, getMailUnread);
   const workspace = state.workspaces.find((entry) => entry.id === state.activeWorkspace);
   if (!workspace) return null;
   const groupId = workspace.id === 'world' ? 'center-intel' : workspace.id === 'character' ? 'left-lower'
@@ -185,23 +187,14 @@ function WorkspaceHeader({ state }: { state: WorkspaceNavigationState }) {
       <div className="workspace-shortcuts">
         {workspace.id === 'items' && <button type="button" data-workspace-shortcut="market" onClick={() => state.onSelectTab('market')}>前往坊市 ↗</button>}
         {workspace.id === 'market' && <button type="button" data-workspace-shortcut="inventory" onClick={() => state.onSelectTab('inventory')}>返回背包</button>}
-        {workspace.id === 'social' && <button type="button" onClick={() => state.onAction('mail')}>飛書</button>}
-        {workspace.id === 'world' && <button type="button" onClick={() => state.onAction('chronicle')}>史書</button>}
       </div>
       <button type="button" className="workspace-close" onClick={state.onClose} aria-label={`關閉${workspace.label}視窗`} title="關閉"><span aria-hidden="true">×</span></button></div>
     <div className="workspace-tabs" role="tablist" data-tab-group={groupId} aria-label={`${workspace.label}分頁`}>
-      {workspace.tabs.map((tab, index) => <button key={tab.id} type="button" id={`workspace-tab-${tab.id}`} data-tab={tab.id}
+      {workspace.tabs.map((tab, index) => <button key={tab.id} type="button" id={`workspace-tab-${tab.id}`} data-tab={tab.id} data-has-unread={tab.id === 'social' && hasMailUnread} aria-label={tab.id === 'social' && hasMailUnread ? '社交，有未讀飛書' : undefined}
         className={`workspace-tab tab-btn${state.activeTab === tab.id ? ' active' : ''}`} role="tab" aria-selected={state.activeTab === tab.id}
         aria-controls={tab.paneId} tabIndex={state.activeTab === tab.id ? 0 : -1} onKeyDown={(event) => onTabKey(event, index)}
         onPointerDown={(event) => { if (event.button === 0) state.onPrepareTab(tab.id); }}
         onClick={() => state.onSelectTab(tab.id)}>{tab.label}</button>)}
     </div>
   </div>;
-}
-
-export function mountWorkspaceActions(container: HTMLElement, onAction: (action: WorkspaceAction) => void): Root {
-  const root = createRoot(container);
-  root.render(<div className="workspace-building-entry"><h3>營造與佈置</h3><p>選擇建築、查看材料，並在地圖上安排位置。</p><button type="button"
-    data-workspace-action="building" onClick={() => onAction('building')}>開啟營造</button></div>);
-  return root;
 }

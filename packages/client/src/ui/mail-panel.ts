@@ -283,13 +283,11 @@ export class MailPanel {
       onClaim: (mailIds) => this.dispatchMailOperation('claim', mailIds),
       onDelete: (mailIds) => this.dispatchMailOperation('delete', mailIds),
     });
-    document.getElementById('hud-open-mail')?.addEventListener('click', () => this.open());
   }
 
   /** 记录当前玩家 ID，并同步角标状态。 */
   setPlayerId(playerId: string): void {
     this.playerId = playerId;
-    this.updateHudUnreadState();
     if (this.replayPendingOperationAfterSessionRestore()) {
       return;
     }
@@ -307,7 +305,6 @@ export class MailPanel {
     this.statusMessage = '';
     this.pendingOperation = null;
     this.pendingPageExpectation = null;
-    this.updateHudUnreadState();
     this.syncReactState();
     unmountReactMailPanel();
     detailModalHost.close(MailPanel.MODAL_OWNER);
@@ -342,7 +339,6 @@ export class MailPanel {
   /** 更新邮件摘要并同步角标。 */
   updateSummary(summary: MailSummaryView): void {
     this.summary = summary;
-    this.updateHudUnreadState();
     this.syncReactState();
     this.render();
   }
@@ -483,7 +479,6 @@ export class MailPanel {
         unreadCount: Math.max(0, this.summary.unreadCount - unreadResolved),
         claimableCount: Math.max(0, this.summary.claimableCount - claimableResolved),
       };
-      this.updateHudUnreadState();
       if (affectedIds.size > 0) {
         this.pageData = {
           ...this.pageData,
@@ -1536,15 +1531,4 @@ export class MailPanel {
     return null;
   }
 
-  /** 同步 HUD 上的邮件未读角标。 */
-  private updateHudUnreadState(): void {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-    const button = document.getElementById('hud-open-mail');
-    if (!(button instanceof HTMLButtonElement)) {
-      return;
-    }
-    const hasUnread = this.summary.unreadCount > 0;
-    button.dataset.hasUnread = hasUnread ? 'true' : 'false';
-  }
 }

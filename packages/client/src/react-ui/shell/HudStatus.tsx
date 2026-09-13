@@ -14,7 +14,7 @@ import { useExternalStoreSnapshot } from '../hooks/use-external-store-snapshot';
 export interface ReactHudStatusState {
   name: string;
   title: string;
-  map: string;
+  profileMap: string;
   position: string;
   objective: string;
   threat: string;
@@ -35,7 +35,7 @@ export interface ReactHudStatusState {
 const DEFAULT_HUD_STATUS: ReactHudStatusState = {
   name: t('shell.name', undefined),
   title: t('shell.title', undefined),
-  map: '-',
+  profileMap: '-',
   position: '(0, 0)',
   objective: t('shell.objective', undefined),
   threat: t('shell.threat', undefined),
@@ -162,10 +162,8 @@ const HudStatusView = memo(function HudStatusView() {
   const profileHost = document.getElementById('workspace-profile-content');
   const profile = (
     <div className="hud-grid">
-      <HudRow label={t('shell.hud-label-map', undefined)} value={state.map} id="hud-map" />
-      <HudRow label={t('shell.hud-label-position', undefined)} value={state.position} id="hud-pos" />
-      <HudRow label={t('shell.hud-label-age', undefined)} value={state.objective} id="hud-objective" />
-      <HudRow label={t('shell.hud-label-lifespan', undefined)} value={state.threat} id="hud-threat" />
+      <HudRow label={t('shell.hud-label-map', undefined)} value={state.profileMap} id="hud-profile-map" />
+      <HudRow label="歲／壽" value={`${state.objective}/${state.threat}`} id="hud-age-lifespan" />
     </div>
   );
   return (
@@ -178,6 +176,7 @@ const HudStatusView = memo(function HudStatusView() {
         <div className="hud-name" id="hud-name">
           <span className="hud-name-text">{state.name}</span>
           <span className="hud-name-level" id="hud-realm-level">{state.realmLevelLabel}</span>
+          <span className="hud-name-position" id="hud-pos">{state.position}</span>
         </div>
         <button className="hud-expand-toggle" type="button" aria-expanded={expanded} aria-controls="hud-summary-details"
           aria-label={expanded ? '收合人物資訊' : '展開人物資訊'}
@@ -251,9 +250,6 @@ const HudCornerActions = memo(function HudCornerActions() {
     <>
       <button id="hud-open-settings" className="hud-corner-btn" type="button" data-i18n="shell.open-settings">
         {t('shell.open-settings', undefined)}
-      </button>
-      <button id="hud-open-mail" className="hud-corner-btn" type="button" data-i18n="shell.open-mail">
-        {t('shell.open-mail', undefined)}
       </button>
       <button id="hud-open-activity" className="hud-corner-btn" type="button" data-i18n="shell.open-activity">
         {t('shell.open-activity', undefined)}
