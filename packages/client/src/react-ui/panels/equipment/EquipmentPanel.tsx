@@ -3,7 +3,7 @@
  *
  * 维护时要保持它只处理前端表现和组件契约，不保存业务真源，也不绕过共享规则或服务端权威运行时。
  */
-import { useCallback, useEffect, useMemo, useRef, useState, memo, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, memo, startTransition, ViewTransition, type CSSProperties } from 'react';
 import { ArtifactSlot, EquipmentSlots, EquipSlot, PlayerState } from '@mud/shared';
 import { getEquipSlotLabel } from '../../../domain-labels';
 import { buildItemTooltipPayload } from '../../../ui/equipment-tooltip';
@@ -139,7 +139,10 @@ export function EquipmentPanel() {
     }
     tooltipSlotRef.current = null;
     getTooltip().hide(true);
-    setActiveTab(tab);
+    // 分頁切換包進 startTransition，讓 <ViewTransition> 以瀏覽器原生過渡做交叉淡化
+    startTransition(() => {
+      setActiveTab(tab);
+    });
   };
 
   const handlePointerMove = (event: React.PointerEvent) => {
@@ -231,32 +234,34 @@ export function EquipmentPanel() {
           </button>
         ))}
       </div>
-      {activeTab === 'artifact' ? (
-        <div className="artifact-slot-list">
-          {artifactEntries.map((slot) => (
-            <ArtifactSlotRow
-              key={slot.slot}
-              entry={slot}
-              shortcutKey={artifactShortcutBindings[slot.slot] ?? ''}
-              isBindingShortcut={bindingArtifactSlot === slot.slot}
-              onUnequip={handleUnequip}
-              onToggle={handleArtifactToggle}
-              onBindShortcut={handleArtifactShortcutBind}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="equip-slot-grid">
-          {activeSlots.map((slot) => (
-            <EquipmentSlotRow
-              key={slot}
-              slot={slot}
-              item={equipment?.[slot] ?? null}
-              onUnequip={handleUnequip}
-            />
-          ))}
-        </div>
-      )}
+      <ViewTransition>
+        {activeTab === 'artifact' ? (
+          <div className="artifact-slot-list">
+            {artifactEntries.map((slot) => (
+              <ArtifactSlotRow
+                key={slot.slot}
+                entry={slot}
+                shortcutKey={artifactShortcutBindings[slot.slot] ?? ''}
+                isBindingShortcut={bindingArtifactSlot === slot.slot}
+                onUnequip={handleUnequip}
+                onToggle={handleArtifactToggle}
+                onBindShortcut={handleArtifactShortcutBind}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="equip-slot-grid">
+            {activeSlots.map((slot) => (
+              <EquipmentSlotRow
+                key={slot}
+                slot={slot}
+                item={equipment?.[slot] ?? null}
+                onUnequip={handleUnequip}
+              />
+            ))}
+          </div>
+        )}
+      </ViewTransition>
     </div>
   );
 }
