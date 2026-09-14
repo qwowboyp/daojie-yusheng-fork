@@ -3,13 +3,19 @@
  *
  * 维护时要保证 Vite、Tailwind/PostCSS 与编辑器源码路径保持一致，避免影响内容生产链路。
  */
+import { createHash } from 'node:crypto';
 import { defineConfig } from 'vite';
 import path from 'path';
 import react from '@vitejs/plugin-react';
 
 const clientPublicDir = path.resolve(__dirname, '../client/public');
+// 編輯器共用客戶端美術載入器，以本次建置版本更新靜態資產快取。
+const buildId = createHash('sha1').update(new Date().toISOString()).digest('hex').slice(0, 12);
 
 export default defineConfig({
+  define: {
+    __APP_BUILD_ID__: JSON.stringify(buildId),
+  },
   plugins: [react()],
   publicDir: clientPublicDir,
   resolve: {
