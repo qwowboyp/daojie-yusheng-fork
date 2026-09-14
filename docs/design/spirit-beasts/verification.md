@@ -1,6 +1,21 @@
-# 靈獸系統本機驗證
+# 靈獸系統驗證與發布
 
-日期：2026-09-14。驗證使用專用本機 PostgreSQL，沒有操作生產資料庫或發布服務。
+首次本機驗證日期：2026-09-14，使用專用本機 PostgreSQL。正式發布於 2026-09-15 完成，兩階段證據分別記錄如下。
+
+## 正式發布結果
+
+- 生產來源提交：`6c58de7f5a80e1dad6d6b1b779f41040078e3a1d`。
+- `pnpm verify:release:full` 四段全部退出 0：with-db、GM 備份還原、shadow、GM；總耗時 1,370.426 秒。
+- 前端 prepare 內的 `pnpm verify:client` 通過，耗時 372.697 秒；產物 `client-6c58de7f5a80-b2deabcc67b0`，buildId `b2deabcc67b0`。
+- 服務端先更新，再原子切換前端。線上 `/`、`/version.json`、服務端 JSON `/health`／`/live` 與 Socket.IO 檢查通過，服務端 OCI revision 與發布提交一致。
+- 線上內容核對：150 種靈獸、30 種物品、14 種設施；362 個靈獸專用素材 HTTP 雜湊全部符合收據。新增美術來源仍為 AGY。
+- 前端、Postgres、Redis 容器身分與發布前一致。保留前端 `client-9bda22f631b1-4792c4845dbb` 與前一版服務端的回復資料。
+
+證據集中於 `.runtime/releases/spirit-beast-6c58de7f5a80/`：`full-verification.json`、`full-final.log`、`full-timing.json`、前端 receipt、`server-publish.json`、`client-publish.json`、`live-verification.json`。前端驗證 timing 另保留於 `.runtime/reports/spirit-beast-final-client/`。
+
+發布期間另修正兩個既有測試問題：手動 ledger 認領前等待背景 consumer 停止；GM 測試選擇合法速度並在 finally 還原原設定。GM 上限邊界在同一 QA DB 連跑兩輪，均驗證 `10 → 9 → 10` 且退出 0。沒有放寬正式速度上限、測試逾時或斷言。各輪失敗與耗時檢討見 [發布流程檢討](../../runbook/spirit-release-workflow-review.md)。
+
+正式上線後，已清除本次遠端 QA 的三個容器、專用資料卷、網路與 `/opt/daojie/qa/spirit-beast-3ef5` 目錄，保留共享 QA 工具映像與生產回復資料。Git worktree 登記已移除；實體 `.runtime/worktrees/spirit-beast-release-aa73/` 因 Windows 長路徑未完全刪除，後續清理遭自動審核以策略限制拒絕，故保留殘留並停止刪除嘗試。沒有程序仍引用此 worktree。較早的本機 fixture 清理限制列於本頁末尾。
 
 ## 已通過
 

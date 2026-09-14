@@ -35,6 +35,14 @@
 
 在已提交的乾淨 checkout 執行；`BASE` 必須是目前線上 receipt 記錄的來源提交，不能只憑時間或 `buildId` 猜測。`version.json` 的 buildId 由建置時間產生，提交身分以 receipt 的完整 commit 為準。
 
+先用唯讀預檢一次比對候選 Nginx 位元組與線上 receipt，以及候選圖包版本對應的完整遠端快照（包括新增、刪除與行尾差異）：
+
+```powershell
+python -B scripts/client-release/preflight.py --checkout CLEAN_CHECKOUT --env-file .env/pve.env --known-hosts KNOWN_HOSTS
+```
+
+`ready: false` 時先修正實際差異，再執行 `prepare`。圖包快照已存在且內容不同時，必須修改來源圖包版本，不能覆寫遠端快照。此工具不寫遠端資料、不執行建置，亦不取代正式門禁、發布當下的 CAS 或 Nginx 契約檢查；預檢後來源或線上狀態有變動就重查。
+
 ```powershell
 node scripts/client-release/plan.mjs --base BASE
 node scripts/client-release/prepare.mjs --base BASE --output .runtime/client-release-artifacts
