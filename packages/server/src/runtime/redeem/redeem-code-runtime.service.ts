@@ -94,7 +94,7 @@ export class RedeemCodeRuntimeService {
         }
         catch (error) {
             this.logger.error(
-                '兑换码启动回读失败，已仅禁用兑换码域并保留核心服务启动',
+                '兌換碼啟動回讀失敗，已僅禁用兌換碼域並保留核心服務啟動',
                 error instanceof Error ? error.stack : String(error),
             );
         }
@@ -178,7 +178,7 @@ export class RedeemCodeRuntimeService {
         const normalizedCount = normalizeCreateCount(count);
         return this.runExclusiveWithRedeemCatalogRollback(async () => {
             if (this.groups.some((entry) => entry.name === normalizedName)) {
-                throw new BadRequestException('兑换码分组名称已存在');
+                throw new BadRequestException('兌換碼分組名稱已存在');
             }
 
             const now = new Date().toISOString();
@@ -214,7 +214,7 @@ export class RedeemCodeRuntimeService {
 
             const conflicting = this.groups.find((entry) => entry.id !== group.id && entry.name === normalizedName);
             if (conflicting) {
-                throw new BadRequestException('兑换码分组名称已存在');
+                throw new BadRequestException('兌換碼分組名稱已存在');
             }
             group.name = normalizedName;
             group.rewards = normalizedRewards.map((entry) => ({ ...entry }));
@@ -251,13 +251,13 @@ export class RedeemCodeRuntimeService {
         await this.ensureCatalogReady();
         const normalizedGroupId = typeof groupId === 'string' ? groupId.trim() : '';
         if (!normalizedGroupId) {
-            throw new BadRequestException('兑换码分组不存在');
+            throw new BadRequestException('兌換碼分組不存在');
         }
         return this.runExclusiveWithRedeemCatalogRollback(async () => {
             const group = this.requireGroup(normalizedGroupId);
             const groupCodes = this.codes.filter((entry) => entry.groupId === group.id);
             if (groupCodes.some((entry) => entry.status === 'used' || entry.status === 'pending')) {
-                throw new BadRequestException('已有使用记录的兑换码分组不能删除');
+                throw new BadRequestException('已有使用記錄的兌換碼分組不能刪除');
             }
             const deleteFn = this.redeemCodePersistenceService?.deleteGroup;
             if (typeof deleteFn !== 'function') {
@@ -270,9 +270,9 @@ export class RedeemCodeRuntimeService {
             }
             if (result && typeof result === 'object' && result.ok === false) {
                 if (result.reason === 'used_code_exists') {
-                    throw new BadRequestException('已有使用记录的兑换码分组不能删除');
+                    throw new BadRequestException('已有使用記錄的兌換碼分組不能刪除');
                 }
-                throw new BadRequestException('兑换码分组删除失败');
+                throw new BadRequestException('兌換碼分組刪除失敗');
             }
             this.groups = this.groups.filter((entry) => entry.id !== group.id);
             this.codes = this.codes.filter((entry) => entry.groupId !== group.id);
@@ -290,19 +290,19 @@ export class RedeemCodeRuntimeService {
         await this.ensureCatalogReady();
         const normalizedCodeId = typeof codeId === 'string' ? codeId.trim() : '';
         if (!normalizedCodeId) {
-            throw new BadRequestException('目标兑换码不存在');
+            throw new BadRequestException('目標兌換碼不存在');
         }
         return this.runExclusiveWithRedeemCatalogRollback(async () => {
 
             const code = this.codes.find((entry) => entry.id === normalizedCodeId);
             if (!code) {
-                throw new BadRequestException('目标兑换码不存在');
+                throw new BadRequestException('目標兌換碼不存在');
             }
             if (code.status === 'used') {
-                throw new BadRequestException('已使用的兑换码不能销毁');
+                throw new BadRequestException('已使用的兌換碼不能銷燬');
             }
             if (code.status === 'pending') {
-                throw new BadRequestException('正在兑换中的兑换码不能销毁');
+                throw new BadRequestException('正在兌換中的兌換碼不能銷燬');
             }
             if (code.status === 'destroyed') {
                 return { ok: true };
@@ -328,10 +328,10 @@ export class RedeemCodeRuntimeService {
         await this.ensureCatalogReady();
         const normalizedCodes = normalizeSubmittedCodes(submittedCodes);
         if (normalizedCodes.length === 0) {
-            throw new BadRequestException('请至少填写一个兑换码');
+            throw new BadRequestException('請至少填寫一個兌換碼');
         }
         if (normalizedCodes.length > 5) {
-            throw new BadRequestException('单次最多兑换 5 个兑换码');
+            throw new BadRequestException('單次最多兌換 5 個兌換碼');
         }
         const now = Date.now();
         if (!this._redeemRateMap) {
@@ -340,7 +340,7 @@ export class RedeemCodeRuntimeService {
         this.pruneRedeemRateMap(now);
         const lastAttempt = this._redeemRateMap.get(playerId) ?? 0;
         if (now - lastAttempt < REDEEM_RATE_LIMIT_MS) {
-            throw new BadRequestException('操作过于频繁，请稍后再试');
+            throw new BadRequestException('操作過於頻繁，請稍後再試');
         }
         this._redeemRateMap.set(playerId, now);
         return this.runExclusivePlayerAssetMutation(playerId, () => this.runExclusive(async () => {
@@ -356,7 +356,7 @@ export class RedeemCodeRuntimeService {
                     results.push({
                         code: submittedCode,
                         ok: false,
-                        message: '兑换码无效或已过期',
+                        message: '兌換碼無效或已過期',
                     });
                     continue;
                 }
@@ -368,7 +368,7 @@ export class RedeemCodeRuntimeService {
                     results.push({
                         code: submittedCode,
                         ok: false,
-                        message: '兑换码无效或已过期',
+                        message: '兌換碼無效或已過期',
                         groupName,
                     });
                     continue;
@@ -377,7 +377,7 @@ export class RedeemCodeRuntimeService {
                     results.push({
                         code: submittedCode,
                         ok: false,
-                        message: '兑换码无效或已过期',
+                        message: '兌換碼無效或已過期',
                         groupName,
                     });
                     continue;
@@ -395,7 +395,7 @@ export class RedeemCodeRuntimeService {
                     results.push({
                         code: submittedCode,
                         ok: false,
-                        message: '兑换码无效或已过期',
+                        message: '兌換碼無效或已過期',
                         groupName,
                     });
                     continue;
@@ -406,7 +406,7 @@ export class RedeemCodeRuntimeService {
                     results.push({
                         code: submittedCode,
                         ok: false,
-                        message: '兑换码奖励物品不存在',
+                        message: '兌換碼獎勵物品不存在',
                         groupName,
                     });
                     continue;
@@ -416,7 +416,7 @@ export class RedeemCodeRuntimeService {
                     results.push({
                         code: submittedCode,
                         ok: false,
-                        message: '背包空间不足',
+                        message: '背包空間不足',
                         groupName,
                         rewards: rewards.map((entry) => ({ ...entry })),
                     });
@@ -427,7 +427,7 @@ export class RedeemCodeRuntimeService {
                     results.push({
                         code: submittedCode,
                         ok: false,
-                        message: '兑换码无效或已过期',
+                        message: '兌換碼無效或已過期',
                         groupName,
                     });
                     continue;
@@ -444,7 +444,7 @@ export class RedeemCodeRuntimeService {
                     results.push({
                         code: submittedCode,
                         ok: false,
-                        message: '背包空间不足',
+                        message: '背包空間不足',
                         groupName,
                         rewards: rewards.map((entry) => ({ ...entry })),
                     });
@@ -464,7 +464,7 @@ export class RedeemCodeRuntimeService {
                 if (group) {
                     group.updatedAt = nowIso;
                 }
-                const redeemNotice = buildStructuredNotice('success', 'notice.redeem.success', '兑换成功', {
+                const redeemNotice = buildStructuredNotice('success', 'notice.redeem.success', '兌換成功', {
                     vars: { groupName: group?.name ?? submittedCode },
                     pills: [{ key: 'groupName', style: 'target' }],
                 });
@@ -476,7 +476,7 @@ export class RedeemCodeRuntimeService {
                 results.push({
                     code: submittedCode,
                     ok: true,
-                    message: '兑换成功',
+                    message: '兌換成功',
                     groupName,
                     rewards: rewards.map((entry) => ({ ...entry })),
                 });
@@ -497,7 +497,7 @@ export class RedeemCodeRuntimeService {
 
         const group = this.groups.find((entry) => entry.id === normalizedGroupId);
         if (!group) {
-            throw new BadRequestException('兑换码分组不存在');
+            throw new BadRequestException('兌換碼分組不存在');
         }
         return group;
     }    
@@ -522,7 +522,7 @@ export class RedeemCodeRuntimeService {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
         if (!Array.isArray(rewards) || rewards.length === 0) {
-            throw new BadRequestException('兑换码分组至少需要一个奖励物品');
+            throw new BadRequestException('兌換碼分組至少需要一個獎勵物品');
         }
 
         const normalizedByItemId = new Map();
@@ -538,21 +538,21 @@ export class RedeemCodeRuntimeService {
                 continue;
             }
             if (!Number.isFinite(rawCount) || rawCount < 1 || rawCount > MAX_REDEEM_REWARD_ITEM_COUNT) {
-                throw new BadRequestException(`奖励物品数量无效：${itemId}`);
+                throw new BadRequestException(`獎勵物品數量無效：${itemId}`);
             }
             const count = Math.floor(rawCount);
             if (!this.contentTemplateRepository.createItem(itemId, count)) {
-                throw new BadRequestException(`奖励物品不存在：${itemId}`);
+                throw new BadRequestException(`獎勵物品不存在：${itemId}`);
             }
             const nextCount = (normalizedByItemId.get(itemId) ?? 0) + count;
             if (nextCount > MAX_REDEEM_REWARD_ITEM_COUNT) {
-                throw new BadRequestException(`奖励物品数量超过上限：${itemId}`);
+                throw new BadRequestException(`獎勵物品數量超過上限：${itemId}`);
             }
             normalizedByItemId.set(itemId, nextCount);
         }
         const normalized = Array.from(normalizedByItemId, ([itemId, count]) => ({ itemId, count }));
         if (normalized.length === 0) {
-            throw new BadRequestException('兑换码分组至少需要一个有效奖励物品');
+            throw new BadRequestException('兌換碼分組至少需要一個有效獎勵物品');
         }
         return normalized;
     }    
@@ -924,10 +924,10 @@ function normalizeGroupName(name) {
 
     const normalized = typeof name === 'string' ? name.normalize('NFC').trim() : '';
     if (!normalized) {
-        throw new BadRequestException('兑换码分组名称不能为空');
+        throw new BadRequestException('兌換碼分組名稱不能為空');
     }
     if (normalized.length > 120) {
-        throw new BadRequestException('兑换码分组名称过长');
+        throw new BadRequestException('兌換碼分組名稱過長');
     }
     return normalized;
 }
@@ -942,10 +942,10 @@ function normalizeCreateCount(count) {
 
     const normalized = Math.max(1, Math.floor(Number(count) || 0));
     if (normalized <= 0) {
-        throw new BadRequestException('兑换码数量必须大于 0');
+        throw new BadRequestException('兌換碼數量必須大於 0');
     }
     if (normalized > MAX_GROUP_CREATE_COUNT) {
-        throw new BadRequestException(`单次最多生成 ${MAX_GROUP_CREATE_COUNT} 个兑换码`);
+        throw new BadRequestException(`單次最多生成 ${MAX_GROUP_CREATE_COUNT} 個兌換碼`);
     }
     return normalized;
 }
