@@ -12,6 +12,7 @@ import { TopdownProjection } from '../projection/topdown-projection';
 import { PixiMapRendererAdapter } from '../renderer/pixi-map-renderer-adapter';
 import { MapScene } from '../scene/map-scene';
 import { MapStore } from '../store/map-store';
+import { SpiritBeastMapStore } from '../store/spirit-beast-map-store';
 import type {
   MapSelfDeltaInput,
   MapWorldDeltaInput,
@@ -77,6 +78,7 @@ export class MapRuntime implements MapRuntimeApi {
   private readonly projection = new TopdownProjection();
   /** 具体渲染器适配层（主世界 Pixi/WebGL2 后端）。 */
   private readonly renderer = new PixiMapRendererAdapter();
+  private readonly spiritBeasts = new SpiritBeastMapStore();
   /** 小地图运行时视图。 */
   private readonly minimap = new MinimapRuntime();
   /**
@@ -196,6 +198,8 @@ export class MapRuntime implements MapRuntimeApi {
   /** 收到首次入场数据后初始化 store 并重置摄像机。 */
   applyBootstrap(data: Parameters<MapRuntimeApi['applyBootstrap']>[0]): void {
     this.interaction.reset();
+    this.spiritBeasts.clear();
+    this.renderer.clearSpiritBeasts();
     this.store.applyBootstrap(data);
     this.viewport.setSafeArea(this.safeArea);
     this.camera.setSafeArea(this.safeArea);
@@ -213,6 +217,7 @@ export class MapRuntime implements MapRuntimeApi {
   applyWorldDelta(data: MapWorldDeltaInput): void {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
+    const previousInstanceId = this.store.getInstanceId();
     for (const effect of selectRenderableCombatEffects(data.effects ?? [])) {
       this.renderer.enqueueEffect(effect);
       if (effect.type === 'cast_burst') {
@@ -222,6 +227,10 @@ export class MapRuntime implements MapRuntimeApi {
       }
     }
     this.store.applyWorldDelta(data);
+    if (previousInstanceId !== this.store.getInstanceId()) {
+      this.spiritBeasts.clear();
+      this.renderer.clearSpiritBeasts();
+    }
     const snapshot = this.store.getSnapshot();
     if (snapshot.player) {
       if (snapshot.entityTransition?.snapCamera) {
@@ -233,14 +242,24 @@ export class MapRuntime implements MapRuntimeApi {
     this.syncViewportDerivedState(false, { deferSceneSync: true, resizeMinimap: false });
   }
 
+  applySpiritBeastMapDelta(data: Parameters<MapRuntimeApi['applySpiritBeastMapDelta']>[0]): void {
+    if (!this.spiritBeasts.apply(data, this.store.getInstanceId())) return;
+    this.renderer.syncSpiritBeasts(this.spiritBeasts.entriesSnapshot());
+  }
+
   /** 消化本体增量（移动、生命、地图切换）并同步场景。 */
   applySelfDelta(data: MapSelfDeltaInput): void {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     const previousMapId = this.store.getSnapshot().player?.mapId ?? null;
+    const previousInstanceId = this.store.getInstanceId();
     this.store.applySelfDelta(data);
     const snapshot = this.store.getSnapshot();
     const mapChanged = Boolean(previousMapId && snapshot.player?.mapId !== previousMapId);
+    if (mapChanged || previousInstanceId !== this.store.getInstanceId()) {
+      this.spiritBeasts.clear();
+      this.renderer.clearSpiritBeasts();
+    }
     if (mapChanged) {
       this.interaction.reset();
       this.renderer.resetScene();
@@ -259,6 +278,7 @@ export class MapRuntime implements MapRuntimeApi {
   reset(): void {
     this.interaction.reset();
     this.store.reset();
+    this.spiritBeasts.clear();
     this.camera.reset();
     this.viewport.setSafeArea(this.safeArea);
     this.camera.setSafeArea(this.safeArea);

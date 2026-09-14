@@ -418,6 +418,7 @@ export interface ProjectorPlayerLike {
   gatherSkill?: S2C_PanelAttrDelta['gatherSkill'];
   enhancementSkill?: S2C_PanelAttrDelta['enhancementSkill'];
   miningSkill?: S2C_PanelAttrDelta['miningSkill'];
+  plantingSkill?: S2C_PanelAttrDelta['plantingSkill'];
   formationSkill?: S2C_PanelAttrDelta['formationSkill'];
   transmissionSkill?: S2C_PanelAttrDelta['transmissionSkill'];
   transmissionJob?: PlayerTransmissionJob | null;
@@ -482,6 +483,7 @@ export interface ProjectedAttrPanelState {
   gatherSkill?: S2C_PanelAttrDelta['gatherSkill'];
   enhancementSkill?: S2C_PanelAttrDelta['enhancementSkill'];
   miningSkill?: S2C_PanelAttrDelta['miningSkill'];
+  plantingSkill?: S2C_PanelAttrDelta['plantingSkill'];
   formationSkill?: S2C_PanelAttrDelta['formationSkill'];
   transmissionSkill?: S2C_PanelAttrDelta['transmissionSkill'];
 }

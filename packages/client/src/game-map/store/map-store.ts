@@ -1087,6 +1087,10 @@ export class MapStore {
     return this.mapMeta;
   }
 
+  getInstanceId(): string | null {
+    return this.player?.instanceId ?? null;
+  }
+
   getKnownTileBounds(): MapKnownTileBounds | null {
     let bounds: MapKnownTileBounds | null = null;
     for (const key of this.renderTileCache.keys()) {

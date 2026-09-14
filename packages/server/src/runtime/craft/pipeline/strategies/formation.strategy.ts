@@ -164,6 +164,7 @@ function resolveAnyActiveTechniqueJob(player: unknown): unknown | null {
     record?.buildingJob,
     record?.formationJob,
     record?.miningJob,
+    record?.plantingJob,
   ];
   return jobs.find((job) => job && Number((job as { remainingTicks?: unknown }).remainingTicks) > 0) ?? null;
 }

@@ -333,6 +333,7 @@ export function toWireAttrUpdate(payload: S2C_AttrUpdate): Record<string, unknow
   if (payload.enhancementSkill !== undefined) wire.enhancementSkillJson = JSON.stringify(payload.enhancementSkill);
   if (payload.forgingSkill !== undefined) wire.forgingSkillJson = JSON.stringify(payload.forgingSkill);
   if (payload.miningSkill !== undefined) wire.miningSkillJson = JSON.stringify(payload.miningSkill);
+  if (payload.plantingSkill !== undefined) wire.plantingSkillJson = JSON.stringify(payload.plantingSkill);
   if (payload.transmissionSkill !== undefined) wire.transmissionSkillJson = JSON.stringify(payload.transmissionSkill);
   if (payload.lifespanYears === null) {
     wire.clearLifespanYears = true;
@@ -371,6 +372,7 @@ export function fromWireAttrUpdate(wire: Record<string, unknown>): S2C_AttrUpdat
   if (typeof wire.enhancementSkillJson === 'string') payload.enhancementSkill = parseJson(wire.enhancementSkillJson);
   if (typeof wire.forgingSkillJson === 'string') payload.forgingSkill = parseJson(wire.forgingSkillJson);
   if (typeof wire.miningSkillJson === 'string') payload.miningSkill = parseJson(wire.miningSkillJson);
+  if (typeof wire.plantingSkillJson === 'string') payload.plantingSkill = parseJson(wire.plantingSkillJson);
   if (typeof wire.transmissionSkillJson === 'string') payload.transmissionSkill = parseJson(wire.transmissionSkillJson);
   if (wire.clearLifespanYears === true) {
     payload.lifespanYears = null;

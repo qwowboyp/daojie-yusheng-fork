@@ -59,6 +59,9 @@ function isMiningJobIssuedTileAttack(attacker, targetX, targetY) {
         ? attacker.suppressCraftInterruptForMiningJobRunId.trim()
         : '';
     const job = attacker?.miningJob;
+    if (job?.facilityOrderId) {
+        return false;
+    }
     return Boolean(jobRunId)
         && job?.jobRunId === jobRunId
         && Number.isFinite(Number(targetX))

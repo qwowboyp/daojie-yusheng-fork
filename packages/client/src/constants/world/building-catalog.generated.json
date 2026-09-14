@@ -361,5 +361,565 @@
     "opening": "none",
     "blocksMove": false,
     "blocksSight": false
+  },
+  {
+    "id": "spirit_incubator_metal",
+    "name": "金行孵蛋器",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "metal": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "spirit_incubator_wood",
+    "name": "木行孵蛋器",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "wood": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "spirit_incubator_water",
+    "name": "水行孵蛋器",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "water": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "spirit_incubator_fire",
+    "name": "火行孵蛋器",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "fire": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "spirit_incubator_earth",
+    "name": "土行孵蛋器",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "earth": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "sect_iron_mine",
+    "name": "玄鐵礦場",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "metal": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "sect_spirit_stone_mine",
+    "name": "靈石礦場",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "earth": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "sect_spirit_field",
+    "name": "靈田",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "wood": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "sect_forging_station",
+    "name": "煉器臺",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "fire": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "sect_enhancement_station",
+    "name": "強化臺",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "metal": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "sect_alchemy_station",
+    "name": "宗門煉丹爐",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "fire": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "spirit_egg_enhancement_station",
+    "name": "靈蛋強化臺",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "metal": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "spirit_beast_cultivation_station",
+    "name": "靈獸培養臺",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "wood": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
+  },
+  {
+    "id": "spirit_beast_fusion_station",
+    "name": "靈獸融合臺",
+    "layer": "facility",
+    "allowRotate": true,
+    "footprint": [
+      {
+        "dx": 0,
+        "dy": 0
+      }
+    ],
+    "cost": [
+      {
+        "itemId": "wood",
+        "count": 8
+      },
+      {
+        "itemId": "stone",
+        "count": 8
+      },
+      {
+        "itemId": "metal",
+        "count": 4
+      }
+    ],
+    "traits": [
+      "facility.spirit_beast"
+    ],
+    "elementVector": {
+      "earth": 12
+    },
+    "durabilityMultiplier": 80,
+    "buildTicks": 1800,
+    "maxHp": 120,
+    "stability": 5,
+    "comfort": 0,
+    "opening": "none",
+    "blocksMove": false,
+    "blocksSight": false
   }
 ]

@@ -217,6 +217,7 @@ function hasActiveTechniqueJobSlots(player: any, excludedJobSlot: string | null)
     player?.gatherJob,
     player?.buildingJob,
     player?.miningJob,
+    player?.plantingJob,
     player?.formationJob,
   ].some((job, index) => {
     const jobSlot = TECHNIQUE_ACTIVITY_JOB_SLOTS[index] ?? '';
@@ -236,6 +237,7 @@ const TECHNIQUE_ACTIVITY_JOB_SLOTS = [
   'gatherJob',
   'buildingJob',
   'miningJob',
+  'plantingJob',
   'formationJob',
 ] as const;
 

@@ -87,6 +87,7 @@ function normalizeTechniqueActivityKind(kind) {
         || kind === 'gather'
         || kind === 'building'
         || kind === 'mining'
+        || kind === 'planting'
         || kind === 'formation'
         ? kind
         : 'alchemy';
@@ -208,10 +209,16 @@ function resolveTechniqueActivityJob(player, kind) {
     if (kind === 'mining') {
         return player.miningJob ?? null;
     }
+    if (kind === 'planting') {
+        return player.plantingJob ?? null;
+    }
     return player.alchemyJob?.jobType === 'forging' ? null : player.alchemyJob ?? null;
 }
 
 function resolveMiningJobTargetRef(job) {
+    if (job?.facilityOrderId) {
+        return '';
+    }
     if (!job || !Number.isFinite(Number(job.targetX)) || !Number.isFinite(Number(job.targetY))) {
         return '';
     }
@@ -241,6 +248,9 @@ function resolveMiningCommandTargetRef(command) {
 function resolveMiningJobCommandMarker(player, command) {
     const jobRunId = typeof command?.miningJobRunId === 'string' ? command.miningJobRunId.trim() : '';
     const job = player?.miningJob;
+    if (job?.facilityOrderId) {
+        return null;
+    }
     if (!jobRunId || job?.jobRunId !== jobRunId) {
         return null;
     }
@@ -835,6 +845,14 @@ export class WorldRuntimePlayerCommandService {
                 return;
             case 'cancelMining':
                 await this.dispatchCancelTechniqueActivity(playerId, 'mining', deps);
+                requestPlayerDeltaSync(deps, playerId);
+                return;
+            case 'startPlanting':
+                await this.dispatchStartTechniqueActivity(playerId, 'planting', command.payload, deps);
+                requestPlayerDeltaSync(deps, playerId);
+                return;
+            case 'cancelPlanting':
+                await this.dispatchCancelTechniqueActivity(playerId, 'planting', deps);
                 requestPlayerDeltaSync(deps, playerId);
                 return;
             case 'startBuilding':

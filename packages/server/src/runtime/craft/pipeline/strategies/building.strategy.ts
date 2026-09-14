@@ -333,6 +333,7 @@ function hasOtherActiveTechniqueActivity(player: unknown, ownKind: string): bool
     ['gather', record.gatherJob],
     ['building', record.buildingJob],
     ['mining', record.miningJob],
+    ['planting', record.plantingJob],
     ['formation', record.formationJob],
   ];
   return slots.some(([kind, job]) => kind !== ownKind && Boolean(job) && Number((job as any).remainingTicks) > 0);

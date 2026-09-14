@@ -47,7 +47,7 @@ type LegacyTechniqueJob = {
   progressBreakdown?: TechniqueComprehensionProgressBreakdown;
   pausedTicks?: number;
   interruptWaitRemainingTicks?: number;
-  interruptState?: { waitRemainingTicks?: number; [key: string]: unknown } | null;
+  interruptState?: { waitRemainingTicks?: number; reason?: string; waitTotalTicks?: number; startedAtTick?: number } | null;
   queuedJobs?: CraftQueueItemView[];
 };
 
@@ -60,6 +60,7 @@ type TechniqueActivityTaskPlayerView = {
   buildingJob?: LegacyTechniqueJob | null;
   formationJob?: LegacyTechniqueJob | null;
   miningJob?: LegacyTechniqueJob | null;
+  plantingJob?: LegacyTechniqueJob | null;
   transmissionJob?: LegacyTechniqueJob | null;
   techniqueActivityQueue?: TechniqueActivityQueueItem[];
 };
@@ -79,6 +80,7 @@ const LEGACY_ACTIVE_JOB_SLOTS = [
   ['building', 'buildingJob'],
   ['formation', 'formationJob'],
   ['mining', 'miningJob'],
+  ['planting', 'plantingJob'],
 ] as const satisfies readonly (readonly [RuntimeTechniqueActivityKind, keyof TechniqueActivityTaskPlayerView])[];
 
 /** 构建统一技艺任务列表完整同步。 */
@@ -330,7 +332,7 @@ function resolveJobTargetLabel(
   if (kind === 'gather') {
     return normalizeText(job.resourceNodeName);
   }
-  if (kind === 'building') {
+  if (kind === 'building' || kind === 'planting') {
     return normalizeText(job.buildingName);
   }
   if (kind === 'formation') {
@@ -404,6 +406,7 @@ function normalizeKind(kind: unknown): RuntimeTechniqueActivityKind {
     || kind === 'gather'
     || kind === 'building'
     || kind === 'mining'
+    || kind === 'planting'
     || kind === 'formation'
     ? kind
     : 'alchemy';
@@ -425,6 +428,8 @@ function resolveKindLabel(kind: RuntimeTechniqueActivityKind): string {
       return '營造任務';
     case 'mining':
       return '挖礦任務';
+    case 'planting':
+      return '種植任務';
     case 'formation':
       return '陣法任務';
   }

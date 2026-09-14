@@ -79,6 +79,9 @@ function ensureInstanceSupportsTileDamage(instance) {
     throw new BadRequestException('當前實例不允許攻擊地塊');
 }
 function resolveMiningJobTargetRef(job) {
+    if (job?.facilityOrderId) {
+        return '';
+    }
     if (!job || !Number.isFinite(Number(job.targetX)) || !Number.isFinite(Number(job.targetY))) {
         return '';
     }
@@ -89,6 +92,9 @@ function isMiningJobIssuedSkillAction(attacker, targetRef) {
         ? attacker.suppressCraftInterruptForMiningJobRunId.trim()
         : '';
     const job = attacker?.miningJob;
+    if (job?.facilityOrderId) {
+        return false;
+    }
     if (!jobRunId || job?.jobRunId !== jobRunId) {
         return false;
     }

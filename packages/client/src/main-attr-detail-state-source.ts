@@ -134,6 +134,7 @@ export function createMainAttrDetailStateSource(options: MainAttrDetailStateSour
         enhancementSkill: options.cloneJson(detail.enhancementSkill ?? player.enhancementSkill),
         forgingSkill: options.cloneJson(detail.forgingSkill ?? player.forgingSkill),
         miningSkill: options.cloneJson(detail.miningSkill ?? player.miningSkill),
+        plantingSkill: options.cloneJson(detail.plantingSkill ?? player.plantingSkill),
         formationSkill: options.cloneJson(detail.formationSkill ?? player.formationSkill),
         transmissionSkill: options.cloneJson(detail.transmissionSkill ?? player.transmissionSkill),
       });
@@ -154,6 +155,7 @@ export function createMainAttrDetailStateSource(options: MainAttrDetailStateSour
       player.enhancementSkill = options.cloneJson(detail.enhancementSkill ?? player.enhancementSkill);
       player.forgingSkill = options.cloneJson(detail.forgingSkill ?? player.forgingSkill);
       player.miningSkill = options.cloneJson(detail.miningSkill ?? player.miningSkill);
+      player.plantingSkill = options.cloneJson(detail.plantingSkill ?? player.plantingSkill);
       player.formationSkill = options.cloneJson(detail.formationSkill ?? player.formationSkill);
       player.transmissionSkill = options.cloneJson(detail.transmissionSkill ?? player.transmissionSkill);
       options.attrPanel.update(attrUpdate);

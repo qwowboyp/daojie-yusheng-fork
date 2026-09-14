@@ -5,7 +5,7 @@
  */
 import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Inject, Logger, Optional } from '@nestjs/common';
-import { C2S } from '@mud/shared';
+import { C2S, type RequestSpiritBeastPanelView, type SpiritBeastCommandView } from '@mud/shared';
 import { Server, Socket } from 'socket.io';
 import * as msgpackParser from 'socket.io-msgpack-parser';
 import { resolveServerCorsOptions } from '../config/server-cors';
@@ -57,6 +57,7 @@ import { WorldGatewayTechniqueAggregationHelper } from './world-gateway-techniqu
 import { WorldGatewayTechniqueHelper } from './world-gateway-technique.helper';
 import { WorldGatewayAccessPolicyHelper } from './world-gateway-access-policy.helper';
 import { WorldGatewayPartyHelper } from './world-gateway-party.helper';
+import { WorldGatewaySpiritBeastHelper } from './world-gateway-spirit-beast.helper';
 import { TechniqueGenerationService } from '../runtime/technique-generation/technique-generation.service';
 import type { WorldGatewayHelperContext } from './world-gateway-context.types';
 
@@ -107,6 +108,7 @@ class WorldGateway implements WorldGatewayHelperContext {
         server!: Server; logger: Logger = new Logger(WorldGateway.name);
         @Inject(PartyRuntimeService) private partyRuntimeService!: PartyRuntimeService;
         private gatewayPartyHelper: WorldGatewayPartyHelper | null = null;
+        @Inject(WorldGatewaySpiritBeastHelper) private spiritBeastHelper!: WorldGatewaySpiritBeastHelper;
         private draining = false;
     constructor(worldGmSocketService: WorldGmSocketService, worldProtocolProjectionService: WorldProtocolProjectionService, sessionBootstrapService: WorldSessionBootstrapService, healthReadinessService: HealthReadinessService, playerDomainPersistenceService: PlayerDomainPersistenceService, playerPersistenceFlushService: PlayerPersistenceFlushService, playerRuntimeService: PlayerRuntimeService, mailRuntimeService: MailRuntimeService, @Inject(MarketRuntimeService) marketRuntimeService: MarketRuntimeService, craftPanelRuntimeService: CraftPanelRuntimeService, activityRuntimeService: ActivityRuntimeService, leaderboardRuntimeService: LeaderboardRuntimeService, runtimeGmStateService: RuntimeGmStateService, @Inject(WorldRuntimeService) worldRuntimeService: WorldRuntimeService, worldClientEventService: WorldClientEventService, worldSessionService: WorldSessionService, playerSessionRouteService: PlayerSessionRouteService, worldSyncService: WorldSyncService, gatewayGuardHelper: WorldGatewayGuardHelper, gatewayClientEmitHelper: WorldGatewayClientEmitHelper, gatewaySessionStateHelper: WorldGatewaySessionStateHelper, gatewayBuildingHelper: WorldGatewayBuildingHelper, gatewayMovementHelper: WorldGatewayMovementHelper, gatewayNpcHelper: WorldGatewayNpcHelper, gatewayCraftHelper: WorldGatewayCraftHelper, gatewayActivityHelper: WorldGatewayActivityHelper, gatewayReadModelHelper: WorldGatewayReadModelHelper, gatewayPresenceHelper: WorldGatewayPresenceHelper, private readonly gatewayContentHelper: WorldGatewayContentHelper, private readonly techniqueGenerationService: TechniqueGenerationService, @Optional() @Inject(AccessPolicyRuntimeService) accessPolicyRuntimeService: AccessPolicyRuntimeService = undefined, @Optional() @Inject(AccessPolicyResourceService) accessPolicyResourceService: AccessPolicyResourceService = undefined, @Optional() @Inject(BuildingAccessPolicyService) buildingAccessPolicyService: BuildingAccessPolicyService = undefined, @Optional() @Inject(SocialRuntimeService) socialRuntimeService: SocialRuntimeService = undefined, @Optional() @Inject(TreasureVaultRuntimeService) treasureVaultRuntimeService: TreasureVaultRuntimeService = undefined, @Optional() @Inject(TimeChamberRuntimeService) timeChamberRuntimeService: TimeChamberRuntimeService = undefined) {
         this.worldGmSocketService = worldGmSocketService;
@@ -353,6 +355,14 @@ class WorldGateway implements WorldGatewayHelperContext {
     @SubscribeMessage(C2S.RequestSectApplicationPage)
     handleRequestSectApplicationPage(@ConnectedSocket() client: Socket, @MessageBody() payload: any) {
         return this.gatewayActionHelper.handleRequestSectApplicationPage(client, payload);
+    }
+    @SubscribeMessage(C2S.RequestSpiritBeastPanel)
+    handleRequestSpiritBeastPanel(@ConnectedSocket() client: Socket, @MessageBody() payload: RequestSpiritBeastPanelView) {
+        return this.spiritBeastHelper.handleRequestPanel(client, payload);
+    }
+    @SubscribeMessage(C2S.SpiritBeastCommand)
+    handleSpiritBeastCommand(@ConnectedSocket() client: Socket, @MessageBody() payload: SpiritBeastCommandView) {
+        return this.spiritBeastHelper.handleCommand(client, payload);
     }
     @SubscribeMessage(C2S.RequestSectDirectory)
     handleRequestSectDirectory(@ConnectedSocket() client: Socket, @MessageBody() payload: any) {

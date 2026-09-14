@@ -1,0 +1,283 @@
+.react-panel-host--spirit-beast { min-height: 0; height: 100%; }
+.spirit-beast-panel {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  height: 100%;
+  color: var(--ink-dark);
+}
+.spirit-beast-panel :is(button, input, select, summary):focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+}
+.spirit-beast-heading,
+.spirit-beast-heading > div,
+.spirit-beast-tabs,
+.spirit-beast-card header,
+.spirit-beast-card footer,
+.spirit-beast-station header,
+.spirit-beast-section-heading,
+.spirit-beast-actions,
+.spirit-beast-ready,
+.spirit-beast-ready__title,
+.spirit-beast-growth-preview,
+.spirit-beast-fusion-preview,
+.spirit-beast-hatch-preview,
+.spirit-beast-seed-shop__body,
+.spirit-beast-egg-list > div,
+.spirit-beast-select-pair {
+  display: flex;
+  align-items: center;
+}
+.spirit-beast-heading { justify-content: space-between; gap: 12px; }
+.spirit-beast-heading > div { align-items: baseline; gap: 8px; }
+.spirit-beast-heading h2,
+.spirit-beast-heading p { margin: 0; }
+.spirit-beast-heading p { color: var(--ink-grey); font-size: 12px; }
+.spirit-beast-heading h2,
+.spirit-beast-panel h3 { font-family: var(--font-role-title); }
+.spirit-beast-heading h2 { font-size: 22px; }
+.spirit-beast-tabs {
+  gap: 6px;
+  flex: 0 0 auto;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding: 2px 2px 4px;
+}
+.spirit-beast-tabs button {
+  min-height: 38px;
+  white-space: nowrap;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm, 4px);
+  padding: 7px 10px;
+  background: var(--surface-card);
+  color: var(--ink-dark);
+  cursor: pointer;
+}
+.spirit-beast-tabs button.active {
+  color: var(--accent-contrast);
+  background: var(--accent-ink);
+  border-color: var(--accent-ink);
+}
+.spirit-beast-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0 4px 12px 0;
+  scrollbar-gutter: stable;
+}
+.spirit-beast-content :is(p, span, strong, label) { text-wrap: pretty; }
+.spirit-beast-work,
+.spirit-beast-incubation,
+.spirit-beast-codex { display: flex; flex-direction: column; gap: 18px; }
+.spirit-beast-grid,
+.spirit-beast-station-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+  gap: 10px;
+}
+.spirit-beast-card,
+.spirit-beast-station,
+.spirit-beast-operation,
+.spirit-beast-egg-list,
+.spirit-beast-seed-shop,
+.spirit-beast-codex-search,
+.spirit-beast-parent-finder {
+  border: 1px solid var(--wash-ink);
+  border-radius: var(--radius-md, 6px);
+  background: var(--surface-card);
+  padding: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+.spirit-beast-section-heading { justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.spirit-beast-section-heading h3,
+.spirit-beast-section-heading p,
+.spirit-beast-egg-list h3 { margin: 0; }
+.spirit-beast-section-heading p,
+.spirit-beast-section-heading > span,
+.spirit-beast-muted { color: var(--ink-grey); font-size: 12px; line-height: 1.55; }
+.spirit-beast-card { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 10px; }
+.spirit-beast-portrait {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  border-radius: var(--radius-sm, 4px);
+  background: var(--highlight);
+}
+.spirit-beast-card__body { display: flex; flex-direction: column; min-width: 0; gap: 8px; }
+.spirit-beast-card header,
+.spirit-beast-card footer { justify-content: space-between; align-items: flex-start; gap: 8px; }
+.spirit-beast-card header > div,
+.spirit-beast-card footer > div { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.spirit-beast-card footer { grid-column: 1 / -1; color: var(--ink-grey); font-size: 12px; }
+.spirit-beast-card dl { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 0; font-size: 13px; }
+.spirit-beast-card dl div:first-child { grid-column: 1 / -1; }
+.spirit-beast-card dt { color: var(--ink-grey); }
+.spirit-beast-card dd { margin: 2px 0 0; }
+.spirit-beast-stars { color: #b97700; letter-spacing: 1px; white-space: nowrap; }
+.spirit-beast-grade { margin-left: 6px; font-size: 12px; }
+.spirit-beast-grade--fan { color: var(--ink-grey); }
+.spirit-beast-grade--human { color: #25803a; }
+.spirit-beast-grade--heaven { color: #b52828; }
+.spirit-beast-grade--saint { color: #7540a0; }
+.spirit-beast-grade--immortal { color: #bf6500; }
+.spirit-beast-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.spirit-beast-tags span {
+  padding: 2px 5px;
+  background: var(--highlight);
+  border-radius: 3px;
+  font-size: 12px;
+}
+.spirit-beast-station { display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+.spirit-beast-station > header { justify-content: flex-start; gap: 9px; }
+.spirit-beast-station > header img,
+.spirit-beast-seed-shop__body > img,
+.spirit-beast-egg-list img {
+  flex: 0 0 auto;
+  object-fit: contain;
+  border-radius: var(--radius-sm, 4px);
+  background: var(--highlight);
+}
+.spirit-beast-station > header div { display: flex; flex-direction: column; min-width: 0; }
+.spirit-beast-station header span { color: var(--ink-grey); font-size: 12px; }
+.spirit-beast-station > p { margin: 0; min-height: 20px; font-size: 13px; }
+.spirit-beast-station progress { width: 100%; accent-color: var(--accent-ink); }
+.spirit-beast-actions { flex-wrap: wrap; gap: 7px; }
+.spirit-beast-order-list { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.spirit-beast-order-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid var(--wash-ink);
+  padding-top: 6px;
+}
+.spirit-beast-order-list li > div { display: flex; flex-direction: column; font-size: 12px; }
+.spirit-beast-order-list li span { color: var(--ink-grey); }
+.spirit-beast-disclosure { border-top: 1px solid var(--wash-ink); padding-top: 7px; }
+.spirit-beast-disclosure summary { min-height: 36px; display: flex; align-items: center; color: var(--accent-ink); cursor: pointer; font-size: 13px; }
+.spirit-beast-disclosure > .small-btn { margin-top: 8px; }
+.spirit-beast-form-grid,
+.spirit-beast-transfer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.spirit-beast-panel label { display: flex; flex-direction: column; gap: 5px; min-width: 0; font-size: 13px; }
+.spirit-beast-panel :is(select, input[type="number"], input[type="search"]) {
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--surface-base);
+  color: var(--ink-dark);
+  padding: 5px 8px;
+}
+.spirit-beast-transfer-grid label { display: grid; grid-template-columns: minmax(0, 1fr) 74px; align-items: center; gap: 6px; }
+.spirit-beast-transfer-grid label span { display: flex; flex-direction: column; min-width: 0; }
+.spirit-beast-transfer-grid small,
+.spirit-beast-materials small { color: var(--ink-grey); font-size: 11px; }
+.spirit-beast-form-help { margin: 8px 0 0; color: var(--ink-grey); font-size: 12px; }
+.spirit-beast-check { flex-direction: row !important; align-items: center; align-self: end; min-height: 38px; }
+.spirit-beast-check input { width: 18px; height: 18px; }
+.spirit-beast-seed-shop__body { flex-wrap: wrap; gap: 10px; }
+.spirit-beast-seed-shop__body label { flex: 1 1 180px; }
+.spirit-beast-note {
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: var(--radius-sm, 4px);
+  background: var(--highlight);
+  color: var(--ink-grey);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.spirit-beast-incubator-form { display: flex; flex-direction: column; gap: 9px; }
+.spirit-beast-hatch-preview,
+.spirit-beast-growth-preview,
+.spirit-beast-fusion-preview { gap: 10px; padding: 9px; background: var(--highlight); border-radius: var(--radius-sm, 4px); }
+.spirit-beast-hatch-preview img,
+.spirit-beast-growth-preview img,
+.spirit-beast-fusion-preview img { flex: 0 0 auto; object-fit: contain; }
+.spirit-beast-hatch-preview > div,
+.spirit-beast-growth-preview > div,
+.spirit-beast-fusion-preview > div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.spirit-beast-hatch-preview span,
+.spirit-beast-growth-preview span,
+.spirit-beast-fusion-preview span { color: var(--ink-grey); font-size: 12px; }
+.spirit-beast-hatch-weights { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin: 0; }
+.spirit-beast-hatch-weights div { text-align: center; padding: 4px 2px; background: var(--highlight); border-radius: 3px; }
+.spirit-beast-hatch-weights dt { color: var(--ink-grey); font-size: 11px; }
+.spirit-beast-hatch-weights dd { margin: 1px 0 0; font-size: 12px; }
+.spirit-beast-ready { align-items: flex-start; gap: 10px; }
+.spirit-beast-ready > img { flex: 0 0 auto; width: 112px; height: 112px; object-fit: contain; }
+.spirit-beast-ready > div { min-width: 0; }
+.spirit-beast-ready__title { flex-wrap: wrap; gap: 5px; }
+.spirit-beast-ready p { margin: 6px 0; font-size: 12px; }
+.spirit-beast-egg-list { display: flex; flex-direction: column; gap: 8px; }
+.spirit-beast-egg-list > div { justify-content: space-between; gap: 8px; padding-top: 8px; border-top: 1px solid var(--wash-ink); }
+.spirit-beast-egg-list > div strong { flex: 1; }
+.spirit-beast-egg-list span { color: var(--ink-grey); font-size: 12px; }
+.spirit-beast-operation { max-width: 820px; }
+.spirit-beast-operation > label { margin: 10px 0; }
+.spirit-beast-select-pair { align-items: stretch; gap: 12px; }
+.spirit-beast-select-pair label { flex: 1; }
+.spirit-beast-materials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  gap: 6px;
+  max-height: 240px;
+  overflow: auto;
+  margin: 10px 0;
+  border: 1px solid var(--wash-ink);
+}
+.spirit-beast-materials legend { color: var(--ink-grey); font-size: 12px; }
+.spirit-beast-materials label { flex-direction: row; align-items: center; margin: 0; padding: 4px; }
+.spirit-beast-materials label > span { display: flex; flex-direction: column; min-width: 0; }
+.spirit-beast-materials input[type="number"] { margin-left: auto; width: 72px; }
+.spirit-beast-materials input[type="checkbox"] { flex: 0 0 auto; width: 18px; height: 18px; }
+.spirit-beast-feedback { margin: 0; padding: 7px 9px; border-radius: 4px; background: var(--highlight); font-size: 13px; }
+.spirit-beast-feedback.is-error { color: var(--stamp-red); }
+.spirit-beast-empty { padding: 24px; text-align: center; }
+.spirit-beast-codex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: 7px;
+  margin-top: 10px;
+}
+.spirit-beast-codex-grid article { display: flex; gap: 8px; min-width: 0; border: 1px solid var(--wash-ink); border-radius: var(--radius-sm, 4px); padding: 7px; }
+.spirit-beast-codex-grid article img { flex: 0 0 auto; width: 72px; height: 72px; object-fit: contain; background: var(--highlight); }
+.spirit-beast-codex-grid article > div { display: flex; flex-direction: column; min-width: 0; gap: 3px; font-size: 12px; }
+.spirit-beast-parent-finder > label { margin-bottom: 10px; }
+.spirit-beast-parent-results > ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 7px; margin: 10px 0 0; padding: 0; list-style: none; }
+.spirit-beast-parent-results li { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 5px; border: 1px solid var(--wash-ink); border-radius: var(--radius-sm, 4px); padding: 6px; }
+.spirit-beast-parent-results li span { display: flex; align-items: center; gap: 5px; min-width: 0; font-size: 12px; }
+.spirit-beast-parent-results li img { flex: 0 0 auto; width: 40px; height: 40px; object-fit: contain; }
+
+@container (max-width: 600px) {
+  .spirit-beast-grid,
+  .spirit-beast-station-grid,
+  .spirit-beast-form-grid,
+  .spirit-beast-transfer-grid { grid-template-columns: 1fr; }
+  .spirit-beast-card { grid-template-columns: 72px minmax(0, 1fr); }
+  .spirit-beast-portrait { width: 72px; height: 72px; }
+  .spirit-beast-card footer { flex-direction: column; }
+  .spirit-beast-card footer > div { width: 100%; }
+  .spirit-beast-card footer button,
+  .spirit-beast-actions button,
+  .spirit-beast-disclosure > button { min-height: 44px; flex: 1 1 auto; }
+  .spirit-beast-select-pair { flex-direction: column; gap: 0; }
+  .spirit-beast-operation { padding: 10px; }
+  .spirit-beast-egg-list > div { display: grid; grid-template-columns: 48px 1fr; justify-content: start; }
+  .spirit-beast-egg-list > div span { grid-column: 2; }
+  .spirit-beast-ready > img { width: 88px; height: 88px; }
+}
+
+@media (pointer: coarse) {
+  .spirit-beast-tabs button,
+  .spirit-beast-panel summary,
+  .spirit-beast-panel :is(select, input, .small-btn) { min-height: 44px; }
+}

@@ -656,6 +656,20 @@ export interface PlayerBuildingJob extends TechniqueActivityJobBase {
 }
 
 /** 玩家当前挖矿任务的最小持久化运行态。 */
+export interface PlayerPlantingJob extends TechniqueActivityJobBase {
+  jobRunId: string;
+  jobType: 'planting';
+  jobVersion: number;
+  orderId: string;
+  buildingId: string;
+  buildingName: string;
+  instanceId: string;
+  targetX: number;
+  targetY: number;
+  action: 'sow' | 'water' | 'harvest';
+  phase: 'planting' | 'paused';
+}
+
 export interface PlayerMiningJob extends TechniqueActivityJobBase {
 /**
  * jobRunId：任务运行 ID。

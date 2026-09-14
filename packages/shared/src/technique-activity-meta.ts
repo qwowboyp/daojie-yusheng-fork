@@ -51,6 +51,8 @@ export type TechniqueActivityCommandKind =
   | 'cancelMining'
   | 'startFormationMaintenance'
   | 'cancelFormationMaintenance'
+  | 'startPlanting'
+  | 'cancelPlanting'
   | 'cancelTechniqueActivity'
   | 'reorderTechniqueActivityQueue';
 
@@ -66,7 +68,8 @@ export type TechniqueActivityStartErrorCode =
   | 'START_GATHER_FAILED'
   | 'START_BUILDING_FAILED'
   | 'START_MINING_FAILED'
-  | 'START_FORMATION_FAILED';
+  | 'START_FORMATION_FAILED'
+  | 'START_PLANTING_FAILED';
 
 export type TechniqueActivityCancelErrorCode =
   | 'CANCEL_ALCHEMY_FAILED'
@@ -76,7 +79,8 @@ export type TechniqueActivityCancelErrorCode =
   | 'CANCEL_GATHER_FAILED'
   | 'CANCEL_BUILDING_FAILED'
   | 'CANCEL_MINING_FAILED'
-  | 'CANCEL_FORMATION_FAILED';
+  | 'CANCEL_FORMATION_FAILED'
+  | 'CANCEL_PLANTING_FAILED';
 
 export interface TechniqueActivityMetadata {
   kind: RuntimeTechniqueActivityKind;
@@ -193,6 +197,19 @@ export const TECHNIQUE_ACTIVITY_METADATA = {
     cancelErrorCode: 'CANCEL_FORMATION_FAILED',
     conditional: true,
   },
+  planting: {
+    kind: 'planting',
+    requestEvent: null,
+    startEvent: null,
+    cancelEvent: null,
+    panelEvent: null,
+    startCommandKind: 'startPlanting',
+    cancelCommandKind: 'cancelPlanting',
+    requestPanelErrorCode: null,
+    startErrorCode: 'START_PLANTING_FAILED',
+    cancelErrorCode: 'CANCEL_PLANTING_FAILED',
+    conditional: true,
+  },
 } as const satisfies Record<RuntimeTechniqueActivityKind, TechniqueActivityMetadata>;
 
 export type TechniqueActivityMetadataByKind = typeof TECHNIQUE_ACTIVITY_METADATA;
@@ -225,6 +242,8 @@ export function resolveTechniqueActivityStartCommandKind(kind: TechniqueActivity
       return 'startMining';
     case 'formation':
       return 'startFormationMaintenance';
+    case 'planting':
+      return 'startPlanting';
   }
 }
 
@@ -246,5 +265,7 @@ export function resolveTechniqueActivityCancelCommandKind(kind: TechniqueActivit
       return 'cancelMining';
     case 'formation':
       return 'cancelFormationMaintenance';
+    case 'planting':
+      return 'cancelPlanting';
   }
 }

@@ -2136,6 +2136,7 @@ async function assertProjectedActiveJobRecoveryKinds(
   versionSeed: number,
 ): Promise<void> {
   const jobKinds: Array<PlayerActiveJobUpsertInput['jobType']> = [
+    'planting',
     'alchemy',
     'forging',
     'enhancement',
@@ -2146,6 +2147,7 @@ async function assertProjectedActiveJobRecoveryKinds(
     'formation',
   ];
   const jobFields: Record<PlayerActiveJobUpsertInput['jobType'], string> = {
+    planting: 'plantingJob',
     alchemy: 'alchemyJob',
     forging: 'forgingJob',
     enhancement: 'enhancementJob',

@@ -21,6 +21,7 @@ import {
 } from '../../party/party-reward-runtime';
 import { resolvePlayerDisplayName } from '../../player/player-display-name';
 import { PlayerCountersPersistenceService } from '../../../persistence/player-counters-persistence.service';
+import { SpiritBeastRuntimeService } from '../../spirit-beast/spirit-beast-runtime.service';
 import { buildStructuredNotice } from '../structured-notice.helpers';
 import { resolveFormationMonsterExpMultiplier } from './formation-combat-effect.helpers';
 import * as world_runtime_normalization_helpers_1 from '../world-runtime.normalization.helpers';
@@ -82,6 +83,7 @@ export class WorldRuntimePlayerCombatService {
 
     playerRuntimeService;
     playerCountersPersistenceService;
+    spiritBeastRuntimeService;
     private readonly deliveredMonsterLootSources = new Map<string, true>();
     /**
  * 构造器：初始化 当前 实例并建立基础状态。
@@ -95,10 +97,12 @@ export class WorldRuntimePlayerCombatService {
         @Inject(PlayerRuntimeService) playerRuntimeService: PlayerRuntimeService,
         @Optional() playerCountersPersistenceServiceOrLegacyAudit: PlayerCountersPersistenceService | null = null,
         @Optional() legacyPlayerCountersPersistenceService: PlayerCountersPersistenceService | null = null,
+        @Optional() @Inject(SpiritBeastRuntimeService) spiritBeastRuntimeService: SpiritBeastRuntimeService | null = null,
     ) {
         this.contentTemplateRepository = contentTemplateRepository;
         this.playerRuntimeService = playerRuntimeService;
         this.playerCountersPersistenceService = legacyPlayerCountersPersistenceService ?? playerCountersPersistenceServiceOrLegacyAudit;
+        this.spiritBeastRuntimeService = spiritBeastRuntimeService;
     }    
     /**
  * handlePlayerMonsterKill：处理玩家怪物Kill并更新相关状态。
@@ -111,6 +115,20 @@ export class WorldRuntimePlayerCombatService {
 
     async handlePlayerMonsterKill(instance: any, monster: any, killerPlayerId: string, deps: any) {
         this.handlePlayerMonsterKillSynchronously(instance, monster, killerPlayerId, deps);
+        if (this.spiritBeastRuntimeService) {
+            const instanceId = typeof instance?.meta?.instanceId === 'string' ? instance.meta.instanceId : 'unknown';
+            const runtimeId = typeof monster?.runtimeId === 'string' ? monster.runtimeId : String(monster?.monsterId ?? 'unknown');
+            const killTick = Math.max(0, Math.trunc(Number(instance?.tick) || 0));
+            try {
+                await this.spiritBeastRuntimeService.recordEligibleMonsterDeath({
+                    sourceRef: `spirit-egg:${instanceId}:${runtimeId}:${killTick}`,
+                    ownerPlayerId: killerPlayerId,
+                    boss: monster?.tier === 'boss',
+                });
+            } catch (error) {
+                this.logger.warn(`靈蛋掉落寫入失敗，不回滾既有擊殺結算: ${error instanceof Error ? error.message : String(error)}`);
+            }
+        }
     }
 
     /** 击杀奖励链仅修改内存态，热路径直接同步结算，避免每只妖兽产生空 Promise 边界。 */

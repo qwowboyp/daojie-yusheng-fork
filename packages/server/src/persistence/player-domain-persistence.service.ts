@@ -504,7 +504,7 @@ interface AttrStateRow {
 }
 
 interface ProfessionStateRow {
-  professionType: 'alchemy' | 'building' | 'gather' | 'enhancement' | 'forging' | 'mining' | 'formation' | 'transmission';
+  professionType: 'alchemy' | 'building' | 'gather' | 'enhancement' | 'forging' | 'mining' | 'planting' | 'formation' | 'transmission';
   level: number;
   exp: number | null;
   expToNext: number | null;
@@ -591,7 +591,7 @@ interface AutoUseItemRuleRow {
 
 interface ActiveJobRow {
   jobRunId: string;
-  jobType: 'alchemy' | 'forging' | 'enhancement' | 'formation' | 'transmission' | 'gather' | 'mining' | 'building';
+  jobType: 'alchemy' | 'forging' | 'enhancement' | 'formation' | 'transmission' | 'gather' | 'mining' | 'planting' | 'building';
   status: string;
   phase: string;
   startedAt: number;
@@ -7464,6 +7464,16 @@ function buildProfessionStateRows(snapshot: PersistedPlayerSnapshot): Profession
     });
   }
 
+  const planting = asRecord(progression?.plantingSkill);
+  if (planting) {
+    rows.push({
+      professionType: 'planting',
+      level: normalizeMinimumInteger(planting.level, 1, 1),
+      exp: normalizeOptionalNumber(planting.exp),
+      expToNext: normalizeOptionalNumber(planting.expToNext),
+    });
+  }
+
   const building = asRecord(progression?.buildingSkill);
   if (building) {
     rows.push({
@@ -7650,6 +7660,17 @@ function buildActiveJobRow(
     });
   }
 
+  const plantingJob = asRecord(progression?.plantingJob);
+  if (plantingJob && Object.keys(plantingJob).length > 0) {
+    return buildGenericTechniqueActiveJobRow(playerId, plantingJob, 'planting', versionSeed, {
+      phase: 'planting',
+      totalTicks: 1,
+      remainingTicks: 0,
+      successRate: 1,
+      speedRate: 1,
+    });
+  }
+
   const buildingJob = asRecord(progression?.buildingJob);
   if (buildingJob && Object.keys(buildingJob).length > 0) {
     return buildGenericTechniqueActiveJobRow(playerId, buildingJob, 'building', versionSeed, {
@@ -7721,7 +7742,7 @@ function buildTechniqueActivityQueueRows(snapshot: PersistedPlayerSnapshot): Tec
 function buildGenericTechniqueActiveJobRow(
   playerId: string,
   job: Record<string, unknown>,
-  jobType: 'gather' | 'mining' | 'building' | 'transmission',
+  jobType: 'gather' | 'mining' | 'planting' | 'building' | 'transmission',
   versionSeed: number,
   defaults: {
     phase: string;
@@ -8695,6 +8716,8 @@ function applyProjectedProfessions(
       snapshot.progression.gatherSkill = state;
     } else if (professionType === 'mining') {
       snapshot.progression.miningSkill = state;
+    } else if (professionType === 'planting') {
+      snapshot.progression.plantingSkill = state;
     } else if (professionType === 'formation') {
       snapshot.progression.formationSkill = state;
     } else if (professionType === 'transmission') {
@@ -8732,6 +8755,7 @@ function applyProjectedActiveJob(
     snapshot.progression.enhancementJob = null;
     snapshot.progression.gatherJob = null;
     snapshot.progression.miningJob = null;
+    snapshot.progression.plantingJob = null;
     snapshot.progression.buildingJob = null;
     snapshot.progression.formationJob = null;
     snapshot.progression.transmissionJob = null;
@@ -8759,6 +8783,7 @@ function applyProjectedActiveJob(
     snapshot.progression.forgingJob = null;
     snapshot.progression.gatherJob = null;
     snapshot.progression.miningJob = null;
+    snapshot.progression.plantingJob = null;
     snapshot.progression.buildingJob = null;
     snapshot.progression.formationJob = null;
     snapshot.progression.transmissionJob = null;
@@ -8771,6 +8796,7 @@ function applyProjectedActiveJob(
     snapshot.progression.enhancementJob = null;
     snapshot.progression.gatherJob = null;
     snapshot.progression.miningJob = null;
+    snapshot.progression.plantingJob = null;
     snapshot.progression.buildingJob = null;
     snapshot.progression.transmissionJob = null;
     return;
@@ -8788,6 +8814,7 @@ function applyProjectedActiveJob(
     snapshot.progression.enhancementJob = null;
     snapshot.progression.gatherJob = null;
     snapshot.progression.miningJob = null;
+    snapshot.progression.plantingJob = null;
     snapshot.progression.buildingJob = null;
     snapshot.progression.formationJob = null;
     return;
@@ -8798,6 +8825,7 @@ function applyProjectedActiveJob(
     snapshot.progression.forgingJob = null;
     snapshot.progression.enhancementJob = null;
     snapshot.progression.miningJob = null;
+    snapshot.progression.plantingJob = null;
     snapshot.progression.buildingJob = null;
     snapshot.progression.formationJob = null;
     snapshot.progression.transmissionJob = null;
@@ -8814,6 +8842,18 @@ function applyProjectedActiveJob(
     snapshot.progression.transmissionJob = null;
     return;
   }
+  if (jobType === 'planting') {
+    snapshot.progression.plantingJob = { ...normalizedJob, jobType: 'planting' };
+    snapshot.progression.miningJob = null;
+    snapshot.progression.alchemyJob = null;
+    snapshot.progression.forgingJob = null;
+    snapshot.progression.enhancementJob = null;
+    snapshot.progression.gatherJob = null;
+    snapshot.progression.buildingJob = null;
+    snapshot.progression.formationJob = null;
+    snapshot.progression.transmissionJob = null;
+    return;
+  }
   if (jobType === 'building') {
     snapshot.progression.buildingJob = { ...normalizedJob, jobType: 'building' };
     snapshot.progression.alchemyJob = null;
@@ -8821,6 +8861,7 @@ function applyProjectedActiveJob(
     snapshot.progression.enhancementJob = null;
     snapshot.progression.gatherJob = null;
     snapshot.progression.miningJob = null;
+    snapshot.progression.plantingJob = null;
     snapshot.progression.formationJob = null;
     snapshot.progression.transmissionJob = null;
     return;
@@ -8835,6 +8876,7 @@ function applyProjectedActiveJob(
   snapshot.progression.enhancementJob = null;
   snapshot.progression.gatherJob = null;
   snapshot.progression.miningJob = null;
+  snapshot.progression.plantingJob = null;
   snapshot.progression.buildingJob = null;
   snapshot.progression.formationJob = null;
   snapshot.progression.transmissionJob = null;

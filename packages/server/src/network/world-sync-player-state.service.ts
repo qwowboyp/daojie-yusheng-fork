@@ -116,6 +116,7 @@ function buildPlayerSyncState(player, view, unlockedMinimapIds) {
     gatherSkill: player.gatherSkill ? { ...player.gatherSkill } : undefined,
     enhancementSkill: player.enhancementSkill ? { ...player.enhancementSkill } : undefined,
     miningSkill: player.miningSkill ? { ...player.miningSkill } : undefined,
+    plantingSkill: player.plantingSkill ? { ...player.plantingSkill } : undefined,
     formationSkill: player.formationSkill ? { ...player.formationSkill } : undefined,
     transmissionSkill: player.transmissionSkill ? { ...player.transmissionSkill } : undefined,
     enhancementSkillLevel: player.enhancementSkillLevel,

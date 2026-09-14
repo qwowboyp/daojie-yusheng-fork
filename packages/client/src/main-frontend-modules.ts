@@ -4,6 +4,7 @@
  * 维护时要把用户意图、显示派生和服务端权威数据分清，避免为了展示便利复制业务规则。
  */
 import { SocketManager } from './network/socket';
+import { S2C } from '@mud/shared';
 import { LoginUI } from './ui/login';
 import { HUD } from './ui/hud';
 import { ChatUI } from './ui/chat';
@@ -30,6 +31,7 @@ import { AccessPolicySocketClient } from './ui/access-policy-socket-client';
 import { createClientPanelSystem } from './ui/panel-system/bootstrap';
 import { createMapRuntime } from './game-map/runtime/map-runtime';
 import { initializeMapPerformanceConfig } from './ui/performance-config';
+import { createSpiritBeastPanelController } from './react-ui/panels/spirit-beast/spirit-beast-panel-controller';
 /**
  * createMainFrontendModules：构建并返回目标对象。
  * @param windowRef Window 参数说明。
@@ -39,6 +41,9 @@ import { initializeMapPerformanceConfig } from './ui/performance-config';
 
 export function createMainFrontendModules(windowRef: Window) {
   const socket = new SocketManager();
+  createSpiritBeastPanelController(socket);
+  const mapRuntime = createMapRuntime();
+  socket.on(S2C.SpiritBeastMapDelta, (data) => mapRuntime.applySpiritBeastMapDelta(data));
   const accessPolicyClient = new AccessPolicySocketClient(socket);
 
   return {
@@ -50,7 +55,7 @@ export function createMainFrontendModules(windowRef: Window) {
     adminSender: socket.admin,
     buildingSender: socket.building,
     techniqueGenerationSender: socket.techniqueGeneration,
-    mapRuntime: createMapRuntime(),
+    mapRuntime,
     loginUI: new LoginUI(socket),
     hud: new HUD(),
     chatUI: new ChatUI(),

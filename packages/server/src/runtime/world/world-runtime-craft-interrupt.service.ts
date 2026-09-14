@@ -1,3 +1,4 @@
+import { PlantingStrategy } from '../craft/pipeline/strategies/planting.strategy';
 /**
  * 本文件属于服务端权威运行时，负责地图、玩家、世界、市场、邮件或后台运行态逻辑。
  *
@@ -99,6 +100,7 @@ export class WorldRuntimeCraftInterruptService {
     this.pipeline.register(new TransmissionStrategy());
     this.pipeline.register(new GatherStrategy());
     this.pipeline.register(new MiningStrategy());
+        this.pipeline.register(new PlantingStrategy());
     this.pipeline.register(new BuildingStrategy());
     this.pipeline.register(new FormationStrategy());
     this.queueService = new TechniqueActivityQueueService(this.pipeline);

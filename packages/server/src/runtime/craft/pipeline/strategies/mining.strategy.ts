@@ -16,6 +16,7 @@ import {
 } from '@mud/shared';
 import type { TechniqueActivityStrategy, PipelineContext, PersistenceDomain } from '../technique-activity-strategy';
 import { bumpTechniqueActivityJobVersion } from '../../technique-activity-runtime.helpers';
+import { releaseFacilityWork, tickFacilityWork } from './facility-work-pipeline.helpers';
 
 type MiningValidatedPayload = {
   instanceId: string;
@@ -28,6 +29,7 @@ type MiningValidatedPayload = {
 };
 
 type MiningDepsPort = {
+  facilityWorkPort?: import('../../../spirit-beast/facility-work.port').FacilityWorkPort;
   getInstanceRuntime?: (instanceId: string) => any;
   getInstanceRuntimeOrThrow?: (instanceId: string) => any;
   getPlayerLocation?: (playerId: string) => { instanceId?: string; x?: number; y?: number } | null;
@@ -60,6 +62,15 @@ export class MiningStrategy implements TechniqueActivityStrategy<PlayerMiningJob
     const playerId = resolvePlayerId(player);
     if (!playerId) {
       return { ok: false, error: '玩家不存在。' };
+    }
+    const facilityOrderId = typeof (payload as { facilityOrderId?: unknown } | null)?.facilityOrderId === 'string'
+      ? String((payload as { facilityOrderId: string }).facilityOrderId).trim() : '';
+    const facilityAssignment = facilityOrderId ? resolveMiningDeps(ctx)?.facilityWorkPort?.getFacilityAssignment(playerId, facilityOrderId, 'mining') : null;
+    if (facilityAssignment) {
+      return { ok: true, validated: { instanceId: facilityAssignment.instanceId, targetX: facilityAssignment.x,
+        targetY: facilityAssignment.y, tileType: 'facility', tileName: facilityAssignment.buildingName,
+        currentHp: facilityAssignment.remainingTicks, baseDamagePerTick: 1,
+        facilityOrderId, facilityBuildingId: facilityAssignment.buildingId, facilityTotalTicks: facilityAssignment.totalTicks } as MiningValidatedPayload };
     }
     const target = resolveMiningTarget(payload);
     if (!target) {
@@ -132,6 +143,8 @@ export class MiningStrategy implements TechniqueActivityStrategy<PlayerMiningJob
   consumeResources(_player: unknown, _validated: MiningValidatedPayload, _ctx: PipelineContext): void {}
 
   createJob(_player: unknown, validated: MiningValidatedPayload, _ctx: PipelineContext): PlayerMiningJob {
+    const facilityOrderId = (validated as MiningValidatedPayload & { facilityOrderId?: string }).facilityOrderId;
+    const totalTicks = facilityOrderId ? Math.max(1, Math.trunc(Number((validated as any).facilityTotalTicks) || validated.currentHp)) : validated.currentHp;
     const jobRunId = `mining:${validated.instanceId}:${validated.targetX}:${validated.targetY}:${Date.now().toString(36)}`;
     return {
       jobRunId,
@@ -146,15 +159,22 @@ export class MiningStrategy implements TechniqueActivityStrategy<PlayerMiningJob
       baseDamagePerTick: validated.baseDamagePerTick,
       phase: 'mining',
       startedAt: Date.now(),
-      workTotalTicks: validated.currentHp,
+      workTotalTicks: totalTicks,
       workRemainingTicks: validated.currentHp,
-      totalTicks: validated.currentHp,
+      totalTicks,
       remainingTicks: validated.currentHp,
       pausedTicks: 0,
       interruptWaitRemainingTicks: 0,
       interruptState: null,
       successRate: 1,
       spiritStoneCost: 0,
+      ...(facilityOrderId ? {
+        facilityOrderId,
+        facilityBuildingId: (validated as any).facilityBuildingId,
+        stationInstanceId: validated.instanceId,
+        stationBuildingId: (validated as any).facilityBuildingId,
+        stationSuccessBonus: 0.1,
+      } : {}),
     };
   }
 
@@ -163,6 +183,8 @@ export class MiningStrategy implements TechniqueActivityStrategy<PlayerMiningJob
     if (!job || Number(job.remainingTicks) <= 0) {
       return emptyMiningTickResult();
     }
+    const facility = tickFacilityWork(player, job, ctx, () => this.setActiveJob(player, null));
+    if (facility) return facility;
     if (job.phase === 'paused') {
       advanceMiningPause(job);
       markMiningDirty(player, ['active_job'], ctx);
@@ -227,7 +249,8 @@ export class MiningStrategy implements TechniqueActivityStrategy<PlayerMiningJob
     };
   }
 
-  computeRefund(_player: unknown, _job: PlayerMiningJob): TechniqueActivityRefundResult {
+  computeRefund(player: unknown, job: PlayerMiningJob, ctx: PipelineContext): TechniqueActivityRefundResult {
+    releaseFacilityWork(player, job, ctx);
     return { items: [], spiritStones: 0 };
   }
 
@@ -359,6 +382,7 @@ function hasAnyActiveTechniqueActivity(player: unknown): boolean {
     record.gatherJob,
     record.buildingJob,
     record.miningJob,
+    record.plantingJob,
     record.formationJob,
   ].some((job) => Boolean(job) && Number((job as { remainingTicks?: unknown }).remainingTicks) > 0);
 }

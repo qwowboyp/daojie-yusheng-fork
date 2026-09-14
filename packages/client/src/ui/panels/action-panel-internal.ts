@@ -31,7 +31,7 @@ export type SkillManagementSortDirection = 'asc' | 'desc';
 export type SkillManagementFilterToggle = 'melee' | 'ranged' | 'physical' | 'spell' | 'single' | 'aoe';
 export type CombatSettingsTab = 'auto_pills' | 'targeting';
 export type AutoUsePillSubview = 'main' | 'picker' | 'conditions';
-export type SectManagementTab = 'overview' | 'members' | 'roles' | 'manage' | 'guardian' | 'domain';
+export type SectManagementTab = 'overview' | 'members' | 'roles' | 'manage' | 'guardian' | 'domain' | 'spirit_beasts';
 
 export interface SkillPresetStatus {
   tone: 'success' | 'error' | 'info';

@@ -78,6 +78,11 @@ export type BuildingSenseQiRoomInfo = {
 const FENGSHUI_DETAIL_MODAL_OWNER = 'building-fengshui-detail';
 const buildModeTooltip = new FloatingTooltip('floating-tooltip building-mode-tooltip');
 const BUILD_CATEGORY_ORDER = ['structure', 'facility', 'floor'] as const;
+const SPIRIT_BEAST_BUILDING_ART_IDS = new Set([
+  'spirit_incubator_metal', 'spirit_incubator_wood', 'spirit_incubator_water', 'spirit_incubator_fire', 'spirit_incubator_earth',
+  'sect_iron_mine', 'sect_spirit_stone_mine', 'sect_spirit_field', 'sect_forging_station', 'sect_enhancement_station', 'sect_alchemy_station',
+  'spirit_egg_enhancement_station', 'spirit_beast_cultivation_station', 'spirit_beast_fusion_station',
+]);
 type BuildCategoryKey = (typeof BUILD_CATEGORY_ORDER)[number];
 type BuildingCatalogEntry = (typeof buildingCatalog)[number];
 type BuildMaterialRequirement = {
@@ -1445,8 +1450,10 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
     button.style.setProperty('--building-material-tint', resolveBuildMaterialTint(materialCategoryKey));
     const image = document.createElement('img');
     image.className = 'building-mode-item-image';
-    image.src = `/assets/building-art/v1/${encodeURIComponent(def.id)}-icon-96.webp`;
-    image.srcset = `/assets/building-art/v1/${encodeURIComponent(def.id)}-icon-192.webp 2x`;
+    const spiritBeastBuilding = SPIRIT_BEAST_BUILDING_ART_IDS.has(def.id);
+    const artStem = spiritBeastBuilding ? `/assets/spirit-beasts/buildings/${encodeURIComponent(def.id)}` : `/assets/building-art/v1/${encodeURIComponent(def.id)}-icon`;
+    image.src = `${artStem}-96.webp`;
+    image.srcset = `${artStem}-192.webp 2x`;
     image.alt = '';
     image.setAttribute('aria-hidden', 'true');
     image.addEventListener('error', () => {

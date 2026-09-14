@@ -90,5 +90,677 @@
     "fengShui": { "elementVector": { "wood": 8, "earth": 6 }, "traits": ["facility.meditation"], "comfort": 4, "stability": 4, "qiAffinity": 1 },
     "economy": { "buildTicks": 600, "durabilityMultiplier": 30, "maxHp": 60, "cost": [{ "itemId": "cloth", "count": 2 }, { "itemId": "wood", "count": 1 }] },
     "craftEffectStats": { "transmission": { "speedRate": 1 } }
+  },
+  {
+    "id": "spirit_incubator_metal",
+    "name": "金行孵蛋器",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "metal": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "spirit_incubator_wood",
+    "name": "木行孵蛋器",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "wood": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "spirit_incubator_water",
+    "name": "水行孵蛋器",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "water": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "spirit_incubator_fire",
+    "name": "火行孵蛋器",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "fire": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "spirit_incubator_earth",
+    "name": "土行孵蛋器",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "earth": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "sect_iron_mine",
+    "name": "玄鐵礦場",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "metal": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "sect_spirit_stone_mine",
+    "name": "靈石礦場",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "earth": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "sect_spirit_field",
+    "name": "靈田",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "wood": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "sect_forging_station",
+    "name": "煉器臺",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "fire": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "sect_enhancement_station",
+    "name": "強化臺",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "metal": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "sect_alchemy_station",
+    "name": "宗門煉丹爐",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "fire": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "spirit_egg_enhancement_station",
+    "name": "靈蛋強化臺",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "metal": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "spirit_beast_cultivation_station",
+    "name": "靈獸培養臺",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "wood": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "spirit_beast_fusion_station",
+    "name": "靈獸融合臺",
+    "visual": {
+      "layer": "furniture"
+    },
+    "placement": {
+      "layer": "facility",
+      "footprint": [
+        {
+          "dx": 0,
+          "dy": 0
+        }
+      ],
+      "requireSectLand": true
+    },
+    "topology": {
+      "blocksMove": false
+    },
+    "fengShui": {
+      "elementVector": {
+        "earth": 12
+      },
+      "traits": [
+        "facility.spirit_beast"
+      ],
+      "stability": 5
+    },
+    "economy": {
+      "buildTicks": 1800,
+      "durabilityMultiplier": 80,
+      "maxHp": 120,
+      "cost": [
+        {
+          "itemId": "wood",
+          "count": 8
+        },
+        {
+          "itemId": "stone",
+          "count": 8
+        },
+        {
+          "itemId": "metal",
+          "count": 4
+        }
+      ]
+    }
   }
 ]

@@ -18,9 +18,11 @@ import type {
   TechniqueActivityStartValidationResult,
   TechniqueActivityNoticeMessage,
 } from '@mud/shared';
+import type { PlantingWorkPort } from '../planting-work.port';
 
 /** 管线 tick 上下文，由管线骨架注入给策略方法。 */
 export interface PipelineContext {
+  plantingWorkPort?: PlantingWorkPort | null;
   contentTemplateRepository: {
     getItemName(itemId: string): string | null;
     normalizeItem(item: { itemId: string; count: number }): unknown;

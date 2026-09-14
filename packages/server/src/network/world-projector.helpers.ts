@@ -1132,6 +1132,7 @@ function buildAttrPanelSignature(player: ProjectorPlayerLike): string {
         buildCraftSkillSignature(player.gatherSkill),
         buildCraftSkillSignature(player.enhancementSkill),
         buildCraftSkillSignature(player.miningSkill),
+        buildCraftSkillSignature(player.plantingSkill),
         buildCraftSkillSignature(player.formationSkill),
         buildCraftSkillSignature(player.transmissionSkill),
         buildAttrBonusesSignature(buildAttrBonuses(player)),
@@ -1394,6 +1395,7 @@ function resolveAttrPanelChangeKind(previousAttr: ProjectedAttrPanelState, playe
         && isSameCraftSkillState(previousAttr.gatherSkill, player.gatherSkill)
         && isSameCraftSkillState(previousAttr.enhancementSkill, player.enhancementSkill)
         && isSameCraftSkillState(previousAttr.miningSkill, player.miningSkill)
+        && isSameCraftSkillState(previousAttr.plantingSkill, player.plantingSkill)
         && isSameCraftSkillState(previousAttr.formationSkill, player.formationSkill)
         && isSameCraftSkillState(previousAttr.transmissionSkill, player.transmissionSkill)
         && isSameCraftEffectStats(previousAttr.craftEffectStats, player.attrs.craftEffectStats)
@@ -1579,6 +1581,7 @@ function captureAttrPanelSlice(player: ProjectorPlayerLike): ProjectedAttrPanelS
         gatherSkill: player.gatherSkill ? { ...player.gatherSkill } : undefined,
         enhancementSkill: player.enhancementSkill ? { ...player.enhancementSkill } : undefined,
         miningSkill: player.miningSkill ? { ...player.miningSkill } : undefined,
+        plantingSkill: player.plantingSkill ? { ...player.plantingSkill } : undefined,
         formationSkill: player.formationSkill ? { ...player.formationSkill } : undefined,
         transmissionSkill: player.transmissionSkill ? { ...player.transmissionSkill } : undefined,
     };
@@ -1673,6 +1676,7 @@ function buildFullAttrDeltaFromState(attr: ProjectedAttrPanelState): ProjectedAt
         gatherSkill: attr.gatherSkill,
         enhancementSkill: attr.enhancementSkill,
         miningSkill: attr.miningSkill,
+        plantingSkill: attr.plantingSkill,
         formationSkill: attr.formationSkill,
         transmissionSkill: attr.transmissionSkill,
     };
@@ -1813,6 +1817,7 @@ function buildAttrDeltaFromState(previousAttr: ProjectedAttrPanelState, currentA
     const gatherSkillChanged = !isSameCraftSkillState(previousAttr.gatherSkill, currentAttr.gatherSkill);
     const enhancementSkillChanged = !isSameCraftSkillState(previousAttr.enhancementSkill, currentAttr.enhancementSkill);
     const miningSkillChanged = !isSameCraftSkillState(previousAttr.miningSkill, currentAttr.miningSkill);
+    const plantingSkillChanged = !isSameCraftSkillState(previousAttr.plantingSkill, currentAttr.plantingSkill);
     const formationSkillChanged = !isSameCraftSkillState(previousAttr.formationSkill, currentAttr.formationSkill);
     const transmissionSkillChanged = !isSameCraftSkillState(previousAttr.transmissionSkill, currentAttr.transmissionSkill);
     return {
@@ -1838,6 +1843,7 @@ function buildAttrDeltaFromState(previousAttr: ProjectedAttrPanelState, currentA
         gatherSkill: gatherSkillChanged ? currentAttr.gatherSkill : undefined,
         enhancementSkill: enhancementSkillChanged ? currentAttr.enhancementSkill : undefined,
         miningSkill: miningSkillChanged ? currentAttr.miningSkill : undefined,
+        plantingSkill: plantingSkillChanged ? currentAttr.plantingSkill : undefined,
         formationSkill: formationSkillChanged ? currentAttr.formationSkill : undefined,
         transmissionSkill: transmissionSkillChanged ? currentAttr.transmissionSkill : undefined,
     };

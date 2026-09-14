@@ -1,3 +1,6 @@
+import { PlantingStrategy } from './pipeline/strategies/planting.strategy';
+import type { FacilityWorkPort } from '../spirit-beast/facility-work.port';
+import type { PlantingWorkPort } from './planting-work.port';
 /**
  * 本文件负责服务端侧的权威运行、网络、持久化或运维辅助逻辑，是生产主线的一部分。
  *
@@ -119,6 +122,10 @@ export class CraftPanelRuntimeService {
     }>();
     /** 技艺管线服务。 */
     pipeline: TechniqueActivityPipelineService | null = null;
+    plantingWorkPort: PlantingWorkPort | null = null;
+    facilityWorkPort: FacilityWorkPort | null = null;
+    /** 宗門服務驗證工位存在、預約與操作距離；沒有有效預約不提供加成。 */
+    stationSuccessBonusResolver: ((playerId: string, job: Record<string, unknown>) => number) | null = null;
     /** 缓存依赖并初始化日志、配方与强化配置。 */
     constructor(
         contentTemplateRepository: ContentTemplateRepository,
@@ -301,6 +308,9 @@ export class CraftPanelRuntimeService {
         }
         if (kind === 'mining') {
             return hasTechniqueActivityJob(player.miningJob);
+        }
+        if (kind === 'planting') {
+            return hasTechniqueActivityJob(player.plantingJob);
         }
         return false;
     }
@@ -1245,11 +1255,15 @@ export class CraftPanelRuntimeService {
         this.playerRuntimeService.recordAssetStatisticMutation?.(player, beforeSnapshot);
     }
     buildPipelineContext(deps = null) {
+        const mergedDeps = this.facilityWorkPort
+            ? { ...(deps && typeof deps === 'object' ? deps : {}), facilityWorkPort: this.facilityWorkPort }
+            : deps;
         return {
+            plantingWorkPort: this.plantingWorkPort,
             contentTemplateRepository: this.contentTemplateRepository,
             resolveExpToNextByLevel: (level) => resolveCraftSkillExpToNextByLevel(this.playerRuntimeService, level),
             getInstanceRuntime: (instanceId) => typeof deps?.getInstanceRuntime === 'function' ? deps.getInstanceRuntime(instanceId) : null,
-            deps,
+            deps: mergedDeps,
         };
     }
     ensurePipelineInitialized() {
@@ -1263,6 +1277,7 @@ export class CraftPanelRuntimeService {
         this.pipeline.register(new TransmissionStrategy());
         this.pipeline.register(new GatherStrategy());
         this.pipeline.register(new MiningStrategy());
+        this.pipeline.register(new PlantingStrategy());
         this.pipeline.register(new BuildingStrategy());
         this.pipeline.register(new FormationStrategy());
     }
@@ -2277,13 +2292,29 @@ export class CraftPanelRuntimeService {
         const craftSkillLevel = normalizedJobKind === 'forging'
             ? player?.forgingSkill?.level
             : player?.alchemySkill?.level;
-        return computeAlchemyAdjustedSuccessRate(
+        const successRate = computeAlchemyAdjustedSuccessRate(
             baseRate,
             targetLevel,
             craftSkillLevel,
             this.getAlchemyLikeToolSuccessRate(player, normalizedJobKind),
             this.getLuckSuccessRateBonus(player),
         );
+        return Math.min(1, successRate + (normalizedJobKind === 'forging' ? this.resolveStationSuccessBonus(player, job) : 0));
+    }
+
+    resolveStationSuccessBonus(player, job) {
+        if (!job?.stationBuildingId || job.stationSuccessBonus !== 0.1 || !this.stationSuccessBonusResolver) return 0;
+        const bonus = this.stationSuccessBonusResolver(player.playerId, job);
+        return Number.isFinite(bonus) ? Math.max(0, Math.min(0.1, bonus)) : 0;
+    }
+
+    refreshEnhancementStationSuccessRate(player, job) {
+        if (!job?.stationBuildingId) return;
+        const roleLevel = Math.max(1, Math.floor(Number(player.enhancementSkill?.level ?? player.enhancementSkillLevel) || 1));
+        const effects = this.getCraftEffectStats(player);
+        job.successRate = Math.min(1, computeEnhancementAdjustedSuccessRate(job.targetLevel, roleLevel,
+            job.targetItemLevel, effects.enhancement.successRate, this.getLuckSuccessRateBonus(player))
+            + this.resolveStationSuccessBonus(player, job));
     }
 
     refreshAlchemyLikeActiveJobSuccessRate(player, jobKind) {
@@ -2318,6 +2349,7 @@ export class CraftPanelRuntimeService {
         player.forgingSkill = normalizeCraftSkill(player.forgingSkill, resolveExpToNext);
         player.gatherSkill = normalizeCraftSkill(player.gatherSkill, resolveExpToNext);
         player.miningSkill = normalizeCraftSkill(player.miningSkill, resolveExpToNext);
+        player.plantingSkill = normalizeCraftSkill(player.plantingSkill, resolveExpToNext);
         player.formationSkill = normalizeCraftSkill(player.formationSkill, resolveExpToNext);
         player.enhancementSkill = normalizeCraftSkill(player.enhancementSkill ?? {
             level: player.enhancementSkillLevel,
@@ -2880,7 +2912,9 @@ export class CraftPanelRuntimeService {
         job.pausedTicks = 0;
         job.interruptWaitRemainingTicks = 0;
         job.interruptState = null;
-        job.successRate = computeEnhancementAdjustedSuccessRate(nextTargetLevel, roleEnhancementLevel, job.targetItemLevel, craftEffectStats.enhancement.successRate, this.getLuckSuccessRateBonus(player));
+        job.successRate = Math.min(1, computeEnhancementAdjustedSuccessRate(nextTargetLevel, roleEnhancementLevel,
+            job.targetItemLevel, craftEffectStats.enhancement.successRate, this.getLuckSuccessRateBonus(player))
+            + this.resolveStationSuccessBonus(player, job));
         job.totalTicks = totalTicks;
         job.remainingTicks = totalTicks;
         job.workTotalTicks = totalTicks;
@@ -4026,7 +4060,9 @@ function normalizeTechniqueActivityQueueItem(item) {
                     ? '採集任務'
                     : kind === 'building'
                         ? '營造任務'
-                        : kind === 'mining'
+                        : kind === 'planting'
+                            ? '種植任務'
+                            : kind === 'mining'
                             ? '挖礦任務'
                             : kind === 'formation'
                                 ? '陣法任務'
@@ -4055,6 +4091,7 @@ function normalizeRuntimeTechniqueActivityKind(kind) {
         || kind === 'gather'
         || kind === 'building'
         || kind === 'mining'
+        || kind === 'planting'
         || kind === 'formation'
         ? kind
         : 'alchemy';
@@ -4084,6 +4121,9 @@ function hasCancelableTechniqueActivityJob(player, kind) {
     }
     if (kind === 'mining') {
         return Boolean(player.miningJob);
+    }
+    if (kind === 'planting') {
+        return Boolean(player.plantingJob);
     }
     return kind === 'building' && Boolean(player.buildingJob);
 }
@@ -4166,6 +4206,9 @@ function buildActiveJobSnapshotFromPlayer(player) {
     if (player?.miningJob) {
         return buildActiveJobSnapshot(player.miningJob, 'mining');
     }
+    if (player?.plantingJob) {
+        return buildActiveJobSnapshot(player.plantingJob, 'planting');
+    }
     if (player?.transmissionJob) {
         return buildActiveJobSnapshot(player.transmissionJob, 'transmission');
     }
@@ -4230,6 +4273,7 @@ function captureEnhancementProgressRuntimeState(player) {
         forgingSkill: player?.forgingSkill,
         gatherSkill: player?.gatherSkill,
         miningSkill: player?.miningSkill,
+        plantingSkill: player?.plantingSkill,
         formationSkill: player?.formationSkill,
         enhancementSkill: player?.enhancementSkill,
         enhancementSkillLevel: player?.enhancementSkillLevel,
@@ -4252,6 +4296,7 @@ function restoreEnhancementProgressRuntimeState(player, snapshot) {
     player.forgingSkill = snapshot.forgingSkill;
     player.gatherSkill = snapshot.gatherSkill;
     player.miningSkill = snapshot.miningSkill;
+    player.plantingSkill = snapshot.plantingSkill;
     player.formationSkill = snapshot.formationSkill;
     player.enhancementSkill = snapshot.enhancementSkill;
     player.enhancementSkillLevel = snapshot.enhancementSkillLevel;
@@ -4528,6 +4573,7 @@ function buildDurableProfessionStatesFromSnapshot(snapshot): DurableProfessionSt
     append('gather', progression.gatherSkill);
     append('forging', progression.forgingSkill);
     append('mining', progression.miningSkill);
+    append('planting', progression.plantingSkill);
     append('formation', progression.formationSkill);
     append('transmission', progression.transmissionSkill);
     append('enhancement', progression.enhancementSkill, progression.enhancementSkillLevel ?? 1);
@@ -4601,6 +4647,7 @@ function normalizeActiveJobSnapshotType(jobType) {
         case 'formation':
         case 'building':
         case 'mining':
+        case 'planting':
         case 'gather':
         case 'enhancement':
         case 'forging':

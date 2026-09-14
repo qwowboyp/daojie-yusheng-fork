@@ -28,6 +28,7 @@ import type {
   TickRenderEntity,
   FengShuiGrade,
 } from '@mud/shared';
+import type { SpiritBeastMapDeltaView } from '@mud/shared';
 import type { MapPerformanceConfig } from '../constants/ui/performance';
 
 /** 地图安全区边距。 */
@@ -959,6 +960,7 @@ export interface MapRuntimeApi {
   applyBootstrap(data: MapBootstrapInput): void;
   applyMapStatic(data: S2C_MapStatic): void;
   applyWorldDelta(data: MapWorldDeltaInput): void;
+  applySpiritBeastMapDelta(data: SpiritBeastMapDeltaView): void;
   applySelfDelta(data: MapSelfDeltaInput): void;
   reset(): void;
   setInteractionCallbacks(callbacks: MapRuntimeInteractionCallbacks): void;

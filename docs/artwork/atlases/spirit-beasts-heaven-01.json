@@ -1,0 +1,1511 @@
+{
+  "id": "spirit-beasts-heaven-01",
+  "grade": "heaven",
+  "sourceSha256": "a781768a82dde960e40d8fb5ab57ad7e31dc85be15092d657c15fd9dba696763",
+  "nativeDimensions": [
+    1200,
+    896
+  ],
+  "records": [
+    {
+      "id": "spirit_beast.heaven.metal.01",
+      "name": "庚羽獅鷲",
+      "element": "metal",
+      "cell": {
+        "col": 0,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 0,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 12950,
+          "left": 15,
+          "top": 10,
+          "width": 165,
+          "height": 149
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 22,
+        "extraction": {
+          "left": 10,
+          "top": 5,
+          "width": 175,
+          "height": 159
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.01-96.webp",
+          "sha256": "aba6a5060e69e4313c6325925e6f84d80c7a069f3b52cd506f2d9d59d178090a",
+          "bytes": 6776
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.01-192.webp",
+          "sha256": "b1b7ba8dd311a0e20ab27ad10d22b50caf1ebbfb8cb25c28c7fa32f675053109",
+          "bytes": 13564
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.metal.02",
+      "name": "斷岳貔犀",
+      "element": "metal",
+      "cell": {
+        "col": 1,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 200,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10818,
+          "left": 17,
+          "top": 44,
+          "width": 176,
+          "height": 116
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 44,
+        "extraction": {
+          "left": 12,
+          "top": 39,
+          "width": 186,
+          "height": 126
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.02-96.webp",
+          "sha256": "175f47fe125617b251782dd1d4eddaa2d428fe25bcb243795da8a2f0f79bd3c3",
+          "bytes": 4558
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.02-192.webp",
+          "sha256": "5cf7e6fa8182cae0fbf3aaac2f5b707d22d49e0c242638d8751184c2b5bb5f7c",
+          "bytes": 8906
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.metal.03",
+      "name": "金鎧狰",
+      "element": "metal",
+      "cell": {
+        "col": 2,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 400,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 12057,
+          "left": 11,
+          "top": 17,
+          "width": 175,
+          "height": 144
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 17,
+        "extraction": {
+          "left": 6,
+          "top": 12,
+          "width": 185,
+          "height": 154
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.03-96.webp",
+          "sha256": "c1704717730cf68ff6ffff5086f96365576d60ed0c4cfb0f22968e33565590b0",
+          "bytes": 6626
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.03-192.webp",
+          "sha256": "3a1eb4ebaf07ed98910317aaa301c22ffec6b922fc831d3354bf57e9fab6f58f",
+          "bytes": 13144
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.metal.04",
+      "name": "鎏刃螳",
+      "element": "metal",
+      "cell": {
+        "col": 3,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 600,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 6306,
+          "left": 22,
+          "top": 34,
+          "width": 161,
+          "height": 111
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 31,
+        "extraction": {
+          "left": 17,
+          "top": 29,
+          "width": 171,
+          "height": 121
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.04-96.webp",
+          "sha256": "27f73b591bacf8dd149008e90a3705645a374cff089070c0a37f139ebe573686",
+          "bytes": 5340
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.04-192.webp",
+          "sha256": "eca4b5920765fd7221cc0de7ada10c69aedf95fb05ce8c3e79bdb476e6b7bb2c",
+          "bytes": 10610
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.metal.05",
+      "name": "星砧象",
+      "element": "metal",
+      "cell": {
+        "col": 4,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 800,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 12482,
+          "left": 21,
+          "top": 9,
+          "width": 162,
+          "height": 154
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 33,
+        "extraction": {
+          "left": 16,
+          "top": 4,
+          "width": 172,
+          "height": 164
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.05-96.webp",
+          "sha256": "cb27c86853428cc21684b427ae18bcc337e5a19455235c3860ad1a178e767465",
+          "bytes": 6532
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.05-192.webp",
+          "sha256": "a37a126b4455c01de78f75b2177fda99bbce7d7f6278c4b504d45eebcc87b383",
+          "bytes": 12094
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.metal.06",
+      "name": "鳴鉞鷲",
+      "element": "metal",
+      "cell": {
+        "col": 5,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 1000,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 11230,
+          "left": 18,
+          "top": 17,
+          "width": 164,
+          "height": 141
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 26,
+        "extraction": {
+          "left": 13,
+          "top": 12,
+          "width": 174,
+          "height": 151
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.06-96.webp",
+          "sha256": "8d91a3ef7acb354b428f93d20764d444b885dd094e671dc7591fa4abfb1c4add",
+          "bytes": 6112
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.metal.06-192.webp",
+          "sha256": "ef956dfdb0a3ce8d7de35f26e549e915a6489b493ed4f51c75c5095c35b07dfc",
+          "bytes": 12060
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.wood.01",
+      "name": "青篁鹿",
+      "element": "wood",
+      "cell": {
+        "col": 0,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 0,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 5315,
+          "left": 52,
+          "top": 12,
+          "width": 100,
+          "height": 150
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 23,
+        "extraction": {
+          "left": 47,
+          "top": 7,
+          "width": 110,
+          "height": 160
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.01-96.webp",
+          "sha256": "24864cf8a49e4a0ee59e0e873a1f03882643edcb9601432b1074d4077d3ab7c9",
+          "bytes": 5138
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.01-192.webp",
+          "sha256": "4b7f4c89e88423bf58ec4af062c1081fd455f0950a07d36b9c078abac3354ffb",
+          "bytes": 9204
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.wood.02",
+      "name": "千藤狌狌",
+      "element": "wood",
+      "cell": {
+        "col": 1,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 200,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10824,
+          "left": 23,
+          "top": 17,
+          "width": 152,
+          "height": 143
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 45,
+        "extraction": {
+          "left": 18,
+          "top": 12,
+          "width": 162,
+          "height": 153
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.02-96.webp",
+          "sha256": "83d532bfa6caea40c7ffcbc4dff2f61e0bea00ba6c1faae3242b44a1c36a8328",
+          "bytes": 7604
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.02-192.webp",
+          "sha256": "b3e8e0c1b3b759025da97c4e51e70b8851c084ba60a8da973aa4884ed439fcf6",
+          "bytes": 15144
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.wood.03",
+      "name": "玉藥白猿",
+      "element": "wood",
+      "cell": {
+        "col": 2,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 400,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 9279,
+          "left": 26,
+          "top": 12,
+          "width": 154,
+          "height": 149
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 42,
+        "extraction": {
+          "left": 21,
+          "top": 7,
+          "width": 164,
+          "height": 159
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.03-96.webp",
+          "sha256": "9408aa42c8afdcffdbb09a91217912326ea450c44408cef12e359fa681eb70d9",
+          "bytes": 6786
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.03-192.webp",
+          "sha256": "50025a97697b11923fdb59d506edbee24cf35ae1b528de6c95373f21eafa470b",
+          "bytes": 13430
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.wood.04",
+      "name": "靈樞花狐",
+      "element": "wood",
+      "cell": {
+        "col": 3,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 600,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10019,
+          "left": 22,
+          "top": 21,
+          "width": 156,
+          "height": 139
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 30,
+        "extraction": {
+          "left": 17,
+          "top": 16,
+          "width": 166,
+          "height": 149
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.04-96.webp",
+          "sha256": "b803c7dea7b926004adf830ac2a1bbca48d9a7698712f7313a68174c241c0c5b",
+          "bytes": 5790
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.04-192.webp",
+          "sha256": "467e1687e03a9839a3390936be9d502f3ec46815ecfc6569e7d85322cad1b458",
+          "bytes": 11288
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.wood.05",
+      "name": "春澤羽鹿",
+      "element": "wood",
+      "cell": {
+        "col": 4,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 800,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 7499,
+          "left": 34,
+          "top": 13,
+          "width": 129,
+          "height": 148
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 42,
+        "extraction": {
+          "left": 29,
+          "top": 8,
+          "width": 139,
+          "height": 158
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.05-96.webp",
+          "sha256": "258cc8df48a91f8680e701b4e491d39c9909816a8e1f4e4936c50ebc0bbda595",
+          "bytes": 6172
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.05-192.webp",
+          "sha256": "d95901c940c057b7a06def9ed0b88417f65d5f6b2d00b4a2f5783564e18f7315",
+          "bytes": 12326
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.wood.06",
+      "name": "棲梧鹿蜀",
+      "element": "wood",
+      "cell": {
+        "col": 5,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 1000,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 8009,
+          "left": 22,
+          "top": 29,
+          "width": 155,
+          "height": 133
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 9,
+        "extraction": {
+          "left": 17,
+          "top": 24,
+          "width": 165,
+          "height": 143
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.06-96.webp",
+          "sha256": "3ce560cb8546d5a179b1238aa936115b97612e6adaa997765f71d1a717c5a9e6",
+          "bytes": 5480
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.wood.06-192.webp",
+          "sha256": "9ecac13dfed2bb348c76333e2e50b8aae54b71d0c0788f9c1875b3c6592b1fda",
+          "bytes": 10334
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.water.01",
+      "name": "寒淵玄黿",
+      "element": "water",
+      "cell": {
+        "col": 0,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 0,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 12729,
+          "left": 17,
+          "top": 26,
+          "width": 168,
+          "height": 131
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 21,
+        "extraction": {
+          "left": 12,
+          "top": 21,
+          "width": 178,
+          "height": 141
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.01-96.webp",
+          "sha256": "648d8771e6ad0f6d4d30b8f29f89bf3379411fe84840bd3e6e3fde5905554b37",
+          "bytes": 6072
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.01-192.webp",
+          "sha256": "c2912b8ddd410db374ea3c5a9ea47bf7160bfc291070a14eef0b08965e528c3a",
+          "bytes": 12340
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.water.02",
+      "name": "滄瀾螭",
+      "element": "water",
+      "cell": {
+        "col": 1,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 200,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 10751,
+          "left": 16,
+          "top": 15,
+          "width": 168,
+          "height": 143
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 13,
+        "extraction": {
+          "left": 11,
+          "top": 10,
+          "width": 178,
+          "height": 153
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.02-96.webp",
+          "sha256": "fd3d9dccd3b2d7dcad631eb77261c2f6b59ce2246757f6099f447c720019858d",
+          "bytes": 6672
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.02-192.webp",
+          "sha256": "bec5ae182c19f980c48952655d6ad44057359374c5acef99ed4084394c240f60",
+          "bytes": 13042
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.water.03",
+      "name": "霜華文鰩",
+      "element": "water",
+      "cell": {
+        "col": 2,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 400,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 8925,
+          "left": 18,
+          "top": 13,
+          "width": 166,
+          "height": 145
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 14,
+        "extraction": {
+          "left": 13,
+          "top": 8,
+          "width": 176,
+          "height": 155
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.03-96.webp",
+          "sha256": "f49e61994185548db330046c59d7e607ab6bf742a71c0e7207476f25f48ff6f3",
+          "bytes": 5230
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.03-192.webp",
+          "sha256": "ed21da87f32b53bff9fc59d2aae40c4c2aeec34b03115cafb98c7ef4be788c87",
+          "bytes": 10342
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.water.04",
+      "name": "銀泉鮫獸",
+      "element": "water",
+      "cell": {
+        "col": 3,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 600,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 10616,
+          "left": 21,
+          "top": 9,
+          "width": 157,
+          "height": 152
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 7,
+        "extraction": {
+          "left": 16,
+          "top": 4,
+          "width": 167,
+          "height": 162
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.04-96.webp",
+          "sha256": "3203a24a46d033afb3e58c591dabb311c4202e848ef3654d7177c18e5f375281",
+          "bytes": 6690
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.04-192.webp",
+          "sha256": "2b2fb99752d12bb3738475cfd449bc7dafb58aab8e21b423e33d0ae1dd9bc935",
+          "bytes": 13678
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.water.05",
+      "name": "雨師長蛙",
+      "element": "water",
+      "cell": {
+        "col": 4,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 800,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 9646,
+          "left": 23,
+          "top": 11,
+          "width": 152,
+          "height": 150
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 13,
+        "extraction": {
+          "left": 18,
+          "top": 6,
+          "width": 162,
+          "height": 160
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.05-96.webp",
+          "sha256": "1007b48bd64408aaf39f9c399ef73c487ebb051421959db05141d78514396d48",
+          "bytes": 6932
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.05-192.webp",
+          "sha256": "8cec9ed4536221c19df853476bef9c8e0cec24a7c0e52e6adadeac348e33b4b3",
+          "bytes": 13640
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.water.06",
+      "name": "冰鑑靈鯢",
+      "element": "water",
+      "cell": {
+        "col": 5,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 1000,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 8754,
+          "left": 16,
+          "top": 35,
+          "width": 168,
+          "height": 119
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 12,
+        "extraction": {
+          "left": 11,
+          "top": 30,
+          "width": 178,
+          "height": 129
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.06-96.webp",
+          "sha256": "4db8d31336f751b502cb943b8507e7b9b50ab18b23a9f1aa1e7b41a45beff838",
+          "bytes": 5314
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.water.06-192.webp",
+          "sha256": "ad7b88072d312598dccf3f218bcdbf1aa3cacda835bc3fac008ddc9df8ddcb7f",
+          "bytes": 10896
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.fire.01",
+      "name": "赤焰畢方",
+      "element": "fire",
+      "cell": {
+        "col": 0,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 0,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 7195,
+          "left": 34,
+          "top": 11,
+          "width": 120,
+          "height": 135
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 40,
+        "extraction": {
+          "left": 29,
+          "top": 6,
+          "width": 130,
+          "height": 145
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.01-96.webp",
+          "sha256": "94829ba861323ef182348421215c98587d4b7d86163b6bbf2103b0a53f4406be",
+          "bytes": 6772
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.01-192.webp",
+          "sha256": "36d0b954c4e9c41b41f8f34d664ad5021ff8deb3d720ca5341ac84a676d3a12b",
+          "bytes": 13854
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.fire.02",
+      "name": "丹爐火猿",
+      "element": "fire",
+      "cell": {
+        "col": 1,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 200,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10657,
+          "left": 20,
+          "top": 13,
+          "width": 162,
+          "height": 146
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 24,
+        "extraction": {
+          "left": 15,
+          "top": 8,
+          "width": 172,
+          "height": 156
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.02-96.webp",
+          "sha256": "65104d7bf5fb9f490b42189038217d16ee3dca8e2c24104482669161a55f05ae",
+          "bytes": 6536
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.02-192.webp",
+          "sha256": "49d7e2c832083190ba0a44b9478581c5fdede37cbfb962ba53a0f249f1e83647",
+          "bytes": 12866
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.fire.03",
+      "name": "離火狻猊",
+      "element": "fire",
+      "cell": {
+        "col": 2,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 400,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10757,
+          "left": 21,
+          "top": 24,
+          "width": 157,
+          "height": 136
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 28,
+        "extraction": {
+          "left": 16,
+          "top": 19,
+          "width": 167,
+          "height": 146
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.03-96.webp",
+          "sha256": "9180deb69ecbe6e61698add81715b67c3ababb975f78de2bcb3702f366616f5b",
+          "bytes": 6308
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.03-192.webp",
+          "sha256": "89a444cc9cf905f6ac7df9be9c3c271ac9a6cc738cfcb433f66f03ea0207a791",
+          "bytes": 12478
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.fire.04",
+      "name": "朱翎鸑鷟",
+      "element": "fire",
+      "cell": {
+        "col": 3,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 600,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10148,
+          "left": 25,
+          "top": 7,
+          "width": 153,
+          "height": 151
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 20,
+        "extraction": {
+          "left": 20,
+          "top": 2,
+          "width": 163,
+          "height": 161
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.04-96.webp",
+          "sha256": "b5da912929289285c6c4d13d18d2923ec451b120528a04cc002716111664fd63",
+          "bytes": 6212
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.04-192.webp",
+          "sha256": "8541457b89fc4c21faa6319ec27b22bc791f4011f6f5ab52d52cc50a496b43b0",
+          "bytes": 12572
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.fire.05",
+      "name": "熔金獬豸",
+      "element": "fire",
+      "cell": {
+        "col": 4,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 800,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10910,
+          "left": 13,
+          "top": 12,
+          "width": 173,
+          "height": 150
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 15,
+        "extraction": {
+          "left": 8,
+          "top": 7,
+          "width": 183,
+          "height": 160
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.05-96.webp",
+          "sha256": "6fcc46680cb23f3c7a82ef6f4617e63c27c9395eb62789e8e9e83ee265e4eaba",
+          "bytes": 6292
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.05-192.webp",
+          "sha256": "284e3e1c1f69ac56fa65779b31ce77e1c080e9c10ac44e6d63e9b2272eab8671",
+          "bytes": 12470
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.fire.06",
+      "name": "流焰赤螭",
+      "element": "fire",
+      "cell": {
+        "col": 5,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 1000,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10608,
+          "left": 18,
+          "top": 21,
+          "width": 162,
+          "height": 133
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 6,
+        "extraction": {
+          "left": 13,
+          "top": 16,
+          "width": 172,
+          "height": 143
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.06-96.webp",
+          "sha256": "3bf11fca2ef9c6a6f1925287016a5145d3c9604e540ce30b97c540e74ac7f413",
+          "bytes": 7058
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.fire.06-192.webp",
+          "sha256": "719ec31aecb7a6587545abd3e279c407c72d1d7894415c1d46157fb731c2aba9",
+          "bytes": 14282
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.earth.01",
+      "name": "鎮岳駁獸",
+      "element": "earth",
+      "cell": {
+        "col": 0,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 0,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 8548,
+          "left": 14,
+          "top": 18,
+          "width": 170,
+          "height": 141
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 18,
+        "extraction": {
+          "left": 9,
+          "top": 13,
+          "width": 180,
+          "height": 151
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.01-96.webp",
+          "sha256": "a9a6592563f45e2a3cffdb0491d8a3b74da9161e3f528ebec560e08e40163942",
+          "bytes": 5430
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.01-192.webp",
+          "sha256": "7b64903aa49bba40f4b4d92857e2840ab202032d334361387c86e283e79aff30",
+          "bytes": 9938
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.earth.02",
+      "name": "坤元岩羆",
+      "element": "earth",
+      "cell": {
+        "col": 1,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 200,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 13799,
+          "left": 20,
+          "top": 12,
+          "width": 161,
+          "height": 145
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 16,
+        "extraction": {
+          "left": 15,
+          "top": 7,
+          "width": 171,
+          "height": 155
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.02-96.webp",
+          "sha256": "40d089b106eea8d8047037939424701dc78f417a06b019fa84250e4572e0d0b4",
+          "bytes": 5032
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.02-192.webp",
+          "sha256": "05513e07fd993156e7fa10d5f805171cd4586810655d5936f69ad00b614c6717",
+          "bytes": 9298
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.earth.03",
+      "name": "玄圃藥犀",
+      "element": "earth",
+      "cell": {
+        "col": 2,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 400,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10496,
+          "left": 13,
+          "top": 38,
+          "width": 175,
+          "height": 120
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 5,
+        "extraction": {
+          "left": 8,
+          "top": 33,
+          "width": 185,
+          "height": 130
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.03-96.webp",
+          "sha256": "3a39a0bf5aad49c4295626bf6c042718fdf5429bf72b0204a74b9a69c973e95e",
+          "bytes": 4710
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.03-192.webp",
+          "sha256": "88e4882858e5e3482b7c4ea1a454c668a1019c59cdcc63bb1dc949afa75d1b61",
+          "bytes": 8686
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.earth.04",
+      "name": "壘岳石猿",
+      "element": "earth",
+      "cell": {
+        "col": 3,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 600,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 11922,
+          "left": 34,
+          "top": 9,
+          "width": 132,
+          "height": 151
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 22,
+        "extraction": {
+          "left": 29,
+          "top": 4,
+          "width": 142,
+          "height": 161
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.04-96.webp",
+          "sha256": "089ef3b6132e4a112a1509c4e4983889b6a8ac0cfacd9d1e0c1254b2255887f0",
+          "bytes": 5346
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.04-192.webp",
+          "sha256": "1ddc3add32404f493cae35ffb344307a25db815b8649e7d05110c65d60da157b",
+          "bytes": 10254
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.earth.05",
+      "name": "負碑贔屭",
+      "element": "earth",
+      "cell": {
+        "col": 4,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 800,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 11689,
+          "left": 22,
+          "top": 9,
+          "width": 156,
+          "height": 151
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 11,
+        "extraction": {
+          "left": 17,
+          "top": 4,
+          "width": 166,
+          "height": 161
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.05-96.webp",
+          "sha256": "ee6e80bf0e4be34818ad3d798e56d1f860eff82a7b1c61915f7ae5f52f28a597",
+          "bytes": 5366
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.05-192.webp",
+          "sha256": "6b7f658337307c23b320ebb822fe01739222913c21312f5739c6955621dac0f7",
+          "bytes": 11060
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.heaven.earth.06",
+      "name": "流沙蛟",
+      "element": "earth",
+      "cell": {
+        "col": 5,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-heaven/spirit-beasts-heaven-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 1000,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 13373,
+          "left": 15,
+          "top": 24,
+          "width": 170,
+          "height": 135
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 1,
+        "extraction": {
+          "left": 10,
+          "top": 19,
+          "width": 180,
+          "height": 145
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.06-96.webp",
+          "sha256": "3d4467b17bacb73688f4ce0cf3aca62a44c5468e7efb0a6b5b2f4ddf316b4352",
+          "bytes": 6222
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.heaven.earth.06-192.webp",
+          "sha256": "55c56bcdfc79819bf62dadb4c801aee54dee09da8147b4c70b1e9c7b25188f9f",
+          "bytes": 11902
+        }
+      ]
+    }
+  ]
+}

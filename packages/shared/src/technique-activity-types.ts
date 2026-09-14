@@ -6,10 +6,10 @@
 import type { TechniqueComprehensionProgressBreakdown } from './technique-comprehension';
 
 /** 可并入统一技艺活动框架的技艺键。 */
-export type TechniqueActivityKind = 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'gather' | 'building' | 'mining' | 'formation';
+export type TechniqueActivityKind = 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'gather' | 'building' | 'mining' | 'formation' | 'planting';
 
 /** 当前已经接入 runtime 活动主链的技艺键。 */
-export type RuntimeTechniqueActivityKind = 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'gather' | 'building' | 'mining' | 'formation';
+export type RuntimeTechniqueActivityKind = 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'gather' | 'building' | 'mining' | 'formation' | 'planting';
 
 /** 统一任务列表可展示的任务键。 */
 export type TechniqueActivityTaskKind = RuntimeTechniqueActivityKind;
@@ -54,6 +54,10 @@ export type TechniqueActivityQueueReorderAction = 'move_to_top' | 'move_down';
 
 /** 技艺活动生命周期公共状态。 */
 export interface TechniqueActivityJobBase {
+  /** 僅由伺服器工位預約寫入；成功率仍需驗證玩家在有效工位操作。 */
+  stationSuccessBonus?: number;
+  stationInstanceId?: string;
+  stationBuildingId?: string;
   startedAt: number;
   /**
    * 目标态实际工作总量。旧 job 兼容期仍可只写 totalTicks。
@@ -132,4 +136,5 @@ export const RUNTIME_TECHNIQUE_ACTIVITY_KINDS = [
   'gather',
   'mining',
   'building',
+  'planting',
 ] as const satisfies readonly RuntimeTechniqueActivityKind[];

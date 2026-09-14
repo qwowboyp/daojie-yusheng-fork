@@ -184,6 +184,14 @@
       "chance": 0.8,
       "count": 2,
       "mapLv": 6
+    },
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門工作",
+      "ruleId": "spirit-beast-facility-mining",
+      "title": "玄鐵礦場",
+      "description": "在宗門核心的靈獸管理開啟礦場，由玩家或採礦靈獸工作，再從工位領取產物。"
     }
   ],
   "blade_pattern_crystal": [
@@ -16306,6 +16314,14 @@
       "mode": "direct",
       "count": 1,
       "mapLv": 19
+    },
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門靈田",
+      "ruleId": "spirit-beast-field-harvest",
+      "title": "靈田收成",
+      "description": "規劃承脈參種子，播種後生長3600息並完成澆水、收割，在靈田領取30份主材。"
     }
   ],
   "mat.beast_bone": [
@@ -16581,6 +16597,14 @@
       "mode": "direct",
       "count": 1,
       "mapLv": 19
+    },
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門靈田",
+      "ruleId": "spirit-beast-field-harvest",
+      "title": "靈田收成",
+      "description": "規劃寒髓葦種子，播種後生長3600息並完成澆水、收割，在靈田領取30份主材。"
     }
   ],
   "mat.darksoil_carapace": [
@@ -16940,6 +16964,14 @@
       "mode": "direct",
       "count": 1,
       "mapLv": 19
+    },
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門靈田",
+      "ruleId": "spirit-beast-field-harvest",
+      "title": "靈田收成",
+      "description": "規劃金芒棘種子，播種後生長3600息並完成澆水、收割，在靈田領取30份主材。"
     }
   ],
   "mat.green_spirit_stem": [
@@ -17095,6 +17127,14 @@
       "mode": "direct",
       "count": 1,
       "mapLv": 29
+    },
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門靈田",
+      "ruleId": "spirit-beast-field-harvest",
+      "title": "靈田收成",
+      "description": "規劃長脈藤種子，播種後生長3600息並完成澆水、收割，在靈田領取30份主材。"
     }
   ],
   "mat.mixed_toad_pearl": [
@@ -17501,6 +17541,14 @@
       "mode": "direct",
       "count": 1,
       "mapLv": 29
+    },
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門靈田",
+      "ruleId": "spirit-beast-field-harvest",
+      "title": "靈田收成",
+      "description": "規劃回春葉種子，播種後生長3600息並完成澆水、收割，在靈田領取30份主材。"
     }
   ],
   "mat.scorchheart_petal": [
@@ -19626,6 +19674,56 @@
       "currencyItemId": "merit"
     }
   ],
+  "seed.bearingroot_ginseng": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-seed-supply",
+      "title": "靈種補給",
+      "description": "開啟宗門核心 → 靈獸管理 → 宗門工作，以150靈石購買一顆。"
+    }
+  ],
+  "seed.coldmarrow_reed": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-seed-supply",
+      "title": "靈種補給",
+      "description": "開啟宗門核心 → 靈獸管理 → 宗門工作，以150靈石購買一顆。"
+    }
+  ],
+  "seed.goldthread_briar": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-seed-supply",
+      "title": "靈種補給",
+      "description": "開啟宗門核心 → 靈獸管理 → 宗門工作，以120靈石購買一顆。"
+    }
+  ],
+  "seed.longvein_vine": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-seed-supply",
+      "title": "靈種補給",
+      "description": "開啟宗門核心 → 靈獸管理 → 宗門工作，以100靈石購買一顆。"
+    }
+  ],
+  "seed.returnspring_leaf": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-seed-supply",
+      "title": "靈種補給",
+      "description": "開啟宗門核心 → 靈獸管理 → 宗門工作，以100靈石購買一顆。"
+    }
+  ],
   "serpent_gall": [
     {
       "kind": "monster_drop",
@@ -19738,6 +19836,256 @@
       "mapLv": 4
     }
   ],
+  "spirit_egg.earth.star1": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.earth.star2": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.earth.star3": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.earth.star4": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.earth.star5": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.fire.star1": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.fire.star2": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.fire.star3": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.fire.star4": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.fire.star5": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.metal.star1": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.metal.star2": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.metal.star3": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.metal.star4": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.metal.star5": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.water.star1": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.water.star2": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.water.star3": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.water.star4": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.water.star5": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.wood.star1": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.wood.star2": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.wood.star3": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.wood.star4": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
+  "spirit_egg.wood.star5": [
+    {
+      "kind": "acquisition_rule",
+      "mapId": "world",
+      "mapName": "宗門核心",
+      "ruleId": "spirit-beast-monster-egg",
+      "title": "極稀有靈蛋掉落",
+      "description": "擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。"
+    }
+  ],
   "spirit_iron_fragment": [
     {
       "kind": "monster_drop",
@@ -19816,6 +20164,14 @@
       "ruleId": "activity-invitation-reward",
       "title": "邀請活動獎勵",
       "description": "完成邀請活動的待領獎勵後發放。"
+    },
+    {
+      "kind": "acquisition_rule",
+      "mapId": "sect",
+      "mapName": "宗門工作",
+      "ruleId": "spirit-beast-facility-mining",
+      "title": "靈石礦場",
+      "description": "在宗門核心的靈獸管理開啟礦場，由玩家或採礦靈獸工作，再從工位領取產物。"
     },
     {
       "kind": "acquisition_rule",

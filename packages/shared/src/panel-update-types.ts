@@ -131,6 +131,7 @@ export interface AttrUpdateView {
  */
 
   miningSkill?: PlayerState['miningSkill'];
+  plantingSkill?: PlayerState['plantingSkill'];
   /**
  * formationSkill：阵法技能相关字段。
  */

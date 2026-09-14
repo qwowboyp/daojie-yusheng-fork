@@ -12,6 +12,7 @@ import type {
 import type { TechniqueActivityStrategy, PipelineContext, PersistenceDomain } from '../technique-activity-strategy';
 import { executeAlchemyLikeTick } from './alchemy-like-tick.helpers';
 import { computeAlchemyLikeCancelRefund } from './alchemy-like-cancel.helpers';
+import { createFacilityWorkJob, releaseFacilityWork, tickFacilityWork, validateFacilityWork } from './facility-work-pipeline.helpers';
 export class ForgingStrategy implements TechniqueActivityStrategy {
   readonly kind = 'forging' as const;
   readonly jobSlot = 'forgingJob';
@@ -31,26 +32,34 @@ export class ForgingStrategy implements TechniqueActivityStrategy {
   }
 
   executeTick(player: unknown, ctx: PipelineContext): unknown {
+    const facility = tickFacilityWork(player, this.getActiveJob(player), ctx, () => this.setActiveJob(player, null));
+    if (facility) return facility;
     return executeAlchemyLikeTick(this.craftService, player, 'forging', ctx);
   }
 
   // ─── 接口占位 ───
 
-  validateStart(player: unknown, payload: unknown): TechniqueActivityStartValidationResult {
+  validateStart(player: unknown, payload: unknown, ctx: PipelineContext): TechniqueActivityStartValidationResult {
+    const facility = validateFacilityWork(player, payload, 'forging', ctx);
+    if (facility) return { ok: true, validated: facility };
     return this.craftService.validateAlchemyLikeStart(player, payload, 'forging');
   }
   queueStart(player: unknown, validated: unknown, payload: unknown): unknown | null {
+    if ((validated as any)?.facilityAssignment) return null;
     return this.craftService.queueAlchemyLikeStart(player, validated, payload);
   }
   consumeResources(player: unknown, validated: unknown): { ok: true } | { ok: false; error?: string } | void {
+    if ((validated as any)?.facilityAssignment) return;
     return this.craftService.consumeAlchemyLikeStartResources(player, validated);
   }
   createJob(player: unknown, validated: unknown): any {
+    if ((validated as any)?.facilityAssignment) return createFacilityWorkJob(validated, 'forging');
     const job = this.craftService.createAlchemyLikeStartJob(player, validated);
     this.craftService.finalizeAlchemyLikeStart(player);
     return job;
   }
   buildStartMessages(_player: unknown, validated: unknown): any[] {
+    if ((validated as any)?.facilityAssignment) return [];
     return this.craftService.buildAlchemyLikeStartMessages(validated);
   }
   resolveResumePhase(job: any): string {
@@ -61,6 +70,7 @@ export class ForgingStrategy implements TechniqueActivityStrategy {
     return { successCount: 0, failureCount: 0, outputs: [], expParams: { playerRealmLevel: 1, skillLevel: 1, targetLevel: 1, baseActionTicks: 1, getExpToNextByLevel: () => 100 }, completed: true };
   }
   computeRefund(player: unknown, _job: any, ctx: PipelineContext): TechniqueActivityRefundResult {
+    if (releaseFacilityWork(player, _job, ctx)) return { items: [], spiritStones: 0 };
     return computeAlchemyLikeCancelRefund(this.craftService, player, 'forging', ctx);
   }
   dirtyDomains(): PersistenceDomain[] { return ['active_job', 'inventory']; }

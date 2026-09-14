@@ -16,6 +16,7 @@
  */
 import type * as RequestPayloads from './protocol-request-payload-types';
 import type * as ResponsePayloads from './protocol-response-payload-types';
+import type { RequestSpiritBeastPanelView, SpiritBeastCommandView, SpiritBeastPanelView, SpiritBeastCommandResultView, SpiritBeastMapDeltaView } from './spirit-beast-types';
 import type {
   AccessPolicyPlayerResultView,
   AccessPolicyResourceResultView,
@@ -180,6 +181,8 @@ export const C2S = {
   RequestInventoryPage: 'n:c:requestInventoryPage',
   RequestSectApplicationPage: 'n:c:requestSectApplicationPage',
   RequestSectDirectory: 'n:c:requestSectDirectory',
+  RequestSpiritBeastPanel: 'n:c:requestSpiritBeastPanel',
+  SpiritBeastCommand: 'n:c:spiritBeastCommand',
   RequestTechniquePage: 'n:c:requestTechniquePage',
   RequestTechniqueTransmissionStatuses: 'n:c:requestTechniqueTransmissionStatuses',
   CreateFormation: 'n:c:createFormation',
@@ -335,6 +338,9 @@ export const S2C = {
   ShenxingResult: 'n:s:shenxingResult',
   SectApplicationPage: 'n:s:sectApplicationPage',
   SectDirectory: 'n:s:sectDirectory',
+  SpiritBeastPanel: 'n:s:spiritBeastPanel',
+  SpiritBeastCommandResult: 'n:s:spiritBeastCommandResult',
+  SpiritBeastMapDelta: 'n:s:spiritBeastMapDelta',
   TechniquePage: 'n:s:techniquePage',
   TechniqueTransmissionStatuses: 'n:s:techniqueTransmissionStatuses',
   AttrDetail: 'n:s:attrDetail',
@@ -442,6 +448,8 @@ export interface C2S_PayloadMap extends Record<C2S_EventName, unknown> {
   [C2S.RequestInventoryPage]: RequestPayloads.C2S_RequestInventoryPage;
   [C2S.RequestSectApplicationPage]: RequestPayloads.C2S_RequestSectApplicationPage;
   [C2S.RequestSectDirectory]: RequestPayloads.C2S_RequestSectDirectory;
+  [C2S.RequestSpiritBeastPanel]: RequestSpiritBeastPanelView;
+  [C2S.SpiritBeastCommand]: SpiritBeastCommandView;
   [C2S.RequestTechniquePage]: RequestPayloads.C2S_RequestTechniquePage;
   [C2S.RequestTechniqueTransmissionStatuses]: RequestPayloads.C2S_RequestTechniqueTransmissionStatuses;
   [C2S.CreateFormation]: RequestPayloads.C2S_CreateFormation;
@@ -592,6 +600,9 @@ export interface S2C_PayloadMap extends Record<S2C_EventName, unknown> {
   [S2C.ShenxingResult]: ResponsePayloads.S2C_ShenxingResult;
   [S2C.SectApplicationPage]: ResponsePayloads.S2C_SectApplicationPage;
   [S2C.SectDirectory]: ResponsePayloads.S2C_SectDirectory;
+  [S2C.SpiritBeastPanel]: SpiritBeastPanelView;
+  [S2C.SpiritBeastCommandResult]: SpiritBeastCommandResultView;
+  [S2C.SpiritBeastMapDelta]: SpiritBeastMapDeltaView;
   [S2C.TechniquePage]: ResponsePayloads.S2C_TechniquePage;
   [S2C.TechniqueTransmissionStatuses]: ResponsePayloads.S2C_TechniqueTransmissionStatuses;
   [S2C.AttrDetail]: S2C_AttrDetail;

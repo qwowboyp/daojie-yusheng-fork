@@ -1,0 +1,1511 @@
+{
+  "id": "spirit-beasts-immortal-01",
+  "grade": "immortal",
+  "sourceSha256": "31bcbeadf4c61965f14928219f2a91ad4e8e6a49dd30297ddb1f286fc36b5182",
+  "nativeDimensions": [
+    1200,
+    896
+  ],
+  "records": [
+    {
+      "id": "spirit_beast.immortal.metal.01",
+      "name": "庚辰白虎",
+      "element": "metal",
+      "cell": {
+        "col": 0,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 0,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 9099,
+          "left": 24,
+          "top": 40,
+          "width": 163,
+          "height": 111
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 11,
+        "extraction": {
+          "left": 19,
+          "top": 35,
+          "width": 173,
+          "height": 121
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.01-96.webp",
+          "sha256": "a089a90154909bb35c4871924a953e19958323d84118e84dbebe423443b8fe89",
+          "bytes": 5468
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.01-192.webp",
+          "sha256": "36002fef9140efe2be436ba33656fd818cdcecf3d33e1ce479178cf16de03515",
+          "bytes": 11040
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.metal.02",
+      "name": "鎮天貔貅",
+      "element": "metal",
+      "cell": {
+        "col": 1,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 200,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 11555,
+          "left": 21,
+          "top": 11,
+          "width": 160,
+          "height": 142
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 1,
+        "extraction": {
+          "left": 16,
+          "top": 6,
+          "width": 170,
+          "height": 152
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.02-96.webp",
+          "sha256": "f6d3d2ad8d355307e35a9cbe354ab92ac4f4cab364f90e6f14a883b308bf8e7a",
+          "bytes": 6400
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.02-192.webp",
+          "sha256": "294caa4c376923d8a2741184874a482ecdf3baa454ea5c3ae0114d179dae334d",
+          "bytes": 13340
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.metal.03",
+      "name": "太白天狰",
+      "element": "metal",
+      "cell": {
+        "col": 2,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 400,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 8441,
+          "left": 23,
+          "top": 32,
+          "width": 160,
+          "height": 121
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 39,
+        "extraction": {
+          "left": 18,
+          "top": 27,
+          "width": 170,
+          "height": 131
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.03-96.webp",
+          "sha256": "775486a667bdeec304929a6e6451710e0cc5363010e04f72a2b5047103928aa6",
+          "bytes": 5800
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.03-192.webp",
+          "sha256": "646bd1711ae88b6b9ce4373dbaf81eaff5249b712ae2f48c8bfb6e8da76713ae",
+          "bytes": 11250
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.metal.04",
+      "name": "昊金九首獅",
+      "element": "metal",
+      "cell": {
+        "col": 3,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 600,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 11126,
+          "left": 22,
+          "top": 21,
+          "width": 157,
+          "height": 134
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 2,
+        "extraction": {
+          "left": 17,
+          "top": 16,
+          "width": 167,
+          "height": 144
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.04-96.webp",
+          "sha256": "186498a1f85523eaa6e37f5f9e8221f90575d92a2d8a3b37fa69bbf3f6a36c24",
+          "bytes": 5664
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.04-192.webp",
+          "sha256": "cd2d6a47d53d8621fd96f2999637d6370dc3271ef41f9d43b50ff5e19a87e353",
+          "bytes": 11794
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.metal.05",
+      "name": "斷界金翅鵬",
+      "element": "metal",
+      "cell": {
+        "col": 4,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 800,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 9246,
+          "left": 8,
+          "top": 3,
+          "width": 186,
+          "height": 146
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 2,
+        "extraction": {
+          "left": 3,
+          "top": 0,
+          "width": 196,
+          "height": 154
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.05-96.webp",
+          "sha256": "d2e54b2da1c9dac96b29b70a0bfdab8278b0ac9f64869382554af1cacee10f5b",
+          "bytes": 4522
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.05-192.webp",
+          "sha256": "fa29dbef728bdfab27cdc46cffca53b4c68eb212b5225857e320456adf2a7b2c",
+          "bytes": 10954
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.metal.06",
+      "name": "萬器應龍",
+      "element": "metal",
+      "cell": {
+        "col": 5,
+        "row": 0
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 1000,
+          "top": 0,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 8700,
+          "left": 16,
+          "top": 7,
+          "width": 175,
+          "height": 145
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 19,
+        "extraction": {
+          "left": 11,
+          "top": 2,
+          "width": 185,
+          "height": 155
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.06-96.webp",
+          "sha256": "ef608963cbf4085b09d28ec0c23a6e4bf6c1e257e2b9f69333f224e3f7e065a7",
+          "bytes": 5398
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.metal.06-192.webp",
+          "sha256": "f748e0d3d123d19ac4335605f62053c3257fae9c4a7fe060e98fbd485a1b3459",
+          "bytes": 10792
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.wood.01",
+      "name": "建木青龍",
+      "element": "wood",
+      "cell": {
+        "col": 0,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 0,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 6032,
+          "left": 29,
+          "top": 36,
+          "width": 159,
+          "height": 113
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 11,
+        "extraction": {
+          "left": 24,
+          "top": 31,
+          "width": 169,
+          "height": 123
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.01-96.webp",
+          "sha256": "d5887d86ff5fab13acee1b015eb9b2aa51d12a15683f6bf6a743b8e580d4f973",
+          "bytes": 5764
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.01-192.webp",
+          "sha256": "39eb32da00643b3d92d13c3eef6c6fa5505444d4f58c02a72f90f298e4330e3e",
+          "bytes": 11028
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.wood.02",
+      "name": "神農白澤",
+      "element": "wood",
+      "cell": {
+        "col": 1,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 200,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 8074,
+          "left": 35,
+          "top": 29,
+          "width": 133,
+          "height": 123
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 9,
+        "extraction": {
+          "left": 30,
+          "top": 24,
+          "width": 143,
+          "height": 133
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.02-96.webp",
+          "sha256": "85d7cae098294abaf09003d38f3684ebeaa80bd4e2787da1576f9464f981a396",
+          "bytes": 6302
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.02-192.webp",
+          "sha256": "04fd5e37eb26006ef34c0b26b052ac5f83c1d0c72617ad0319cc5d6f8d329f12",
+          "bytes": 12774
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.wood.03",
+      "name": "太古夔牛",
+      "element": "wood",
+      "cell": {
+        "col": 2,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 400,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 7764,
+          "left": 24,
+          "top": 32,
+          "width": 144,
+          "height": 119
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 36,
+        "extraction": {
+          "left": 19,
+          "top": 27,
+          "width": 154,
+          "height": 129
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.03-96.webp",
+          "sha256": "134c30852a6b77fcf21dddd93e3a89334936515fb8284836c259d908f2434eee",
+          "bytes": 4840
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.03-192.webp",
+          "sha256": "5451e1fa5e7adde66f56a8b3d21110224da3057d404ff517bb345709278b20b2",
+          "bytes": 9266
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.wood.04",
+      "name": "百草九色鹿",
+      "element": "wood",
+      "cell": {
+        "col": 3,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 600,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 4144,
+          "left": 48,
+          "top": 11,
+          "width": 98,
+          "height": 142
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 9,
+        "extraction": {
+          "left": 43,
+          "top": 6,
+          "width": 108,
+          "height": 152
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.04-96.webp",
+          "sha256": "809ec0821ec213b116de9f846be759f67871b523c4aa17b1bb9af1ef04db874a",
+          "bytes": 4400
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.04-192.webp",
+          "sha256": "6e9d936f94ce50e25344de3e8d7ba41c0f57524d0450f8cc005167acc2323be6",
+          "bytes": 8470
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.wood.05",
+      "name": "元春青鸞",
+      "element": "wood",
+      "cell": {
+        "col": 4,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 800,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 6279,
+          "left": 36,
+          "top": 16,
+          "width": 142,
+          "height": 109
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 8,
+        "extraction": {
+          "left": 31,
+          "top": 11,
+          "width": 152,
+          "height": 119
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.05-96.webp",
+          "sha256": "70b8b48aae0c4725482cf451df247031fbbf726aa2cacc9807885f7deda57c01",
+          "bytes": 4748
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.05-192.webp",
+          "sha256": "ab2c78d96c80a004980dcb9531627eb35ee2ab81940467001c8289299f5654a1",
+          "bytes": 9554
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.wood.06",
+      "name": "萬象麒麟",
+      "element": "wood",
+      "cell": {
+        "col": 5,
+        "row": 1
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 1000,
+          "top": 179,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 6022,
+          "left": 39,
+          "top": 20,
+          "width": 131,
+          "height": 133
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 13,
+        "extraction": {
+          "left": 34,
+          "top": 15,
+          "width": 141,
+          "height": 143
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.06-96.webp",
+          "sha256": "f94baf6806cf15731b9bb7ded38deac92d4786fd9bd64af9177f4ef0e4e2e8f9",
+          "bytes": 6122
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.wood.06-192.webp",
+          "sha256": "4050789686036fee184a2036e22e59125e5303a8473a07643b6ec7f97affe935",
+          "bytes": 12780
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.water.01",
+      "name": "滄海玄武",
+      "element": "water",
+      "cell": {
+        "col": 0,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 0,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 10856,
+          "left": 22,
+          "top": 19,
+          "width": 161,
+          "height": 132
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 17,
+        "extraction": {
+          "left": 17,
+          "top": 14,
+          "width": 171,
+          "height": 142
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.01-96.webp",
+          "sha256": "55cecc667fb654fb8b7b069507ee0a1086f0845431ac3bad9853786476a9b302",
+          "bytes": 4942
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.01-192.webp",
+          "sha256": "f6519f3ce8e8a1a1e4a376e7effcb2bd31752fdc22f22190411215ae41e954c3",
+          "bytes": 9516
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.water.02",
+      "name": "北冥鯤鵬",
+      "element": "water",
+      "cell": {
+        "col": 1,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 200,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 10435,
+          "left": 9,
+          "top": 10,
+          "width": 185,
+          "height": 143
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 40,
+        "extraction": {
+          "left": 4,
+          "top": 5,
+          "width": 195,
+          "height": 153
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.02-96.webp",
+          "sha256": "7e1fa70f25eb4f2f268be6c83ceacc24b24cb89dea99014edfcb5e618d7687f2",
+          "bytes": 4902
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.02-192.webp",
+          "sha256": "8b9ab1ab5cd4a72bce4d1776f8737ad71c6bbed21dab1c2939f4b12d05632802",
+          "bytes": 11146
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.water.03",
+      "name": "洛水應龍",
+      "element": "water",
+      "cell": {
+        "col": 2,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 400,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 10606,
+          "left": 14,
+          "top": 10,
+          "width": 170,
+          "height": 141
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 3,
+        "extraction": {
+          "left": 9,
+          "top": 5,
+          "width": 180,
+          "height": 151
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.03-96.webp",
+          "sha256": "6474e06c080c790a261dae6e9c67c5bfd0b3c42e1d6a8bae8cae601d5eefb3c7",
+          "bytes": 6730
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.03-192.webp",
+          "sha256": "096e7f83d729f483e94985005e48bf39105422b8df84ae04a31aed96b7980c31",
+          "bytes": 13452
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.water.04",
+      "name": "玄冥冰夷",
+      "element": "water",
+      "cell": {
+        "col": 3,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 600,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 9488,
+          "left": 30,
+          "top": 19,
+          "width": 160,
+          "height": 134
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 3,
+        "extraction": {
+          "left": 25,
+          "top": 14,
+          "width": 170,
+          "height": 144
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.04-96.webp",
+          "sha256": "4f84c4da746264f5c6394bd199e8e5f7aea54833a81a771fcda63eec5057e33f",
+          "bytes": 7080
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.04-192.webp",
+          "sha256": "0f8f1d21f9f51c784d674278f1b4e000e8b04106aa4128f31c65da0eaeb74df0",
+          "bytes": 14060
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.water.05",
+      "name": "天河九嬰",
+      "element": "water",
+      "cell": {
+        "col": 4,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 800,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 9629,
+          "left": 25,
+          "top": 19,
+          "width": 154,
+          "height": 134
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 59,
+        "extraction": {
+          "left": 20,
+          "top": 14,
+          "width": 164,
+          "height": 144
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.05-96.webp",
+          "sha256": "17a12011ce651dd5ab03532734c42bc8e9f8206d4e9038e4f88240344312c1b4",
+          "bytes": 6994
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.05-192.webp",
+          "sha256": "23e57d6d529a11f4bc0f0716fd2fcf4ed42993ce431a527d550b16b5681f5d7a",
+          "bytes": 13536
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.water.06",
+      "name": "溯源白螭",
+      "element": "water",
+      "cell": {
+        "col": 5,
+        "row": 2
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 1000,
+          "top": 358,
+          "width": 200,
+          "height": 180
+        },
+        "primaryComponent": {
+          "area": 6993,
+          "left": 30,
+          "top": 27,
+          "width": 150,
+          "height": 121
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 6,
+        "extraction": {
+          "left": 25,
+          "top": 22,
+          "width": 160,
+          "height": 131
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.06-96.webp",
+          "sha256": "13ca84266bd3abcc84a72e239dbd877b7993722e0abb6155474bd5162192edaa",
+          "bytes": 5724
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.water.06-192.webp",
+          "sha256": "a19f40b19a0f51f2da274f7a56ab8deb9f13d26554751763a9d2b026731e2958",
+          "bytes": 9886
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.fire.01",
+      "name": "南明朱雀",
+      "element": "fire",
+      "cell": {
+        "col": 0,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 0,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 7640,
+          "left": 20,
+          "top": 2,
+          "width": 162,
+          "height": 152
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 5,
+        "extraction": {
+          "left": 15,
+          "top": 0,
+          "width": 172,
+          "height": 159
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.01-96.webp",
+          "sha256": "bfe7d7e96a64a7be77f239dcd3b65b40151823663c40eb5cf16a78723bc2ad50",
+          "bytes": 5972
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.01-192.webp",
+          "sha256": "444821d6d40b7e548e1a90f6c8a1f0dcd558f75071107e21b6dc69dc43966e06",
+          "bytes": 11730
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.fire.02",
+      "name": "太陽金烏",
+      "element": "fire",
+      "cell": {
+        "col": 1,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 200,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10985,
+          "left": 16,
+          "top": 11,
+          "width": 170,
+          "height": 124
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 6,
+        "extraction": {
+          "left": 11,
+          "top": 6,
+          "width": 180,
+          "height": 134
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.02-96.webp",
+          "sha256": "648775824ee7e2188fcb4a0d2982fb9027f8fcc4986aab1baf594a24ce5367ec",
+          "bytes": 4832
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.02-192.webp",
+          "sha256": "29b50c2524146fd778bab687eccbf93f9e457ed78684e06789f5ab1214a036bc",
+          "bytes": 9384
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.fire.03",
+      "name": "丹霄鳳凰",
+      "element": "fire",
+      "cell": {
+        "col": 2,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 400,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10465,
+          "left": 16,
+          "top": 0,
+          "width": 170,
+          "height": 154
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 6,
+        "extraction": {
+          "left": 11,
+          "top": 0,
+          "width": 180,
+          "height": 159
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.03-96.webp",
+          "sha256": "e05d1b268b86573f30fcfe4800452b3dbf3d5567e32b8cc14fface57209eba1c",
+          "bytes": 7686
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.03-192.webp",
+          "sha256": "d201f68944804484f0433f8631235627a292229dbfee3a6981eec92bfcea5bc5",
+          "bytes": 14918
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.fire.04",
+      "name": "赤霄畢方",
+      "element": "fire",
+      "cell": {
+        "col": 3,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 600,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 5437,
+          "left": 44,
+          "top": 8,
+          "width": 129,
+          "height": 116
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 8,
+        "extraction": {
+          "left": 39,
+          "top": 3,
+          "width": 139,
+          "height": 126
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.04-96.webp",
+          "sha256": "ff79301abff5446b87bb98767054a39d40f978a7856d7cb325d23804b1fde846",
+          "bytes": 5674
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.04-192.webp",
+          "sha256": "8eec6e042f4011e20f910cc03ccd257d9562d8b50a385263b50a5a9936dfe352",
+          "bytes": 11448
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.fire.05",
+      "name": "萬焰燭龍",
+      "element": "fire",
+      "cell": {
+        "col": 4,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 800,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 8394,
+          "left": 17,
+          "top": 18,
+          "width": 169,
+          "height": 129
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 1,
+        "extraction": {
+          "left": 12,
+          "top": 13,
+          "width": 179,
+          "height": 139
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.05-96.webp",
+          "sha256": "0994732eba5bac0249728a076bb597bb4878cadf0756d459466dba774f339561",
+          "bytes": 6184
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.05-192.webp",
+          "sha256": "a969acc8304b0eaf45924fa7d386588eb5aba17a5561c50a90edae7448891999",
+          "bytes": 11334
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.fire.06",
+      "name": "離天狻猊",
+      "element": "fire",
+      "cell": {
+        "col": 5,
+        "row": 3
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 1000,
+          "top": 538,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 8429,
+          "left": 37,
+          "top": 32,
+          "width": 132,
+          "height": 121
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 5,
+        "extraction": {
+          "left": 32,
+          "top": 27,
+          "width": 142,
+          "height": 131
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.06-96.webp",
+          "sha256": "0bc57b69a70b4949d5e6fa18686888be3d6a2aa601555fcc8215ae71ccbb1f81",
+          "bytes": 5868
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.fire.06-192.webp",
+          "sha256": "a66d1abfae6a15e73a963fa54a2a099abfaf1d964bffba3e1027929e0da7f4ef",
+          "bytes": 11758
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.earth.01",
+      "name": "后土麒麟",
+      "element": "earth",
+      "cell": {
+        "col": 0,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 0,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 7431,
+          "left": 31,
+          "top": 18,
+          "width": 132,
+          "height": 135
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 3,
+        "extraction": {
+          "left": 26,
+          "top": 13,
+          "width": 142,
+          "height": 145
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.01-96.webp",
+          "sha256": "25507c2203334976594adb0152d566321668955c45309cdb706ee7584f9d2456",
+          "bytes": 6250
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.01-192.webp",
+          "sha256": "3532952e1f4d6a74273caa3d2b4c29a3e0219e6dad1a8311d94c61472003e3cb",
+          "bytes": 12774
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.earth.02",
+      "name": "鎮世贔屭",
+      "element": "earth",
+      "cell": {
+        "col": 1,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 200,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 9687,
+          "left": 30,
+          "top": 10,
+          "width": 139,
+          "height": 142
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 9,
+        "extraction": {
+          "left": 25,
+          "top": 5,
+          "width": 149,
+          "height": 152
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.02-96.webp",
+          "sha256": "1007a29f7976d649d298e057e703dab981911dae88ea914c912ee8d5c89b62b4",
+          "bytes": 4650
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.02-192.webp",
+          "sha256": "963cf2c16dcb7ef583c3b1069a29a96d1dbf6567226b555c9f6244f2ac3e05f5",
+          "bytes": 9326
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.earth.03",
+      "name": "崑崙陸吾",
+      "element": "earth",
+      "cell": {
+        "col": 2,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 400,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 8947,
+          "left": 18,
+          "top": 15,
+          "width": 154,
+          "height": 136
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 3,
+        "extraction": {
+          "left": 13,
+          "top": 10,
+          "width": 164,
+          "height": 146
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.03-96.webp",
+          "sha256": "1c8dd36f14649ee35fac47eebebe270e8bbe6b94100f1faa8f9813294619b7a8",
+          "bytes": 6916
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.03-192.webp",
+          "sha256": "ce723ebf73b3926d743e2fedfe2af29158011ef7c813d47f7d54514fea0556f2",
+          "bytes": 13558
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.earth.04",
+      "name": "開明鎮岳獸",
+      "element": "earth",
+      "cell": {
+        "col": 3,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 600,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 11734,
+          "left": 16,
+          "top": 11,
+          "width": 169,
+          "height": 139
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 17,
+        "extraction": {
+          "left": 11,
+          "top": 6,
+          "width": 179,
+          "height": 149
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.04-96.webp",
+          "sha256": "96d5e9691c0b295e816275d0bdad452eb5d650d603c6938ae8649a609403f0b6",
+          "bytes": 5424
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.04-192.webp",
+          "sha256": "168fd7d230bad7677a2b58051ea0ed58a168cd4c92b9c30721c4d9c84acabb54",
+          "bytes": 10254
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.earth.05",
+      "name": "九壤騰蛇",
+      "element": "earth",
+      "cell": {
+        "col": 4,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 800,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 9804,
+          "left": 21,
+          "top": 25,
+          "width": 163,
+          "height": 123
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 25,
+        "extraction": {
+          "left": 16,
+          "top": 20,
+          "width": 173,
+          "height": 133
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.05-96.webp",
+          "sha256": "588a964b34912252061f5b70443037dabeb9b523a53bba81f26ab37734dd1a2d",
+          "bytes": 5298
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.05-192.webp",
+          "sha256": "9f1b518be5ecd0444c71aa144b263517c1e25162eb9ae180cbff6b326df6678f",
+          "bytes": 10064
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast.immortal.earth.06",
+      "name": "地藏諦聽",
+      "element": "earth",
+      "cell": {
+        "col": 5,
+        "row": 4
+      },
+      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-immortal/spirit-beasts-immortal-raw.png",
+      "extraction": {
+        "method": "magenta-chroma-key-connected-primary-component",
+        "alphaKey": "#ff00ff",
+        "sourceCell": {
+          "left": 1000,
+          "top": 717,
+          "width": 200,
+          "height": 179
+        },
+        "primaryComponent": {
+          "area": 10401,
+          "left": 23,
+          "top": 22,
+          "width": 143,
+          "height": 126
+        },
+        "keptComponentCount": 1,
+        "removedComponentCount": 12,
+        "extraction": {
+          "left": 18,
+          "top": 17,
+          "width": 153,
+          "height": 136
+        },
+        "excludedReason": "generator-added-text-components"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.06-96.webp",
+          "sha256": "6f252e763f5e5bf1cb67bb3821d1dc4fb10a82da84b785ae894dd5ae36ad56c7",
+          "bytes": 5608
+        },
+        {
+          "size": 192,
+          "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.immortal.earth.06-192.webp",
+          "sha256": "278ec94c6cdbf10cd0fbe027b9e6869aaf297fe1d52e1641bf0bb1a8566bbb84",
+          "bytes": 11146
+        }
+      ]
+    }
+  ]
+}

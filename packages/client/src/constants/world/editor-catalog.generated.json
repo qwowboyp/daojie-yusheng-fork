@@ -18099,6 +18099,20 @@
       ]
     },
     {
+      "itemId": "seed.bearingroot_ginseng",
+      "name": "承脈參種子",
+      "type": "material",
+      "grade": "yellow",
+      "level": 20,
+      "materialCategory": "herb",
+      "desc": "播入宗門靈田，生長3600息後可收割30份承脈參。取消已播作物不返還種子。",
+      "tags": [
+        "種子",
+        "宗門種植",
+        "药材"
+      ]
+    },
+    {
       "itemId": "earthbearing_stone",
       "name": "承脈石",
       "type": "material",
@@ -20417,6 +20431,20 @@
       ]
     },
     {
+      "itemId": "seed.coldmarrow_reed",
+      "name": "寒髓葦種子",
+      "type": "material",
+      "grade": "yellow",
+      "level": 20,
+      "materialCategory": "herb",
+      "desc": "播入宗門靈田，生長3600息後可收割30份寒髓葦。取消已播作物不返還種子。",
+      "tags": [
+        "種子",
+        "宗門種植",
+        "药材"
+      ]
+    },
+    {
       "itemId": "mat.cold_iron_carapace",
       "name": "寒鐵甲殼",
       "type": "material",
@@ -21054,6 +21082,20 @@
       ]
     },
     {
+      "itemId": "seed.returnspring_leaf",
+      "name": "回春葉種子",
+      "type": "material",
+      "grade": "yellow",
+      "level": 1,
+      "materialCategory": "herb",
+      "desc": "播入宗門靈田，生長3600息後可收割30份回春葉。取消已播作物不返還種子。",
+      "tags": [
+        "種子",
+        "宗門種植",
+        "药材"
+      ]
+    },
+    {
       "itemId": "lg_nascent_soul_m4_entry_resource_1",
       "name": "回瀾晶",
       "type": "material",
@@ -21421,6 +21463,76 @@
         "藥材",
         "靈植",
         "药材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.fire.star1",
+      "name": "火行靈蛋（1星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "1星火行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.fire.star2",
+      "name": "火行靈蛋（2星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "2星火行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.fire.star3",
+      "name": "火行靈蛋（3星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "3星火行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.fire.star4",
+      "name": "火行靈蛋（4星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "4星火行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.fire.star5",
+      "name": "火行靈蛋（5星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "5星火行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
       ]
     },
     {
@@ -22150,6 +22262,90 @@
         "布料",
         "金属",
         "药材"
+      ]
+    },
+    {
+      "itemId": "seed.goldthread_briar",
+      "name": "金芒棘種子",
+      "type": "material",
+      "grade": "yellow",
+      "level": 10,
+      "materialCategory": "herb",
+      "desc": "播入宗門靈田，生長3600息後可收割30份金芒棘。取消已播作物不返還種子。",
+      "tags": [
+        "種子",
+        "宗門種植",
+        "药材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.metal.star1",
+      "name": "金行靈蛋（1星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "1星金行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.metal.star2",
+      "name": "金行靈蛋（2星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "2星金行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.metal.star3",
+      "name": "金行靈蛋（3星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "3星金行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.metal.star4",
+      "name": "金行靈蛋（4星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "4星金行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.metal.star5",
+      "name": "金行靈蛋（5星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "5星金行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
       ]
     },
     {
@@ -24018,6 +24214,76 @@
       ]
     },
     {
+      "itemId": "spirit_egg.wood.star1",
+      "name": "木行靈蛋（1星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "1星木行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.wood.star2",
+      "name": "木行靈蛋（2星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "2星木行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.wood.star3",
+      "name": "木行靈蛋（3星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "3星木行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.wood.star4",
+      "name": "木行靈蛋（4星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "4星木行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.wood.star5",
+      "name": "木行靈蛋（5星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "5星木行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
       "itemId": "lg_great_vehicle_m4_entry_resource_4",
       "name": "逆光梢",
       "type": "material",
@@ -25677,6 +25943,76 @@
       ]
     },
     {
+      "itemId": "spirit_egg.water.star1",
+      "name": "水行靈蛋（1星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "1星水行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.water.star2",
+      "name": "水行靈蛋（2星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "2星水行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.water.star3",
+      "name": "水行靈蛋（3星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "3星水行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.water.star4",
+      "name": "水行靈蛋（4星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "4星水行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.water.star5",
+      "name": "水行靈蛋（5星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "5星水行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
       "itemId": "lg_mat_lg_spirit_transformation_m2_entry_boss_component",
       "name": "司律袍部件",
       "type": "material",
@@ -26569,6 +26905,76 @@
       "desc": "玄土甲蟲體內的靈核，蘊含純粹土行之力。",
       "tags": [
         "石材",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.earth.star1",
+      "name": "土行靈蛋（1星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "1星土行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.earth.star2",
+      "name": "土行靈蛋（2星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "2星土行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.earth.star3",
+      "name": "土行靈蛋（3星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "3星土行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.earth.star4",
+      "name": "土行靈蛋（4星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "4星土行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
+        "异材"
+      ]
+    },
+    {
+      "itemId": "spirit_egg.earth.star5",
+      "name": "土行靈蛋（5星）",
+      "type": "material",
+      "grade": "heaven",
+      "level": 1,
+      "materialCategory": "exotic",
+      "desc": "5星土行靈蛋，可投入宗門五行孵蛋器。星級提高孵出高品靈獸的機率。",
+      "tags": [
+        "靈蛋",
+        "宗門靈獸",
         "异材"
       ]
     },
@@ -29978,6 +30384,20 @@
       "desc": "沿谷壁攀出的韌藤，藤芯溫潤，最擅長牽引木行藥力深入經脈。",
       "tags": [
         "木材",
+        "药材"
+      ]
+    },
+    {
+      "itemId": "seed.longvein_vine",
+      "name": "長脈藤種子",
+      "type": "material",
+      "grade": "yellow",
+      "level": 1,
+      "materialCategory": "herb",
+      "desc": "播入宗門靈田，生長3600息後可收割30份長脈藤。取消已播作物不返還種子。",
+      "tags": [
+        "種子",
+        "宗門種植",
         "药材"
       ]
     },

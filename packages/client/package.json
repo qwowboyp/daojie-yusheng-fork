@@ -74,6 +74,8 @@
     "proof:terrain-hd": "node ./scripts/prove-terrain-hd-browser.mjs",
     "proof:movement-substeps": "node ./scripts/prove-movement-substeps.mjs",
     "proof:movement-bootstrap": "node ./scripts/prove-movement-bootstrap.mjs",
+    "proof:spirit-beast-map": "node ./scripts/prove-spirit-beast-map.mjs",
+    "proof:spirit-beast-map-browser": "node ./scripts/prove-spirit-beast-map-browser.mjs",
     "proof:item-source-catalog": "node ./scripts/check-item-source-catalog.mjs --check",
     "proof:item-sources-panel": "node ./scripts/prove-item-sources-panel.mjs",
     "proof:shenxing-travel": "node ./scripts/prove-shenxing-travel.mjs"

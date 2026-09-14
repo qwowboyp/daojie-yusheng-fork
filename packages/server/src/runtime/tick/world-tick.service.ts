@@ -26,6 +26,7 @@ import {
   type InstanceTickSchedulePlan,
   type SchedulableInstanceRuntime,
 } from '../world/world-runtime-instance-schedule.service';
+import { SpiritBeastRuntimeService, type SpiritBeastMapInstance } from '../spirit-beast/spirit-beast-runtime.service';
 
 /** 运行时事件总线端口：tick 末尾 flush 收集的事件。 */
 interface RuntimeEventBusPort {
@@ -57,6 +58,7 @@ interface WorldRuntimePort {
   setMovementScheduleChangedListener?(listener: (() => void) | null): void;
   listInstanceEntries?(): Iterable<[string, SchedulableInstanceRuntime]>;
   getInstanceRuntime?(instanceId: string): SchedulableInstanceRuntime | null;
+  getInstance?(instanceId: string): SpiritBeastMapInstance | null;
   isInstanceLeaseWritable?(instance: SchedulableInstanceRuntime): boolean;
 }
 
@@ -145,6 +147,8 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
     private readonly instanceScheduleService?: WorldRuntimeInstanceScheduleService,
     @Optional() @Inject(WorldSessionService)
     private readonly worldSessionService?: WorldSessionIndexPort,
+    @Optional() @Inject(SpiritBeastRuntimeService)
+    private readonly spiritBeastRuntimeService?: SpiritBeastRuntimeService,
   ) {}
 
   private getMapTickSpeed(mapId: string): number {
@@ -212,11 +216,16 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
         ? this.collectPlanPlayerIds(scheduledPlans)
         : null;
       if (shouldAdvanceWorldFrame) {
+        const elapsedSpiritTicks = Math.floor(this.pendingWorldFrameElapsedMs / BASE_TICK_INTERVAL_MS);
         await this.worldRuntimeService.advanceFrame(
           this.pendingWorldFrameElapsedMs,
           null,
           scheduledPlans,
         );
+        if (elapsedSpiritTicks > 0) {
+          this.spiritBeastRuntimeService?.advanceTicks(elapsedSpiritTicks,
+            (instanceId) => this.worldRuntimeService.getInstance?.(instanceId) ?? null);
+        }
         this.pendingWorldFrameElapsedMs = 0;
         if (scheduledPlans) {
           for (const playerId of this.collectPlanPlayerIds(scheduledPlans)) {

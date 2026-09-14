@@ -1374,6 +1374,7 @@ function hasAnyActiveTechniqueJob(player: any): boolean {
     || hasRemainingJob(player?.gatherJob)
     || hasRemainingJob(player?.buildingJob)
     || hasRemainingJob(player?.miningJob)
+    || hasRemainingJob(player?.plantingJob)
     || hasRemainingJob(player?.formationJob);
 }
 

@@ -1,0 +1,5002 @@
+{
+  "status": "implemented_with_local_validation",
+  "version": "spirit-beasts-design-v1",
+  "date": "2026-09-14",
+  "approvalState": "scope_probabilities_speed_and_strict_materials_confirmed",
+  "drop": {
+    "normalProbability": 0.00001,
+    "bossProbability": 0.0001,
+    "elementWeights": {
+      "metal": 20,
+      "wood": 20,
+      "water": 20,
+      "fire": 20,
+      "earth": 20
+    },
+    "starWeightsPercent": [
+      70,
+      15,
+      5,
+      8,
+      2
+    ]
+  },
+  "hatching": {
+    "baseWorkTicks": 3600,
+    "newbornStar": 1,
+    "gradeOrder": [
+      "fan",
+      "human",
+      "heaven",
+      "saint",
+      "immortal"
+    ],
+    "gradeBasisPointsByEggStar": [
+      [
+        7100,
+        1500,
+        500,
+        800,
+        100
+      ],
+      [
+        6600,
+        1500,
+        850,
+        900,
+        150
+      ],
+      [
+        6100,
+        1500,
+        1200,
+        1000,
+        200
+      ],
+      [
+        5600,
+        1500,
+        1550,
+        1100,
+        250
+      ],
+      [
+        5100,
+        1500,
+        1900,
+        1200,
+        300
+      ]
+    ],
+    "speedMultiplier": {
+      "same": 1.5,
+      "incubatorProducesEgg": 2,
+      "eggProducesIncubator": 1,
+      "incubatorControlsEgg": 0.5,
+      "eggControlsIncubator": 0.75
+    }
+  },
+  "eggEnhancement": {
+    "materialCount": 10,
+    "materialStarMustEqualTarget": true,
+    "materialElementMustEqualTarget": false,
+    "successBasisPoints": 2500,
+    "maxStar": 5,
+    "preserveTargetOnFailure": true
+  },
+  "cultivation": {
+    "materialCount": 10,
+    "materialGradeMustEqualTarget": true,
+    "materialStarMustEqualTarget": true,
+    "materialStarPolicyStatus": "confirmed_same_grade_same_star",
+    "successBasisPoints": 2500,
+    "maxStar": 5,
+    "powerMultiplierPerPromotion": 1.3,
+    "skillLevelsAddedPerPromotion": 5,
+    "speedBonusPercentAddedPerPromotion": 10
+  },
+  "workerSpeed": {
+    "levelSpeedPercentPerLevel": 1,
+    "gradeSpeedBonusesPercent": {
+      "fan": 0,
+      "human": 10,
+      "heaven": 20,
+      "saint": 35,
+      "immortal": 50
+    },
+    "formula": "1 + effectiveSkillLevel / 100 + gradeSpeedBonusPercent / 100 + 0.1 * (star - 1)"
+  },
+  "farming": {
+    "growthTicks": 3600,
+    "outputCountPerSeed": 30,
+    "wateringProgressMilestones": [
+      0.3333333333333333,
+      0.6666666666666666
+    ],
+    "fertilizerEnabled": false,
+    "fertilizerAccelerationOnly": true
+  },
+  "futureAdventure": {
+    "enabled": false,
+    "combatPowerUsedByCurrentCombat": false
+  },
+  "species": [
+    {
+      "id": "spirit_beast.fan.metal.01",
+      "name": "銀鬚尋鐵鼠",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "銀鬚尋鐵鼠自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：銀色鬚毛、寬挖爪與額前鐵片。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.metal.02",
+      "name": "銅喙雀",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "銅喙雀自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：短喙鳥形、金屬羽緣與雙尾羽。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.metal.03",
+      "name": "鐵背甲",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鐵背甲自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：低伏甲殼、分節護背與厚前肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.metal.04",
+      "name": "鐮尾貂",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 12
+        },
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鐮尾貂自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：長尾貂形、彎刃尾尖與窄身輪廓。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.metal.05",
+      "name": "錘角羊",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 12
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "錘角羊自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：彎角與厚蹄、錘形角端。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.metal.06",
+      "name": "銀爪鼬",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 12
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "銀爪鼬自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：修長鼬形、利爪與環狀肩甲。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.wood.01",
+      "name": "藥耳兔",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "藥耳兔自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：長耳或長角、藥草囊與嫩葉。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.wood.02",
+      "name": "青芽雀",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "青芽雀自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：孢子或芽冠、圓潤身形。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.wood.03",
+      "name": "藤尾狸",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "藤尾狸自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：藤索長尾、可操作前肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.wood.04",
+      "name": "松果獾",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 12
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "松果獾自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：蓬鬆毛與種莢裝飾。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.wood.05",
+      "name": "葉冠蜥",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 12
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "葉冠蜥自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：枝葉冠、展翅或修長四肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.wood.06",
+      "name": "花鬚貘",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 12
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "花鬚貘自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：花鬚、柔和長吻與藥紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.water.01",
+      "name": "滴露獺",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "滴露獺自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：水滴尾與圓潤頸背。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.water.02",
+      "name": "泡泡龜",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "泡泡龜自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：玉色長身、波紋冠與薄鰭。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.water.03",
+      "name": "寒苔蛙",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "寒苔蛙自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：層疊殼甲或寬鰭、月珠意象。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.water.04",
+      "name": "溪鰭鯢",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 12
+        },
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "溪鰭鯢自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：長吻或長頸、銀白鬚鬣。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.water.05",
+      "name": "月貝螺",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 12
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "月貝螺自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：水鏡般光滑表面與環形紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.water.06",
+      "name": "墨尾鴨",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 12
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "墨尾鴨自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：深色背部、分岔水尾或羽緣。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.fire.01",
+      "name": "炭尾狐",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "炭尾狐自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：蓬尾或單足鳥形、收斂火羽。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.fire.02",
+      "name": "燈芯蛾",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "燈芯蛾自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：環繞頸部的丹爐意象與短厚身形。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.fire.03",
+      "name": "赤喙鴉",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "赤喙鴉自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：獅鬃或鴉羽、赤金胸部。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.fire.04",
+      "name": "火絨貂",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 12
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "火絨貂自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：長尾羽或扇尾、明確火瓣輪廓。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.fire.05",
+      "name": "焦角豕",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 12
+        },
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "焦角豕自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：粗角或角狀羽冠、熔岩紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.fire.06",
+      "name": "燭鱗蛇",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 12
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "燭鱗蛇自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：蛇形或獅形、甲狀側鱗。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.earth.01",
+      "name": "陶甲獾",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "陶甲獾自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：層疊陶岩肩甲、厚重前爪。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.earth.02",
+      "name": "岩耳兔",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "岩耳兔自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：寬背與山形鬣、短尾。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.earth.03",
+      "name": "砂背鼠",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 20
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "砂背鼠自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：藥土紋、弧角與寬額。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.earth.04",
+      "name": "泥角牛",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 12
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "泥角牛自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：長臂、石製般指節與工作姿態。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.earth.05",
+      "name": "頁岩龜",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 12
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "頁岩龜自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：負碑狀背甲、低重心與粗足。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.fan.earth.06",
+      "name": "石臂猿",
+      "grade": "fan",
+      "gradeName": "凡品",
+      "colorName": "白色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 12
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 12
+        }
+      ],
+      "baseCombatPowerMin": 100,
+      "baseCombatPowerMax": 300,
+      "baseSpeedBonusPercent": 0,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "石臂猿自身名稱的動物形態為第一優先；幼小樸實、無巨大光環。輔助造型意象：蛇尾或長耳、沙紋與精細額冠。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.metal.01",
+      "name": "銅鱗穿山獸",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "銅鱗穿山獸自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：銀色鬚毛、寬挖爪與額前鐵片。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.metal.02",
+      "name": "銀鈴隼",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "銀鈴隼自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：短喙鳥形、金屬羽緣與雙尾羽。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.metal.03",
+      "name": "鐵牙獠犬",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鐵牙獠犬自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：低伏甲殼、分節護背與厚前肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.metal.04",
+      "name": "斷礦獾",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 24
+        },
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "斷礦獾自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：長尾貂形、彎刃尾尖與窄身輪廓。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.metal.05",
+      "name": "鎏尾蜥",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 24
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鎏尾蜥自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：彎角與厚蹄、錘形角端。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.metal.06",
+      "name": "金鬃羚",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 24
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "金鬃羚自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：修長鼬形、利爪與環狀肩甲。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.wood.01",
+      "name": "苔角鹿",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "苔角鹿自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：長耳或長角、藥草囊與嫩葉。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.wood.02",
+      "name": "靈芝貘",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "靈芝貘自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：孢子或芽冠、圓潤身形。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.wood.03",
+      "name": "藥囊狸",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "藥囊狸自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：藤索長尾、可操作前肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.wood.04",
+      "name": "藤鞭猿",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 24
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "藤鞭猿自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：蓬鬆毛與種莢裝飾。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.wood.05",
+      "name": "翠羽雉",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 24
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "翠羽雉自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：枝葉冠、展翅或修長四肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.wood.06",
+      "name": "花冠獬",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 24
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "花冠獬自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：花鬚、柔和長吻與藥紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.water.01",
+      "name": "泉衣獺",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "泉衣獺自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：水滴尾與圓潤頸背。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.water.02",
+      "name": "玉澗鯢",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "玉澗鯢自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：玉色長身、波紋冠與薄鰭。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.water.03",
+      "name": "珠蚌龜",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "珠蚌龜自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：層疊殼甲或寬鰭、月珠意象。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.water.04",
+      "name": "霜鬚海馬",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 24
+        },
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "霜鬚海馬自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：長吻或長頸、銀白鬚鬣。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.water.05",
+      "name": "水鏡鯉",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 24
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "水鏡鯉自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：水鏡般光滑表面與環形紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.water.06",
+      "name": "雲沫鶴",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 24
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "雲沫鶴自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：深色背部、分岔水尾或羽緣。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.fire.01",
+      "name": "丹霞狐",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "丹霞狐自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：蓬尾或單足鳥形、收斂火羽。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.fire.02",
+      "name": "赤爐獾",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "赤爐獾自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：環繞頸部的丹爐意象與短厚身形。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.fire.03",
+      "name": "焰翎鷲",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "焰翎鷲自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：獅鬃或鴉羽、赤金胸部。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.fire.04",
+      "name": "火羽雉",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 24
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "火羽雉自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：長尾羽或扇尾、明確火瓣輪廓。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.fire.05",
+      "name": "燧角犀",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 24
+        },
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "燧角犀自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：粗角或角狀羽冠、熔岩紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.fire.06",
+      "name": "熔紋蜥",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 24
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "熔紋蜥自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：蛇形或獅形、甲狀側鱗。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.earth.01",
+      "name": "銅丘熊",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "銅丘熊自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：層疊陶岩肩甲、厚重前爪。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.earth.02",
+      "name": "山嵐獾",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "山嵐獾自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：寬背與山形鬣、短尾。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.earth.03",
+      "name": "玄壤牛",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 40
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "玄壤牛自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：藥土紋、弧角與寬額。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.earth.04",
+      "name": "礪角羚",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 24
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "礪角羚自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：長臂、石製般指節與工作姿態。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.earth.05",
+      "name": "壘石猿",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 24
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "壘石猿自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：負碑狀背甲、低重心與粗足。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.human.earth.06",
+      "name": "砂翼梟",
+      "grade": "human",
+      "gradeName": "人品",
+      "colorName": "綠色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 24
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 24
+        }
+      ],
+      "baseCombatPowerMin": 300,
+      "baseCombatPowerMax": 600,
+      "baseSpeedBonusPercent": 10,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "砂翼梟自身名稱的動物形態為第一優先；成年工匠靈獸、結構增加但仍親近。輔助造型意象：蛇尾或長耳、沙紋與精細額冠。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.metal.01",
+      "name": "庚羽獅鷲",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "庚羽獅鷲自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：銀色鬚毛、寬挖爪與額前鐵片。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.metal.02",
+      "name": "斷嶽貔犀",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "斷嶽貔犀自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：短喙鳥形、金屬羽緣與雙尾羽。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.metal.03",
+      "name": "金鎧猙",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "金鎧猙自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：低伏甲殼、分節護背與厚前肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.metal.04",
+      "name": "鎏刃螳",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 36
+        },
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鎏刃螳自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：長尾貂形、彎刃尾尖與窄身輪廓。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.metal.05",
+      "name": "星砧象",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 36
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "星砧象自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：彎角與厚蹄、錘形角端。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.metal.06",
+      "name": "鳴鉞鷲",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 36
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鳴鉞鷲自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：修長鼬形、利爪與環狀肩甲。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.wood.01",
+      "name": "青篁鹿",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "青篁鹿自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：長耳或長角、藥草囊與嫩葉。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.wood.02",
+      "name": "千藤狌狌",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "千藤狌狌自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：孢子或芽冠、圓潤身形。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.wood.03",
+      "name": "玉藥白猿",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "玉藥白猿自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：藤索長尾、可操作前肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.wood.04",
+      "name": "靈樞花狐",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 36
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "靈樞花狐自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：蓬鬆毛與種莢裝飾。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.wood.05",
+      "name": "春澤羽鹿",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 36
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "春澤羽鹿自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：枝葉冠、展翅或修長四肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.wood.06",
+      "name": "棲梧鹿蜀",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 36
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "棲梧鹿蜀自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：花鬚、柔和長吻與藥紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.water.01",
+      "name": "寒淵玄黿",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "寒淵玄黿自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：水滴尾與圓潤頸背。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.water.02",
+      "name": "滄瀾螭",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "滄瀾螭自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：玉色長身、波紋冠與薄鰭。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.water.03",
+      "name": "霜華文鰩",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "霜華文鰩自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：層疊殼甲或寬鰭、月珠意象。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.water.04",
+      "name": "銀泉鮫獸",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 36
+        },
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "銀泉鮫獸自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：長吻或長頸、銀白鬚鬣。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.water.05",
+      "name": "雨師長蛙",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 36
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "雨師長蛙自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：水鏡般光滑表面與環形紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.water.06",
+      "name": "冰鑑靈鯢",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 36
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "冰鑑靈鯢自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：深色背部、分岔水尾或羽緣。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.fire.01",
+      "name": "赤焰畢方",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "赤焰畢方自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：蓬尾或單足鳥形、收斂火羽。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.fire.02",
+      "name": "丹爐火猿",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "丹爐火猿自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：環繞頸部的丹爐意象與短厚身形。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.fire.03",
+      "name": "離火狻猊",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "離火狻猊自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：獅鬃或鴉羽、赤金胸部。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.fire.04",
+      "name": "朱翎鸑鷟",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 36
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "朱翎鸑鷟自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：長尾羽或扇尾、明確火瓣輪廓。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.fire.05",
+      "name": "熔金獬豸",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 36
+        },
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "熔金獬豸自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：粗角或角狀羽冠、熔岩紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.fire.06",
+      "name": "流焰赤螭",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 36
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "流焰赤螭自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：蛇形或獅形、甲狀側鱗。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.earth.01",
+      "name": "鎮嶽駁獸",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鎮嶽駁獸自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：層疊陶岩肩甲、厚重前爪。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.earth.02",
+      "name": "坤元岩羆",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "坤元岩羆自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：寬背與山形鬣、短尾。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.earth.03",
+      "name": "玄圃藥犀",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "玄圃藥犀自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：藥土紋、弧角與寬額。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.earth.04",
+      "name": "壘嶽石猿",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 36
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "壘嶽石猿自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：長臂、石製般指節與工作姿態。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.earth.05",
+      "name": "負碑贔屭",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 36
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "負碑贔屭自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：負碑狀背甲、低重心與粗足。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.heaven.earth.06",
+      "name": "流沙蛟",
+      "grade": "heaven",
+      "gradeName": "天品",
+      "colorName": "紅色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 36
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 36
+        }
+      ],
+      "baseCombatPowerMin": 600,
+      "baseCombatPowerMax": 1000,
+      "baseSpeedBonusPercent": 20,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "流沙蛟自身名稱的動物形態為第一優先；神話輪廓鮮明、有專屬角翼殼甲。輔助造型意象：蛇尾或長耳、沙紋與精細額冠。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.metal.01",
+      "name": "白金虎君",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "白金虎君自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：銀色鬚毛、寬挖爪與額前鐵片。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.metal.02",
+      "name": "鎮器貔貅",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鎮器貔貅自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：短喙鳥形、金屬羽緣與雙尾羽。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.metal.03",
+      "name": "太鋒猙獸",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "太鋒猙獸自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：低伏甲殼、分節護背與厚前肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.metal.04",
+      "name": "銀魄天隼",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 48
+        },
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "銀魄天隼自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：長尾貂形、彎刃尾尖與窄身輪廓。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.metal.05",
+      "name": "斷嶽金犀",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 48
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "斷嶽金犀自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：彎角與厚蹄、錘形角端。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.metal.06",
+      "name": "鳴霄金鵬",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 48
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鳴霄金鵬自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：修長鼬形、利爪與環狀肩甲。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.wood.01",
+      "name": "萬藥靈鹿",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "萬藥靈鹿自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：長耳或長角、藥草囊與嫩葉。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.wood.02",
+      "name": "碧霄青鸞",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "碧霄青鸞自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：孢子或芽冠、圓潤身形。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.wood.03",
+      "name": "建木長猿",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "建木長猿自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：藤索長尾、可操作前肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.wood.04",
+      "name": "花海九尾",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 48
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "花海九尾自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：蓬鬆毛與種莢裝飾。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.wood.05",
+      "name": "榮枯白澤",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 48
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "榮枯白澤自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：枝葉冠、展翅或修長四肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.wood.06",
+      "name": "玉枝麒獸",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 48
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "玉枝麒獸自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：花鬚、柔和長吻與藥紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.water.01",
+      "name": "覆海玄龜",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "覆海玄龜自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：水滴尾與圓潤頸背。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.water.02",
+      "name": "滄溟螭龍",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "滄溟螭龍自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：玉色長身、波紋冠與薄鰭。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.water.03",
+      "name": "寒月鮫靈",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "寒月鮫靈自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：層疊殼甲或寬鰭、月珠意象。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.water.04",
+      "name": "雲雨應鶴",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 48
+        },
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "雲雨應鶴自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：長吻或長頸、銀白鬚鬣。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.water.05",
+      "name": "九曲水麒麟",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 48
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "九曲水麒麟自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：水鏡般光滑表面與環形紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.water.06",
+      "name": "玄淵鯤魚",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 48
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "玄淵鯤魚自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：深色背部、分岔水尾或羽緣。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.fire.01",
+      "name": "焚霄朱鶴",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "焚霄朱鶴自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：蓬尾或單足鳥形、收斂火羽。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.fire.02",
+      "name": "九曜丹凰",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "九曜丹凰自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：環繞頸部的丹爐意象與短厚身形。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.fire.03",
+      "name": "赤帝狻猊",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "赤帝狻猊自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：獅鬃或鴉羽、赤金胸部。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.fire.04",
+      "name": "燭炎天狐",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 48
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "燭炎天狐自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：長尾羽或扇尾、明確火瓣輪廓。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.fire.05",
+      "name": "南明畢方",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 48
+        },
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "南明畢方自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：粗角或角狀羽冠、熔岩紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.fire.06",
+      "name": "炎胄獬豸",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 48
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "炎胄獬豸自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：蛇形或獅形、甲狀側鱗。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.earth.01",
+      "name": "承天玄武",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "承天玄武自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：層疊陶岩肩甲、厚重前爪。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.earth.02",
+      "name": "厚土麒麟",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "厚土麒麟自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：寬背與山形鬣、短尾。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.earth.03",
+      "name": "不周巨羆",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 80
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "不周巨羆自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：藥土紋、弧角與寬額。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.earth.04",
+      "name": "負嶽龍龜",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 48
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "負嶽龍龜自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：長臂、石製般指節與工作姿態。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.earth.05",
+      "name": "地脈黃虯",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 48
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "地脈黃虯自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：負碑狀背甲、低重心與粗足。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.saint.earth.06",
+      "name": "鎮壇諦聽",
+      "grade": "saint",
+      "gradeName": "聖品",
+      "colorName": "紫色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 48
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 48
+        }
+      ],
+      "baseCombatPowerMin": 1000,
+      "baseCombatPowerMax": 2000,
+      "baseSpeedBonusPercent": 35,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鎮壇諦聽自身名稱的動物形態為第一優先；威嚴完整的聖獸形態、獨立解剖設計。輔助造型意象：蛇尾或長耳、沙紋與精細額冠。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.metal.01",
+      "name": "庚辰白虎",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "庚辰白虎自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：銀色鬚毛、寬挖爪與額前鐵片。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.metal.02",
+      "name": "鎮天貔貅",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鎮天貔貅自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：短喙鳥形、金屬羽緣與雙尾羽。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.metal.03",
+      "name": "太白天猙",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "太白天猙自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：低伏甲殼、分節護背與厚前肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.metal.04",
+      "name": "昊金九首獅",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 60
+        },
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "昊金九首獅自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：長尾貂形、彎刃尾尖與窄身輪廓。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.metal.05",
+      "name": "斷界金翅鵬",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 60
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "斷界金翅鵬自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：彎角與厚蹄、錘形角端。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.metal.06",
+      "name": "萬器應龍",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "metal",
+      "elementName": "金",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 60
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "萬器應龍自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：修長鼬形、利爪與環狀肩甲。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.wood.01",
+      "name": "建木青龍",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "建木青龍自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：長耳或長角、藥草囊與嫩葉。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.wood.02",
+      "name": "神農白澤",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "神農白澤自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：孢子或芽冠、圓潤身形。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.wood.03",
+      "name": "太古夔牛",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "太古夔牛自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：藤索長尾、可操作前肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.wood.04",
+      "name": "百草九色鹿",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 60
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "百草九色鹿自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：蓬鬆毛與種莢裝飾。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.wood.05",
+      "name": "元春青鸞",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 60
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "元春青鸞自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：枝葉冠、展翅或修長四肢。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.wood.06",
+      "name": "萬象麒麟",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "wood",
+      "elementName": "木",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 60
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "萬象麒麟自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：花鬚、柔和長吻與藥紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.water.01",
+      "name": "滄海玄武",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "滄海玄武自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：水滴尾與圓潤頸背。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.water.02",
+      "name": "北冥鯤鵬",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "北冥鯤鵬自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：玉色長身、波紋冠與薄鰭。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.water.03",
+      "name": "洛水應龍",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "洛水應龍自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：層疊殼甲或寬鰭、月珠意象。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.water.04",
+      "name": "玄冥冰夷",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 60
+        },
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "玄冥冰夷自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：長吻或長頸、銀白鬚鬣。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.water.05",
+      "name": "天河九嬰",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 60
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "天河九嬰自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：水鏡般光滑表面與環形紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.water.06",
+      "name": "溯源白螭",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "water",
+      "elementName": "水",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 60
+        },
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "溯源白螭自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：深色背部、分岔水尾或羽緣。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.fire.01",
+      "name": "南明朱雀",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "南明朱雀自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：蓬尾或單足鳥形、收斂火羽。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.fire.02",
+      "name": "太陽金烏",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "太陽金烏自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：環繞頸部的丹爐意象與短厚身形。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.fire.03",
+      "name": "丹霄鳳凰",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "丹霄鳳凰自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：獅鬃或鴉羽、赤金胸部。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.fire.04",
+      "name": "赤霄畢方",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 60
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "赤霄畢方自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：長尾羽或扇尾、明確火瓣輪廓。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.fire.05",
+      "name": "萬焰燭龍",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "alchemy",
+          "name": "煉丹",
+          "level": 60
+        },
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "萬焰燭龍自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：粗角或角狀羽冠、熔岩紋。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.fire.06",
+      "name": "離天狻猊",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "fire",
+      "elementName": "火",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "enhancement",
+          "name": "強化",
+          "level": 60
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "離天狻猊自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：蛇形或獅形、甲狀側鱗。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.earth.01",
+      "name": "后土麒麟",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 0,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "后土麒麟自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：層疊陶岩肩甲、厚重前爪。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.earth.02",
+      "name": "鎮世贔屭",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 1,
+      "skills": [
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "鎮世贔屭自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：寬背與山形鬣、短尾。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.earth.03",
+      "name": "崑崙陸吾",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 2,
+      "skills": [
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 100
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "崑崙陸吾自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：藥土紋、弧角與寬額。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.earth.04",
+      "name": "開明鎮嶽獸",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 3,
+      "skills": [
+        {
+          "id": "forging",
+          "name": "煉器",
+          "level": 60
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "開明鎮嶽獸自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：長臂、石製般指節與工作姿態。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.earth.05",
+      "name": "九壤騰蛇",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 4,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 60
+        },
+        {
+          "id": "building",
+          "name": "營造",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "九壤騰蛇自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：負碑狀背甲、低重心與粗足。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    },
+    {
+      "id": "spirit_beast.immortal.earth.06",
+      "name": "地藏諦聽",
+      "grade": "immortal",
+      "gradeName": "仙品",
+      "colorName": "橘色",
+      "element": "earth",
+      "elementName": "土",
+      "slot": 5,
+      "skills": [
+        {
+          "id": "mining",
+          "name": "採礦",
+          "level": 60
+        },
+        {
+          "id": "planting",
+          "name": "種植",
+          "level": 60
+        }
+      ],
+      "baseCombatPowerMin": 2000,
+      "baseCombatPowerMax": 5000,
+      "baseSpeedBonusPercent": 50,
+      "hatchWeightWithinGradeElement": 1,
+      "newbornStar": 1,
+      "appearanceBrief": "地藏諦聽自身名稱的動物形態為第一優先；莊嚴神獸主題、角翼足尾全部完整；不得只將低品版本換色。輔助造型意象：蛇尾或長耳、沙紋與精細額冠。具體量產需逐種解剖草圖驗收，不允許套用與物種不符的輪廓。",
+      "artStatus": "agy_verified"
+    }
+  ],
+  "namedRecipes": [
+    {
+      "parentA": "spirit_beast.fan.metal.01",
+      "parentB": "spirit_beast.fan.metal.02",
+      "child": "spirit_beast.human.metal.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.metal.02",
+      "parentB": "spirit_beast.fan.metal.03",
+      "child": "spirit_beast.human.metal.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.metal.03",
+      "parentB": "spirit_beast.fan.metal.04",
+      "child": "spirit_beast.human.metal.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.metal.04",
+      "parentB": "spirit_beast.fan.metal.05",
+      "child": "spirit_beast.human.metal.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.metal.05",
+      "parentB": "spirit_beast.fan.metal.06",
+      "child": "spirit_beast.human.metal.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.metal.06",
+      "parentB": "spirit_beast.fan.metal.01",
+      "child": "spirit_beast.human.metal.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.wood.01",
+      "parentB": "spirit_beast.fan.wood.02",
+      "child": "spirit_beast.human.wood.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.wood.02",
+      "parentB": "spirit_beast.fan.wood.03",
+      "child": "spirit_beast.human.wood.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.wood.03",
+      "parentB": "spirit_beast.fan.wood.04",
+      "child": "spirit_beast.human.wood.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.wood.04",
+      "parentB": "spirit_beast.fan.wood.05",
+      "child": "spirit_beast.human.wood.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.wood.05",
+      "parentB": "spirit_beast.fan.wood.06",
+      "child": "spirit_beast.human.wood.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.wood.06",
+      "parentB": "spirit_beast.fan.wood.01",
+      "child": "spirit_beast.human.wood.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.water.01",
+      "parentB": "spirit_beast.fan.water.02",
+      "child": "spirit_beast.human.water.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.water.02",
+      "parentB": "spirit_beast.fan.water.03",
+      "child": "spirit_beast.human.water.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.water.03",
+      "parentB": "spirit_beast.fan.water.04",
+      "child": "spirit_beast.human.water.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.water.04",
+      "parentB": "spirit_beast.fan.water.05",
+      "child": "spirit_beast.human.water.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.water.05",
+      "parentB": "spirit_beast.fan.water.06",
+      "child": "spirit_beast.human.water.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.water.06",
+      "parentB": "spirit_beast.fan.water.01",
+      "child": "spirit_beast.human.water.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.fire.01",
+      "parentB": "spirit_beast.fan.fire.02",
+      "child": "spirit_beast.human.fire.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.fire.02",
+      "parentB": "spirit_beast.fan.fire.03",
+      "child": "spirit_beast.human.fire.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.fire.03",
+      "parentB": "spirit_beast.fan.fire.04",
+      "child": "spirit_beast.human.fire.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.fire.04",
+      "parentB": "spirit_beast.fan.fire.05",
+      "child": "spirit_beast.human.fire.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.fire.05",
+      "parentB": "spirit_beast.fan.fire.06",
+      "child": "spirit_beast.human.fire.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.fire.06",
+      "parentB": "spirit_beast.fan.fire.01",
+      "child": "spirit_beast.human.fire.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.earth.01",
+      "parentB": "spirit_beast.fan.earth.02",
+      "child": "spirit_beast.human.earth.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.earth.02",
+      "parentB": "spirit_beast.fan.earth.03",
+      "child": "spirit_beast.human.earth.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.earth.03",
+      "parentB": "spirit_beast.fan.earth.04",
+      "child": "spirit_beast.human.earth.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.earth.04",
+      "parentB": "spirit_beast.fan.earth.05",
+      "child": "spirit_beast.human.earth.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.earth.05",
+      "parentB": "spirit_beast.fan.earth.06",
+      "child": "spirit_beast.human.earth.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.fan.earth.06",
+      "parentB": "spirit_beast.fan.earth.01",
+      "child": "spirit_beast.human.earth.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.metal.01",
+      "parentB": "spirit_beast.human.metal.02",
+      "child": "spirit_beast.heaven.metal.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.metal.02",
+      "parentB": "spirit_beast.human.metal.03",
+      "child": "spirit_beast.heaven.metal.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.metal.03",
+      "parentB": "spirit_beast.human.metal.04",
+      "child": "spirit_beast.heaven.metal.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.metal.04",
+      "parentB": "spirit_beast.human.metal.05",
+      "child": "spirit_beast.heaven.metal.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.metal.05",
+      "parentB": "spirit_beast.human.metal.06",
+      "child": "spirit_beast.heaven.metal.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.metal.06",
+      "parentB": "spirit_beast.human.metal.01",
+      "child": "spirit_beast.heaven.metal.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.wood.01",
+      "parentB": "spirit_beast.human.wood.02",
+      "child": "spirit_beast.heaven.wood.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.wood.02",
+      "parentB": "spirit_beast.human.wood.03",
+      "child": "spirit_beast.heaven.wood.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.wood.03",
+      "parentB": "spirit_beast.human.wood.04",
+      "child": "spirit_beast.heaven.wood.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.wood.04",
+      "parentB": "spirit_beast.human.wood.05",
+      "child": "spirit_beast.heaven.wood.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.wood.05",
+      "parentB": "spirit_beast.human.wood.06",
+      "child": "spirit_beast.heaven.wood.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.wood.06",
+      "parentB": "spirit_beast.human.wood.01",
+      "child": "spirit_beast.heaven.wood.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.water.01",
+      "parentB": "spirit_beast.human.water.02",
+      "child": "spirit_beast.heaven.water.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.water.02",
+      "parentB": "spirit_beast.human.water.03",
+      "child": "spirit_beast.heaven.water.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.water.03",
+      "parentB": "spirit_beast.human.water.04",
+      "child": "spirit_beast.heaven.water.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.water.04",
+      "parentB": "spirit_beast.human.water.05",
+      "child": "spirit_beast.heaven.water.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.water.05",
+      "parentB": "spirit_beast.human.water.06",
+      "child": "spirit_beast.heaven.water.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.water.06",
+      "parentB": "spirit_beast.human.water.01",
+      "child": "spirit_beast.heaven.water.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.fire.01",
+      "parentB": "spirit_beast.human.fire.02",
+      "child": "spirit_beast.heaven.fire.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.fire.02",
+      "parentB": "spirit_beast.human.fire.03",
+      "child": "spirit_beast.heaven.fire.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.fire.03",
+      "parentB": "spirit_beast.human.fire.04",
+      "child": "spirit_beast.heaven.fire.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.fire.04",
+      "parentB": "spirit_beast.human.fire.05",
+      "child": "spirit_beast.heaven.fire.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.fire.05",
+      "parentB": "spirit_beast.human.fire.06",
+      "child": "spirit_beast.heaven.fire.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.fire.06",
+      "parentB": "spirit_beast.human.fire.01",
+      "child": "spirit_beast.heaven.fire.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.earth.01",
+      "parentB": "spirit_beast.human.earth.02",
+      "child": "spirit_beast.heaven.earth.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.earth.02",
+      "parentB": "spirit_beast.human.earth.03",
+      "child": "spirit_beast.heaven.earth.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.earth.03",
+      "parentB": "spirit_beast.human.earth.04",
+      "child": "spirit_beast.heaven.earth.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.earth.04",
+      "parentB": "spirit_beast.human.earth.05",
+      "child": "spirit_beast.heaven.earth.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.earth.05",
+      "parentB": "spirit_beast.human.earth.06",
+      "child": "spirit_beast.heaven.earth.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.human.earth.06",
+      "parentB": "spirit_beast.human.earth.01",
+      "child": "spirit_beast.heaven.earth.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.metal.01",
+      "parentB": "spirit_beast.heaven.metal.02",
+      "child": "spirit_beast.saint.metal.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.metal.02",
+      "parentB": "spirit_beast.heaven.metal.03",
+      "child": "spirit_beast.saint.metal.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.metal.03",
+      "parentB": "spirit_beast.heaven.metal.04",
+      "child": "spirit_beast.saint.metal.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.metal.04",
+      "parentB": "spirit_beast.heaven.metal.05",
+      "child": "spirit_beast.saint.metal.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.metal.05",
+      "parentB": "spirit_beast.heaven.metal.06",
+      "child": "spirit_beast.saint.metal.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.metal.06",
+      "parentB": "spirit_beast.heaven.metal.01",
+      "child": "spirit_beast.saint.metal.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.wood.01",
+      "parentB": "spirit_beast.heaven.wood.02",
+      "child": "spirit_beast.saint.wood.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.wood.02",
+      "parentB": "spirit_beast.heaven.wood.03",
+      "child": "spirit_beast.saint.wood.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.wood.03",
+      "parentB": "spirit_beast.heaven.wood.04",
+      "child": "spirit_beast.saint.wood.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.wood.04",
+      "parentB": "spirit_beast.heaven.wood.05",
+      "child": "spirit_beast.saint.wood.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.wood.05",
+      "parentB": "spirit_beast.heaven.wood.06",
+      "child": "spirit_beast.saint.wood.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.wood.06",
+      "parentB": "spirit_beast.heaven.wood.01",
+      "child": "spirit_beast.saint.wood.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.water.01",
+      "parentB": "spirit_beast.heaven.water.02",
+      "child": "spirit_beast.saint.water.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.water.02",
+      "parentB": "spirit_beast.heaven.water.03",
+      "child": "spirit_beast.saint.water.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.water.03",
+      "parentB": "spirit_beast.heaven.water.04",
+      "child": "spirit_beast.saint.water.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.water.04",
+      "parentB": "spirit_beast.heaven.water.05",
+      "child": "spirit_beast.saint.water.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.water.05",
+      "parentB": "spirit_beast.heaven.water.06",
+      "child": "spirit_beast.saint.water.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.water.06",
+      "parentB": "spirit_beast.heaven.water.01",
+      "child": "spirit_beast.saint.water.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.fire.01",
+      "parentB": "spirit_beast.heaven.fire.02",
+      "child": "spirit_beast.saint.fire.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.fire.02",
+      "parentB": "spirit_beast.heaven.fire.03",
+      "child": "spirit_beast.saint.fire.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.fire.03",
+      "parentB": "spirit_beast.heaven.fire.04",
+      "child": "spirit_beast.saint.fire.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.fire.04",
+      "parentB": "spirit_beast.heaven.fire.05",
+      "child": "spirit_beast.saint.fire.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.fire.05",
+      "parentB": "spirit_beast.heaven.fire.06",
+      "child": "spirit_beast.saint.fire.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.fire.06",
+      "parentB": "spirit_beast.heaven.fire.01",
+      "child": "spirit_beast.saint.fire.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.earth.01",
+      "parentB": "spirit_beast.heaven.earth.02",
+      "child": "spirit_beast.saint.earth.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.earth.02",
+      "parentB": "spirit_beast.heaven.earth.03",
+      "child": "spirit_beast.saint.earth.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.earth.03",
+      "parentB": "spirit_beast.heaven.earth.04",
+      "child": "spirit_beast.saint.earth.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.earth.04",
+      "parentB": "spirit_beast.heaven.earth.05",
+      "child": "spirit_beast.saint.earth.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.earth.05",
+      "parentB": "spirit_beast.heaven.earth.06",
+      "child": "spirit_beast.saint.earth.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.heaven.earth.06",
+      "parentB": "spirit_beast.heaven.earth.01",
+      "child": "spirit_beast.saint.earth.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.metal.01",
+      "parentB": "spirit_beast.saint.metal.02",
+      "child": "spirit_beast.immortal.metal.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.metal.02",
+      "parentB": "spirit_beast.saint.metal.03",
+      "child": "spirit_beast.immortal.metal.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.metal.03",
+      "parentB": "spirit_beast.saint.metal.04",
+      "child": "spirit_beast.immortal.metal.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.metal.04",
+      "parentB": "spirit_beast.saint.metal.05",
+      "child": "spirit_beast.immortal.metal.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.metal.05",
+      "parentB": "spirit_beast.saint.metal.06",
+      "child": "spirit_beast.immortal.metal.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.metal.06",
+      "parentB": "spirit_beast.saint.metal.01",
+      "child": "spirit_beast.immortal.metal.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.wood.01",
+      "parentB": "spirit_beast.saint.wood.02",
+      "child": "spirit_beast.immortal.wood.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.wood.02",
+      "parentB": "spirit_beast.saint.wood.03",
+      "child": "spirit_beast.immortal.wood.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.wood.03",
+      "parentB": "spirit_beast.saint.wood.04",
+      "child": "spirit_beast.immortal.wood.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.wood.04",
+      "parentB": "spirit_beast.saint.wood.05",
+      "child": "spirit_beast.immortal.wood.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.wood.05",
+      "parentB": "spirit_beast.saint.wood.06",
+      "child": "spirit_beast.immortal.wood.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.wood.06",
+      "parentB": "spirit_beast.saint.wood.01",
+      "child": "spirit_beast.immortal.wood.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.water.01",
+      "parentB": "spirit_beast.saint.water.02",
+      "child": "spirit_beast.immortal.water.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.water.02",
+      "parentB": "spirit_beast.saint.water.03",
+      "child": "spirit_beast.immortal.water.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.water.03",
+      "parentB": "spirit_beast.saint.water.04",
+      "child": "spirit_beast.immortal.water.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.water.04",
+      "parentB": "spirit_beast.saint.water.05",
+      "child": "spirit_beast.immortal.water.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.water.05",
+      "parentB": "spirit_beast.saint.water.06",
+      "child": "spirit_beast.immortal.water.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.water.06",
+      "parentB": "spirit_beast.saint.water.01",
+      "child": "spirit_beast.immortal.water.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.fire.01",
+      "parentB": "spirit_beast.saint.fire.02",
+      "child": "spirit_beast.immortal.fire.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.fire.02",
+      "parentB": "spirit_beast.saint.fire.03",
+      "child": "spirit_beast.immortal.fire.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.fire.03",
+      "parentB": "spirit_beast.saint.fire.04",
+      "child": "spirit_beast.immortal.fire.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.fire.04",
+      "parentB": "spirit_beast.saint.fire.05",
+      "child": "spirit_beast.immortal.fire.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.fire.05",
+      "parentB": "spirit_beast.saint.fire.06",
+      "child": "spirit_beast.immortal.fire.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.fire.06",
+      "parentB": "spirit_beast.saint.fire.01",
+      "child": "spirit_beast.immortal.fire.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.earth.01",
+      "parentB": "spirit_beast.saint.earth.02",
+      "child": "spirit_beast.immortal.earth.01",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.earth.02",
+      "parentB": "spirit_beast.saint.earth.03",
+      "child": "spirit_beast.immortal.earth.02",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.earth.03",
+      "parentB": "spirit_beast.saint.earth.04",
+      "child": "spirit_beast.immortal.earth.03",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.earth.04",
+      "parentB": "spirit_beast.saint.earth.05",
+      "child": "spirit_beast.immortal.earth.04",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.earth.05",
+      "parentB": "spirit_beast.saint.earth.06",
+      "child": "spirit_beast.immortal.earth.05",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.saint.earth.06",
+      "parentB": "spirit_beast.saint.earth.01",
+      "child": "spirit_beast.immortal.earth.06",
+      "kind": "promotion"
+    },
+    {
+      "parentA": "spirit_beast.immortal.metal.01",
+      "parentB": "spirit_beast.immortal.metal.02",
+      "child": "spirit_beast.immortal.metal.03",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.metal.02",
+      "parentB": "spirit_beast.immortal.metal.03",
+      "child": "spirit_beast.immortal.metal.04",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.metal.03",
+      "parentB": "spirit_beast.immortal.metal.04",
+      "child": "spirit_beast.immortal.metal.05",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.metal.04",
+      "parentB": "spirit_beast.immortal.metal.05",
+      "child": "spirit_beast.immortal.metal.06",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.metal.05",
+      "parentB": "spirit_beast.immortal.metal.06",
+      "child": "spirit_beast.immortal.metal.01",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.metal.06",
+      "parentB": "spirit_beast.immortal.metal.01",
+      "child": "spirit_beast.immortal.metal.02",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.wood.01",
+      "parentB": "spirit_beast.immortal.wood.02",
+      "child": "spirit_beast.immortal.wood.03",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.wood.02",
+      "parentB": "spirit_beast.immortal.wood.03",
+      "child": "spirit_beast.immortal.wood.04",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.wood.03",
+      "parentB": "spirit_beast.immortal.wood.04",
+      "child": "spirit_beast.immortal.wood.05",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.wood.04",
+      "parentB": "spirit_beast.immortal.wood.05",
+      "child": "spirit_beast.immortal.wood.06",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.wood.05",
+      "parentB": "spirit_beast.immortal.wood.06",
+      "child": "spirit_beast.immortal.wood.01",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.wood.06",
+      "parentB": "spirit_beast.immortal.wood.01",
+      "child": "spirit_beast.immortal.wood.02",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.water.01",
+      "parentB": "spirit_beast.immortal.water.02",
+      "child": "spirit_beast.immortal.water.03",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.water.02",
+      "parentB": "spirit_beast.immortal.water.03",
+      "child": "spirit_beast.immortal.water.04",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.water.03",
+      "parentB": "spirit_beast.immortal.water.04",
+      "child": "spirit_beast.immortal.water.05",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.water.04",
+      "parentB": "spirit_beast.immortal.water.05",
+      "child": "spirit_beast.immortal.water.06",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.water.05",
+      "parentB": "spirit_beast.immortal.water.06",
+      "child": "spirit_beast.immortal.water.01",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.water.06",
+      "parentB": "spirit_beast.immortal.water.01",
+      "child": "spirit_beast.immortal.water.02",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.fire.01",
+      "parentB": "spirit_beast.immortal.fire.02",
+      "child": "spirit_beast.immortal.fire.03",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.fire.02",
+      "parentB": "spirit_beast.immortal.fire.03",
+      "child": "spirit_beast.immortal.fire.04",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.fire.03",
+      "parentB": "spirit_beast.immortal.fire.04",
+      "child": "spirit_beast.immortal.fire.05",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.fire.04",
+      "parentB": "spirit_beast.immortal.fire.05",
+      "child": "spirit_beast.immortal.fire.06",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.fire.05",
+      "parentB": "spirit_beast.immortal.fire.06",
+      "child": "spirit_beast.immortal.fire.01",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.fire.06",
+      "parentB": "spirit_beast.immortal.fire.01",
+      "child": "spirit_beast.immortal.fire.02",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.earth.01",
+      "parentB": "spirit_beast.immortal.earth.02",
+      "child": "spirit_beast.immortal.earth.03",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.earth.02",
+      "parentB": "spirit_beast.immortal.earth.03",
+      "child": "spirit_beast.immortal.earth.04",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.earth.03",
+      "parentB": "spirit_beast.immortal.earth.04",
+      "child": "spirit_beast.immortal.earth.05",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.earth.04",
+      "parentB": "spirit_beast.immortal.earth.05",
+      "child": "spirit_beast.immortal.earth.06",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.earth.05",
+      "parentB": "spirit_beast.immortal.earth.06",
+      "child": "spirit_beast.immortal.earth.01",
+      "kind": "immortal_respecialization"
+    },
+    {
+      "parentA": "spirit_beast.immortal.earth.06",
+      "parentB": "spirit_beast.immortal.earth.01",
+      "child": "spirit_beast.immortal.earth.02",
+      "kind": "immortal_respecialization"
+    }
+  ]
+}

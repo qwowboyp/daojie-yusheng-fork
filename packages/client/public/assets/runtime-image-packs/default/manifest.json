@@ -1872,15 +1872,6 @@
       "fit": "contain",
       "insetRatio": 0.04
     },
-    "container:月露草": {
-      "src": "containers/herb_moondew_grass.png",
-      "cols": 1,
-      "rows": 1,
-      "col": 0,
-      "row": 0,
-      "fit": "contain",
-      "insetRatio": 0.04
-    },
     "container:landmark.herb.moondew_grass": {
       "src": "containers/herb_moondew_grass.png",
       "cols": 1,
@@ -1944,26 +1935,8 @@
       "fit": "contain",
       "insetRatio": 0.04
     },
-    "container:明心花": {
-      "src": "containers/herb_clear_mind_flower.png",
-      "cols": 1,
-      "rows": 1,
-      "col": 0,
-      "row": 0,
-      "fit": "contain",
-      "insetRatio": 0.04
-    },
     "container:landmark.herb.clear_mind_flower": {
       "src": "containers/herb_clear_mind_flower.png",
-      "cols": 1,
-      "rows": 1,
-      "col": 0,
-      "row": 0,
-      "fit": "contain",
-      "insetRatio": 0.04
-    },
-    "container:赤芽果": {
-      "src": "containers/herb_bloodbud_fruit.png",
       "cols": 1,
       "rows": 1,
       "col": 0,
@@ -2009,15 +1982,6 @@
     },
     "container:landmark.herb.swiftwind_reed": {
       "src": "containers/herb_swiftwind_reed.png",
-      "cols": 1,
-      "rows": 1,
-      "col": 0,
-      "row": 0,
-      "fit": "contain",
-      "insetRatio": 0.04
-    },
-    "container:苦心藤": {
-      "src": "containers/herb_bitterheart_vine.png",
       "cols": 1,
       "rows": 1,
       "col": 0,
@@ -2106,15 +2070,6 @@
       "fit": "contain",
       "insetRatio": 0.04
     },
-    "container:月井蕊": {
-      "src": "containers/herb_moonwell_stamen.png",
-      "cols": 1,
-      "rows": 1,
-      "col": 0,
-      "row": 0,
-      "fit": "contain",
-      "insetRatio": 0.04
-    },
     "container:landmark.herb.moonwell_stamen": {
       "src": "containers/herb_moonwell_stamen.png",
       "cols": 1,
@@ -2124,26 +2079,8 @@
       "fit": "contain",
       "insetRatio": 0.04
     },
-    "container:灼心瓣": {
-      "src": "containers/herb_scorchheart_petal.png",
-      "cols": 1,
-      "rows": 1,
-      "col": 0,
-      "row": 0,
-      "fit": "contain",
-      "insetRatio": 0.04
-    },
     "container:landmark.herb.scorchheart_petal": {
       "src": "containers/herb_scorchheart_petal.png",
-      "cols": 1,
-      "rows": 1,
-      "col": 0,
-      "row": 0,
-      "fit": "contain",
-      "insetRatio": 0.04
-    },
-    "container:炎穗芒": {
-      "src": "containers/herb_flamegrain_spike.png",
       "cols": 1,
       "rows": 1,
       "col": 0,
@@ -2196,15 +2133,6 @@
       "fit": "contain",
       "insetRatio": 0.04
     },
-    "container:金芒棘": {
-      "src": "containers/herb_goldthread_briar.png",
-      "cols": 1,
-      "rows": 1,
-      "col": 0,
-      "row": 0,
-      "fit": "contain",
-      "insetRatio": 0.04
-    },
     "container:landmark.herb.goldthread_briar": {
       "src": "containers/herb_goldthread_briar.png",
       "cols": 1,
@@ -2225,15 +2153,6 @@
     },
     "container:landmark.herb.ironvein_caltrop": {
       "src": "containers/herb_ironvein_caltrop.png",
-      "cols": 1,
-      "rows": 1,
-      "col": 0,
-      "row": 0,
-      "fit": "contain",
-      "insetRatio": 0.04
-    },
-    "container:霜刃晶": {
-      "src": "containers/herb_frostblade_frost_crystal.png",
       "cols": 1,
       "rows": 1,
       "col": 0,
@@ -2322,26 +2241,8 @@
       "fit": "contain",
       "insetRatio": 0.04
     },
-    "container:焦木心": {
-      "src": "containers/herb_blazewood_charwood_heart.png",
-      "cols": 1,
-      "rows": 1,
-      "col": 0,
-      "row": 0,
-      "fit": "contain",
-      "insetRatio": 0.04
-    },
     "container:landmark.herb.blazewood_charwood_heart": {
       "src": "containers/herb_blazewood_charwood_heart.png",
-      "cols": 1,
-      "rows": 1,
-      "col": 0,
-      "row": 0,
-      "fit": "contain",
-      "insetRatio": 0.04
-    },
-    "container:玄壤精土": {
-      "src": "containers/herb_darksoil_vein_stone.png",
       "cols": 1,
       "rows": 1,
       "col": 0,
@@ -2591,6 +2492,90 @@
       "row": 0,
       "fit": "contain",
       "insetRatio": 0.04
+    },
+    "building:spirit_incubator_metal": {
+      "src": "/assets/building-art/v1/spirit_incubator_metal-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:spirit_incubator_wood": {
+      "src": "/assets/building-art/v1/spirit_incubator_wood-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:spirit_incubator_water": {
+      "src": "/assets/building-art/v1/spirit_incubator_water-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:spirit_incubator_fire": {
+      "src": "/assets/building-art/v1/spirit_incubator_fire-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:spirit_incubator_earth": {
+      "src": "/assets/building-art/v1/spirit_incubator_earth-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:sect_iron_mine": {
+      "src": "/assets/building-art/v1/sect_iron_mine-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:sect_spirit_stone_mine": {
+      "src": "/assets/building-art/v1/sect_spirit_stone_mine-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:sect_spirit_field": {
+      "src": "/assets/building-art/v1/sect_spirit_field-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:sect_forging_station": {
+      "src": "/assets/building-art/v1/sect_forging_station-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:sect_enhancement_station": {
+      "src": "/assets/building-art/v1/sect_enhancement_station-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:sect_alchemy_station": {
+      "src": "/assets/building-art/v1/sect_alchemy_station-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:spirit_egg_enhancement_station": {
+      "src": "/assets/building-art/v1/spirit_egg_enhancement_station-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:spirit_beast_cultivation_station": {
+      "src": "/assets/building-art/v1/spirit_beast_cultivation_station-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
+    },
+    "building:spirit_beast_fusion_station": {
+      "src": "/assets/building-art/v1/spirit_beast_fusion_station-ground-256.webp",
+      "cols": 1,
+      "rows": 1,
+      "fit": "contain"
     }
   }
 }

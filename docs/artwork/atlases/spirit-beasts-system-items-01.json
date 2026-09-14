@@ -1,0 +1,890 @@
+{
+  "id": "spirit-beasts-system-items-01",
+  "source": ".runtime\\reports\\spirit-beasts-design-20260914\\art\\items\\spirit-beasts-items-raw.png",
+  "sourceSha256": "eac9412242c6d3d5047b76c6805d5c828064733e8291d1386216af5800752e0f",
+  "nativeDimensions": [
+    1264,
+    848
+  ],
+  "records": [
+    {
+      "id": "spirit_egg.metal",
+      "cell": {
+        "col": 0,
+        "row": 0,
+        "left": 0,
+        "top": 0,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\spirit_egg.metal-96.webp",
+          "sha256": "1556ffcc437d5574302a67949d41919946630054e17b5967712a9016d980930f",
+          "bytes": 3136
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\spirit_egg.metal-192.webp",
+          "sha256": "0645495baac331b3a57a085347cd7da75e96b928041ff4ea5411a78f4943affb",
+          "bytes": 7888
+        }
+      ]
+    },
+    {
+      "id": "spirit_egg.wood",
+      "cell": {
+        "col": 1,
+        "row": 0,
+        "left": 211,
+        "top": 0,
+        "width": 210,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\spirit_egg.wood-96.webp",
+          "sha256": "c7b9e769b7d653a93882f7bdde6b0cffa3103b295bc067d7711fb6684f3a00e9",
+          "bytes": 3262
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\spirit_egg.wood-192.webp",
+          "sha256": "ff0106621d62bccacbf32b139463e7fecc9a45d2dda3da902b45f16735c8e44c",
+          "bytes": 7616
+        }
+      ]
+    },
+    {
+      "id": "spirit_egg.water",
+      "cell": {
+        "col": 2,
+        "row": 0,
+        "left": 421,
+        "top": 0,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\spirit_egg.water-96.webp",
+          "sha256": "a780eda4828e9857aaca711c2b22b225f9d1c59167a3cf3012ad6e96822f9197",
+          "bytes": 2336
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\spirit_egg.water-192.webp",
+          "sha256": "70ac9afaea83b83b168d274941111c22b59120563fa402fc78b3f2f151f5ece4",
+          "bytes": 4924
+        }
+      ]
+    },
+    {
+      "id": "spirit_egg.fire",
+      "cell": {
+        "col": 3,
+        "row": 0,
+        "left": 632,
+        "top": 0,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\spirit_egg.fire-96.webp",
+          "sha256": "c501838dd92e4bf5351e17d7a1737384ef21b966ae31c12dede2ef4128f4b7c8",
+          "bytes": 2372
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\spirit_egg.fire-192.webp",
+          "sha256": "657a0d4df8c5fc5a366114ba8b7bb385b1553ace4b486e8453777c7b515d2d26",
+          "bytes": 4896
+        }
+      ]
+    },
+    {
+      "id": "spirit_egg.earth",
+      "cell": {
+        "col": 4,
+        "row": 0,
+        "left": 843,
+        "top": 0,
+        "width": 210,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\spirit_egg.earth-96.webp",
+          "sha256": "237e04abcc0d0a0b7b23090054c2efeed35af249fabeda83df3e92054c4dbd5d",
+          "bytes": 2940
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\spirit_egg.earth-192.webp",
+          "sha256": "769a7e2b73ed3b24d149ba9f0e60ba95be2a39f675959e63c1ad09e8a6df07e6",
+          "bytes": 6480
+        }
+      ]
+    },
+    {
+      "id": "seed.returnspring_leaf",
+      "cell": {
+        "col": 5,
+        "row": 0,
+        "left": 1053,
+        "top": 0,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\seed.returnspring_leaf-96.webp",
+          "sha256": "34f26895d446d34c0ef377a65bde69f7037c1785e345e5cf930a14c7a9299b56",
+          "bytes": 3298
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\seed.returnspring_leaf-192.webp",
+          "sha256": "81459d084404c73ff0fddac6ffcee4275238111d6c66fcf6310dc2b2072a311d",
+          "bytes": 7766
+        }
+      ]
+    },
+    {
+      "id": "seed.longvein_vine",
+      "cell": {
+        "col": 0,
+        "row": 1,
+        "left": 0,
+        "top": 212,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\seed.longvein_vine-96.webp",
+          "sha256": "d39a9ab7ca8fa056023ab0154458e545a077d8d65362f86fadc810f32ab49944",
+          "bytes": 4310
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\seed.longvein_vine-192.webp",
+          "sha256": "e5b0b2f92cbed45d769e43f81eae7fd432c35a2004fbcf630ca63dd9a8ffe652",
+          "bytes": 10226
+        }
+      ]
+    },
+    {
+      "id": "seed.coldmarrow_reed",
+      "cell": {
+        "col": 1,
+        "row": 1,
+        "left": 211,
+        "top": 212,
+        "width": 210,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\seed.coldmarrow_reed-96.webp",
+          "sha256": "a846b5f723a5bb2cb6b48587bbb75c69dd2aa4d1c4ccc76885e9ef8f624b4e9a",
+          "bytes": 2892
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\seed.coldmarrow_reed-192.webp",
+          "sha256": "c32902d0e6ea740419fbfb2964ed608a933c89dbf82457e6f0a91c4a44819d4d",
+          "bytes": 6628
+        }
+      ]
+    },
+    {
+      "id": "seed.bearingroot_ginseng",
+      "cell": {
+        "col": 2,
+        "row": 1,
+        "left": 421,
+        "top": 212,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\seed.bearingroot_ginseng-96.webp",
+          "sha256": "5ae10a0e931accef3142018ec91b73e541f2225449bcf428053ae5fcd71c69c6",
+          "bytes": 3222
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\seed.bearingroot_ginseng-192.webp",
+          "sha256": "046b1c66e4a842a26ba1598eae357edb829fd7c791324323232e03321c542fd3",
+          "bytes": 7566
+        }
+      ]
+    },
+    {
+      "id": "seed.goldthread_briar",
+      "cell": {
+        "col": 3,
+        "row": 1,
+        "left": 632,
+        "top": 212,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\seed.goldthread_briar-96.webp",
+          "sha256": "c97017e5ac44a673144fd9f330b65e6fd90d4f222f5abecffaf2ceaa78a82d37",
+          "bytes": 3596
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\items\\seed.goldthread_briar-192.webp",
+          "sha256": "796e5f570ebfe0c67edb5974b112aa5044aee91f5a46446de87aba8585a3798b",
+          "bytes": 8630
+        }
+      ]
+    },
+    {
+      "id": "spirit_incubator_metal",
+      "cell": {
+        "col": 4,
+        "row": 1,
+        "left": 843,
+        "top": 212,
+        "width": 210,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_metal-96.webp",
+          "sha256": "35aca69b1e9b9a76b0b9a8ce5f0bcf243b731091268a6cf0291f25d80ba5de2a",
+          "bytes": 5732
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_metal-192.webp",
+          "sha256": "a3adb2f3770b94a800e4cb8da7d0a98cd7c4e195d3daa09970b20fc445d5c1c6",
+          "bytes": 13328
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_metal-256.webp",
+          "sha256": "ed8a9c0354ae11044ace966cf3f57f747dca63b657a6b67140bfa83e6baa806e",
+          "bytes": 16958
+        }
+      ]
+    },
+    {
+      "id": "spirit_incubator_wood",
+      "cell": {
+        "col": 5,
+        "row": 1,
+        "left": 1053,
+        "top": 212,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_wood-96.webp",
+          "sha256": "476730f398739693887057ca9e2763c243d3447701441fd0b9d9b9fd215fd99b",
+          "bytes": 4592
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_wood-192.webp",
+          "sha256": "d37b111a791c1d00abad303a8102e329b5aadebf5641ce357c636eccfcf5fccf",
+          "bytes": 11098
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_wood-256.webp",
+          "sha256": "4e4a354090c95d9981236e436a2b23723ca2351849ecc395a626d790f6e54ecd",
+          "bytes": 13984
+        }
+      ]
+    },
+    {
+      "id": "spirit_incubator_water",
+      "cell": {
+        "col": 0,
+        "row": 2,
+        "left": 0,
+        "top": 424,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_water-96.webp",
+          "sha256": "79d18ef2bcf87cc40987696d48393b45cdd88041100b414438dba75e5566df12",
+          "bytes": 3554
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_water-192.webp",
+          "sha256": "bf55da6cfc3620f83d9d4a7599b0c6b25d9ca42b97799c21fc6dff90065ddd2f",
+          "bytes": 7898
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_water-256.webp",
+          "sha256": "b17db79ffa0f570cade8aa8028ae0fc94f1390b52f45fbaf8ff3457681dd29f6",
+          "bytes": 9928
+        }
+      ]
+    },
+    {
+      "id": "spirit_incubator_fire",
+      "cell": {
+        "col": 1,
+        "row": 2,
+        "left": 211,
+        "top": 424,
+        "width": 210,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_fire-96.webp",
+          "sha256": "c04b8aaa1b76e92cb55aaf342f8aae7314264f933d520891b258c2183b1513d1",
+          "bytes": 3414
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_fire-192.webp",
+          "sha256": "34254aa00714a42aefbeaf1423844c371a950894dd9a232d285aef49d48d2b5e",
+          "bytes": 7582
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_fire-256.webp",
+          "sha256": "fa3c13a960682a85cdd0f302d5e798ae24df1424cb70f99f0131e683ac18226a",
+          "bytes": 9154
+        }
+      ]
+    },
+    {
+      "id": "spirit_incubator_earth",
+      "cell": {
+        "col": 2,
+        "row": 2,
+        "left": 421,
+        "top": 424,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_earth-96.webp",
+          "sha256": "443d37c7b4a3ddf8201fb2b8ef552ad8713d3517639a835ae3a5cb5f319b905c",
+          "bytes": 4054
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_earth-192.webp",
+          "sha256": "db38e09299f2a89532d399c2bf72260f046565593ff1f0c904d6da718707fda6",
+          "bytes": 8932
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_incubator_earth-256.webp",
+          "sha256": "6aa2af7c251befc89d995e70fbe951978fa498af1deabcf7352e24ccc80cbc59",
+          "bytes": 10560
+        }
+      ]
+    },
+    {
+      "id": "sect_iron_mine",
+      "cell": {
+        "col": 3,
+        "row": 2,
+        "left": 632,
+        "top": 424,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_iron_mine-96.webp",
+          "sha256": "634030c8fc24f52c15e01a81346edb23481aae50dd63ae3fda73acae790a9af2",
+          "bytes": 4340
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_iron_mine-192.webp",
+          "sha256": "3ebb2a7d12e50d9fc8bd105dc67e1216e4fc27c4869c9977d5e1fea371d18452",
+          "bytes": 10334
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_iron_mine-256.webp",
+          "sha256": "8879123b47cb8b2e8f2eabf1f60ef3c96511d8dc5a065b9e1475ca7b1cf3b351",
+          "bytes": 12824
+        }
+      ]
+    },
+    {
+      "id": "sect_spirit_stone_mine",
+      "cell": {
+        "col": 4,
+        "row": 2,
+        "left": 843,
+        "top": 424,
+        "width": 210,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_spirit_stone_mine-96.webp",
+          "sha256": "d78ad823ae19763862e6b0751c78159fdeea9a09d67683d6b65cc1db517d6589",
+          "bytes": 4368
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_spirit_stone_mine-192.webp",
+          "sha256": "d66416749cdb286c6fbe43f8c4471b551d396d3a2151722eed60b432645bbe2b",
+          "bytes": 10234
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_spirit_stone_mine-256.webp",
+          "sha256": "e61d4d65524b11bbd1295038a8a3aeaa1246f27a289d5ec4a992613342f7c0e0",
+          "bytes": 12560
+        }
+      ]
+    },
+    {
+      "id": "sect_spirit_field",
+      "cell": {
+        "col": 5,
+        "row": 2,
+        "left": 1053,
+        "top": 424,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_spirit_field-96.webp",
+          "sha256": "5853281d03acb717ec2683144bb720efdd3a75450fe41dc588b8049dbb82a713",
+          "bytes": 3258
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_spirit_field-192.webp",
+          "sha256": "133348171db4f8f2c92ae0a94eb83c5fc6d6487ef08931705b060c34a6f0eba4",
+          "bytes": 7494
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_spirit_field-256.webp",
+          "sha256": "3d8e711f048f0751480627dd11bf9b775fbeb8af9cb6dc057e144b5721666614",
+          "bytes": 9040
+        }
+      ]
+    },
+    {
+      "id": "sect_forging_station",
+      "cell": {
+        "col": 0,
+        "row": 3,
+        "left": 0,
+        "top": 636,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_forging_station-96.webp",
+          "sha256": "69da4c82e23c6f1062a8bf226be2d29e0bdff2f24c0047e8244b98a2b99d2846",
+          "bytes": 3648
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_forging_station-192.webp",
+          "sha256": "5a159306b51947f72dba059a166ac0324345b06ce2411464b106b0bdbbe8082e",
+          "bytes": 8016
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_forging_station-256.webp",
+          "sha256": "88e4252634a16a21cbf1e639e6b96793d2216a7280e2452ce7d05bb3571eaf0c",
+          "bytes": 9554
+        }
+      ]
+    },
+    {
+      "id": "sect_enhancement_station",
+      "cell": {
+        "col": 1,
+        "row": 3,
+        "left": 211,
+        "top": 636,
+        "width": 210,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_enhancement_station-96.webp",
+          "sha256": "2522195f935b929fcad05338c44ad8a2cabfb10cb6b7a3d8ab1a8af2e078961d",
+          "bytes": 3478
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_enhancement_station-192.webp",
+          "sha256": "2ffab1fd414fdb9f681ce037af7bff006f484d4ec8c015020e480afa278d29cc",
+          "bytes": 8032
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_enhancement_station-256.webp",
+          "sha256": "f15e0fec5095fc8f82b90e8738abb0c2cdb008a4fb99957afdd819ed02e1d08b",
+          "bytes": 9582
+        }
+      ]
+    },
+    {
+      "id": "sect_alchemy_station",
+      "cell": {
+        "col": 2,
+        "row": 3,
+        "left": 421,
+        "top": 636,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_alchemy_station-96.webp",
+          "sha256": "fc88d550dde50a385bddf9ba6ac71d96d35e3ce18247e3c41435a22ab7d5313b",
+          "bytes": 3068
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_alchemy_station-192.webp",
+          "sha256": "caf9e7dce3fdcc4a462e24e484caa2eb03bae86a45af94cd8f10729ad982c8d1",
+          "bytes": 6578
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\sect_alchemy_station-256.webp",
+          "sha256": "4d2c0aba58961478f128d2e387768619312f6e4b7b53b741e2cf838599f13964",
+          "bytes": 7910
+        }
+      ]
+    },
+    {
+      "id": "spirit_egg_enhancement_station",
+      "cell": {
+        "col": 3,
+        "row": 3,
+        "left": 632,
+        "top": 636,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_egg_enhancement_station-96.webp",
+          "sha256": "2ebc5747d116b42a197dfc3a0d9dffed403823361b482a1a9e4e707876a75949",
+          "bytes": 3730
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_egg_enhancement_station-192.webp",
+          "sha256": "99f5b5740773155b0b605dfaaffba6fa3ae74e32eb053814ac136d9d4c4a6870",
+          "bytes": 8814
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_egg_enhancement_station-256.webp",
+          "sha256": "4d594d7552ab53aeab9a5aac4d30beb8b3f1287996718538ca1debd5edf568fc",
+          "bytes": 11144
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast_cultivation_station",
+      "cell": {
+        "col": 4,
+        "row": 3,
+        "left": 843,
+        "top": 636,
+        "width": 210,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_beast_cultivation_station-96.webp",
+          "sha256": "d79a5704081b0dcd661cc0ee72f294ccf3cf9e5d1f733508b052aee58a790ff1",
+          "bytes": 3922
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_beast_cultivation_station-192.webp",
+          "sha256": "0ff37a0e1ea02eca39b9b8278d98fe0a068fddbf2204abaf331362ad7e3004bf",
+          "bytes": 9322
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_beast_cultivation_station-256.webp",
+          "sha256": "93d405fe0ac8148d12fc74fbc4ccfd30e2dc1d3ba98ef2947d58c094f68789de",
+          "bytes": 11610
+        }
+      ]
+    },
+    {
+      "id": "spirit_beast_fusion_station",
+      "cell": {
+        "col": 5,
+        "row": 3,
+        "left": 1053,
+        "top": 636,
+        "width": 211,
+        "height": 212
+      },
+      "extraction": {
+        "method": "magenta-chroma-key-upper-cell",
+        "alphaKey": "#ff00ff",
+        "excludedReason": "generator-added-labels"
+      },
+      "outputs": [
+        {
+          "size": 96,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_beast_fusion_station-96.webp",
+          "sha256": "65b8e48f56b7d721d0fd3ad01b6fec4a1b86ab9bab90fe2b40157926e1714ceb",
+          "bytes": 4770
+        },
+        {
+          "size": 192,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_beast_fusion_station-192.webp",
+          "sha256": "69db3f44b683acf2fe5f6c1750fde986376593d04aa891f2050f3b4f298cb702",
+          "bytes": 11768
+        },
+        {
+          "size": 256,
+          "path": "packages\\client\\public\\assets\\spirit-beasts\\buildings\\spirit_beast_fusion_station-256.webp",
+          "sha256": "7054c666bde2d98fe667426f77048918a863ee54f4912ef8ab09fa65cc3781c0",
+          "bytes": 14934
+        }
+      ]
+    }
+  ],
+  "aliases": {
+    "spirit_egg.metal.star1": "spirit_egg.metal",
+    "spirit_egg.metal.star2": "spirit_egg.metal",
+    "spirit_egg.metal.star3": "spirit_egg.metal",
+    "spirit_egg.metal.star4": "spirit_egg.metal",
+    "spirit_egg.metal.star5": "spirit_egg.metal",
+    "spirit_egg.wood.star1": "spirit_egg.wood",
+    "spirit_egg.wood.star2": "spirit_egg.wood",
+    "spirit_egg.wood.star3": "spirit_egg.wood",
+    "spirit_egg.wood.star4": "spirit_egg.wood",
+    "spirit_egg.wood.star5": "spirit_egg.wood",
+    "spirit_egg.water.star1": "spirit_egg.water",
+    "spirit_egg.water.star2": "spirit_egg.water",
+    "spirit_egg.water.star3": "spirit_egg.water",
+    "spirit_egg.water.star4": "spirit_egg.water",
+    "spirit_egg.water.star5": "spirit_egg.water",
+    "spirit_egg.fire.star1": "spirit_egg.fire",
+    "spirit_egg.fire.star2": "spirit_egg.fire",
+    "spirit_egg.fire.star3": "spirit_egg.fire",
+    "spirit_egg.fire.star4": "spirit_egg.fire",
+    "spirit_egg.fire.star5": "spirit_egg.fire",
+    "spirit_egg.earth.star1": "spirit_egg.earth",
+    "spirit_egg.earth.star2": "spirit_egg.earth",
+    "spirit_egg.earth.star3": "spirit_egg.earth",
+    "spirit_egg.earth.star4": "spirit_egg.earth",
+    "spirit_egg.earth.star5": "spirit_egg.earth"
+  },
+  "canonicalItemAliases": [
+    "spirit_egg.metal.star1",
+    "spirit_egg.metal.star2",
+    "spirit_egg.metal.star3",
+    "spirit_egg.metal.star4",
+    "spirit_egg.metal.star5",
+    "spirit_egg.wood.star1",
+    "spirit_egg.wood.star2",
+    "spirit_egg.wood.star3",
+    "spirit_egg.wood.star4",
+    "spirit_egg.wood.star5",
+    "spirit_egg.water.star1",
+    "spirit_egg.water.star2",
+    "spirit_egg.water.star3",
+    "spirit_egg.water.star4",
+    "spirit_egg.water.star5",
+    "spirit_egg.fire.star1",
+    "spirit_egg.fire.star2",
+    "spirit_egg.fire.star3",
+    "spirit_egg.fire.star4",
+    "spirit_egg.fire.star5",
+    "spirit_egg.earth.star1",
+    "spirit_egg.earth.star2",
+    "spirit_egg.earth.star3",
+    "spirit_egg.earth.star4",
+    "spirit_egg.earth.star5",
+    "seed.returnspring_leaf",
+    "seed.longvein_vine",
+    "seed.coldmarrow_reed",
+    "seed.bearingroot_ginseng",
+    "seed.goldthread_briar"
+  ],
+  "canonicalBuildingIds": [
+    "spirit_incubator_metal",
+    "spirit_incubator_wood",
+    "spirit_incubator_water",
+    "spirit_incubator_fire",
+    "spirit_incubator_earth",
+    "sect_iron_mine",
+    "sect_spirit_stone_mine",
+    "sect_spirit_field",
+    "sect_forging_station",
+    "sect_enhancement_station",
+    "sect_alchemy_station",
+    "spirit_egg_enhancement_station",
+    "spirit_beast_cultivation_station",
+    "spirit_beast_fusion_station"
+  ]
+}

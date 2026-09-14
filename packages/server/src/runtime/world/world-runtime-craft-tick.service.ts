@@ -1,3 +1,4 @@
+import { PlantingStrategy } from '../craft/pipeline/strategies/planting.strategy';
 /**
  * 本文件属于服务端权威运行时，负责地图、玩家、世界、市场、邮件或后台运行态逻辑。
  *
@@ -88,6 +89,7 @@ export class WorldRuntimeCraftTickService {
         this.pipeline.register(new TransmissionStrategy());
         this.pipeline.register(new GatherStrategy());
         this.pipeline.register(new MiningStrategy());
+        this.pipeline.register(new PlantingStrategy());
         this.pipeline.register(new BuildingStrategy());
         this.pipeline.register(new FormationStrategy());
         this.queueService = new TechniqueActivityQueueService(this.pipeline);
@@ -408,6 +410,7 @@ export class WorldRuntimeCraftTickService {
         if (player.transmissionJob && Number(player.transmissionJob.remainingTicks) > 0) return 'transmission';
         if (player.gatherJob && Number(player.gatherJob.remainingTicks) > 0) return 'gather';
         if (player.miningJob && Number(player.miningJob.remainingTicks) > 0) return 'mining';
+        if (player.plantingJob && Number(player.plantingJob.remainingTicks) > 0) return 'planting';
         if (player.buildingJob && Number(player.buildingJob.remainingTicks) > 0) return 'building';
         if (player.formationJob && Number(player.formationJob.remainingTicks) > 0) return 'formation';
         return null;
@@ -443,6 +446,7 @@ function hasTechniqueActivityTickWork(player: any): boolean {
         || hasTechniqueActivityJob(player.gatherJob)
         || hasTechniqueActivityJob(player.buildingJob)
         || hasTechniqueActivityJob(player.miningJob)
+        || hasTechniqueActivityJob(player.plantingJob)
         || hasTechniqueActivityJob(player.formationJob)
     ) {
         return true;

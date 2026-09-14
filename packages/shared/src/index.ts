@@ -126,3 +126,6 @@ export * from './name-visibility';
 export * from './tutorial-mechanics.generated';
 export * from './actor';
 export * from './procgen';
+export * from './spirit-beast-types';
+export * from './spirit-beast-rules';
+export * from './spirit-beast-catalog.generated';

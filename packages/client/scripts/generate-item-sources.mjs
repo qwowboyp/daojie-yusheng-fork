@@ -690,6 +690,31 @@ function main() {
   );
   const itemNameById = buildItemNameById(items);
 
+  const spiritBeastContent = readJson(path.join(clientDir, '../server/data/content/spirit-beasts/catalog.json'));
+  for (const item of items) {
+    if (!item.itemId.startsWith('spirit_egg.')) continue;
+    pushSource(sourceByItemId, item.itemId, {
+      kind: 'acquisition_rule', mapId: 'world', mapName: '宗門核心', ruleId: 'spirit-beast-monster-egg',
+      title: '極稀有靈蛋掉落', description: '擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。',
+    });
+  }
+  for (const seed of spiritBeastContent.seeds) {
+    pushSource(sourceByItemId, seed.itemId, {
+      kind: 'acquisition_rule', mapId: 'sect', mapName: '宗門核心', ruleId: 'spirit-beast-seed-supply',
+      title: '靈種補給', description: `開啟宗門核心 → 靈獸管理 → 宗門工作，以${seed.purchaseSpiritStones}靈石購買一顆。`,
+    });
+    pushSource(sourceByItemId, seed.outputItemId, {
+      kind: 'acquisition_rule', mapId: 'sect', mapName: '宗門靈田', ruleId: 'spirit-beast-field-harvest',
+      title: '靈田收成', description: `規劃${seed.name}，播種後生長3600息並完成澆水、收割，在靈田領取30份主材。`,
+    });
+  }
+  for (const [itemId, title] of [['black_iron_chunk', '玄鐵礦場'], ['spirit_stone', '靈石礦場']]) {
+    pushSource(sourceByItemId, itemId, {
+      kind: 'acquisition_rule', mapId: 'sect', mapName: '宗門工作', ruleId: 'spirit-beast-facility-mining',
+      title, description: '在宗門核心的靈獸管理開啟礦場，由玩家或採礦靈獸工作，再從工位領取產物。',
+    });
+  }
+
   for (const entry of Array.isArray(starterInventory?.items) ? starterInventory.items : []) {
     if (typeof entry?.itemId !== 'string') {
       continue;

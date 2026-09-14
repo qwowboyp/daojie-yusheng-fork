@@ -82,6 +82,9 @@ import { CraftPanelRuntimeService } from './runtime/craft/craft-panel-runtime.se
 import { CraftPanelAlchemyQueryService } from './runtime/craft/craft-panel-alchemy-query.service';
 import { CraftPanelEnhancementQueryService } from './runtime/craft/craft-panel-enhancement-query.service';
 import { TreasureVaultRuntimeService } from './runtime/building/treasure-vault-runtime.service';
+import { SpiritBeastRuntimeService } from './runtime/spirit-beast/spirit-beast-runtime.service';
+import { SpiritBeastPersistenceService } from './persistence/spirit-beast-persistence.service';
+import { WorldGatewaySpiritBeastHelper } from './network/world-gateway-spirit-beast.helper';
 import { TimeChamberAdmissionPolicy } from './runtime/building/time-chamber-admission.policy';
 import { TimeChamberRuntimeService } from './runtime/building/time-chamber-runtime.service';
 import { SocialRuntimeService } from './runtime/social/social-runtime.service';
@@ -316,6 +319,9 @@ const WORLD_GATEWAY_PROVIDERS = shouldStartHttpServer()
     CraftPanelEnhancementQueryService,
     CraftPanelRuntimeService,
     TreasureVaultRuntimeService,
+    SpiritBeastPersistenceService,
+    SpiritBeastRuntimeService,
+    WorldGatewaySpiritBeastHelper,
     TimeChamberAdmissionPolicy,
     TimeChamberRuntimeService,
     SocialRuntimeService,

@@ -88,11 +88,13 @@ interface PlayerSnapshotProgression {
   buildingSkill?: Record<string, unknown> | null;
   gatherSkill: Record<string, unknown> | null;
   miningSkill?: Record<string, unknown> | null;
+  plantingSkill?: Record<string, unknown> | null;
   formationSkill?: Record<string, unknown> | null;
   transmissionSkill?: Record<string, unknown> | null;
   transmissionJob?: Record<string, unknown> | null;
   gatherJob: Record<string, unknown> | null;
   miningJob?: Record<string, unknown> | null;
+  plantingJob?: Record<string, unknown> | null;
   buildingJob?: Record<string, unknown> | null;
   formationJob?: Record<string, unknown> | null;
   alchemyPresets: unknown[];
@@ -613,11 +615,13 @@ function normalizePlayerSnapshotPayload(raw: unknown): PersistedPlayerSnapshot |
       buildingSkill: asRecordOrNull(progression?.buildingSkill),
       gatherSkill: asRecordOrNull(progression?.gatherSkill),
       miningSkill: asRecordOrNull(progression?.miningSkill),
+      plantingSkill: asRecordOrNull(progression?.plantingSkill),
       formationSkill: asRecordOrNull(progression?.formationSkill),
       transmissionSkill: asRecordOrNull(progression?.transmissionSkill),
       transmissionJob: asRecordOrNull(progression?.transmissionJob),
       gatherJob: asRecordOrNull(progression?.gatherJob),
       miningJob: asRecordOrNull(progression?.miningJob),
+      plantingJob: asRecordOrNull(progression?.plantingJob),
       buildingJob: asRecordOrNull(progression?.buildingJob),
       formationJob: asRecordOrNull(progression?.formationJob),
       alchemyPresets: Array.isArray(progression?.alchemyPresets) ? progression.alchemyPresets : [],

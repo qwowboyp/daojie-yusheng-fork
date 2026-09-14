@@ -105,6 +105,20 @@ export function handleBuildPlaceIntent(runtime, playerId, payload) {
         context.instance.deconstructBuildingInstance?.(result.building?.id, { treasureVaultRecovered: true });
         throw error;
     }
+    if (sectAccess.applies && sectAccess.sectId && result.building?.id && runtime.spiritBeastRuntimeService) {
+        void runtime.spiritBeastRuntimeService.registerConstructionBuilding({
+            ownerPlayerId: playerId,
+            sectId: sectAccess.sectId,
+            instanceId: context.instance.meta.instanceId,
+            buildingId: result.building.id,
+            x: result.building.x,
+            y: result.building.y,
+            totalWork: Math.max(1, Number(result.building.buildRemainingTicks ?? result.building.buildStrength) || 1),
+            buildingRevision: Math.max(1, Math.trunc(Number(result.building.revision) || 1)),
+        }).catch((error) => runtime.logger?.warn?.(
+            `靈獸營造工單登記失敗，不回滾已完成的建築放置: ${error instanceof Error ? error.message : String(error)}`,
+        ));
+    }
     return recordBuildingOperation(runtime, operationKey, {
         requestId,
         ok: true,

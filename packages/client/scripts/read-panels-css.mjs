@@ -22,6 +22,7 @@ export const PANELS_CSS_ORDER = [
   'skill.css',
   'sect.css',
   'sect-directory.css',
+  'spirit-beast.css',
   'social.css',
   'party.css',
   'world.css',

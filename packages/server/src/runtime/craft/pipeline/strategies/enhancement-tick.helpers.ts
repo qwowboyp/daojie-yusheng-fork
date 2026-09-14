@@ -17,6 +17,7 @@ const CONFLICTING_TECHNIQUE_JOB_SLOTS = [
   'formationJob',
   'buildingJob',
   'miningJob',
+  'plantingJob',
   'transmissionJob',
   'gatherJob',
   'forgingJob',
@@ -112,6 +113,7 @@ export function executeEnhancementTick(craftService: any, player: any, ctx: Pipe
     }], finishResult.inventoryChanged, finishResult.equipmentChanged, finishResult.attrChanged, finishResult.groundDrops);
   }
 
+  craftService.refreshEnhancementStationSuccessRate?.(player, job);
   const success = Math.random() < job.successRate;
   if (success) {
     try {

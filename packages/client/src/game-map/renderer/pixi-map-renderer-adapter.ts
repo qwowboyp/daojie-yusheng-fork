@@ -60,9 +60,11 @@ import {
 import { SERVER_AVATARS_CHANGED_EVENT, startServerAvatarAutoRefresh } from '../../renderer/server-avatar-registry';
 import { formatDisplayInteger } from '../../utils/number';
 import { t as translateUi } from '../../ui/i18n';
+import { SPIRIT_BEAST_CONTENT } from '@mud/shared';
 import type { CameraState } from '../camera/camera-controller';
 import type { TopdownProjection } from '../projection/topdown-projection';
 import type { MapEntityTransition, MapSceneSnapshot, ObservedMapEntity } from '../types';
+import type { SpiritBeastMapEntry } from '../store/spirit-beast-map-store';
 import {
   type PixiProfileFrameSchedule,
   type PixiProfileRendererState,
@@ -137,6 +139,26 @@ const ATTACK_MOTION_DURATION_MS = 180;
 const ARTIFACT_AURA_COLOR = 0xa8fbff;
 const ARTIFACT_AURA_FLOW_MS = 1200;
 const ARTIFACT_AURA_FRAME_COUNT = 16;
+const SPIRIT_BEAST_MOTION_DURATION_MS = 320;
+const MAX_RENDERED_SPIRIT_BEASTS = 30;
+const spiritBeastBuildingIds = new Set([
+  'spirit_incubator_metal', 'spirit_incubator_wood', 'spirit_incubator_water', 'spirit_incubator_fire', 'spirit_incubator_earth',
+  'sect_iron_mine', 'sect_spirit_stone_mine', 'sect_spirit_field', 'sect_forging_station', 'sect_enhancement_station', 'sect_alchemy_station',
+  'spirit_egg_enhancement_station', 'spirit_beast_cultivation_station', 'spirit_beast_fusion_station',
+]);
+const spiritBeastNames = new Map(SPIRIT_BEAST_CONTENT.species.map((entry) => [entry.id, entry.name]));
+
+type SpiritBeastView = {
+  entry: SpiritBeastMapEntry;
+  root: Container;
+  sprite: Sprite;
+  label: Text;
+  oldWX: number;
+  oldWY: number;
+  targetWX: number;
+  targetWY: number;
+  motionStartedAt: number;
+};
 
 const CHUNK_SIZE = PIXI_TERRAIN_CHUNK_SIZE;
 const DEFAULT_PATH_TRAIL_FADE_MS = 500;
@@ -208,6 +230,7 @@ export class PixiMapRendererAdapter {
   private readonly groundLayer = new Container();
   private readonly threatArrowLayer = new Container();
   private readonly entityLayer = new Container();
+  private readonly spiritBeastLayer = new Container();
   private readonly effectLayer = new Container();
   private readonly combatEffectRuntime = new PixiCombatEffectRuntime(this.effectLayer);
   private readonly screenLayer = new Container();
@@ -217,6 +240,9 @@ export class PixiMapRendererAdapter {
   private readonly terrainChunks = new Map<string, TerrainChunkView>();
   private readonly terrainFogChunks = new Map<string, TerrainFogChunkView>();
   private readonly entities = new Map<string, EntityView>();
+  private readonly spiritBeastViews = new Map<string, SpiritBeastView>();
+  private readonly spiritBeastBuildingTextures = new Map<string, Texture>();
+  private readonly spiritBeastBuildingTextureRequests = new Set<string>();
   private readonly crowdedTileKeysScratch = new PixiFrameGridPointSet();
   private readonly formationRangeVisuals = new Map<string, FormationRangeVisual>();
   private readonly formationRangeSenseQiVisuals = new Map<string, FormationRangeVisual>();
@@ -302,6 +328,7 @@ export class PixiMapRendererAdapter {
       this.pathLayer,
       this.groundLayer,
       this.threatArrowLayer,
+      this.spiritBeastLayer,
       this.entityLayer,
       this.effectLayer,
     );
@@ -503,6 +530,7 @@ export class PixiMapRendererAdapter {
     this.terrainChunks.clear();
     for (const view of this.entities.values()) this.destroyEntityView(view);
     this.entities.clear();
+    this.clearSpiritBeasts();
     this.pathCells = [];
     this.fadingPath = null;
     this.threatArrows = [];
@@ -598,6 +626,7 @@ export class PixiMapRendererAdapter {
     this.profiler.end('terrainChunks', terrainStartedAt);
     const entityViewsStartedAt = this.profiler.start();
     this.updateEntityViews(camera, progress, player.id, player.x, player.y, player.char, frameAtMs);
+    this.updateSpiritBeastViews(camera, frameAtMs);
     this.profiler.end('entityViews', entityViewsStartedAt);
     const threatArrowsStartedAt = this.profiler.start();
     this.renderThreatArrows(player.id);
@@ -627,6 +656,75 @@ export class PixiMapRendererAdapter {
 
   getCanvas(): HTMLCanvasElement | null {
     return this.canvas;
+  }
+
+  syncSpiritBeasts(entries: readonly SpiritBeastMapEntry[]): void {
+    const selected = entries.slice(0, MAX_RENDERED_SPIRIT_BEASTS);
+    const seen = new Set<string>();
+    const cellSize = getCellSize();
+    const now = performance.now();
+    for (const entry of selected) {
+      seen.add(entry.instanceId);
+      const targetWX = entry.x * cellSize;
+      const targetWY = entry.y * cellSize;
+      let view = this.spiritBeastViews.get(entry.instanceId);
+      if (!view) {
+        const root = new Container();
+        root.eventMode = 'none';
+        const sprite = new Sprite(Texture.EMPTY);
+        sprite.anchor.set(0.5, 1);
+        sprite.width = cellSize * 0.92;
+        sprite.height = cellSize * 0.92;
+        const label = new Text({ text: '', style: textStyle('label', Math.max(10, cellSize * 0.18), '#dff8de'), anchor: 0.5 });
+        root.addChild(sprite, label);
+        view = { entry: { ...entry }, root, sprite, label, oldWX: targetWX, oldWY: targetWY, targetWX, targetWY, motionStartedAt: now };
+        this.spiritBeastViews.set(entry.instanceId, view);
+        this.spiritBeastLayer.addChild(root);
+        this.loadSpiritBeastTexture(view, entry.speciesId);
+      } else {
+        const current = Math.min(1, (now - view.motionStartedAt) / SPIRIT_BEAST_MOTION_DURATION_MS);
+        view.oldWX += (view.targetWX - view.oldWX) * current;
+        view.oldWY += (view.targetWY - view.oldWY) * current;
+        view.targetWX = targetWX;
+        view.targetWY = targetWY;
+        view.motionStartedAt = now;
+        if (view.entry.speciesId !== entry.speciesId) this.loadSpiritBeastTexture(view, entry.speciesId);
+        view.entry = { ...entry };
+      }
+      view.label.text = `${spiritBeastNames.get(entry.speciesId) ?? entry.speciesId}${entry.state === 'working' ? ' · 工作中' : ''}`;
+      view.label.position.set(cellSize / 2, -Math.max(6, cellSize * 0.1));
+      view.root.zIndex = 15;
+    }
+    for (const [id, view] of this.spiritBeastViews) {
+      if (!seen.has(id)) {
+        view.root.destroy({ children: true });
+        this.spiritBeastViews.delete(id);
+      }
+    }
+  }
+
+  clearSpiritBeasts(): void {
+    for (const view of this.spiritBeastViews.values()) view.root.destroy({ children: true });
+    this.spiritBeastViews.clear();
+  }
+
+  private loadSpiritBeastTexture(view: SpiritBeastView, speciesId: string): void {
+    const src = `/assets/spirit-beasts/species/${encodeURIComponent(speciesId)}-192.webp`;
+    void Assets.load<Texture>(src).then((texture) => {
+      if (!view.root.destroyed && view.entry.speciesId === speciesId) view.sprite.texture = texture;
+    }).catch(() => undefined);
+  }
+
+  private updateSpiritBeastViews(camera: CameraState, frameAtMs: number): void {
+    const cellSize = getCellSize();
+    for (const view of this.spiritBeastViews.values()) {
+      const progress = Math.min(1, (frameAtMs - view.motionStartedAt) / SPIRIT_BEAST_MOTION_DURATION_MS);
+      const wx = view.oldWX + (view.targetWX - view.oldWX) * progress;
+      const wy = view.oldWY + (view.targetWY - view.oldWY) * progress;
+      view.root.position.set(wx, wy + cellSize);
+      view.root.visible = Math.abs(wx + cellSize / 2 - camera.x) <= this.width / 2 + cellSize
+        && Math.abs(wy + cellSize / 2 - camera.y) <= this.height / 2 + cellSize;
+    }
   }
 
   private clearContainer(container: Container): void {
@@ -2139,7 +2237,7 @@ export class PixiMapRendererAdapter {
     if (forceTextMode) {
       view.image.visible = false;
     } else {
-      drewEntityImage = this.patchRuntimeEntitySprite(view, visualCellSize);
+      drewEntityImage = this.patchSpiritBeastBuildingSprite(view, visualCellSize) || this.patchRuntimeEntitySprite(view, visualCellSize);
     }
     view.glyph.text = anim.char;
     view.glyph.style = textStyle('entityGlyph', visualCellSize * 0.75, anim.color);
@@ -2202,6 +2300,36 @@ export class PixiMapRendererAdapter {
     view.imageFlipTargetSign = nextFlipSign;
     view.imageFlipStartedAt = shouldAnimateFlip ? now : 0;
     this.applyEntityImageScale(view, now);
+    view.image.rotation = 0;
+    view.image.position.set(visualCellSize / 2, visualCellSize / 2);
+    view.image.visible = true;
+    return true;
+  }
+
+  private patchSpiritBeastBuildingSprite(view: EntityView, visualCellSize: number): boolean {
+    const id = view.anim.kind === 'building' ? view.anim.buildingDefId : undefined;
+    if (!id || !spiritBeastBuildingIds.has(id)) return false;
+    const texture = this.spiritBeastBuildingTextures.get(id);
+    if (!texture) {
+      if (!this.spiritBeastBuildingTextureRequests.has(id)) {
+        this.spiritBeastBuildingTextureRequests.add(id);
+        void Assets.load<Texture>(`/assets/spirit-beasts/buildings/${encodeURIComponent(id)}-256.webp`).then((loaded) => {
+          this.spiritBeastBuildingTextures.set(id, loaded);
+          this.spiritBeastBuildingTextureRequests.delete(id);
+          view.staticSignature = '';
+          this.patchEntityStatic(view);
+        }).catch(() => this.spiritBeastBuildingTextureRequests.delete(id));
+      }
+      return false;
+    }
+    view.image.texture = texture;
+    const scale = Math.min(visualCellSize / Math.max(1, texture.width), visualCellSize / Math.max(1, texture.height));
+    view.imageBaseScaleX = scale;
+    view.imageBaseScaleY = scale;
+    view.imageFlipSourceSign = 1;
+    view.imageFlipTargetSign = 1;
+    view.imageFlipStartedAt = 0;
+    view.image.scale.set(scale, scale);
     view.image.rotation = 0;
     view.image.position.set(visualCellSize / 2, visualCellSize / 2);
     view.image.visible = true;

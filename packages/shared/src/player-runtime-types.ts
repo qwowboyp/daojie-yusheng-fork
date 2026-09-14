@@ -18,6 +18,7 @@ import type {
   PlayerForgingJob,
   PlayerGatherJob,
   PlayerMiningJob,
+  PlayerPlantingJob,
   PlayerTransmissionJob,
 } from './crafting-types';
 import type { EquipmentSlots, Inventory, PlayerArtifactState } from './item-runtime-types';
@@ -514,11 +515,14 @@ export interface PlayerState {
  */
 
   miningSkill?: AlchemySkillState;
+  /** 宗門靈田人工操作的種植技藝。 */
+  plantingSkill?: AlchemySkillState;
   /**
  * miningJob：挖矿 Job 相关字段。
  */
 
   miningJob?: PlayerMiningJob | null;
+  plantingJob?: PlayerPlantingJob | null;
   /**
  * formationSkill：阵法技能相关字段。
  */

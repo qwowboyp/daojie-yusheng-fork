@@ -14,7 +14,7 @@ import {
   type TechniqueActivityInterruptReason,
 } from '@mud/shared';
 
-type TechniqueActivityRuntimePhase = 'brewing' | 'enhancing' | 'transmitting' | 'mining' | 'maintaining' | 'building' | 'deconstructing' | 'paused';
+type TechniqueActivityRuntimePhase = 'brewing' | 'enhancing' | 'transmitting' | 'mining' | 'planting' | 'maintaining' | 'building' | 'deconstructing' | 'paused';
 
 interface TechniqueActivityRuntimeJob {
   phase: TechniqueActivityRuntimePhase;
@@ -36,6 +36,7 @@ function getActiveTechniqueActivityJob(player: unknown): TechniqueActivityRuntim
     formationJob?: TechniqueActivityRuntimeJob | null;
     buildingJob?: TechniqueActivityRuntimeJob | null;
     miningJob?: TechniqueActivityRuntimeJob | null;
+    plantingJob?: TechniqueActivityRuntimeJob | null;
     transmissionJob?: TechniqueActivityRuntimeJob | null;
     gatherJob?: TechniqueActivityRuntimeJob | null;
     enhancementJob?: TechniqueActivityRuntimeJob | null;
@@ -45,6 +46,7 @@ function getActiveTechniqueActivityJob(player: unknown): TechniqueActivityRuntim
   return record?.formationJob
     ?? record?.buildingJob
     ?? record?.miningJob
+    ?? record?.plantingJob
     ?? record?.transmissionJob
     ?? record?.gatherJob
     ?? record?.enhancementJob

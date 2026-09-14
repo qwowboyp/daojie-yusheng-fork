@@ -1094,6 +1094,7 @@ export class AttrPanel {
       numericStatBreakdowns,
       data.forgingSkill,
       data.miningSkill,
+      data.plantingSkill,
       data.formationSkill,
       data.transmissionSkill,
     );
@@ -1140,6 +1141,7 @@ export class AttrPanel {
       enhancementSkill: player.enhancementSkill,
       forgingSkill: player.forgingSkill,
       miningSkill: player.miningSkill,
+      plantingSkill: player.plantingSkill,
       formationSkill: player.formationSkill,
       transmissionSkill: player.transmissionSkill,
     };
@@ -1167,6 +1169,7 @@ export class AttrPanel {
       this.resolveRenderNumericStatBreakdowns(this.latestData.numericStatBreakdowns),
       player.forgingSkill,
       player.miningSkill,
+      player.plantingSkill,
       player.formationSkill,
       player.transmissionSkill,
     );
@@ -1208,6 +1211,7 @@ export class AttrPanel {
       detail.numericStatBreakdowns,
       detail.forgingSkill,
       detail.miningSkill,
+      detail.plantingSkill,
       detail.formationSkill,
       detail.transmissionSkill,
     );
@@ -1296,6 +1300,7 @@ export class AttrPanel {
     numericStatBreakdowns?: NumericStatBreakdownMap,
     forgingSkill?: PlayerState['forgingSkill'],
     miningSkill?: PlayerState['miningSkill'],
+    plantingSkill?: PlayerState['plantingSkill'],
     formationSkill?: PlayerState['formationSkill'],
     transmissionSkill?: PlayerState['transmissionSkill'],
   ): AttrPanelSnapshot {
@@ -1335,7 +1340,7 @@ export class AttrPanel {
           },
         }, final, numericStatBreakdowns),
         special: this.buildSpecialPaneSnapshot(stats, ratioDivisors, specialStats, craftEffectStats, final, numericStatBreakdowns),
-        craft: this.buildCraftPaneSnapshot(alchemySkill, buildingSkill, gatherSkill, enhancementSkill, forgingSkill, miningSkill, formationSkill, transmissionSkill),
+        craft: this.buildCraftPaneSnapshot(alchemySkill, buildingSkill, gatherSkill, enhancementSkill, forgingSkill, miningSkill, plantingSkill, formationSkill, transmissionSkill),
       },
     };
   }
@@ -1889,6 +1894,7 @@ export class AttrPanel {
       | PlayerState['forgingSkill']
       | PlayerState['buildingSkill']
       | PlayerState['miningSkill']
+      | PlayerState['plantingSkill']
       | PlayerState['transmissionSkill'],
   ): AttrCraftSkillSnapshot | null {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
@@ -1931,6 +1937,7 @@ export class AttrPanel {
     enhancementSkill?: PlayerState['enhancementSkill'],
     forgingSkill?: PlayerState['forgingSkill'],
     miningSkill?: PlayerState['miningSkill'],
+    plantingSkill?: PlayerState['plantingSkill'],
     formationSkill?: PlayerState['formationSkill'],
     transmissionSkill?: PlayerState['transmissionSkill'],
   ): AttrPaneSnapshot {
@@ -1944,6 +1951,7 @@ export class AttrPanel {
       this.buildCraftSkillSnapshot('formation', '陣法', formationSkill),
       this.buildCraftSkillSnapshot('gather', '採集', gatherSkill),
       this.buildCraftSkillSnapshot('mining', '挖礦', miningSkill),
+      this.buildCraftSkillSnapshot('planting', '種植', plantingSkill),
       this.buildCraftSkillSnapshot('building', '營造', buildingSkill),
     ].filter((entry): entry is AttrCraftSkillSnapshot => Boolean(entry));
     if (skills.length === 0) {

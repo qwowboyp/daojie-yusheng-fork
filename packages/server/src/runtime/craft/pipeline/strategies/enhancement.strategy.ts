@@ -15,6 +15,7 @@ import type {
 import type { TechniqueActivityStrategy, PipelineContext, PersistenceDomain } from '../technique-activity-strategy';
 import { computeEnhancementCancelRefund } from './enhancement-cancel.helpers';
 import { executeEnhancementTick } from './enhancement-tick.helpers';
+import { createFacilityWorkJob, releaseFacilityWork, tickFacilityWork, validateFacilityWork } from './facility-work-pipeline.helpers';
 
 export class EnhancementStrategy implements TechniqueActivityStrategy {
   readonly kind = 'enhancement' as const;
@@ -35,30 +36,38 @@ export class EnhancementStrategy implements TechniqueActivityStrategy {
   }
 
   executeTick(player: unknown, ctx: PipelineContext): unknown {
+    const facility = tickFacilityWork(player, this.getActiveJob(player), ctx, () => this.setActiveJob(player, null));
+    if (facility) return facility;
     return executeEnhancementTick(this.craftService, player, ctx);
   }
 
   // ─── Start 生命周期插槽 ───
 
-  validateStart(player: unknown, payload: unknown, _ctx: PipelineContext): TechniqueActivityStartValidationResult {
+  validateStart(player: unknown, payload: unknown, ctx: PipelineContext): TechniqueActivityStartValidationResult {
+    const facility = validateFacilityWork(player, payload, 'enhancement', ctx);
+    if (facility) return { ok: true, validated: facility };
     return this.craftService.validateEnhancementStart(player, payload);
   }
 
   queueStart(player: unknown, validated: unknown, payload: unknown, _ctx: PipelineContext): unknown | null {
+    if ((validated as any)?.facilityAssignment) return null;
     return this.craftService.queueEnhancementStart(player, validated, payload);
   }
 
   consumeResources(player: unknown, validated: unknown, _ctx: PipelineContext): { ok: true } | { ok: false; error?: string } | void {
+    if ((validated as any)?.facilityAssignment) return;
     return this.craftService.consumeEnhancementStartResources(player, validated);
   }
 
   createJob(player: unknown, validated: unknown, _ctx: PipelineContext): any {
+    if ((validated as any)?.facilityAssignment) return createFacilityWorkJob(validated, 'enhancement');
     const job = this.craftService.createEnhancementStartJob(player, validated);
     this.craftService.finalizeEnhancementStart(player);
     return job;
   }
 
   buildStartMessages(_player: unknown, validated: unknown, job: any, _ctx: PipelineContext): any[] {
+    if ((validated as any)?.facilityAssignment) return [];
     return this.craftService.buildEnhancementStartMessages(validated, job);
   }
 
@@ -72,7 +81,8 @@ export class EnhancementStrategy implements TechniqueActivityStrategy {
     return { successCount: 0, failureCount: 0, outputs: [], expParams: { playerRealmLevel: 1, skillLevel: 1, targetLevel: 1, baseActionTicks: 1, getExpToNextByLevel: () => 100 }, completed: true };
   }
 
-  computeRefund(player: unknown): TechniqueActivityRefundResult {
+  computeRefund(player: unknown, job: any, ctx: PipelineContext): TechniqueActivityRefundResult {
+    if (releaseFacilityWork(player, job, ctx)) return { items: [], spiritStones: 0 };
     return computeEnhancementCancelRefund(this.craftService, player);
   }
 

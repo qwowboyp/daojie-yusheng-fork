@@ -8,6 +8,7 @@ import {
   computeCraftSkillExpGain,
   createItemStackSignature,
   type RuntimeTechniqueActivityKind,
+  type CraftEffectSkillKind,
   type TechniqueActivityNoticeMessage,
   type TechniqueActivityInterruptReason,
   type TechniqueActivityOutputItem,
@@ -32,7 +33,7 @@ import {
 } from './technique-activity-strategy';
 import { applyPlayerCraftExpRate } from '../craft-effect-runtime.helpers';
 
-const CRAFT_EFFECT_SKILL_BY_SKILL_SLOT: Record<string, RuntimeTechniqueActivityKind> = {
+const CRAFT_EFFECT_SKILL_BY_SKILL_SLOT: Record<string, CraftEffectSkillKind> = {
   alchemySkill: 'alchemy',
   forgingSkill: 'forging',
   enhancementSkill: 'enhancement',

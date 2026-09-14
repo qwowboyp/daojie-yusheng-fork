@@ -3,6 +3,7 @@
   "private": true,
   "packageManager": "pnpm@10.29.1",
   "scripts": {
+    "proof:spirit-beasts": "node scripts/verify-spirit-beasts.mjs",
     "generate:realm-pills": "node scripts/generate-realm-pill-content.mjs --write && node packages/client/scripts/generate-item-sources.mjs && node scripts/generate-editor-catalog.mjs --client=client --shared=shared",
     "proof:realm-pills": "node scripts/generate-realm-pill-content.mjs && node scripts/prove-realm-pill-content.mjs && node scripts/prove-realm-pill-art.mjs && node packages/server/dist/tools/shenxing-runtime-smoke.js && node packages/server/dist/tools/inventory-consumable-cooldown-smoke.js",
     "generate:foundation-expansion": "node scripts/generate-foundation-expansion.mjs --write && node packages/client/scripts/generate-item-sources.mjs && node scripts/generate-editor-catalog.mjs --client=client --shared=shared",

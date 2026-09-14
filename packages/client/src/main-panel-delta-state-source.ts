@@ -484,6 +484,7 @@ export function createMainPanelDeltaStateSource(options: MainPanelDeltaStateSour
       enhancementSkill: player.enhancementSkill ? cloneJson(player.enhancementSkill) : undefined,
       forgingSkill: player.forgingSkill ? cloneJson(player.forgingSkill) : undefined,
       miningSkill: player.miningSkill ? cloneJson(player.miningSkill) : undefined,
+      plantingSkill: player.plantingSkill ? cloneJson(player.plantingSkill) : undefined,
       formationSkill: player.formationSkill ? cloneJson(player.formationSkill) : undefined,
       transmissionSkill: player.transmissionSkill ? cloneJson(player.transmissionSkill) : undefined,
     };
@@ -575,6 +576,9 @@ export function createMainPanelDeltaStateSource(options: MainPanelDeltaStateSour
       miningSkill: patch.miningSkill
         ? cloneJson(patch.miningSkill)
         : (previous?.miningSkill ? cloneJson(previous.miningSkill) : (player?.miningSkill ? cloneJson(player.miningSkill) : undefined)),
+      plantingSkill: patch.plantingSkill
+        ? cloneJson(patch.plantingSkill)
+        : (previous?.plantingSkill ? cloneJson(previous.plantingSkill) : (player?.plantingSkill ? cloneJson(player.plantingSkill) : undefined)),
       formationSkill: patch.formationSkill
         ? cloneJson(patch.formationSkill)
         : (previous?.formationSkill ? cloneJson(previous.formationSkill) : (player?.formationSkill ? cloneJson(player.formationSkill) : undefined)),
@@ -1175,6 +1179,7 @@ export function createMainPanelDeltaStateSource(options: MainPanelDeltaStateSour
         player.enhancementSkill = latestAttrUpdate.enhancementSkill ?? player.enhancementSkill;
         player.forgingSkill = latestAttrUpdate.forgingSkill ?? player.forgingSkill;
         player.miningSkill = latestAttrUpdate.miningSkill ?? player.miningSkill;
+        player.plantingSkill = latestAttrUpdate.plantingSkill ?? player.plantingSkill;
         player.formationSkill = latestAttrUpdate.formationSkill ?? player.formationSkill;
         player.transmissionSkill = latestAttrUpdate.transmissionSkill ?? player.transmissionSkill;
         if (player.realm) {

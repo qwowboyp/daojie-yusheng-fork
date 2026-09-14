@@ -31,6 +31,7 @@ import {
   resolveSectApplicationPageScopeSectId,
 } from './sect-application-page-request-state';
 import type { ActionPanel } from './action-panel';
+import { mountReactSpiritBeastPanel, unmountReactSpiritBeastPanel } from '../../react-ui/panels/spirit-beast/mount-spirit-beast-panel';
 import type {
   ActionPanelInternal,
   SectManagementData,
@@ -364,6 +365,7 @@ export class SectManagementSubpanel {
       },
       onClose: () => {
         confirmModalHost.close(SECT_MEMBER_ACTION_CONFIRM_OWNER);
+        unmountReactSpiritBeastPanel();
       },
     });
   }
@@ -473,6 +475,10 @@ export class SectManagementSubpanel {
     });
     this.bindSectActionButtons(root, options);
     this.bindSectApplicationControls(root, options);
+    const spiritBeastHost = root.querySelector<HTMLElement>('[data-sect-manage-spirit-beasts]');
+    if (spiritBeastHost) {
+      mountReactSpiritBeastPanel(spiritBeastHost, signal);
+    }
     root.querySelectorAll<HTMLElement>('button[data-sect-guardian-active]').forEach((button) => {
       button.addEventListener('click', () => {
         const active = button.dataset.sectGuardianActive === '1';
@@ -581,6 +587,7 @@ export class SectManagementSubpanel {
       tabs.push({ tab: 'guardian', label: t('action.sect.manage.tab.guardian', undefined) });
     }
     tabs.push({ tab: 'domain', label: t('action.sect.manage.tab.domain', undefined) });
+    tabs.push({ tab: 'spirit_beasts', label: '靈獸' });
     return tabs;
   }
 
@@ -604,6 +611,8 @@ export class SectManagementSubpanel {
           return this.renderSectManagementOverviewPanel(summary);
         }
         return this.renderSectGuardianPanel(summary);
+      case 'spirit_beasts':
+        return '<div class="sect-manage-spirit-beasts" data-sect-manage-spirit-beasts="true"></div>';
       case 'domain':
       default:
         return `

@@ -222,6 +222,9 @@ export function validateContentConfigDocument(relativePath: string, value: unkno
   if (normalizedPath === 'breakthroughs.json') return validateBreakthroughs(value);
   if (normalizedPath === 'realm-attr-baselines.json') return validateRealmAttrBaselines(value);
   if (normalizedPath === 'tongtian-tower.json') return validateTongtianTower(value);
+  if (normalizedPath === 'spirit-beasts/catalog.json') {
+    return validateSpiritBeastContent(value).map((message) => ({ path: 'spirit-beasts/catalog.json', message }));
+  }
   return [];
 }
 
@@ -233,3 +236,4 @@ export function assertContentConfigDocument(relativePath: string, value: unknown
   const suffix = issues.length > 8 ? `；另有 ${issues.length - 8} 项` : '';
   throw new Error(`${relativePath} 配置校验失败：${preview}${suffix}`);
 }
+import { validateSpiritBeastContent } from './spirit-beast-rules';

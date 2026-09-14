@@ -508,7 +508,7 @@ export interface DurableEnhancementRecordSnapshot {
 }
 
 export interface DurableProfessionStateSnapshot {
-  professionType: 'alchemy' | 'building' | 'gather' | 'enhancement' | 'forging' | 'mining' | 'formation' | 'transmission';
+  professionType: 'alchemy' | 'building' | 'gather' | 'enhancement' | 'forging' | 'mining' | 'planting' | 'formation' | 'transmission';
   level: number;
   exp?: number | null;
   expToNext?: number | null;
@@ -7184,6 +7184,7 @@ function normalizeProfessionStateSnapshots(
     'enhancement',
     'forging',
     'mining',
+    'planting',
     'formation',
     'transmission',
   ]);

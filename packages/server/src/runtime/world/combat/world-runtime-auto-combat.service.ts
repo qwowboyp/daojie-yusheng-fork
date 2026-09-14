@@ -188,6 +188,9 @@ function recordAutoCombatPerf(deps, key, startedAt, count = 1) {
 
 function resolveMiningJobTargetRef(player) {
     const job = player?.miningJob;
+    if (job?.facilityOrderId) {
+        return '';
+    }
     if (!job || !Number.isFinite(Number(job.targetX)) || !Number.isFinite(Number(job.targetY))) {
         return '';
     }
@@ -201,6 +204,9 @@ function isMiningJobTargetRef(player, targetRef) {
 }
 
 function resolveMiningJobCommandMarker(player, target) {
+    if (player?.miningJob?.facilityOrderId) {
+        return null;
+    }
     const jobRunId = typeof player?.miningJob?.jobRunId === 'string'
         ? player.miningJob.jobRunId.trim()
         : '';

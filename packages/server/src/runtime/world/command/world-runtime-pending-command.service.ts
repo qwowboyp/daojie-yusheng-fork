@@ -123,7 +123,9 @@ function buildPendingCommandNotice(command, message) {
         || command?.kind === 'startGather'
         || command?.kind === 'cancelGather'
         || command?.kind === 'startMining'
+        || command?.kind === 'startPlanting'
         || command?.kind === 'cancelMining'
+        || command?.kind === 'cancelPlanting'
         || command?.kind === 'startBuilding'
         || command?.kind === 'cancelBuilding'
         || command?.kind === 'startFormationMaintenance'
@@ -373,7 +375,9 @@ function isExpectedPendingCommandReject(command, message) {
         || command?.kind === 'startGather'
         || command?.kind === 'cancelGather'
         || command?.kind === 'startMining'
+        || command?.kind === 'startPlanting'
         || command?.kind === 'cancelMining'
+        || command?.kind === 'cancelPlanting'
         || command?.kind === 'startBuilding'
         || command?.kind === 'cancelBuilding'
         || command?.kind === 'startFormationMaintenance'
@@ -588,7 +592,9 @@ function resolvePendingCommandPerfKey(command) {
         case 'startGather':
         case 'cancelGather':
         case 'startMining':
+        case 'startPlanting':
         case 'cancelMining':
+        case 'cancelPlanting':
         case 'startBuilding':
         case 'cancelBuilding':
         case 'startFormationMaintenance':
