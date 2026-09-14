@@ -101,6 +101,10 @@ async function main() {
  * 记录socket。
  */
     let socket = null;
+/**
+ * 保存地图配置原值，确保烟测不会把持久化 tick 速度留给后续门禁。
+ */
+    let mapRuntimeRestore = null;
     if (!hasDatabaseUrl && !LEGACY_HTTP_MEMORY_FALLBACK_ENABLED) {
         console.log(JSON.stringify({
             ok: true,
@@ -727,10 +731,25 @@ async function main() {
  * 记录地图运行态before。
  */
         const mapRuntimeBefore = await fetchGmMapRuntime(gmToken, httpResetRuntime.templateId, auth.playerId, httpResetRuntime.x, httpResetRuntime.y);
+        mapRuntimeRestore = {
+            mapId: httpResetRuntime.templateId,
+            viewerId: auth.playerId,
+            x: httpResetRuntime.x,
+            y: httpResetRuntime.y,
+            tickSpeed: Number(mapRuntimeBefore?.tickSpeed ?? 1),
+            tickPaused: mapRuntimeBefore?.tickPaused === true,
+            timeScale: Number(mapRuntimeBefore?.timeConfig?.scale ?? 1),
+            offsetTicks: Math.trunc(Number(mapRuntimeBefore?.timeConfig?.offsetTicks ?? 0)),
+        };
 /**
  * 记录nexttickspeed。
  */
-        const nextTickSpeed = Math.max(1, Number(mapRuntimeBefore?.tickSpeed ?? 1) + 2);
+        const currentTickSpeed = Number.isFinite(mapRuntimeRestore.tickSpeed)
+            ? Math.max(0, Math.min(shared_1.MAX_INSTANCE_TICK_SPEED, mapRuntimeRestore.tickSpeed))
+            : 1;
+        const nextTickSpeed = currentTickSpeed >= shared_1.MAX_INSTANCE_TICK_SPEED
+            ? Math.max(1, shared_1.MAX_INSTANCE_TICK_SPEED - 1)
+            : Math.min(shared_1.MAX_INSTANCE_TICK_SPEED, currentTickSpeed + 1);
 /**
  * 记录nexttimescale。
  */
@@ -1058,7 +1077,14 @@ async function main() {
         legacyProtocolGuardSocket?.close();
         gmSessionIdGuardSocket?.close();
         socket?.close();
-        await cleanup(gmToken, auth?.playerId ?? '').catch(() => undefined);
+        try {
+            if (gmToken && mapRuntimeRestore) {
+                await restoreGmMapRuntime(gmToken, mapRuntimeRestore);
+            }
+        }
+        finally {
+            await cleanup(gmToken, auth?.playerId ?? '').catch(() => undefined);
+        }
     }
 }
 /**
@@ -1809,6 +1835,31 @@ async function waitForGmMapRuntime(token, mapId, viewerId, x, y, predicate, time
         return true;
     }, timeoutMs, label);
     return resolved;
+}
+/**
+ * 还原 GM 烟测修改的地图运行配置，并确认持久化 tick 真源与内存时间配置都已回到原值。
+ */
+async function restoreGmMapRuntime(token, snapshot) {
+    await authedRequestJson(`/api/gm/maps/${snapshot.mapId}/tick`, {
+        method: 'PUT',
+        token,
+        body: {
+            paused: snapshot.tickPaused,
+            speed: snapshot.tickSpeed,
+        },
+    });
+    await authedRequestJson(`/api/gm/maps/${snapshot.mapId}/time`, {
+        method: 'PUT',
+        token,
+        body: {
+            scale: snapshot.timeScale,
+            offsetTicks: snapshot.offsetTicks,
+        },
+    });
+    await waitForGmMapRuntime(token, snapshot.mapId, snapshot.viewerId, snapshot.x, snapshot.y, (runtime) => Number(runtime?.tickSpeed ?? -1) === snapshot.tickSpeed
+        && runtime?.tickPaused === snapshot.tickPaused
+        && Number(runtime?.timeConfig?.scale ?? -1) === snapshot.timeScale
+        && Number(runtime?.timeConfig?.offsetTicks ?? -1) === snapshot.offsetTicks, 8000, 'gm map runtime restore');
 }
 /**
  * 同时校验运行态和 GM 摘要中的玩家状态是否已一致更新。
