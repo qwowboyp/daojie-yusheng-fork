@@ -1,3 +1,4 @@
+import { emitPendingInitialNotices, emitPendingRuntimeEvents } from './world-sync-runtime-notices';
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import { RuntimeGmStateService } from '../runtime/gm/runtime-gm-state.service';
 import { WorldRuntimeService } from '../runtime/world/world-runtime.service';
@@ -12,12 +13,12 @@ import { NativePlayerAuthStoreService } from '../http/native/native-player-auth-
 import { type SyncFlushBreakdownSample, createSyncFlushBreakdownSample, addSyncFlushDuration, recordSyncEnvelopeDetail, runMeasuredAuxSync, runMeasuredSyncFlushStep } from './world-sync-flush-breakdown';
 import { emitPendingPlayerStatisticRecords } from './world-sync-player-statistic-records';
 import { WorldSyncContextActionsCache } from './world-sync-context-actions-cache';
-import { S2C, type SpiritBeastMapDeltaView, type SpiritBeastMapProjection } from '@mud/shared';
+import { WorldSyncSpiritBeastMapCache } from './world-sync-spirit-beast-map-cache';
 import { SpiritBeastRuntimeService } from '../runtime/spirit-beast/spirit-beast-runtime.service';
 @Injectable()
 export class WorldSyncService {
     private readonly contextActionsCache = new WorldSyncContextActionsCache();
-    private readonly spiritBeastMapCache = new Map<string, { mapInstanceId: string; revision: number; entries: Map<string, SpiritBeastMapProjection> }>();
+    private readonly spiritBeastMapCache = new WorldSyncSpiritBeastMapCache();
     constructor(
         @Inject(WorldRuntimeService) private readonly worldRuntimeService: any,
         @Inject(PlayerRuntimeService) private readonly playerRuntimeService: any,
@@ -46,11 +47,11 @@ export class WorldSyncService {
         const envelope = this.worldSyncEnvelopeService.createInitialEnvelope(playerId, binding, view, player);
         if (envelope.initSession) envelope.initSession.pno = this.nativePlayerAuthStoreService?.getMemoryUserByPlayerId?.(playerId)?.playerNo ?? undefined;
         this.emitEnvelope(socket, envelope);
-        this.emitSpiritBeastMapDelta(binding.playerId, socket, view, player, true);
+        this.spiritBeastMapCache.emit(this.spiritBeastRuntimeService, binding.playerId, socket, view, player, true);
         this.worldSyncAuxStateService.emitAuxInitialSync(binding.playerId, socket, view, player);
         this.worldSyncQuestLootService.markQuestSyncBaseline(binding.playerId, player.quests.revision);
         this.worldSyncQuestLootService.emitAvailableQuestsSyncIfChanged(socket, binding.playerId);
-        this.emitPendingInitialNotices(binding.playerId, socket);
+        emitPendingInitialNotices(this.playerRuntimeService, this.worldSyncProtocolService, binding.playerId, socket);
     }
     emitDeltaSync(playerId: string, socketOverride = undefined) {
         const binding = this.worldSessionService.getBinding(playerId);
@@ -84,7 +85,7 @@ export class WorldSyncService {
             const auxSynced = this.worldSyncAuxStateService.emitAuxDeltaSync(binding.playerId, socket, view, player,
                 { movementOnly: true, deferMapChanged: true });
             if (envelope) this.emitEnvelope(socket, envelope);
-            this.emitSpiritBeastMapDelta(binding.playerId, socket, view, player, false);
+            this.spiritBeastMapCache.emit(this.spiritBeastRuntimeService, binding.playerId, socket, view, player, false);
             if (auxSynced === false) {
                 this.worldSyncAuxStateService.emitAuxDeltaSync(binding.playerId, socket, view, player, { movementOnly: true });
             }
@@ -201,9 +202,9 @@ export class WorldSyncService {
         if (auxDeferred) runMeasuredAuxSync(breakdown, () => this.worldSyncAuxStateService.emitAuxDeltaSync(playerId, socket, view, player, { breakdown }));
         runMeasuredSyncFlushStep(breakdown, 'questSyncMs', 'questSyncCount', () => this.worldSyncQuestLootService.emitQuestSyncIfChanged(socket, playerId, player?.quests?.revision));
         runMeasuredSyncFlushStep(breakdown, 'availableQuestSyncMs', 'availableQuestSyncCount', () => this.worldSyncQuestLootService.emitAvailableQuestsSyncIfChanged(socket, playerId));
-        runMeasuredSyncFlushStep(breakdown, 'runtimeEventsMs', 'runtimeEventsCount', () => this.emitPendingRuntimeEvents(playerId, socket, envelope));
+        runMeasuredSyncFlushStep(breakdown, 'runtimeEventsMs', 'runtimeEventsCount', () => emitPendingRuntimeEvents(this.runtimeGmStateService, this.playerRuntimeService, this.worldSyncProtocolService, playerId, socket, envelope));
         runMeasuredSyncFlushStep(breakdown, 'statisticRecordsMs', 'statisticRecordsCount', () => emitPendingPlayerStatisticRecords(this.playerRuntimeService, playerId, socket));
-        this.emitSpiritBeastMapDelta(playerId, socket, view, player, false);
+        this.spiritBeastMapCache.emit(this.spiritBeastRuntimeService, playerId, socket, view, player, false);
     }
 
     private clearPurgedPlayerCaches() {
@@ -221,64 +222,12 @@ export class WorldSyncService {
         }
         this.worldSyncQuestLootService.clearPlayerCache(playerId);
         this.worldSyncAuxStateService.clearPlayerCache(playerId);
-        this.spiritBeastMapCache.delete(playerId);
-    }
-
-    private emitSpiritBeastMapDelta(playerId: string, socket: any, view: any, player: any, reset: boolean): void {
-        if (!this.spiritBeastRuntimeService || !socket || !view?.instance?.instanceId || !view?.self) return;
-        const mapInstanceId = String(view.instance.instanceId);
-        const radius = Math.max(1, Math.round(Number(player?.attrs?.numericStats?.viewRange) || 12));
-        const x = Math.trunc(Number(view.self.x) || 0);
-        const y = Math.trunc(Number(view.self.y) || 0);
-        const visible = this.spiritBeastRuntimeService.listMapProjections(mapInstanceId)
-            .filter((entry) => Math.max(Math.abs(entry.x - x), Math.abs(entry.y - y)) <= radius);
-        const next = new Map(visible.map((entry) => [entry.instanceId, entry]));
-        const previous = this.spiritBeastMapCache.get(playerId);
-        const mustReset = reset || !previous || previous.mapInstanceId !== mapInstanceId;
-        const added: SpiritBeastMapProjection[] = [];
-        const updated: SpiritBeastMapDeltaView['updated'] = [];
-        const removed: string[] = [];
-        if (mustReset) {
-            added.push(...visible);
-        } else {
-            for (const [id, entry] of next) {
-                const before = previous.entries.get(id);
-                if (!before) { added.push(entry); continue; }
-                const patch: SpiritBeastMapDeltaView['updated'][number] = { instanceId: id };
-                if (before.x !== entry.x) patch.x = entry.x;
-                if (before.y !== entry.y) patch.y = entry.y;
-                if (before.state !== entry.state) patch.state = entry.state;
-                if ((before.buildingId ?? null) !== (entry.buildingId ?? null)) patch.buildingId = entry.buildingId ?? null;
-                if (Object.keys(patch).length > 1) updated.push(patch);
-            }
-            for (const id of previous.entries.keys()) if (!next.has(id)) removed.push(id);
-        }
-        if (!mustReset && added.length === 0 && updated.length === 0 && removed.length === 0) return;
-        const revision = (previous?.revision ?? 0) + 1;
-        this.spiritBeastMapCache.set(playerId, { mapInstanceId, revision, entries: next });
-        socket.emit(S2C.SpiritBeastMapDelta, { mapInstanceId, revision, ...(mustReset ? { reset: true } : {}), added, updated, removed } satisfies SpiritBeastMapDeltaView);
+        this.spiritBeastMapCache.clear(playerId);
     }
 
     private isOfflineGainBlocking(playerId: string): boolean {
         return typeof this.playerRuntimeService.hasLoadedActiveOfflineGainSession === 'function'
             && this.playerRuntimeService.hasLoadedActiveOfflineGainSession(playerId) === true;
-    }
-
-    private emitPendingRuntimeEvents(playerId: string, socket: any, envelope: any) {
-        if (envelope?.gmStatePush) {
-            this.runtimeGmStateService.emitState(socket);
-        }
-        if (envelope?.worldDelta?.eventBus) {
-            return;
-        }
-        this.emitPendingInitialNotices(playerId, socket);
-    }
-
-    private emitPendingInitialNotices(playerId: string, socket: any) {
-        const items = this.playerRuntimeService.drainNotices(playerId);
-        if (items.length > 0) {
-            this.worldSyncProtocolService.sendNotices(socket, items);
-        }
     }
 
     private syncPlayerInstanceRoom(playerId: string, view: any) {

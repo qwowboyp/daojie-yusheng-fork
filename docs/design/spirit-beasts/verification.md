@@ -24,6 +24,8 @@
 
 首次功能提交保留了這個既有失敗，未將完整 with-db 或完整發布門禁標記為通過。使用者後續授權正式發布後，已將該測試的預期文案精準對齊現行繁體回應，保留原有失敗回應、請求身份與獎勵不重發斷言。發布仍須重新通過正式門禁；不能以首次本機證據代替發布收據。
 
+正式門禁另發現 `world-sync.service.ts` 增至 293 行，超過既有 250 行邊界。已將靈獸 AOI 游標與差量、待送通知抽出獨立模組，主服務降至 242 行，沒有調高門檻。新增差量不重送、視野進出、工位清除、跨圖重置、離線游標清理及 EventBus 通知去重測試，並納入 server smoke 套件。舊候選的失敗紀錄保留，正式發布須以修正候選重新完成完整門禁。
+
 ## 可重複執行
 
 入口與本機 DB 準備方式見 [系統文件](README.md#美術及驗證)。完整日誌、結果 JSON、編譯指紋及程序紀錄位於 `.runtime/reports/spirit-beasts-verification/`；瀏覽器畫面位於 `.runtime/reports/spirit-beast-client-browser/` 與 `.runtime/reports/spirit-beast-map-browser/`。

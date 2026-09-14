@@ -130,6 +130,7 @@ const smokeCases = [
     { name: 'world-runtime-monster-los', scriptFile: 'world-runtime-monster-los-smoke.js', standalone: true },
     { name: 'pending-combat-cast-redis-recovery', scriptFile: 'pending-combat-cast-redis-recovery-smoke.js', standalone: true },
     { name: 'world-sync-envelope', scriptFile: 'world-sync-envelope-smoke.js', standalone: true },
+    { name: 'world-sync-spirit-beast', scriptFile: 'world-sync-spirit-beast-smoke.js', standalone: true },
     { name: 'leaderboard-offline-snapshots', scriptFile: 'leaderboard-offline-snapshots-smoke.js', standalone: true },
     { name: 'market-fractional-buy-order-cancel', scriptFile: 'market-fractional-buy-order-cancel-smoke.js', standalone: true },
     { name: 'market-runtime-ban-cancel-orders', scriptFile: 'market-runtime-ban-cancel-orders-smoke.js', standalone: true },
