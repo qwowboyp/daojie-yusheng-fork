@@ -1,12 +1,10 @@
-// @ts-nocheck
-
 /**
  * 用途：验证统一战斗编排器仍是运行时窄口，不把网络、数据库或 JSON 序列化带入热路径。
  */
 
-const assert = require('node:assert/strict');
-const fs = require('node:fs');
-const path = require('node:path');
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const runtimeFiles = [
   'packages/server/src/runtime/world/combat/world-runtime-combat-action.service.ts',
@@ -33,7 +31,7 @@ const forbiddenRuntimePatterns = [
   { pattern: /createQueryRunner\s*\(|manager\.query\s*\(|\.query\s*\(/, label: 'direct database query' },
   { pattern: /JSON\.stringify\s*\(/, label: 'JSON.stringify' },
   { pattern: /JSON\.parse\s*\(/, label: 'JSON.parse' },
-  { pattern: /fs\./, label: 'fs access' },
+  { pattern: /\bfs\./, label: 'fs access' },
 ];
 
 // 旧服务允许遗留 JSON.stringify/parse，但绝不允许新增 DB/socket/fs/redis 直连。
@@ -47,6 +45,9 @@ const forbiddenLegacyPatterns = [
 ];
 
 function run() {
+  const fsAccess = forbiddenRuntimePatterns.find((check) => check.label === 'fs access')!.pattern;
+  assert.equal(fsAccess.test('fs.readFileSync(path)'), true);
+  assert.equal(fsAccess.test('runtimeRefs.players'), false);
   const repoRoot = resolveRepoRoot();
   for (const relativePath of runtimeFiles) {
     const source = readSource(repoRoot, relativePath);

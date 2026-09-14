@@ -62,7 +62,7 @@ type MainInventoryStateSourceOptions = {
  * sendUseItem：sendUse道具相关字段。
  */
 
-  sendUseItem: (itemInstanceId: string, count?: number, options?: { sectName?: string; sectMark?: string }) => void;
+  sendUseItem: (itemInstanceId: string, count?: number, options?: { sectName?: string; sectMark?: string; requestId?: string; targetMapId?: string }) => void;
   /**
  * sendRepairInventoryItemInstanceIds：请求服务端重建缺失背包实例 ID。
  */

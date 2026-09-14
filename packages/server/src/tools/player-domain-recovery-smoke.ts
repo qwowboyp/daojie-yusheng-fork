@@ -3,6 +3,7 @@ import { installSmokeTimeout } from './smoke-timeout';
 installSmokeTimeout(__filename);
 
 import { Pool } from 'pg';
+import { StructureType, TerrainType, TileType } from '@mud/shared';
 
 import { resolveServerDatabaseUrl } from '../config/env-alias';
 import { ContentTemplateRepository } from '../content/content-template.repository';
@@ -466,7 +467,10 @@ async function proveMiningSpiritStoneDropRecovery(input: {
   let tileDrops: Array<{ itemId?: string; count?: number }> = [];
   try {
     Math.random = () => 0;
-    const damageResult = instance.damageTile(1, 0, Number.MAX_SAFE_INTEGER);
+    if (instance.getTileCombatState(2, 2)?.tileType !== TileType.SpiritOre) {
+      throw new Error('mining recovery fixture requires a damageable spirit ore tile');
+    }
+    const damageResult = instance.damageTile(2, 2, Number.MAX_SAFE_INTEGER);
     tileDrops = Array.isArray(damageResult?.tileDrops) ? damageResult.tileDrops : [];
   } finally {
     Math.random = originalRandom;
@@ -606,9 +610,11 @@ function createSpiritOreDropInstance(): MapInstanceRuntime {
       name: '灵石矿掉落恢复 Smoke',
       width: 3,
       height: 3,
-      terrainRows: ['.灵.', '...', '...'],
-      walkableMask: Uint8Array.from([1, 0, 1, 1, 1, 1, 1, 1, 1]),
-      blocksSightMask: Uint8Array.from([0, 1, 0, 0, 0, 0, 0, 0, 0]),
+      terrainRows: Array.from({ length: 3 }, () => Array.from({ length: 3 }, () => TerrainType.Floor)),
+      structureRows: Array.from({ length: 3 }, (_, y) =>
+        Array.from({ length: 3 }, (_, x) => x === 2 && y === 2 ? StructureType.SpiritOre : null)),
+      walkableMask: Uint8Array.from([1, 1, 1, 1, 1, 1, 1, 1, 0]),
+      blocksSightMask: Uint8Array.from([0, 0, 0, 0, 0, 0, 0, 0, 1]),
       portalIndexByTile: Int32Array.from({ length: cellCount }, () => -1),
       safeZoneMask: Uint8Array.from({ length: cellCount }, () => 0),
       baseAuraByTile: Int32Array.from({ length: cellCount }, () => 0),

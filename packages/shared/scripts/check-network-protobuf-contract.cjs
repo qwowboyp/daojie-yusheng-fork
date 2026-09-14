@@ -40,7 +40,7 @@ const EXPECTED_STATIC_S2C_SURFACES = [
     label: 'world-sync-protocol service emits',
     relativePath: 'packages/server/src/network/world-sync-protocol.service.ts',
     qualifierName: 'S2C',
-    expectedMembers: ['Bootstrap', 'InitSession', 'LootWindowUpdate', 'MapEnter', 'MapStatic', 'Notice', 'Quests', 'Realm', 'SyncEnvelope', 'WorldDelta'],
+    expectedMembers: ['AvailableQuests', 'Bootstrap', 'InitSession', 'LootWindowUpdate', 'MapEnter', 'MapStatic', 'Notice', 'Quests', 'Realm', 'SyncEnvelope', 'WorldDelta'],
   },
   {
     label: 'world-client-event service emits',

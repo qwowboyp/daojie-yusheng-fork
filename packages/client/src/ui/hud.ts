@@ -171,16 +171,15 @@ export class HUD {
       return;
     }
 
-    this.setText(this.nameDiv, 'name', player.displayName ?? player.name);
-    this.setText(this.titleDiv, 'title', meta?.titleLabel ?? t('hud.title.default', undefined));
+    this.setText(this.nameDiv, 'name', player.name);
     this.setText(this.posDiv, 'pos', `(${player.x}, ${player.y})`);
-    this.setText(
-      this.mapDiv,
-      'map',
-      meta?.mapDanger ? `${meta.mapName ?? '未知地域'} · ${meta.mapDanger}` : (meta?.mapName ?? '未知地域'),
-    );
-    this.setText(this.objectiveDiv, 'objective', meta?.boneAgeLabel ?? this.buildBoneAgeLabel(player));
-    this.setText(this.threatDiv, 'threat', meta?.lifespanLabel ?? this.buildLifespanLabel(player));
+    const mapName = meta?.mapName ?? '未知地域';
+    const ageLabel = meta?.boneAgeLabel ?? this.buildBoneAgeLabel(player);
+    const lifespanLabel = meta?.lifespanLabel ?? this.buildLifespanLabel(player);
+    this.setText(this.titleDiv, 'title', `${meta?.titleLabel ?? t('hud.title.default', undefined)} ${ageLabel}/${lifespanLabel}`);
+    this.setText(this.mapDiv, 'map', this.buildMapLabel(mapName, meta?.mapDanger));
+    this.setText(this.objectiveDiv, 'objective', ageLabel);
+    this.setText(this.threatDiv, 'threat', lifespanLabel);
 
     const realmLabel = meta?.realmLabel ?? player.realm?.displayName ?? player.realmName ?? player.realmStage ?? '-';
     const realmLevelLabel = this.buildRealmLevelLabel(player);
@@ -241,6 +240,8 @@ export class HUD {
 
   private buildReactHudStatus(player: PlayerState, meta?: HUDMeta): ReactHudStatusState {
     const realmLabel = meta?.realmLabel ?? player.realm?.displayName ?? player.realmName ?? player.realmStage ?? '-';
+    const ageLabel = meta?.boneAgeLabel ?? this.buildBoneAgeLabel(player);
+    const lifespanLabel = meta?.lifespanLabel ?? this.buildLifespanLabel(player);
     const realmLevelLabel = this.buildRealmLevelLabel(player);
     const realmReviewLabel = meta?.realmReviewLabel ?? player.realm?.review ?? player.realmReview ?? '-';
     const breakthroughPreview = player.realm?.breakthrough;
@@ -260,12 +261,9 @@ export class HUD {
     const cultivate = this.buildCultivate(player);
 
     return {
-      name: player.displayName ?? player.name,
+      name: player.name,
       title: meta?.titleLabel ?? t('hud.title.default', undefined),
-      position: `(${player.x}, ${player.y})`,
-      map: meta?.mapDanger ? `${meta.mapName ?? '未知地域'} · ${meta.mapDanger}` : (meta?.mapName ?? '未知地域'),
-      objective: meta?.boneAgeLabel ?? this.buildBoneAgeLabel(player),
-      threat: meta?.lifespanLabel ?? this.buildLifespanLabel(player),
+      ageLifespan: `${ageLabel}/${lifespanLabel}`,
       realmLabel,
       realmLevelLabel,
       realmReviewLabel,
@@ -298,6 +296,10 @@ export class HUD {
       return '';
     }
     return `lv${formatDisplayInteger(Math.floor(realmLv))}`;
+  }
+
+  private buildMapLabel(mapName: string, mapRecommendation?: string): string {
+    return mapRecommendation ? `${mapName} ${mapRecommendation}` : mapName;
   }
 
   private buildCultivate(player: PlayerState): { text: string; width: string } {

@@ -47,6 +47,7 @@ import {
   resolveTechniqueIdFromBookItem,
 } from '../../content/local-templates';
 import { detailModalHost } from '../detail-modal-host';
+import { bindItemSourceLinks, renderItemSourceButton } from '../item-source-links';
 import { FloatingTooltip, prefersPinnedTooltipInteraction } from '../floating-tooltip';
 import {
   buildItemTooltipPayload,
@@ -96,10 +97,13 @@ import {
   InventoryFormationDialogController,
   type FormationRangePreviewPayload,
 } from './inventory-formation-dialog';
+import { openShenxingTravelPanel } from '../../react-ui/panels/inventory/mount-shenxing-travel-panel';
 
 type UseItemOptions = {
   sectName?: string;
   sectMark?: string;
+  requestId?: string;
+  targetMapId?: string;
 };
 
 type InventoryCellRibbon = {
@@ -779,6 +783,14 @@ export class InventoryPanel {
     }
     if (this.isFormationDiskItem(item)) {
       this.openFormationDialog(slotIndex);
+      return;
+    }
+    if (item.useBehavior === 'shenxing_travel') {
+      if (!itemInstanceId) {
+        this.repairMissingInventoryItemInstanceIds();
+        return;
+      }
+      openShenxingTravelPanel(itemInstanceId, item.name, (useOptions) => this.onUseItem?.(itemInstanceId, 1, useOptions));
       return;
     }
     if (this.isSectFoundingTokenItem(item)) {
@@ -1758,6 +1770,7 @@ export class InventoryPanel {
           this.sourceExpanded = !this.sourceExpanded;
           this.renderModal();
         }, { signal });
+        bindItemSourceLinks(body, signal);
         this.bindItemDetailActions(body, signal, item, slotIndex);
       },
     });
@@ -1959,6 +1972,7 @@ export class InventoryPanel {
       </div>` : ''}
       <div class="quest-detail-section inventory-source-section">
         <strong>${t('inventory.detail.sources', undefined)}</strong>
+        ${renderItemSourceButton(item.itemId)}
         ${sourceListHtml}
         ${canToggleSourceList
           ? `<button class="small-btn ghost inventory-source-toggle" data-inventory-source-toggle="true" type="button">${this.sourceExpanded ? t('inventory.source.collapse', undefined) : t('inventory.source.expand-all', { count: formatDisplayInteger(sourceEntryCount) })}</button>`
@@ -2333,6 +2347,7 @@ export class InventoryPanel {
       && item.count > 1
       && !this.isFormationDiskItem(item)
       && !this.isSectFoundingTokenItem(item)
+      && item.useBehavior !== 'shenxing_travel'
       && item.itemId !== MERIT_ITEM_ID;
   }
 

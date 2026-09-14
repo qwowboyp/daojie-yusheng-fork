@@ -642,3 +642,12 @@
   display: grid;
   gap: 10px;
 }
+
+/* View Transitions（React 19.3 <ViewTransition>）：跟隨系統「減少動態效果」偏好，停用過渡動畫 */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

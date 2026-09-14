@@ -202,6 +202,8 @@ function testBuildingJobRoundtrip() {
         jobVersion: 4,
         buildingId: 'building:half:1',
         buildingName: '门',
+        label: undefined,
+        operation: 'construct',
         instanceId: 'real:building_command_runtime_smoke',
         phase: 'building',
         startedAt: 100,

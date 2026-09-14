@@ -139,7 +139,7 @@ async function verifyLeaseLostDuringTickBlocksMonsterAction(): Promise<Record<st
     },
   });
 
-  assert.equal(ticks, 1);
+  assert.equal(ticks, 0, 'tick 前第二次 lease 檢查失敗時不得計入已執行邏輯息');
   assert.equal(fixture.instance.tick, 0);
   assert.equal(fixture.appliedMonsterActions.length, 0);
   assert.deepEqual(fixture.fenceReasons, ['instance_tick_lease_check_failed']);

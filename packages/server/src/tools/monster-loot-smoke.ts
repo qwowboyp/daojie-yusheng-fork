@@ -147,8 +147,10 @@ async function main() {
 /**
  * 记录rattail数量。
  */
-        const ratTailCount = tileAfterSpawn.tile?.groundPile?.items?.find((entry) => entry.itemId === TARGET_ITEM_ID)?.count ?? 0;
-        if (!sourceId || ratTailCount <= 0) {
+        const ratTailGroundItem = tileAfterSpawn.tile?.groundPile?.items?.find((entry) => entry.itemId === TARGET_ITEM_ID) ?? null;
+        const targetItemKey = typeof ratTailGroundItem?.itemKey === 'string' ? ratTailGroundItem.itemKey.trim() : '';
+        const ratTailCount = ratTailGroundItem?.count ?? 0;
+        if (!sourceId || !targetItemKey || ratTailCount <= 0) {
             throw new Error(`expected spawned ${TARGET_ITEM_ID}, got ${JSON.stringify(tileAfterSpawn)}`);
         }
         await waitFor(() => worldEvents.some((payload) => payload.g?.some((entry) => entry.sourceId === sourceId && entry.items?.some((item) => item.itemId === TARGET_ITEM_ID && item.count === ratTailCount))), 10000).catch(() => {
@@ -159,7 +161,7 @@ async function main() {
         for (let attempt = 0; attempt < 3 && !pickupSucceeded; attempt++) {
             socket.emit(shared_1.C2S.TakeGround, {
                 sourceId,
-                itemKey: TARGET_ITEM_ID,
+                itemKey: targetItemKey,
             });
             try {
                 await waitFor(async () => {
@@ -221,6 +223,7 @@ async function main() {
             inventoryAfter: getInventoryCount(finalState.player, TARGET_ITEM_ID),
             inventoryPanelPatched,
             sourceId,
+            targetItemKey,
             finalTile,
             finalState,
         }, null, 2));

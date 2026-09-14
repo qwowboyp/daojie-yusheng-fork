@@ -10,6 +10,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { resolveProjectPath } from '../common/project-path';
 
 import { installSmokeTimeout } from './smoke-timeout';
 import {
@@ -22,6 +23,7 @@ installSmokeTimeout(__filename);
 function resolveRepoRoot(): string {
   // dist 模式下 __dirname = packages/server/dist/tools
   const candidates = [
+    resolveProjectPath(), // stable-dist 使用正式 SERVER_PACKAGE_ROOT 定位來源。
     join(__dirname, '..', '..', '..', '..', '..'), // dist/tools -> repo root
     join(__dirname, '..', '..', '..', '..'), // dist -> repo root
   ];

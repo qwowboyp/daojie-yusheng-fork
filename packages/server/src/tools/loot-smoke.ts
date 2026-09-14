@@ -223,6 +223,11 @@ async function main() {
             `looterLastWorld=${JSON.stringify(looterWorld[looterWorld.length - 1] ?? null)}`,
         ].join('\n'));
     });
+    const droppedItem = droppedPile.items?.find((entry) => entry.itemId === TARGET_ITEM_ID) ?? null;
+    const droppedItemKey = typeof droppedItem?.itemKey === 'string' ? droppedItem.itemKey.trim() : '';
+    if (!droppedItemKey) {
+        throw new Error(`missing ground itemKey for ${TARGET_ITEM_ID}: ${JSON.stringify(droppedPile)}`);
+    }
     await waitFor(async () => {
         const state = await fetchState(dropperId);
         return getInventoryCount(state.player, TARGET_ITEM_ID) === Math.max(0, dropperCountBefore - DROP_COUNT);
@@ -233,7 +238,7 @@ async function main() {
     const dropperAfterMove = { x: null, y: null };
     looter.emit(shared_1.C2S.TakeGround, {
         sourceId: droppedPile.sourceId,
-        itemKey: TARGET_ITEM_ID,
+        itemKey: droppedItemKey,
     });
     await waitFor(async () => {
         const [looterState, tileState] = await Promise.all([
@@ -270,8 +275,8 @@ async function main() {
         dropTile: { x: dropX, y: dropY },
         movedDropperTo: { x: dropperAfterMove.x, y: dropperAfterMove.y },
         groundSourceId: droppedPile.sourceId,
-        dropPatchedForDropper: Boolean(findGroundPatch(dropperWorld, dropX, dropY, TARGET_ITEM_ID, groundCountBefore + DROP_COUNT)),
-        dropPatchedForLooter: Boolean(findGroundPatch(looterWorld, dropX, dropY, TARGET_ITEM_ID, groundCountBefore + DROP_COUNT)),
+        dropPatchedForDropper: Boolean(findGroundPatch(dropperWorld, dropX, dropY, droppedItemKey, groundCountBefore + DROP_COUNT)),
+        dropPatchedForLooter: Boolean(findGroundPatch(looterWorld, dropX, dropY, droppedItemKey, groundCountBefore + DROP_COUNT)),
         removePatchedForDropper: hasGroundRemovePatch(dropperWorld, droppedPile.sourceId),
         removePatchedForLooter: hasGroundRemovePatch(looterWorld, droppedPile.sourceId),
         finalDropperCount: getInventoryCount(finalDropper?.player, TARGET_ITEM_ID),

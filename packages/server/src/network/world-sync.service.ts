@@ -42,7 +42,7 @@ export class WorldSyncService {
         const envelope = this.worldSyncEnvelopeService.createInitialEnvelope(playerId, binding, view, player);
         if (envelope.initSession) envelope.initSession.pno = this.nativePlayerAuthStoreService?.getMemoryUserByPlayerId?.(playerId)?.playerNo ?? undefined;
         this.emitEnvelope(socket, envelope);
-        this.emitAuxInitialSync(binding.playerId, socket, view, player);
+        this.worldSyncAuxStateService.emitAuxInitialSync(binding.playerId, socket, view, player);
         this.worldSyncQuestLootService.markQuestSyncBaseline(binding.playerId, player.quests.revision);
         this.worldSyncQuestLootService.emitAvailableQuestsSyncIfChanged(socket, binding.playerId);
         this.emitPendingInitialNotices(binding.playerId, socket);
@@ -54,7 +54,8 @@ export class WorldSyncService {
         const socket = socketOverride ?? this.worldSessionService.getSocketByPlayerId(playerId);
         const view = this.worldRuntimeService.getPlayerView(playerId);
         if (!socket || !view) return;
-        this.syncDeltaForPlayer(binding.playerId, binding.sessionId, socket, view);
+        const { envelope, player, auxDeferred } = this.prepareDeltaForPlayer(binding.playerId, binding.sessionId, socket, view);
+        this.emitPreparedDelta(binding.playerId, socket, view, player, envelope, auxDeferred);
     }
     async flushConnectedPlayers() {
         return this.flushBindings(this.worldSessionService.listBindings());
@@ -63,7 +64,6 @@ export class WorldSyncService {
     async flushPlayerIds(playerIds: Iterable<string>) {
         return this.flushBindings(this.worldSessionService.listBindingsForPlayerIds(playerIds));
     }
-
     /** 移動子步只刷新受影響的接收者，面板、任務與統計保留原本的低頻出口。 */
     async flushMovementPlayerIds(playerIds: Iterable<string>): Promise<void> {
         for (const binding of this.worldSessionService.listBindingsForPlayerIds(playerIds)) {
@@ -76,15 +76,14 @@ export class WorldSyncService {
             const player = this.playerRuntimeService.syncFromWorldView(binding.playerId, binding.sessionId, view);
             const envelope = this.worldSyncEnvelopeService.createMovementEnvelope(binding.playerId, view, player);
             // 視野揭露必須隨站位更新，不能等到下一息才補新地塊。
-            const auxSynced = this.emitAuxDeltaSync(binding.playerId, socket, view, player,
+            const auxSynced = this.worldSyncAuxStateService.emitAuxDeltaSync(binding.playerId, socket, view, player,
                 { movementOnly: true, deferMapChanged: true });
             if (envelope) this.emitEnvelope(socket, envelope);
             if (auxSynced === false) {
-                this.emitAuxDeltaSync(binding.playerId, socket, view, player, { movementOnly: true });
+                this.worldSyncAuxStateService.emitAuxDeltaSync(binding.playerId, socket, view, player, { movementOnly: true });
             }
         }
     }
-
     private async flushBindings(bindings: any[]) {
         const breakdown = createSyncFlushBreakdownSample();
         try {
@@ -92,12 +91,9 @@ export class WorldSyncService {
             this.clearPurgedPlayerCaches();
             addSyncFlushDuration(breakdown, 'clearCachesMs', clearCachesStartedAt);
             breakdown.clearCachesCount += 1;
-
             breakdown.playerCount = Array.isArray(bindings) ? bindings.length : 0;
-
             const pendingEmits: PendingEnvelopeEmit[] = [];
             const useWorkerEncode = this.workerEncodeService?.shouldUseWorkerEncode?.() === true;
-
             for (const binding of bindings) {
                 if (this.isOfflineGainBlocking(binding.playerId)) {
                     breakdown.skippedPlayerCount += 1;
@@ -107,18 +103,15 @@ export class WorldSyncService {
                 const socket = this.worldSessionService.getSocketByPlayerId(binding.playerId);
                 addSyncFlushDuration(breakdown, 'getSocketMs', getSocketStartedAt);
                 breakdown.getSocketCount += 1;
-
                 const getViewStartedAt = performance.now();
                 const view = this.worldRuntimeService.getPlayerView(binding.playerId);
                 addSyncFlushDuration(breakdown, 'getViewMs', getViewStartedAt);
                 breakdown.getViewCount += 1;
-
                 if (!socket || !view) {
                     breakdown.skippedPlayerCount += 1;
                     continue;
                 }
                 breakdown.processedPlayerCount += 1;
-
                 const { envelope, player, auxDeferred } = this.prepareDeltaForPlayer(binding.playerId, binding.sessionId, socket, view, breakdown, true);
                 if (useWorkerEncode && envelope) {
                     const playerId = binding.playerId;
@@ -154,7 +147,7 @@ export class WorldSyncService {
         this.worldSessionService.syncPlayerSectChannel?.(playerId, player?.sectId ?? null);
         const envelope = runMeasuredSyncFlushStep(breakdown, 'envelopeMs', 'envelopeCount', () => this.worldSyncEnvelopeService.createDeltaEnvelope(playerId, view, player, breakdown));
         recordSyncEnvelopeDetail(breakdown, envelope);
-        const auxSynced = runMeasuredAuxSync(breakdown, () => this.emitAuxDeltaSync(playerId, socket, view, player, {
+        const auxSynced = runMeasuredAuxSync(breakdown, () => this.worldSyncAuxStateService.emitAuxDeltaSync(playerId, socket, view, player, {
             deferMapChanged: true,
             breakdown,
         }));
@@ -191,11 +184,6 @@ export class WorldSyncService {
         return this.worldSyncQuestLootService.openLootWindow(playerId, x, y);
     }
 
-    private syncDeltaForPlayer(playerId: string, sessionId: string, socket: any, view: any, breakdown?: SyncFlushBreakdownSample) {
-        const { envelope, player, auxDeferred } = this.prepareDeltaForPlayer(playerId, sessionId, socket, view, breakdown);
-        this.emitPreparedDelta(playerId, socket, view, player, envelope, auxDeferred, breakdown);
-    }
-
     private emitPreparedDelta(playerId: string, socket: any, view: any, player: any, envelope: any, auxDeferred: boolean, breakdown?: SyncFlushBreakdownSample) {
         if (envelope) {
             runMeasuredSyncFlushStep(breakdown, 'emitEnvelopeMs', 'emitEnvelopeCount', () => this.emitEnvelope(socket, envelope));
@@ -204,7 +192,7 @@ export class WorldSyncService {
     }
 
     private emitDeltaPostSync(playerId: string, socket: any, view: any, player: any, envelope: any, auxDeferred: boolean, breakdown?: SyncFlushBreakdownSample) {
-        if (auxDeferred) runMeasuredAuxSync(breakdown, () => this.emitAuxDeltaSync(playerId, socket, view, player, { breakdown }));
+        if (auxDeferred) runMeasuredAuxSync(breakdown, () => this.worldSyncAuxStateService.emitAuxDeltaSync(playerId, socket, view, player, { breakdown }));
         runMeasuredSyncFlushStep(breakdown, 'questSyncMs', 'questSyncCount', () => this.worldSyncQuestLootService.emitQuestSyncIfChanged(socket, playerId, player?.quests?.revision));
         runMeasuredSyncFlushStep(breakdown, 'availableQuestSyncMs', 'availableQuestSyncCount', () => this.worldSyncQuestLootService.emitAvailableQuestsSyncIfChanged(socket, playerId));
         runMeasuredSyncFlushStep(breakdown, 'runtimeEventsMs', 'runtimeEventsCount', () => this.emitPendingRuntimeEvents(playerId, socket, envelope));
@@ -228,14 +216,6 @@ export class WorldSyncService {
         this.worldSyncAuxStateService.clearPlayerCache(playerId);
     }
 
-    private emitAuxInitialSync(playerId: string, socket: any, view: any, player: any) {
-        this.worldSyncAuxStateService.emitAuxInitialSync(playerId, socket, view, player);
-    }
-
-    private emitAuxDeltaSync(playerId: string, socket: any, view: any, player: any, options: any = undefined) {
-        return this.worldSyncAuxStateService.emitAuxDeltaSync(playerId, socket, view, player, options);
-    }
-
     private isOfflineGainBlocking(playerId: string): boolean {
         return typeof this.playerRuntimeService.hasLoadedActiveOfflineGainSession === 'function'
             && this.playerRuntimeService.hasLoadedActiveOfflineGainSession(playerId) === true;
@@ -248,10 +228,7 @@ export class WorldSyncService {
         if (envelope?.worldDelta?.eventBus) {
             return;
         }
-        const items = this.playerRuntimeService.drainNotices(playerId);
-        if (items.length > 0) {
-            this.worldSyncProtocolService.sendNotices(socket, items);
-        }
+        this.emitPendingInitialNotices(playerId, socket);
     }
 
     private emitPendingInitialNotices(playerId: string, socket: any) {

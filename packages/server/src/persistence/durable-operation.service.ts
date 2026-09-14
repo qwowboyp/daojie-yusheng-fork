@@ -1659,6 +1659,7 @@ export class DurableOperationService implements OnModuleInit, OnModuleDestroy {
         || normalizedSourceType === 'activity_invitation_reward_claim'
         || normalizedSourceType === 'item_map_unlock'
         || normalizedSourceType === 'item_respawn_bind'
+        || normalizedSourceType === 'item_shenxing_travel'
         || normalizedSourceType === 'time_chamber_activation')
       && !normalizedSourceMutation
     ) {
@@ -1690,7 +1691,9 @@ export class DurableOperationService implements OnModuleInit, OnModuleDestroy {
     if (normalizedSourceMutation?.kind === 'player_item_use') {
       const expectedSourceType = normalizedSourceMutation.action === 'unlock_maps'
         ? 'item_map_unlock'
-        : 'item_respawn_bind';
+        : normalizedSourceMutation.action === 'bind_respawn'
+          ? 'item_respawn_bind'
+          : 'item_shenxing_travel';
       if (normalizedSourceMutation.playerId !== normalizedPlayerId) {
         throw new Error('player_item_use_source_player_mismatch');
       }

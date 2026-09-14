@@ -102,7 +102,7 @@ export function createSocketPanelSender(deps: PanelSenderDeps) {
  * @returns 无返回值，直接更新sendUse道具相关状态。
  */
 
-    sendUseItem(itemInstanceId: string, count?: number, options?: { sectName?: string; sectMark?: string }): void {
+    sendUseItem(itemInstanceId: string, count?: number, options?: { sectName?: string; sectMark?: string; requestId?: string; targetMapId?: string }): void {
       deps.emitEvent(C2S.UseItem, {
         itemRef: buildInventoryItemRef(itemInstanceId),
         count,

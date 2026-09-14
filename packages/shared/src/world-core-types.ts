@@ -305,6 +305,9 @@ export type MapSpaceVisionMode = 'isolated' | 'parent_overlay';
 /** 地图所属路网域。 */
 export type MapRouteDomain = 'system' | 'sect' | 'personal' | 'dynamic';
 
+/** 可由神行丹抵達的正式公共地圖分類；缺省即不列入目的地。 */
+export type ShenxingDestinationCategory = 'town' | 'wild';
+
 /** 传送点路网域配置。 */
 export type PortalRouteDomain = MapRouteDomain | 'inherit';
 
@@ -349,6 +352,7 @@ export interface MapMeta {
  */
 
   routeDomain?: MapRouteDomain;
+  shenxingCategory?: ShenxingDestinationCategory;
   /**
  * parentMapId：parent地图ID标识。
  */

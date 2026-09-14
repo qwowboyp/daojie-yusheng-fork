@@ -280,6 +280,7 @@ async function main(): Promise<void> {
       sessionId,
       preferredX: 41,
       preferredY: 12,
+      relocateExisting: true,
     }],
     ['disconnectPlayer', playerId],
     ['setPlayerMoveSpeed', playerId, 18],
@@ -370,6 +371,7 @@ async function main(): Promise<void> {
       sessionId: failedSessionId,
       preferredX: 41,
       preferredY: 12,
+      relocateExisting: true,
     }],
     ['setPlayerLocation', failedPlayerId, 'instance:old', failedSessionId],
   ]);

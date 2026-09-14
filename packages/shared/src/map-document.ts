@@ -862,6 +862,9 @@ export function normalizeEditableMapDocument(raw: unknown): GmMapDocument {
  * routeDomain：路线Domain相关字段。
  */
  routeDomain?: unknown }).routeDomain) ?? 'system',
+    shenxingCategory: source.shenxingCategory === 'town' || source.shenxingCategory === 'wild'
+      ? source.shenxingCategory
+      : undefined,
     mapLv: Number.isFinite((source as {
     /**
  * mapLv：mapLv相关字段。
@@ -1637,6 +1640,7 @@ export function buildEditableMapSummary(document: GmMapDocument): GmMapSummary {
     width: document.width,
     height: document.height,
     description: document.description,
+    shenxingCategory: document.shenxingCategory,
     mapLv: document.mapLv,
     portalCount: document.portals.length,
     npcCount: document.npcs.length,
@@ -1694,6 +1698,7 @@ export function serializeEditableMapDocumentToFormatV2(document: GmMapDocument):
   output.width = normalized.width;
   output.height = normalized.height;
   if (normalized.routeDomain) output.routeDomain = normalized.routeDomain;
+  if (normalized.shenxingCategory) output.shenxingCategory = normalized.shenxingCategory;
   if (normalized.mapLv !== undefined) output.mapLv = normalized.mapLv;
   if (normalized.spaceVisionMode) output.spaceVisionMode = normalized.spaceVisionMode;
   if (normalized.parentMapId) output.parentMapId = normalized.parentMapId;

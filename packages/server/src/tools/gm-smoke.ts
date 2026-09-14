@@ -1146,10 +1146,10 @@ async function registerAndLoginPlayer() {
         }
         catch (error) {
             const message = error instanceof Error ? error.message : String(error);
-            if (!message.includes('显示名称已存在')
-                && !message.includes('账号已存在')
-                && !message.includes('角色名已存在')
-                && !message.includes('称号已存在')) {
+            if (!message.includes('顯示名稱已存在')
+                && !message.includes('帳號已存在')
+                && !message.includes('角色名稱已存在')
+                && !message.includes('稱號已存在')) {
                 throw error;
             }
         }
@@ -1416,9 +1416,13 @@ async function requestJson(path, init = {}) {
 /**
  * 记录headers。
  */
+    const runtimeToken = process.env.SERVER_SHADOW_RUNTIME_ADMIN_TOKEN?.trim()
+        || process.env.SERVER_RUNTIME_ADMIN_TOKEN?.trim()
+        || process.env.SERVER_RUNTIME_HTTP_TOKEN?.trim();
     const headers = {
         ...(body === undefined ? {} : { 'content-type': 'application/json' }),
         ...(init.token ? { authorization: `Bearer ${init.token}` } : {}),
+        ...(path.startsWith('/runtime/') && runtimeToken ? { 'x-runtime-admin-token': runtimeToken } : {}),
     };
 /**
  * 记录response。

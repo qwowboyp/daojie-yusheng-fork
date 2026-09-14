@@ -72,7 +72,7 @@ if (!databaseUrl || !shadowUrl || !gmPassword) {
  * 汇总需要串行执行的步骤。
  */
 const steps = [
-  { label: 'with-db', kind: 'node', args: ['scripts/release-with-db.js'] },
+  { label: 'with-db', kind: 'node', args: ['scripts/release-with-db.js', ...(process.argv.includes('--serial') ? ['--serial'] : [])] },
   ...(rerunGmDatabase ? [{
     label: 'gm-database',
     kind: 'pnpm',

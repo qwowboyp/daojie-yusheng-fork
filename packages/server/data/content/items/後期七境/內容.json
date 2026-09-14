@@ -6688,5 +6688,1323 @@
     "tags": [
       "異材"
     ]
+  },
+  {
+    "itemId": "pill.realm.golden_core.martial_edge",
+    "name": "金丹破軍丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 43,
+    "desc": "金丹修士淬鍊用的破軍丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_martial_edge",
+        "name": "破軍丹·金丹",
+        "desc": "物攻提升 60%、暴擊提升 45%，持續 6000 息。同族丹效不疊層。",
+        "shortMark": "攻",
+        "duration": 6000,
+        "maxStacks": 1,
+        "stats": {
+          "physAtk": 60,
+          "crit": 45
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "燈芯灰燼與熔金；裂紋赤金雙丸，表面嵌一枚斷戟形金片"
+  },
+  {
+    "itemId": "pill.realm.golden_core.arcane_surge",
+    "name": "金丹玄元丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 43,
+    "desc": "金丹修士淬鍊用的玄元丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_arcane_surge",
+        "name": "玄元丹·金丹",
+        "desc": "法攻提升 60%、每息靈力輸出上限提升 45%，持續 6000 息。同族丹效不疊層。",
+        "shortMark": "元",
+        "duration": 6000,
+        "maxStacks": 1,
+        "stats": {
+          "spellAtk": 60,
+          "maxQiOutputPerTick": 45
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "燈芯灰燼與熔金；旋渦藍紫珠，半透明核心浮著一道靈流"
+  },
+  {
+    "itemId": "pill.realm.golden_core.iron_guard",
+    "name": "金丹金剛丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 47,
+    "desc": "金丹修士淬鍊用的金剛丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_iron_guard",
+        "name": "金剛丹·金丹",
+        "desc": "物防提升 60%、化解提升 45%，持續 6000 息。同族丹效不疊層。",
+        "shortMark": "剛",
+        "duration": 6000,
+        "maxStacks": 1,
+        "stats": {
+          "physDef": 60,
+          "resolvePower": 45
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "燈芯灰燼與熔金；龜甲褐金丸，外殼有明顯分節與厚重邊緣"
+  },
+  {
+    "itemId": "pill.realm.golden_core.veil_guard",
+    "name": "金丹玄甲丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 47,
+    "desc": "金丹修士淬鍊用的玄甲丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_veil_guard",
+        "name": "玄甲丹·金丹",
+        "desc": "法防提升 60%、抗暴提升 45%，持續 6000 息。同族丹效不疊層。",
+        "shortMark": "甲",
+        "duration": 6000,
+        "maxStacks": 1,
+        "stats": {
+          "spellDef": 60,
+          "antiCrit": 45
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "燈芯灰燼與熔金；半透明青玉護珠，內封六角護符"
+  },
+  {
+    "itemId": "pill.realm.golden_core.hawk_eye",
+    "name": "金丹明瞳丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 51,
+    "desc": "金丹修士淬鍊用的明瞳丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_hawk_eye",
+        "name": "明瞳丹·金丹",
+        "desc": "命中提升 60%、破招提升 45%，持續 6000 息。同族丹效不疊層。",
+        "shortMark": "瞳",
+        "duration": 6000,
+        "maxStacks": 1,
+        "stats": {
+          "hit": 60,
+          "breakPower": 45
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "燈芯灰燼與熔金；瞳孔琥珀丸，黑金虹膜環繞一點高光"
+  },
+  {
+    "itemId": "pill.realm.golden_core.mist_step",
+    "name": "金丹幻影丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 51,
+    "desc": "金丹修士淬鍊用的幻影丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_mist_step",
+        "name": "幻影丹·金丹",
+        "desc": "閃避提升 60%、移速提升 45%，持續 6000 息。同族丹效不疊層。",
+        "shortMark": "影",
+        "duration": 6000,
+        "maxStacks": 1,
+        "stats": {
+          "dodge": 60,
+          "moveSpeed": 45
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "燈芯灰燼與熔金；羽紋銀霧丸，拖著分離的薄霧尾痕"
+  },
+  {
+    "itemId": "pill.realm.golden_core.swiftwind",
+    "name": "金丹神行丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 43,
+    "useBehavior": "shenxing_travel",
+    "desc": "金丹行旅丹，啟動神行後可前往已收錄的城鎮或野外地圖；不可進入副本、塔、私人或測試地圖。",
+    "artDirection": "燈芯灰燼與熔金；螺旋翼紋青白丸，外圈有獨立風環與折紙般的雲翼"
+  },
+  {
+    "itemId": "pill.realm.nascent_soul.martial_edge",
+    "name": "元嬰破軍丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 55,
+    "desc": "元嬰修士淬鍊用的破軍丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_martial_edge",
+        "name": "破軍丹·元嬰",
+        "desc": "物攻提升 90%、暴擊提升 68%，持續 7200 息。同族丹效不疊層。",
+        "shortMark": "攻",
+        "duration": 7200,
+        "maxStacks": 1,
+        "stats": {
+          "physAtk": 90,
+          "crit": 68
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "潮音貝殼與月白水紋；裂紋赤金雙丸，表面嵌一枚斷戟形金片"
+  },
+  {
+    "itemId": "pill.realm.nascent_soul.arcane_surge",
+    "name": "元嬰玄元丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 55,
+    "desc": "元嬰修士淬鍊用的玄元丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_arcane_surge",
+        "name": "玄元丹·元嬰",
+        "desc": "法攻提升 90%、每息靈力輸出上限提升 68%，持續 7200 息。同族丹效不疊層。",
+        "shortMark": "元",
+        "duration": 7200,
+        "maxStacks": 1,
+        "stats": {
+          "spellAtk": 90,
+          "maxQiOutputPerTick": 68
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "潮音貝殼與月白水紋；旋渦藍紫珠，半透明核心浮著一道靈流"
+  },
+  {
+    "itemId": "pill.realm.nascent_soul.iron_guard",
+    "name": "元嬰金剛丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 59,
+    "desc": "元嬰修士淬鍊用的金剛丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_iron_guard",
+        "name": "金剛丹·元嬰",
+        "desc": "物防提升 90%、化解提升 68%，持續 7200 息。同族丹效不疊層。",
+        "shortMark": "剛",
+        "duration": 7200,
+        "maxStacks": 1,
+        "stats": {
+          "physDef": 90,
+          "resolvePower": 68
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "潮音貝殼與月白水紋；龜甲褐金丸，外殼有明顯分節與厚重邊緣"
+  },
+  {
+    "itemId": "pill.realm.nascent_soul.veil_guard",
+    "name": "元嬰玄甲丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 59,
+    "desc": "元嬰修士淬鍊用的玄甲丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_veil_guard",
+        "name": "玄甲丹·元嬰",
+        "desc": "法防提升 90%、抗暴提升 68%，持續 7200 息。同族丹效不疊層。",
+        "shortMark": "甲",
+        "duration": 7200,
+        "maxStacks": 1,
+        "stats": {
+          "spellDef": 90,
+          "antiCrit": 68
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "潮音貝殼與月白水紋；半透明青玉護珠，內封六角護符"
+  },
+  {
+    "itemId": "pill.realm.nascent_soul.hawk_eye",
+    "name": "元嬰明瞳丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 63,
+    "desc": "元嬰修士淬鍊用的明瞳丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_hawk_eye",
+        "name": "明瞳丹·元嬰",
+        "desc": "命中提升 90%、破招提升 68%，持續 7200 息。同族丹效不疊層。",
+        "shortMark": "瞳",
+        "duration": 7200,
+        "maxStacks": 1,
+        "stats": {
+          "hit": 90,
+          "breakPower": 68
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "潮音貝殼與月白水紋；瞳孔琥珀丸，黑金虹膜環繞一點高光"
+  },
+  {
+    "itemId": "pill.realm.nascent_soul.mist_step",
+    "name": "元嬰幻影丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 63,
+    "desc": "元嬰修士淬鍊用的幻影丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_mist_step",
+        "name": "幻影丹·元嬰",
+        "desc": "閃避提升 90%、移速提升 68%，持續 7200 息。同族丹效不疊層。",
+        "shortMark": "影",
+        "duration": 7200,
+        "maxStacks": 1,
+        "stats": {
+          "dodge": 90,
+          "moveSpeed": 68
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "潮音貝殼與月白水紋；羽紋銀霧丸，拖著分離的薄霧尾痕"
+  },
+  {
+    "itemId": "pill.realm.nascent_soul.swiftwind",
+    "name": "元嬰神行丹",
+    "type": "consumable",
+    "grade": "heaven",
+    "level": 55,
+    "useBehavior": "shenxing_travel",
+    "desc": "元嬰行旅丹，啟動神行後可前往已收錄的城鎮或野外地圖；不可進入副本、塔、私人或測試地圖。",
+    "artDirection": "潮音貝殼與月白水紋；螺旋翼紋青白丸，外圈有獨立風環與折紙般的雲翼"
+  },
+  {
+    "itemId": "pill.realm.spirit_transformation.martial_edge",
+    "name": "化神破軍丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 67,
+    "desc": "化神修士淬鍊用的破軍丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_martial_edge",
+        "name": "破軍丹·化神",
+        "desc": "物攻提升 135%、暴擊提升 101%，持續 8400 息。同族丹效不疊層。",
+        "shortMark": "攻",
+        "duration": 8400,
+        "maxStacks": 1,
+        "stats": {
+          "physAtk": 135,
+          "crit": 101
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "神木琥珀與幽綠火星；裂紋赤金雙丸，表面嵌一枚斷戟形金片"
+  },
+  {
+    "itemId": "pill.realm.spirit_transformation.arcane_surge",
+    "name": "化神玄元丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 67,
+    "desc": "化神修士淬鍊用的玄元丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_arcane_surge",
+        "name": "玄元丹·化神",
+        "desc": "法攻提升 135%、每息靈力輸出上限提升 101%，持續 8400 息。同族丹效不疊層。",
+        "shortMark": "元",
+        "duration": 8400,
+        "maxStacks": 1,
+        "stats": {
+          "spellAtk": 135,
+          "maxQiOutputPerTick": 101
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "神木琥珀與幽綠火星；旋渦藍紫珠，半透明核心浮著一道靈流"
+  },
+  {
+    "itemId": "pill.realm.spirit_transformation.iron_guard",
+    "name": "化神金剛丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 71,
+    "desc": "化神修士淬鍊用的金剛丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_iron_guard",
+        "name": "金剛丹·化神",
+        "desc": "物防提升 135%、化解提升 101%，持續 8400 息。同族丹效不疊層。",
+        "shortMark": "剛",
+        "duration": 8400,
+        "maxStacks": 1,
+        "stats": {
+          "physDef": 135,
+          "resolvePower": 101
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "神木琥珀與幽綠火星；龜甲褐金丸，外殼有明顯分節與厚重邊緣"
+  },
+  {
+    "itemId": "pill.realm.spirit_transformation.veil_guard",
+    "name": "化神玄甲丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 71,
+    "desc": "化神修士淬鍊用的玄甲丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_veil_guard",
+        "name": "玄甲丹·化神",
+        "desc": "法防提升 135%、抗暴提升 101%，持續 8400 息。同族丹效不疊層。",
+        "shortMark": "甲",
+        "duration": 8400,
+        "maxStacks": 1,
+        "stats": {
+          "spellDef": 135,
+          "antiCrit": 101
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "神木琥珀與幽綠火星；半透明青玉護珠，內封六角護符"
+  },
+  {
+    "itemId": "pill.realm.spirit_transformation.hawk_eye",
+    "name": "化神明瞳丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 75,
+    "desc": "化神修士淬鍊用的明瞳丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_hawk_eye",
+        "name": "明瞳丹·化神",
+        "desc": "命中提升 135%、破招提升 101%，持續 8400 息。同族丹效不疊層。",
+        "shortMark": "瞳",
+        "duration": 8400,
+        "maxStacks": 1,
+        "stats": {
+          "hit": 135,
+          "breakPower": 101
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "神木琥珀與幽綠火星；瞳孔琥珀丸，黑金虹膜環繞一點高光"
+  },
+  {
+    "itemId": "pill.realm.spirit_transformation.mist_step",
+    "name": "化神幻影丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 75,
+    "desc": "化神修士淬鍊用的幻影丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_mist_step",
+        "name": "幻影丹·化神",
+        "desc": "閃避提升 135%、移速提升 101%，持續 8400 息。同族丹效不疊層。",
+        "shortMark": "影",
+        "duration": 8400,
+        "maxStacks": 1,
+        "stats": {
+          "dodge": 135,
+          "moveSpeed": 101
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "神木琥珀與幽綠火星；羽紋銀霧丸，拖著分離的薄霧尾痕"
+  },
+  {
+    "itemId": "pill.realm.spirit_transformation.swiftwind",
+    "name": "化神神行丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 67,
+    "useBehavior": "shenxing_travel",
+    "desc": "化神行旅丹，啟動神行後可前往已收錄的城鎮或野外地圖；不可進入副本、塔、私人或測試地圖。",
+    "artDirection": "神木琥珀與幽綠火星；螺旋翼紋青白丸，外圈有獨立風環與折紙般的雲翼"
+  },
+  {
+    "itemId": "pill.realm.void_refinement.martial_edge",
+    "name": "煉虛破軍丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 79,
+    "desc": "煉虛修士淬鍊用的破軍丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_martial_edge",
+        "name": "破軍丹·煉虛",
+        "desc": "物攻提升 200%、暴擊提升 150%，持續 9600 息。同族丹效不疊層。",
+        "shortMark": "攻",
+        "duration": 9600,
+        "maxStacks": 1,
+        "stats": {
+          "physAtk": 200,
+          "crit": 150
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "裂空晶面與深靛星砂；裂紋赤金雙丸，表面嵌一枚斷戟形金片"
+  },
+  {
+    "itemId": "pill.realm.void_refinement.arcane_surge",
+    "name": "煉虛玄元丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 79,
+    "desc": "煉虛修士淬鍊用的玄元丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_arcane_surge",
+        "name": "玄元丹·煉虛",
+        "desc": "法攻提升 200%、每息靈力輸出上限提升 150%，持續 9600 息。同族丹效不疊層。",
+        "shortMark": "元",
+        "duration": 9600,
+        "maxStacks": 1,
+        "stats": {
+          "spellAtk": 200,
+          "maxQiOutputPerTick": 150
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "裂空晶面與深靛星砂；旋渦藍紫珠，半透明核心浮著一道靈流"
+  },
+  {
+    "itemId": "pill.realm.void_refinement.iron_guard",
+    "name": "煉虛金剛丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 83,
+    "desc": "煉虛修士淬鍊用的金剛丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_iron_guard",
+        "name": "金剛丹·煉虛",
+        "desc": "物防提升 200%、化解提升 150%，持續 9600 息。同族丹效不疊層。",
+        "shortMark": "剛",
+        "duration": 9600,
+        "maxStacks": 1,
+        "stats": {
+          "physDef": 200,
+          "resolvePower": 150
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "裂空晶面與深靛星砂；龜甲褐金丸，外殼有明顯分節與厚重邊緣"
+  },
+  {
+    "itemId": "pill.realm.void_refinement.veil_guard",
+    "name": "煉虛玄甲丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 83,
+    "desc": "煉虛修士淬鍊用的玄甲丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_veil_guard",
+        "name": "玄甲丹·煉虛",
+        "desc": "法防提升 200%、抗暴提升 150%，持續 9600 息。同族丹效不疊層。",
+        "shortMark": "甲",
+        "duration": 9600,
+        "maxStacks": 1,
+        "stats": {
+          "spellDef": 200,
+          "antiCrit": 150
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "裂空晶面與深靛星砂；半透明青玉護珠，內封六角護符"
+  },
+  {
+    "itemId": "pill.realm.void_refinement.hawk_eye",
+    "name": "煉虛明瞳丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 87,
+    "desc": "煉虛修士淬鍊用的明瞳丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_hawk_eye",
+        "name": "明瞳丹·煉虛",
+        "desc": "命中提升 200%、破招提升 150%，持續 9600 息。同族丹效不疊層。",
+        "shortMark": "瞳",
+        "duration": 9600,
+        "maxStacks": 1,
+        "stats": {
+          "hit": 200,
+          "breakPower": 150
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "裂空晶面與深靛星砂；瞳孔琥珀丸，黑金虹膜環繞一點高光"
+  },
+  {
+    "itemId": "pill.realm.void_refinement.mist_step",
+    "name": "煉虛幻影丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 87,
+    "desc": "煉虛修士淬鍊用的幻影丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_mist_step",
+        "name": "幻影丹·煉虛",
+        "desc": "閃避提升 200%、移速提升 150%，持續 9600 息。同族丹效不疊層。",
+        "shortMark": "影",
+        "duration": 9600,
+        "maxStacks": 1,
+        "stats": {
+          "dodge": 200,
+          "moveSpeed": 150
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "裂空晶面與深靛星砂；羽紋銀霧丸，拖著分離的薄霧尾痕"
+  },
+  {
+    "itemId": "pill.realm.void_refinement.swiftwind",
+    "name": "煉虛神行丹",
+    "type": "consumable",
+    "grade": "spirit",
+    "level": 79,
+    "useBehavior": "shenxing_travel",
+    "desc": "煉虛行旅丹，啟動神行後可前往已收錄的城鎮或野外地圖；不可進入副本、塔、私人或測試地圖。",
+    "artDirection": "裂空晶面與深靛星砂；螺旋翼紋青白丸，外圈有獨立風環與折紙般的雲翼"
+  },
+  {
+    "itemId": "pill.realm.body_integration.martial_edge",
+    "name": "合體破軍丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 91,
+    "desc": "合體修士淬鍊用的破軍丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_martial_edge",
+        "name": "破軍丹·合體",
+        "desc": "物攻提升 300%、暴擊提升 225%，持續 10800 息。同族丹效不疊層。",
+        "shortMark": "攻",
+        "duration": 10800,
+        "maxStacks": 1,
+        "stats": {
+          "physAtk": 300,
+          "crit": 225
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "骨金合鑄與朱紅脈絡；裂紋赤金雙丸，表面嵌一枚斷戟形金片"
+  },
+  {
+    "itemId": "pill.realm.body_integration.arcane_surge",
+    "name": "合體玄元丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 91,
+    "desc": "合體修士淬鍊用的玄元丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_arcane_surge",
+        "name": "玄元丹·合體",
+        "desc": "法攻提升 300%、每息靈力輸出上限提升 225%，持續 10800 息。同族丹效不疊層。",
+        "shortMark": "元",
+        "duration": 10800,
+        "maxStacks": 1,
+        "stats": {
+          "spellAtk": 300,
+          "maxQiOutputPerTick": 225
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "骨金合鑄與朱紅脈絡；旋渦藍紫珠，半透明核心浮著一道靈流"
+  },
+  {
+    "itemId": "pill.realm.body_integration.iron_guard",
+    "name": "合體金剛丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 95,
+    "desc": "合體修士淬鍊用的金剛丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_iron_guard",
+        "name": "金剛丹·合體",
+        "desc": "物防提升 300%、化解提升 225%，持續 10800 息。同族丹效不疊層。",
+        "shortMark": "剛",
+        "duration": 10800,
+        "maxStacks": 1,
+        "stats": {
+          "physDef": 300,
+          "resolvePower": 225
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "骨金合鑄與朱紅脈絡；龜甲褐金丸，外殼有明顯分節與厚重邊緣"
+  },
+  {
+    "itemId": "pill.realm.body_integration.veil_guard",
+    "name": "合體玄甲丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 95,
+    "desc": "合體修士淬鍊用的玄甲丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_veil_guard",
+        "name": "玄甲丹·合體",
+        "desc": "法防提升 300%、抗暴提升 225%，持續 10800 息。同族丹效不疊層。",
+        "shortMark": "甲",
+        "duration": 10800,
+        "maxStacks": 1,
+        "stats": {
+          "spellDef": 300,
+          "antiCrit": 225
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "骨金合鑄與朱紅脈絡；半透明青玉護珠，內封六角護符"
+  },
+  {
+    "itemId": "pill.realm.body_integration.hawk_eye",
+    "name": "合體明瞳丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 99,
+    "desc": "合體修士淬鍊用的明瞳丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_hawk_eye",
+        "name": "明瞳丹·合體",
+        "desc": "命中提升 300%、破招提升 225%，持續 10800 息。同族丹效不疊層。",
+        "shortMark": "瞳",
+        "duration": 10800,
+        "maxStacks": 1,
+        "stats": {
+          "hit": 300,
+          "breakPower": 225
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "骨金合鑄與朱紅脈絡；瞳孔琥珀丸，黑金虹膜環繞一點高光"
+  },
+  {
+    "itemId": "pill.realm.body_integration.mist_step",
+    "name": "合體幻影丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 99,
+    "desc": "合體修士淬鍊用的幻影丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_mist_step",
+        "name": "幻影丹·合體",
+        "desc": "閃避提升 300%、移速提升 225%，持續 10800 息。同族丹效不疊層。",
+        "shortMark": "影",
+        "duration": 10800,
+        "maxStacks": 1,
+        "stats": {
+          "dodge": 300,
+          "moveSpeed": 225
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "骨金合鑄與朱紅脈絡；羽紋銀霧丸，拖著分離的薄霧尾痕"
+  },
+  {
+    "itemId": "pill.realm.body_integration.swiftwind",
+    "name": "合體神行丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 91,
+    "useBehavior": "shenxing_travel",
+    "desc": "合體行旅丹，啟動神行後可前往已收錄的城鎮或野外地圖；不可進入副本、塔、私人或測試地圖。",
+    "artDirection": "骨金合鑄與朱紅脈絡；螺旋翼紋青白丸，外圈有獨立風環與折紙般的雲翼"
+  },
+  {
+    "itemId": "pill.realm.great_vehicle.martial_edge",
+    "name": "大乘破軍丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 103,
+    "desc": "大乘修士淬鍊用的破軍丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_martial_edge",
+        "name": "破軍丹·大乘",
+        "desc": "物攻提升 450%、暴擊提升 338%，持續 12000 息。同族丹效不疊層。",
+        "shortMark": "攻",
+        "duration": 12000,
+        "maxStacks": 1,
+        "stats": {
+          "physAtk": 450,
+          "crit": 338
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雷紋蓮座與白金流光；裂紋赤金雙丸，表面嵌一枚斷戟形金片"
+  },
+  {
+    "itemId": "pill.realm.great_vehicle.arcane_surge",
+    "name": "大乘玄元丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 103,
+    "desc": "大乘修士淬鍊用的玄元丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_arcane_surge",
+        "name": "玄元丹·大乘",
+        "desc": "法攻提升 450%、每息靈力輸出上限提升 338%，持續 12000 息。同族丹效不疊層。",
+        "shortMark": "元",
+        "duration": 12000,
+        "maxStacks": 1,
+        "stats": {
+          "spellAtk": 450,
+          "maxQiOutputPerTick": 338
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雷紋蓮座與白金流光；旋渦藍紫珠，半透明核心浮著一道靈流"
+  },
+  {
+    "itemId": "pill.realm.great_vehicle.iron_guard",
+    "name": "大乘金剛丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 107,
+    "desc": "大乘修士淬鍊用的金剛丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_iron_guard",
+        "name": "金剛丹·大乘",
+        "desc": "物防提升 450%、化解提升 338%，持續 12000 息。同族丹效不疊層。",
+        "shortMark": "剛",
+        "duration": 12000,
+        "maxStacks": 1,
+        "stats": {
+          "physDef": 450,
+          "resolvePower": 338
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雷紋蓮座與白金流光；龜甲褐金丸，外殼有明顯分節與厚重邊緣"
+  },
+  {
+    "itemId": "pill.realm.great_vehicle.veil_guard",
+    "name": "大乘玄甲丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 107,
+    "desc": "大乘修士淬鍊用的玄甲丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_veil_guard",
+        "name": "玄甲丹·大乘",
+        "desc": "法防提升 450%、抗暴提升 338%，持續 12000 息。同族丹效不疊層。",
+        "shortMark": "甲",
+        "duration": 12000,
+        "maxStacks": 1,
+        "stats": {
+          "spellDef": 450,
+          "antiCrit": 338
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雷紋蓮座與白金流光；半透明青玉護珠，內封六角護符"
+  },
+  {
+    "itemId": "pill.realm.great_vehicle.hawk_eye",
+    "name": "大乘明瞳丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 111,
+    "desc": "大乘修士淬鍊用的明瞳丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_hawk_eye",
+        "name": "明瞳丹·大乘",
+        "desc": "命中提升 450%、破招提升 338%，持續 12000 息。同族丹效不疊層。",
+        "shortMark": "瞳",
+        "duration": 12000,
+        "maxStacks": 1,
+        "stats": {
+          "hit": 450,
+          "breakPower": 338
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雷紋蓮座與白金流光；瞳孔琥珀丸，黑金虹膜環繞一點高光"
+  },
+  {
+    "itemId": "pill.realm.great_vehicle.mist_step",
+    "name": "大乘幻影丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 111,
+    "desc": "大乘修士淬鍊用的幻影丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_mist_step",
+        "name": "幻影丹·大乘",
+        "desc": "閃避提升 450%、移速提升 338%，持續 12000 息。同族丹效不疊層。",
+        "shortMark": "影",
+        "duration": 12000,
+        "maxStacks": 1,
+        "stats": {
+          "dodge": 450,
+          "moveSpeed": 338
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雷紋蓮座與白金流光；羽紋銀霧丸，拖著分離的薄霧尾痕"
+  },
+  {
+    "itemId": "pill.realm.great_vehicle.swiftwind",
+    "name": "大乘神行丹",
+    "type": "consumable",
+    "grade": "saint",
+    "level": 103,
+    "useBehavior": "shenxing_travel",
+    "desc": "大乘行旅丹，啟動神行後可前往已收錄的城鎮或野外地圖；不可進入副本、塔、私人或測試地圖。",
+    "artDirection": "雷紋蓮座與白金流光；螺旋翼紋青白丸，外圈有獨立風環與折紙般的雲翼"
+  },
+  {
+    "itemId": "pill.realm.tribulation.martial_edge",
+    "name": "渡劫破軍丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 115,
+    "desc": "渡劫修士淬鍊用的破軍丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_martial_edge",
+        "name": "破軍丹·渡劫",
+        "desc": "物攻提升 675%、暴擊提升 506%，持續 13200 息。同族丹效不疊層。",
+        "shortMark": "攻",
+        "duration": 13200,
+        "maxStacks": 1,
+        "stats": {
+          "physAtk": 675,
+          "crit": 506
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "焦木雷痕與熾白電弧；裂紋赤金雙丸，表面嵌一枚斷戟形金片"
+  },
+  {
+    "itemId": "pill.realm.tribulation.arcane_surge",
+    "name": "渡劫玄元丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 115,
+    "desc": "渡劫修士淬鍊用的玄元丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_arcane_surge",
+        "name": "玄元丹·渡劫",
+        "desc": "法攻提升 675%、每息靈力輸出上限提升 506%，持續 13200 息。同族丹效不疊層。",
+        "shortMark": "元",
+        "duration": 13200,
+        "maxStacks": 1,
+        "stats": {
+          "spellAtk": 675,
+          "maxQiOutputPerTick": 506
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "焦木雷痕與熾白電弧；旋渦藍紫珠，半透明核心浮著一道靈流"
+  },
+  {
+    "itemId": "pill.realm.tribulation.iron_guard",
+    "name": "渡劫金剛丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 119,
+    "desc": "渡劫修士淬鍊用的金剛丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_iron_guard",
+        "name": "金剛丹·渡劫",
+        "desc": "物防提升 675%、化解提升 506%，持續 13200 息。同族丹效不疊層。",
+        "shortMark": "剛",
+        "duration": 13200,
+        "maxStacks": 1,
+        "stats": {
+          "physDef": 675,
+          "resolvePower": 506
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "焦木雷痕與熾白電弧；龜甲褐金丸，外殼有明顯分節與厚重邊緣"
+  },
+  {
+    "itemId": "pill.realm.tribulation.veil_guard",
+    "name": "渡劫玄甲丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 119,
+    "desc": "渡劫修士淬鍊用的玄甲丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_veil_guard",
+        "name": "玄甲丹·渡劫",
+        "desc": "法防提升 675%、抗暴提升 506%，持續 13200 息。同族丹效不疊層。",
+        "shortMark": "甲",
+        "duration": 13200,
+        "maxStacks": 1,
+        "stats": {
+          "spellDef": 675,
+          "antiCrit": 506
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "焦木雷痕與熾白電弧；半透明青玉護珠，內封六角護符"
+  },
+  {
+    "itemId": "pill.realm.tribulation.hawk_eye",
+    "name": "渡劫明瞳丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 123,
+    "desc": "渡劫修士淬鍊用的明瞳丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_hawk_eye",
+        "name": "明瞳丹·渡劫",
+        "desc": "命中提升 675%、破招提升 506%，持續 13200 息。同族丹效不疊層。",
+        "shortMark": "瞳",
+        "duration": 13200,
+        "maxStacks": 1,
+        "stats": {
+          "hit": 675,
+          "breakPower": 506
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "焦木雷痕與熾白電弧；瞳孔琥珀丸，黑金虹膜環繞一點高光"
+  },
+  {
+    "itemId": "pill.realm.tribulation.mist_step",
+    "name": "渡劫幻影丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 123,
+    "desc": "渡劫修士淬鍊用的幻影丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_mist_step",
+        "name": "幻影丹·渡劫",
+        "desc": "閃避提升 675%、移速提升 506%，持續 13200 息。同族丹效不疊層。",
+        "shortMark": "影",
+        "duration": 13200,
+        "maxStacks": 1,
+        "stats": {
+          "dodge": 675,
+          "moveSpeed": 506
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "焦木雷痕與熾白電弧；羽紋銀霧丸，拖著分離的薄霧尾痕"
+  },
+  {
+    "itemId": "pill.realm.tribulation.swiftwind",
+    "name": "渡劫神行丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 115,
+    "useBehavior": "shenxing_travel",
+    "desc": "渡劫行旅丹，啟動神行後可前往已收錄的城鎮或野外地圖；不可進入副本、塔、私人或測試地圖。",
+    "artDirection": "焦木雷痕與熾白電弧；螺旋翼紋青白丸，外圈有獨立風環與折紙般的雲翼"
+  },
+  {
+    "itemId": "pill.realm.ascension.martial_edge",
+    "name": "飛昇破軍丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 127,
+    "desc": "飛昇修士淬鍊用的破軍丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_martial_edge",
+        "name": "破軍丹·飛昇",
+        "desc": "物攻提升 1000%、暴擊提升 750%，持續 14400 息。同族丹效不疊層。",
+        "shortMark": "攻",
+        "duration": 14400,
+        "maxStacks": 1,
+        "stats": {
+          "physAtk": 1000,
+          "crit": 750
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雲階星塵與虹彩天光；裂紋赤金雙丸，表面嵌一枚斷戟形金片"
+  },
+  {
+    "itemId": "pill.realm.ascension.arcane_surge",
+    "name": "飛昇玄元丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 127,
+    "desc": "飛昇修士淬鍊用的玄元丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_arcane_surge",
+        "name": "玄元丹·飛昇",
+        "desc": "法攻提升 1000%、每息靈力輸出上限提升 750%，持續 14400 息。同族丹效不疊層。",
+        "shortMark": "元",
+        "duration": 14400,
+        "maxStacks": 1,
+        "stats": {
+          "spellAtk": 1000,
+          "maxQiOutputPerTick": 750
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雲階星塵與虹彩天光；旋渦藍紫珠，半透明核心浮著一道靈流"
+  },
+  {
+    "itemId": "pill.realm.ascension.iron_guard",
+    "name": "飛昇金剛丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 127,
+    "desc": "飛昇修士淬鍊用的金剛丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_iron_guard",
+        "name": "金剛丹·飛昇",
+        "desc": "物防提升 1000%、化解提升 750%，持續 14400 息。同族丹效不疊層。",
+        "shortMark": "剛",
+        "duration": 14400,
+        "maxStacks": 1,
+        "stats": {
+          "physDef": 1000,
+          "resolvePower": 750
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雲階星塵與虹彩天光；龜甲褐金丸，外殼有明顯分節與厚重邊緣"
+  },
+  {
+    "itemId": "pill.realm.ascension.veil_guard",
+    "name": "飛昇玄甲丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 127,
+    "desc": "飛昇修士淬鍊用的玄甲丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_veil_guard",
+        "name": "玄甲丹·飛昇",
+        "desc": "法防提升 1000%、抗暴提升 750%，持續 14400 息。同族丹效不疊層。",
+        "shortMark": "甲",
+        "duration": 14400,
+        "maxStacks": 1,
+        "stats": {
+          "spellDef": 1000,
+          "antiCrit": 750
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雲階星塵與虹彩天光；半透明青玉護珠，內封六角護符"
+  },
+  {
+    "itemId": "pill.realm.ascension.hawk_eye",
+    "name": "飛昇明瞳丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 127,
+    "desc": "飛昇修士淬鍊用的明瞳丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_hawk_eye",
+        "name": "明瞳丹·飛昇",
+        "desc": "命中提升 1000%、破招提升 750%，持續 14400 息。同族丹效不疊層。",
+        "shortMark": "瞳",
+        "duration": 14400,
+        "maxStacks": 1,
+        "stats": {
+          "hit": 1000,
+          "breakPower": 750
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雲階星塵與虹彩天光；瞳孔琥珀丸，黑金虹膜環繞一點高光"
+  },
+  {
+    "itemId": "pill.realm.ascension.mist_step",
+    "name": "飛昇幻影丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 127,
+    "desc": "飛昇修士淬鍊用的幻影丹。同類丹效只保留一層，改服不同境界同族丹時以新藥力替換舊效果。",
+    "consumeBuffs": [
+      {
+        "buffId": "item_buff.realm_mist_step",
+        "name": "幻影丹·飛昇",
+        "desc": "閃避提升 1000%、移速提升 750%，持續 14400 息。同族丹效不疊層。",
+        "shortMark": "影",
+        "duration": 14400,
+        "maxStacks": 1,
+        "stats": {
+          "dodge": 1000,
+          "moveSpeed": 750
+        },
+        "statMode": "percent",
+        "color": "#d6b567"
+      }
+    ],
+    "artDirection": "雲階星塵與虹彩天光；羽紋銀霧丸，拖著分離的薄霧尾痕"
+  },
+  {
+    "itemId": "pill.realm.ascension.swiftwind",
+    "name": "飛昇神行丹",
+    "type": "consumable",
+    "grade": "emperor",
+    "level": 127,
+    "useBehavior": "shenxing_travel",
+    "desc": "飛昇行旅丹，啟動神行後可前往已收錄的城鎮或野外地圖；不可進入副本、塔、私人或測試地圖。",
+    "artDirection": "雲階星塵與虹彩天光；螺旋翼紋青白丸，外圈有獨立風環與折紙般的雲翼"
+  },
+  {
+    "itemId": "mat.ascension_cloudstep_orchid",
+    "name": "雲階蘭",
+    "type": "material",
+    "grade": "emperor",
+    "level": 127,
+    "materialCategory": "herb",
+    "materialValues": {
+      "elements": {
+        "wood": 1020,
+        "water": 640
+      }
+    },
+    "tags": [
+      "藥材",
+      "靈植"
+    ],
+    "desc": "生於飛昇關雲階裂縫的淡銀蘭草，花瓣會隨天風轉向。"
+  },
+  {
+    "itemId": "mat.ascension_starfold_crystal",
+    "name": "摺星晶",
+    "type": "material",
+    "grade": "emperor",
+    "level": 127,
+    "materialCategory": "ore",
+    "materialValues": {
+      "elements": {
+        "metal": 920,
+        "fire": 740
+      }
+    },
+    "tags": [
+      "礦石",
+      "礦材"
+    ],
+    "desc": "飛昇關石階中的虹彩晶體，折面映出碎星般的冷光。"
   }
 ]

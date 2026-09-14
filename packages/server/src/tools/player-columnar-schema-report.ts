@@ -8,6 +8,7 @@ import { NestFactory } from '@nestjs/core';
 import type { Pool } from 'pg';
 
 import { AppModule } from '../app.module';
+import { ServerLifecycleCoordinatorService } from '../lifecycle/server-lifecycle-coordinator.service';
 import { DatabasePoolProvider } from '../persistence/database-pool.provider';
 import { resolveServerDatabaseUrl } from '../config/env-alias';
 
@@ -124,7 +125,11 @@ async function main(): Promise<void> {
       ),
     );
   } finally {
-    await app.close().catch(() => undefined);
+    try {
+      await app.get(ServerLifecycleCoordinatorService).drain('player-columnar-schema-report');
+    } finally {
+      await app.close();
+    }
   }
 }
 

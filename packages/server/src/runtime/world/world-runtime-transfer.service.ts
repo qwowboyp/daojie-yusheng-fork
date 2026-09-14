@@ -30,13 +30,13 @@ export class WorldRuntimeTransferService {
 
         const source = deps.getInstanceRuntime(transfer.fromInstanceId);
         if (!source) {
-            return;
+            return { ok: false, reason: 'source_missing' };
         }
         if (typeof deps.isInstanceLeaseWritable === 'function' && !deps.isInstanceLeaseWritable(source)) {
             if (typeof deps.fenceInstanceRuntime === 'function') {
                 deps.fenceInstanceRuntime(source.meta.instanceId, 'transfer_lease_check_failed');
             }
-            return;
+            return { ok: false, reason: 'source_lease_not_writable' };
         }
         const runtimePlayer = deps.playerRuntimeService?.getPlayer?.(transfer.playerId) ?? null;
         const linePreset = runtimePlayer?.worldPreference?.linePreset === 'real' ? 'real' : 'peaceful';
@@ -58,7 +58,7 @@ export class WorldRuntimeTransferService {
         const attachReady = resolveTransferTargetAttachReady(target, deps);
         if (!attachReady.ok) {
             this.logger.warn(`傳送目標實例暫不可進入：playerId=${transfer.playerId} target=${target?.meta?.instanceId ?? 'missing'} reason=${attachReady.reason}`);
-            return;
+            return { ok: false, reason: attachReady.reason };
         }
         const previousSourcePosition = typeof source.getPlayerPosition === 'function'
             ? source.getPlayerPosition(transfer.playerId)
@@ -97,7 +97,7 @@ export class WorldRuntimeTransferService {
             reason: transfer.reason,
         });
         try {
-            target.connectPlayer({
+            const connectedPlayer = target.connectPlayer({
                 playerId: transfer.playerId,
                 sessionId: transfer.sessionId,
                 preferredX: transfer.targetX,
@@ -126,6 +126,18 @@ export class WorldRuntimeTransferService {
                 ...transfer,
                 sourceMapId: source.template?.mapId ?? null,
             }, deps);
+            const appliedPlayer = connectedPlayer
+                ?? (typeof target.getPlayerPosition === 'function' ? target.getPlayerPosition(transfer.playerId) : null)
+                ?? runtimePlayer;
+            return {
+                ok: true,
+                reason: 'applied',
+                instanceId: target.meta.instanceId,
+                templateId: target.template?.mapId ?? transfer.targetMapId,
+                x: Math.trunc(Number(appliedPlayer?.x) || 0),
+                y: Math.trunc(Number(appliedPlayer?.y) || 0),
+                facing: Math.trunc(Number(appliedPlayer?.facing) || 0),
+            };
         }
         catch (error) {
             rollbackTransferRuntimePlacement(runtimePlayer, previousRuntimePlacement);

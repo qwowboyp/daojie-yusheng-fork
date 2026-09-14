@@ -62,7 +62,8 @@ export function buildUniqueAuditRoleName(seed: string, attempt: number): string 
 
 export function isRegisterConflictError(error: unknown): boolean {
   const message = error instanceof Error ? error.message : String(error ?? '');
-  return message.includes('称号已存在')
-    || message.includes('显示名称已存在')
-    || message.includes('账号已存在');
+  return message.includes('稱號已存在')
+    || message.includes('顯示名稱已存在')
+    || message.includes('帳號已存在')
+    || message.includes('角色名稱已存在');
 }

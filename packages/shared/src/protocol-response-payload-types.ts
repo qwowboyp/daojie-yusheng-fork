@@ -34,6 +34,8 @@ import type {
   EquipmentUpdateView,
   ArtifactUpdateView,
   InventoryPageView,
+  ShenxingDestinationsView,
+  ShenxingResultView,
   TechniquePageView,
   TechniqueTransmissionStatusesView,
   InventoryUpdateView,
@@ -270,6 +272,8 @@ export interface S2C_RealmUpdate extends RealmUpdateView {}
 export interface S2C_InventoryUpdate extends InventoryUpdateView {}
 /** 背包面板分页响应。 */
 export interface S2C_InventoryPage extends InventoryPageView {}
+export interface S2C_ShenxingDestinations extends ShenxingDestinationsView {}
+export interface S2C_ShenxingResult extends ShenxingResultView {}
 /** 宗门待审批申请分页响应。 */
 export interface S2C_SectApplicationPage extends SectApplicationPageView {}
 /** 宗門目錄分頁回應。 */

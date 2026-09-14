@@ -180,7 +180,7 @@ async function testGroundTakeFormatsTemplateName() {
   } as never);
   assert.deepEqual(log, [
     ['refreshQuestStates', 'player:ground:book'],
-    ['queuePlayerNotice', 'player:ground:book', '获得 长生禅缘', 'loot'],
+    ['queuePlayerNotice', 'player:ground:book', '獲得 长生禅缘', 'loot'],
   ]);
 }
 
@@ -712,7 +712,7 @@ async function testGroundTakeAllIteratesStableEntrySnapshot() {
   });
   assert.deepEqual(log, [
     ['refreshQuestStates', 'player:ground:snapshot'],
-    ['queuePlayerNotice', 'player:ground:snapshot', '获得 铜胎丹炉、+15 铜胎丹炉、铜强化锤', 'loot'],
+    ['queuePlayerNotice', 'player:ground:snapshot', '獲得 铜胎丹炉、+15 铜胎丹炉、铜强化锤', 'loot'],
   ]);
 }
 
@@ -855,7 +855,7 @@ async function testDurableContainerFailureNoticeIsStructured(): Promise<void> {
   assert.equal(notices.length, 1);
   assert.deepEqual(notices[0]?.slice(0, 3), [
     player.playerId,
-    '拿取失败，物品已留在容器内。',
+    '拿取失敗，物品已留在容器內。',
     'warn',
   ]);
   assert.deepEqual(notices[0]?.[5], { key: 'notice.loot.take-failed-container' });
@@ -1168,7 +1168,7 @@ async function testStartGatherSupportsColonInstanceId() {
   assert.ok(itemKey);
   assert.equal(prepared?.sourceId, `container:${instanceId}:${container.id}`);
   assert.equal(prepared?.herb?.nativeGatherTicks, 7);
-  assert.equal(prepared?.herb?.gatherTicks, 5);
+  assert.equal(prepared?.herb?.gatherTicks, 3);
   const deps = {
     tick: 10,
     getPlayerLocationOrThrow() {
@@ -1188,9 +1188,9 @@ async function testStartGatherSupportsColonInstanceId() {
   assert.equal(result.ok, true);
   assert.equal(result.messages?.[0]?.kind, 'gather');
   assert.equal(result.messages?.[0]?.key, 'notice.craft.gather.start');
-  assert.deepEqual(result.messages?.[0]?.vars, { resourceNodeName: '月露草', totalTicks: 5 });
+  assert.deepEqual(result.messages?.[0]?.vars, { resourceNodeName: '月露草', totalTicks: 3 });
   assert.equal(player.gatherJob?.resourceNodeId, container.id);
-  assert.equal(player.gatherJob?.remainingTicks, 5);
+  assert.equal(player.gatherJob?.remainingTicks, 3);
   assert.equal(typeof player.gatherJob?.jobRunId, 'string');
   const persisted = service.buildContainerPersistenceStates(instanceId);
   assert.equal(persisted[0]?.activeSearch?.playerId, player.playerId);
@@ -1976,7 +1976,7 @@ async function testHerbAttackConsumesSingleStockAndShowsRegrowthCountdown() {
   assert.equal(result?.respawnRemainingTicks, 2);
   const source = service.getPreparedContainerLootSource(instanceId, container as never, null, 10);
   assert.equal(source?.items.length, 0);
-  assert.equal(source?.emptyText, '这处草药药性回生中，还需 2 息。');
+  assert.equal(source?.emptyText, '這處草藥藥性回生中，還需 2 息。');
   assert.equal(source?.herb?.respawnRemainingTicks, 2);
   const persisted = service.buildContainerPersistenceStates(instanceId);
   assert.equal(persisted[0]?.entries.length, 0);
@@ -2604,7 +2604,7 @@ async function testGatherCompletionConsumesSingleAccumulatedStock() {
   assert.deepEqual(result.messages?.[0]?.vars, { itemLabel: '凝露草' });
   assert.equal(player.inventory.items.length, 1);
   assert.equal(player.inventory.items[0]?.count, 1);
-  assert.equal(Number(player.gatherJob?.remainingTicks), 3);
+  assert.equal(Number(player.gatherJob?.remainingTicks), 2);
   const nextJobRunId = player.gatherJob?.jobRunId;
   assert.equal(typeof nextJobRunId, 'string');
   assert.notEqual(nextJobRunId, initialJobRunId);

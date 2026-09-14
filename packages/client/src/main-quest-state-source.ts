@@ -138,7 +138,8 @@ export function createMainQuestStateSource(options: MainQuestStateSourceOptions)
     onNavigateQuest: navigateToQuest,
   });
 
-  return {  
+  return {
+    navigateToQuest,
   /**
  * syncBootstrapQuestState：处理引导任务状态并更新相关状态。
  * @param player PlayerState 玩家对象。

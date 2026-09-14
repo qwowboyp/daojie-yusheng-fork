@@ -298,8 +298,14 @@ await withClientBrowserProof({ viewport: MOBILE_VIEWPORT, profilePrefix: 'item-c
     deltaX: 0,
     deltaY: 900,
   });
-  await delay(120);
-  assert((await cdp.evaluate(measureConstellationExpression)).bodyScrollTop > 0, '手机触控等价滚动未推进功法详情');
+  // 受限 CPU 下 Chromium 合成滾動可能晚於 120ms；只等待同一次事件的實際結果。
+  const scrollDeadline = Date.now() + 3000;
+  let scrollAdvanced = (await cdp.evaluate(measureConstellationExpression)).bodyScrollTop > 0;
+  while (!scrollAdvanced && Date.now() < scrollDeadline) {
+    await delay(50);
+    scrollAdvanced = (await cdp.evaluate(measureConstellationExpression)).bodyScrollTop > 0;
+  }
+  assert(scrollAdvanced, '手机触控等价滚动未推进功法详情');
 
   await cdp.evaluate(`document.querySelector('[data-tech-constellation-root="true"]').scrollIntoView({ block: 'start' })`);
   await delay(80);

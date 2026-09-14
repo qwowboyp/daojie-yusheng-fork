@@ -377,7 +377,7 @@ async function testRealLineAllowsPlayerBasicAttack() {
   }), log);
   await service.dispatchBasicAttackToPlayer(attacker, target.playerId, 'spell', 14, 8, deps);
   assert.deepEqual(log[0], ['getInstanceRuntimeOrThrow', 'real:yunlai_town']);
-  assert.deepEqual(log[1], ['pushActionLabelEffect', 'real:yunlai_town', 10, 10, '攻击']);
+  assert.deepEqual(log[1], ['pushActionLabelEffect', 'real:yunlai_town', 10, 10, '攻擊']);
   assert.deepEqual(log[2].slice(0, 6), ['pushAttackEffect', 'real:yunlai_town', 10, 10, 11, 10]);
   assert.equal(typeof log[2][6], 'string');
   assert.deepEqual(log[3].slice(0, 5), ['pushDamageFloatEffect', 'real:yunlai_town', 11, 10, 9]);
@@ -586,7 +586,7 @@ function testMonsterBasicAttackQueuesCombatNoticeAndDamageFloat() {
   assert.ok(notice, `expected monster basic attack to enqueue combat notice, log=${JSON.stringify(log)}`);
   assert.deepEqual(notice.slice(0, 2), ['queuePlayerNotice', 'player:victim']);
   assert.match(notice[2], /唤灵真人對你發起攻擊/);
-  assert.match(notice[2], new RegExp(`实际 ${float[4]} - 物理`));
+  assert.match(notice[2], new RegExp(`實際 ${float[4]} - 物理`));
   assert.equal(notice[3], 'combat');
   assert.equal(deps.combatOutcomes.length, 1);
   assert.equal(deps.combatOutcomes[0].target.id, player.playerId);
@@ -1279,7 +1279,7 @@ function testPeacefulLineAllowsTileAttack() {
   service.dispatchBasicAttackToTile(attacker, 11, 10, 'physical', 12, deps);
   assert.deepEqual(log[0], ['getInstanceRuntimeOrThrow', 'public:yunlai_town']);
   assert.deepEqual(log[1], ['damageTile', 11, 10, 12]);
-  assert.deepEqual(log[2], ['pushActionLabelEffect', 'public:yunlai_town', 10, 10, '攻击']);
+  assert.deepEqual(log[2], ['pushActionLabelEffect', 'public:yunlai_town', 10, 10, '攻擊']);
   assert.deepEqual(log[3].slice(0, 6), ['pushAttackEffect', 'public:yunlai_town', 10, 10, 11, 10]);
   assert.equal(typeof log[3][6], 'string');
   assert.deepEqual(log[4].slice(0, 5), ['pushDamageFloatEffect', 'public:yunlai_town', 11, 10, 5]);
@@ -1317,7 +1317,7 @@ function testTileAttackHitsHerbContainerBeforeTerrainDamage() {
   assert.deepEqual(log[0], ['getInstanceRuntimeOrThrow', 'public:yunlai_town']);
   assert.deepEqual(log[1], ['getContainerAtTile', 11, 10]);
   assert.deepEqual(log[2], ['damageHerbContainerAtTile', 'public:yunlai_town', 'herb1', 22]);
-  assert.deepEqual(log[3], ['pushActionLabelEffect', 'public:yunlai_town', 10, 10, '攻击']);
+  assert.deepEqual(log[3], ['pushActionLabelEffect', 'public:yunlai_town', 10, 10, '攻擊']);
   assert.deepEqual(log[4].slice(0, 6), ['pushAttackEffect', 'public:yunlai_town', 10, 10, 11, 10]);
   assert.deepEqual(log[5].slice(0, 5), ['pushDamageFloatEffect', 'public:yunlai_town', 11, 10, 1]);
   assert.deepEqual(log[6].slice(0, 2), ['queuePlayerNotice', 'player:attacker']);
@@ -1547,7 +1547,7 @@ function testRealLineAllowsTileAttack() {
   service.dispatchBasicAttackToTile(attacker, 11, 10, 'physical', 12, deps);
   assert.deepEqual(log[0], ['getInstanceRuntimeOrThrow', 'real:yunlai_town']);
   assert.deepEqual(log[1], ['damageTile', 11, 10, 12]);
-  assert.deepEqual(log[2], ['pushActionLabelEffect', 'real:yunlai_town', 10, 10, '攻击']);
+  assert.deepEqual(log[2], ['pushActionLabelEffect', 'real:yunlai_town', 10, 10, '攻擊']);
   assert.deepEqual(log[3].slice(0, 6), ['pushAttackEffect', 'real:yunlai_town', 10, 10, 11, 10]);
   assert.equal(typeof log[3][6], 'string');
   assert.deepEqual(log[4].slice(0, 5), ['pushDamageFloatEffect', 'real:yunlai_town', 11, 10, 7]);

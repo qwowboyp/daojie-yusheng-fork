@@ -490,7 +490,7 @@ function isRegisterConflictError(error) {
  * 记录message。
  */
     const message = error instanceof Error ? error.message : String(error);
-    return /账号已存在|角色(?:名|名称)已存在|显示名称已存在|称号已存在|already exists|duplicate/i.test(message);
+    return /帳號已存在|角色(?:名|名稱)已存在|顯示名稱已存在|稱號已存在|already exists|duplicate/i.test(message);
 }
 /**
  * 解析 JWT payload，提取 playerId 等字段。

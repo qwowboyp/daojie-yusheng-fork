@@ -55,7 +55,6 @@ const serverEntry = (0, node_path_1.join)(distRoot, 'main.js');
  * 记录数据库地址。
  */
 const databaseUrl = (0, env_alias_1.resolveServerDatabaseUrl)();
-const MARKET_STORAGE_SCOPE = 'server_market_storage_v1';
 const PERSISTENCE_SMOKE_CONTRACT = Object.freeze({
     answers: 'with-db 本地环境下的主线持久化闭环：重启后玩家状态、掉落、灵气、地图解锁与结构化坊市托管仓仍可从数据库真源恢复',
     excludes: 'shadow destructive、维护窗口 backup/restore、真实运营取证与跨环境灾备演练',
@@ -65,6 +64,9 @@ const PERSISTENCE_SMOKE_RESOURCE_TILE = Object.freeze({
     x: 30,
     y: 40,
 });
+const PERSISTENCE_SMOKE_AURA_RESOURCE_KEY = shared_1.buildQiResourceKey(shared_1.DEFAULT_QI_RESOURCE_DESCRIPTOR);
+const PERSISTENCE_SMOKE_AURA_RETENTION_PER_TICK = 1 - shared_1.TILE_AURA_HALF_LIFE_RATE_SCALED
+    / shared_1.TILE_AURA_HALF_LIFE_RATE_SCALE;
 const BASELINE_MARKET_STORAGE_ITEMS = Object.freeze([
     {
         itemId: 'wolf_fang',
@@ -132,7 +134,6 @@ async function main() {
         const auth = await registerAndLoginPlayer();
         accessToken = auth.accessToken;
         playerId = auth.playerId;
-        await seedNativePersistenceForToken(accessToken);
         reconnectTarget = await connectAndMutate(accessToken);
         await stopServer(server);
         server = null;
@@ -176,6 +177,18 @@ async function connectAndMutate(token) {
             protocol: 'mainline',
         },
     });
+    const commandDiagnostics = [];
+    const recordCommandDiagnostic = (event, payload) => {
+        commandDiagnostics.push({
+            event,
+            payload: (0, smoke_payload_1.decodeSmokePayload)(payload),
+        });
+        if (commandDiagnostics.length > 12) {
+            commandDiagnostics.shift();
+        }
+    };
+    socket.on(shared_1.S2C.Error, (payload) => recordCommandDiagnostic(shared_1.S2C.Error, payload));
+    socket.on(shared_1.S2C.Notice, (payload) => recordCommandDiagnostic(shared_1.S2C.Notice, payload));
 /**
  * 记录init会话。
  */
@@ -195,7 +208,8 @@ async function connectAndMutate(token) {
         throw new Error(`invalid init session payload: ${JSON.stringify(initPayload)}`);
     }
     await mapEnter;
-    await ensureTravelToWildlands(socket, playerId, sessionId);
+    await waitForPersistedNativePlayerIdentity(playerId);
+    await ensureTravelToWildlands(socket, playerId, sessionId, commandDiagnostics);
     await postJson(`/runtime/players/${playerId}/grant-item`, {
         itemId: 'rat_tail',
         count: 3,
@@ -238,28 +252,91 @@ async function connectAndMutate(token) {
     if (spiritStoneSlot < 0) {
         throw new Error('spirit_stone missing before persistence aura mutation');
     }
+    const spiritStone = state.player.inventory.items[spiritStoneSlot];
+    const spiritStoneInstanceId = typeof spiritStone?.itemInstanceId === 'string'
+        ? spiritStone.itemInstanceId.trim()
+        : '';
+    const spiritStoneCountBefore = Math.max(0, Math.trunc(Number(spiritStone?.count) || 0));
+    if (!spiritStoneInstanceId || spiritStoneCountBefore <= 0) {
+        throw new Error(`invalid spirit_stone before persistence aura mutation: ${JSON.stringify(spiritStone)}`);
+    }
+    const auraTarget = {
+        instanceId: state.player.instanceId,
+        x: Number(state.player.x),
+        y: Number(state.player.y),
+    };
+    if (typeof auraTarget.instanceId !== 'string'
+        || !auraTarget.instanceId
+        || state.player.templateId !== 'wildlands'
+        || auraTarget.x !== PERSISTENCE_SMOKE_RESOURCE_TILE.x
+        || auraTarget.y !== PERSISTENCE_SMOKE_RESOURCE_TILE.y) {
+        throw new Error(`unexpected spirit_stone target before use: ${JSON.stringify(auraTarget)}`);
+    }
+    const auraObservationStartedAt = Date.now();
+    const auraBeforeState = await fetchJson(`${baseUrl}/runtime/instances/${auraTarget.instanceId}/tiles/${auraTarget.x}/${auraTarget.y}`);
+    const auraBefore = Number(auraBeforeState.tile?.aura);
+    if (!Number.isFinite(auraBefore)) {
+        throw new Error(`invalid aura before spirit_stone use: ${JSON.stringify(auraBeforeState)}`);
+    }
     let persistedAuraTile = null;
-    socket.emit(shared_1.C2S.UseItem, { itemRef: itemRefAt(state.player, spiritStoneSlot, 'spirit stone') });
-    await waitForCondition(async () => {
+    let lastSpiritStoneUseState = {
+        position: auraTarget,
+        remainingCount: spiritStoneCountBefore,
+        aura: auraBefore,
+    };
+    socket.emit(shared_1.C2S.UseItem, { itemRef: { itemInstanceId: spiritStoneInstanceId } });
+    try {
+        await waitForCondition(async () => {
 /**
  * 记录玩家状态。
  */
-        const playerState = await fetchJson(`${baseUrl}/runtime/players/${playerId}/state`);
+            const playerState = await fetchJson(`${baseUrl}/runtime/players/${playerId}/state`);
 /**
  * 记录tile状态。
  */
-        const tileState = await fetchJson(`${baseUrl}/runtime/instances/${playerState.player.instanceId}/tiles/${playerState.player.x}/${playerState.player.y}`);
-        const stillHasSpiritStone = playerState.player?.inventory?.items?.some((entry) => entry.itemId === 'spirit_stone') ?? false;
-        if ((tileState.tile?.aura ?? 0) >= 100 && !stillHasSpiritStone) {
-            persistedAuraTile = {
-                instanceId: playerState.player.instanceId,
-                x: playerState.player.x,
-                y: playerState.player.y,
+            const tileState = await fetchJson(`${baseUrl}/runtime/instances/${auraTarget.instanceId}/tiles/${auraTarget.x}/${auraTarget.y}`);
+            const currentSpiritStone = playerState.player?.inventory?.items?.find((entry) => entry.itemInstanceId === spiritStoneInstanceId);
+            const remainingCount = currentSpiritStone
+                ? Math.max(0, Math.trunc(Number(currentSpiritStone.count) || 0))
+                : 0;
+            const currentAura = Number(tileState.tile?.aura);
+            const currentAuraResource = tileState.tile?.resources?.find((entry) => entry?.resourceKey === PERSISTENCE_SMOKE_AURA_RESOURCE_KEY);
+            const currentAuraResourceValue = Number(currentAuraResource?.value);
+            // 用正式半衰期與最大息速估計觀察期間的最低餘量，保留完整注入量驗證。
+            const maxElapsedTicks = Math.ceil((Date.now() - auraObservationStartedAt) / 1000
+                * shared_1.MAX_INSTANCE_TICK_SPEED) + 1;
+            const minimumExpectedAura = (auraBefore + 100) * Math.pow(PERSISTENCE_SMOKE_AURA_RETENTION_PER_TICK, maxElapsedTicks);
+            lastSpiritStoneUseState = {
+                position: {
+                    instanceId: playerState.player?.instanceId,
+                    x: playerState.player?.x,
+                    y: playerState.player?.y,
+                },
+                remainingCount,
+                aura: currentAura,
+                auraResourceKey: currentAuraResource?.resourceKey ?? null,
+                auraResourceValue: currentAuraResourceValue,
+                minimumExpectedAura,
             };
-            return true;
-        }
-        return false;
-    }, 5000);
+            if (Number.isFinite(currentAura)
+                && Number.isFinite(currentAuraResourceValue)
+                && Math.abs(currentAuraResourceValue - currentAura) <= 1e-8
+                && currentAura + 1e-8 >= minimumExpectedAura
+                && remainingCount === spiritStoneCountBefore - 1) {
+                persistedAuraTile = auraTarget;
+                return true;
+            }
+            return false;
+        }, 5000);
+    }
+    catch (error) {
+        throw new Error(`spirit_stone use did not commit expected inventory/aura mutation: before=${JSON.stringify({
+            target: auraTarget,
+            itemInstanceId: spiritStoneInstanceId,
+            count: spiritStoneCountBefore,
+            aura: auraBefore,
+        })} last=${JSON.stringify(lastSpiritStoneUseState)} diagnostics=${JSON.stringify(commandDiagnostics)} cause=${error instanceof Error ? error.message : String(error)}`);
+    }
     if (!persistedAuraTile) {
         throw new Error('expected spirit_stone aura target before persistence mutation');
     }
@@ -333,14 +410,27 @@ async function connectAndMutate(token) {
         x: dropState.player.x,
         y: dropState.player.y,
     };
+    const auraBeforeFlushState = await fetchJson(`${baseUrl}/runtime/instances/${persistedAuraTile.instanceId}/tiles/${persistedAuraTile.x}/${persistedAuraTile.y}`);
+    const auraBeforeFlushResource = auraBeforeFlushState.tile?.resources?.find((entry) => entry?.resourceKey === PERSISTENCE_SMOKE_AURA_RESOURCE_KEY);
+    const auraBeforeFlush = Number(auraBeforeFlushResource?.value);
+    const auraSourceValue = Number(auraBeforeFlushResource?.sourceValue);
+    if (!Number.isFinite(auraBeforeFlush)
+        || !Number.isFinite(auraSourceValue)
+        || auraBeforeFlush <= auraSourceValue
+        || Math.abs(auraBeforeFlush - Number(auraBeforeFlushState.tile?.aura)) > 1e-8) {
+        throw new Error(`invalid aura resource before persistence flush: expectedResourceKey=${PERSISTENCE_SMOKE_AURA_RESOURCE_KEY} state=${JSON.stringify(auraBeforeFlushState)}`);
+    }
+    persistedAuraTile = {
+        ...persistedAuraTile,
+        resourceKey: PERSISTENCE_SMOKE_AURA_RESOURCE_KEY,
+        auraAtFlush: auraBeforeFlush,
+        sourceValue: auraSourceValue,
+        observedAtMs: Date.now(),
+    };
     await postJson('/runtime/persistence/flush', {});
-    await waitForPersistedPlayerSnapshot(playerId);
     await waitForPersistedPlayerPlacement(playerId, 'wildlands');
     await replaceStructuredPlayerMarketStorageItems(playerId, BASELINE_MARKET_STORAGE_ITEMS);
-    await replacePersistedPlayerSnapshotMarketStorageItems(playerId, BASELINE_MARKET_STORAGE_ITEMS);
-    await deleteLegacyMarketStorageDocument(playerId);
     await assertStructuredPlayerMarketStorageItems(playerId, BASELINE_MARKET_STORAGE_ITEMS);
-    await assertLegacyMarketStorageDocumentAbsent(playerId);
     await delay(300);
     socket.close();
     await delay(300);
@@ -353,7 +443,7 @@ async function connectAndMutate(token) {
 /**
  * 确保持久化 smoke 的玩家稳定抵达 wildlands。
  */
-async function ensureTravelToWildlands(socket, currentPlayerId, currentSessionId = '') {
+async function ensureTravelToWildlands(socket, currentPlayerId, currentSessionId = '', commandDiagnostics = []) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
     let lastTemplateId = '';
@@ -366,6 +456,7 @@ async function ensureTravelToWildlands(socket, currentPlayerId, currentSessionId
         preferredX: PERSISTENCE_SMOKE_RESOURCE_TILE.x,
         preferredY: PERSISTENCE_SMOKE_RESOURCE_TILE.y,
     });
+    let attachedToWildlands = false;
     for (let attempt = 0; attempt < 24; attempt += 1) {
 /**
  * 记录状态。
@@ -377,11 +468,36 @@ async function ensureTravelToWildlands(socket, currentPlayerId, currentSessionId
         if (lastTemplateId === 'wildlands'
             && Number.isFinite(lastX)
             && Number.isFinite(lastY)) {
-            return;
+            attachedToWildlands = true;
+            break;
         }
         await delay(250);
     }
-    throw new Error(`failed to attach player to wildlands near resource tile ${PERSISTENCE_SMOKE_RESOURCE_TILE.x},${PERSISTENCE_SMOKE_RESOURCE_TILE.y}; current=${lastTemplateId} @ (${lastX}, ${lastY})`);
+    if (!attachedToWildlands) {
+        throw new Error(`failed to attach player to wildlands before moving to resource tile ${PERSISTENCE_SMOKE_RESOURCE_TILE.x},${PERSISTENCE_SMOKE_RESOURCE_TILE.y}; current=${lastTemplateId} @ (${lastX}, ${lastY}); diagnostics=${JSON.stringify(commandDiagnostics)}`);
+    }
+    if (lastX === PERSISTENCE_SMOKE_RESOURCE_TILE.x && lastY === PERSISTENCE_SMOKE_RESOURCE_TILE.y) {
+        return;
+    }
+    socket.emit(shared_1.C2S.MoveTo, {
+        x: PERSISTENCE_SMOKE_RESOURCE_TILE.x,
+        y: PERSISTENCE_SMOKE_RESOURCE_TILE.y,
+        allowNearestReachable: false,
+    });
+    try {
+        await waitForCondition(async () => {
+            const state = await fetchJson(`${baseUrl}/runtime/players/${currentPlayerId}/view`);
+            lastTemplateId = state?.view?.instance?.templateId ?? '';
+            lastX = Number(state?.view?.self?.x);
+            lastY = Number(state?.view?.self?.y);
+            return lastTemplateId === 'wildlands'
+                && lastX === PERSISTENCE_SMOKE_RESOURCE_TILE.x
+                && lastY === PERSISTENCE_SMOKE_RESOURCE_TILE.y;
+        }, 20000);
+    }
+    catch (error) {
+        throw new Error(`failed to move player to wildlands resource tile ${PERSISTENCE_SMOKE_RESOURCE_TILE.x},${PERSISTENCE_SMOKE_RESOURCE_TILE.y}; current=${lastTemplateId} @ (${lastX}, ${lastY}); diagnostics=${JSON.stringify(commandDiagnostics)}; cause=${error instanceof Error ? error.message : String(error)}`);
+    }
 }
 /**
  * 处理reconnectandread。
@@ -508,8 +624,35 @@ async function reconnectAndRead(reconnectTarget) {
  * 记录tile状态。
  */
     const auraTileState = await fetchJson(`${baseUrl}/runtime/instances/${auraTargetTile.instanceId}/tiles/${auraTargetTile.x}/${auraTargetTile.y}`);
-    if ((auraTileState.tile?.aura ?? 0) < 100) {
-        throw new Error(`expected persisted tile aura >= 100, got ${JSON.stringify(auraTileState)}`);
+    const expectedAuraResourceKey = typeof auraTargetTile.resourceKey === 'string'
+        ? auraTargetTile.resourceKey
+        : PERSISTENCE_SMOKE_AURA_RESOURCE_KEY;
+    const restoredAuraResource = auraTileState.tile?.resources?.find((entry) => entry?.resourceKey === expectedAuraResourceKey);
+    const restoredAura = Number(restoredAuraResource?.value);
+    const restoredAuraSourceValue = Number(restoredAuraResource?.sourceValue);
+    const auraAtFlush = Number(auraTargetTile.auraAtFlush);
+    const auraSourceValue = Number(auraTargetTile.sourceValue);
+    const auraObservedAtMs = Number(auraTargetTile.observedAtMs);
+    const maxElapsedAuraTicks = Math.ceil(Math.max(0, Date.now() - auraObservedAtMs) / 1000
+        * shared_1.MAX_INSTANCE_TICK_SPEED) + 1;
+    const minimumRestoredAura = auraSourceValue
+        + (auraAtFlush - auraSourceValue) * Math.pow(PERSISTENCE_SMOKE_AURA_RETENTION_PER_TICK, maxElapsedAuraTicks);
+    if (!Number.isFinite(auraAtFlush)
+        || !Number.isFinite(auraSourceValue)
+        || !Number.isFinite(auraObservedAtMs)
+        || !Number.isFinite(restoredAura)
+        || !Number.isFinite(restoredAuraSourceValue)
+        || restoredAura <= restoredAuraSourceValue
+        || Math.abs(restoredAuraSourceValue - auraSourceValue) > 1e-8
+        || Math.abs(restoredAura - Number(auraTileState.tile?.aura)) > 1e-8
+        || restoredAura + 1e-8 < minimumRestoredAura) {
+        throw new Error(`expected persisted aura resource to retain its measured pre-flush value within formal decay bounds: target=${JSON.stringify(auraTargetTile)} actual=${JSON.stringify({
+            resourceKey: restoredAuraResource?.resourceKey ?? null,
+            aura: restoredAura,
+            sourceValue: restoredAuraSourceValue,
+            maxElapsedAuraTicks,
+            minimumRestoredAura,
+        })} state=${JSON.stringify(auraTileState)}`);
     }
     const groundTargetTile = reconnectTarget?.persistedGroundTile ?? reconnectTarget?.persistedTile ?? auraTargetTile;
     const groundTileState = groundTargetTile.instanceId === auraTargetTile.instanceId
@@ -620,6 +763,13 @@ async function registerAndLoginPlayer() {
             }
             const payload = parseJwtPayload(nextAccessToken);
             const playerId = typeof payload?.playerId === 'string' ? payload.playerId.trim() : '';
+            if (!playerId) {
+                throw new Error(`persistence smoke token missing playerId: ${JSON.stringify(payload)}`);
+            }
+            (0, smoke_player_auth_1.registerSmokePlayerForCleanup)(playerId, {
+                serverUrl: baseUrl,
+                databaseUrl,
+            });
             return {
                 accessToken: nextAccessToken,
                 playerId,
@@ -627,9 +777,9 @@ async function registerAndLoginPlayer() {
         }
         catch (error) {
             const message = error instanceof Error ? error.message : String(error);
-            if (message.includes('账号已存在')
-                || message.includes('称号已存在')
-                || message.includes('角色名已存在')) {
+            if (message.includes('帳號已存在')
+                || message.includes('稱號已存在')
+                || message.includes('角色名稱已存在')) {
                 continue;
             }
             throw error;
@@ -837,179 +987,6 @@ async function fetchJson(url) {
     return response.json();
 }
 /**
- * 按 access token 预种 mainline-native identity 与 snapshot，避免 persistence smoke 被 legacy/compat 迁移链噪音干扰。
- */
-async function seedNativePersistenceForToken(token) {
-  // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
-
-/**
- * 记录payload。
- */
-    const payload = parseJwtPayload(token);
-/**
- * 记录userID。
- */
-    const userId = typeof payload?.sub === 'string' ? payload.sub.trim() : '';
-/**
- * 记录username。
- */
-    const username = typeof payload?.username === 'string' ? payload.username.trim() : '';
-/**
- * 记录displayname。
- */
-    const displayName = typeof payload?.displayName === 'string' ? payload.displayName.trim() : '';
-/**
- * 记录玩家ID。
- */
-    const seededPlayerId = typeof payload?.playerId === 'string' ? payload.playerId.trim() : '';
-/**
- * 记录玩家名称。
- */
-    const playerName = typeof payload?.playerName === 'string' ? payload.playerName.trim() : '';
-    if (!userId || !seededPlayerId || !playerName) {
-        throw new Error(`invalid persistence smoke token payload: ${JSON.stringify(payload)}`);
-    }
-    const pool = new pg_1.Pool({
-        connectionString: databaseUrl,
-    });
-    try {
-        await pool.query(`
-      INSERT INTO server_player_identity(
-        user_id,
-        username,
-        player_id,
-        display_name,
-        player_name,
-        persisted_source,
-        updated_at,
-        payload
-      )
-      VALUES ($1, $2, $3, $4, $5, $6, now(), $7::jsonb)
-      ON CONFLICT (user_id)
-      DO UPDATE SET
-        username = EXCLUDED.username,
-        player_id = EXCLUDED.player_id,
-        display_name = EXCLUDED.display_name,
-        player_name = EXCLUDED.player_name,
-        persisted_source = EXCLUDED.persisted_source,
-        updated_at = now(),
-        payload = EXCLUDED.payload
-    `, [userId, username, seededPlayerId, displayName, playerName, 'token_seed', JSON.stringify({
-            version: 1,
-            userId,
-            username,
-            displayName,
-            playerId: seededPlayerId,
-            playerName,
-            persistedSource: 'token_seed',
-            updatedAt: Date.now(),
-        })]);
-        await pool.query(`
-      INSERT INTO server_player_snapshot(
-        player_id,
-        template_id,
-        persisted_source,
-        seeded_at,
-        saved_at,
-        updated_at,
-        payload
-      )
-      VALUES ($1, $2, $3, $4, $5, now(), $6::jsonb)
-      ON CONFLICT (player_id)
-      DO UPDATE SET
-        template_id = EXCLUDED.template_id,
-        persisted_source = EXCLUDED.persisted_source,
-        seeded_at = EXCLUDED.seeded_at,
-        saved_at = EXCLUDED.saved_at,
-        updated_at = now(),
-        payload = EXCLUDED.payload
-    `, [seededPlayerId, 'yunlai_town', 'native', Date.now(), Date.now(), JSON.stringify({
-            version: 1,
-            savedAt: Date.now(),
-            placement: {
-                templateId: 'yunlai_town',
-                x: 31,
-                y: 54,
-                facing: 1,
-            },
-            vitals: {
-                hp: 100,
-                maxHp: 100,
-                qi: 0,
-                maxQi: 100,
-            },
-            progression: {
-                foundation: 0,
-                combatExp: 0,
-                bodyTraining: null,
-                gatherJob: {
-                    resourceNodeId: 'landmark.herb.moondew_grass',
-                    resourceNodeName: '月露草',
-                    phase: 'gathering',
-                    startedAt: Date.now(),
-                    totalTicks: 8,
-                    remainingTicks: 3,
-                    pausedTicks: 0,
-                    successRate: 1,
-                    spiritStoneCost: 0,
-                },
-                boneAgeBaseYears: 18,
-                lifeElapsedTicks: 0,
-                lifespanYears: null,
-                realm: null,
-                heavenGate: null,
-                spiritualRoots: null,
-            },
-            unlockedMapIds: ['yunlai_town'],
-            inventory: {
-                revision: 1,
-                capacity: 24,
-                items: [],
-            },
-            equipment: {
-                revision: 1,
-                slots: [],
-            },
-            techniques: {
-                revision: 1,
-                techniques: [],
-                cultivatingTechId: null,
-            },
-            buffs: {
-                revision: 1,
-                buffs: [],
-            },
-            quests: {
-                revision: 1,
-                entries: [],
-            },
-            combat: {
-                autoBattle: false,
-                autoRetaliate: true,
-                autoBattleStationary: false,
-                retaliatePlayerTargetId: null,
-                retaliatePlayerTargetLastAttackTick: null,
-                combatTargetId: null,
-                combatTargetLocked: false,
-                allowAoePlayerHit: false,
-                autoIdleCultivation: true,
-                autoSwitchCultivation: false,
-                senseQiActive: false,
-                autoBattleSkills: [],
-            },
-            pendingLogbookMessages: [],
-            runtimeBonuses: [],
-            __snapshotMeta: {
-                persistedSource: 'native',
-                seededAt: Date.now(),
-            },
-        })]);
-    }
-    finally {
-        await pool.end().catch(() => undefined);
-    }
-}
-/**
  * parseJwtPayload：读取Jwt载荷并返回结果。
  * @param token 参数说明。
  * @returns 无返回值，直接更新Jwt载荷相关状态。
@@ -1071,88 +1048,6 @@ async function replaceStructuredPlayerMarketStorageItems(playerIdToSeed, items) 
   }
 }
 
-async function replacePersistedPlayerSnapshotMarketStorageItems(playerIdToSeed, items) {
-  const client = new pg_1.Client({ connectionString: databaseUrl });
-  await client.connect();
-  try {
-    const existing = await client.query(`
-      SELECT payload
-      FROM server_player_snapshot
-      WHERE player_id = $1
-      LIMIT 1
-    `, [playerIdToSeed]);
-    if ((existing.rowCount ?? 0) === 0) {
-      throw new Error(`missing server_player_snapshot for ${playerIdToSeed}`);
-    }
-    const payload = existing.rows[0]?.payload && typeof existing.rows[0].payload === 'object'
-      ? { ...existing.rows[0].payload }
-      : {};
-    payload.marketStorage = {
-      items: normalizeSnapshotMarketStorageItems(items),
-    };
-    payload.savedAt = Date.now();
-    await client.query(`
-      UPDATE server_player_snapshot
-      SET saved_at = $2,
-          updated_at = now(),
-          payload = $3::jsonb
-      WHERE player_id = $1
-    `, [playerIdToSeed, Date.now(), JSON.stringify(payload)]);
-  }
-  finally {
-    await client.end().catch(() => undefined);
-  }
-}
-
-async function deleteLegacyMarketStorageDocument(playerIdToDelete) {
-  const client = new pg_1.Client({ connectionString: databaseUrl });
-  await client.connect();
-  try {
-    try {
-      await client.query('DELETE FROM persistent_documents WHERE scope = $1 AND key = $2', [
-        MARKET_STORAGE_SCOPE,
-        playerIdToDelete,
-      ]);
-    } catch (error) {
-      if (!isMissingTableError(error)) {
-        throw error;
-      }
-    }
-  }
-  finally {
-    await client.end().catch(() => undefined);
-  }
-}
-
-async function assertLegacyMarketStorageDocumentAbsent(playerIdToCheck) {
-  const client = new pg_1.Client({ connectionString: databaseUrl });
-  await client.connect();
-  try {
-    let result = null;
-    try {
-      result = await client.query('SELECT 1 FROM persistent_documents WHERE scope = $1 AND key = $2 LIMIT 1', [
-        MARKET_STORAGE_SCOPE,
-        playerIdToCheck,
-      ]);
-    } catch (error) {
-      if (isMissingTableError(error)) {
-        return;
-      }
-      throw error;
-    }
-    if ((result.rowCount ?? 0) !== 0) {
-      throw new Error(`expected legacy market storage document to be absent for ${playerIdToCheck}`);
-    }
-  }
-  finally {
-    await client.end().catch(() => undefined);
-  }
-}
-
-function isMissingTableError(error) {
-  return Boolean(error && typeof error === 'object' && error.code === '42P01');
-}
-
 async function assertStructuredPlayerMarketStorageItems(playerIdToCheck, expectedItems) {
   const actual = await readStructuredPlayerMarketStorageItems(playerIdToCheck);
   const expected = normalizeComparableMarketStorageItems(expectedItems);
@@ -1196,14 +1091,6 @@ function normalizeComparableMarketStorageItems(items) {
     || left.itemId.localeCompare(right.itemId, 'zh-Hans-CN'));
 }
 
-function normalizeSnapshotMarketStorageItems(items) {
-  return normalizeComparableMarketStorageItems(items).map((entry) => ({
-    itemId: entry.itemId,
-    count: entry.count,
-    enhanceLevel: entry.enhanceLevel,
-  }));
-}
-
 function normalizeOptionalInteger(value) {
   if (value == null || value === '') {
     return null;
@@ -1212,15 +1099,21 @@ function normalizeOptionalInteger(value) {
   return Number.isFinite(numeric) ? Math.trunc(numeric) : null;
 }
 /**
- * 等待 persisted player snapshot 写入主线专表。
+ * 等待首次 mainline bootstrap 把 token seed 身份提升為正式 native identity。
  */
-async function waitForPersistedPlayerSnapshot(playerIdToCheck) {
+async function waitForPersistedNativePlayerIdentity(playerIdToCheck) {
     await waitForCondition(async () => {
         const pool = new pg_1.Pool({
             connectionString: databaseUrl,
         });
         try {
-            const result = await pool.query('SELECT 1 FROM server_player_snapshot WHERE player_id = $1 LIMIT 1', [playerIdToCheck]);
+            const result = await pool.query(`
+              SELECT 1
+              FROM server_player_identity
+              WHERE player_id = $1
+                AND persisted_source = 'native'
+              LIMIT 1
+            `, [playerIdToCheck]);
             return Array.isArray(result?.rows) && result.rows.length > 0;
         }
         finally {

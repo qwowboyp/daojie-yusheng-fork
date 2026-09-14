@@ -6,6 +6,8 @@
 
 `pnpm proof:late-game-market` 使用正式內容庫與坊市服務驗證零掛單收錄、分類分頁、功法分類、裝備部位、求購身份及圖片檔案；不建立訂單、不連接資料庫。
 
+築基至飛昇的 63 種增益／神行丹與飛昇關兩種採集材料同樣不設坊市白名單。它們由正式物品模板自動收錄，`scripts/prove-realm-pill-content.mjs` 以 `MarketRuntimeService.buildMarketListingEntries()` 驗證 65 件物品的零掛單目錄與可求購身份；不建立訂單或資料庫寫入。
+
 ## 价格常量
 
 源文件: `packages/shared/src/constants/gameplay/market.ts`

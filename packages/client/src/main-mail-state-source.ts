@@ -70,7 +70,10 @@ export function createMainMailStateSource(options: MainMailStateSourceOptions) {
     recoverSession: options.recoverSession,
   });
 
-  return {  
+  return {
+    open(): void {
+      mailPanel.open();
+    },
   /**
  * initFromPlayer：执行initFrom玩家相关逻辑。
  * @param playerId string 玩家 ID。

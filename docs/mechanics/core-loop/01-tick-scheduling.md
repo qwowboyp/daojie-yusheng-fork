@@ -116,3 +116,11 @@ runTickOnce():
 - 同类可覆盖意图以最后一次为准（如寻路目标）
 - 不可覆盖意图（资产/战斗/交易）有排队、幂等、去重、冷却规则
 - socket handler 只接收意图、鉴权、排队和返回结果，不直接改权威世界态
+
+## 關機時的排程快照
+
+正式入口先呼叫 `ServerLifecycleCoordinatorService.drain()`，完成後才執行 `app.close()`。編排器先將排程器標記為停止，拒絕新任務；等待世界 tick、背景任務與既有持久化工作結束後，再透過冪等的 `SchedulerManagerService.drainForShutdown()` 寫入最後快照。世界 drain 失敗時仍嘗試寫入排程快照，失敗會向上回報。
+
+Nest 的同階段 `onModuleDestroy` 可能並行執行，因此排程器的該 hook 僅停止狀態與取消計時器，不發出資料庫寫入，避免與連線池銷毀競爭。最終快照失敗不再安排背景重試；關機結果由呼叫方觀測。整合測試亦應遵守 drain、close、刪除測試資料的順序，避免最後一次 flush 重建已刪除資料。
+
+驗證入口：`scheduler-manager-smoke`、`startup-lifecycle-coordinator-smoke`，以及帶資料庫的 `player-anchor-checkpoint-flush-worker-smoke`、`player-state-flush-worker-smoke`。

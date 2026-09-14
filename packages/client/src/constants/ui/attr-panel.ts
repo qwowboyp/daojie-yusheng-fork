@@ -15,16 +15,14 @@ function attrText(key: string): string {
 }
 
 /** AttrTab：属性面板分页标识。 */
-export type AttrTab = 'base' | 'root' | 'vein' | 'combat' | 'qi' | 'special' | 'craft';
+export type AttrTab = 'numeric' | 'combat' | 'qi' | 'special' | 'craft';
 /** NumericCardKey：属性面板数值条目键。 */
 export type NumericCardKey = Exclude<keyof NumericStats, 'elementDamageBonus' | 'elementDamageReduce'>;
 /** PlayerSpecialCardKey：玩家特殊属性条目键。 */
 export type PlayerSpecialCardKey = Exclude<keyof PlayerSpecialStats, 'bodyTrainingLevel'>;
 
 export const ATTR_TAB_LABELS: Record<AttrTab, string> = {
-  base: attrText('attr.tab.base'),
-  root: attrText('attr.tab.root'),
-  vein: attrText('attr.tab.vein'),
+  numeric: '數值',
   combat: attrText('attr.tab.combat'),
   qi: attrText('attr.tab.qi'),
   special: attrText('attr.tab.special'),

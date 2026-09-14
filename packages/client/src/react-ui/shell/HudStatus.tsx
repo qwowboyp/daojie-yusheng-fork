@@ -4,7 +4,7 @@
  * 维护时应把它视为前端表现层：只组织视图和用户意图，不保存会与主运行态冲突的真源。
  */
 import { StrictMode, memo, useCallback, useEffect, useState } from 'react';
-import { createPortal, flushSync } from 'react-dom';
+import { flushSync } from 'react-dom';
 import { createRoot, type Root } from 'react-dom/client';
 import { t } from '../../ui/i18n';
 import { requestMobileSurface, subscribeMobileSurface } from '../../ui/mobile-surface';
@@ -14,10 +14,7 @@ import { useExternalStoreSnapshot } from '../hooks/use-external-store-snapshot';
 export interface ReactHudStatusState {
   name: string;
   title: string;
-  map: string;
-  position: string;
-  objective: string;
-  threat: string;
+  ageLifespan: string;
   realmLabel: string;
   realmLevelLabel: string;
   realmReviewLabel: string;
@@ -35,10 +32,7 @@ export interface ReactHudStatusState {
 const DEFAULT_HUD_STATUS: ReactHudStatusState = {
   name: t('shell.name', undefined),
   title: t('shell.title', undefined),
-  map: '-',
-  position: '(0, 0)',
-  objective: t('shell.objective', undefined),
-  threat: t('shell.threat', undefined),
+  ageLifespan: '-',
   realmLabel: '-',
   realmLevelLabel: '',
   realmReviewLabel: '-',
@@ -159,15 +153,6 @@ const HudStatusView = memo(function HudStatusView() {
   const state = useExternalStoreSnapshot(hudStatusStore);
   const [expanded, setExpanded] = useState(false);
   useEffect(() => subscribeMobileSurface('hud', () => setExpanded(false)), []);
-  const profileHost = document.getElementById('workspace-profile-content');
-  const profile = (
-    <div className="hud-grid">
-      <HudRow label={t('shell.hud-label-map', undefined)} value={state.map} id="hud-map" />
-      <HudRow label={t('shell.hud-label-position', undefined)} value={state.position} id="hud-pos" />
-      <HudRow label={t('shell.hud-label-age', undefined)} value={state.objective} id="hud-objective" />
-      <HudRow label={t('shell.hud-label-lifespan', undefined)} value={state.threat} id="hud-threat" />
-    </div>
-  );
   return (
     <>
       <div
@@ -198,10 +183,11 @@ const HudStatusView = memo(function HudStatusView() {
             <div className="hud-realm-main">
               <div className="hud-realm-heading">
                 <div className="hud-realm-value" id="hud-realm">{state.realmLabel}</div>
-              </div>
+              </div>{' '}
               <div className="hud-realm-sub" id="hud-realm-sub">
-                <span className="hud-title" id="hud-title">{state.title}</span>
-              </div>
+                <strong className="hud-title" id="hud-title">{state.title}</strong>
+              </div>{' '}
+              <span className="hud-age-lifespan" id="hud-age-lifespan">{state.ageLifespan}</span>
             </div>
             <div className="hud-progress-shell">
               <div className="hud-progress-track">
@@ -240,7 +226,6 @@ const HudStatusView = memo(function HudStatusView() {
           />
         </div>
 
-        {profileHost ? createPortal(profile, profileHost) : profile}
       </div>
     </>
   );
@@ -251,9 +236,6 @@ const HudCornerActions = memo(function HudCornerActions() {
     <>
       <button id="hud-open-settings" className="hud-corner-btn" type="button" data-i18n="shell.open-settings">
         {t('shell.open-settings', undefined)}
-      </button>
-      <button id="hud-open-mail" className="hud-corner-btn" type="button" data-i18n="shell.open-mail">
-        {t('shell.open-mail', undefined)}
       </button>
       <button id="hud-open-activity" className="hud-corner-btn" type="button" data-i18n="shell.open-activity">
         {t('shell.open-activity', undefined)}
@@ -315,15 +297,6 @@ const HudResource = memo(function HudResource({
           <span className="hud-resource-text" id={textId}>{text}</span>
         </div>
       </div>
-    </div>
-  );
-});
-
-const HudRow = memo(function HudRow({ label, value, id }: { label: string; value: string; id: string }) {
-  return (
-    <div className="hud-row">
-      <span className="hud-label">{label}</span>
-      <span className="hud-value" id={id}>{value}</span>
     </div>
   );
 });

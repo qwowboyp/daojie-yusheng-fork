@@ -18,8 +18,6 @@ function createService() {
     {},
     {},
     {},
-    {},
-    {},
     {
       isEnabled() {
         return true;
@@ -59,6 +57,11 @@ function createService() {
         ];
       },
     },
+    {},
+    {},
+    {},
+    {},
+    null,
     {
       getRuntimeSummary() {
         return {};

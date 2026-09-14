@@ -3,7 +3,7 @@
  *
  * 维护时要保持它只处理前端表现和组件契约，不保存业务真源，也不绕过共享规则或服务端权威运行时。
  */
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, startTransition, useCallback, useEffect, useRef, useState, ViewTransition } from 'react';
 import type { AccountRedeemCodesRes, OfflineGainReportView, PlayerStatisticTotalsView } from '@mud/shared';
 import { ROLE_NAME_MAX_LENGTH, ROLE_NAME_MAX_ASCII_LENGTH } from '@mud/shared';
 import { createPanelStore } from '../../stores/create-panel-store';
@@ -239,30 +239,22 @@ export const SettingsPanel = memo(function SettingsPanel() {
             type="button"
             role="tab"
             aria-selected={activeTab === tab.id ? 'true' : 'false'}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => startTransition(() => setActiveTab(tab.id))}
           >
             {tab.label()}
           </button>
         ))}
       </div>
-      <div className={`settings-modal-pane ui-tabbed-modal-pane${activeTab === 'account' ? ' active' : ''}`}>
-        {activeTab === 'account' && <AccountTab state={state} />}
-      </div>
-      <div className={`settings-modal-pane ui-tabbed-modal-pane${activeTab === 'redeem' ? ' active' : ''}`}>
-        {activeTab === 'redeem' && <RedeemTab />}
-      </div>
-      <div className={`settings-modal-pane ui-tabbed-modal-pane${activeTab === 'ui' ? ' active' : ''}`}>
-        {activeTab === 'ui' && <UiTab />}
-      </div>
-      <div className={`settings-modal-pane ui-tabbed-modal-pane${activeTab === 'performance' ? ' active' : ''}`}>
-        {activeTab === 'performance' && <PerformanceTab />}
-      </div>
-      <div className={`settings-modal-pane ui-tabbed-modal-pane${activeTab === 'resourceReload' ? ' active' : ''}`}>
-        {activeTab === 'resourceReload' && <ResourceReloadTab />}
-      </div>
-      <div className={`settings-modal-pane ui-tabbed-modal-pane${activeTab === 'offlineGain' ? ' active' : ''}`}>
-        {activeTab === 'offlineGain' && <OfflineGainTab playerId={state.playerId || state.accountName || 'anonymous'} />}
-      </div>
+      <ViewTransition>
+        <div className="settings-modal-pane ui-tabbed-modal-pane active">
+          {activeTab === 'account' && <AccountTab state={state} />}
+          {activeTab === 'redeem' && <RedeemTab />}
+          {activeTab === 'ui' && <UiTab />}
+          {activeTab === 'performance' && <PerformanceTab />}
+          {activeTab === 'resourceReload' && <ResourceReloadTab />}
+          {activeTab === 'offlineGain' && <OfflineGainTab playerId={state.playerId || state.accountName || 'anonymous'} />}
+        </div>
+      </ViewTransition>
     </div>
   );
 });

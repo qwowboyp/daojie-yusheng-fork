@@ -245,6 +245,7 @@ async function verifyStartupRecoveryStillCanForceReclaim(): Promise<{
   };
   let forceClaimCalls = 0;
   let createdInstanceId = '';
+  let createdInstance: { meta: Record<string, unknown> } | null = null;
   let replayedOwnershipEpoch = -1;
   const order: string[] = [];
   const runtime = {
@@ -279,17 +280,30 @@ async function verifyStartupRecoveryStillCanForceReclaim(): Promise<{
         throw new Error('startup recovery should use force claim for valid remote dev lease');
       },
     },
-    getInstanceRuntime() {
-      return null;
+    getInstanceRuntime(candidateInstanceId: string) {
+      return candidateInstanceId === instanceId ? createdInstance : null;
     },
     async replayInstanceFlushPayloadsBeforeOwnershipChange(targetInstanceId: string, ownershipEpoch: number) {
       assert.equal(targetInstanceId, instanceId);
       replayedOwnershipEpoch = ownershipEpoch;
       order.push('replay');
     },
-    createInstance(input: { instanceId: string }) {
+    createInstance(input: {
+      instanceId: string;
+      ownershipEpoch: number;
+      runtimeStatus: string;
+      status: string;
+    }) {
       createdInstanceId = input.instanceId;
-      return {};
+      createdInstance = {
+        meta: {
+          instanceId: input.instanceId,
+          ownershipEpoch: input.ownershipEpoch,
+          runtimeStatus: input.runtimeStatus,
+          status: input.status,
+        },
+      };
+      return createdInstance;
     },
     worldRuntimeLootContainerService: {
       hydrateContainerStates() {},

@@ -88,6 +88,30 @@ const scrollToEndExpression = String.raw`
   })()
 `;
 
+const prepareMapHitTestFixtureExpression = String.raw`
+  (() => {
+    const canvas = document.getElementById('game-canvas');
+    if (!(canvas instanceof HTMLCanvasElement)) throw new Error('主地圖畫布不存在');
+    // 此 proof 未建立遊戲 runtime；把既有主畫布暫置到可命中的底層，驗證遮罩點擊真正穿透到地圖。
+    document.body.append(canvas);
+    Object.assign(canvas.style, {
+      position: 'fixed', inset: '0', width: '100vw', height: '100vh', display: 'block', zIndex: '0',
+    });
+    let ui = document.getElementById('offline-gain-proof-ui');
+    if (!(ui instanceof HTMLButtonElement)) {
+      ui = document.createElement('button');
+      ui.id = 'offline-gain-proof-ui';
+      ui.type = 'button';
+      ui.textContent = 'proof ui';
+      document.body.append(ui);
+    }
+    Object.assign(ui.style, {
+      position: 'fixed', left: '12px', top: '12px', width: '96px', height: '44px', zIndex: '1',
+    });
+    return canvas.getBoundingClientRect().width > 0;
+  })()
+`;
+
 async function setViewport(cdp, viewport, touch) {
   await cdp.send('Emulation.setDeviceMetricsOverride', {
     width: viewport.width,
@@ -136,22 +160,28 @@ const interactionPointsExpression = String.raw`
     if (!(modal instanceof HTMLElement) || !(card instanceof HTMLElement) || !(row instanceof HTMLElement)) {
       throw new Error('離線收益真實點擊目標不存在');
     }
-    const modalRect = modal.getBoundingClientRect();
     const cardRect = card.getBoundingClientRect();
-    const candidates = [
-      { x: modalRect.left + 8, y: modalRect.top + 8 },
-      { x: modalRect.right - 8, y: modalRect.top + 8 },
-      { x: modalRect.left + 8, y: modalRect.bottom - 8 },
-      { x: modalRect.right - 8, y: modalRect.bottom - 8 },
-    ];
-    const backdrop = candidates.find((point) => document.elementFromPoint(point.x, point.y) === modal);
+    const canvas = document.getElementById('game-canvas');
+    if (!(canvas instanceof HTMLCanvasElement)) {
+      throw new Error('主地圖畫布不存在');
+    }
+    const isOutsideCard = (point) => point.x < cardRect.left || point.x > cardRect.right || point.y < cardRect.top || point.y > cardRect.bottom;
+    const underlyingAt = (point) => document.elementsFromPoint(point.x, point.y)
+      .find((element) => element !== modal && !modal.contains(element));
+    const canvasRect = canvas.getBoundingClientRect();
+    const mapCandidates = [0.1, 0.25, 0.5, 0.75, 0.9].flatMap((x) => [0.1, 0.25, 0.5, 0.75, 0.9]
+      .map((y) => ({ x: canvasRect.left + canvasRect.width * x, y: canvasRect.top + canvasRect.height * y })));
+    const map = mapCandidates.find((point) => isOutsideCard(point) && underlyingAt(point) === canvas);
+    const uiTarget = document.getElementById('offline-gain-proof-ui');
+    const uiRect = uiTarget?.getBoundingClientRect();
+    const ui = uiRect ? { x: uiRect.left + uiRect.width / 2, y: uiRect.top + uiRect.height / 2 } : null;
     const rowRect = row.getBoundingClientRect();
     const inner = { x: rowRect.left + rowRect.width / 2, y: rowRect.top + rowRect.height / 2 };
     const innerHit = document.elementFromPoint(inner.x, inner.y);
-    if (!backdrop || !row.contains(innerHit)) {
-      throw new Error('離線收益命中點不正確：' + JSON.stringify({ modalRect, cardRect, backdrop, inner, innerHit: innerHit?.className ?? innerHit?.tagName }));
+    if (!map || !ui || underlyingAt(ui) !== uiTarget || !row.contains(innerHit)) {
+      throw new Error('離線收益命中點不正確：' + JSON.stringify({ canvasRect, cardRect, map, ui, uiHit: ui ? underlyingAt(ui)?.id ?? underlyingAt(ui)?.className : null, inner, innerHit: innerHit?.className ?? innerHit?.tagName }));
     }
-    return { backdrop, inner };
+    return { map, ui, inner };
   })()
 `;
 
@@ -186,8 +216,10 @@ async function assertRealInputConfirmation(cdp, label, touch) {
   );
   await clickPoint(cdp, points.inner, touch);
   assert.equal(await cdp.evaluate('window.__offlineGainProof.ackCalls'), 0, `${label}內文點擊誤觸確認`);
-  await clickPoint(cdp, points.backdrop, touch);
-  await clickPoint(cdp, points.backdrop, touch);
+  await clickPoint(cdp, points.ui, touch);
+  assert.equal(await cdp.evaluate('window.__offlineGainProof.ackCalls'), 0, `${label}其他 UI 點擊誤觸確認`);
+  await clickPoint(cdp, points.map, touch);
+  await clickPoint(cdp, points.map, touch);
   const result = await cdp.evaluate(`({
     ackCalls: window.__offlineGainProof.ackCalls,
     pending: document.querySelector('.offline-gain-confirm-btn')?.disabled === true,
@@ -196,6 +228,7 @@ async function assertRealInputConfirmation(cdp, label, touch) {
 }
 
 await withClientBrowserProof({ viewport: DESKTOP, profilePrefix: 'offline-gain-confirm-proof-' }, async (cdp) => {
+  assert.equal(await cdp.evaluate(prepareMapHitTestFixtureExpression), true, '未建立主地圖命中測試底層');
   const modes = [
     { label: '桌面', viewport: DESKTOP, touch: false },
     { label: '手機直向', viewport: PORTRAIT, touch: true },
@@ -240,7 +273,7 @@ await withClientBrowserProof({ viewport: DESKTOP, profilePrefix: 'offline-gain-c
   await cdp.evaluate(`window.__offlineGainProof.modal.resetOfflineGainBlockingConfirmation(); true`);
   assert.equal(await cdp.evaluate(buildOpenExpression({ ackSucceeds: false, prefix: 'offline-proof-failed' })), 24, '失敗 ACK 測試未建立預覽');
   const failedAck = await cdp.evaluate(`(() => {
-    document.getElementById('detail-modal')?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    document.querySelector('.offline-gain-confirm-btn')?.click();
     return {
       ackCalls: window.__offlineGainProof.ackCalls,
       modalOpen: !document.getElementById('detail-modal')?.classList.contains('hidden'),

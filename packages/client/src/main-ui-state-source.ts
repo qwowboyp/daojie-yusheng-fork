@@ -10,7 +10,7 @@ import type { HUD } from './ui/hud';
 import type { WorldPanel } from './ui/panels/world-panel';
 import { getDisplayRangeX, getDisplayRangeY, getZoom, setZoom } from './display';
 import { formatZoom, refreshZoomChrome as syncZoomChrome } from './main-ui-helpers';
-import { formatMapRecommendedRealmText } from './utils/map-level-display';
+import { getLocalRealmLevelEntry } from './content/local-templates';
 import { t } from './ui/i18n';
 /**
  * MainUiStateSourceOptions：统一结构类型，保证协议与运行时一致性。
@@ -306,7 +306,12 @@ export function createMainUiStateSource(options: MainUiStateSourceOptions) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
       const mapLv = Number(options.mapRuntime.getMapMeta()?.mapLv);
-      return formatMapRecommendedRealmText(mapLv);
+      if (!Number.isFinite(mapLv) || mapLv <= 0) {
+        return t('map-level.unknown');
+      }
+      const normalizedMapLv = Math.floor(mapLv);
+      const realmLabel = getLocalRealmLevelEntry(normalizedMapLv)?.displayName;
+      return realmLabel ? `${realmLabel} LV${normalizedMapLv}` : `LV${normalizedMapLv}`;
     },
     /**
  * refreshHudChrome：执行refreshHudChrome相关逻辑。
@@ -319,14 +324,16 @@ export function createMainUiStateSource(options: MainUiStateSourceOptions) {
 
       const player = options.getPlayer();
       const mapName = options.mapRuntime.getMapMeta()?.name ?? t('hud.map-name.unknown');
-      if (options.mapNameEl && options.mapNameEl.textContent !== mapName) {
-        options.mapNameEl.textContent = mapName;
+      const mapDanger = this.resolveMapDanger();
+      const mapLabel = `${mapName} ${mapDanger}${player ? ` (${player.x}, ${player.y})` : ''}`;
+      if (options.mapNameEl && options.mapNameEl.textContent !== mapLabel) {
+        options.mapNameEl.textContent = mapLabel;
       }
       if (!player) return;
       const heavenGateAction = getHeavenGateHudAction(player);
       options.hud.update(player, {
         mapName,
-        mapDanger: this.resolveMapDanger(),
+        mapDanger,
         realmLabel: player.realm?.displayName ?? resolveRealmLabel(player),
         realmReviewLabel: player.realm?.review ?? player.realmReview,
         realmActionLabel: heavenGateAction?.label,

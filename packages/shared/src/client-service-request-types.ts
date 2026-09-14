@@ -722,6 +722,10 @@ export interface UseItemView {
  */
 
   sectMark?: string;
+  /** 神行丹選單與確認共用的請求身份；普通物品不需傳入。 */
+  requestId?: string;
+  /** 神行丹確認目的地；缺省時只請求權威目的地清單，不消耗物品。 */
+  targetMapId?: string;
 }
 
 /** 丢弃背包物品。 */

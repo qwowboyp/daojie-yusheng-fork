@@ -17,6 +17,8 @@ import { PlayerAttributesService } from '../runtime/player/player-attributes.ser
 import { PlayerRuntimeService } from '../runtime/player/player-runtime.service';
 import { buildSelfDelta, captureSelfState } from '../network/world-projector.helpers';
 
+process.env.SERVER_FLUSH_TASK_RUNTIME_MODE = 'inline';
+
 function createPlayerRuntimeService() {
   const autoBattleSkillWrites: Array<{ playerId: string; skills: unknown[]; versionSeed?: number | null }> = [];
   const autoUseRuleWrites: Array<{ playerId: string; rules: unknown[]; versionSeed?: number | null }> = [];
@@ -278,13 +280,15 @@ function testAutoUsePillsDirtyDomain(): void {
       conditions: [{ type: 'hp_below_ratio', value: 0.5 }],
     },
   ]);
+  assert.deepEqual(service.getPlayerOrThrow(playerId).combat.autoUsePills, [
+    {
+      itemId: 'pill.minor_heal',
+      conditions: [{ type: 'hp_below_ratio', value: 0.5 }],
+    },
+  ]);
   assertDirtyDomains(service, playerId, ['auto_use_item_rule'], ['snapshot', 'combat_pref']);
   const writes = (service as unknown as { autoUseRuleWrites?: Array<{ playerId: string; rules: unknown[]; versionSeed?: number | null }> }).autoUseRuleWrites ?? [];
-  assert.equal(writes.length, 1);
-  assert.equal(writes[0].playerId, playerId);
-  assert.ok(Number.isSafeInteger(writes[0].versionSeed) && Number(writes[0].versionSeed) > 0);
-  assert.equal(Array.isArray(writes[0].rules), true);
-  assert.equal(writes[0].rules.length, 1);
+  assert.equal(writes.length, 0, '統一 flush consumer 模式只標 dirty，不得走舊分域直寫');
 }
 
 function testMapUnlockDirtyDomain(): void {
@@ -359,13 +363,15 @@ function testAutoBattleSkillDirtyDomain(): void {
 
   service.updateAutoBattleSkills(playerId, [{ skillId: 'manual.tech.skill', enabled: true, skillEnabled: true }]);
 
+  assert.deepEqual(player.combat.autoBattleSkills, [{
+    skillId: 'manual.tech.skill',
+    enabled: true,
+    skillEnabled: true,
+    autoBattleOrder: 0,
+  }]);
   assertDirtyDomains(service, playerId, ['technique', 'auto_battle_skill'], ['snapshot']);
   const writes = (service as unknown as { autoBattleSkillWrites?: Array<{ playerId: string; skills: unknown[]; versionSeed?: number | null }> }).autoBattleSkillWrites ?? [];
-  assert.equal(writes.length, 1);
-  assert.equal(writes[0].playerId, playerId);
-  assert.ok(Number.isSafeInteger(writes[0].versionSeed) && Number(writes[0].versionSeed) > 0);
-  assert.equal(Array.isArray(writes[0].skills), true);
-  assert.equal(writes[0].skills.length, 1);
+  assert.equal(writes.length, 0, '統一 flush consumer 模式只標 dirty，不得走舊分域直寫');
 }
 
 function testPlayerRetaliateOpensLockedAutoBattle(): void {
@@ -482,13 +488,16 @@ function testLogbookDirtyDomain(): void {
     text: 'dirty-domain smoke',
     at: 123,
   });
+  assert.deepEqual(service.getPendingLogbookMessages(playerId), [{
+    id: 'log:1',
+    kind: 'system',
+    text: 'dirty-domain smoke',
+    from: undefined,
+    at: 123,
+  }]);
   assertDirtyDomains(service, playerId, ['logbook'], ['snapshot']);
   const writes = (service as unknown as { logbookWrites?: Array<{ playerId: string; messages: unknown[]; versionSeed?: number | null }> }).logbookWrites ?? [];
-  assert.equal(writes.length, 1);
-  assert.equal(writes[0].playerId, playerId);
-  assert.ok(Number.isSafeInteger(writes[0].versionSeed) && Number(writes[0].versionSeed) > 0);
-  assert.equal(Array.isArray(writes[0].messages), true);
-  assert.equal(writes[0].messages.length, 1);
+  assert.equal(writes.length, 0, '統一 flush consumer 模式只標 dirty，不得走舊分域直寫');
 }
 
 function testWorldPreferenceDirtyDomain(): void {

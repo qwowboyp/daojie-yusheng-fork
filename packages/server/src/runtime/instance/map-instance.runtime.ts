@@ -278,6 +278,9 @@ class MapInstanceRuntime {
  */
 
     playerIdsByTile = new Map();
+    /** 神行丹 durable 提交期間的短暫落點保留；只阻擋其他玩家，不進 tick 或持久化。 */
+    shenxingReservedPlayerIdByTile = new Map();
+    shenxingReservedTileByPlayerId = new Map();
     /** 玩家 tile 索引中的唯一玩家计数，用于异常时 O(1) 触发正确性 fallback。 */
     playerTileIndexedPlayerCount = 0;
     /** 玩家 chunk 空间索引，供 AOI 与怪物寻敌先缩小候选集。 */
@@ -8478,6 +8481,31 @@ class MapInstanceRuntime {
         }
         return null;
     }
+    reserveShenxingSpawnPoint(playerId, preferredX = undefined, preferredY = undefined) {
+        this.releaseShenxingSpawnPoint(playerId);
+        const attachedPlayer = this.playersById.get(playerId);
+        const preferredMatchesAttachedPlayer = attachedPlayer
+            && Number.isFinite(Number(preferredX))
+            && Number.isFinite(Number(preferredY))
+            && attachedPlayer.x === this.clampToRuntimeTileBounds(preferredX, 'x')
+            && attachedPlayer.y === this.clampToRuntimeTileBounds(preferredY, 'y');
+        const spawn = preferredMatchesAttachedPlayer
+            ? { x: attachedPlayer.x, y: attachedPlayer.y }
+            : this.findSpawnPoint(preferredX, preferredY, playerId);
+        if (!spawn) return null;
+        const tileIndex = this.toTileIndex(spawn.x, spawn.y);
+        this.shenxingReservedPlayerIdByTile.set(tileIndex, playerId);
+        this.shenxingReservedTileByPlayerId.set(playerId, tileIndex);
+        return spawn;
+    }
+    releaseShenxingSpawnPoint(playerId) {
+        const tileIndex = this.shenxingReservedTileByPlayerId.get(playerId);
+        if (tileIndex === undefined) return;
+        if (this.shenxingReservedPlayerIdByTile.get(tileIndex) === playerId) {
+            this.shenxingReservedPlayerIdByTile.delete(tileIndex);
+        }
+        this.shenxingReservedTileByPlayerId.delete(playerId);
+    }
     /** findNearestOpenTile：查找最近的可占用地块。 */
     findNearestOpenTile(originX, originY, playerId = null) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
@@ -8530,6 +8558,10 @@ class MapInstanceRuntime {
         }
 
         const tileIndex = this.toTileIndex(x, y);
+        const reservedPlayerId = this.shenxingReservedPlayerIdByTile.get(tileIndex);
+        if (reservedPlayerId && reservedPlayerId !== playerId) {
+            return false;
+        }
         if (this.npcIdByTile.has(tileIndex)) {
             return false;
         }

@@ -8,6 +8,7 @@ import { NestFactory } from '@nestjs/core';
 import { Pool } from 'pg';
 
 import { AppModule } from '../app.module';
+import { ServerLifecycleCoordinatorService } from '../lifecycle/server-lifecycle-coordinator.service';
 import { resolveServerDatabaseUrl } from '../config/env-alias';
 import { DatabasePoolProvider } from '../persistence/database-pool.provider';
 import { FlushLedgerService } from '../persistence/flush-ledger.service';
@@ -266,10 +267,27 @@ async function main(): Promise<void> {
       completionMapping: 'release:proof:flush-task-worker',
     }, null, 2));
   } finally {
-    await cleanupAll(pool, allPlayerIds, [instanceId, staleInstanceId]).catch(() => undefined);
-    await app.close().catch(() => undefined);
+    const failures: unknown[] = [];
+    // 此替身僅驗證過期圍欄，沒有正式實例的刷盤方法。
+    worldRuntime.worldRuntimeInstanceStateService.deleteInstanceRuntime(staleInstanceId);
+    try {
+      await app.get(ServerLifecycleCoordinatorService).drain('flush-task-worker-db-smoke');
+    } catch (error) {
+      failures.push(error);
+    }
+    try {
+      await cleanupAll(pool, allPlayerIds, [instanceId, staleInstanceId]);
+    } catch (error) {
+      failures.push(error);
+    }
+    try {
+      await app.close();
+    } catch (error) {
+      failures.push(error);
+    }
     restoreEnv('SERVER_RUNTIME_ROLE', previousRole);
     restoreEnv('SERVER_FLUSH_TASK_RUNTIME_MODE', previousMode);
+    if (failures.length > 0) throw new AggregateError(failures, 'flush_worker_smoke_cleanup_failed');
   }
 }
 
@@ -318,10 +336,10 @@ async function provePlayerLedgerBatchLockOrder(
 }
 
 async function cleanupAll(pool: Pool, playerIds: string[], instanceIds: string[]): Promise<void> {
-  await pool.query('DELETE FROM player_flush_ledger WHERE player_id = ANY($1::varchar[])', [playerIds]).catch(() => undefined);
-  await pool.query('DELETE FROM instance_flush_ledger WHERE instance_id = ANY($1::varchar[])', [instanceIds]).catch(() => undefined);
-  await pool.query('DELETE FROM player_presence WHERE player_id = ANY($1::varchar[])', [playerIds]).catch(() => undefined);
-  await pool.query('DELETE FROM instance_checkpoint WHERE instance_id = ANY($1::varchar[])', [instanceIds]).catch(() => undefined);
+  await pool.query('DELETE FROM player_flush_ledger WHERE player_id = ANY($1::varchar[])', [playerIds]);
+  await pool.query('DELETE FROM instance_flush_ledger WHERE instance_id = ANY($1::varchar[])', [instanceIds]);
+  await pool.query('DELETE FROM player_presence WHERE player_id = ANY($1::varchar[])', [playerIds]);
+  await pool.query('DELETE FROM instance_checkpoint WHERE instance_id = ANY($1::varchar[])', [instanceIds]);
 }
 
 async function fetchFlushRow(pool: Pool, scope: 'player' | 'instance', id: string, domain: string): Promise<Record<string, unknown> | null> {

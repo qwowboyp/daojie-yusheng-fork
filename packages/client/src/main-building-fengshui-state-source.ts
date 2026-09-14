@@ -516,6 +516,7 @@ function normalizeMaterialFailure(reason: string | undefined): string {
 export function createMainBuildingFengShuiStateSource(options: MainBuildingFengShuiStateSourceOptions) {
   const rooms = new Map<string, RoomSummaryPayload>();
   const toolbarHost = document.getElementById('building-mode-toolbar') as HTMLElement | null;
+  const toolbarMapParent = toolbarHost?.parentElement ?? null;
   let latestDetail: ServerToClientEventPayload<typeof S2C.FengShuiDetail> | null = null;
   let latestOverlay: ServerToClientEventPayload<typeof S2C.FengShuiOverlayPatch> | null = null;
   let latestBuildResult: ServerToClientEventPayload<typeof S2C.BuildResult> | null = null;
@@ -525,6 +526,11 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
   let selectedCategory: BuildCategoryKey = resolveBuildCategoryForLayer(findBuildingDefById(selectedDefId)?.layer);
   let buildStrength = 1;
   let buildingModeActive = false;
+  let mapPresentationActive = false;
+  let buildingWorkspaceHost: HTMLElement | null = null;
+  let closeBuildingWorkspace: (() => void) | null = null;
+  let returningToMapPlacement = false;
+  let openBuildingWorkspace: (() => void) | null = null;
   let restoreDesktopLayoutState: SidePanelLayoutCollapseState | null = null;
   let toolbarRenderEvents: AbortController | null = null;
   let followFrame = 0;
@@ -604,32 +610,67 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
     };
   }
 
-  function beginBuildingMode(): void {
+  function restoreMapPresentation(): void {
+    if (!mapPresentationActive) {
+      return;
+    }
+    mapPresentationActive = false;
+    options.sidePanel.setBuildingModeActive(false);
+    if (!options.sidePanel.isMobileLayoutActive() && restoreDesktopLayoutState) {
+      options.sidePanel.setLayoutCollapseState(restoreDesktopLayoutState, { persist: false });
+    }
+    restoreDesktopLayoutState = null;
+  }
+
+  function moveToolbarToMap(): void {
+    if (!toolbarHost) {
+      return;
+    }
+    toolbarHost.classList.remove('building-mode-toolbar--workspace');
+    delete toolbarHost.dataset.workspaceEmbedded;
+    if (toolbarMapParent?.isConnected && toolbarHost.parentElement !== toolbarMapParent) {
+      toolbarMapParent.appendChild(toolbarHost);
+    }
+  }
+
+  function beginMapPresentation(): void {
+    if (mapPresentationActive) {
+      return;
+    }
+    mapPresentationActive = true;
+    if (!options.sidePanel.isMobileLayoutActive()) {
+      restoreDesktopLayoutState = options.sidePanel.getLayoutCollapseState();
+      options.sidePanel.setLayoutCollapseState({
+        leftCollapsed: true,
+        rightCollapsed: true,
+        bottomCollapsed: true,
+      }, { persist: false });
+    } else {
+      restoreDesktopLayoutState = null;
+    }
+    options.sidePanel.setBuildingModeActive(true);
+  }
+
+  function beginBuildingMode(inWorkspace = false, preserveSelection = false): void {
     if (!buildingModeActive) {
       buildingModeActive = true;
       detailModalHost.close('building-panel');
-      if (!options.sidePanel.isMobileLayoutActive()) {
-        restoreDesktopLayoutState = options.sidePanel.getLayoutCollapseState();
-        options.sidePanel.setLayoutCollapseState({
-          leftCollapsed: true,
-          rightCollapsed: true,
-          bottomCollapsed: true,
-        }, { persist: false });
-      } else {
-        restoreDesktopLayoutState = null;
-      }
-      options.sidePanel.setBuildingModeActive(true);
+    }
+    if (!inWorkspace) {
+      beginMapPresentation();
     }
     selectedCategory = resolveBuildCategoryForLayer(findBuildingDefById(selectedDefId)?.layer);
     latestBuildResult = null;
-    selectedMaterialItemIdsBySlot = new Map();
-    continuousSelection = false;
+    if (!preserveSelection) {
+      selectedMaterialItemIdsBySlot = new Map();
+      continuousSelection = false;
+    }
     lastBuildPreviewKey = '';
     syncActiveBuildMode(true);
     ensureBuildModeFollowLoop();
   }
 
-  function endBuildingMode(): void {
+  function endBuildingMode(preserveSelection = false): void {
     if (!buildingModeActive) {
       options.setBuildPreviewOverlay(null);
       hideBuildModeToolbar();
@@ -640,13 +681,11 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
     hideBuildModeToolbar();
     options.setBuildPreviewOverlay(null);
     buildModeTooltip.hide(true);
-    options.sidePanel.setBuildingModeActive(false);
+    restoreMapPresentation();
     resetPendingPlacement(true);
-    if (!options.sidePanel.isMobileLayoutActive() && restoreDesktopLayoutState) {
-      options.sidePanel.setLayoutCollapseState(restoreDesktopLayoutState, { persist: false });
+    if (!preserveSelection) {
+      selectedMaterialItemIdsBySlot = new Map();
     }
-    restoreDesktopLayoutState = null;
-    selectedMaterialItemIdsBySlot = new Map();
     lastBuildPreviewKey = '';
     lastToolbarRenderKey = '';
     lastMaterialInventoryRevision = -1;
@@ -672,6 +711,43 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
       window.cancelAnimationFrame(followFrame);
       followFrame = 0;
     }
+  }
+
+  function showBuildingWorkspace(host: HTMLElement, closeWorkspace: () => void): void {
+    if (!toolbarHost) {
+      return;
+    }
+    restoreMapPresentation();
+    buildingWorkspaceHost = host;
+    closeBuildingWorkspace = closeWorkspace;
+    if (toolbarHost.parentElement !== host) {
+      host.appendChild(toolbarHost);
+    }
+    toolbarHost.classList.add('building-mode-toolbar--workspace');
+    toolbarHost.dataset.workspaceEmbedded = 'true';
+    beginBuildingMode(true, true);
+  }
+
+  function hideBuildingWorkspace(): void {
+    if (!buildingWorkspaceHost) {
+      return;
+    }
+    buildingWorkspaceHost = null;
+    closeBuildingWorkspace = null;
+    moveToolbarToMap();
+    if (!returningToMapPlacement) {
+      endBuildingMode(true);
+    }
+  }
+
+  function enterMapPlacement(): void {
+    if (buildingWorkspaceHost) {
+      returningToMapPlacement = true;
+      moveToolbarToMap();
+      closeBuildingWorkspace?.();
+      returningToMapPlacement = false;
+    }
+    beginMapPresentation();
   }
 
   function isBuildStrengthInputFocused(): boolean {
@@ -799,6 +875,7 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
           selectedMaterialItemIds: latestMaterialSlots.map((slot) => slot.selectedItemId ?? ''),
         };
         pendingPlacementHover = null;
+        enterMapPlacement();
         options.beginTargeting('building:place', '建造位置', 'tile', Math.max(1, options.getInfoRadius()));
         syncActiveBuildMode(true);
       },
@@ -807,6 +884,7 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
         pendingPlacementHover = null;
         options.setBuildPreviewOverlay(null);
         pendingDeconstructTargeting = true;
+        enterMapPlacement();
         options.beginTargeting('building:deconstruct', '拆除建築', 'entity', Math.max(1, options.getInfoRadius()));
         syncActiveBuildMode(true);
       },
@@ -816,6 +894,7 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
       },
       onExit: () => {
         endBuildingMode();
+        closeBuildingWorkspace?.();
       },
       prepareSignal: () => {
         toolbarRenderEvents?.abort();
@@ -855,7 +934,23 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
     },
 
     openBuildingPanel(): void {
+      if (openBuildingWorkspace) {
+        openBuildingWorkspace();
+        return;
+      }
       beginBuildingMode();
+    },
+
+    configureWorkspaceNavigation(open: (() => void) | null): void {
+      openBuildingWorkspace = open;
+    },
+
+    showBuildingWorkspace(host: HTMLElement, closeWorkspace: () => void): void {
+      showBuildingWorkspace(host, closeWorkspace);
+    },
+
+    hideBuildingWorkspace(): void {
+      hideBuildingWorkspace();
     },
 
     hasPendingPlacementTargeting(): boolean {

@@ -16,6 +16,7 @@ import type {
 } from '@mud/shared';
 import { createItemStackSignature, getTechniqueMaxLevel, resolvePlayerFacingContentName, TECHNIQUE_GRADE_ORDER } from '@mud/shared';
 import { getItemTypeLabel } from '../../domain-labels';
+import { mailPanelStore } from '../../react-ui/panels/mail/MailPanel';
 import { renderItemIcon } from '../../content/item-art';
 import { INVENTORY_FILTER_TABS, type InventoryFilter } from '../../constants/ui/inventory';
 import { getItemDecorClassName, getItemDisplayMeta, type ItemDisplayMeta } from '../item-display';
@@ -137,6 +138,7 @@ export class SocialPanel {
   private sectDirectoryOpenHandler: ((opener: HTMLElement | null) => void) | null = null;
   private sectDirectoryCloseHandler: (() => void) | null = null;
   private featurePanelOpenHandler: ((opener: HTMLElement | null) => void) | null = null;
+  private mailOpenHandler: (() => void) | null = null;
   private partyPanelOpenStateReader: (() => boolean) | null = null;
   private partyTabUnreadCount = 0;
   private partyAvailable = false;
@@ -170,6 +172,12 @@ export class SocialPanel {
       this.bindEvents(panel.body);
     }
     this.render();
+    // 面板與遊戲 shell 同生命週期；只 patch 飛書入口，不重建社交內容。
+    mailPanelStore.subscribe(() => this.patchMailUnread());
+  }
+
+  setMailOpenHandler(handler: () => void): void {
+    this.mailOpenHandler = handler;
   }
 
   setCallbacks(callbacks: SocialPanelCallbacks): void {
@@ -391,6 +399,12 @@ export class SocialPanel {
       const playerId = target.dataset.playerId ?? '';
       const requestId = target.dataset.requestId ?? '';
       const tab = target.dataset.socialTab;
+      if (action === 'mail') {
+        this.closeFeaturePanels();
+        this.featurePanelOpenHandler?.(target);
+        this.mailOpenHandler?.();
+        return;
+      }
       if (action === 'menu' && isSocialPanelTab(tab)) {
         this.switchActiveTab(tab, target instanceof HTMLButtonElement ? target : null);
         return;
@@ -453,7 +467,7 @@ export class SocialPanel {
     this.pane.innerHTML = `
       <div class="panel-section social-panel">
         <div class="panel-section-head social-panel-head">
-          <div class="panel-section-title">道友</div>
+          <div class="panel-section-title">社交</div>
           <div class="social-panel-actions">
             <button class="small-btn" type="button" data-social-action="refresh">刷新</button>
           </div>
@@ -471,6 +485,10 @@ export class SocialPanel {
     const partyUnread = this.getPartyTabUnreadCount();
     return `
       <div class="social-menu-launcher" id="social-menu-launcher" data-social-menu-launcher="true" aria-label="道友功能入口">
+        <button class="social-menu-card" type="button" data-social-action="mail" data-social-menu="mail" aria-haspopup="dialog">
+          <span class="social-menu-card-glyph" aria-hidden="true">書</span>
+          <span class="social-menu-card-copy"><strong>飛書</strong><small>查看來信與領取附件</small></span>
+        </button>
         <button
           class="social-menu-card social-menu-card--party ${partyUnread > 0 ? 'has-unread' : ''}"
           type="button"
@@ -1113,7 +1131,16 @@ export class SocialPanel {
     return total;
   }
 
+  private patchMailUnread(): void {
+    const button = this.pane.querySelector<HTMLButtonElement>('[data-social-menu="mail"]');
+    if (!button) return;
+    const unreadCount = mailPanelStore.getState().summary.unreadCount;
+    button.dataset.hasUnread = String(unreadCount > 0);
+    button.setAttribute('aria-label', unreadCount > 0 ? `飛書，${unreadCount} 封未讀` : '飛書');
+  }
+
   private patchTabState(): void {
+    this.patchMailUnread();
     const unreadCount = this.getTotalUnreadCount();
     const partyButton = this.pane.querySelector<HTMLButtonElement>('[data-social-menu="party"]');
     const partyUnread = this.getPartyTabUnreadCount();

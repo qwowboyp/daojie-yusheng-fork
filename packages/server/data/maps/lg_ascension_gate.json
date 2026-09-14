@@ -196,5 +196,38 @@
       "y": 20,
       "radius": 64
     }
+  ],
+  "shenxingCategory": "wild",
+  "resourceNodeGroups": [
+    {
+      "resourceNodeId": "landmark.herb.ascension_cloudstep_orchid",
+      "idPrefix": "lg_ascension_cloudstep_orchid",
+      "name": "雲階蘭",
+      "placements": [
+        {
+          "x": 11,
+          "y": 17
+        },
+        {
+          "x": 18,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "resourceNodeId": "landmark.ore.ascension_starfold_crystal",
+      "idPrefix": "lg_ascension_starfold_crystal",
+      "name": "摺星晶",
+      "placements": [
+        {
+          "x": 24,
+          "y": 17
+        },
+        {
+          "x": 31,
+          "y": 24
+        }
+      ]
+    }
   ]
 }

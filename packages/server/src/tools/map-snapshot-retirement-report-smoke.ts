@@ -7,6 +7,7 @@ import assert from 'node:assert/strict';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from '../app.module';
+import { ServerLifecycleCoordinatorService } from '../lifecycle/server-lifecycle-coordinator.service';
 import { MapPersistenceService } from '../persistence/map-persistence.service';
 import { WorldRuntimeLifecycleService } from '../runtime/world/world-runtime-lifecycle.service';
 
@@ -32,7 +33,11 @@ async function main(): Promise<void> {
     assert.equal(report.modernSourceScopeObserved, true);
     console.log(JSON.stringify(report, null, 2));
   } finally {
-    await app.close();
+    try {
+      await app.get(ServerLifecycleCoordinatorService).drain('map-snapshot-retirement-smoke');
+    } finally {
+      await app.close();
+    }
   }
 }
 

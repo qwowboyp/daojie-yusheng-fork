@@ -13,7 +13,7 @@ import { mountFloatingListPanelLayer, refreshFloatingListPanelLayout } from './f
 import { dismissPinnedFloatingTooltips } from './floating-tooltip';
 import { bindDesktopWindow } from './desktop-window';
 import {
-  WORKSPACES, mountWorkspaceNavigation, mountWorkspaceActions,
+  WORKSPACES, mountWorkspaceNavigation,
   type WorkspaceId, type WorkspaceAction, type WorkspaceDefinition, type WorkspaceNavigationMount,
 } from '../react-ui/shell/WorkspaceNavigation';
 import {
@@ -154,7 +154,6 @@ export class SidePanel {
   private hudWindow: ReturnType<typeof bindDesktopWindow> | null = null;
   private workspaceActionHandler: ((action: WorkspaceAction) => void) | null = null;
   private workspaceContentHandler: ((tab: string | null, pane: HTMLElement | null) => void) | null = null;
-  private readonly workspaceActionRoots: { unmount(): void }[] = [];
   private readonly mobileSurfaceCleanup: (() => void)[] = [];
   private readonly dismissMobileSurfacesOnMap = (event: PointerEvent): void => {
     if (event.target instanceof Element && event.target.closest('#game-canvas')) requestMobileSurface(null);
@@ -347,7 +346,7 @@ export class SidePanel {
         return;
       }
       const aliases: Record<string, string> = {
-        'mobile-overview': 'overview', 'mobile-attrs': 'attr', 'mobile-bag': 'inventory',
+        'mobile-overview': 'attr', 'mobile-attrs': 'attr', 'mobile-bag': 'inventory',
         'mobile-action': 'dialogue', action: 'dialogue', crafting: 'alchemy', 'mobile-world': 'map-intel', intel: 'map-intel',
       };
       tabName = aliases[tabName] ?? tabName;
@@ -506,7 +505,6 @@ export class SidePanel {
     const launcher = document.createElement('section');
     launcher.id = 'workspace-building';
     body.appendChild(launcher);
-    this.workspaceActionRoots.push(mountWorkspaceActions(launcher, (action) => this.workspaceActionHandler?.(action)));
 
     const systemContent = document.getElementById('workspace-system-content');
     if (systemContent) {
@@ -514,7 +512,7 @@ export class SidePanel {
         systemContent.appendChild(actions);
       }
       // 保留既有事件接線，入口由各工作區的捷徑提供。
-      for (const id of ['hud-open-mail', 'hud-open-activity', 'hud-open-chronicle']) {
+      for (const id of ['hud-open-activity']) {
         const button = document.getElementById(id);
         if (button) button.hidden = true;
       }
@@ -557,6 +555,7 @@ export class SidePanel {
     const hud = document.getElementById('hud');
     if (hud) this.hudWindow = bindDesktopWindow(hud, {
       storageKey: 'hud', handleSelector: '.hud-identity', minWidth: 260, minHeight: 140,
+      resizable: false,
     });
     this.syncChatVisibility();
     window.addEventListener('keydown', this.handleWorkspaceEscape, true);
@@ -576,7 +575,7 @@ export class SidePanel {
     this.activeWorkspace = definition.id;
     this.workspaceTab = tabName;
     this.workspace.dataset.workspace = definition.id;
-    this.workspace.dataset.compact = String(definition.compact === true || tabName === 'building');
+    this.workspace.dataset.compact = String(definition.compact === true);
     this.workspace.hidden = false;
     this.workspace.classList.remove('hidden');
     this.workspace.setAttribute('aria-hidden', 'false');
@@ -690,7 +689,6 @@ export class SidePanel {
     this.hudWindow?.destroy();
     window.removeEventListener('keydown', this.handleWorkspaceEscape, true);
     this.workspaceNavigation?.destroy();
-    this.workspaceActionRoots.forEach((root) => root.unmount());
     this.responsiveCleanup?.();
     this.responsiveCleanup = null;
     if (this.mobileExpandTransitionHandler) {

@@ -12,6 +12,7 @@ type SmokeItem = {
 
 type SmokePlayer = {
   playerId: string;
+  sessionId: string;
   runtimeOwnerId: string;
   sessionEpoch: number;
   inventory: { items: SmokeItem[]; capacity: number; revision?: number };
@@ -136,6 +137,7 @@ async function main(): Promise<void> {
   const playerId = 'player:heavenly-dao-shop';
   const runtimePlayer: SmokePlayer = {
     playerId,
+    sessionId: 'socket:heavenly-dao-shop',
     runtimeOwnerId: 'smoke-runtime-owner',
     sessionEpoch: 1,
     inventory: {
@@ -204,6 +206,7 @@ async function main(): Promise<void> {
   const discountedPlayerId = 'player:heavenly-dao-shop-eternal';
   runtimePlayers.set(discountedPlayerId, {
     playerId: discountedPlayerId,
+    sessionId: 'socket:heavenly-dao-shop-eternal',
     runtimeOwnerId: 'smoke-runtime-owner',
     sessionEpoch: 1,
     inventory: {

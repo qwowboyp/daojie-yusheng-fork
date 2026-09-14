@@ -16,6 +16,7 @@ export * from './map-layer-chars';
 export * from './building';
 export * from './fengshui';
 export * from './inventory';
+export * from './shenxing';
 export * from './quest';
 export * from './attributes';
 export * from './technique';

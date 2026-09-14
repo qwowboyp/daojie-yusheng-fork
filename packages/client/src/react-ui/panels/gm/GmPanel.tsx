@@ -3,7 +3,7 @@
  *
  * 维护时要保持它只处理前端表现和组件契约，不保存业务真源，也不绕过共享规则或服务端权威运行时。
  */
-import { memo, useCallback, useMemo, useState, useRef } from 'react';
+import { memo, startTransition, useCallback, useMemo, useState, useRef, ViewTransition } from 'react';
 import type { C2S_GmUpdatePlayer, GmPlayerSummary, GmWorkerPoolAllMetrics, GmWorkerPoolMetrics, S2C_GmState } from '@mud/shared';
 import { createPanelStore } from '../../stores/create-panel-store';
 import { getCachedMapMeta } from '../../../map-static-cache';
@@ -141,34 +141,36 @@ export function GmPanel() {
         <button
           className={`gm-tab-btn${activeTab === 'overview' ? ' is-active' : ''}`}
           type="button"
-          onClick={() => setActiveTab('overview')}
+          onClick={() => startTransition(() => { setActiveTab('overview'); })}
         >总览</button>
         <button
           className={`gm-tab-btn${activeTab === 'workers' ? ' is-active' : ''}`}
           type="button"
-          onClick={() => setActiveTab('workers')}
+          onClick={() => startTransition(() => { setActiveTab('workers'); })}
         >多线程</button>
       </div>
-      {activeTab === 'overview' && (
-        <>
-          <GmPerfSection perf={state.perf} />
-          <GmOverviewSection playerCount={state.players.length} botCount={state.botCount} />
-          <GmDebugSection />
-          <GmBotSection />
-          <GmPlayerListSection
-            players={state.players}
-            selectedId={effectiveSelectedId}
-            onSelect={setSelectedPlayerId}
-          />
-          <GmPlayerDetailSection
-            player={selectedPlayer}
-            mapIds={state.mapIds}
-          />
-        </>
-      )}
-      {activeTab === 'workers' && (
-        <GmWorkerPoolSection workerPool={state.perf.workerPool ?? null} />
-      )}
+      <ViewTransition>
+        {activeTab === 'overview' && (
+          <>
+            <GmPerfSection perf={state.perf} />
+            <GmOverviewSection playerCount={state.players.length} botCount={state.botCount} />
+            <GmDebugSection />
+            <GmBotSection />
+            <GmPlayerListSection
+              players={state.players}
+              selectedId={effectiveSelectedId}
+              onSelect={setSelectedPlayerId}
+            />
+            <GmPlayerDetailSection
+              player={selectedPlayer}
+              mapIds={state.mapIds}
+            />
+          </>
+        )}
+        {activeTab === 'workers' && (
+          <GmWorkerPoolSection workerPool={state.perf.workerPool ?? null} />
+        )}
+      </ViewTransition>
     </div>
   );
 }

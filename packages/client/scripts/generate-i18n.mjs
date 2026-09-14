@@ -19,6 +19,8 @@ const targetPath = path.join(clientDir, 'src/constants/ui/i18n.generated.ts');
 const COLUMNS = ['key', 'category', 'zh-TW', 'note'];
 
 function parseCsv(text) {
+  // checkout 的 CRLF 不應進入多行文案，否則 Windows/Linux 建置會產生不同字串。
+  text = text.replace(/\r\n?/g, '\n');
   const rows = [];
   let row = [];
   let cell = '';

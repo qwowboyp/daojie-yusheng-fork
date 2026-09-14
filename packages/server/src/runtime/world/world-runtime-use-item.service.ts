@@ -8,8 +8,14 @@
  * 处理丹药、技能书、传送符、灵石等各类物品的使用逻辑分支
  */
 import { Inject, Injectable, BadRequestException, NotFoundException, ServiceUnavailableException } from '@nestjs/common';
-import { CUSTOM_TECHNIQUE_BOOK_ITEM_ID, DEFAULT_QI_RESOURCE_DESCRIPTOR, MERIT_ETERNAL_DAILY_SIGN_IN_FIXED_BONUS, MERIT_ETERNAL_POOL_GRANT, MERIT_ETERNAL_USE_BEHAVIOR, MERIT_MONTH_CARD_DURATION_DAYS, MERIT_MONTH_CARD_POOL_GRANT, MERIT_MONTH_CARD_USE_BEHAVIOR, SECT_ENTRANCE_RELOCATION_USE_BEHAVIOR, TECHNIQUE_FRAGMENT_ITEM_ID, buildQiResourceKey, calculateTechniqueBookCraftFragmentCost, calculateTechniqueBookDecomposeFragments, getItemDisplayName, getTechniqueMaxLevel, isCreatedTechniqueId, isTechniqueAggregationId, isTechniqueFullyMastered, resolvePlayerFacingContentName } from '@mud/shared';
-import { randomUUID } from 'node:crypto';
+import { CUSTOM_TECHNIQUE_BOOK_ITEM_ID, DEFAULT_QI_RESOURCE_DESCRIPTOR, MERIT_ETERNAL_DAILY_SIGN_IN_FIXED_BONUS, MERIT_ETERNAL_POOL_GRANT, MERIT_ETERNAL_USE_BEHAVIOR, MERIT_MONTH_CARD_DURATION_DAYS, MERIT_MONTH_CARD_POOL_GRANT, MERIT_MONTH_CARD_USE_BEHAVIOR, S2C, SECT_ENTRANCE_RELOCATION_USE_BEHAVIOR, SHENXING_USE_BEHAVIOR, TECHNIQUE_FRAGMENT_ITEM_ID, buildQiResourceKey, calculateTechniqueBookCraftFragmentCost, calculateTechniqueBookDecomposeFragments, getItemDisplayName, getShenxingPillTier, getTechniqueMaxLevel, isCreatedTechniqueId, isTechniqueAggregationId, isTechniqueFullyMastered, resolvePlayerFacingContentName } from '@mud/shared';
+import { createHash, randomUUID } from 'node:crypto';
+import type {
+    S2C_ShenxingDestinations,
+    S2C_ShenxingResult,
+    ShenxingDestinationView,
+    ShenxingPillTierConfig,
+} from '@mud/shared';
 import { resolveServerDatabaseUrl } from '../../config/env-alias';
 import { ContentTemplateRepository } from '../../content/content-template.repository';
 import { REFINED_SHA_RESOURCE_KEY } from '../../constants/gameplay/pvp';
@@ -30,6 +36,11 @@ import {
 const DEFAULT_TILE_AURA_RESOURCE_KEY = buildQiResourceKey(DEFAULT_QI_RESOURCE_DESCRIPTOR);
 const CURRENT_RESPAWN_BIND_USE_BEHAVIOR = 'bind_current_respawn';
 const PUBLIC_RESPAWN_BIND_MAP_IDS = new Set(['yunlai_town', 'qizhen_crossing', 'yunxu_terrace']);
+
+interface ShenxingUsePayload {
+    requestId?: string;
+    targetMapId?: string;
+}
 
 function normalizeOptionalStringSafe(value) {
     return typeof value === 'string' && value.trim() ? value.trim() : null;
@@ -56,6 +67,7 @@ function findPlayerLearnedTechnique(player, techniqueId) {
 /** world-runtime use-item orchestration：承接物品使用结算分支。 */
 @Injectable()
 export class WorldRuntimeUseItemService {
+    private readonly shenxingTargetByRequest = new Map<string, string>();
 /**
  * contentTemplateRepository：内容Template仓储引用。
  */
@@ -102,11 +114,37 @@ export class WorldRuntimeUseItemService {
     async dispatchUseItem(playerId, itemInstanceId, deps, payload = null) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
+        const shenxingRequestId = normalizeShenxingRequestId(payload?.requestId);
+        const shenxingTargetMapId = normalizeOptionalStringSafe(payload?.targetMapId);
+        if (shenxingRequestId && shenxingTargetMapId
+            && await this.tryEmitCommittedShenxingReplay(
+                playerId,
+                itemInstanceId,
+                shenxingRequestId,
+                shenxingTargetMapId,
+                deps,
+            )) {
+            return;
+        }
         const inventoryItem = this.playerRuntimeService.peekInventoryItemByInstanceId(playerId, itemInstanceId);
         if (!inventoryItem) {
+            if (shenxingRequestId) {
+                this.emitShenxingResult(playerId, deps, {
+                    requestId: shenxingRequestId,
+                    status: 'rejected',
+                    code: 'item_missing',
+                    ...(shenxingTargetMapId ? { targetMapId: shenxingTargetMapId } : {}),
+                });
+                return;
+            }
             throw new NotFoundException(`背包物品不存在：${normalizeInventoryItemInstanceId(itemInstanceId) || 'unknown'}`);
         }
         const item = this.resolveUseItemView(inventoryItem);
+        const shenxingTier = getShenxingPillTier(item.itemId);
+        if (shenxingTier || item.useBehavior === SHENXING_USE_BEHAVIOR) {
+            await this.handleShenxingItem(playerId, itemInstanceId, item, deps, payload);
+            return;
+        }
         const count = normalizeUseItemCount(payload?.count, item);
         if (typeof item.formationDiskTier === 'string' && item.formationDiskTier.length > 0) {
             const n = buildStructuredNotice('info', 'notice.item.formation-hint', '陣盤需要通過背包中的佈陣頁面使用。', {});
@@ -283,6 +321,450 @@ export class WorldRuntimeUseItemService {
             : null;
         return normalized && typeof normalized === 'object' ? normalized : item;
     }
+
+    async handleShenxingItem(
+        playerId: string,
+        itemInstanceId: string,
+        item: Record<string, any>,
+        deps: any,
+        payload: ShenxingUsePayload | null,
+    ): Promise<void> {
+        const requestId = normalizeShenxingRequestId(payload?.requestId);
+        const targetMapId = normalizeOptionalStringSafe(payload?.targetMapId);
+        if (!requestId) {
+            this.emitShenxingResult(playerId, deps, {
+                requestId: typeof payload?.requestId === 'string' ? payload.requestId.trim() : '',
+                status: 'rejected',
+                code: 'request_invalid',
+                ...(targetMapId ? { targetMapId } : {}),
+            });
+            return;
+        }
+        const tier = getShenxingPillTier(item.itemId);
+        if (!tier || item.useBehavior !== SHENXING_USE_BEHAVIOR) {
+            this.emitShenxingResult(playerId, deps, {
+                requestId,
+                status: 'rejected',
+                code: 'item_changed',
+                ...(targetMapId ? { targetMapId } : {}),
+            });
+            return;
+        }
+        const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
+        const playerRealmLv = Math.max(1, Math.trunc(Number(player.realm?.realmLv ?? player.realmLv ?? 1)));
+        if (playerRealmLv < tier.minRealmLv) {
+            this.emitShenxingResult(playerId, deps, {
+                requestId,
+                status: 'rejected',
+                code: 'realm_too_low',
+                ...(targetMapId ? { targetMapId } : {}),
+            });
+            return;
+        }
+        const destinations = this.resolveShenxingDestinations(tier, player.templateId);
+        const cooldownRemainingTicks = this.playerRuntimeService.getConsumableItemCooldownRemainingTicks(playerId, item);
+        if (!targetMapId) {
+            this.emitShenxingDestinations(playerId, deps, {
+                requestId,
+                itemInstanceId: normalizeInventoryItemInstanceId(itemInstanceId),
+                itemId: item.itemId,
+                cooldownTicks: tier.cooldownTicks,
+                cooldownRemainingTicks,
+                destinations,
+            });
+            return;
+        }
+        const requestKey = `${playerId}\u0000${requestId}`;
+        const lockedTarget = this.shenxingTargetByRequest.get(requestKey);
+        if (lockedTarget && lockedTarget !== targetMapId) {
+            this.emitShenxingResult(playerId, deps, {
+                requestId,
+                status: 'rejected',
+                code: 'request_invalid',
+                targetMapId,
+            });
+            return;
+        }
+        if (!lockedTarget) {
+            this.rememberShenxingTarget(requestKey, targetMapId);
+        }
+        const destination = destinations.find((entry) => entry.mapId === targetMapId);
+        if (!destination) {
+            this.emitShenxingResult(playerId, deps, {
+                requestId,
+                status: 'rejected',
+                code: this.templateRepository.has(targetMapId) ? 'destination_forbidden' : 'destination_invalid',
+                targetMapId,
+            });
+            return;
+        }
+        if (cooldownRemainingTicks > 0) {
+            this.emitShenxingResult(playerId, deps, {
+                requestId,
+                status: 'rejected',
+                code: 'cooldown_active',
+                targetMapId,
+                cooldownTicks: cooldownRemainingTicks,
+            });
+            return;
+        }
+        await this.executeShenxingTravel(playerId, itemInstanceId, item, tier, destination, requestId, deps);
+    }
+
+    resolveShenxingDestinations(
+        tier: ShenxingPillTierConfig,
+        currentTemplateId: string,
+    ): ShenxingDestinationView[] {
+        return this.templateRepository.listBootstrapTemplates()
+            .filter((template) => template.routeDomain === 'system'
+                && (template.shenxingCategory === 'town' || template.shenxingCategory === 'wild')
+                && Number.isFinite(Number(template.mapLv))
+                && Math.trunc(Number(template.mapLv)) >= 1
+                && Math.trunc(Number(template.mapLv)) <= tier.maxRealmLv
+                && template.id !== currentTemplateId)
+            .map((template) => ({
+                mapId: template.id,
+                name: resolvePlayerFacingContentName(template.id, '未知地圖', template.name),
+                mapLv: Math.trunc(Number(template.mapLv)),
+                category: template.shenxingCategory,
+            }))
+            .sort((left, right) => left.mapLv - right.mapLv
+                || left.category.localeCompare(right.category)
+                || left.name.localeCompare(right.name, 'zh-Hant-TW')
+                || left.mapId.localeCompare(right.mapId));
+    }
+
+    rememberShenxingTarget(requestKey: string, targetMapId: string): void {
+        this.shenxingTargetByRequest.set(requestKey, targetMapId);
+        while (this.shenxingTargetByRequest.size > 10_000) {
+            const oldest = this.shenxingTargetByRequest.keys().next().value;
+            if (typeof oldest !== 'string') break;
+            this.shenxingTargetByRequest.delete(oldest);
+        }
+    }
+
+    emitShenxingDestinations(playerId: string, deps: any, payload: S2C_ShenxingDestinations): void {
+        deps?.worldSessionService?.getSocketByPlayerId?.(playerId)?.emit(S2C.ShenxingDestinations, payload);
+    }
+
+    emitShenxingResult(playerId: string, deps: any, payload: S2C_ShenxingResult): void {
+        deps?.worldSessionService?.getSocketByPlayerId?.(playerId)?.emit(S2C.ShenxingResult, payload);
+    }
+
+    async tryEmitCommittedShenxingReplay(
+        playerId: string,
+        itemInstanceId: string,
+        requestId: string,
+        targetMapId: string,
+        deps: any,
+    ): Promise<boolean> {
+        const durable = deps?.durableOperationService;
+        if (typeof durable?.getOperationStatus !== 'function') return false;
+        const operationId = buildShenxingOperationId(playerId, requestId);
+        if (await durable.getOperationStatus(operationId) !== 'committed') return false;
+        const replay = typeof durable.getOperationReplay === 'function'
+            ? await durable.getOperationReplay(operationId)
+            : null;
+        const replayPayload = normalizeRecordPayload(replay?.operation?.payload_jsonb);
+        const sourceMutation = replayPayload?.sourceMutation;
+        const replaySourceRefId = normalizeOptionalStringSafe(replayPayload?.sourceRefId);
+        const replayTargetMapId = sourceMutation?.kind === 'player_item_use'
+            && sourceMutation.action === 'shenxing_travel'
+            ? normalizeOptionalStringSafe(sourceMutation.nextPlacement?.templateId)
+            : null;
+        if (!replayTargetMapId) return false;
+        const expectedSourceSuffix = `:${normalizeInventoryItemInstanceId(itemInstanceId)}`;
+        if (!replaySourceRefId?.endsWith(expectedSourceSuffix) || replayTargetMapId !== targetMapId) {
+            this.emitShenxingResult(playerId, deps, {
+                requestId,
+                status: 'rejected',
+                code: 'request_invalid',
+                targetMapId,
+            });
+            return true;
+        }
+        const runtimePlayer = this.playerRuntimeService.getPlayer?.(playerId);
+        if (!runtimePlayer || runtimePlayer.templateId !== replayTargetMapId) {
+            this.emitShenxingResult(playerId, deps, {
+                requestId,
+                status: 'rejected',
+                code: 'asset_commit_unavailable',
+                targetMapId,
+            });
+            this.failClosedShenxingSession(playerId, deps);
+            return true;
+        }
+        const tier = getShenxingPillTier(replaySourceRefId.slice(0, -expectedSourceSuffix.length));
+        const target = this.templateRepository.has(replayTargetMapId)
+            ? this.templateRepository.getOrThrow(replayTargetMapId)
+            : null;
+        this.emitShenxingResult(playerId, deps, {
+            requestId,
+            status: 'success',
+            code: 'travel_succeeded',
+            targetMapId: replayTargetMapId,
+            ...(target ? { targetMapName: resolvePlayerFacingContentName(target.id, '未知地圖', target.name) } : {}),
+            ...(tier ? { cooldownTicks: tier.cooldownTicks } : {}),
+        });
+        return true;
+    }
+
+    async executeShenxingTravel(
+        playerId: string,
+        itemInstanceId: string,
+        item: Record<string, any>,
+        tier: ShenxingPillTierConfig,
+        destination: ShenxingDestinationView,
+        requestId: string,
+        deps: any,
+    ): Promise<void> {
+        await this.runExclusivePersistentPlayerItemUse(playerId, async () => {
+            if (await this.tryEmitCommittedShenxingReplay(
+                playerId,
+                itemInstanceId,
+                requestId,
+                destination.mapId,
+                deps,
+            )) return;
+            let currentItem;
+            try {
+                currentItem = this.requireUnchangedInventoryItem(playerId, itemInstanceId, item.itemId);
+            }
+            catch {
+                this.emitShenxingResult(playerId, deps, {
+                    requestId,
+                    status: 'rejected',
+                    code: 'item_missing',
+                    targetMapId: destination.mapId,
+                });
+                return;
+            }
+            const player = this.playerRuntimeService.getPlayerOrThrow(playerId);
+            if (Math.max(1, Math.trunc(Number(player.realm?.realmLv ?? player.realmLv ?? 1))) < tier.minRealmLv) {
+                this.emitShenxingResult(playerId, deps, {
+                    requestId,
+                    status: 'rejected',
+                    code: 'realm_too_low',
+                    targetMapId: destination.mapId,
+                });
+                return;
+            }
+            const cooldownRemainingTicks = this.playerRuntimeService.getConsumableItemCooldownRemainingTicks(playerId, currentItem);
+            if (cooldownRemainingTicks > 0) {
+                this.emitShenxingResult(playerId, deps, {
+                    requestId,
+                    status: 'rejected',
+                    code: 'cooldown_active',
+                    targetMapId: destination.mapId,
+                    cooldownTicks: cooldownRemainingTicks,
+                });
+                return;
+            }
+            const durable = deps?.durableOperationService;
+            if (durable?.isEnabled?.() !== true || typeof durable?.grantInventoryItems !== 'function') {
+                this.emitShenxingResult(playerId, deps, {
+                    requestId,
+                    status: 'rejected',
+                    code: 'asset_commit_unavailable',
+                    targetMapId: destination.mapId,
+                });
+                return;
+            }
+            const location = deps.getPlayerLocationOrThrow(playerId);
+            const source = deps.getInstanceRuntime(location.instanceId);
+            if (!source || source.template?.id !== player.templateId) {
+                this.emitShenxingResult(playerId, deps, {
+                    requestId,
+                    status: 'rejected',
+                    code: 'transfer_failed',
+                    targetMapId: destination.mapId,
+                });
+                return;
+            }
+            let target;
+            try {
+                const linePreset = player.worldPreference?.linePreset === 'real' ? 'real' : 'peaceful';
+                target = deps.getOrCreateDefaultLineInstance(destination.mapId, linePreset);
+            }
+            catch {
+                target = null;
+            }
+            const readiness = target
+                ? (deps.instanceReadyForPlayerAttach?.(target.meta.instanceId)
+                    ?? deps.worldRuntimeService?.instanceReadyForPlayerAttach?.(target.meta.instanceId)
+                    ?? { ok: true })
+                : { ok: false };
+            if (!target || readiness.ok !== true) {
+                this.emitShenxingResult(playerId, deps, {
+                    requestId,
+                    status: 'rejected',
+                    code: 'destination_unavailable',
+                    targetMapId: destination.mapId,
+                });
+                return;
+            }
+            const sourcePlacement = {
+                templateId: source.template.id,
+                instanceId: source.meta.instanceId,
+                x: Math.trunc(Number(player.x) || 0),
+                y: Math.trunc(Number(player.y) || 0),
+                facing: Math.trunc(Number(player.facing) || 0),
+            };
+            const nextInventoryItems = buildInventoryAfterConsume(player.inventory?.items, itemInstanceId, 1);
+            const cooldownBuff = this.playerRuntimeService.buildConsumableCooldownBuffSnapshot(currentItem);
+            if (!cooldownBuff) {
+                this.emitShenxingResult(playerId, deps, {
+                    requestId,
+                    status: 'rejected',
+                    code: 'item_changed',
+                    targetMapId: destination.mapId,
+                });
+                return;
+            }
+            const spawn = typeof target.reserveShenxingSpawnPoint === 'function'
+                ? target.reserveShenxingSpawnPoint(playerId)
+                : null;
+            const sourceHold = typeof source.reserveShenxingSpawnPoint === 'function'
+                ? source.reserveShenxingSpawnPoint(playerId, sourcePlacement.x, sourcePlacement.y)
+                : null;
+            let sourceDetached = false;
+            if (spawn
+                && sourceHold
+                && sourceHold.x === sourcePlacement.x
+                && sourceHold.y === sourcePlacement.y) {
+                try {
+                    sourceDetached = source.disconnectPlayer(playerId) !== false;
+                }
+                catch {
+                    sourceDetached = false;
+                }
+            }
+            if (!spawn
+                || !sourceHold
+                || sourceHold.x !== sourcePlacement.x
+                || sourceHold.y !== sourcePlacement.y
+                || !sourceDetached) {
+                target.releaseShenxingSpawnPoint?.(playerId);
+                source.releaseShenxingSpawnPoint?.(playerId);
+                this.emitShenxingResult(playerId, deps, {
+                    requestId,
+                    status: 'rejected',
+                    code: 'placement_unavailable',
+                    targetMapId: destination.mapId,
+                });
+                return;
+            }
+            deps.worldRuntimeNavigationService?.clearNavigationIntent?.(playerId);
+            deps.clearPendingCommand?.(playerId);
+            let committed = false;
+            try {
+                const committedInventoryItems = await this.commitPersistentPlayerItemUse({
+                    operationId: buildShenxingOperationId(playerId, requestId),
+                    playerId,
+                    itemInstanceId,
+                    item: currentItem,
+                    nextInventoryItems,
+                    durable,
+                    sourceType: 'item_shenxing_travel',
+                    sourceMutation: {
+                        kind: 'player_item_use',
+                        action: 'shenxing_travel',
+                        playerId,
+                        expectedPlacement: sourcePlacement,
+                        nextPlacement: {
+                            templateId: destination.mapId,
+                            instanceId: target.meta.instanceId,
+                            x: spawn.x,
+                            y: spawn.y,
+                            facing: sourcePlacement.facing,
+                        },
+                        cooldownBuff,
+                    },
+                });
+                committed = true;
+                this.playerRuntimeService.replaceInventoryItems(playerId, committedInventoryItems);
+                this.playerRuntimeService.markConsumableItemCooldown(playerId, currentItem);
+                const applied = deps.worldRuntimeTransferService.applyTransfer({
+                    playerId,
+                    sessionId: location.sessionId ?? player.sessionId,
+                    fromInstanceId: source.meta.instanceId,
+                    targetInstanceId: target.meta.instanceId,
+                    targetMapId: destination.mapId,
+                    targetX: spawn.x,
+                    targetY: spawn.y,
+                    reason: 'shenxing',
+                }, deps);
+                if (!applied?.ok) {
+                    throw new Error(`shenxing_transfer_rejected:${applied?.reason ?? 'unknown'}`);
+                }
+                if (!await this.syncCurrentPlayerPresence(playerId)) {
+                    throw new Error('shenxing_target_presence_sync_failed');
+                }
+            }
+            catch (error) {
+                let sourceRestored = false;
+                if (!committed && !isDurableCommitOutcomeUnknownError(error)) {
+                    try {
+                        const restoredPlayer = source.connectPlayer({
+                            playerId,
+                            sessionId: location.sessionId ?? player.sessionId,
+                            preferredX: sourcePlacement.x,
+                            preferredY: sourcePlacement.y,
+                        });
+                        if (restoredPlayer) {
+                            restoredPlayer.facing = sourcePlacement.facing;
+                        }
+                        source.setPlayerMoveSpeed?.(playerId, player.attrs?.numericStats?.moveSpeed ?? 0);
+                        deps.worldRuntimeNavigationService?.clearNavigationIntent?.(playerId);
+                        deps.clearPendingCommand?.(playerId);
+                        sourceRestored = true;
+                    }
+                    catch {
+                        sourceRestored = false;
+                    }
+                }
+                this.emitShenxingResult(playerId, deps, {
+                    requestId,
+                    status: 'rejected',
+                    code: committed || (!sourceRestored && !isDurableCommitOutcomeUnknownError(error))
+                        ? 'transfer_failed'
+                        : isDurableCommitOutcomeUnknownError(error)
+                          ? 'asset_commit_unavailable'
+                          : 'asset_commit_failed',
+                    targetMapId: destination.mapId,
+                });
+                if (committed || isDurableCommitOutcomeUnknownError(error) || !sourceRestored) {
+                    this.failClosedShenxingSession(playerId, deps);
+                }
+                return;
+            }
+            finally {
+                target.releaseShenxingSpawnPoint(playerId);
+                source.releaseShenxingSpawnPoint(playerId);
+            }
+            if (committed) {
+                deps.refreshQuestStates?.(playerId);
+                this.emitShenxingResult(playerId, deps, {
+                    requestId,
+                    status: 'success',
+                    code: 'travel_succeeded',
+                    targetMapId: destination.mapId,
+                    targetMapName: destination.name,
+                    cooldownTicks: tier.cooldownTicks,
+                });
+            }
+        });
+    }
+
+    failClosedShenxingSession(playerId: string, deps: any): void {
+        if (typeof deps?.worldRuntimePlayerSessionService?.removePlayer === 'function') {
+            deps.worldRuntimePlayerSessionService.removePlayer(playerId, 'shenxing_durable_recovery', deps);
+            return;
+        }
+        deps?.worldSessionService?.purgePlayerSession?.(playerId, 'shenxing_durable_recovery');
+        deps?.playerRuntimeService?.removePlayerRuntime?.(playerId);
+    }
+
     resolveLearnTechniqueId(item) {
         const explicit = typeof item?.learnTechniqueId === 'string' && item.learnTechniqueId.trim()
             ? item.learnTechniqueId.trim()
@@ -641,7 +1123,8 @@ export class WorldRuntimeUseItemService {
             throw new ServiceUnavailableException('玩家資產事務圍欄暫不可用，請稍後重試');
         }
         const durableInput = {
-            operationId: `${input.sourceType}:${input.playerId}:${randomUUID()}`,
+            operationId: normalizeOptionalStringSafe(input.operationId)
+                ?? `${input.sourceType}:${input.playerId}:${randomUUID()}`,
             playerId: input.playerId,
             expectedRuntimeOwnerId: fence.runtimeOwnerId,
             expectedSessionEpoch: Math.max(1, Math.trunc(Number(fence.sessionEpoch))),
@@ -1015,6 +1498,33 @@ export class WorldRuntimeUseItemService {
         return [];
     }
 };
+
+function normalizeShenxingRequestId(value: unknown): string {
+    if (typeof value !== 'string') return '';
+    const normalized = value.trim();
+    return /^[A-Za-z0-9][A-Za-z0-9._:-]{7,95}$/.test(normalized) ? normalized : '';
+}
+
+function buildShenxingOperationId(playerId: string, requestId: string): string {
+    const digest = createHash('sha256')
+        .update(String(playerId))
+        .update('\u0000')
+        .update(requestId)
+        .digest('hex');
+    return `item-shenxing:${digest}`;
+}
+
+function normalizeRecordPayload(value: unknown): Record<string, any> | null {
+    if (value && typeof value === 'object' && !Array.isArray(value)) return value;
+    if (typeof value !== 'string' || !value.trim()) return null;
+    try {
+        const parsed = JSON.parse(value);
+        return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : null;
+    }
+    catch {
+        return null;
+    }
+}
 
 function normalizeUseItemCount(input, item) {
     const count = input === undefined || input === null

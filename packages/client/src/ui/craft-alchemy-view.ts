@@ -38,9 +38,15 @@ import { getTechniqueGradeLabel } from '../domain-labels';
 import { confirmModalHost } from './confirm-modal-host';
 import { t } from './i18n';
 import { bindInlineItemTooltips, renderInlineItemChip } from './item-inline-tooltip';
+import {
+  getCraftRealmTab,
+  getVisibleCraftRealmTabs,
+  normalizeCraftRealmTab,
+  type CraftRealmTab,
+} from './craft-realm-tabs';
 
 type AlchemyTab = 'full' | 'simple';
-type AlchemyRealmTab = 'mortal' | 'qi' | 'foundation';
+type AlchemyRealmTab = CraftRealmTab;
 
 const UNKNOWN_ITEM_NAME = '未知物品';
 
@@ -142,24 +148,6 @@ function resolveInterruptTotalTicks(job: NonNullable<NonNullable<S2C_AlchemyPane
   return Math.max(remaining, Math.floor(Number(job.interruptState?.waitTotalTicks ?? 10) || 10));
 }
 
-function getAlchemyRealmTab(level: number): AlchemyRealmTab {
-  const normalizedLevel = Math.max(1, Math.floor(Number(level) || 1));
-  if (normalizedLevel >= 31) {
-    return 'foundation';
-  }
-  if (normalizedLevel >= 19) {
-    return 'qi';
-  }
-  return 'mortal';
-}
-
-function normalizeAlchemyRealm(value: string | undefined): AlchemyRealmTab {
-  if (value === 'qi' || value === 'foundation') {
-    return value;
-  }
-  return 'mortal';
-}
-
 function normalizeAlchemyCategory(value: string | undefined): AlchemyRecipeCategory {
   if (
     value === 'artifact'
@@ -245,7 +233,7 @@ export class CraftAlchemyView {
   private getVisibleAlchemyRecipes(): AlchemyRecipeCatalogEntry[] {
     return this.parent.alchemyCatalog.filter((entry) => (
       entry.category === this.parent.activeAlchemyCategory
-      && getAlchemyRealmTab(entry.outputLevel) === this.parent.activeAlchemyRealm
+      && getCraftRealmTab(entry.outputLevel) === this.parent.activeAlchemyRealm
     ));
   }
 
@@ -254,7 +242,7 @@ export class CraftAlchemyView {
     if (!recipe) {
       return null;
     }
-    return recipe.category === this.parent.activeAlchemyCategory && getAlchemyRealmTab(recipe.outputLevel) === this.parent.activeAlchemyRealm
+    return recipe.category === this.parent.activeAlchemyCategory && getCraftRealmTab(recipe.outputLevel) === this.parent.activeAlchemyRealm
       ? recipe
       : null;
   }
@@ -777,7 +765,7 @@ export class CraftAlchemyView {
     return categories.map((tab) => {
       const count = this.parent.alchemyCatalog.filter((entry) => (
         entry.category === tab.category
-        && getAlchemyRealmTab(entry.outputLevel) === this.parent.activeAlchemyRealm
+        && getCraftRealmTab(entry.outputLevel) === this.parent.activeAlchemyRealm
       )).length;
       return `
         <button class="alchemy-category-btn ${this.parent.activeAlchemyCategory === tab.category ? 'active' : ''}" type="button" data-craft-action="alchemy-switch-category" data-category="${tab.category}" data-guided-tour-alchemy-category="${tab.category}">
@@ -789,13 +777,9 @@ export class CraftAlchemyView {
   }
 
   renderAlchemyRealmTabs(): string {
-    const realms: Array<{ realm: AlchemyRealmTab; label: string }> = [
-      { realm: 'mortal', label: t('craft.workbench.alchemy.realm.mortal') },
-      { realm: 'qi', label: t('craft.workbench.alchemy.realm.qi') },
-      { realm: 'foundation', label: t('craft.workbench.alchemy.realm.foundation') },
-    ];
+    const realms = getVisibleCraftRealmTabs(this.parent.alchemyCatalog);
     return realms.map((tab) => {
-      const count = this.parent.alchemyCatalog.filter((entry) => getAlchemyRealmTab(entry.outputLevel) === tab.realm).length;
+      const count = this.parent.alchemyCatalog.filter((entry) => getCraftRealmTab(entry.outputLevel) === tab.realm).length;
       return `
         <button class="alchemy-category-btn ${this.parent.activeAlchemyRealm === tab.realm ? 'active' : ''}" type="button" data-craft-action="alchemy-switch-realm" data-realm="${tab.realm}" data-guided-tour-alchemy-realm="${tab.realm}">
           ${escapeHtml(tab.label)}
@@ -1679,7 +1663,7 @@ export class CraftAlchemyView {
   }
 
   handleAlchemySwitchRealm(realm: string): void {
-    this.parent.activeAlchemyRealm = normalizeAlchemyRealm(realm);
+    this.parent.activeAlchemyRealm = normalizeCraftRealmTab(realm);
     const firstRecipe = this.getVisibleAlchemyRecipes()[0] ?? null;
     this.parent.selectedAlchemyRecipeId = firstRecipe?.recipeId ?? null;
     this.parent.selectedAlchemyPresetId = null;

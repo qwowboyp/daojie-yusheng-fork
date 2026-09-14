@@ -5,6 +5,7 @@
 import { syncEstimatedServerTick } from './runtime/server-tick';
 import { resolvePreviewTechniques } from './content/local-templates';
 import { FloatingTooltip } from './ui/floating-tooltip';
+import { createItemSourceNavigationHandler, setItemSourceNavigationHandler } from './ui/item-source-navigation';
 import { refreshHeavenGateModal } from './ui/heaven-gate-modal';
 import { getDisplayRangeX, getDisplayRangeY } from './display';
 import { reactUiBridge } from './react-ui/bridge/react-ui-bridge';
@@ -105,12 +106,6 @@ export function createMainRuntimeOwnerContext(options: CreateMainRuntimeOwnerCon
   let targetingStateSource!: ReturnType<typeof createMainTargetingStateSource>;
   let panelDeltaStateSource!: ReturnType<typeof createMainPanelDeltaStateSource>;
   let resetStateSource!: ReturnType<typeof createMainResetStateSource>;  
-  /**
- * getInfoRadius：读取InfoRadiu。
- * @returns 无返回值，完成InfoRadiu的读取/组装。
- */
-
-
   function getInfoRadius() {
     return panelContext.uiStateSource.getInfoRadius(runtimeMonitorSource.getCurrentTimeState());
   }
@@ -204,6 +199,11 @@ export function createMainRuntimeOwnerContext(options: CreateMainRuntimeOwnerCon
     openNpcQuestPending: (npcId) => npcQuestModal.openPending(npcId),
     showToast: helpers.showToast,
   });
+  setItemSourceNavigationHandler(createItemSourceNavigationHandler({
+    isReady: () => socket.connected && Boolean(rootRuntimeSource.getPlayer()),
+    planPathTo: (target, config) => navigationStateSource.planPathTo(target, config),
+    navigateToQuest: (questId) => panelContext.questStateSource.navigateToQuest(questId),
+  }));
   const senseQiTooltip = new FloatingTooltip();
   targetingStateSource = createMainTargetingStateSource({
     getPlayer: () => rootRuntimeSource.getPlayer(),

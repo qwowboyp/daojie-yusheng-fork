@@ -13,6 +13,7 @@ async function main(): Promise<void> {
   await assertAllRoleStartupOrder();
   await assertWorkerRoleStartsFlushConsumer();
   await assertStartupFailureDrainsBeforeNestDestroy();
+  await assertSchedulerFinalSnapshotFollowsRuntimeDrain();
   assertBootstrapEntryHandlesRejectedStartup();
   console.log('[startup-lifecycle-coordinator-smoke] ok');
 }
@@ -71,6 +72,71 @@ async function assertStartupFailureDrainsBeforeNestDestroy(): Promise<void> {
   } finally {
     restoreEnv('SERVER_RUNTIME_ROLE', previousRole);
   }
+}
+
+async function assertSchedulerFinalSnapshotFollowsRuntimeDrain(): Promise<void> {
+  const status = new StartupStatusService();
+  const barrier = new StartupBarrierService();
+  const order: string[] = [];
+  const scheduler = {
+    refreshBarrierSnapshot() {},
+    stop() {
+      order.push('scheduler-stop');
+    },
+    async drainForShutdown() {
+      order.push('scheduler-final-snapshot');
+    },
+  };
+  const coordinator = new ServerLifecycleCoordinatorService(
+    status,
+    barrier,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    {
+      async drain() {
+        order.push('world-drain');
+        return {};
+      },
+    } as never,
+    scheduler as never,
+  );
+  await coordinator.drain('scheduler_order_test');
+  assert.deepEqual(order, ['scheduler-stop', 'world-drain', 'scheduler-final-snapshot']);
+
+  const failureOrder: string[] = [];
+  const failingCoordinator = new ServerLifecycleCoordinatorService(
+    new StartupStatusService(),
+    new StartupBarrierService(),
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    {
+      async drain() {
+        failureOrder.push('world-drain-failed');
+        throw new Error('world_drain_failed');
+      },
+    } as never,
+    {
+      refreshBarrierSnapshot() {},
+      stop() {
+        failureOrder.push('scheduler-stop');
+      },
+      async drainForShutdown() {
+        failureOrder.push('scheduler-final-snapshot');
+      },
+    } as never,
+  );
+  await assert.rejects(() => failingCoordinator.drain('scheduler_failure_order_test'), /world_drain_failed/);
+  assert.deepEqual(failureOrder, ['scheduler-stop', 'world-drain-failed', 'scheduler-final-snapshot']);
 }
 
 async function assertAllRoleStartupOrder(): Promise<void> {

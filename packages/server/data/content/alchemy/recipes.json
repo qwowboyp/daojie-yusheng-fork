@@ -1820,5 +1820,1909 @@
       "water": 126,
       "wood": 68
     }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.foundation.martial_edge",
+    "outputItemId": "pill.realm.foundation.martial_edge",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 31,
+    "grade": "mystic",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 63,
+      "earth": 34
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.foundation.arcane_surge",
+    "outputItemId": "pill.realm.foundation.arcane_surge",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 31,
+    "grade": "mystic",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 63,
+      "earth": 34
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.foundation.iron_guard",
+    "outputItemId": "pill.realm.foundation.iron_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 35,
+    "grade": "mystic",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 63,
+      "earth": 34
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.foundation.veil_guard",
+    "outputItemId": "pill.realm.foundation.veil_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 35,
+    "grade": "mystic",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 63,
+      "earth": 34
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.foundation.hawk_eye",
+    "outputItemId": "pill.realm.foundation.hawk_eye",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 39,
+    "grade": "mystic",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 63,
+      "earth": 34
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.foundation.mist_step",
+    "outputItemId": "pill.realm.foundation.mist_step",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 39,
+    "grade": "mystic",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 63,
+      "earth": 34
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.foundation.swiftwind",
+    "outputItemId": "pill.realm.foundation.swiftwind",
+    "outputCount": 1,
+    "baseBrewTicks": 48,
+    "level": 31,
+    "grade": "mystic",
+    "category": "special",
+    "ingredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.qinglin_jade_sand",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.qinglin_copper_ore",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "water": 63,
+      "earth": 34
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.golden_core.martial_edge",
+    "outputItemId": "pill.realm.golden_core.martial_edge",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 43,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 225
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.golden_core.arcane_surge",
+    "outputItemId": "pill.realm.golden_core.arcane_surge",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 43,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 225
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.golden_core.iron_guard",
+    "outputItemId": "pill.realm.golden_core.iron_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 47,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 225
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.golden_core.veil_guard",
+    "outputItemId": "pill.realm.golden_core.veil_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 47,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 225
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.golden_core.hawk_eye",
+    "outputItemId": "pill.realm.golden_core.hawk_eye",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 51,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 225
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.golden_core.mist_step",
+    "outputItemId": "pill.realm.golden_core.mist_step",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 51,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 225
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.golden_core.swiftwind",
+    "outputItemId": "pill.realm.golden_core.swiftwind",
+    "outputCount": 1,
+    "baseBrewTicks": 60,
+    "level": 43,
+    "grade": "heaven",
+    "category": "special",
+    "ingredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_golden_core_hanging_lamps_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "fire": 225
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.nascent_soul.martial_edge",
+    "outputItemId": "pill.realm.nascent_soul.martial_edge",
+    "outputCount": 1,
+    "baseBrewTicks": 72,
+    "level": 55,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 186
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.nascent_soul.arcane_surge",
+    "outputItemId": "pill.realm.nascent_soul.arcane_surge",
+    "outputCount": 1,
+    "baseBrewTicks": 72,
+    "level": 55,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 186
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.nascent_soul.iron_guard",
+    "outputItemId": "pill.realm.nascent_soul.iron_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 72,
+    "level": 59,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 186
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.nascent_soul.veil_guard",
+    "outputItemId": "pill.realm.nascent_soul.veil_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 72,
+    "level": 59,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 186
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.nascent_soul.hawk_eye",
+    "outputItemId": "pill.realm.nascent_soul.hawk_eye",
+    "outputCount": 1,
+    "baseBrewTicks": 72,
+    "level": 63,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 186
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.nascent_soul.mist_step",
+    "outputItemId": "pill.realm.nascent_soul.mist_step",
+    "outputCount": 1,
+    "baseBrewTicks": 72,
+    "level": 63,
+    "grade": "heaven",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 186
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.nascent_soul.swiftwind",
+    "outputItemId": "pill.realm.nascent_soul.swiftwind",
+    "outputCount": 1,
+    "baseBrewTicks": 72,
+    "level": 55,
+    "grade": "heaven",
+    "category": "special",
+    "ingredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_nascent_soul_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "wood": 186
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.spirit_transformation.martial_edge",
+    "outputItemId": "pill.realm.spirit_transformation.martial_edge",
+    "outputCount": 1,
+    "baseBrewTicks": 84,
+    "level": 67,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 408
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.spirit_transformation.arcane_surge",
+    "outputItemId": "pill.realm.spirit_transformation.arcane_surge",
+    "outputCount": 1,
+    "baseBrewTicks": 84,
+    "level": 67,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 408
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.spirit_transformation.iron_guard",
+    "outputItemId": "pill.realm.spirit_transformation.iron_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 84,
+    "level": 71,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 408
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.spirit_transformation.veil_guard",
+    "outputItemId": "pill.realm.spirit_transformation.veil_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 84,
+    "level": 71,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 408
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.spirit_transformation.hawk_eye",
+    "outputItemId": "pill.realm.spirit_transformation.hawk_eye",
+    "outputCount": 1,
+    "baseBrewTicks": 84,
+    "level": 75,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 408
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.spirit_transformation.mist_step",
+    "outputItemId": "pill.realm.spirit_transformation.mist_step",
+    "outputCount": 1,
+    "baseBrewTicks": 84,
+    "level": 75,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 408
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.spirit_transformation.swiftwind",
+    "outputItemId": "pill.realm.spirit_transformation.swiftwind",
+    "outputCount": 1,
+    "baseBrewTicks": 84,
+    "level": 67,
+    "grade": "spirit",
+    "category": "special",
+    "ingredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_spirit_transformation_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 408
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.void_refinement.martial_edge",
+    "outputItemId": "pill.realm.void_refinement.martial_edge",
+    "outputCount": 1,
+    "baseBrewTicks": 96,
+    "level": 79,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "earth": 478
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.void_refinement.arcane_surge",
+    "outputItemId": "pill.realm.void_refinement.arcane_surge",
+    "outputCount": 1,
+    "baseBrewTicks": 96,
+    "level": 79,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "earth": 478
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.void_refinement.iron_guard",
+    "outputItemId": "pill.realm.void_refinement.iron_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 96,
+    "level": 83,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "earth": 478
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.void_refinement.veil_guard",
+    "outputItemId": "pill.realm.void_refinement.veil_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 96,
+    "level": 83,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "earth": 478
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.void_refinement.hawk_eye",
+    "outputItemId": "pill.realm.void_refinement.hawk_eye",
+    "outputCount": 1,
+    "baseBrewTicks": 96,
+    "level": 87,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "earth": 478
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.void_refinement.mist_step",
+    "outputItemId": "pill.realm.void_refinement.mist_step",
+    "outputCount": 1,
+    "baseBrewTicks": 96,
+    "level": 87,
+    "grade": "spirit",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "earth": 478
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.void_refinement.swiftwind",
+    "outputItemId": "pill.realm.void_refinement.swiftwind",
+    "outputCount": 1,
+    "baseBrewTicks": 96,
+    "level": 79,
+    "grade": "spirit",
+    "category": "special",
+    "ingredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_void_refinement_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "earth": 478
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.body_integration.martial_edge",
+    "outputItemId": "pill.realm.body_integration.martial_edge",
+    "outputCount": 1,
+    "baseBrewTicks": 108,
+    "level": 91,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.body_integration.arcane_surge",
+    "outputItemId": "pill.realm.body_integration.arcane_surge",
+    "outputCount": 1,
+    "baseBrewTicks": 108,
+    "level": 91,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.body_integration.iron_guard",
+    "outputItemId": "pill.realm.body_integration.iron_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 108,
+    "level": 95,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.body_integration.veil_guard",
+    "outputItemId": "pill.realm.body_integration.veil_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 108,
+    "level": 95,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.body_integration.hawk_eye",
+    "outputItemId": "pill.realm.body_integration.hawk_eye",
+    "outputCount": 1,
+    "baseBrewTicks": 108,
+    "level": 99,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.body_integration.mist_step",
+    "outputItemId": "pill.realm.body_integration.mist_step",
+    "outputCount": 1,
+    "baseBrewTicks": 108,
+    "level": 99,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.body_integration.swiftwind",
+    "outputItemId": "pill.realm.body_integration.swiftwind",
+    "outputCount": 1,
+    "baseBrewTicks": 108,
+    "level": 91,
+    "grade": "saint",
+    "category": "special",
+    "ingredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_2",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_body_integration_m1_entry_resource_1",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.great_vehicle.martial_edge",
+    "outputItemId": "pill.realm.great_vehicle.martial_edge",
+    "outputCount": 1,
+    "baseBrewTicks": 120,
+    "level": 103,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 834
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.great_vehicle.arcane_surge",
+    "outputItemId": "pill.realm.great_vehicle.arcane_surge",
+    "outputCount": 1,
+    "baseBrewTicks": 120,
+    "level": 103,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 834
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.great_vehicle.iron_guard",
+    "outputItemId": "pill.realm.great_vehicle.iron_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 120,
+    "level": 107,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 834
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.great_vehicle.veil_guard",
+    "outputItemId": "pill.realm.great_vehicle.veil_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 120,
+    "level": 107,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 834
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.great_vehicle.hawk_eye",
+    "outputItemId": "pill.realm.great_vehicle.hawk_eye",
+    "outputCount": 1,
+    "baseBrewTicks": 120,
+    "level": 111,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 834
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.great_vehicle.mist_step",
+    "outputItemId": "pill.realm.great_vehicle.mist_step",
+    "outputCount": 1,
+    "baseBrewTicks": 120,
+    "level": 111,
+    "grade": "saint",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 834
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.great_vehicle.swiftwind",
+    "outputItemId": "pill.realm.great_vehicle.swiftwind",
+    "outputCount": 1,
+    "baseBrewTicks": 120,
+    "level": 103,
+    "grade": "saint",
+    "category": "special",
+    "ingredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_3",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_great_vehicle_m1_entry_resource_2",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 834
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.tribulation.martial_edge",
+    "outputItemId": "pill.realm.tribulation.martial_edge",
+    "outputCount": 1,
+    "baseBrewTicks": 132,
+    "level": 115,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1254
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.tribulation.arcane_surge",
+    "outputItemId": "pill.realm.tribulation.arcane_surge",
+    "outputCount": 1,
+    "baseBrewTicks": 132,
+    "level": 115,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1254
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.tribulation.iron_guard",
+    "outputItemId": "pill.realm.tribulation.iron_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 132,
+    "level": 119,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1254
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.tribulation.veil_guard",
+    "outputItemId": "pill.realm.tribulation.veil_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 132,
+    "level": 119,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1254
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.tribulation.hawk_eye",
+    "outputItemId": "pill.realm.tribulation.hawk_eye",
+    "outputCount": 1,
+    "baseBrewTicks": 132,
+    "level": 123,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1254
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.tribulation.mist_step",
+    "outputItemId": "pill.realm.tribulation.mist_step",
+    "outputCount": 1,
+    "baseBrewTicks": 132,
+    "level": 123,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1254
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.tribulation.swiftwind",
+    "outputItemId": "pill.realm.tribulation.swiftwind",
+    "outputCount": 1,
+    "baseBrewTicks": 132,
+    "level": 115,
+    "grade": "emperor",
+    "category": "special",
+    "ingredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_4",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "lg_tribulation_m1_entry_resource_3",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 1254
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.ascension.martial_edge",
+    "outputItemId": "pill.realm.ascension.martial_edge",
+    "outputCount": 1,
+    "baseBrewTicks": 144,
+    "level": 127,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.ascension_starfold_crystal",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 920,
+      "fire": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.ascension.arcane_surge",
+    "outputItemId": "pill.realm.ascension.arcane_surge",
+    "outputCount": 1,
+    "baseBrewTicks": 144,
+    "level": 127,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.ascension_starfold_crystal",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 920,
+      "fire": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.ascension.iron_guard",
+    "outputItemId": "pill.realm.ascension.iron_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 144,
+    "level": 127,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.ascension_starfold_crystal",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 920,
+      "fire": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.ascension.veil_guard",
+    "outputItemId": "pill.realm.ascension.veil_guard",
+    "outputCount": 1,
+    "baseBrewTicks": 144,
+    "level": 127,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.ascension_starfold_crystal",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 920,
+      "fire": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.ascension.hawk_eye",
+    "outputItemId": "pill.realm.ascension.hawk_eye",
+    "outputCount": 1,
+    "baseBrewTicks": 144,
+    "level": 127,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.ascension_starfold_crystal",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 920,
+      "fire": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.ascension.mist_step",
+    "outputItemId": "pill.realm.ascension.mist_step",
+    "outputCount": 1,
+    "baseBrewTicks": 144,
+    "level": 127,
+    "grade": "emperor",
+    "category": "buff",
+    "ingredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.ascension_starfold_crystal",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 920,
+      "fire": 740
+    }
+  },
+  {
+    "recipeId": "alchemy.pill.realm.ascension.swiftwind",
+    "outputItemId": "pill.realm.ascension.swiftwind",
+    "outputCount": 1,
+    "baseBrewTicks": 144,
+    "level": 127,
+    "grade": "emperor",
+    "category": "special",
+    "ingredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2,
+        "role": "main"
+      },
+      {
+        "itemId": "mat.ascension_starfold_crystal",
+        "count": 1,
+        "role": "aux"
+      }
+    ],
+    "mainIngredients": [
+      {
+        "itemId": "mat.ascension_cloudstep_orchid",
+        "count": 2
+      }
+    ],
+    "requiredAuxElements": {
+      "metal": 920,
+      "fire": 740
+    }
   }
 ]

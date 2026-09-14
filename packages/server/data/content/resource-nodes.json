@@ -2082,6 +2082,52 @@
           }
         ]
       }
+    },
+    {
+      "id": "landmark.herb.ascension_cloudstep_orchid",
+      "kind": "landmark_container",
+      "name": "雲階蘭",
+      "sourceLabel": "雲階蘭叢",
+      "container": {
+        "variant": "herb",
+        "grade": "emperor",
+        "refreshTicksMin": 180,
+        "refreshTicksMax": 260,
+        "char": "草",
+        "color": "#c9e9dc",
+        "drops": [
+          {
+            "itemId": "mat.ascension_cloudstep_orchid",
+            "name": "雲階蘭",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "landmark.ore.ascension_starfold_crystal",
+      "kind": "landmark_container",
+      "name": "摺星晶",
+      "sourceLabel": "摺星晶脈",
+      "container": {
+        "variant": "ore",
+        "grade": "emperor",
+        "refreshTicksMin": 220,
+        "refreshTicksMax": 300,
+        "char": "礦",
+        "color": "#b9b5e7",
+        "drops": [
+          {
+            "itemId": "mat.ascension_starfold_crystal",
+            "name": "摺星晶",
+            "type": "material",
+            "count": 1,
+            "chance": 1
+          }
+        ]
+      }
     }
   ]
 }
