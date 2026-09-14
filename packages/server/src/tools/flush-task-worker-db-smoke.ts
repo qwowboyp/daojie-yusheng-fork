@@ -15,6 +15,7 @@ import { FlushLedgerService } from '../persistence/flush-ledger.service';
 import { InstanceDomainPersistenceService } from '../persistence/instance-domain-persistence.service';
 import { PlayerDomainPersistenceService } from '../persistence/player-domain-persistence.service';
 import { WorldRuntimeService } from '../runtime/world/world-runtime.service';
+import { BackgroundWorkerRuntimeService } from '../runtime/worker/background-worker-runtime.service';
 
 async function main(): Promise<void> {
   const databaseUrl = resolveServerDatabaseUrl();
@@ -49,6 +50,8 @@ async function main(): Promise<void> {
   const allPlayerIds = [playerId, retryPlayerId, groupedPlayerId, ...lockOrderPlayerIds];
 
   try {
+    // 手動驗證 ledger 認領前，先等啟動時的背景 consumer 完成並停止，避免搶走測試工作。
+    await app.get(BackgroundWorkerRuntimeService).drainForShutdown();
     assert.equal(ledger.isEnabled(), true, 'flush ledger should be enabled');
     assert.equal(playerPresencePersistence.isEnabled(), true, 'player domain persistence should be enabled');
     assert.equal(instancePersistence.isEnabled(), true, 'instance domain persistence should be enabled');
