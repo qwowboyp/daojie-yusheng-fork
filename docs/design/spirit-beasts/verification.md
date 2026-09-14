@@ -15,19 +15,19 @@
 
 靈獸不加入碰撞實體；玩家與其他靈獸可以穿越。地圖插值只影響顯示，世界仍由服務端每息推進。
 
-## 完整門禁的既有阻礙
+## 首次驗證記錄與發布修正
 
-完整 server with-db 套件共有 174 個案例。修正本機 PostgreSQL/Git 工具的 PATH 後，GM 備份還原單獨重跑通過；合計 173 項通過，剩下既有 `redeem-code` 案例因簡繁文案不一致而逾時：
+`fac19d245` 首次本機驗證的完整 server with-db 套件共有 174 個案例。修正本機 PostgreSQL/Git 工具的 PATH 後，GM 備份還原單獨重跑通過；當時合計 173 項通過，`redeem-code` 案例因簡繁文案不一致而逾時：
 
-- [測試期待簡體文案](../../../packages/server/src/tools/redeem-code-smoke.ts#L239)：`兑换码无效或已过期`。
+- [兌換碼測試](../../../packages/server/src/tools/redeem-code-smoke.ts#L239) 原先期待簡體文案：`兑换码无效或已过期`。
 - [服務實際回傳繁體文案](../../../packages/server/src/runtime/redeem/redeem-code-runtime.service.ts#L359)：`兌換碼無效或已過期`。
 
-這兩個來源均未由本次任務修改；依專案規範保留其他範圍的失敗 proof。因此不將完整 with-db 或完整發布門禁標記為通過。另行執行的 GM 備份還原、刷盤及 protocol with-db 均有獨立通過紀錄。
+首次功能提交保留了這個既有失敗，未將完整 with-db 或完整發布門禁標記為通過。使用者後續授權正式發布後，已將該測試的預期文案精準對齊現行繁體回應，保留原有失敗回應、請求身份與獎勵不重發斷言。發布仍須重新通過正式門禁；不能以首次本機證據代替發布收據。
 
 ## 可重複執行
 
 入口與本機 DB 準備方式見 [系統文件](README.md#美術及驗證)。完整日誌、結果 JSON、編譯指紋及程序紀錄位於 `.runtime/reports/spirit-beasts-verification/`；瀏覽器畫面位於 `.runtime/reports/spirit-beast-client-browser/` 與 `.runtime/reports/spirit-beast-map-browser/`。
 
-本次沒有執行生產部署、shadow/full 環境驗收、實體 iPhone/Safari 測試或 5,000 人負載測試。
+首次本機驗證沒有執行生產部署、shadow/full 環境驗收、實體 iPhone/Safari 測試或 5,000 人負載測試；後續正式發布以對應發布收據為準。
 
 本機測試 PostgreSQL 已透過 `pg_ctl` 停止，確認沒有殘留的 fixture 程序。自動審核以策略限制拒絕刪除 `.runtime/builds/spirit-beast-test-db/` 及 `.runtime/reports/spirit-beasts-design-20260914/db-fixture.env`；保留這些未入 Git 的暫存與原有環境檔 ACL，沒有改用其他方式刪除。
