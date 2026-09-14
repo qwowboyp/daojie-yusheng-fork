@@ -421,7 +421,7 @@ const dismissGuidedTourExpression = String.raw`
 `;
 
 async function setViewport(cdp, viewport, { touch = true } = {}) {
-  await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: touch, maxTouchPoints: 5});
+  await cdp.setTouchEmulationEnabled(touch);
   await cdp.send('Emulation.setDeviceMetricsOverride', {
     width: viewport.width, height: viewport.height, deviceScaleFactor: 1, mobile: false,
     screenWidth: viewport.width, screenHeight: viewport.height,
@@ -1283,31 +1283,20 @@ async function verifyWorkspaceOutsideDismiss(cdp, viewport, touch) {
   }
 }
 
-await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-proof-' }, async (cdp) => {
-  // 舊 active tab 不得在啟動時自動打開按需工作窗。
+async function initializeWorkspaceProofContext(cdp) {
   await cdp.evaluate(`(async () => {
     localStorage.setItem('mud:side-panel-state:v1', JSON.stringify({ version: 1, activeTabs: { 'side-primary': 'inventory' } }));
-    // 操作驗證使用已看過引導的使用者偏好，避免延遲出現的教學接管手勢。
     const { GUIDED_TOUR_FLOWS } = await import('/src/constants/ui/guided-tour.ts');
     localStorage.setItem('mud:guided-tour:v1', JSON.stringify({ completed: {}, dismissed: Object.fromEntries(GUIDED_TOUR_FLOWS.map(flow => [flow.id, flow.storageVersion])) }));
     location.reload(); return true;
   })()`);
   await waitFor(() => cdp.evaluate(`document.readyState === 'complete' && document.getElementById('game-shell')?.dataset.workspaceMode === 'true'`), '工作窗控制器初始化');
   const initial = await cdp.evaluate(measureShellExpression);
-  assert.equal(initial.mode, 'true', '主舞台未啟用 workspace mode');
-  assert.equal(initial.workspaceHidden, true, '舊 active tab 在初始載入時打開了工作窗');
 
-  // 此 proof 不登入或讀取憑證；以登入成功後同一份正式 shell 作畫面 fixture。
-  // SidePanel、dock 與 workspace controller 都是頁面既有實例，沒有建立第二個控制器。
   await cdp.evaluate(`document.getElementById('game-shell')?.classList.remove('hidden'); document.getElementById('login-overlay')?.classList.add('hidden'); document.getElementById('hud')?.classList.remove('hidden'); document.body.dataset.workspaceProofFixture = 'true'; true`);
   await waitFor(() => cdp.evaluate(`document.getElementById('game-dock')?.getClientRects().length`), '登入後主舞台 shell 顯示');
   const shown = await cdp.evaluate(measureShellExpression);
-  assert.equal(shown.dockVisible, true, '主舞台缺少可達的功能入口');
-  assertInsideViewport(shown.dock, shown.viewport, '手機功能入口');
-
   const fixture = await cdp.evaluate(fixtureExpression);
-  // 失敗時帶回頁面端診斷（WebGL renderer 字串、地圖像素、canvas 尺寸），
-  // 便於容器環境定位「地圖未就緒」的真實原因。
   try {
     await waitFor(() => cdp.evaluate(`window.__gameWorkspaceProof.getMapPixels().slice(0,3).some(value=>value>0)`), '正式 Pixi 地圖繪製');
   } catch (waitError) {
@@ -1333,6 +1322,20 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
     })()`);
     throw new Error(`正式 Pixi 地圖繪製未就緒：${JSON.stringify(diagnostics)}`, { cause: waitError });
   }
+  return { initial, shown, fixture };
+}
+
+await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-proof-' }, async (cdp) => {
+  // 舊 active tab 不得在啟動時自動打開按需工作窗。
+  const { initial, shown, fixture } = await initializeWorkspaceProofContext(cdp);
+  assert.equal(initial.mode, 'true', '主舞台未啟用 workspace mode');
+  assert.equal(initial.workspaceHidden, true, '舊 active tab 在初始載入時打開了工作窗');
+
+  // 此 proof 不登入或讀取憑證；以登入成功後同一份正式 shell 作畫面 fixture。
+  // SidePanel、dock 與 workspace controller 都是頁面既有實例，沒有建立第二個控制器。
+  assert.equal(shown.dockVisible, true, '主舞台缺少可達的功能入口');
+  assertInsideViewport(shown.dock, shown.viewport, '手機功能入口');
+
   assert(fixture.inventoryCells > 0, '正式背包 Panel 未載入非空 fixture');
   assert(fixture.actionTabs > 0, '正式行動 Panel 未載入非空 fixture');
   assert.match(fixture.hpText ?? '', /68萬\s*\/\s*100萬/, '正式 HUD 未顯示長數值 fixture 氣血');
@@ -1472,6 +1475,28 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assert.equal(preservedLandscape.value, '赤鐵', '橫向手機切換後背包搜尋文字遺失');
   await captureWorkspace(cdp, 'implemented-landscape.png');
 
+  const touchCdp = cdp;
+  await withClientBrowserProof({
+    viewport: DESKTOP,
+    profilePrefix: 'game-workspace-desktop-proof-',
+    initialTouch: false,
+  }, async (cdp) => {
+    await initializeWorkspaceProofContext(cdp);
+    const desktopMedia = await cdp.evaluate(`({
+      coarse: matchMedia('(pointer: coarse)').matches,
+      hoverNone: matchMedia('(hover: none)').matches,
+      fine: matchMedia('(pointer: fine)').matches,
+      hover: matchMedia('(hover: hover)').matches,
+      maxTouchPoints: navigator.maxTouchPoints,
+    })`);
+    assert.deepEqual(desktopMedia, {
+      coarse: false,
+      hoverNone: false,
+      fine: true,
+      hover: true,
+      maxTouchPoints: 0,
+    }, '桌面 context 未保持原生滑鼠媒體狀態');
+
   await setViewport(cdp, DESKTOP, { touch: false });
   const desktop = await cdp.evaluate(measureShellExpression);
   assertInsideViewport(desktop.dock, desktop.viewport, '桌面功能入口');
@@ -1500,6 +1525,8 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assertInsideViewport(large.time.rect, large.viewport, '大型桌面右上時間');
   await captureWorkspace(cdp, 'implemented-large-desktop.png');
 
+  const initialDesktopWorkspace = await cdp.evaluate(openWorkspaceExpression);
+  assert.equal(initialDesktopWorkspace.hidden, false, '大型桌面工作窗前置開啟失敗');
   const hiddenWorkspace = await cdp.evaluate(closeWorkspaceExpression);
   assert.equal(hiddenWorkspace.hidden, true, '大型桌面工作窗未能先隱藏');
   const reopenedWorkspace = await cdp.evaluate(openWorkspaceExpression);
@@ -1663,6 +1690,8 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   await captureWorkspace(cdp, 'implemented-dark.png');
   await cdp.evaluate(`(async () => { const { updateUiColorMode } = await import('/src/ui/ui-style-config.ts'); updateUiColorMode('light'); await window.__gameWorkspaceProof.nextPaint(); })()`);
 
+  {
+  const cdp = touchCdp;
   await setViewport(cdp, PHONE);
   const mobileInteractionAndQuick = await cdp.evaluate(verifyInteractionAndQuickActionsExpression);
   assert.equal(mobileInteractionAndQuick.disclosure?.expanded, 'true', '手機聊天行動列未能展開');
@@ -1765,6 +1794,7 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assert.equal(nearbyOpen.executed, true, '844x390 touch 附近行動無法執行');
   await clickCenterWithCdp(cdp, '#floating-interaction-list [data-floating-list-collapse="true"]');
   await captureWorkspace(cdp, 'implemented-mobile-nearby-open.png');
+  }
   await setViewport(cdp, LARGE_DESKTOP, { touch: false });
   await waitFor(() => cdp.evaluate(`document.documentElement.dataset.desktopScaleLock === 'true'`), '恢復大型桌面 responsive locked');
 
@@ -1781,15 +1811,16 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   assert.equal(closed.hidden, true, '返回地圖未關閉工作窗');
   assert.equal(closed.focusInsideHidden, false, '返回地圖後焦點仍停在 hidden 工作窗');
   assert.equal(closed.calls.some((entry) => entry.kind === 'cancel'), false, '返回地圖錯誤發出取消活動意圖');
-  await verifyMobileInventoryInteractions(cdp, PHONE_SMALL);
-  await verifyMobileInventoryInteractions(cdp, PHONE_BROWSER_CHROME, 'dark');
-  await verifyMobileInventoryInteractions(cdp, LANDSCAPE);
+  await verifyMobileInventoryInteractions(touchCdp, PHONE_SMALL);
+  await verifyMobileInventoryInteractions(touchCdp, PHONE_BROWSER_CHROME, 'dark');
+  await verifyMobileInventoryInteractions(touchCdp, LANDSCAPE);
   await setViewport(cdp, DESKTOP, { touch: false });
   await setViewport(cdp, SQUARE_DESKTOP, { touch: false });
   const squareCompactness = await cdp.evaluate(measureWorkspaceCompactnessExpression);
   for (const viewport of [SQUARE_DESKTOP, PHONE, { width: 320, height: 667 }]) {
-    await setViewport(cdp, viewport, { touch: viewport.width <= 390 });
-    const questSurface = await cdp.evaluate(`(async () => {
+    const viewportCdp = viewport.width <= 390 ? touchCdp : cdp;
+    await setViewport(viewportCdp, viewport, { touch: viewport.width <= 390 });
+    const questSurface = await viewportCdp.evaluate(`(async () => {
       document.querySelector('#game-dock [data-workspace-open="quests"]').click();
       await window.__gameWorkspaceProof.nextPaint();
       const pane = document.getElementById('pane-quest');
@@ -1802,8 +1833,8 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
     assert(questSurface.visible && /初入道途/.test(questSurface.text), '精簡任務必須顯示任務內容');
     assert.equal(questSurface.overflow, false, '精簡任務不得橫向溢出');
     if (viewport.width <= 390) assert(questSurface.minDockWidth >= 44, '窄手機 dock 命中寬度不足 44px');
-    await captureWorkspace(cdp, `quests-compact-${viewport.width}.png`);
-    await cdp.evaluate(`document.querySelector('.workspace-close').click(); true`);
+    await captureWorkspace(viewportCdp, `quests-compact-${viewport.width}.png`);
+    await viewportCdp.evaluate(`document.querySelector('.workspace-close').click(); true`);
   }
   await setViewport(cdp, SQUARE_DESKTOP, { touch: false });
   assert.equal(squareCompactness.quests.compact, 'true', '任務未套用精簡視窗');
@@ -1826,9 +1857,10 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
     return document.querySelector('.inventory-tooltip.visible')?.textContent ?? '';
   })()`);
   assert.match(desktopHover, /回春散/, '桌面滑鼠道具說明遺失');
-  await verifyWorkspaceOutsideDismiss(cdp, PHONE, true);
-  await verifyWorkspaceOutsideDismiss(cdp, LANDSCAPE, true);
+  await verifyWorkspaceOutsideDismiss(touchCdp, PHONE, true);
+  await verifyWorkspaceOutsideDismiss(touchCdp, LANDSCAPE, true);
   await verifyWorkspaceOutsideDismiss(cdp, DESKTOP, false);
+  });
 });
 
 console.log('game workspace proof: PASS');

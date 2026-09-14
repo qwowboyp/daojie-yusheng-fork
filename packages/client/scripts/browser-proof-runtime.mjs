@@ -69,6 +69,7 @@ class CdpClient {
     this.socket = null;
     this.nextId = 1;
     this.pending = new Map();
+    this.touchEmulationEnabled = false;
   }
 
   async connect() {
@@ -111,6 +112,12 @@ class CdpClient {
     return result.result?.value;
   }
 
+  async setTouchEmulationEnabled(enabled) {
+    if (this.touchEmulationEnabled === enabled) return;
+    await this.send('Emulation.setTouchEmulationEnabled', { enabled, maxTouchPoints: 5 });
+    this.touchEmulationEnabled = enabled;
+  }
+
   close() {
     this.socket?.close();
     this.socket = null;
@@ -144,7 +151,7 @@ async function resolvePageTarget(port) {
   }, 'Chrome 页面目标');
 }
 
-export async function withClientBrowserProof({ viewport, profilePrefix, configureViteServer }, run) {
+export async function withClientBrowserProof({ viewport, profilePrefix, configureViteServer, initialTouch = true }, run) {
   let viteServer = null;
   let chrome = null;
   let cdp = null;
@@ -202,7 +209,7 @@ export async function withClientBrowserProof({ viewport, profilePrefix, configur
       screenWidth: viewport.width,
       screenHeight: viewport.height,
     });
-    await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
+    await cdp.setTouchEmulationEnabled(initialTouch);
     await cdp.send('Page.navigate', { url: `http://127.0.0.1:${address.port}/` });
     await waitFor(
       () => cdp.evaluate(`document.readyState === 'complete' && Boolean(document.getElementById('detail-modal-body'))`),
