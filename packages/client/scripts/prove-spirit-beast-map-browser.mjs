@@ -26,6 +26,13 @@ async function setupFixture(cdp, mode) {
     runtime.attach(host);
     runtime.setViewportSize(${mode.width - 24}, ${Math.max(300, mode.height - 24)}, 1);
     runtime.applyBootstrap({ self: { id: 'self', name: '測試道友', displayName: '測試道友', mapId: 'spirit-proof', instanceId: 'spirit-proof:1', x: 8, y: 6, hp: 100, maxHp: 100, facing: 'down', unlockedMinimapIds: [] } });
+    runtime.applyMapStatic({ mapId: 'spirit-proof', tilesOriginX: -8, tilesOriginY: -8,
+      tiles: Array.from({ length: 32 }, (_, row) => Array.from({ length: 32 }, (_, column) => ({
+        type: '.', walkable: true, terrainType: 'grass',
+        surfaceType: row === 14 || column === 16 ? 'road' : null,
+        structureType: null, interactableKinds: [],
+      }))),
+    });
     const delta = { mapInstanceId: 'spirit-proof:1', revision: 1, reset: true, added: [
       { instanceId: 'beast-fan', speciesId: 'spirit_beast.fan.metal.01', ownerPlayerId: 'self', x: 7, y: 6, state: 'idle' },
       { instanceId: 'beast-heaven', speciesId: 'spirit_beast.heaven.water.02', ownerPlayerId: 'self', x: 9, y: 6, state: 'working', buildingId: 'sect_spirit_field' },
@@ -75,6 +82,7 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
   ]) {
     try {
       const result = await setupFixture(cdp, mode);
+      await cdp.evaluate(`new Promise(resolve => setTimeout(resolve, 800))`);
       const screenshot = await cdp.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
       await writeFile(path.join(outputDir, `${mode.id}.png`), Buffer.from(screenshot.data, 'base64'));
       results.push({ mode: mode.id, ...result, exercise: await exerciseMoveRecallReset(cdp) });

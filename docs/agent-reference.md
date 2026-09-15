@@ -298,7 +298,7 @@ pnpm verify:release:full      # 完整验证
 
 **门禁选择**：
 - 小型服务端改动：`pnpm verify:quick`
-- 客户端改动：`pnpm verify:client`
+- 客戶端改動：型別/建置與本次受影響 proof；發布用 `prepare --proof ...`，不預設 `pnpm verify:client`。
 - 建筑/风水改动：`pnpm verify:quick` + `pnpm verify:building`
 - shared/protocol 改动：`pnpm build:shared` + `pnpm audit:protocol`
 - 持久化/DB 改动：`pnpm verify:release:with-db`

@@ -51,6 +51,21 @@ FULL_VERIFICATION_GATES = (
     "shadow",
     "gm",
 )
+SCOPED_VERIFICATION_COMMAND = "client-release scoped verification"
+ALL_CLIENT_TESTS_COMMAND = "client-release all-client-tests verification"
+REQUIRED_BUILD_COMMANDS = (
+    ("build:shared-typescript", "pnpm", ["--dir", "packages/shared", "exec", "tsc"]),
+    ("generate:editor-catalog", "pnpm", ["--dir", "packages/client", "run", "generate:editor-catalog"]),
+    ("generate:item-sources", "pnpm", ["--dir", "packages/client", "run", "generate:item-sources"]),
+    ("generate:building-catalog", "pnpm", ["--dir", "packages/client", "run", "generate:building-catalog"]),
+    ("generate:i18n", "pnpm", ["--dir", "packages/client", "run", "generate:i18n"]),
+    ("check:client-types", "pnpm", ["--dir", "packages/client", "exec", "tsc", "--noEmit"]),
+    ("build:vite", "pnpm", ["--dir", "packages/client", "exec", "vite", "build"]),
+)
+SAFE_PROOF_SCRIPT = re.compile(
+    r"^(?:scripts|packages/client/scripts)/(?:[a-z0-9._-]+/)*(?:check|prove|verify|test)[a-z0-9._-]*\.(?:c?js|mjs|py)$"
+)
+SAFE_PROOF_PACKAGE_SCRIPT = re.compile(r"^proof:[a-z0-9][a-z0-9:-]*$")
 
 
 class ReleaseError(RuntimeError):
@@ -176,11 +191,16 @@ def validate_receipt(payload: object) -> dict:
     elif payload.get("coordinatedFull") is not None:
         raise ReleaseError("client/assets receipt must not contain coordinatedFull")
     verification = payload.get("verification")
-    expected_verification = "pnpm verify:client" if payload.get("kind") == RELEASE_KIND else "adopt-verified-production"
     if (payload.get("verificationPassed") is not True or payload.get("verificationSkipped") is not False
-            or not isinstance(verification, dict) or verification.get("exitCode") != 0
-            or verification.get("command") != expected_verification):
+            or not isinstance(verification, dict) or verification.get("exitCode") != 0):
         raise ReleaseError("release did not pass the required client verification")
+    if payload.get("kind") == ADOPTED_RELEASE_KIND:
+        if verification.get("command") != "adopt-verified-production":
+            raise ReleaseError("release did not pass the required client verification")
+    elif verification.get("command") == "pnpm verify:client":
+        pass
+    else:
+        _validate_scoped_verification(payload, verification)
     version = payload.get("version")
     if (not isinstance(version, dict) or version.get("buildId") != build_id
             or version.get("manifestPath") != "dist/version.json"
@@ -205,6 +225,78 @@ def validate_receipt(payload: object) -> dict:
     result["nginx"]["files"] = nginx_files
     result["nginxTemplates"] = nginx_templates
     return result
+
+
+def _validate_scoped_verification(payload: dict, verification: dict) -> None:
+    expected_command = (SCOPED_VERIFICATION_COMMAND if verification.get("mode") == "scoped"
+                        else ALL_CLIENT_TESTS_COMMAND if verification.get("mode") == "all-client-tests" else None)
+    if verification.get("command") != expected_command:
+        raise ReleaseError("scoped verification mode/command is invalid")
+    started = _parse_utc_timestamp(verification.get("startedAt"))
+    completed = _parse_utc_timestamp(verification.get("completedAt"))
+    if started > completed:
+        raise ReleaseError("scoped verification timestamps are invalid")
+    selected = verification.get("selectedProofs")
+    commands = verification.get("commands")
+    if not isinstance(selected, list) or not selected:
+        raise ReleaseError("scoped verification selectedProofs are missing")
+    for proof in selected:
+        if (not isinstance(proof, dict) or proof.get("kind") not in ("registered", "script")
+                or not isinstance(proof.get("input"), str) or not proof["input"]
+                or any(char in proof["input"] for char in ("\x00", "\r", "\n"))):
+            raise ReleaseError("scoped verification selectedProofs are invalid")
+        if proof.get("kind") == "script" and (not isinstance(proof.get("path"), str)
+                                                or not SAFE_PROOF_SCRIPT.fullmatch(proof["path"])):
+            raise ReleaseError("selected proof script is outside the allowlist")
+    if not isinstance(commands, list) or len(commands) <= len(REQUIRED_BUILD_COMMANDS):
+        raise ReleaseError("scoped verification command evidence is incomplete")
+    for index, result in enumerate(commands):
+        if not isinstance(result, dict) or result.get("exitCode") != 0 or result.get("cwd") != ".":
+            raise ReleaseError("scoped verification command result is invalid")
+        command_started = _parse_utc_timestamp(result.get("startedAt"))
+        command_completed = _parse_utc_timestamp(result.get("completedAt"))
+        if command_started > command_completed or command_started < started or command_completed > completed:
+            raise ReleaseError("scoped verification command timestamps are invalid")
+        if index < len(REQUIRED_BUILD_COMMANDS):
+            label, executable, argv = REQUIRED_BUILD_COMMANDS[index]
+            if (result.get("label") != label or result.get("executable") != executable
+                    or result.get("argv") != argv):
+                raise ReleaseError(f"required build command evidence is invalid: {label}")
+        else:
+            _validate_proof_command(result)
+    scope = payload.get("changeScope")
+    if (not isinstance(scope, dict) or scope.get("baseCommit") != payload.get("baseCommit")
+            or scope.get("commit") != payload.get("commit")
+            or scope.get("classification") != payload.get("classification")):
+        raise ReleaseError("scoped receipt changeScope identity is invalid")
+    paths = scope.get("paths")
+    if (not isinstance(paths, list) or not paths or any(not isinstance(item, str) for item in paths)
+            or paths != sorted(set(paths))):
+        raise ReleaseError("scoped receipt changeScope paths are invalid")
+    for item in paths:
+        pure = PurePosixPath(item)
+        if pure.is_absolute() or ".." in pure.parts or str(pure) != item or "\\" in item:
+            raise ReleaseError("scoped receipt changeScope path escapes the repository")
+
+
+def _validate_proof_command(result: dict) -> None:
+    label = result.get("label")
+    executable = result.get("executable")
+    argv = result.get("argv")
+    if (not isinstance(label, str) or (not label.startswith("proof:") and label != "check:traditional-client-scope")
+            or executable not in ("node", "python", "pnpm") or not isinstance(argv, list) or not argv
+            or any(not isinstance(item, str) or not item or "\x00" in item or "\r" in item or "\n" in item for item in argv)):
+        raise ReleaseError("proof command evidence is invalid")
+    if executable == "pnpm":
+        if (len(argv) != 4 or argv[0] != "--dir" or argv[1] not in (".", "packages/client")
+                or argv[2] != "run" or not SAFE_PROOF_PACKAGE_SCRIPT.fullmatch(argv[3])):
+            raise ReleaseError("proof pnpm command is outside the allowlist")
+    else:
+        script = argv[3] if executable == "python" and len(argv) == 4 else argv[0]
+        valid_argv = ((executable == "python" and len(argv) == 4 and argv[:3] == ["-B", "-X", "utf8"])
+                      or (executable == "node" and len(argv) == 1))
+        if not valid_argv or not SAFE_PROOF_SCRIPT.fullmatch(script):
+            raise ReleaseError("proof script command is outside the allowlist")
 
 
 def load_receipt(path: Path) -> dict:

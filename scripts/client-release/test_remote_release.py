@@ -16,6 +16,8 @@ import unittest
 from pathlib import Path
 
 from remote_apply import (
+    REQUIRED_BUILD_COMMANDS,
+    SCOPED_VERIFICATION_COMMAND,
     ReleaseError,
     RemoteReleaseManager,
     build_adopted_receipt,
@@ -111,6 +113,54 @@ def make_coordinated_full_receipt(receipt: dict) -> dict:
     return validate_receipt(payload)
 
 
+def make_scoped_receipt(receipt: dict) -> dict:
+    payload = json.loads(json.dumps(receipt))
+    started_at = "2026-09-15T00:00:00.000Z"
+    completed_at = "2026-09-15T00:01:00.000Z"
+    commands = [
+        {
+            "label": label,
+            "executable": executable,
+            "argv": argv,
+            "cwd": ".",
+            "exitCode": 0,
+            "startedAt": started_at,
+            "completedAt": completed_at,
+        }
+        for label, executable, argv in REQUIRED_BUILD_COMMANDS
+    ]
+    commands.append({
+        "label": "proof:release-contracts",
+        "executable": "node",
+        "argv": ["scripts/client-release/prove-release-contracts.mjs"],
+        "cwd": ".",
+        "exitCode": 0,
+        "startedAt": started_at,
+        "completedAt": completed_at,
+    })
+    payload["verification"] = {
+        "mode": "scoped",
+        "command": SCOPED_VERIFICATION_COMMAND,
+        "selectedProofs": [{
+            "input": "release-contracts",
+            "kind": "registered",
+            "id": "release-contracts",
+            "path": "scripts/client-release/prove-release-contracts.mjs",
+        }],
+        "commands": commands,
+        "exitCode": 0,
+        "startedAt": started_at,
+        "completedAt": completed_at,
+    }
+    payload["changeScope"] = {
+        "baseCommit": payload["baseCommit"],
+        "commit": payload["commit"],
+        "classification": payload["classification"],
+        "paths": ["scripts/client-release/prepare.mjs"],
+    }
+    return validate_receipt(payload)
+
+
 def make_payload(parent: Path, site: Path, receipt: dict, changed: list[str], *, nginx: bool = False) -> Path:
     payload = parent / "payload"
     payload.mkdir(parents=True)
@@ -126,6 +176,25 @@ def make_payload(parent: Path, site: Path, receipt: dict, changed: list[str], *,
             shutil.copy2(CLIENT_ROOT / "nginx" / item["path"].removeprefix("nginx/"), target)
     (parent / "receipt.json").write_text(json.dumps(receipt), encoding="utf-8")
     return payload
+
+
+class ReceiptValidationTests(unittest.TestCase):
+    def test_scoped_receipt_and_legacy_baseline_are_both_accepted(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="daojie-scoped-receipt-") as temporary:
+            site = Path(temporary) / "site"
+            write_site(site, "NEWBUILD99", "runtime-new", label="new")
+            legacy = make_receipt(site, COMMIT_B, COMMIT_A, "client-bbbbbbbbbbbb-NEWBUILD99")
+            self.assertEqual(validate_receipt(legacy)["verification"]["command"], "pnpm verify:client")
+            scoped = make_scoped_receipt(legacy)
+            self.assertEqual(scoped["verification"]["mode"], "scoped")
+            bad_command = json.loads(json.dumps(scoped))
+            bad_command["verification"]["commands"][-1]["argv"] = ["scripts/client-release/prepare.mjs"]
+            with self.assertRaisesRegex(ReleaseError, "allowlist"):
+                validate_receipt(bad_command)
+            bad_scope = json.loads(json.dumps(scoped))
+            bad_scope["changeScope"]["paths"] = ["../escape"]
+            with self.assertRaisesRegex(ReleaseError, "path"):
+                validate_receipt(bad_scope)
 
 
 class RemoteReleaseTests(unittest.TestCase):

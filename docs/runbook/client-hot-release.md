@@ -12,7 +12,7 @@
 
 新增道具圖示或調整展示介面可以走前端流程；新增道具的權威設定不能只發布圖片。分類 `full` 表示需要進一步檢查伺服器與契約，並不表示需要重建資料庫容器。
 
-這一版 `assets` 和 `client` 均執行完整 `pnpm verify:client`，尚未按美術類型裁切本機測試。省下的是生產機的重複建置、工具下載、未變檔案傳輸，以及後續發布的容器重建。
+`assets` 和 `client` 預設只執行明確選定的相關 proof。`prepare` 必須給 `--proof`（可重複）；沒有選擇會拒絕，不會偷偷退回全測。仍執行必要生成、client 型別與 Vite 建置，並驗證封包、版本和遠端發布契約。只有明確要求全測時才用 `--all-client-tests`。
 
 ## 首次導入與後續發布
 
@@ -24,13 +24,13 @@
 
 ## 使用方式
 
-### 先預檢，再執行完整門禁
+### 先預檢，再執行本次相關驗證
 
 1. 開工先讀線上 receipt、current 與受保護容器身分。從實際 live commit 建立候選，先跑範圍分類；不要在建置後才發現混入 server/shared 改動。若 main 已等於 live，只維護一份候選。
 2. 在建立 worktree 時確認該環境的行尾設定。Nginx 範本和固定圖包以位元組雜湊作契約，LF 與 CRLF 會不同；一次核對所有 Nginx 範本及未修改的 public 靜態檔案，不能只確認 Git diff 沒變。相同圖包版本的內容必須與既有 immutable snapshot 完全一致，不可改遠端 receipt 或快照來遷就新包。
 3. 首次建置前先執行既有 prebuild 生成步驟，確認 tracked 生成檔的正規化 blob 與索引相同，再刷新這些檔案的索引狀態。生成器會將 checkout 的 CRLF 改寫為 LF，即使內容相同，也可能使穩定工作樹檢查失敗；若 blob 不同，必須先處理實際內容差異。日誌、截圖、下載的 receipt 和產物統一放在候選的 `.runtime/`。用 `git check-ignore` 實際確認，不假設 `.tmp/` 受忽略；輸出版本目錄不得覆寫既有候選。
 4. 程式與驗收案例由同一負責者整合；Git 專員只處理明確檔案的提交與推送。語意衝突須回到程式負責者，不能選用整份舊檔解衝突。
-5. 先完成相關型別與互動檢查，確認多端截圖，再提交穩定候選。直接讓 `prepare` 跑一次完整 `verify:client`，不要先獨立跑同一套完整門禁再立即交給 `prepare` 重跑。必要失敗修正後仍須重跑原本門禁，不可略過。
+5. 先完成相關型別與互動檢查，確認多端截圖，再提交穩定候選。列出與本次完整差異有關的 proof，交給 `prepare --proof ...` 執行；不得先跑全測。必要失敗先定位原因，只修正相關問題，再執行原本選定的驗證。
 6. 發布前比對 receipt 的全部靜態檔案及 Nginx 契約，確認僅有預期差異，再做遠端 plan 與精確 CAS publish。既有成功證據可直接引用；不要由不同代理重複執行同一檢查。將成功結果、雜湊核驗數、健康狀態與回復目標寫入實際存在的發布紀錄。
 
 在已提交的乾淨 checkout 執行；`BASE` 必須是目前線上 receipt 記錄的來源提交，不能只憑時間或 `buildId` 猜測。`version.json` 的 buildId 由建置時間產生，提交身分以 receipt 的完整 commit 為準。
@@ -44,11 +44,13 @@ python -B scripts/client-release/preflight.py --checkout CLEAN_CHECKOUT --env-fi
 `ready: false` 時先修正實際差異，再執行 `prepare`。圖包快照已存在且內容不同時，必須修改來源圖包版本，不能覆寫遠端快照。此工具不寫遠端資料、不執行建置，亦不取代正式門禁、發布當下的 CAS 或 Nginx 契約檢查；預檢後來源或線上狀態有變動就重查。
 
 ```powershell
-node scripts/client-release/plan.mjs --base BASE
-node scripts/client-release/prepare.mjs --base BASE --output .runtime/client-release-artifacts
+node scripts/client-release/plan.mjs --base BASE --proof building-workspace
+node scripts/client-release/prepare.mjs --base BASE --proof building-workspace --output .runtime/releases/client-release-artifacts
 ```
 
-`prepare` 固定執行 `pnpm verify:client`，前後檢查 Git 狀態，並建立含 `dist/`、Nginx 模板及 receipt 的封包。外層 envelope 記錄封包與 receipt 雜湊。驗證失敗、來源漂移、不安全路徑或不符發布範圍時停止，沒有略過驗證的選項。
+`prepare` 執行必要建置及選定 proof，前後檢查 Git 狀態，並建立含 `dist/`、Nginx 模板及 receipt 的封包。收據記錄模式、實際命令、所選測試、時間與成功結果；原有已驗證生產收據仍可作 baseline。外層 envelope 記錄封包與 receipt 雜湊。驗證失敗、來源漂移、不安全路徑或不符發布範圍時停止，沒有略過驗證的選項。
+
+選測範例：營造介面使用 `--proof building-workspace`；靈獸地圖使用 `--proof packages/client/scripts/prove-spirit-beast-map-browser.mjs`；發布工具使用 `--proof release-contracts`。跨領域就重複給相關 `--proof`。只接受已登錄名稱或允許範圍內存在的腳本路徑，不接受 shell 字串。這些選項不能證明測試選擇已完整，執行者仍須對照此次全部差異確認覆蓋。
 
 以輸出的版本目錄作為 `BUNDLE`。憑證檔留在原工作區，不要複製進發布包：
 
@@ -70,7 +72,7 @@ Nginx 模板契約有改動時不得沿用一般 publish；需要重新檢查 ru
 
 ## Full-stack 協調發布
 
-這條路徑只負責在服務端已安全更新後切換靜態前端，不會替換 server、Postgres 或 Redis。`--coordinated-full` 不是略過分類或門禁的開關；它必須搭配由同一份 canonical source archive 跑完 `pnpm verify:release:full` 所產生的證據。原本的 `pnpm verify:client`、完整產物 manifest、bundle envelope、CAS、Nginx 契約、不可變圖包、保留舊 chunk、線上 hash 與回復機制仍全部執行。
+這條路徑只負責在服務端已安全更新後切換靜態前端，不會替換 server、Postgres 或 Redis。`--coordinated-full` 不是略過分類或門禁的開關；它必須搭配由同一份 canonical source archive 跑完 `pnpm verify:release:full` 所產生的證據。明確選定的前端驗證、完整產物 manifest、bundle envelope、CAS、Nginx 契約、不可變圖包、保留舊 chunk、線上 hash 與回復機制仍全部執行。
 
 先從最終乾淨 commit 建立不含工作目錄變更、無 prefix、未壓縮的 canonical archive。full gate 必須在這份 archive 解開的隔離 checkout 執行：
 
@@ -111,6 +113,7 @@ pnpm verify:release:full
 ```powershell
 node scripts/client-release/plan.mjs --base LIVE_RECEIPT_COMMIT
 node scripts/client-release/prepare.mjs `
+  --all-client-tests `
   --base LIVE_RECEIPT_COMMIT `
   --baseline-manifest LIVE_RECEIPT_JSON `
   --output .runtime/client-release-artifacts `

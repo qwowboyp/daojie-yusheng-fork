@@ -5,6 +5,11 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { TextDecoder } from 'node:util';
+import {
+  ALL_CLIENT_TESTS_COMMAND,
+  REQUIRED_BUILD_COMMANDS,
+  SCOPED_VERIFICATION_COMMAND,
+} from './verification.mjs';
 
 export const CLIENT_RELEASE_SCHEMA_VERSION = 1;
 export const FULL_VERIFICATION_SCHEMA_VERSION = 1;
@@ -363,9 +368,8 @@ export function buildReceipt({ plan, files, distFiles, nginxFiles, version, veri
   if (!isClientOnly && !isCoordinatedFull) {
     throw new Error('receipt 只能由 eligible client/assets plan 或具完整證據的 coordinated full plan 建立');
   }
-  if (verification?.command !== 'pnpm verify:client' || verification?.exitCode !== 0) {
-    throw new Error('receipt 必須記錄本次成功完成的 pnpm verify:client');
-  }
+  validateVerificationEvidence(verification, 'receipt');
+  const isLegacyVerification = verification?.command === 'pnpm verify:client';
   const receipt = {
     schemaVersion: CLIENT_RELEASE_SCHEMA_VERSION,
     kind: 'daojie-client-release',
@@ -376,6 +380,14 @@ export function buildReceipt({ plan, files, distFiles, nginxFiles, version, veri
     verification,
     verificationPassed: verification.exitCode === 0,
     verificationSkipped: false,
+    ...(!isLegacyVerification ? {
+      changeScope: {
+        baseCommit: plan.baseCommit,
+        commit: plan.commit,
+        classification: plan.classification,
+        paths: [...(plan.paths ?? [])],
+      },
+    } : null),
     buildId: version.buildId,
     version,
     dist: { files: [...distFiles].sort(compareManifestEntries) },
@@ -424,18 +436,11 @@ function validateReceipt(receipt, label) {
   } else if (receipt.coordinatedFull !== undefined) {
     throw new Error(`${label} client/assets receipt 不得包含 coordinatedFull`);
   }
-  if (receipt.verificationPassed !== true || receipt.verificationSkipped !== false
-    || receipt.verification?.command !== 'pnpm verify:client' || receipt.verification?.exitCode !== 0) {
-    throw new Error(`${label} 缺少成功的 pnpm verify:client 證據`);
+  if (receipt.verificationPassed !== true || receipt.verificationSkipped !== false) {
+    throw new Error(`${label} 缺少成功的 client verification 證據`);
   }
-  const startedAt = new Date(receipt.verification.startedAt);
-  const completedAt = new Date(receipt.verification.completedAt);
-  if (Number.isNaN(startedAt.valueOf()) || Number.isNaN(completedAt.valueOf())
-    || startedAt.toISOString() !== receipt.verification.startedAt
-    || completedAt.toISOString() !== receipt.verification.completedAt
-    || startedAt > completedAt) {
-    throw new Error(`${label} verify:client 時間證據無效`);
-  }
+  validateVerificationEvidence(receipt.verification, label);
+  if (receipt.verification.command !== 'pnpm verify:client') validateChangeScope(receipt, label);
   const distFiles = validateFileList(receipt.dist?.files, `${label} dist`, 'dist/');
   const nginxFiles = validateFileList(receipt.nginx?.files, `${label} nginx`, 'nginx/');
   const nginxTemplates = validateFileList(receipt.nginxTemplates, `${label} nginxTemplates`, 'nginx/');
@@ -452,6 +457,94 @@ function validateReceipt(receipt, label) {
   const versionFile = files.find((file) => file.path === 'dist/version.json');
   if (!versionFile || receipt.version?.manifestPath !== versionFile.path || receipt.version?.sha256 !== versionFile.sha256) {
     throw new Error(`${label} version.json 雜湊未綁定 files 清單`);
+  }
+}
+
+function validateChangeScope(receipt, label) {
+  const scope = receipt.changeScope;
+  if (!scope || scope.baseCommit !== receipt.baseCommit || scope.commit !== receipt.commit
+    || scope.classification !== receipt.classification || !Array.isArray(scope.paths) || scope.paths.length === 0) {
+    throw new Error(`${label} scoped verification 缺少完整 changeScope`);
+  }
+  const paths = scope.paths.map(normalizeArchivePath);
+  const sorted = [...new Set(paths)].sort(compareArchivePaths);
+  if (paths.length !== sorted.length || paths.some((item, index) => item !== sorted[index])) {
+    throw new Error(`${label} changeScope paths 必須唯一且排序`);
+  }
+}
+
+function validateVerificationEvidence(verification, label) {
+  if (!verification || verification.exitCode !== 0) throw new Error(`${label} client verification 未成功`);
+  const startedAt = parseUtcTimestamp(verification.startedAt, `${label} verification startedAt`);
+  const completedAt = parseUtcTimestamp(verification.completedAt, `${label} verification completedAt`);
+  if (startedAt > completedAt) throw new Error(`${label} verification 時間順序無效`);
+  if (verification.command === 'pnpm verify:client') return;
+
+  const expectedCommand = verification.mode === 'scoped'
+    ? SCOPED_VERIFICATION_COMMAND
+    : verification.mode === 'all-client-tests' ? ALL_CLIENT_TESTS_COMMAND : null;
+  if (!expectedCommand || verification.command !== expectedCommand) {
+    throw new Error(`${label} scoped verification mode/command 無效`);
+  }
+  if (!Array.isArray(verification.selectedProofs) || verification.selectedProofs.length === 0) {
+    throw new Error(`${label} scoped verification 缺少 selectedProofs`);
+  }
+  for (const selected of verification.selectedProofs) {
+    if (!selected || typeof selected.input !== 'string' || !selected.input || /[\0\r\n]/u.test(selected.input)
+      || !['registered', 'script'].includes(selected.kind)) {
+      throw new Error(`${label} selectedProofs 記錄無效`);
+    }
+    if (selected.kind === 'script'
+      && (typeof selected.path !== 'string'
+        || !/^(?:scripts|packages\/client\/scripts)\/(?:[a-z0-9._-]+\/)*(?:check|prove|verify|test)[a-z0-9._-]*\.(?:c?js|mjs|py)$/u.test(selected.path))) {
+      throw new Error(`${label} selected proof script 不在白名單`);
+    }
+  }
+  if (!Array.isArray(verification.commands) || verification.commands.length <= REQUIRED_BUILD_COMMANDS.length) {
+    throw new Error(`${label} scoped verification command 證據不完整`);
+  }
+  for (let index = 0; index < verification.commands.length; index += 1) {
+    const result = verification.commands[index];
+    const commandStartedAt = parseUtcTimestamp(result?.startedAt, `${label} verification command startedAt`);
+    const commandCompletedAt = parseUtcTimestamp(result?.completedAt, `${label} verification command completedAt`);
+    if (commandStartedAt > commandCompletedAt || commandStartedAt < startedAt || commandCompletedAt > completedAt
+      || result.exitCode !== 0 || result.cwd !== '.') {
+      throw new Error(`${label} verification command 結果無效`);
+    }
+    const required = REQUIRED_BUILD_COMMANDS[index];
+    if (required) {
+      if (result.label !== required.label || result.executable !== required.executable
+        || JSON.stringify(result.argv) !== JSON.stringify(required.argv)) {
+        throw new Error(`${label} 必要 build command 證據無效：${required.label}`);
+      }
+    } else {
+      validateProofCommand(result, label);
+    }
+  }
+}
+
+function validateProofCommand(result, label) {
+  if (typeof result.label !== 'string' || !result.label.startsWith('proof:') && result.label !== 'check:traditional-client-scope'
+    || !['node', 'python', 'pnpm'].includes(result.executable)
+    || !Array.isArray(result.argv) || result.argv.length === 0
+    || result.argv.some((item) => typeof item !== 'string' || !item || /[\0\r\n]/u.test(item))) {
+    throw new Error(`${label} proof command 證據無效`);
+  }
+  if (result.executable === 'pnpm') {
+    const [dirFlag, dir, run, script, ...rest] = result.argv;
+    if (dirFlag !== '--dir' || !['.', 'packages/client'].includes(dir) || run !== 'run'
+      || !/^proof:[a-z0-9][a-z0-9:-]*$/u.test(script ?? '') || rest.length > 0) {
+      throw new Error(`${label} proof pnpm command 不在白名單`);
+    }
+  } else {
+    const script = result.executable === 'python' ? result.argv[3] : result.argv[0];
+    const validArgv = result.executable === 'python'
+      ? result.argv.length === 4 && result.argv[0] === '-B' && result.argv[1] === '-X' && result.argv[2] === 'utf8'
+      : result.argv.length === 1;
+    if (!validArgv || typeof script !== 'string'
+      || !/^(?:scripts|packages\/client\/scripts)\/(?:[a-z0-9._-]+\/)*(?:check|prove|verify|test)[a-z0-9._-]*\.(?:c?js|mjs|py)$/u.test(script)) {
+      throw new Error(`${label} proof script command 不在白名單`);
+    }
   }
 }
 

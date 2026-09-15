@@ -21,6 +21,12 @@ import {
   sha256,
 } from './manifest.mjs';
 import { assertReleaseMode, parseArgs as parsePrepareArgs } from './prepare.mjs';
+import { parseArgs as parsePlanArgs } from './plan.mjs';
+import {
+  REQUIRED_BUILD_COMMANDS,
+  SCOPED_VERIFICATION_COMMAND,
+  resolveVerificationPlan,
+} from './verification.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -118,13 +124,58 @@ async function testReceiptAndOutputBoundary() {
   assert.throws(() => buildReceipt({
     plan, files, distFiles, nginxFiles, version: receipt.version,
     verification: { ...verification, command: 'pnpm build:client' }, delta: receipt.delta,
-  }), /verify:client/);
+  }), /mode\/command/);
+
+  const verificationPlan = resolveVerificationPlan(repoRoot, { proofs: ['release-contracts'] });
+  const scopedVerification = {
+    mode: 'scoped',
+    command: SCOPED_VERIFICATION_COMMAND,
+    selectedProofs: verificationPlan.selectedProofs,
+    commands: verificationPlan.commands.map((item) => ({
+      ...item,
+      argv: [...item.argv],
+      exitCode: 0,
+      startedAt: '2026-09-12T00:00:00.000Z',
+      completedAt: '2026-09-12T00:01:00.000Z',
+    })),
+    exitCode: 0,
+    startedAt: '2026-09-12T00:00:00.000Z',
+    completedAt: '2026-09-12T00:01:00.000Z',
+  };
+  const scopedReceipt = buildReceipt({
+    plan: { ...plan, paths: ['scripts/client-release/prepare.mjs'] },
+    files,
+    distFiles,
+    nginxFiles,
+    version: receipt.version,
+    verification: scopedVerification,
+    delta: receipt.delta,
+  });
+  assert.equal(scopedReceipt.verification.mode, 'scoped');
+  assert.deepEqual(scopedReceipt.changeScope.paths, ['scripts/client-release/prepare.mjs']);
+  assert.throws(() => buildReceipt({
+    plan: { ...plan, paths: [] }, files, distFiles, nginxFiles, version: receipt.version,
+    verification: scopedVerification, delta: receipt.delta,
+  }), /changeScope/);
 
   const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'daojie-client-receipt-'));
   try {
     const baselinePath = path.join(tempRoot, 'receipt.json');
     await fs.writeFile(baselinePath, JSON.stringify(receipt), 'utf8');
     assert.deepEqual(await readBaselineManifest(baselinePath), receipt);
+    await fs.writeFile(baselinePath, JSON.stringify(scopedReceipt), 'utf8');
+    assert.deepEqual(await readBaselineManifest(baselinePath), scopedReceipt);
+    for (const [mutate, expected] of [
+      [(value) => { value.verification.mode = 'unknown'; }, /mode\/command/],
+      [(value) => { value.verification.selectedProofs = []; }, /selectedProofs/],
+      [(value) => { value.verification.commands.at(-1).exitCode = 1; }, /command 結果/],
+      [(value) => { delete value.verification.commands[0].startedAt; }, /UTC ISO/],
+    ]) {
+      const invalid = structuredClone(scopedReceipt);
+      mutate(invalid);
+      await fs.writeFile(baselinePath, JSON.stringify(invalid), 'utf8');
+      await assert.rejects(() => readBaselineManifest(baselinePath), expected);
+    }
     await fs.writeFile(baselinePath, JSON.stringify({ ...receipt, files: receipt.files.slice(1) }), 'utf8');
     await assert.rejects(() => readBaselineManifest(baselinePath), /完整等於/);
 
@@ -144,6 +195,70 @@ async function testReceiptAndOutputBoundary() {
     () => assertAllowedOutput(repoRoot, path.join(repoRoot, '..not-ignored-client-release')),
     /必須被 .gitignore 忽略/,
   );
+}
+
+async function testVerificationSelectionContract() {
+  assert.throws(() => resolveVerificationPlan(repoRoot), /至少指定一個 --proof/);
+  assert.throws(
+    () => resolveVerificationPlan(repoRoot, { proofs: ['building-workspace'], allClientTests: true }),
+    /不可同時使用/,
+  );
+  assert.throws(() => resolveVerificationPlan(repoRoot, { proofs: ['missing-proof'] }), /未知 proof/);
+  assert.throws(
+    () => resolveVerificationPlan(repoRoot, { proofs: ['scripts/client-release/prepare.mjs;whoami'] }),
+    /白名單/,
+  );
+  assert.throws(
+    () => resolveVerificationPlan(repoRoot, { proofs: ['packages/server/src/index.ts'] }),
+    /白名單/,
+  );
+
+  const selected = resolveVerificationPlan(repoRoot, {
+    proofs: ['release-contracts', 'building-workspace', 'packages/client/scripts/prove-spirit-beast-map-browser.mjs'],
+  });
+  assert.equal(selected.mode, 'scoped');
+  assert.deepEqual(selected.commands.slice(0, REQUIRED_BUILD_COMMANDS.length), [...REQUIRED_BUILD_COMMANDS]);
+  assert.equal(selected.selectedProofs[0].id, 'release-contracts');
+  assert.equal(selected.selectedProofs[1].id, 'building-workspace');
+  assert.equal(selected.selectedProofs[2].path, 'packages/client/scripts/prove-spirit-beast-map-browser.mjs');
+  assert.equal(selected.commands.at(-1).executable, 'node');
+
+  const preview = resolveVerificationPlan(repoRoot, { requireSelection: false });
+  assert.equal(preview.mode, null);
+  assert.equal(preview.prepareRequiresExplicitSelection, true);
+  assert.throws(
+    () => parsePrepareArgs(['--base', 'HEAD~1', '--output', 'out']),
+    /至少指定一個 --proof/,
+  );
+  const prepareOptions = parsePrepareArgs([
+    '--base', 'HEAD~1', '--output', 'out', '--proof', 'release-contracts',
+    '--coordinated-full', '--full-verification', 'report.json',
+  ]);
+  assert.deepEqual(prepareOptions.proofs, ['release-contracts']);
+  assert.equal(prepareOptions.fullVerification, 'report.json');
+  assert.deepEqual(parsePlanArgs(['--base', 'HEAD~1', '--proof', 'release-contracts']).proofs, ['release-contracts']);
+
+  const tempRepo = await fs.mkdtemp(path.join(os.tmpdir(), 'daojie-proof-realpath-'));
+  const external = await fs.mkdtemp(path.join(os.tmpdir(), 'daojie-proof-external-'));
+  try {
+    await fs.mkdir(path.join(tempRepo, 'packages', 'client'), { recursive: true });
+    await fs.mkdir(path.join(tempRepo, 'scripts'), { recursive: true });
+    await fs.writeFile(path.join(tempRepo, 'package.json'), '{"scripts":{}}', 'utf8');
+    await fs.writeFile(path.join(tempRepo, 'packages', 'client', 'package.json'), '{"scripts":{}}', 'utf8');
+    await fs.writeFile(path.join(external, 'prove-escape.mjs'), 'export {};', 'utf8');
+    try {
+      await fs.symlink(external, path.join(tempRepo, 'scripts', 'linked'), 'junction');
+      assert.throws(
+        () => resolveVerificationPlan(tempRepo, { proofs: ['scripts/linked/prove-escape.mjs'] }),
+        /實際路徑必須位於 repo 內/,
+      );
+    } catch (error) {
+      if (error?.code !== 'EPERM' && error?.code !== 'EACCES') throw error;
+    }
+  } finally {
+    await fs.rm(tempRepo, { recursive: true, force: true });
+    await fs.rm(external, { recursive: true, force: true });
+  }
 }
 
 async function testCoordinatedFullVerification() {
@@ -286,6 +401,7 @@ async function testDockerfileToolchainCacheBoundary() {
 
 testConservativeClassification();
 testPureSafetyAndDrift();
+await testVerificationSelectionContract();
 await testManifestAndDelta();
 await testReceiptAndOutputBoundary();
 await testCoordinatedFullVerification();

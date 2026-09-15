@@ -45,19 +45,21 @@ mechanics：core-loop 移動/tick/AOI；combat 戰鬥/怪物/掉落；growth 屬
 
 ## 驗證分級
 
+使用者要求：每次只測與當下任務完整差異有關的項目，不預設全測。先列受影響入口與所選 proof；不明範圍先定位或補最小行為驗證，不以全測代替判斷。`verify:client`、`verify:release:full` 等全套命令只在使用者明確要求全測時執行。建置、型別、產物雜湊、版本、CAS、回復與線上健康檢查仍保留。
+
 | 變更 | 必要驗證 |
 | --- | --- |
 | 純文件 | diff/連結，不跑遊戲建置 |
 | 局部工作流工具 | 契約測試 + 一次真實流程，不跑整套遊戲 proof |
 | 局部 UI 顯示/樣式/位置，無協議/資產/生命週期變更 | `node scripts/workflow.mjs check --tier ui-small --surface <名稱> --files <完整本次範圍>`：文案、client tsc、對應既有 proof，僅屬本地驗證 |
-| client 全域樣式/裝配/狀態/網路/跨面板、覆蓋不足或風險不明 | `pnpm verify:client` |
-| 小型 server | `pnpm verify:quick` |
-| 建築/風水機制 | quick + `pnpm verify:building` |
+| client 全域樣式/裝配/狀態/網路/跨面板 | client 型別與建置 + 實際受影響入口的 proof，發布明確指定 `--proof` |
+| server | 建置/型別 + 受影響服務與 runtime 的測試 |
+| 建築/風水機制 | 受影響建築/風水 proof 與直接依賴的測試 |
 | shared/protocol | `pnpm build:shared` + `pnpm audit:protocol` + 受影響消費端 |
-| DB/持久化 | `pnpm verify:release:with-db` |
-| 完整發布 | `pnpm verify:release:full`；阻礙明示，不稱完整通過 |
+| DB/持久化 | 受影響持久化、回讀、併發與恢复測試，使用隔離資料庫 |
+| 發布 | 依本次差異選測並記錄 receipt；全測只在明確要求時使用 `--all-client-tests` 或相應全套指令 |
 
-精準 UI 分級依實際差異，不只看副檔名；提供完整本次範圍，全域 token/base、shared、網路/runtime 不得冒用。proof 須覆蓋本次行為和多端要求；不足則補最小行為驗證或升級，不修改他人的失敗 proof。局部收據供引用，不是自動略過正式門禁的快取。
+精準 UI 分級依實際差異，不只看副檔名；提供完整本次範圍，全域 token/base、shared、網路/runtime 不得冒用。proof 須覆蓋本次行為和多端要求；不足則補受影響行為的驗證，不修改他人的失敗 proof。局部收據供引用，不是自動略過正式門禁的快取。
 
 ## 工作目錄集中管理
 
@@ -70,7 +72,7 @@ mechanics：core-loop 移動/tick/AOI；combat 戰鬥/怪物/掉落；growth 屬
 
 ## 發布與程序收尾
 
-先確認發布工具在當前候選中存在。可用 client prepare 若含完整 verify，就在乾淨候選執行一次，不在前後重跑。不能把 `.runtime` 舊快照或記憶路徑當現行工具，也不臨時重寫部署；需恢復歷史工具時先核對 exact commit/範圍/契約。只有前端門禁通過就明示前端範圍，不稱全棧驗收。
+先確認發布工具在當前候選中存在。client prepare 必須明確指定本次相關 `--proof`，在乾淨候選執行一次，不在前後重跑；不得自動選 `--all-client-tests`。不能把 `.runtime` 舊快照或記憶路徑當現行工具，也不臨時重寫部署；需恢復歷史工具時先核對 exact commit/範圍/契約。只有前端門禁通過就明示前端範圍，不稱全棧驗收。
 
 生產是 LXC `192.168.0.191`，非舊 Swarm；禁用 `.190`、禁在 PVE host 裝服務。前端發布保留 server/Postgres/Redis、rollback；核對 runtime hash、`/`、`/version.json`、Socket.IO、`/health`、`/live`，不以時間已過推定完成。
 

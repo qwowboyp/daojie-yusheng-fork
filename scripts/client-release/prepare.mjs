@@ -17,6 +17,7 @@ import {
   readBaselineManifest,
   readWorktreeState,
 } from './manifest.mjs';
+import { resolveVerificationPlan, runVerification } from './verification.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -28,6 +29,8 @@ export function parseArgs(argv) {
     baselineManifest: null,
     coordinatedFull: false,
     fullVerification: null,
+    proofs: [],
+    allClientTests: false,
   };
   for (let index = 0; index < argv.length; index += 1) {
     const value = argv[index];
@@ -37,13 +40,21 @@ export function parseArgs(argv) {
     else if (value === '--baseline-manifest') options.baselineManifest = readOptionValue(argv, ++index, value);
     else if (value === '--coordinated-full') options.coordinatedFull = true;
     else if (value === '--full-verification') options.fullVerification = readOptionValue(argv, ++index, value);
+    else if (value === '--proof') options.proofs.push(readOptionValue(argv, ++index, value));
+    else if (value === '--all-client-tests') options.allClientTests = true;
     else throw new Error(`未知參數：${value}`);
   }
   if (!options.base || !options.output || !options.ref) {
-    throw new Error('用法：node prepare.mjs --base <commit-ish> --output <repo外或忽略目錄> [--ref HEAD] [--baseline-manifest <path>] [--coordinated-full --full-verification <report.json>]');
+    throw new Error('用法：node prepare.mjs --base <commit-ish> --output <repo外或忽略目錄> [--ref HEAD] [--baseline-manifest <path>] (--proof <id|script>... | --all-client-tests) [--coordinated-full --full-verification <report.json>]');
   }
   if (options.coordinatedFull !== Boolean(options.fullVerification)) {
     throw new Error('--coordinated-full 與 --full-verification <report.json> 必須成對使用');
+  }
+  if (options.allClientTests && options.proofs.length > 0) {
+    throw new Error('--all-client-tests 與 --proof 不可同時使用');
+  }
+  if (!options.allClientTests && options.proofs.length === 0) {
+    throw new Error('必須至少指定一個 --proof，或明確使用 --all-client-tests');
   }
   return options;
 }
@@ -52,22 +63,6 @@ function readOptionValue(argv, index, option) {
   const value = argv[index];
   if (!value || value.startsWith('--')) throw new Error(`${option} 缺少值`);
   return value;
-}
-
-function runVerification() {
-  const startedAt = new Date().toISOString();
-  const command = process.platform === 'win32' ? (process.env.ComSpec || 'cmd.exe') : 'pnpm';
-  const args = process.platform === 'win32'
-    ? ['/d', '/s', '/c', 'pnpm.cmd verify:client']
-    : ['verify:client'];
-  const result = spawnSync(command, args, {
-    cwd: repoRoot,
-    stdio: 'inherit',
-    shell: false,
-  });
-  if (result.error) throw result.error;
-  if (result.status !== 0) throw new Error(`pnpm verify:client 失敗，exit=${result.status ?? 1}`);
-  return { command: 'pnpm verify:client', exitCode: 0, startedAt, completedAt: new Date().toISOString() };
 }
 
 export function assertReleaseMode(plan, options) {
@@ -133,7 +128,8 @@ async function main() {
   const baseline = options.baselineManifest ? await readBaselineManifest(path.resolve(options.baselineManifest)) : null;
   assertBaselineMatchesPlan(baseline, plan);
 
-  const verification = runVerification();
+  const verificationPlan = resolveVerificationPlan(repoRoot, options);
+  const verification = runVerification(repoRoot, verificationPlan);
   const afterVerification = readWorktreeState(repoRoot);
   assertStableWorktree(before, afterVerification);
 
@@ -153,8 +149,9 @@ async function main() {
     const versionSource = await fs.readFile(versionPath);
     const version = parseVersionJson(versionSource.toString('utf8'));
     const builtAtMs = Date.parse(version.builtAt);
-    if (builtAtMs < Date.parse(verification.startedAt) || builtAtMs > Date.parse(verification.completedAt)) {
-      throw new Error('dist/version.json 不是本次 pnpm verify:client 產生的版本');
+    const viteBuild = verification.commands.find((item) => item.label === 'build:vite');
+    if (!viteBuild || builtAtMs < Date.parse(viteBuild.startedAt) || builtAtMs > Date.parse(viteBuild.completedAt)) {
+      throw new Error('dist/version.json 不是本次定向驗證的 Vite build 產生版本');
     }
     const versionFile = distFiles.find((file) => file.path === 'dist/version.json');
     if (!versionFile) throw new Error('dist 產物缺少 version.json');
