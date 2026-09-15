@@ -1,5 +1,7 @@
 /** 用途：已確認的靈獸機率、同品同星素材、完整融合及種植共用生命週期回歸驗證。 */
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import {
   SPIRIT_BEAST_CATALOG, SPIRIT_BEAST_CONTENT, SPIRIT_BEAST_ELEMENTS, SPIRIT_BEAST_GRADES,
   SPIRIT_BEAST_SKILLS, SPIRIT_BEAST_STAR_WEIGHTS, computeSpiritBeastCombatPower,
@@ -61,21 +63,54 @@ async function main(): Promise<void> {
   assert.equal(41 ** 4, 2825761);
 
   let fusionPairs = 0;
+  const recipeRows = readFileSync(resolve(__dirname, '../../../../docs/design/spirit-beasts/fusion-recipes.csv'), 'utf8')
+    .trim().split(/\r?\n/).slice(1).map((line) => line.split(','));
+  const recipes = new Map(recipeRows.map((row) => [row[0], row]));
+  assert.equal(recipes.size, 1860);
+  assert.equal(recipeRows.length, recipes.size);
   for (const grade of SPIRIT_BEAST_GRADES) {
     const group = SPIRIT_BEAST_CATALOG.filter((s) => s.grade === grade);
     for (let a = 0; a < group.length; a += 1) for (let b = a; b < group.length; b += 1) {
-      const first = record('first', group[a].id, 5);
-      const second = record('second', group[b].id, 5);
+      const first = record('first', group[a].id, 3);
+      const second = record('second', group[b].id, 3);
       const preview = previewSpiritBeastFusion(first, second, SPIRIT_BEAST_CATALOG)!;
+      if (grade === 'immortal') {
+        assert.equal(preview, null);
+        assert.equal(resolveSpiritBeastFusionSpecies(group[a], group[b], SPIRIT_BEAST_CATALOG), null);
+        continue;
+      }
       assert.ok(preview);
-      assert.equal(preview.star, 3);
+      assert.equal(preview.star, 1);
+      const documented = recipes.get(preview.recipeId)!;
+      assert.ok(documented, '公開配方須使用正式 v2 ID');
+      assert.equal(documented[5], preview.speciesId);
+      assert.equal(documented[9], '3');
+      assert.equal(documented[10], '1');
+      assert.equal(documented[11], '10000');
+      assert.equal(preview.combatPower, preview.baseCombatPower);
+      const child = catalog.get(preview.speciesId)!;
+      assert.deepEqual(preview.masteries, child.masteries);
+      assert.equal(preview.effectiveSpeed, computeSpiritBeastSpeed(child, 1));
       assert.equal(preview.speciesId, resolveSpiritBeastFusionSpecies(group[b], group[a], SPIRIT_BEAST_CATALOG)?.id);
       assert.equal(preview.grade, SPIRIT_BEAST_GRADES[Math.min(4, SPIRIT_BEAST_GRADES.indexOf(grade) + 1)]);
       fusionPairs += 1;
     }
   }
-  assert.equal(fusionPairs, 2325);
-  assert.equal(previewSpiritBeastFusion(record('same', immortal.id, 5), record('same', immortal.id, 5), SPIRIT_BEAST_CATALOG), null);
+  assert.equal(fusionPairs, 1860);
+  const parent = record('parent', SPIRIT_BEAST_CATALOG[0].id, 3);
+  const partner = { ...parent, instanceId: 'partner' };
+  for (const star of [1, 2, 4, 5] as const) {
+    assert.equal(previewSpiritBeastFusion({ ...parent, star }, partner, SPIRIT_BEAST_CATALOG), null);
+    assert.equal(previewSpiritBeastFusion(parent, { ...partner, star }, SPIRIT_BEAST_CATALOG), null);
+  }
+  for (const invalid of [parent, { ...partner, protected: true }, { ...partner, state: 'working' as const },
+    { ...partner, ownerPlayerId: 'other' }, { ...partner, speciesId: immortal.id }]) {
+    assert.equal(previewSpiritBeastFusion(parent, invalid, SPIRIT_BEAST_CATALOG), null);
+  }
+  const inherited = previewSpiritBeastFusion({ ...parent, baseCombatPower: 260 }, { ...partner, baseCombatPower: 200 }, SPIRIT_BEAST_CATALOG)!;
+  assert.equal(inherited.baseCombatPower, 540, '80% 資質映射到人品，不能帶入三星加成');
+  assert.equal(inherited.combatPower, 540);
+  assert.equal(2 * 41 ** 2, 3362);
 
   const lifecycle = new TechniqueActivityPipelineService();
   lifecycle.register(new PlantingStrategy());

@@ -16,6 +16,7 @@ const ALL_FUSION_SPECIES_PAIRS: FusionSpeciesPair[] = (() => {
   }
   return pairs;
 })();
+const FUSION_TARGET_SPECIES = [...new Map(ALL_FUSION_SPECIES_PAIRS.map((entry) => [entry.child.id, entry.child])).values()];
 
 export const SpiritBeastCodexTab = memo(function SpiritBeastCodexTab() {
   const [grade, setGrade] = useState<string>('all');
@@ -59,10 +60,10 @@ export const SpiritBeastCodexTab = memo(function SpiritBeastCodexTab() {
       </section>
       <p className="spirit-beast-muted">召喚後會自動承接擅長的宗門工作，可被穿透、不阻擋路徑。戰鬥力保留供日後探險使用；種植的作物熟成時間不受工作速度加成影響。</p>
       <section className="spirit-beast-parent-finder" aria-labelledby="spirit-beast-parent-title">
-        <div className="spirit-beast-section-heading"><div><h3 id="spirit-beast-parent-title">依目標查融合父母</h3><p>完整查詢同品配對表，共 {ALL_FUSION_SPECIES_PAIRS.length} 組。</p></div></div>
-        <label>目標靈獸<select value={targetId} onChange={(event) => setTargetId(event.target.value)}><option value="">選擇目標靈獸</option>{SPIRIT_BEAST_CATALOG.map((entry) => <option key={entry.id} value={entry.id}>{entry.name}・{gradeLabel(entry.grade)}・{elementLabel(entry.element)}行</option>)}</select></label>
+        <div className="spirit-beast-section-heading"><div><h3 id="spirit-beast-parent-title">依目標查融合父母</h3><p>由兩隻同品三星父獸融合為高一品一星，共 {ALL_FUSION_SPECIES_PAIRS.length} 組配對；仙品不開放融合。</p></div></div>
+        <label>目標靈獸<select value={targetId} onChange={(event) => setTargetId(event.target.value)}><option value="">選擇可融合目標靈獸</option>{FUSION_TARGET_SPECIES.map((entry) => <option key={entry.id} value={entry.id}>{entry.name}・{gradeLabel(entry.grade)}・{elementLabel(entry.element)}行</option>)}</select></label>
         {target ? <div className="spirit-beast-parent-results">
-          <div className="spirit-beast-growth-preview"><img src={speciesArtUrl(target.id)} srcSet={`${speciesArtUrl(target.id)} 1x, ${speciesArtUrl(target.id, 192)} 2x`} alt={`${target.name}圖`} width="80" height="80" /><div><strong>{target.name}</strong><span>{gradeLabel(target.grade)}・{elementLabel(target.element)}行・可由 {parentPairs.length} 組父母融合</span></div></div>
+          <div className="spirit-beast-growth-preview"><img src={speciesArtUrl(target.id)} srcSet={`${speciesArtUrl(target.id)} 1x, ${speciesArtUrl(target.id, 192)} 2x`} alt={`${target.name}圖`} width="80" height="80" /><div><strong>{target.name}</strong><span>{gradeLabel(target.grade)}・{elementLabel(target.element)}行・可由 {parentPairs.length} 組同品三星父獸融合為一星</span></div></div>
           <ul>{parentPairs.map((pair) => <li key={`${pair.left.id}:${pair.right.id}`}><span><img src={speciesArtUrl(pair.left.id)} alt="" width="48" height="48" loading="lazy" decoding="async" />{pair.left.name}</span><b>＋</b><span><img src={speciesArtUrl(pair.right.id)} alt="" width="48" height="48" loading="lazy" decoding="async" />{pair.right.name}</span></li>)}</ul>
         </div> : null}
       </section>

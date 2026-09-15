@@ -1,5 +1,6 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import {
+  SPIRIT_BEAST_RULES,
   type SpiritBeastPanelView,
   type SpiritBeastView,
 } from '@mud/shared';
@@ -63,7 +64,9 @@ export const SpiritBeastFusionTab = memo(function SpiritBeastFusionTab({ view, b
   const [previewRequestId, setPreviewRequestId] = useState('');
   const receipt = useSpiritBeastStore().fusionPreviewReceipt;
   const fusion = view.facilities.find((facility) => facility.kind === 'fusion');
-  const candidates = useMemo(() => view.beasts.filter((entry) => canUseBeast(entry, view.ownerPlayerId) && entry.star === 5), [view.beasts, view.ownerPlayerId]);
+  const candidates = useMemo(() => view.beasts.filter((entry) => (
+    canUseBeast(entry, view.ownerPlayerId) && entry.star === SPIRIT_BEAST_RULES.fusionParentStar && entry.grade !== 'immortal'
+  )), [view.beasts, view.ownerPlayerId]);
   const left = candidates.find((entry) => entry.instanceId === leftId);
   const right = candidates.find((entry) => entry.instanceId === rightId);
   useEffect(() => { if (leftId && !candidates.some((entry) => entry.instanceId === leftId)) setLeftId(''); if (rightId && !candidates.some((entry) => entry.instanceId === rightId)) setRightId(''); }, [candidates, leftId, rightId]);
@@ -80,12 +83,12 @@ export const SpiritBeastFusionTab = memo(function SpiritBeastFusionTab({ view, b
   };
   return (
     <section className="spirit-beast-operation" aria-labelledby="spirit-beast-fusion-title">
-      <div className="spirit-beast-section-heading"><div><h3 id="spirit-beast-fusion-title">靈獸融合</h3><p>兩隻同品五星靈獸會融合成三星靈獸。凡、人、天、聖品提升一品；仙品維持仙品。</p></div><span>必定融合</span></div>
+      <div className="spirit-beast-section-heading"><div><h3 id="spirit-beast-fusion-title">靈獸融合</h3><p>消耗兩隻同品{stars(SPIRIT_BEAST_RULES.fusionParentStar)}靈獸，融合成高一品{stars(SPIRIT_BEAST_RULES.fusionOutputStar)}靈獸。凡、人、天、聖品可融合；仙品不開放融合。</p></div><span>成功率 100%</span></div>
       <div className="spirit-beast-select-pair">
-        <label>主獸<select value={leftId} onChange={(event) => chooseLeft(event.target.value)}><option value="">選擇五星靈獸</option>{candidates.filter((entry) => entry.instanceId !== rightId).map((entry) => <option value={entry.instanceId} key={entry.instanceId}>{entry.name}・{gradeLabel(entry.grade)}</option>)}</select></label>
-        <label>副獸<select value={rightId} onChange={(event) => chooseRight(event.target.value)}><option value="">選擇同品五星靈獸</option>{candidates.filter((entry) => entry.instanceId !== leftId && (!left || entry.grade === left.grade)).map((entry) => <option value={entry.instanceId} key={entry.instanceId}>{entry.name}・{gradeLabel(entry.grade)}</option>)}</select></label>
+        <label>主獸<select value={leftId} onChange={(event) => chooseLeft(event.target.value)}><option value="">選擇{stars(SPIRIT_BEAST_RULES.fusionParentStar)}靈獸</option>{candidates.filter((entry) => entry.instanceId !== rightId).map((entry) => <option value={entry.instanceId} key={entry.instanceId}>{entry.name}・{gradeLabel(entry.grade)} {stars(entry.star)}</option>)}</select></label>
+        <label>副獸<select value={rightId} onChange={(event) => chooseRight(event.target.value)}><option value="">選擇同品{stars(SPIRIT_BEAST_RULES.fusionParentStar)}靈獸</option>{candidates.filter((entry) => entry.instanceId !== leftId && (!left || entry.grade === left.grade)).map((entry) => <option value={entry.instanceId} key={entry.instanceId}>{entry.name}・{gradeLabel(entry.grade)} {stars(entry.star)}</option>)}</select></label>
       </div>
-      {previewMatches && preview ? <div className="spirit-beast-fusion-preview" data-fusion-preview-ready="true"><img src={speciesArtUrl(preview.speciesId, 192)} alt={`${preview.name}靈獸圖`} width="112" height="112" /><div><strong>融合結果：{preview.name}</strong><span className={gradeClass(preview.grade)}>{gradeLabel(preview.grade)}・{elementLabel(preview.element)}行・★★★</span><span>精通 {preview.masteries.map((entry) => `${skillLabel(entry.skill)} ${entry.level} 級`).join('、')}</span><span>戰力 {preview.combatPower.toLocaleString('zh-TW')}・工作速度 {preview.effectiveSpeed.toFixed(2)} 倍</span></div></div> : <p className="spirit-beast-muted">選好兩隻靈獸後查看配方；選擇或名冊變動後需重新預覽。</p>}
+      {previewMatches && preview ? <div className="spirit-beast-fusion-preview" data-fusion-preview-ready="true"><img src={speciesArtUrl(preview.speciesId, 192)} alt={`${preview.name}靈獸圖`} width="112" height="112" /><div><strong>融合結果：{preview.name}</strong><span className={gradeClass(preview.grade)}>{gradeLabel(preview.grade)}・{elementLabel(preview.element)}行・{stars(preview.star)}</span><span>精通 {preview.masteries.map((entry) => `${skillLabel(entry.skill)} ${entry.level} 級`).join('、')}</span><span>戰力 {preview.combatPower.toLocaleString('zh-TW')}・工作速度 {preview.effectiveSpeed.toFixed(2)} 倍</span></div></div> : <p className="spirit-beast-muted">選好兩隻靈獸後查看融合結果；選擇或名冊變動後需重新預覽。</p>}
       <div className="spirit-beast-actions"><button type="button" className="small-btn ghost" disabled={!left || !right || busy || !fusion?.canOperate} onClick={requestPreview}>查看融合結果</button><button type="button" className="small-btn" disabled={!previewMatches || busy || !fusion?.canOperate} onClick={() => fusion && previewMatches && sendSpiritBeastCommand({ action: 'fuse', buildingId: fusion.buildingId, beastIds: [leftId, rightId], expectedRevision: view.revision })}>確認融合</button></div>
     </section>
   );

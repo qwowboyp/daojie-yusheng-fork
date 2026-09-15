@@ -7,7 +7,7 @@
 import { Inject, Injectable, Logger, type OnModuleDestroy, type OnModuleInit } from '@nestjs/common';
 import { createHash, randomUUID } from 'node:crypto';
 import type { Pool, PoolClient } from 'pg';
-import { computeCraftSkillExpGain } from '@mud/shared';
+import { computeCraftSkillExpGain, SPIRIT_BEAST_RULES } from '@mud/shared';
 
 import { DatabasePoolProvider } from './database-pool.provider';
 
@@ -427,7 +427,8 @@ export class SpiritBeastPersistenceService implements OnModuleInit, OnModuleDest
       const parents = await lockBeasts(client, parentIds.sort());
       if (parents.length !== 2) throw new Error('SPIRIT_FUSION_PARENT_NOT_FOUND');
       for (const parent of parents) {
-        if (parent.ownerPlayerId !== input.ownerPlayerId || parent.state !== 'warehouse' || parent.favorite || parent.star !== 5) {
+        if (parent.ownerPlayerId !== input.ownerPlayerId || parent.state !== 'warehouse' || parent.favorite
+          || parent.star !== SPIRIT_BEAST_RULES.fusionParentStar || parent.grade === 'immortal') {
           throw new Error('SPIRIT_FUSION_PARENT_NOT_AVAILABLE');
         }
       }
@@ -438,9 +439,9 @@ export class SpiritBeastPersistenceService implements OnModuleInit, OnModuleDest
         `INSERT INTO spirit_beast_instance
           (beast_id, owner_player_id, species_id, grade, element, star, base_combat_power,
            skill_levels, speed_bonus_percent, state, revision)
-         VALUES ($1,$2,$3,$4,$5,3,$6,$7::jsonb,0,'warehouse',1) RETURNING *`,
+         VALUES ($1,$2,$3,$4,$5,$8,$6,$7::jsonb,0,'warehouse',1) RETURNING *`,
         [childId, input.ownerPlayerId, input.childSpeciesId, input.childGrade, input.childElement,
-          Math.max(1, Math.trunc(input.childCombatPower)), JSON.stringify(input.childSkillLevels)],
+          Math.max(1, Math.trunc(input.childCombatPower)), JSON.stringify(input.childSkillLevels), SPIRIT_BEAST_RULES.fusionOutputStar],
       );
       return mapBeastRow(inserted.rows[0]);
     });

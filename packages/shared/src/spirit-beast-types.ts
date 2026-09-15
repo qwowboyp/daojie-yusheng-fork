@@ -152,7 +152,7 @@ export interface SpiritBeastFusionPreview {
   recipeId: string;
   parentIds: [string, string];
   speciesId: string;
-  star: 3;
+  star: 1;
   grade: SpiritBeastGrade;
   element: SpiritBeastElement;
   name: string;

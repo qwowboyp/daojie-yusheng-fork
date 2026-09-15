@@ -140,6 +140,7 @@ async function main(): Promise<void> {
       buildings: [
         { id: incubatorId, defId: 'spirit_incubator_metal', x: 0, y: 0, state: 'active', revision: 7 },
         { id: enhancementId, defId: 'spirit_egg_enhancement_station', x: 1, y: 0, state: 'active', revision: 9 },
+        { id: 'fusion', defId: 'spirit_beast_fusion_station', x: 2, y: 0, state: 'active', revision: 1 },
       ] };
     for (let index = 0; index < 12; index += 1) {
       await service.awardEgg({ sourceRef: `${sourcePrefix}:runtime-egg:${index}`,
@@ -175,7 +176,61 @@ async function main(): Promise<void> {
     assert.equal((await service.listPlayerEggs(runtimePlayerId)).length, 1,
       '真 command 路徑須以蛋 revision 原子扣除十顆素材');
 
+    const beforeFusionIds = new Set((await service.listPlayerBeasts(runtimePlayerId)).map((beast) => beast.beastId));
+    const fusionIds = [randomUUID(), randomUUID()];
+    for (const beastId of fusionIds) {
+      await pool.query(`INSERT INTO spirit_beast_instance
+        (beast_id,owner_player_id,species_id,grade,element,star,base_combat_power,skill_levels,state,revision)
+        VALUES ($1,$2,$3,$4,$5,3,260,$6::jsonb,'warehouse',1)`,
+      [beastId, runtimePlayerId, species.id, species.grade, species.element,
+        JSON.stringify(Object.fromEntries(species.masteries.map((entry) => [entry.skill, entry.level + 10])))]);
+    }
+    const fusionCommand = { action: 'fuse', buildingId: 'fusion', beastIds: fusionIds };
+    const previewResult = await runtime.executeCommand(runtimePlayerId,
+      { ...fusionCommand, action: 'preview_fusion', requestId: `${sourcePrefix}:preview` }, runtimeContext);
+    assert.equal(previewResult.ok, true, previewResult.reasonKey);
+    const preview = previewResult.fusionPreview;
+    assert.equal(preview.star, 1);
+    assert.equal(preview.baseCombatPower, 540);
+    // 預覽後親代變動：交易必須再次校驗，不能消耗四／五星或受保護素材。
+    const persistenceRequest = { operationId: `${sourcePrefix}:fusion-invalid`, ownerPlayerId: runtimePlayerId,
+      parentBeastIds: fusionIds, childSpeciesId: preview.speciesId, childGrade: preview.grade,
+      childElement: preview.element, childCombatPower: preview.baseCombatPower,
+      childSkillLevels: Object.fromEntries(preview.masteries.map((entry) => [entry.skill, entry.level])) };
+    for (const star of [1, 2, 4, 5]) {
+      await pool.query('UPDATE spirit_beast_instance SET star=$2 WHERE beast_id=$1', [fusionIds[0], star]);
+      await assert.rejects(service.fuseBeasts(persistenceRequest), /SPIRIT_FUSION_PARENT_NOT_AVAILABLE/);
+    }
+    await pool.query("UPDATE spirit_beast_instance SET star=3,grade='immortal' WHERE beast_id=ANY($1::uuid[])", [fusionIds]);
+    await assert.rejects(service.fuseBeasts(persistenceRequest), /SPIRIT_FUSION_PARENT_NOT_AVAILABLE/);
+    await pool.query('UPDATE spirit_beast_instance SET grade=$2 WHERE beast_id=ANY($1::uuid[])', [fusionIds, species.grade]);
+    const concurrent = await Promise.all(['fusion-a', 'fusion-b'].map((id) => runtime!.executeCommand(runtimePlayerId,
+      { ...fusionCommand, requestId: `${sourcePrefix}:${id}` }, runtimeContext)));
+    assert.equal(concurrent.filter((result) => result.ok).length, 1, '競爭融合只能產出一隻後代');
+    const successful = concurrent.find((result) => result.ok)!;
+    const fusionReplay = await runtime.executeCommand(runtimePlayerId,
+      { ...fusionCommand, beastIds: [...fusionIds].reverse(), requestId: successful.requestId }, runtimeContext);
+    assert.equal(fusionReplay.ok, true, '親代刪除後相同請求仍應重放成功');
+    const fusionPanel = await runtime.getPanel(runtimePlayerId, runtimeContext);
+    assert.ok(fusionIds.every((id) => !fusionPanel.beasts.some((beast) => beast.instanceId === id)));
+    const offspring = fusionPanel.beasts.filter((beast) => !beforeFusionIds.has(beast.instanceId));
+    assert.equal(offspring.length, 1);
+    assert.equal(offspring[0].speciesId, preview.speciesId);
+    assert.equal(offspring[0].star, 1);
+    assert.equal(offspring[0].combatPower, preview.combatPower);
+    assert.deepEqual(offspring[0].masteries, preview.masteries);
+    assert.equal(offspring[0].effectiveSpeed, preview.effectiveSpeed);
+    const recovered = await service.loadRecoveryState();
+    const recoveredChild = recovered.beasts.find((beast) => beast.beastId === offspring[0].instanceId);
+    // 倉庫獸由 listPlayerBeasts 回讀；恢復清單若含倉庫也必須保持一星。
+    if (recoveredChild) assert.equal(recoveredChild.star, 1);
+    const persistedChild = (await service.listPlayerBeasts(runtimePlayerId)).find((beast) => beast.beastId === offspring[0].instanceId)!;
+    assert.equal(persistedChild.star, 1);
+    assert.equal(persistedChild.baseCombatPower, 540);
+    assert.deepEqual(persistedChild.skillLevels, persistenceRequest.childSkillLevels);
+
     console.log(JSON.stringify({ ok: true, case: 'spirit-beast-persistence', sourceDedupe: true,
+      fusionThreeToOne: true, fusionConcurrentAndReplay: true, fusionPreviewMatchesReadback: true,
       atomicTenMaterialConsume: true, idempotentRandomReplay: true, hatchAdopted: true,
       lateFlushTerminalSafe: true, inventorySlotAndSharedLock: true,
       commandRevisionBindings: ['incubate', 'adopt', 'enhance_egg'] }, null, 2));

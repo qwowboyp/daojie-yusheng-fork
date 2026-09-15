@@ -31,8 +31,10 @@ const mountFixture = String.raw`
     };
     const target = beast('beast-target', 'spirit_beast.human.metal.01', 3);
     const materials = Array.from({ length: 10 }, (_, index) => beast('beast-mat-' + index, 'spirit_beast.human.' + ['metal','wood','water','fire','earth'][index % 5] + '.0' + ((index % 6) + 1), 3));
-    const fusionLeft = beast('fusion-left', 'spirit_beast.human.fire.01', 5);
-    const fusionRight = beast('fusion-right', 'spirit_beast.human.fire.02', 5);
+    const fusionLeft = beast('fusion-left', 'spirit_beast.human.fire.01', 3);
+    const fusionRight = beast('fusion-right', 'spirit_beast.human.fire.02', 3);
+    const wrongStarFusion = beast('fusion-wrong-star', 'spirit_beast.human.fire.03', 4);
+    const immortalFusion = beast('fusion-immortal', 'spirit_beast.immortal.fire.01', 3);
     const activeBeast = beast('active-beast', 'spirit_beast.fan.earth.01', 2, { state: 'idle', summonedSectId: 'proof-sect' });
     const fiveStar = beast('five-star-target', 'spirit_beast.heaven.water.01', 5);
     const outsider = beast('outsider', 'spirit_beast.human.metal.02', 3, { ownerPlayerId: 'someone-else' });
@@ -45,7 +47,7 @@ const mountFixture = String.raw`
     });
     const view = {
       revision: 31, sectId: 'proof-sect', ownerPlayerId: owner,
-      beasts: [target, ...materials, fusionLeft, fusionRight, activeBeast, fiveStar, outsider],
+      beasts: [target, ...materials, fusionLeft, fusionRight, wrongStarFusion, immortalFusion, activeBeast, fiveStar, outsider],
       facilities: [
         facility('incubator', 'spirit_incubator_metal', { name: '庚金孵蛋器', element: 'metal', hatch: { hatchId: 'ready-hatch', ownerPlayerId: owner, buildingId: 'spirit_incubator_metal', element: 'wood', eggStar: 2, state: 'ready', workTotalTicks: 2400, workRemainingTicks: 0, speedMultiplier: 1.5, offspring: readyBeast } }),
         facility('incubator', 'spirit_incubator_wood', { name: '青木孵蛋器', element: 'wood', hatch: { hatchId: 'busy-hatch', ownerPlayerId: owner, buildingId: 'spirit_incubator_wood', element: 'water', eggStar: 1, state: 'incubating', workTotalTicks: 1800, workRemainingTicks: 900, speedMultiplier: 2 } }),
@@ -142,9 +144,9 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
     await tab('incubation');const fire=root.querySelector('[data-incubator-element=fire]');set(fire.querySelector('select'),'egg-earth');await frame();const crossElementSpeed=fire.textContent.includes('2.00 倍');click(fire,'開始孵化');click(root.querySelector('[data-incubator-element=wood]'),'取消孵化');click(root.querySelector('[data-incubator-element=metal]'),'收養靈獸');
     const eggSection=root.querySelector('#spirit-beast-egg-enhance-title').closest('section');set(eggSection.querySelector('select'),'egg-stack-fire');await frame();const eggCounts=eggSection.querySelectorAll('fieldset input[type=number]');set(eggCounts[0],9);set(eggCounts[1],1);await frame();click(eggSection,'確認強化');
     await tab('growth');const growth=root.querySelector('#spirit-beast-growth-title').closest('section'), growthSelect=growth.querySelector('select');const excluded={five:![...growthSelect.options].some((o)=>o.value==='five-star-target'),outsider:![...growthSelect.options].some((o)=>o.value==='outsider')};set(growthSelect,'beast-target');await frame();[...growth.querySelectorAll('fieldset input[type=checkbox]')].slice(0,10).forEach((box)=>box.click());await frame();click(growth,'確認培養');
-    await tab('fusion');const fusion=root.querySelector('#spirit-beast-fusion-title').closest('section'), selects=fusion.querySelectorAll('select');set(selects[0],'fusion-left');await frame();set(selects[1],'fusion-right');await frame();click(fusion,'查看融合結果');await frame();const previewCommand=[...proof.commands].reverse().find((command)=>command.action==='preview_fusion');const preview=proof.shared.previewSpiritBeastFusion(proof.fusionLeft,proof.fusionRight,proof.shared.SPIRIT_BEAST_CATALOG);proof.model.spiritBeastStore.patchState({view:{...proof.model.spiritBeastStore.getState().view,fusionPreview:preview},fusionPreviewReceipt:{requestId:previewCommand.requestId,revision:proof.view.revision}});await frame();const previewReady=Boolean(fusion.querySelector('[data-fusion-preview-ready=true]'));click(fusion,'確認融合');
-    await tab('codex');const codexCount=root.querySelectorAll('[data-species-id]').length;const finder=root.querySelector('#spirit-beast-parent-title').closest('section'),targetSelect=finder.querySelector('select');set(targetSelect,'spirit_beast.immortal.fire.01');await frame();const parentCount=finder.querySelectorAll('.spirit-beast-parent-results li').length;const pairText=finder.textContent.includes('2325 組');
-    return {commands:proof.commands,continuity,crossElementSpeed,excluded,previewReady,codexCount,parentCount,pairText,tabs:[...root.querySelectorAll('[data-spirit-beast-tab]')].map((entry)=>entry.dataset.spiritBeastTab),errors:window.__spiritBeastProofErrors};
+    await tab('fusion');const fusion=root.querySelector('#spirit-beast-fusion-title').closest('section'), selects=fusion.querySelectorAll('select');const fusionExcluded={wrongStar:![...selects[0].options].some((o)=>o.value==='fusion-wrong-star'),immortal:![...selects[0].options].some((o)=>o.value==='fusion-immortal')};set(selects[0],'fusion-left');await frame();set(selects[1],'fusion-right');await frame();click(fusion,'查看融合結果');await frame();const previewCommand=[...proof.commands].reverse().find((command)=>command.action==='preview_fusion');const preview=proof.shared.previewSpiritBeastFusion(proof.fusionLeft,proof.fusionRight,proof.shared.SPIRIT_BEAST_CATALOG);proof.model.spiritBeastStore.patchState({view:{...proof.model.spiritBeastStore.getState().view,fusionPreview:preview},fusionPreviewReceipt:{requestId:previewCommand.requestId,revision:proof.view.revision}});await frame();const previewReady=Boolean(fusion.querySelector('[data-fusion-preview-ready=true]')),previewStarText=fusion.querySelector('.spirit-beast-fusion-preview span')?.textContent||'';click(fusion,'確認融合');
+    await tab('codex');const codexCount=root.querySelectorAll('[data-species-id]').length;const finder=root.querySelector('#spirit-beast-parent-title').closest('section'),targetSelect=finder.querySelector('select');set(targetSelect,'spirit_beast.immortal.fire.01');await frame();const parentCount=finder.querySelectorAll('.spirit-beast-parent-results li').length;const pairText=finder.textContent.includes('1860 組');
+    return {commands:proof.commands,continuity,crossElementSpeed,excluded,fusionExcluded,previewReady,previewStarText,previewStar:preview?.star,codexCount,parentCount,pairText,tabs:[...root.querySelectorAll('[data-spirit-beast-tab]')].map((entry)=>entry.dataset.spiritBeastTab),errors:window.__spiritBeastProofErrors};
   })()`);
   const actions = new Set(interactionResult.commands.map((command) => command.action));
   for (const action of ['summon','recall','protect','incubate','cancel_incubation','adopt','enhance_egg','cultivate','preview_fusion','fuse','set_mine_enabled','set_crop_plan','cancel_crop','deposit','withdraw','queue_craft','cancel_order','manual_work','cancel_manual_work','buy_seed']) assert(actions.has(action), `未送出 ${action} payload`);
@@ -160,9 +162,14 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
   assert.deepEqual(interactionResult.continuity, { sameNode: true, focused: true, value: '2', scroll: interactionResult.continuity.beforeScroll, beforeScroll: interactionResult.continuity.beforeScroll }, '快照 patch 未保留表單節點、焦點、值或捲動');
   assert.equal(interactionResult.crossElementSpeed, true, '跨五行靈蛋未顯示 shared 孵化速度');
   assert.deepEqual(interactionResult.excluded, { five: true, outsider: true }, '培養主獸未排除五星或他人靈獸');
+  assert.deepEqual(interactionResult.fusionExcluded, { wrongStar: true, immortal: true }, '融合候選未排除非精確三星或仙品靈獸');
   assert.equal(interactionResult.previewReady, true, '權威融合預覽未綁定 requestId／parents／revision');
+  assert.equal(interactionResult.previewStar, 1, '融合預覽必須為一星靈獸');
+  assert.match(interactionResult.previewStarText, /^.+・.+行・★$/, '融合預覽未精確顯示一星');
+  assert(interactionResult.commands.some((command) => command.action === 'preview_fusion' && command.beastIds[0] === 'fusion-left' && command.beastIds[1] === 'fusion-right'), '三星融合預覽 payload 錯誤');
+  assert(interactionResult.commands.some((command) => command.action === 'fuse' && command.beastIds[0] === 'fusion-left' && command.beastIds[1] === 'fusion-right'), '三星確認融合 payload 錯誤');
   assert.equal(interactionResult.codexCount, 150, '圖鑑未完整呈現 150 種靈獸');
-  assert(interactionResult.parentCount > 0 && interactionResult.pairText, '依目標查父母未走完整 2325 組配方');
+  assert(interactionResult.parentCount > 0 && interactionResult.pairText, '依目標查父母未走完整 1860 組配方');
   assert.deepEqual(interactionResult.errors, [], '靈獸面板出現瀏覽器執行錯誤');
 
   const modes = [
@@ -180,7 +187,7 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
     assert.equal(layout.active, mode.tab, `${mode.id} 分頁未開啟`);
     assert.equal(layout.theme, mode.theme, `${mode.id} 主題未套用`);
     if (mode.mobile) assert(layout.minTouch >= 38, `${mode.id} 可見控制過小：${layout.minTouch}`);
-    const brokenImages = await cdp.evaluate(`(async()=>{const images=[...document.querySelectorAll('#spirit-beast-proof-shell img')];await Promise.allSettled(images.map((img)=>img.decode()));return images.filter((img)=>!img.naturalWidth).map((img)=>img.src);})()`);
+    const brokenImages = await cdp.evaluate(`(async()=>{const shell=document.getElementById('spirit-beast-proof-shell'),bounds=shell.getBoundingClientRect(),images=[...shell.querySelectorAll('img')].filter((img)=>{const rect=img.getBoundingClientRect();return rect.width>0&&rect.height>0&&rect.bottom>=bounds.top&&rect.top<=bounds.bottom;});await Promise.allSettled(images.map((img)=>Promise.race([img.decode(),new Promise((resolve)=>setTimeout(resolve,5000))])));return images.filter((img)=>!img.naturalWidth).map((img)=>img.src);})()`);
     assert.deepEqual(brokenImages, [], `${mode.id} 靈獸或工位圖片無法解碼`);
     await capture(cdp, mode.id);
   }
@@ -199,6 +206,7 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
   assert(controllerResult.receipt?.requestId && controllerResult.receipt.revision === 31, '融合預覽 receipt 未綁 requestId/revision');
   assert.equal(controllerResult.staleCleared, true, '較新快照未清除過期融合預覽');
   assert.deepEqual(controllerResult.pending, ['keep-request'], 'command result 移除了其他 requestId');
+  console.log('SPIRIT_BEAST_PANEL_BROWSER_ASSERTIONS:PASS screenshots=4');
 });
 
 console.log(`SPIRIT_BEAST_PANEL_BROWSER_PROOF:PASS screenshots=4 dir=${artifactDir}`);

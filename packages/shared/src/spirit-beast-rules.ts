@@ -15,6 +15,7 @@ export const SPIRIT_BEAST_RULES = Object.freeze({
   version: 1, normalEggDropProbability: 0.00001, bossEggDropProbability: 0.0001,
   hatchBaseWorkTicks: 3600, evolutionMaterialCount: 10, evolutionSuccessBasisPoints: 2500,
   maxStar: 5, baseCombatGrowth: 1.3, skillLevelsPerStar: 5, speedBonusPerStar: 0.1,
+  fusionParentStar: 3, fusionOutputStar: 1, fusionVersion: 2,
   warehouseCapacity: 300, playerSummonLimit: 3, sectSummonLimit: 30, workSearchDistance: 16,
   cropGrowthTicks: 3600, cropOutputCount: 30, sowWorkTicks: 10, waterWorkTicks: 5, harvestWorkTicks: 10,
   ironMineWorkTicks: 120, spiritStoneMineWorkTicks: 600, playerStationSuccessBonus: 0.1,
@@ -126,9 +127,9 @@ export function validateSpiritBeastCultivation(
 export function resolveSpiritBeastFusionSpecies(
   a: SpiritBeastSpecies, b: SpiritBeastSpecies, catalog: readonly SpiritBeastSpecies[],
 ): SpiritBeastSpecies | null {
-  if (a.grade !== b.grade) return null;
+  if (a.grade !== b.grade || a.grade === 'immortal') return null;
   const index = SPIRIT_BEAST_GRADES.indexOf(a.grade);
-  const grade = SPIRIT_BEAST_GRADES[Math.min(index + 1, 4)];
+  const grade = SPIRIT_BEAST_GRADES[index + 1];
   let element = a.element;
   let slot = a.slot;
   if (a.id !== b.id) {
@@ -136,7 +137,7 @@ export function resolveSpiritBeastFusionSpecies(
     const high = Math.max(a.slot, b.slot);
     const namedSlot = a.element === b.element && (high - low === 1 || (low === 0 && high === 5))
       ? (low === 0 && high === 5 ? 5 : low) : null;
-    if (namedSlot !== null) slot = index === 4 ? (namedSlot + 2) % 6 : namedSlot;
+    if (namedSlot !== null) slot = namedSlot;
     else {
       if (a.element === b.element) element = a.element;
       else if (PRODUCES[a.element] === b.element) element = b.element;
@@ -151,7 +152,8 @@ export function resolveSpiritBeastFusionSpecies(
 export function previewSpiritBeastFusion(
   a: SpiritBeastRecord, b: SpiritBeastRecord, catalog: readonly SpiritBeastSpecies[],
 ): SpiritBeastFusionPreview | null {
-  if (a.instanceId === b.instanceId || a.ownerPlayerId !== b.ownerPlayerId || a.star !== 5 || b.star !== 5
+  if (a.instanceId === b.instanceId || a.ownerPlayerId !== b.ownerPlayerId
+    || a.star !== SPIRIT_BEAST_RULES.fusionParentStar || b.star !== SPIRIT_BEAST_RULES.fusionParentStar
     || a.state !== 'stored' || b.state !== 'stored' || a.protected || b.protected) return null;
   const sa = catalog.find((entry) => entry.id === a.speciesId);
   const sb = catalog.find((entry) => entry.id === b.speciesId);
@@ -165,10 +167,11 @@ export function previewSpiritBeastFusion(
     * (child.baseCombatPowerMax - child.baseCombatPowerMin));
   const parents = [a.speciesId, b.speciesId].sort();
   return {
-    recipeId: `spirit_fusion.v1:${parents[0]}:${parents[1]}`, parentIds: [a.instanceId, b.instanceId],
-    speciesId: child.id, star: 3, grade: child.grade, element: child.element, name: child.name,
-    masteries: computeSpiritBeastMasteries(child, 3), baseCombatPower,
-    combatPower: computeSpiritBeastCombatPower(baseCombatPower, 3), effectiveSpeed: computeSpiritBeastSpeed(child, 3),
+    recipeId: `spirit_fusion.v${SPIRIT_BEAST_RULES.fusionVersion}:${parents[0]}:${parents[1]}`, parentIds: [a.instanceId, b.instanceId],
+    speciesId: child.id, star: SPIRIT_BEAST_RULES.fusionOutputStar, grade: child.grade, element: child.element, name: child.name,
+    masteries: computeSpiritBeastMasteries(child, SPIRIT_BEAST_RULES.fusionOutputStar), baseCombatPower,
+    combatPower: computeSpiritBeastCombatPower(baseCombatPower, SPIRIT_BEAST_RULES.fusionOutputStar),
+    effectiveSpeed: computeSpiritBeastSpeed(child, SPIRIT_BEAST_RULES.fusionOutputStar),
   };
 }
 
