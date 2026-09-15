@@ -1,0 +1,32 @@
+Generate only production game artwork: exactly thirty completely distinct xianxia spirit beasts arranged in six columns and five rows using INVISIBLE placement regions on a completely flat uniform #ff00ff magenta background. Pure cutout asset collection, never a catalogue, table, sheet, card, or infographic. Every creature must follow its assigned description and have a unique mythology silhouette; no ordinary real-world mammals, birds, reptiles or insects, no recolours, and no repeated body plan. large luminous horns and celestial cloud ribbons. Cohesive polished hand-painted xianxia game art, three-quarter view facing right, full body. Each complete subject, including all glow, horns, tails, wings and accessories, fits inside the central 60 percent of its placement region with empty #ff00ff margins; no overlap or cropping. No ground, pedestal, cast shadow, text, letters, Chinese characters, numbers, labels, captions, titles, signatures, watermarks, grid lines, separators, borders, frames, cards or panels. Do not render a checkerboard. The whole background must be exact RGB #ff00ff with no texture, gradient, reflection or other marks. Original mythology-inspired designs only; do not copy an existing franchise.
+
+row 1 column 1: white tiger sovereign with plated silver mane, three crystal antlers and comet-metal stripes
+row 1 column 2: golden roc with enormous swept wings, hooked beak and six long blade-feather tails
+row 1 column 3: black-gold lion-dragon with a serrated metal carapace and a crown of floating iron petals
+row 1 column 4: four-legged jade pixiu with a split spiral horn, star-crystal belly and cloud tail
+row 1 column 5: golden rhinoceros qilin with a long faceted horn and mineral scale mantle
+row 1 column 6: slender imperial yinglong with four limbs, bronze wings, silver whiskers and orbiting metal motes
+row 2 column 1: azure deer-dragon with bamboo antlers, leaf mane and translucent green hoof mist
+row 2 column 2: white bai ze guardian with layered emerald leaf fins and a flowering jade crown
+row 2 column 3: long-armed sacred ape with living-root shoulder mantle and a branch-antler crown
+row 2 column 4: emerald blue phoenix with peacock-like tail eyes made of leaves and translucent wing tips
+row 2 column 5: nine-colour deer qilin with petal scale mane, flowering antlers and vine tail
+row 2 column 6: long-bodied green qilin with a canopy mane, jade bark plates and cloud hooves
+row 3 column 1: ancient black turtle-dragon with wave-carved shell, pearl horns and a complete serpent tail
+row 3 column 2: sea-blue eastern dragon with fins, whiskers and a crescent of water behind its back
+row 3 column 3: colossal whale-like celestial fish with broad moonlit fins, a full fish tail and drifting pearl bubbles, never a dragon
+row 3 column 4: elegant aquatic mermaid-beast with a fish tail, glass fins and a crown of sea crystals
+row 3 column 5: blue water qilin with spiral horns, flowing fin mane and a circular rain halo
+row 3 column 6: ice-white eastern dragon with crystalline fins, four limbs and a frosted mirror halo
+row 4 column 1: scarlet phoenix with broad ember wings, a long fan tail and a restrained sun disk behind it
+row 4 column 2: gold and vermilion alchemy phoenix with a glowing crystal breast and nine layered tail plumes
+row 4 column 3: three-legged golden sun crow with flame-feather wings, circular solar halo and visible talons
+row 4 column 4: massive flame lion-dragon with obsidian mane, molten horns and ember cloud tail
+row 4 column 5: one-legged vermilion divine bird with a long flame crest and two curling tail banners
+row 4 column 6: long crimson candle dragon with a glowing horn crown, four limbs and a fire-ring breath halo
+row 5 column 1: massive earth turtle-dragon with a mountain shell, jade soil horns and four stone paws
+row 5 column 2: broad shouldered sacred bear with a carved cliff mantle, amber crystal mane and cloud claws
+row 5 column 3: nine-tailed tiger guardian with a humanlike jade mask, striped mineral fur and mountain halo
+row 5 column 4: four-legged mountain qilin with terraced stone plates, twin horns and a misty waterfall tail
+row 5 column 5: ancient giant tortoise with a carved tablet shell, crystal stalactite mane and serpent tail
+row 5 column 6: yellow earth dragon with a long scaled body, mineral whiskers, four limbs and floating sandstone rings

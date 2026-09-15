@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 import { SPIRIT_BEAST_CATALOG, SPIRIT_BEAST_GRADES, SPIRIT_BEAST_SKILLS, resolveSpiritBeastFusionSpecies, type SpiritBeastSpecies } from '@mud/shared';
-import { elementLabel, gradeClass, gradeLabel, skillLabel, speciesArtUrl } from './spirit-beast-display';
+import { elementLabel, gradeLabel, skillLabel, speciesArtUrl } from './spirit-beast-display';
 
 interface FusionSpeciesPair { left: SpiritBeastSpecies; right: SpiritBeastSpecies; child: SpiritBeastSpecies }
 const ALL_FUSION_SPECIES_PAIRS: FusionSpeciesPair[] = (() => {
@@ -45,9 +45,10 @@ export const SpiritBeastCodexTab = memo(function SpiritBeastCodexTab() {
         {species.length === 0 ? <div className="spirit-beast-empty"><p>沒有符合條件的靈獸，試試其他名稱或清除篩選。</p><button type="button" className="small-btn" onClick={() => { setGrade('all'); setElement('all'); setSkill('all'); setQuery(''); }}>清除篩選</button></div> : null}
         <div className="spirit-beast-codex-grid">
           {species.map((entry) => (
-            <article key={entry.id} data-species-id={entry.id}>
-              <img src={speciesArtUrl(entry.id)} srcSet={`${speciesArtUrl(entry.id)} 1x, ${speciesArtUrl(entry.id, 192)} 2x`} alt={`${entry.name}圖`} width="96" height="96" loading="lazy" decoding="async" />
-              <div><strong>{entry.name}</strong><span className={gradeClass(entry.grade)}>{gradeLabel(entry.grade)}・{elementLabel(entry.element)}行</span><span>{entry.masteries.map((mastery) => `${skillLabel(mastery.skill)} ${mastery.level} 級`).join('、')}</span>
+            <article key={entry.id} data-species-id={entry.id} data-grade={entry.grade} className="spirit-beast-codex-card">
+              <div className="spirit-beast-codex-card__art"><span className="spirit-beast-codex-card__seal">{gradeLabel(entry.grade)}</span>
+              <img src={speciesArtUrl(entry.id, 192)} alt={`${entry.name}圖`} width="192" height="192" loading="lazy" decoding="async" />
+              </div><div className="spirit-beast-codex-card__body"><strong>{entry.name}</strong><span className="spirit-beast-codex-card__identity">{gradeLabel(entry.grade)}・{elementLabel(entry.element)}行</span><span>{entry.masteries.map((mastery) => `${skillLabel(mastery.skill)} ${mastery.level} 級`).join('、')}</span>
                 <p>{entry.name}為{elementLabel(entry.element)}行{gradeLabel(entry.grade)}靈獸，{entry.masteries.length === 1 ? '專精' : '兼擅'}{entry.masteries.map((mastery) => skillLabel(mastery.skill)).join('與')}，可協助宗門完成對應工作。</p>
                 <span>基礎工作速度加成 ＋{entry.baseSpeedBonusPercent}%</span>
                 <span>基礎戰鬥力 {entry.baseCombatPowerMin}～{entry.baseCombatPowerMax}</span>

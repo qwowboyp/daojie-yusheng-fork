@@ -17,7 +17,7 @@ export const elementLabel = (element: SpiritBeastElement): string => SPIRIT_BEAS
 export const skillLabel = (skill: SpiritBeastSkill): string => SPIRIT_BEAST_SKILL_NAMES[skill];
 export const stars = (star: number): string => '★'.repeat(Math.max(0, Math.min(5, star)));
 export const gradeClass = (grade: SpiritBeastGrade): string => `spirit-beast-grade spirit-beast-grade--${grade}`;
-export const speciesArtUrl = (speciesId: string, size: 96 | 192 = 96): string => `/assets/spirit-beasts/species/${speciesId}-${size}.webp`;
+export { spiritBeastArtUrl as speciesArtUrl } from '../../../content/spirit-beast-art';
 
 export function stateLabel(state: SpiritBeastState): string {
   return ({

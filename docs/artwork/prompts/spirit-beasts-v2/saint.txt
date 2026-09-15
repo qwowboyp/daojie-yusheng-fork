@@ -1,0 +1,32 @@
+Generate only production game artwork: exactly thirty completely distinct xianxia spirit beasts arranged in six columns and five rows using INVISIBLE placement regions on a completely flat uniform #ff00ff magenta background. Pure cutout asset collection, never a catalogue, table, sheet, card, or infographic. Every creature must follow its assigned description and have a unique mythology silhouette; no ordinary real-world mammals, birds, reptiles or insects, no recolours, and no repeated body plan. premium detailed fantasy RPG art: radiant celestial apparitions, luminous filigree scales, layered translucent aura, ornate divine halo, crystalline feather and cloud-tail details, visibly far more magnificent than heaven grade. Cohesive polished hand-painted xianxia game art, three-quarter view facing right, full body. Each complete subject, including all glow, horns, tails, wings and accessories, fits inside the central 60 percent of its placement region with empty #ff00ff margins; no overlap or cropping. No ground, pedestal, cast shadow, text, letters, Chinese characters, numbers, labels, captions, titles, signatures, watermarks, grid lines, separators, borders, frames, cards or panels. Do not render a checkerboard. The whole background must be exact RGB #ff00ff with no texture, gradient, reflection or other marks. Original mythology-inspired designs only; do not copy an existing franchise.
+
+row 1 column 1: radiant platinum tiger emperor with a crown of seven crystal antlers, layered metal mane and star-ring tail
+row 1 column 2: vast gold roc with armour-like feathers, a solar crest and six translucent comet tails
+row 1 column 3: black celestial lion-dragon with a silver blade mane, three horns and a circular meteor halo
+row 1 column 4: jade pixiu sovereign with split antlers, gold scale belly and a spiralling nebula tail
+row 1 column 5: massive gold rhinoceros spirit with a floating crystal horn crown and layered scale mantle
+row 1 column 6: long imperial metal dragon with four limbs, broad feather wings, silver whiskers and a constellation halo
+row 2 column 1: white bai ze with jade leaf fins, flower antlers and a green aurora mane
+row 2 column 2: long green eastern dragon with a living-vine mane, leaf wings and luminous root whiskers
+row 2 column 3: colossal sacred ape with bark armour, flowering antler crown and cloud sleeves from its shoulders
+row 2 column 4: nine-tailed flower fox with petal scale tails, luminous vine ears and a green moon halo
+row 2 column 5: emerald phoenix with large jade wings, layered blossom tail plumes and a leaf crown
+row 2 column 6: pale jade qilin with branch horns, crystal flower mane and long cloud tail
+row 3 column 1: black sea turtle-dragon with a pearl mountain shell, wave fins and a star-water halo
+row 3 column 2: enormous dark-blue whale-like celestial fish with broad fins, a full tail and moonlit pearl mist, never a dragon
+row 3 column 3: silver eastern river dragon with four limbs, ice fins, antlers and a flowing water ring
+row 3 column 4: aquatic fish sovereign with a full scaled tail, glass fins and a sea-crystal crown
+row 3 column 5: blue water qilin with twin spiral horns, tide mane and a raindrop constellation halo
+row 3 column 6: deep abyss eastern dragon with moonstone fins, white whiskers and cloud-water tail
+row 4 column 1: three-legged golden sun crow with colossal flame wings, a solar disk and a fan of ember tail feathers
+row 4 column 2: vermilion alchemy phoenix with nine crystal tail plumes, a jade-red breast gem and flame halo
+row 4 column 3: scarlet phoenix sovereign with layered wing armour, long fire tail and crown plume
+row 4 column 4: red lion-dragon emperor with an obsidian flame mane, horn crown and molten cloud tail
+row 4 column 5: one-legged vermilion divine bird with a blazing crest, two long tail streamers and a fire-ring halo
+row 4 column 6: ancient candle dragon with a long crimson body, four limbs, crystal horns and spiral flame breath
+row 5 column 1: earth qilin sovereign with four jade horns, terraced mineral scales and cloud hooves
+row 5 column 2: giant turtle-dragon with a carved tablet shell, amber crystal crown and serpent tail
+row 5 column 3: towering mountain guardian with a humanlike jade mask, nine mineral tails and cliff mantle
+row 5 column 4: four-legged stone guardian with a mountain crown, waterfall tail and layered slate wings
+row 5 column 5: long earth serpent dragon with amber scales, crystal whiskers and floating sandstone halos
+row 5 column 6: noble listening guardian beast with huge leaflike ears, jade antlers, stone mane and cloud paws

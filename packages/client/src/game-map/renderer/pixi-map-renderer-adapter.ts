@@ -1,3 +1,4 @@
+import { spiritBeastArtUrl } from '../../content/spirit-beast-art';
 /**
  * 本文件属于客户端地图模块，负责主世界 Pixi/WebGL2 渲染后端。
  *
@@ -709,7 +710,7 @@ export class PixiMapRendererAdapter {
   }
 
   private loadSpiritBeastTexture(view: SpiritBeastView, speciesId: string): void {
-    const src = `/assets/spirit-beasts/species/${encodeURIComponent(speciesId)}-192.webp`;
+    const src = spiritBeastArtUrl(speciesId, 192);
     void Assets.load<Texture>(src).then((texture) => {
       if (!view.root.destroyed && view.entry.speciesId === speciesId) view.sprite.texture = texture;
     }).catch(() => undefined);

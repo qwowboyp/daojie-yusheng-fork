@@ -1,0 +1,32 @@
+Generate only production game artwork: exactly thirty completely distinct xianxia spirit beasts arranged in six columns and five rows using INVISIBLE placement regions on a completely flat uniform #ff00ff magenta background. Pure cutout asset collection, never a catalogue, table, sheet, card, or infographic. Every creature must follow its assigned description and have a unique mythology silhouette; no ordinary real-world mammals, birds, reptiles or insects, no recolours, and no repeated body plan. ornate spiritual regalia. Cohesive polished hand-painted xianxia game art, three-quarter view facing right, full body. Each complete subject, including all glow, horns, tails, wings and accessories, fits inside the central 60 percent of its placement region with empty #ff00ff margins; no overlap or cropping. No ground, pedestal, cast shadow, text, letters, Chinese characters, numbers, labels, captions, titles, signatures, watermarks, grid lines, separators, borders, frames, cards or panels. Do not render a checkerboard. The whole background must be exact RGB #ff00ff with no texture, gradient, reflection or other marks. Original mythology-inspired designs only; do not copy an existing franchise.
+
+row 1 column 1: silver horned metal guardian beast with a chiselled jade mask, plated mane and three cloud hooves visible
+row 1 column 2: sleek silver falcon spirit with a bronze crest, broad layered wings and long ringing tail feathers
+row 1 column 3: iron-toothed lion-dragon with black plated shoulders, a heavy crystal dorsal fin and feline paws
+row 1 column 4: slender gold-edged marten spirit with a forked lightning tail and translucent crystal ear fins
+row 1 column 5: graceful gold-maned antelope qilin with spiral horns, scale shoulders and cloud hooves
+row 1 column 6: white jade pixiu guardian with a magnetic shard mane, curled cloud tail and split horn
+row 2 column 1: moss-antlered deer spirit with fern chest fur, jade leaf scales and a soft green cloud tail
+row 2 column 2: nine-tailed flower fox with separate vine-wrapped tails, blossom ears and leaf-shaped shoulder fins
+row 2 column 3: long-armed tree ape with a hollow jadewood crown, root bracers and a flowering mane
+row 2 column 4: emerald crane-phoenix with a crown crest, leaf feathers and two complete ribbon-like tail plumes
+row 2 column 5: forest qilin with a woven vine mane, green crystal horn and cloven cloud hooves
+row 2 column 6: dream tapir with a jade mask, flowered curled tail, glowing seed pods and short trunk
+row 3 column 1: cold spring turtle-dragon with a pearl-carved shell, four paws and a long serpent tail
+row 3 column 2: blue-green eastern water dragon with translucent fins, antlers and a wave-shaped cloud tail
+row 3 column 3: small moonlit fish-dragon with a full finned body, pearl scales and flowing dorsal ribbons
+row 3 column 4: glass sea-horse spirit with a curled fish tail, fin-wings and a crystal coral crown
+row 3 column 5: water mirror carp-qilin with a broad fish tail, spiral horn and ripple halo
+row 3 column 6: mist-sea whale-like spirit fish with broad fins, a full fish tail and cloud-water mane, never a winged dragon
+row 4 column 1: vermilion fire crane with complete long legs, crystal wing feathers and two flame tail plumes
+row 4 column 2: red winged nine-tail fox with a charcoal mane, separate glowing tails and ember ear tufts
+row 4 column 3: small fire phoenix with a gold breast crystal, fully spread flame wings and a long fan tail
+row 4 column 4: molten lion-dragon with obsidian horn crown, ember mane and plated paws
+row 4 column 5: scarlet fire qilin with a faceted horn, molten scale mantle and curled flame cloud tail
+row 4 column 6: candle-flame phoenix spirit with a crescent flame halo, long crest and six individual tail feathers
+row 5 column 1: mountain rhinoceros guardian with a jade crystal horn, layered cliff armour and four cloud hooves
+row 5 column 2: broad winged sacred bear with an amber crystal mane, carved stone shoulder mantle and cloud claws
+row 5 column 3: earth qilin with mineral antlers, sandglass tail plume and terraced scale plates
+row 5 column 4: green-grey guardian beast with a forked stone horn, layered shale mane and a ring of soil mist
+row 5 column 5: ancient turtle-dragon with a stone tablet shell, quartz stalactite crest and serpent tail
+row 5 column 6: massive cliff ape with long crystal-braced arms, a cloud mane and a crown of small geodes

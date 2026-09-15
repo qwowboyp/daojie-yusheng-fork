@@ -3,7 +3,7 @@
   "species": [
     {
       "id": "spirit_beast.fan.metal.01",
-      "name": "銀鬚尋鐵鼠",
+      "name": "雲鋒靈鹿",
       "grade": "fan",
       "element": "metal",
       "slot": 0,
@@ -20,7 +20,7 @@
     },
     {
       "id": "spirit_beast.fan.metal.02",
-      "name": "銅喙雀",
+      "name": "銀羽靈鷹",
       "grade": "fan",
       "element": "metal",
       "slot": 1,
@@ -37,7 +37,7 @@
     },
     {
       "id": "spirit_beast.fan.metal.03",
-      "name": "鐵背甲",
+      "name": "玄鐵背猊",
       "grade": "fan",
       "element": "metal",
       "slot": 2,
@@ -54,7 +54,7 @@
     },
     {
       "id": "spirit_beast.fan.metal.04",
-      "name": "鐮尾貂",
+      "name": "星鋒九尾",
       "grade": "fan",
       "element": "metal",
       "slot": 3,
@@ -75,7 +75,7 @@
     },
     {
       "id": "spirit_beast.fan.metal.05",
-      "name": "錘角羊",
+      "name": "鎏金靈羚",
       "grade": "fan",
       "element": "metal",
       "slot": 4,
@@ -96,7 +96,7 @@
     },
     {
       "id": "spirit_beast.fan.metal.06",
-      "name": "銀爪鼬",
+      "name": "磁尾幼螭",
       "grade": "fan",
       "element": "metal",
       "slot": 5,
@@ -117,7 +117,7 @@
     },
     {
       "id": "spirit_beast.fan.wood.01",
-      "name": "藥耳兔",
+      "name": "琅葉麋",
       "grade": "fan",
       "element": "wood",
       "slot": 0,
@@ -134,7 +134,7 @@
     },
     {
       "id": "spirit_beast.fan.wood.02",
-      "name": "青芽雀",
+      "name": "青藤翼狐",
       "grade": "fan",
       "element": "wood",
       "slot": 1,
@@ -151,7 +151,7 @@
     },
     {
       "id": "spirit_beast.fan.wood.03",
-      "name": "藤尾狸",
+      "name": "芳華翼猊",
       "grade": "fan",
       "element": "wood",
       "slot": 2,
@@ -168,7 +168,7 @@
     },
     {
       "id": "spirit_beast.fan.wood.04",
-      "name": "松果獾",
+      "name": "翠冠靈鶴",
       "grade": "fan",
       "element": "wood",
       "slot": 3,
@@ -189,7 +189,7 @@
     },
     {
       "id": "spirit_beast.fan.wood.05",
-      "name": "葉冠蜥",
+      "name": "木靈青鹿",
       "grade": "fan",
       "element": "wood",
       "slot": 4,
@@ -210,7 +210,7 @@
     },
     {
       "id": "spirit_beast.fan.wood.06",
-      "name": "花鬚貘",
+      "name": "芝雲神貘",
       "grade": "fan",
       "element": "wood",
       "slot": 5,
@@ -231,7 +231,7 @@
     },
     {
       "id": "spirit_beast.fan.water.01",
-      "name": "滴露獺",
+      "name": "瀲光靈鯢",
       "grade": "fan",
       "element": "water",
       "slot": 0,
@@ -248,7 +248,7 @@
     },
     {
       "id": "spirit_beast.fan.water.02",
-      "name": "泡泡龜",
+      "name": "月潮飛玄龜",
       "grade": "fan",
       "element": "water",
       "slot": 1,
@@ -265,7 +265,7 @@
     },
     {
       "id": "spirit_beast.fan.water.03",
-      "name": "寒苔蛙",
+      "name": "雲鰭青螭",
       "grade": "fan",
       "element": "water",
       "slot": 2,
@@ -282,7 +282,7 @@
     },
     {
       "id": "spirit_beast.fan.water.04",
-      "name": "溪鰭鯢",
+      "name": "碧渦海馬",
       "grade": "fan",
       "element": "water",
       "slot": 3,
@@ -303,7 +303,7 @@
     },
     {
       "id": "spirit_beast.fan.water.05",
-      "name": "月貝螺",
+      "name": "珠霧蝶翼麟",
       "grade": "fan",
       "element": "water",
       "slot": 4,
@@ -324,7 +324,7 @@
     },
     {
       "id": "spirit_beast.fan.water.06",
-      "name": "墨尾鴨",
+      "name": "玄波幼螭",
       "grade": "fan",
       "element": "water",
       "slot": 5,
@@ -345,7 +345,7 @@
     },
     {
       "id": "spirit_beast.fan.fire.01",
-      "name": "炭尾狐",
+      "name": "焰翎靈鶴",
       "grade": "fan",
       "element": "fire",
       "slot": 0,
@@ -362,7 +362,7 @@
     },
     {
       "id": "spirit_beast.fan.fire.02",
-      "name": "燈芯蛾",
+      "name": "赤燼翼狐",
       "grade": "fan",
       "element": "fire",
       "slot": 1,
@@ -379,7 +379,7 @@
     },
     {
       "id": "spirit_beast.fan.fire.03",
-      "name": "赤喙鴉",
+      "name": "火羽鸞雛",
       "grade": "fan",
       "element": "fire",
       "slot": 2,
@@ -396,7 +396,7 @@
     },
     {
       "id": "spirit_beast.fan.fire.04",
-      "name": "火絨貂",
+      "name": "熾角狴犴",
       "grade": "fan",
       "element": "fire",
       "slot": 3,
@@ -417,7 +417,7 @@
     },
     {
       "id": "spirit_beast.fan.fire.05",
-      "name": "焦角豕",
+      "name": "丹霞靈獬",
       "grade": "fan",
       "element": "fire",
       "slot": 4,
@@ -438,7 +438,7 @@
     },
     {
       "id": "spirit_beast.fan.fire.06",
-      "name": "燭鱗蛇",
+      "name": "燈魄鳳靈",
       "grade": "fan",
       "element": "fire",
       "slot": 5,
@@ -459,7 +459,7 @@
     },
     {
       "id": "spirit_beast.fan.earth.01",
-      "name": "陶甲獾",
+      "name": "靈岩幼獬",
       "grade": "fan",
       "element": "earth",
       "slot": 0,
@@ -476,7 +476,7 @@
     },
     {
       "id": "spirit_beast.fan.earth.02",
-      "name": "岩耳兔",
+      "name": "山紋翼羆",
       "grade": "fan",
       "element": "earth",
       "slot": 1,
@@ -493,7 +493,7 @@
     },
     {
       "id": "spirit_beast.fan.earth.03",
-      "name": "砂背鼠",
+      "name": "坤砂靈羚",
       "grade": "fan",
       "element": "earth",
       "slot": 2,
@@ -510,7 +510,7 @@
     },
     {
       "id": "spirit_beast.fan.earth.04",
-      "name": "泥角牛",
+      "name": "玉壤靈犀",
       "grade": "fan",
       "element": "earth",
       "slot": 3,
@@ -531,7 +531,7 @@
     },
     {
       "id": "spirit_beast.fan.earth.05",
-      "name": "頁岩龜",
+      "name": "石髓龍龜",
       "grade": "fan",
       "element": "earth",
       "slot": 4,
@@ -552,7 +552,7 @@
     },
     {
       "id": "spirit_beast.fan.earth.06",
-      "name": "石臂猿",
+      "name": "雲嶽角猊",
       "grade": "fan",
       "element": "earth",
       "slot": 5,
@@ -573,7 +573,7 @@
     },
     {
       "id": "spirit_beast.human.metal.01",
-      "name": "銅鱗穿山獸",
+      "name": "玄鋒獬豸",
       "grade": "human",
       "element": "metal",
       "slot": 0,
@@ -590,7 +590,7 @@
     },
     {
       "id": "spirit_beast.human.metal.02",
-      "name": "銀鈴隼",
+      "name": "鳴金靈隼",
       "grade": "human",
       "element": "metal",
       "slot": 1,
@@ -607,7 +607,7 @@
     },
     {
       "id": "spirit_beast.human.metal.03",
-      "name": "鐵牙獠犬",
+      "name": "星鎧猙獸",
       "grade": "human",
       "element": "metal",
       "slot": 2,
@@ -624,7 +624,7 @@
     },
     {
       "id": "spirit_beast.human.metal.04",
-      "name": "斷礦獾",
+      "name": "鎏電靈貂",
       "grade": "human",
       "element": "metal",
       "slot": 3,
@@ -645,7 +645,7 @@
     },
     {
       "id": "spirit_beast.human.metal.05",
-      "name": "鎏尾蜥",
+      "name": "斷嶽金羚",
       "grade": "human",
       "element": "metal",
       "slot": 4,
@@ -666,7 +666,7 @@
     },
     {
       "id": "spirit_beast.human.metal.06",
-      "name": "金鬃羚",
+      "name": "白玉貔靈",
       "grade": "human",
       "element": "metal",
       "slot": 5,
@@ -687,7 +687,7 @@
     },
     {
       "id": "spirit_beast.human.wood.01",
-      "name": "苔角鹿",
+      "name": "青蘿靈鹿",
       "grade": "human",
       "element": "wood",
       "slot": 0,
@@ -704,7 +704,7 @@
     },
     {
       "id": "spirit_beast.human.wood.02",
-      "name": "靈芝貘",
+      "name": "百花九尾",
       "grade": "human",
       "element": "wood",
       "slot": 1,
@@ -721,7 +721,7 @@
     },
     {
       "id": "spirit_beast.human.wood.03",
-      "name": "藥囊狸",
+      "name": "建木靈猿",
       "grade": "human",
       "element": "wood",
       "slot": 2,
@@ -738,7 +738,7 @@
     },
     {
       "id": "spirit_beast.human.wood.04",
-      "name": "藤鞭猿",
+      "name": "翠雲青鸞",
       "grade": "human",
       "element": "wood",
       "slot": 3,
@@ -759,7 +759,7 @@
     },
     {
       "id": "spirit_beast.human.wood.05",
-      "name": "翠羽雉",
+      "name": "森羅麒獸",
       "grade": "human",
       "element": "wood",
       "slot": 4,
@@ -780,7 +780,7 @@
     },
     {
       "id": "spirit_beast.human.wood.06",
-      "name": "花冠獬",
+      "name": "藥霞靈貘",
       "grade": "human",
       "element": "wood",
       "slot": 5,
@@ -801,7 +801,7 @@
     },
     {
       "id": "spirit_beast.human.water.01",
-      "name": "泉衣獺",
+      "name": "寒潭靈黿",
       "grade": "human",
       "element": "water",
       "slot": 0,
@@ -818,7 +818,7 @@
     },
     {
       "id": "spirit_beast.human.water.02",
-      "name": "玉澗鯢",
+      "name": "滄浪青螭",
       "grade": "human",
       "element": "water",
       "slot": 1,
@@ -835,7 +835,7 @@
     },
     {
       "id": "spirit_beast.human.water.03",
-      "name": "珠蚌龜",
+      "name": "月汐長鰭鯉",
       "grade": "human",
       "element": "water",
       "slot": 2,
@@ -852,7 +852,7 @@
     },
     {
       "id": "spirit_beast.human.water.04",
-      "name": "霜鬚海馬",
+      "name": "琉璃海馬麟",
       "grade": "human",
       "element": "water",
       "slot": 3,
@@ -873,7 +873,7 @@
     },
     {
       "id": "spirit_beast.human.water.05",
-      "name": "水鏡鯉",
+      "name": "珠泉獨角靈鯉",
       "grade": "human",
       "element": "water",
       "slot": 4,
@@ -894,7 +894,7 @@
     },
     {
       "id": "spirit_beast.human.water.06",
-      "name": "雲沫鶴",
+      "name": "霧海靈鯤",
       "grade": "human",
       "element": "water",
       "slot": 5,
@@ -915,7 +915,7 @@
     },
     {
       "id": "spirit_beast.human.fire.01",
-      "name": "丹霞狐",
+      "name": "赤曜朱鶴",
       "grade": "human",
       "element": "fire",
       "slot": 0,
@@ -932,7 +932,7 @@
     },
     {
       "id": "spirit_beast.human.fire.02",
-      "name": "赤爐獾",
+      "name": "離焰九尾",
       "grade": "human",
       "element": "fire",
       "slot": 1,
@@ -949,7 +949,7 @@
     },
     {
       "id": "spirit_beast.human.fire.03",
-      "name": "焰翎鷲",
+      "name": "丹霞火鸞",
       "grade": "human",
       "element": "fire",
       "slot": 2,
@@ -966,7 +966,7 @@
     },
     {
       "id": "spirit_beast.human.fire.04",
-      "name": "火羽雉",
+      "name": "熔星狻猊",
       "grade": "human",
       "element": "fire",
       "slot": 3,
@@ -987,7 +987,7 @@
     },
     {
       "id": "spirit_beast.human.fire.05",
-      "name": "燧角犀",
+      "name": "南明靈獬",
       "grade": "human",
       "element": "fire",
       "slot": 4,
@@ -1008,7 +1008,7 @@
     },
     {
       "id": "spirit_beast.human.fire.06",
-      "name": "熔紋蜥",
+      "name": "燼羽鳳靈",
       "grade": "human",
       "element": "fire",
       "slot": 5,
@@ -1029,7 +1029,7 @@
     },
     {
       "id": "spirit_beast.human.earth.01",
-      "name": "銅丘熊",
+      "name": "鎮嶽靈犀",
       "grade": "human",
       "element": "earth",
       "slot": 0,
@@ -1046,7 +1046,7 @@
     },
     {
       "id": "spirit_beast.human.earth.02",
-      "name": "山嵐獾",
+      "name": "厚土翼羆",
       "grade": "human",
       "element": "earth",
       "slot": 1,
@@ -1063,7 +1063,7 @@
     },
     {
       "id": "spirit_beast.human.earth.03",
-      "name": "玄壤牛",
+      "name": "坤脈麒麟",
       "grade": "human",
       "element": "earth",
       "slot": 2,
@@ -1080,7 +1080,7 @@
     },
     {
       "id": "spirit_beast.human.earth.04",
-      "name": "礪角羚",
+      "name": "青巖獬豸",
       "grade": "human",
       "element": "earth",
       "slot": 3,
@@ -1101,7 +1101,7 @@
     },
     {
       "id": "spirit_beast.human.earth.05",
-      "name": "壘石猿",
+      "name": "負碑靈龜",
       "grade": "human",
       "element": "earth",
       "slot": 4,
@@ -1122,7 +1122,7 @@
     },
     {
       "id": "spirit_beast.human.earth.06",
-      "name": "砂翼梟",
+      "name": "崩雲巨猿",
       "grade": "human",
       "element": "earth",
       "slot": 5,
@@ -1143,7 +1143,7 @@
     },
     {
       "id": "spirit_beast.heaven.metal.01",
-      "name": "庚羽獅鷲",
+      "name": "太庚白虎",
       "grade": "heaven",
       "element": "metal",
       "slot": 0,
@@ -1160,7 +1160,7 @@
     },
     {
       "id": "spirit_beast.heaven.metal.02",
-      "name": "斷嶽貔犀",
+      "name": "天鉞金鵬",
       "grade": "heaven",
       "element": "metal",
       "slot": 1,
@@ -1177,7 +1177,7 @@
     },
     {
       "id": "spirit_beast.heaven.metal.03",
-      "name": "金鎧猙",
+      "name": "萬刃猙王",
       "grade": "heaven",
       "element": "metal",
       "slot": 2,
@@ -1194,7 +1194,7 @@
     },
     {
       "id": "spirit_beast.heaven.metal.04",
-      "name": "鎏刃螳",
+      "name": "星河貔貅",
       "grade": "heaven",
       "element": "metal",
       "slot": 3,
@@ -1215,7 +1215,7 @@
     },
     {
       "id": "spirit_beast.heaven.metal.05",
-      "name": "星砧象",
+      "name": "斬嶽金麟",
       "grade": "heaven",
       "element": "metal",
       "slot": 4,
@@ -1236,7 +1236,7 @@
     },
     {
       "id": "spirit_beast.heaven.metal.06",
-      "name": "鳴鉞鷲",
+      "name": "靈樞應龍",
       "grade": "heaven",
       "element": "metal",
       "slot": 5,
@@ -1257,7 +1257,7 @@
     },
     {
       "id": "spirit_beast.heaven.wood.01",
-      "name": "青篁鹿",
+      "name": "青帝蒼鹿",
       "grade": "heaven",
       "element": "wood",
       "slot": 0,
@@ -1274,7 +1274,7 @@
     },
     {
       "id": "spirit_beast.heaven.wood.02",
-      "name": "千藤狌狌",
+      "name": "萬葉白澤",
       "grade": "heaven",
       "element": "wood",
       "slot": 1,
@@ -1291,7 +1291,7 @@
     },
     {
       "id": "spirit_beast.heaven.wood.03",
-      "name": "玉藥白猿",
+      "name": "扶桑神猿",
       "grade": "heaven",
       "element": "wood",
       "slot": 2,
@@ -1308,7 +1308,7 @@
     },
     {
       "id": "spirit_beast.heaven.wood.04",
-      "name": "靈樞花狐",
+      "name": "碧落青鸞",
       "grade": "heaven",
       "element": "wood",
       "slot": 3,
@@ -1329,7 +1329,7 @@
     },
     {
       "id": "spirit_beast.heaven.wood.05",
-      "name": "春澤羽鹿",
+      "name": "花海九色鹿",
       "grade": "heaven",
       "element": "wood",
       "slot": 4,
@@ -1350,7 +1350,7 @@
     },
     {
       "id": "spirit_beast.heaven.wood.06",
-      "name": "棲梧鹿蜀",
+      "name": "長春麒麟",
       "grade": "heaven",
       "element": "wood",
       "slot": 5,
@@ -1371,7 +1371,7 @@
     },
     {
       "id": "spirit_beast.heaven.water.01",
-      "name": "寒淵玄黿",
+      "name": "玄冥龍龜",
       "grade": "heaven",
       "element": "water",
       "slot": 0,
@@ -1388,7 +1388,7 @@
     },
     {
       "id": "spirit_beast.heaven.water.02",
-      "name": "滄瀾螭",
+      "name": "滄瀾螭龍",
       "grade": "heaven",
       "element": "water",
       "slot": 1,
@@ -1405,7 +1405,7 @@
     },
     {
       "id": "spirit_beast.heaven.water.03",
-      "name": "霜華文鰩",
+      "name": "寒月鯤鵬",
       "grade": "heaven",
       "element": "water",
       "slot": 2,
@@ -1422,7 +1422,7 @@
     },
     {
       "id": "spirit_beast.heaven.water.04",
-      "name": "銀泉鮫獸",
+      "name": "天河鮫靈",
       "grade": "heaven",
       "element": "water",
       "slot": 3,
@@ -1443,7 +1443,7 @@
     },
     {
       "id": "spirit_beast.heaven.water.05",
-      "name": "雨師長蛙",
+      "name": "雨師青麟",
       "grade": "heaven",
       "element": "water",
       "slot": 4,
@@ -1464,7 +1464,7 @@
     },
     {
       "id": "spirit_beast.heaven.water.06",
-      "name": "冰鑑靈鯢",
+      "name": "冰鑑應龍",
       "grade": "heaven",
       "element": "water",
       "slot": 5,
@@ -1485,7 +1485,7 @@
     },
     {
       "id": "spirit_beast.heaven.fire.01",
-      "name": "赤焰畢方",
+      "name": "南離朱雀",
       "grade": "heaven",
       "element": "fire",
       "slot": 0,
@@ -1502,7 +1502,7 @@
     },
     {
       "id": "spirit_beast.heaven.fire.02",
-      "name": "丹爐火猿",
+      "name": "九轉丹凰",
       "grade": "heaven",
       "element": "fire",
       "slot": 1,
@@ -1519,7 +1519,7 @@
     },
     {
       "id": "spirit_beast.heaven.fire.03",
-      "name": "離火狻猊",
+      "name": "赤霄金烏",
       "grade": "heaven",
       "element": "fire",
       "slot": 2,
@@ -1536,7 +1536,7 @@
     },
     {
       "id": "spirit_beast.heaven.fire.04",
-      "name": "朱翎鸑鷟",
+      "name": "焚天狻猊",
       "grade": "heaven",
       "element": "fire",
       "slot": 3,
@@ -1557,7 +1557,7 @@
     },
     {
       "id": "spirit_beast.heaven.fire.05",
-      "name": "熔金獬豸",
+      "name": "流火畢方",
       "grade": "heaven",
       "element": "fire",
       "slot": 4,
@@ -1578,7 +1578,7 @@
     },
     {
       "id": "spirit_beast.heaven.fire.06",
-      "name": "流焰赤螭",
+      "name": "燭炎天龍",
       "grade": "heaven",
       "element": "fire",
       "slot": 5,
@@ -1599,7 +1599,7 @@
     },
     {
       "id": "spirit_beast.heaven.earth.01",
-      "name": "鎮嶽駁獸",
+      "name": "承天玄武",
       "grade": "heaven",
       "element": "earth",
       "slot": 0,
@@ -1616,7 +1616,7 @@
     },
     {
       "id": "spirit_beast.heaven.earth.02",
-      "name": "坤元岩羆",
+      "name": "不周神羆",
       "grade": "heaven",
       "element": "earth",
       "slot": 1,
@@ -1633,7 +1633,7 @@
     },
     {
       "id": "spirit_beast.heaven.earth.03",
-      "name": "玄圃藥犀",
+      "name": "厚嶺陸吾",
       "grade": "heaven",
       "element": "earth",
       "slot": 2,
@@ -1650,7 +1650,7 @@
     },
     {
       "id": "spirit_beast.heaven.earth.04",
-      "name": "壘嶽石猿",
+      "name": "壘嶽麒麟",
       "grade": "heaven",
       "element": "earth",
       "slot": 3,
@@ -1671,7 +1671,7 @@
     },
     {
       "id": "spirit_beast.heaven.earth.05",
-      "name": "負碑贔屭",
+      "name": "地脈贔屭",
       "grade": "heaven",
       "element": "earth",
       "slot": 4,
@@ -1692,7 +1692,7 @@
     },
     {
       "id": "spirit_beast.heaven.earth.06",
-      "name": "流沙蛟",
+      "name": "黃泉虯龍",
       "grade": "heaven",
       "element": "earth",
       "slot": 5,
@@ -1713,7 +1713,7 @@
     },
     {
       "id": "spirit_beast.saint.metal.01",
-      "name": "白金虎君",
+      "name": "白帝虎尊",
       "grade": "saint",
       "element": "metal",
       "slot": 0,
@@ -1730,7 +1730,7 @@
     },
     {
       "id": "spirit_beast.saint.metal.02",
-      "name": "鎮器貔貅",
+      "name": "鎮界金鵬",
       "grade": "saint",
       "element": "metal",
       "slot": 1,
@@ -1747,7 +1747,7 @@
     },
     {
       "id": "spirit_beast.saint.metal.03",
-      "name": "太鋒猙獸",
+      "name": "太鋒天猙",
       "grade": "saint",
       "element": "metal",
       "slot": 2,
@@ -1764,7 +1764,7 @@
     },
     {
       "id": "spirit_beast.saint.metal.04",
-      "name": "銀魄天隼",
+      "name": "九曜貔貅",
       "grade": "saint",
       "element": "metal",
       "slot": 3,
@@ -1785,7 +1785,7 @@
     },
     {
       "id": "spirit_beast.saint.metal.05",
-      "name": "斷嶽金犀",
+      "name": "裂空金犀",
       "grade": "saint",
       "element": "metal",
       "slot": 4,
@@ -1806,7 +1806,7 @@
     },
     {
       "id": "spirit_beast.saint.metal.06",
-      "name": "鳴霄金鵬",
+      "name": "萬器祖龍",
       "grade": "saint",
       "element": "metal",
       "slot": 5,
@@ -1827,7 +1827,7 @@
     },
     {
       "id": "spirit_beast.saint.wood.01",
-      "name": "萬藥靈鹿",
+      "name": "神農白澤",
       "grade": "saint",
       "element": "wood",
       "slot": 0,
@@ -1844,7 +1844,7 @@
     },
     {
       "id": "spirit_beast.saint.wood.02",
-      "name": "碧霄青鸞",
+      "name": "建木青龍",
       "grade": "saint",
       "element": "wood",
       "slot": 1,
@@ -1861,7 +1861,7 @@
     },
     {
       "id": "spirit_beast.saint.wood.03",
-      "name": "建木長猿",
+      "name": "萬藥仙猿",
       "grade": "saint",
       "element": "wood",
       "slot": 2,
@@ -1878,7 +1878,7 @@
     },
     {
       "id": "spirit_beast.saint.wood.04",
-      "name": "花海九尾",
+      "name": "榮枯九尾",
       "grade": "saint",
       "element": "wood",
       "slot": 3,
@@ -1899,7 +1899,7 @@
     },
     {
       "id": "spirit_beast.saint.wood.05",
-      "name": "榮枯白澤",
+      "name": "百華青鸞",
       "grade": "saint",
       "element": "wood",
       "slot": 4,
@@ -1920,7 +1920,7 @@
     },
     {
       "id": "spirit_beast.saint.wood.06",
-      "name": "玉枝麒獸",
+      "name": "玉枝祖麟",
       "grade": "saint",
       "element": "wood",
       "slot": 5,
@@ -1941,7 +1941,7 @@
     },
     {
       "id": "spirit_beast.saint.water.01",
-      "name": "覆海玄龜",
+      "name": "覆海玄武",
       "grade": "saint",
       "element": "water",
       "slot": 0,
@@ -1958,7 +1958,7 @@
     },
     {
       "id": "spirit_beast.saint.water.02",
-      "name": "滄溟螭龍",
+      "name": "北溟鯤鵬",
       "grade": "saint",
       "element": "water",
       "slot": 1,
@@ -1975,7 +1975,7 @@
     },
     {
       "id": "spirit_beast.saint.water.03",
-      "name": "寒月鮫靈",
+      "name": "洛川應龍",
       "grade": "saint",
       "element": "water",
       "slot": 2,
@@ -1992,7 +1992,7 @@
     },
     {
       "id": "spirit_beast.saint.water.04",
-      "name": "雲雨應鶴",
+      "name": "雲夢鮫皇",
       "grade": "saint",
       "element": "water",
       "slot": 3,
@@ -2034,7 +2034,7 @@
     },
     {
       "id": "spirit_beast.saint.water.06",
-      "name": "玄淵鯤魚",
+      "name": "玄淵蒼龍",
       "grade": "saint",
       "element": "water",
       "slot": 5,
@@ -2055,7 +2055,7 @@
     },
     {
       "id": "spirit_beast.saint.fire.01",
-      "name": "焚霄朱鶴",
+      "name": "太陽金烏",
       "grade": "saint",
       "element": "fire",
       "slot": 0,
@@ -2089,7 +2089,7 @@
     },
     {
       "id": "spirit_beast.saint.fire.03",
-      "name": "赤帝狻猊",
+      "name": "焚霄朱雀",
       "grade": "saint",
       "element": "fire",
       "slot": 2,
@@ -2106,7 +2106,7 @@
     },
     {
       "id": "spirit_beast.saint.fire.04",
-      "name": "燭炎天狐",
+      "name": "赤帝狻猊",
       "grade": "saint",
       "element": "fire",
       "slot": 3,
@@ -2148,7 +2148,7 @@
     },
     {
       "id": "spirit_beast.saint.fire.06",
-      "name": "炎胄獬豸",
+      "name": "萬焰燭龍",
       "grade": "saint",
       "element": "fire",
       "slot": 5,
@@ -2169,7 +2169,7 @@
     },
     {
       "id": "spirit_beast.saint.earth.01",
-      "name": "承天玄武",
+      "name": "后土麒麟",
       "grade": "saint",
       "element": "earth",
       "slot": 0,
@@ -2186,7 +2186,7 @@
     },
     {
       "id": "spirit_beast.saint.earth.02",
-      "name": "厚土麒麟",
+      "name": "鎮世贔屭",
       "grade": "saint",
       "element": "earth",
       "slot": 1,
@@ -2203,7 +2203,7 @@
     },
     {
       "id": "spirit_beast.saint.earth.03",
-      "name": "不周巨羆",
+      "name": "不周巨靈",
       "grade": "saint",
       "element": "earth",
       "slot": 2,
@@ -2220,7 +2220,7 @@
     },
     {
       "id": "spirit_beast.saint.earth.04",
-      "name": "負嶽龍龜",
+      "name": "開明神獸",
       "grade": "saint",
       "element": "earth",
       "slot": 3,
@@ -2241,7 +2241,7 @@
     },
     {
       "id": "spirit_beast.saint.earth.05",
-      "name": "地脈黃虯",
+      "name": "九壤騰蛇",
       "grade": "saint",
       "element": "earth",
       "slot": 4,
@@ -2262,7 +2262,7 @@
     },
     {
       "id": "spirit_beast.saint.earth.06",
-      "name": "鎮壇諦聽",
+      "name": "地藏諦聽",
       "grade": "saint",
       "element": "earth",
       "slot": 5,
@@ -2283,7 +2283,7 @@
     },
     {
       "id": "spirit_beast.immortal.metal.01",
-      "name": "庚辰白虎",
+      "name": "混元白虎",
       "grade": "immortal",
       "element": "metal",
       "slot": 0,
@@ -2300,7 +2300,7 @@
     },
     {
       "id": "spirit_beast.immortal.metal.02",
-      "name": "鎮天貔貅",
+      "name": "太虛金鵬",
       "grade": "immortal",
       "element": "metal",
       "slot": 1,
@@ -2317,7 +2317,7 @@
     },
     {
       "id": "spirit_beast.immortal.metal.03",
-      "name": "太白天猙",
+      "name": "誅仙天猙",
       "grade": "immortal",
       "element": "metal",
       "slot": 2,
@@ -2334,7 +2334,7 @@
     },
     {
       "id": "spirit_beast.immortal.metal.04",
-      "name": "昊金九首獅",
+      "name": "乾坤貔貅",
       "grade": "immortal",
       "element": "metal",
       "slot": 3,
@@ -2355,7 +2355,7 @@
     },
     {
       "id": "spirit_beast.immortal.metal.05",
-      "name": "斷界金翅鵬",
+      "name": "斷界金翅鯤",
       "grade": "immortal",
       "element": "metal",
       "slot": 4,
@@ -2376,7 +2376,7 @@
     },
     {
       "id": "spirit_beast.immortal.metal.06",
-      "name": "萬器應龍",
+      "name": "萬劫應龍",
       "grade": "immortal",
       "element": "metal",
       "slot": 5,
@@ -2397,7 +2397,7 @@
     },
     {
       "id": "spirit_beast.immortal.wood.01",
-      "name": "建木青龍",
+      "name": "太初青龍",
       "grade": "immortal",
       "element": "wood",
       "slot": 0,
@@ -2414,7 +2414,7 @@
     },
     {
       "id": "spirit_beast.immortal.wood.02",
-      "name": "神農白澤",
+      "name": "神木白澤",
       "grade": "immortal",
       "element": "wood",
       "slot": 1,
@@ -2431,7 +2431,7 @@
     },
     {
       "id": "spirit_beast.immortal.wood.03",
-      "name": "太古夔牛",
+      "name": "太古夔皇",
       "grade": "immortal",
       "element": "wood",
       "slot": 2,
@@ -2490,7 +2490,7 @@
     },
     {
       "id": "spirit_beast.immortal.wood.06",
-      "name": "萬象麒麟",
+      "name": "萬象祖麟",
       "grade": "immortal",
       "element": "wood",
       "slot": 5,
@@ -2528,7 +2528,7 @@
     },
     {
       "id": "spirit_beast.immortal.water.02",
-      "name": "北冥鯤鵬",
+      "name": "北冥鯤祖",
       "grade": "immortal",
       "element": "water",
       "slot": 1,
@@ -2545,7 +2545,7 @@
     },
     {
       "id": "spirit_beast.immortal.water.03",
-      "name": "洛水應龍",
+      "name": "銀河應龍",
       "grade": "immortal",
       "element": "water",
       "slot": 2,
@@ -2625,7 +2625,7 @@
     },
     {
       "id": "spirit_beast.immortal.fire.01",
-      "name": "南明朱雀",
+      "name": "大日金烏",
       "grade": "immortal",
       "element": "fire",
       "slot": 0,
@@ -2642,7 +2642,7 @@
     },
     {
       "id": "spirit_beast.immortal.fire.02",
-      "name": "太陽金烏",
+      "name": "涅槃丹凰",
       "grade": "immortal",
       "element": "fire",
       "slot": 1,
@@ -2659,7 +2659,7 @@
     },
     {
       "id": "spirit_beast.immortal.fire.03",
-      "name": "丹霄鳳凰",
+      "name": "丹霄鳳皇",
       "grade": "immortal",
       "element": "fire",
       "slot": 2,
@@ -2697,7 +2697,7 @@
     },
     {
       "id": "spirit_beast.immortal.fire.05",
-      "name": "萬焰燭龍",
+      "name": "永燼燭龍",
       "grade": "immortal",
       "element": "fire",
       "slot": 4,
@@ -2739,7 +2739,7 @@
     },
     {
       "id": "spirit_beast.immortal.earth.01",
-      "name": "后土麒麟",
+      "name": "九天麒麟",
       "grade": "immortal",
       "element": "earth",
       "slot": 0,
@@ -2756,7 +2756,7 @@
     },
     {
       "id": "spirit_beast.immortal.earth.02",
-      "name": "鎮世贔屭",
+      "name": "鎮界贔屭",
       "grade": "immortal",
       "element": "earth",
       "slot": 1,
@@ -2790,7 +2790,7 @@
     },
     {
       "id": "spirit_beast.immortal.earth.04",
-      "name": "開明鎮嶽獸",
+      "name": "開天鎮嶽獸",
       "grade": "immortal",
       "element": "earth",
       "slot": 3,
@@ -2811,7 +2811,7 @@
     },
     {
       "id": "spirit_beast.immortal.earth.05",
-      "name": "九壤騰蛇",
+      "name": "太荒騰蛇",
       "grade": "immortal",
       "element": "earth",
       "slot": 4,
@@ -2832,7 +2832,7 @@
     },
     {
       "id": "spirit_beast.immortal.earth.06",
-      "name": "地藏諦聽",
+      "name": "幽冥諦聽",
       "grade": "immortal",
       "element": "earth",
       "slot": 5,

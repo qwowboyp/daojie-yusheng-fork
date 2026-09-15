@@ -250,17 +250,103 @@
 .spirit-beast-feedback { margin: 0; padding: 7px 9px; border-radius: 4px; background: var(--highlight); font-size: 13px; }
 .spirit-beast-feedback.is-error { color: var(--stamp-red); }
 .spirit-beast-empty { padding: 24px; text-align: center; }
+/* 品質只染卡框與箔面，資訊區維持主題高對比文字。 */
 .spirit-beast-codex-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-  gap: 7px;
-  margin-top: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 235px), 1fr));
+  gap: 16px;
+  margin-top: 16px;
 }
-.spirit-beast-codex-grid article { display: flex; gap: 8px; min-width: 0; border: 1px solid var(--wash-ink); border-radius: var(--radius-sm, 4px); padding: 7px; }
-.spirit-beast-codex-grid article img { flex: 0 0 auto; width: 96px; height: 96px; object-fit: contain; background: var(--highlight); border-radius: var(--radius-sm, 4px); }
-.spirit-beast-codex-grid article > div { display: flex; flex-direction: column; min-width: 0; gap: 3px; font-size: 12px; }
-.spirit-beast-codex-grid article strong { font-size: 15px; }
-.spirit-beast-codex-grid article p { margin: 4px 0; line-height: 1.6; }
+.spirit-beast-codex-card {
+  --beast-foil: #e6edf5;
+  --beast-deep: #69798d;
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding: 2px;
+  overflow: hidden;
+  border: 1px solid var(--beast-foil);
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--beast-deep), var(--beast-foil) 28%, #fff 33%, var(--beast-deep) 52%, var(--beast-foil) 78%, var(--beast-deep));
+  box-shadow: 0 6px 16px #0002, inset 0 0 0 1px #ffffff70;
+}
+.spirit-beast-codex-card[data-grade="human"] { --beast-foil: #7ce6ae; --beast-deep: #24614e; }
+.spirit-beast-codex-card[data-grade="heaven"] { --beast-foil: #ff929f; --beast-deep: #942e46; }
+.spirit-beast-codex-card[data-grade="saint"] { --beast-foil: #d4a4ff; --beast-deep: #653598; }
+.spirit-beast-codex-card[data-grade="immortal"] { --beast-foil: #ffcc85; --beast-deep: #b25b1d; }
+.spirit-beast-codex-card__art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 194px;
+  overflow: hidden;
+  border-radius: 14px 14px 0 0;
+  background:
+    radial-gradient(ellipse at 50% 76%, color-mix(in srgb, var(--beast-foil) 55%, transparent), transparent 63%),
+    repeating-conic-gradient(from 20deg at 50% 65%, #ffffff09 0deg 2deg, transparent 2deg 18deg),
+    linear-gradient(145deg, #171d2c, var(--beast-deep));
+}
+.spirit-beast-codex-card__art::before {
+  content: "";
+  position: absolute;
+  width: 134px;
+  height: 134px;
+  border: 1px solid color-mix(in srgb, var(--beast-foil) 65%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px #ffffff06, 0 0 0 9px #ffffff18, inset 0 0 25px #ffffff12;
+  transform: rotateX(25deg) rotate(-20deg);
+  pointer-events: none;
+}
+.spirit-beast-codex-card__art::after {
+  content: "";
+  position: absolute;
+  inset: -65%;
+  background: linear-gradient(115deg, transparent 32%, #bdeaff18 39%, #ffffff70 45%, #ffd6f13b 49%, transparent 57%);
+  transform: translateX(-22%);
+  transition: transform .65s ease;
+  pointer-events: none;
+}
+.spirit-beast-codex-card__art img {
+  position: relative;
+  z-index: 1;
+  width: 176px;
+  height: 176px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px #0005);
+}
+.spirit-beast-codex-card__seal {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  padding: 4px 9px;
+  border: 1px solid var(--beast-foil);
+  border-radius: 8px 2px 8px 2px;
+  background: #171c29ed;
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: .12em;
+}
+.spirit-beast-codex-card__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  height: calc(100% - 194px);
+  padding: 15px;
+  border-radius: 0 0 14px 14px;
+  background: var(--surface-card);
+  color: var(--ink-dark);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.spirit-beast-codex-card__body strong { font-size: 19px; font-family: var(--font-role-title); letter-spacing: .04em; }
+.spirit-beast-codex-card__identity { padding-bottom: 8px; border-bottom: 1px solid var(--wash-ink); }
+.spirit-beast-codex-card__body p { margin: 2px 0 6px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .spirit-beast-codex-card:hover .spirit-beast-codex-card__art::after { transform: translateX(22%); }
+}
 .spirit-beast-panel .spirit-beast-codex :is(select, input, button) { min-height: 44px; }
 .spirit-beast-parent-finder > label { margin-bottom: 10px; }
 .spirit-beast-parent-results > ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 7px; margin: 10px 0 0; padding: 0; list-style: none; }

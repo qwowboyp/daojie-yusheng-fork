@@ -1,7 +1,8 @@
 {
   "id": "spirit-beasts-fan-01",
   "grade": "fan",
-  "sourceSha256": "315dfd1780e9d3d1cff4ab7eb02233a31a73044e53df35b3eaf02cf523df8335",
+  "sourceSha256": "bf792aed03468f9fd5af6b7f3d2daf35c5c5c945abb8b6f0211357b79a9b6e81",
+  "promptSource": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/prompt.txt",
   "nativeDimensions": [
     1200,
     896
@@ -9,16 +10,18 @@
   "records": [
     {
       "id": "spirit_beast.fan.metal.01",
-      "name": "銀鬚尋鐵鼠",
+      "name": "雲鋒靈鹿",
       "element": "metal",
       "cell": {
         "col": 0,
         "row": 0
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 0,
           "top": 0,
@@ -26,49 +29,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 5586,
-          "left": 33,
-          "top": 53,
-          "width": 144,
-          "height": 86
+          "area": 5906,
+          "left": 49,
+          "top": 11,
+          "width": 113,
+          "height": 163
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 40,
+        "removedComponentCount": 12,
         "extraction": {
-          "left": 28,
-          "top": 48,
-          "width": 154,
-          "height": 96
+          "left": 43,
+          "top": 5,
+          "width": 125,
+          "height": 174
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 5906
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.01-96.webp",
-          "sha256": "4540d9383c8c52cf8b36768972869b40d1c8e3eea8331c9d14d28f1a34ea3eb9",
-          "bytes": 3532
+          "sha256": "578411b9bb0a028e905290804bd52ac7574d6b4d04c637c9eea6bfcc9a4e7e35",
+          "bytes": 5568
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.01-192.webp",
-          "sha256": "6f643aaeac48b9473117ca789c46c42db119325b60c6cc52e4f25abb863fcde6",
-          "bytes": 6534
+          "sha256": "9296204c0c19603929fd9f4de8f61c1933829f46326ba4315ae2b744f58aa4ef",
+          "bytes": 10552
         }
       ]
     },
     {
       "id": "spirit_beast.fan.metal.02",
-      "name": "銅喙雀",
+      "name": "銀羽靈鷹",
       "element": "metal",
       "cell": {
         "col": 1,
         "row": 0
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 200,
           "top": 0,
@@ -76,49 +81,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 4983,
-          "left": 38,
-          "top": 45,
-          "width": 130,
-          "height": 88
+          "area": 8728,
+          "left": 10,
+          "top": 13,
+          "width": 161,
+          "height": 152
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 16,
+        "removedComponentCount": 5,
         "extraction": {
-          "left": 33,
-          "top": 40,
-          "width": 140,
-          "height": 98
+          "left": 4,
+          "top": 7,
+          "width": 173,
+          "height": 164
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 8728
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.02-96.webp",
-          "sha256": "a8e2eb2eb93a8989e5a1bb7a28bf0e5abfb030161a8632590986f9616bd884d1",
-          "bytes": 3500
+          "sha256": "1ba2ad870bb37c6a09fa79c1f9f285cfeabc46d174b16f0c4a1c505634c1bdc7",
+          "bytes": 5976
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.02-192.webp",
-          "sha256": "36753d5c27c5824336ec6fbc3ef821308a6d8ad34762ac8200a270144fbeaf15",
-          "bytes": 6554
+          "sha256": "5cffe90d64c3969ddd44bdeaad009d8018acaf3fd6e7ea685382400e5afaae4b",
+          "bytes": 12256
         }
       ]
     },
     {
       "id": "spirit_beast.fan.metal.03",
-      "name": "鐵背甲",
+      "name": "玄鐵背猊",
       "element": "metal",
       "cell": {
         "col": 2,
         "row": 0
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 400,
           "top": 0,
@@ -126,49 +133,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 7696,
-          "left": 28,
-          "top": 53,
-          "width": 142,
-          "height": 91
+          "area": 8349,
+          "left": 50,
+          "top": 43,
+          "width": 122,
+          "height": 128
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 3,
+        "removedComponentCount": 30,
         "extraction": {
-          "left": 23,
-          "top": 48,
-          "width": 152,
-          "height": 101
+          "left": 44,
+          "top": 37,
+          "width": 134,
+          "height": 140
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 8349
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.03-96.webp",
-          "sha256": "7ddc3066d456e524f34cd9cd26329740cf8688a6592d85c7c150e7823c7a7860",
-          "bytes": 3956
+          "sha256": "e0dd9f7d639a25ddf6c7d54effd16b3571e1d86f7d341e981293a8784bd78299",
+          "bytes": 6528
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.03-192.webp",
-          "sha256": "65a4f91641d979a7950531bf829116947d33d5a4c583865e8b0d0ee9808d933a",
-          "bytes": 7410
+          "sha256": "f4d1f0319855d93360fef15115fd611af402aba4db5bd81c26cd54f93437afa8",
+          "bytes": 13430
         }
       ]
     },
     {
       "id": "spirit_beast.fan.metal.04",
-      "name": "鐮尾貂",
+      "name": "星鋒九尾",
       "element": "metal",
       "cell": {
         "col": 3,
         "row": 0
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 600,
           "top": 0,
@@ -176,49 +185,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 7881,
-          "left": 26,
-          "top": 24,
-          "width": 155,
-          "height": 125
+          "area": 8681,
+          "left": 17,
+          "top": 35,
+          "width": 163,
+          "height": 132
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 11,
+        "removedComponentCount": 3,
         "extraction": {
-          "left": 21,
-          "top": 19,
-          "width": 165,
-          "height": 135
+          "left": 11,
+          "top": 29,
+          "width": 175,
+          "height": 144
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 8681
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.04-96.webp",
-          "sha256": "344a9eb70c1dbbdab020597ec26f95ea1346609faeccf09aabc06836e5d45935",
-          "bytes": 4870
+          "sha256": "1f72f50f967a5bc5ea2cb5ea97fc5fec943eb735fe1f07c4076ceeb7f649c6bf",
+          "bytes": 5604
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.04-192.webp",
-          "sha256": "37fd0b57b5acc6960dfe5d8be42e183460f9b069fa6103904d9087cdabfd4d36",
-          "bytes": 8136
+          "sha256": "297bdca3083e2d0aa878d0dd8bb9aeef2d32a478b981c2fcbef94d4df65eb53c",
+          "bytes": 10344
         }
       ]
     },
     {
       "id": "spirit_beast.fan.metal.05",
-      "name": "錘角羊",
+      "name": "鎏金靈羚",
       "element": "metal",
       "cell": {
         "col": 4,
         "row": 0
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 800,
           "top": 0,
@@ -226,49 +237,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 9403,
-          "left": 31,
-          "top": 24,
-          "width": 132,
-          "height": 126
+          "area": 5999,
+          "left": 51,
+          "top": 13,
+          "width": 107,
+          "height": 160
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 18,
+        "removedComponentCount": 3,
         "extraction": {
-          "left": 26,
-          "top": 19,
-          "width": 142,
-          "height": 136
+          "left": 45,
+          "top": 7,
+          "width": 119,
+          "height": 172
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 5999
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.05-96.webp",
-          "sha256": "f11219db799ebf46d648ea0338801206de648d3f345f1b703bd64173fba152e3",
-          "bytes": 5124
+          "sha256": "a2e8b3100c965892253221c1e98c844e92516022bbc85243dc44f127853bbca8",
+          "bytes": 5300
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.05-192.webp",
-          "sha256": "8dfafd4784bec554efad55cdc660c3b5c9afe0cf816afc445662719176c86e1e",
-          "bytes": 9610
+          "sha256": "b1bdea99c3988bb8e11a6779a44a41e22f66e7b05fb2007eef173a32d32944e6",
+          "bytes": 10390
         }
       ]
     },
     {
       "id": "spirit_beast.fan.metal.06",
-      "name": "銀爪鼬",
+      "name": "磁尾幼螭",
       "element": "metal",
       "cell": {
         "col": 5,
         "row": 0
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 1000,
           "top": 0,
@@ -276,49 +289,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 6420,
-          "left": 21,
-          "top": 47,
-          "width": 168,
-          "height": 100
+          "area": 10040,
+          "left": 12,
+          "top": 32,
+          "width": 164,
+          "height": 139
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 21,
+        "removedComponentCount": 3,
         "extraction": {
-          "left": 16,
-          "top": 42,
-          "width": 178,
-          "height": 110
+          "left": 6,
+          "top": 26,
+          "width": 176,
+          "height": 151
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 10040
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.06-96.webp",
-          "sha256": "6490d3198874f13d7f9593360254e85bd649b9b5c9e65b168b892a26b027350b",
-          "bytes": 3984
+          "sha256": "827c18548db1536153338f04fbba683a57e9957b270d328d4d030c2ea8dda7cd",
+          "bytes": 7088
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.metal.06-192.webp",
-          "sha256": "3de9fb836596545e87ed491d9d7ab1a7a5b1518e16c33bfcd45be48c1bb4b28a",
-          "bytes": 6882
+          "sha256": "25f650da1c8ca3358781d18540cb937574971f0532418c5c4379dbe18b9b12fc",
+          "bytes": 13226
         }
       ]
     },
     {
       "id": "spirit_beast.fan.wood.01",
-      "name": "藥耳兔",
+      "name": "琅葉麋",
       "element": "wood",
       "cell": {
         "col": 0,
         "row": 1
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 0,
           "top": 179,
@@ -326,49 +341,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 6731,
-          "left": 52,
-          "top": 26,
-          "width": 102,
-          "height": 122
+          "area": 6529,
+          "left": 56,
+          "top": 9,
+          "width": 105,
+          "height": 166
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 11,
+        "removedComponentCount": 1,
         "extraction": {
-          "left": 47,
-          "top": 21,
-          "width": 112,
-          "height": 132
+          "left": 50,
+          "top": 3,
+          "width": 117,
+          "height": 176
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 6529
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.01-96.webp",
-          "sha256": "37c5e8c53e9f4d0e5e7b9b1bc34ac193a5c18584abc83e7fb80a20fdc695aeda",
-          "bytes": 4416
+          "sha256": "b1b270b213572b546f235db3b7ecf292c090963826a1b4ae9f633898d446a9eb",
+          "bytes": 5232
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.01-192.webp",
-          "sha256": "f3d7c2930a0b9a96a3efa0315a41d64e7932f7cd1b52096d478fc30ab81e4bb2",
-          "bytes": 8166
+          "sha256": "2a28edc928184b39f1f5441158e6b8fd5de4d999b4a9b875f6e269a8f6708355",
+          "bytes": 9358
         }
       ]
     },
     {
       "id": "spirit_beast.fan.wood.02",
-      "name": "青芽雀",
+      "name": "青藤翼狐",
       "element": "wood",
       "cell": {
         "col": 1,
         "row": 1
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 200,
           "top": 179,
@@ -376,49 +393,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 5384,
-          "left": 44,
-          "top": 27,
-          "width": 126,
-          "height": 114
+          "area": 11359,
+          "left": 14,
+          "top": 17,
+          "width": 162,
+          "height": 154
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 7,
+        "removedComponentCount": 1,
         "extraction": {
-          "left": 39,
-          "top": 22,
-          "width": 136,
-          "height": 124
+          "left": 8,
+          "top": 11,
+          "width": 174,
+          "height": 166
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 11359
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.02-96.webp",
-          "sha256": "9af0add1f4e0051b2b054412f3e0369fd925bb19bb5e07f5813746a3d44fbaea",
-          "bytes": 4622
+          "sha256": "9b7cd22a112710199657b53ad8c3a33a616179bd584be4e67f959fd887ffe152",
+          "bytes": 7418
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.02-192.webp",
-          "sha256": "a3d54581c0c0c3b1b1b7e06c6d6c5fcc7c9211be3d9483764d83d36b25625835",
-          "bytes": 8646
+          "sha256": "b950588dec70cd1e1e7a254a03ce459fcfbc6cd189b82e0ddac53336049449c8",
+          "bytes": 14902
         }
       ]
     },
     {
       "id": "spirit_beast.fan.wood.03",
-      "name": "藤尾狸",
+      "name": "芳華翼猊",
       "element": "wood",
       "cell": {
         "col": 2,
         "row": 1
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 400,
           "top": 179,
@@ -426,49 +445,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 8325,
-          "left": 25,
-          "top": 23,
-          "width": 157,
-          "height": 125
+          "area": 10930,
+          "left": 26,
+          "top": 12,
+          "width": 152,
+          "height": 161
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 7,
+        "removedComponentCount": 0,
         "extraction": {
           "left": 20,
-          "top": 18,
-          "width": 167,
-          "height": 135
+          "top": 6,
+          "width": 164,
+          "height": 173
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 10930
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.03-96.webp",
-          "sha256": "533fddbf0a2a67f5b56166d9c6e75aeca4126085e45102a743b96427b84b88ab",
-          "bytes": 5164
+          "sha256": "ca45fc0dfa5e05d6f3819974f9483e3d6885c85d464dc1cc9fc6977de500cfd1",
+          "bytes": 7464
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.03-192.webp",
-          "sha256": "49113c80af3763eeb2a9d7f10974d9c284941eee62bde8b5d5968c5174a826ec",
-          "bytes": 9582
+          "sha256": "50e58ae43fd72a3a06e85cac96aabc1f76abafd6a5e5112b965f5503cdf9ef9c",
+          "bytes": 15206
         }
       ]
     },
     {
       "id": "spirit_beast.fan.wood.04",
-      "name": "松果獾",
+      "name": "翠冠靈鶴",
       "element": "wood",
       "cell": {
         "col": 3,
         "row": 1
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 600,
           "top": 179,
@@ -476,49 +497,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 9085,
-          "left": 24,
-          "top": 46,
-          "width": 152,
-          "height": 97
+          "area": 7534,
+          "left": 10,
+          "top": 15,
+          "width": 161,
+          "height": 146
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 14,
+        "removedComponentCount": 10,
         "extraction": {
-          "left": 19,
-          "top": 41,
-          "width": 162,
-          "height": 107
+          "left": 4,
+          "top": 9,
+          "width": 173,
+          "height": 158
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 7534
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.04-96.webp",
-          "sha256": "149e84ebdca801e574bde653963393db4c30110c980d27aa522cebd4b3ea502d",
-          "bytes": 4246
+          "sha256": "baf085a678c67b31cfe461a8dfd0c8ee10295d7999622fd2490535e5fd8ca272",
+          "bytes": 5960
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.04-192.webp",
-          "sha256": "b7db7d91d48ba11bddcafb089ed8a20cac7bbea5aa5a14cf3252f697f6c5e323",
-          "bytes": 8206
+          "sha256": "f1023670f04a474ffb41c8f3a4044590d5f8cbdb2b90f99bd28767808cd3e9c6",
+          "bytes": 11800
         }
       ]
     },
     {
       "id": "spirit_beast.fan.wood.05",
-      "name": "葉冠蜥",
+      "name": "木靈青鹿",
       "element": "wood",
       "cell": {
         "col": 4,
         "row": 1
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 800,
           "top": 179,
@@ -526,49 +549,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 8141,
-          "left": 26,
-          "top": 28,
-          "width": 152,
-          "height": 123
+          "area": 8238,
+          "left": 48,
+          "top": 9,
+          "width": 110,
+          "height": 167
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 5,
+        "removedComponentCount": 0,
         "extraction": {
-          "left": 21,
-          "top": 23,
-          "width": 162,
-          "height": 133
+          "left": 42,
+          "top": 3,
+          "width": 122,
+          "height": 176
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 8238
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.05-96.webp",
-          "sha256": "9eb7f1cc4eb56c58a845d48b54557ad01aacb1a735a820c95735bb37e559d6a1",
-          "bytes": 5720
+          "sha256": "8c9e7156db90ec43eacee50d573f38a443018ced9752489fc505acad964549eb",
+          "bytes": 5608
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.05-192.webp",
-          "sha256": "798cace3ffc3ad7fe537be68d51ac4d6426872eae35a285267fcbc914fbfb951",
-          "bytes": 10726
+          "sha256": "cecd1222b6618fcf838108215da391ca021ce06c946997fd65e330535571c5dc",
+          "bytes": 10874
         }
       ]
     },
     {
       "id": "spirit_beast.fan.wood.06",
-      "name": "花鬚貘",
+      "name": "芝雲神貘",
       "element": "wood",
       "cell": {
         "col": 5,
         "row": 1
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 1000,
           "top": 179,
@@ -576,49 +601,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 9706,
-          "left": 24,
-          "top": 46,
-          "width": 150,
-          "height": 102
+          "area": 12349,
+          "left": 12,
+          "top": 31,
+          "width": 162,
+          "height": 139
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 5,
+        "removedComponentCount": 1,
         "extraction": {
-          "left": 19,
-          "top": 41,
-          "width": 160,
-          "height": 112
+          "left": 6,
+          "top": 25,
+          "width": 174,
+          "height": 151
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 12349
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.06-96.webp",
-          "sha256": "6c6de7fb4098a592124c04f006a3db6254fd112a18bb3cddc48ffac7fed1f1fa",
-          "bytes": 4084
+          "sha256": "caec4663a48ef236513f1a0309809eab54dfbf723e6924cdf0b2995a15acfc75",
+          "bytes": 6078
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.wood.06-192.webp",
-          "sha256": "95eaa18d8ba74abbe650b4a30b0a38e66a515a6b321e7e8b8ad73d3e96cf335a",
-          "bytes": 6756
+          "sha256": "2553f1e45cbac1c0e97c89724776150e08a1bee23a28b965caa2489f4fa4c35a",
+          "bytes": 11732
         }
       ]
     },
     {
       "id": "spirit_beast.fan.water.01",
-      "name": "滴露獺",
+      "name": "瀲光靈鯢",
       "element": "water",
       "cell": {
         "col": 0,
         "row": 2
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 0,
           "top": 358,
@@ -626,49 +653,51 @@
           "height": 180
         },
         "primaryComponent": {
-          "area": 7409,
-          "left": 21,
-          "top": 41,
-          "width": 152,
-          "height": 104
+          "area": 10427,
+          "left": 22,
+          "top": 25,
+          "width": 166,
+          "height": 136
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 11,
+        "removedComponentCount": 0,
         "extraction": {
           "left": 16,
-          "top": 36,
-          "width": 162,
-          "height": 114
+          "top": 19,
+          "width": 178,
+          "height": 148
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 10427
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.01-96.webp",
-          "sha256": "9e084635a0d6a5b30a5004bc6baac738d0c23a1a53d0b8d1707125d374ade1fb",
-          "bytes": 4148
+          "sha256": "baa775616807141d8d4caed8a2a22ebdae7ba90ad708284ef4f133f2d1188480",
+          "bytes": 6024
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.01-192.webp",
-          "sha256": "b8698c16eb79a317aca5b003aac64affb62ffcc5e9453338fe8ef733ed117b91",
-          "bytes": 7062
+          "sha256": "a91a34642372b5e0087a5fa8baa7616686a60300353ad497aa4346eebfe9591a",
+          "bytes": 11334
         }
       ]
     },
     {
       "id": "spirit_beast.fan.water.02",
-      "name": "泡泡龜",
+      "name": "月潮飛玄龜",
       "element": "water",
       "cell": {
         "col": 1,
         "row": 2
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 200,
           "top": 358,
@@ -676,49 +705,51 @@
           "height": 180
         },
         "primaryComponent": {
-          "area": 8607,
-          "left": 39,
-          "top": 33,
-          "width": 139,
-          "height": 112
+          "area": 10334,
+          "left": 14,
+          "top": 14,
+          "width": 165,
+          "height": 149
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 12,
+        "removedComponentCount": 1,
         "extraction": {
-          "left": 34,
-          "top": 28,
-          "width": 149,
-          "height": 122
+          "left": 8,
+          "top": 8,
+          "width": 177,
+          "height": 161
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 10334
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.02-96.webp",
-          "sha256": "79b58ef4c0c43d4ae3d03f98be3b47deed667022905f27c59450db5924927419",
-          "bytes": 5004
+          "sha256": "2d6e0443925d79666883dd8be58b571dfa3816f3f37206783828cc06daf08864",
+          "bytes": 5810
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.02-192.webp",
-          "sha256": "d2e2df3edf4042619b346410027ee12d4f8706bbd04075338dc10fea30c46c41",
-          "bytes": 9920
+          "sha256": "00ebf2573b16d1d0a75ac08796d40f55136b55f77a671a55d9fe4fc9ca7391a2",
+          "bytes": 11962
         }
       ]
     },
     {
       "id": "spirit_beast.fan.water.03",
-      "name": "寒苔蛙",
+      "name": "雲鰭青螭",
       "element": "water",
       "cell": {
         "col": 2,
         "row": 2
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 400,
           "top": 358,
@@ -726,49 +757,51 @@
           "height": 180
         },
         "primaryComponent": {
-          "area": 7584,
-          "left": 43,
-          "top": 48,
-          "width": 123,
-          "height": 95
+          "area": 11718,
+          "left": 9,
+          "top": 22,
+          "width": 177,
+          "height": 145
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 1,
+        "removedComponentCount": 0,
         "extraction": {
-          "left": 38,
-          "top": 43,
-          "width": 133,
-          "height": 105
+          "left": 3,
+          "top": 16,
+          "width": 189,
+          "height": 157
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 11718
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.03-96.webp",
-          "sha256": "f90d787fd6ffe000eff83bea68a4c96565cb99971ffda893f5e5026c5650a220",
-          "bytes": 5328
+          "sha256": "d5590f5f055304c75b3e70384c48d1a4d4b0a112c7c3d5be0173459854591ef1",
+          "bytes": 7062
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.03-192.webp",
-          "sha256": "ddf18c3a44a2e1dc54bd68ea15a412410fc4d6c344e68ee017464d9a05d66140",
-          "bytes": 10780
+          "sha256": "3113dd84eed1899e8118b09da22ddf0bdc7758cfac14483ccd13bb0dacd109cb",
+          "bytes": 13300
         }
       ]
     },
     {
       "id": "spirit_beast.fan.water.04",
-      "name": "溪鰭鯢",
+      "name": "碧渦海馬",
       "element": "water",
       "cell": {
         "col": 3,
         "row": 2
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 600,
           "top": 358,
@@ -776,49 +809,51 @@
           "height": 180
         },
         "primaryComponent": {
-          "area": 7509,
-          "left": 54,
-          "top": 31,
-          "width": 125,
-          "height": 118
+          "area": 7498,
+          "left": 38,
+          "top": 7,
+          "width": 122,
+          "height": 169
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 26,
+        "removedComponentCount": 9,
         "extraction": {
-          "left": 49,
-          "top": 26,
-          "width": 135,
-          "height": 128
+          "left": 32,
+          "top": 1,
+          "width": 134,
+          "height": 179
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 7498
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.04-96.webp",
-          "sha256": "5894e8e21e6e436d5c77ff6dade87974ecc1709707819da18e21c06873be86ce",
-          "bytes": 5700
+          "sha256": "989d38ace088c098450c697472ae85072f83b6762352eae75c8c1b21d6cae73f",
+          "bytes": 5970
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.04-192.webp",
-          "sha256": "c7b59711bc1cb27caf75dd580ab6a019368af4aae72a5891f3dcef75452328f0",
-          "bytes": 10700
+          "sha256": "49ea1c391110096436c29423747702577d6d68de0781eaa41ac365ab1b4073da",
+          "bytes": 11620
         }
       ]
     },
     {
       "id": "spirit_beast.fan.water.05",
-      "name": "月貝螺",
+      "name": "珠霧蝶翼麟",
       "element": "water",
       "cell": {
         "col": 4,
         "row": 2
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 800,
           "top": 358,
@@ -826,49 +861,51 @@
           "height": 180
         },
         "primaryComponent": {
-          "area": 8920,
-          "left": 34,
-          "top": 43,
-          "width": 133,
-          "height": 98
+          "area": 9294,
+          "left": 19,
+          "top": 16,
+          "width": 139,
+          "height": 158
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 16,
+        "removedComponentCount": 4,
         "extraction": {
-          "left": 29,
-          "top": 38,
-          "width": 143,
-          "height": 108
+          "left": 13,
+          "top": 10,
+          "width": 151,
+          "height": 170
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 9294
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.05-96.webp",
-          "sha256": "39e0efe6c3c31e2187a61542df2cafd91e7c12b8c44a6e7a4ebd71b4d094454f",
-          "bytes": 5032
+          "sha256": "e5ac3264d9fe4a9e3580c559772dddc51ee9fb117f1931dc20310a035f87b3d7",
+          "bytes": 6864
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.05-192.webp",
-          "sha256": "51e8acb89de516c178d122bc01cfab5e4dfd0e0aff9b969a838cc4b39860d609",
-          "bytes": 9486
+          "sha256": "41aaa42b8dff4ac91e42b99051acc5dbacad0ed140643501fdc4f2ce31ff70dc",
+          "bytes": 13906
         }
       ]
     },
     {
       "id": "spirit_beast.fan.water.06",
-      "name": "墨尾鴨",
+      "name": "玄波幼螭",
       "element": "water",
       "cell": {
         "col": 5,
         "row": 2
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 1000,
           "top": 358,
@@ -876,49 +913,51 @@
           "height": 180
         },
         "primaryComponent": {
-          "area": 6404,
-          "left": 45,
-          "top": 32,
-          "width": 132,
-          "height": 115
+          "area": 8301,
+          "left": 10,
+          "top": 24,
+          "width": 159,
+          "height": 143
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 6,
+        "removedComponentCount": 0,
         "extraction": {
-          "left": 40,
-          "top": 27,
-          "width": 142,
-          "height": 125
+          "left": 4,
+          "top": 18,
+          "width": 171,
+          "height": 155
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 8301
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.06-96.webp",
-          "sha256": "6080a1483caacc9443b5fd19b639cebba29445d7bc31325a62991ca6982e0303",
-          "bytes": 4642
+          "sha256": "0fdc47aef68a5471391fee59ce71902486ecdaee09e90ab4fca7d44057ab25fd",
+          "bytes": 5824
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.water.06-192.webp",
-          "sha256": "a0971d04696f8b239a4a834aed29c2aad45f94170ffa92dd029eb99bef201bb3",
-          "bytes": 8542
+          "sha256": "384cd53d99469f8f2eba3b775d932d58eb37dd2d257d233074b6b003c59ff393",
+          "bytes": 11666
         }
       ]
     },
     {
       "id": "spirit_beast.fan.fire.01",
-      "name": "炭尾狐",
+      "name": "焰翎靈鶴",
       "element": "fire",
       "cell": {
         "col": 0,
         "row": 3
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 0,
           "top": 538,
@@ -926,49 +965,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 7842,
-          "left": 23,
-          "top": 29,
-          "width": 152,
-          "height": 117
+          "area": 8689,
+          "left": 26,
+          "top": 11,
+          "width": 141,
+          "height": 162
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 7,
+        "removedComponentCount": 3,
         "extraction": {
-          "left": 18,
-          "top": 24,
-          "width": 162,
-          "height": 127
+          "left": 20,
+          "top": 5,
+          "width": 153,
+          "height": 174
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 8689
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.01-96.webp",
-          "sha256": "d3676b1bf6b58a829c28d9cb5e2d40a9d5e237431860892bfe49450b33bd5fad",
-          "bytes": 4456
+          "sha256": "1d0206e55ce1f7e6e4e68e65418cafb85e33e3adaaa68ffd34145cd8bff1a588",
+          "bytes": 6386
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.01-192.webp",
-          "sha256": "966e29788ce6b6e9f73b5e6c67bd8a06e44fb5e0a3038cf059086770b2e0372d",
-          "bytes": 7658
+          "sha256": "438a7a7e17dd573fc8bb365eac53686c5b52dda42953881b3d8658f812e6494b",
+          "bytes": 12398
         }
       ]
     },
     {
       "id": "spirit_beast.fan.fire.02",
-      "name": "燈芯蛾",
+      "name": "赤燼翼狐",
       "element": "fire",
       "cell": {
         "col": 1,
         "row": 3
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 200,
           "top": 538,
@@ -976,49 +1017,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 5711,
-          "left": 42,
-          "top": 23,
-          "width": 98,
-          "height": 121
+          "area": 11862,
+          "left": 15,
+          "top": 10,
+          "width": 165,
+          "height": 158
         },
         "keptComponentCount": 1,
         "removedComponentCount": 1,
         "extraction": {
-          "left": 37,
-          "top": 18,
-          "width": 108,
-          "height": 131
+          "left": 9,
+          "top": 4,
+          "width": 177,
+          "height": 170
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 11862
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.02-96.webp",
-          "sha256": "256e4882ed50da7bde98b47a0942927479f14e9c9338ff806b0aed74aa5ae665",
-          "bytes": 4416
+          "sha256": "8108b0b07073efd39add849c43329e98bf57d28a3f347d8a60a1ff0cefa0103f",
+          "bytes": 6796
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.02-192.webp",
-          "sha256": "131ffd94188c8ef56e714ff7da5df7cc8d7140cd3b9f2c8d7d5fc3c8377586fe",
-          "bytes": 8470
+          "sha256": "1cf5ded0f2b6ddf2b12ca5eab9b9d39de8868e4823f41d8f911ff54562f16dfb",
+          "bytes": 13372
         }
       ]
     },
     {
       "id": "spirit_beast.fan.fire.03",
-      "name": "赤喙鴉",
+      "name": "火羽鸞雛",
       "element": "fire",
       "cell": {
         "col": 2,
         "row": 3
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 400,
           "top": 538,
@@ -1026,49 +1069,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 5483,
-          "left": 29,
-          "top": 32,
-          "width": 138,
-          "height": 106
+          "area": 10167,
+          "left": 18,
+          "top": 10,
+          "width": 149,
+          "height": 156
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 5,
+        "removedComponentCount": 2,
         "extraction": {
-          "left": 24,
-          "top": 27,
-          "width": 148,
-          "height": 116
+          "left": 12,
+          "top": 4,
+          "width": 161,
+          "height": 168
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 10167
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.03-96.webp",
-          "sha256": "2bb30fa30d2e6199129557e4247747b6421eb24556b46bea0f527b28b81215b4",
-          "bytes": 3536
+          "sha256": "1556700748d5b8a481a9f0514b9527c9700ed05844391e58308dd18617cbb0da",
+          "bytes": 7334
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.03-192.webp",
-          "sha256": "4f3840ff142b90ddda42fb1a473f61088a1b4cc8f82cff2b0fbf6d5d9342659e",
-          "bytes": 6302
+          "sha256": "3deeb6a9ecc406607420c3a767fd1573cdab543c18a9de5b3c3dc8d3d8961f40",
+          "bytes": 13900
         }
       ]
     },
     {
       "id": "spirit_beast.fan.fire.04",
-      "name": "火絨貂",
+      "name": "熾角狴犴",
       "element": "fire",
       "cell": {
         "col": 3,
         "row": 3
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 600,
           "top": 538,
@@ -1076,49 +1121,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 7771,
-          "left": 15,
-          "top": 36,
-          "width": 167,
-          "height": 105
+          "area": 10760,
+          "left": 12,
+          "top": 20,
+          "width": 164,
+          "height": 149
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 3,
+        "removedComponentCount": 0,
         "extraction": {
-          "left": 10,
-          "top": 31,
-          "width": 177,
-          "height": 115
+          "left": 6,
+          "top": 14,
+          "width": 176,
+          "height": 161
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 10760
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.04-96.webp",
-          "sha256": "860506f8e07a5b144800c58d1a3df4727580967e75d7508623c6940cdbe821b2",
-          "bytes": 4214
+          "sha256": "636baa2c079e4b08d31118c1678be97d3c92d64bbfd9f38c174ae66e772f67e8",
+          "bytes": 7148
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.04-192.webp",
-          "sha256": "0ba358e7467222388cc8e84bb0a79515921f33a8b06d787446cd1eff28beaf93",
-          "bytes": 7390
+          "sha256": "429bf817ff88c59de19cef0aa483aacd5a620dddb7f7c170cebed5e75ce40d42",
+          "bytes": 13072
         }
       ]
     },
     {
       "id": "spirit_beast.fan.fire.05",
-      "name": "焦角豕",
+      "name": "丹霞靈獬",
       "element": "fire",
       "cell": {
         "col": 4,
         "row": 3
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 800,
           "top": 538,
@@ -1126,49 +1173,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 9876,
-          "left": 31,
-          "top": 28,
-          "width": 152,
-          "height": 117
+          "area": 8391,
+          "left": 25,
+          "top": 7,
+          "width": 137,
+          "height": 168
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 4,
+        "removedComponentCount": 0,
         "extraction": {
-          "left": 26,
-          "top": 23,
-          "width": 162,
-          "height": 127
+          "left": 19,
+          "top": 1,
+          "width": 149,
+          "height": 178
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 8391
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.05-96.webp",
-          "sha256": "d032b01dd073ac2a5d5b3258e375c95c408b741cb6dbfec8b10a7b0bfbe90a9e",
-          "bytes": 4626
+          "sha256": "825074c6b093dea81c613139f380be4aca931ea87eb3db80a102c6559be091de",
+          "bytes": 6104
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.05-192.webp",
-          "sha256": "6bd68c4424ab7842fcf58e40384d86928f6f09058ea746185e4fa06ba9c81195",
-          "bytes": 8414
+          "sha256": "140929dd1ecc1a1bd84d5659e035029843b5b345afdcbfa6e20b8534229a81b4",
+          "bytes": 11962
         }
       ]
     },
     {
       "id": "spirit_beast.fan.fire.06",
-      "name": "燭鱗蛇",
+      "name": "燈魄鳳靈",
       "element": "fire",
       "cell": {
         "col": 5,
         "row": 3
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 1000,
           "top": 538,
@@ -1176,49 +1225,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 6885,
-          "left": 37,
-          "top": 17,
-          "width": 127,
-          "height": 127
+          "area": 11006,
+          "left": 20,
+          "top": 3,
+          "width": 155,
+          "height": 169
         },
         "keptComponentCount": 1,
         "removedComponentCount": 1,
         "extraction": {
-          "left": 32,
-          "top": 12,
-          "width": 137,
-          "height": 137
+          "left": 14,
+          "top": 0,
+          "width": 167,
+          "height": 178
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 11006
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.06-96.webp",
-          "sha256": "84e8194ce1ae4615f0687f7ccce895571ecceeb204ff11295577434a721f74a6",
-          "bytes": 6224
+          "sha256": "e852113dfe54a3dbf0bfa17c62020984b63d5e08f8fc985bbc2aaf27117480c1",
+          "bytes": 7868
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.fire.06-192.webp",
-          "sha256": "9503b3a7420085dd6b346552173e47ba15bfbbd5d6fe4c322d0de74880ddd9d7",
-          "bytes": 12036
+          "sha256": "aca2f038c076a2344df50ed15657dfef894e3aeb6296471fbc5e6f01cf8943bc",
+          "bytes": 15492
         }
       ]
     },
     {
       "id": "spirit_beast.fan.earth.01",
-      "name": "陶甲獾",
+      "name": "靈岩幼獬",
       "element": "earth",
       "cell": {
         "col": 0,
         "row": 4
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 0,
           "top": 717,
@@ -1226,49 +1277,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 9332,
-          "left": 23,
-          "top": 47,
-          "width": 166,
-          "height": 91
+          "area": 11047,
+          "left": 31,
+          "top": 14,
+          "width": 150,
+          "height": 150
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 9,
+        "removedComponentCount": 3,
         "extraction": {
-          "left": 18,
-          "top": 42,
-          "width": 176,
-          "height": 101
+          "left": 25,
+          "top": 8,
+          "width": 162,
+          "height": 162
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 11047
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.01-96.webp",
-          "sha256": "54d7fe819769e5b54988ec3ffb2be8d4e2ce4cd3899271b63b117e593d8f71dc",
-          "bytes": 4038
+          "sha256": "f57f4ae673d1c95ad0907c1b79f2dec6107f386652e37d3dce82c65f787311f5",
+          "bytes": 6542
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.01-192.webp",
-          "sha256": "b71537449b413c4fc73e083832acf3a9b59959e8b4a279290510987027acf300",
-          "bytes": 7248
+          "sha256": "fae83098e27de2b49b22f9d9cf05cb318e33bc4226eeb77bf6ce5ef1d27a3a02",
+          "bytes": 13542
         }
       ]
     },
     {
       "id": "spirit_beast.fan.earth.02",
-      "name": "岩耳兔",
+      "name": "山紋翼羆",
       "element": "earth",
       "cell": {
         "col": 1,
         "row": 4
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 200,
           "top": 717,
@@ -1276,49 +1329,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 7156,
-          "left": 49,
-          "top": 20,
-          "width": 106,
-          "height": 122
+          "area": 13559,
+          "left": 12,
+          "top": 14,
+          "width": 168,
+          "height": 150
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 11,
+        "removedComponentCount": 0,
         "extraction": {
-          "left": 44,
-          "top": 15,
-          "width": 116,
-          "height": 132
+          "left": 6,
+          "top": 8,
+          "width": 180,
+          "height": 162
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 13559
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.02-96.webp",
-          "sha256": "246a664b001ad73cb4aa2e08040fe8a780c67b463ffcb58da9dcfb7d6e7ef083",
-          "bytes": 4576
+          "sha256": "40698186c06a29a05056d9336542d3b07ddb6476d8ccd550f82a16c45ea4a8db",
+          "bytes": 6056
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.02-192.webp",
-          "sha256": "05697b5915744b27d190a209e5c93e278becacada96ad9b29cef8bbd8d7a7009",
-          "bytes": 8548
+          "sha256": "0b46035e8ae9563a829819137ed19bc54a3117c12dad38a410e64a080b47b639",
+          "bytes": 11646
         }
       ]
     },
     {
       "id": "spirit_beast.fan.earth.03",
-      "name": "砂背鼠",
+      "name": "坤砂靈羚",
       "element": "earth",
       "cell": {
         "col": 2,
         "row": 4
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 400,
           "top": 717,
@@ -1326,49 +1381,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 6507,
-          "left": 16,
-          "top": 56,
-          "width": 164,
-          "height": 76
+          "area": 7868,
+          "left": 40,
+          "top": 8,
+          "width": 129,
+          "height": 161
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 75,
+        "removedComponentCount": 3,
         "extraction": {
-          "left": 11,
-          "top": 51,
-          "width": 174,
-          "height": 86
+          "left": 34,
+          "top": 2,
+          "width": 141,
+          "height": 173
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 7868
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.03-96.webp",
-          "sha256": "754d0aae14429be9882d556f36159312b59347e6593d210522b457e0aba58e27",
-          "bytes": 3356
+          "sha256": "ae91a007375a922ab4807c860cd3b9f8e69d66b19990d6f1ed69ad01e06e4c95",
+          "bytes": 5570
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.03-192.webp",
-          "sha256": "043a62f0c83d4a71f560938c6abf3d4e0efa32103c7481376aab0dcb407c4457",
-          "bytes": 5906
+          "sha256": "db7e1977edd94775e7166eadf7ca7184a9fbdf39ced8faa5bfc5466f7b28b2df",
+          "bytes": 10540
         }
       ]
     },
     {
       "id": "spirit_beast.fan.earth.04",
-      "name": "泥角牛",
+      "name": "玉壤靈犀",
       "element": "earth",
       "cell": {
         "col": 3,
         "row": 4
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 600,
           "top": 717,
@@ -1376,49 +1433,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 9853,
-          "left": 20,
-          "top": 16,
-          "width": 178,
-          "height": 127
+          "area": 10335,
+          "left": 2,
+          "top": 13,
+          "width": 186,
+          "height": 150
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 3,
+        "removedComponentCount": 0,
         "extraction": {
-          "left": 15,
-          "top": 11,
-          "width": 185,
-          "height": 137
+          "left": 0,
+          "top": 7,
+          "width": 194,
+          "height": 162
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 10335
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.04-96.webp",
-          "sha256": "788578877bcc698fa7c7c825d5197647a0ce29aa02b9d0ae3e9eeab3cece23fe",
-          "bytes": 4190
+          "sha256": "9686acd13639771a424c0323e66d66b3c2676c59d4dfd32452bfd7aebacf6ec4",
+          "bytes": 5280
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.04-192.webp",
-          "sha256": "e30850a3742d59e1c3302f582238515bf5aef400f046b5ca15b980fd7fda8b7b",
-          "bytes": 6902
+          "sha256": "264a93fa5c52606ccbf97a00b43bc556d9ff77584a0551ec6f8b6735ed923de4",
+          "bytes": 11922
         }
       ]
     },
     {
       "id": "spirit_beast.fan.earth.05",
-      "name": "頁岩龜",
+      "name": "石髓龍龜",
       "element": "earth",
       "cell": {
         "col": 4,
         "row": 4
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 800,
           "top": 717,
@@ -1426,49 +1485,51 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 9196,
-          "left": 28,
-          "top": 43,
-          "width": 153,
-          "height": 98
+          "area": 12223,
+          "left": 15,
+          "top": 19,
+          "width": 168,
+          "height": 146
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 5,
+        "removedComponentCount": 4,
         "extraction": {
-          "left": 23,
-          "top": 38,
-          "width": 163,
-          "height": 108
+          "left": 9,
+          "top": 13,
+          "width": 180,
+          "height": 158
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 12223
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.05-96.webp",
-          "sha256": "97c06f468e3e68f1e60904da15126e2d5dac127e9ae52dc40a150b39d5ccb59b",
-          "bytes": 3828
+          "sha256": "592e1ec9d1d20b19c68e6b2d340b4fffd5cf723062a0f6a14f60b08b8db66c43",
+          "bytes": 6066
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.05-192.webp",
-          "sha256": "c39745b028f91214d7aa62936aceed965d0597171a5e923c702609143bc4c391",
-          "bytes": 7024
+          "sha256": "bdf2aa0f35a3f8b237f08d117c98acc9dbb72655b5301ac66e5aaf4d1714ea8e",
+          "bytes": 11536
         }
       ]
     },
     {
       "id": "spirit_beast.fan.earth.06",
-      "name": "石臂猿",
+      "name": "雲嶽角猊",
       "element": "earth",
       "cell": {
         "col": 5,
         "row": 4
       },
-      "source": ".runtime/reports/spirit-beasts-design-20260914/art/species-fan/spirit-beasts-fan-raw.png",
+      "source": ".runtime/reports/spirit-beasts-redesign-20260915/art/species-fan/spirit-beasts-fan-raw.png",
       "extraction": {
-        "method": "magenta-chroma-key-connected-primary-component",
+        "method": "magenta-chroma-key-primary-silhouette",
         "alphaKey": "#ff00ff",
+        "keyMode": "magenta-hue",
+        "edgeDespill": "outer-one-pixel-only",
         "sourceCell": {
           "left": 1000,
           "top": 717,
@@ -1476,34 +1537,34 @@
           "height": 179
         },
         "primaryComponent": {
-          "area": 10034,
-          "left": 34,
-          "top": 18,
-          "width": 133,
-          "height": 128
+          "area": 10268,
+          "left": 15,
+          "top": 19,
+          "width": 149,
+          "height": 144
         },
         "keptComponentCount": 1,
-        "removedComponentCount": 4,
+        "removedComponentCount": 5,
         "extraction": {
-          "left": 29,
+          "left": 9,
           "top": 13,
-          "width": 143,
-          "height": 138
+          "width": 161,
+          "height": 156
         },
-        "excludedReason": "generator-added-text-components"
+        "opaquePixels": 10268
       },
       "outputs": [
         {
           "size": 96,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.06-96.webp",
-          "sha256": "a88a4aeefbce387c14227337badf3f46c685eb8bba9bd6e7125375cf8c248ed6",
-          "bytes": 5542
+          "sha256": "ed985c9686ebc2cf36a70c676ef79ba7393c39c9c15888ae228ad58911307909",
+          "bytes": 6960
         },
         {
           "size": 192,
           "path": "packages/client/public/assets/spirit-beasts/species/spirit_beast.fan.earth.06-192.webp",
-          "sha256": "d3d8ff1fd3dc580c9deaa09344ed5cf90f5b97c6e361aa2912a35091f856c179",
-          "bytes": 10182
+          "sha256": "2c21ea1f0b7c4957744806f19a3631cd0d6fe4f48721a923aa904380c77e8603",
+          "bytes": 13676
         }
       ]
     }
