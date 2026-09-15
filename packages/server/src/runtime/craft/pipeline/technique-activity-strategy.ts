@@ -19,9 +19,11 @@ import type {
   TechniqueActivityNoticeMessage,
 } from '@mud/shared';
 import type { PlantingWorkPort } from '../planting-work.port';
+import type { FacilityWorkPort } from '../../spirit-beast/facility-work.port';
 
 /** 管线 tick 上下文，由管线骨架注入给策略方法。 */
 export interface PipelineContext {
+  facilityWorkPort?: FacilityWorkPort | null;
   plantingWorkPort?: PlantingWorkPort | null;
   contentTemplateRepository: {
     getItemName(itemId: string): string | null;

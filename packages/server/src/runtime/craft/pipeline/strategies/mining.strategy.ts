@@ -16,7 +16,7 @@ import {
 } from '@mud/shared';
 import type { TechniqueActivityStrategy, PipelineContext, PersistenceDomain } from '../technique-activity-strategy';
 import { bumpTechniqueActivityJobVersion } from '../../technique-activity-runtime.helpers';
-import { releaseFacilityWork, tickFacilityWork } from './facility-work-pipeline.helpers';
+import { releaseFacilityWork, resolveFacilityPort, tickFacilityWork } from './facility-work-pipeline.helpers';
 
 type MiningValidatedPayload = {
   instanceId: string;
@@ -65,7 +65,7 @@ export class MiningStrategy implements TechniqueActivityStrategy<PlayerMiningJob
     }
     const facilityOrderId = typeof (payload as { facilityOrderId?: unknown } | null)?.facilityOrderId === 'string'
       ? String((payload as { facilityOrderId: string }).facilityOrderId).trim() : '';
-    const facilityAssignment = facilityOrderId ? resolveMiningDeps(ctx)?.facilityWorkPort?.getFacilityAssignment(playerId, facilityOrderId, 'mining') : null;
+    const facilityAssignment = facilityOrderId ? resolveFacilityPort(ctx)?.getFacilityAssignment(playerId, facilityOrderId, 'mining') : null;
     if (facilityAssignment) {
       return { ok: true, validated: { instanceId: facilityAssignment.instanceId, targetX: facilityAssignment.x,
         targetY: facilityAssignment.y, tileType: 'facility', tileName: facilityAssignment.buildingName,

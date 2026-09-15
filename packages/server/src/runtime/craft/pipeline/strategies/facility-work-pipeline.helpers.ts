@@ -54,8 +54,8 @@ export function releaseFacilityWork(player: any, job: any, ctx: PipelineContext)
   return true;
 }
 
-function resolveFacilityPort(ctx: PipelineContext): FacilityWorkPort | null {
-  return ((ctx.deps as { facilityWorkPort?: FacilityWorkPort } | null)?.facilityWorkPort) ?? null;
+export function resolveFacilityPort(ctx: PipelineContext): FacilityWorkPort | null {
+  return ctx.facilityWorkPort ?? ((ctx.deps as { facilityWorkPort?: FacilityWorkPort } | null)?.facilityWorkPort) ?? null;
 }
 
 function empty(panelChanged: boolean) {

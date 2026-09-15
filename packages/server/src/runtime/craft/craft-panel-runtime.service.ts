@@ -1255,15 +1255,13 @@ export class CraftPanelRuntimeService {
         this.playerRuntimeService.recordAssetStatisticMutation?.(player, beforeSnapshot);
     }
     buildPipelineContext(deps = null) {
-        const mergedDeps = this.facilityWorkPort
-            ? { ...(deps && typeof deps === 'object' ? deps : {}), facilityWorkPort: this.facilityWorkPort }
-            : deps;
         return {
+            facilityWorkPort: this.facilityWorkPort,
             plantingWorkPort: this.plantingWorkPort,
             contentTemplateRepository: this.contentTemplateRepository,
             resolveExpToNextByLevel: (level) => resolveCraftSkillExpToNextByLevel(this.playerRuntimeService, level),
             getInstanceRuntime: (instanceId) => typeof deps?.getInstanceRuntime === 'function' ? deps.getInstanceRuntime(instanceId) : null,
-            deps: mergedDeps,
+            deps,
         };
     }
     ensurePipelineInitialized() {

@@ -215,7 +215,9 @@ function createContext(runtime: RuntimeHarness, probe: Probe): PipelineContext {
     enqueuePendingCommand(): void { probe.tileAttacks += 1; },
     playerRuntimeService: runtime.playerRuntimeService,
   };
+  const { facilityWorkPort, ...worldDeps } = deps;
   return {
+    facilityWorkPort,
     contentTemplateRepository: {
       getItemName(itemId: string): string { return itemId; },
       normalizeItem(item: { itemId: string; count: number }): unknown { return item; },
@@ -225,7 +227,7 @@ function createContext(runtime: RuntimeHarness, probe: Probe): PipelineContext {
       probe.tileReads += 1;
       throw new Error('facility mining must not resolve a map instance');
     },
-    deps,
+    deps: worldDeps,
   };
 }
 

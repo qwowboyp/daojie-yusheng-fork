@@ -181,7 +181,7 @@ async function testForcedAttackOreRespectsPendingCast(): Promise<void> {
     [
       'queuePlayerNotice',
       'player:force-attack-mining',
-      '吟唱中无法分心挖矿。',
+      '吟唱中無法分心挖礦。',
       'system',
       'notice.command.casting-busy-mining',
     ],

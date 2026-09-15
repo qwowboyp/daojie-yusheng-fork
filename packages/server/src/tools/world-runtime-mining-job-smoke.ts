@@ -8,6 +8,7 @@ import { TileType } from '@mud/shared';
 import { TechniqueActivityPipelineService } from '../runtime/craft/pipeline/technique-activity-pipeline.service';
 import type { PipelineContext } from '../runtime/craft/pipeline/technique-activity-strategy';
 import { MiningStrategy } from '../runtime/craft/pipeline/strategies/mining.strategy';
+import { CraftPanelRuntimeService } from '../runtime/craft/craft-panel-runtime.service';
 import { buildTechniqueActivityTaskListView } from '../runtime/craft/technique-activity-task-view.helpers';
 
 type SmokePlayer = {
@@ -148,7 +149,7 @@ function createContext(
     },
   };
 
-  return {
+  const context: PipelineContext = {
     contentTemplateRepository: {
       getItemName(itemId: string) {
         return itemId;
@@ -166,6 +167,22 @@ function createContext(
     },
     deps,
   };
+  // Production uses class prototype methods, which object spreading silently drops.
+  class WorldRuntime {
+    playerRuntimeService = deps.playerRuntimeService;
+    getInstanceRuntime(instanceId: string) { return deps.getInstanceRuntime(instanceId); }
+    getPlayerLocation(playerId: string) { return deps.getPlayerLocation(playerId); }
+    hasPendingCommand() { return deps.hasPendingCommand(); }
+    enqueuePendingCommand(playerId: string, command: unknown) { deps.enqueuePendingCommand(playerId, command); }
+  }
+  const world = new WorldRuntime();
+  const craft = Object.create(CraftPanelRuntimeService.prototype) as CraftPanelRuntimeService;
+  craft.facilityWorkPort = {} as NonNullable<CraftPanelRuntimeService['facilityWorkPort']>;
+  Object.assign(craft, { contentTemplateRepository: context.contentTemplateRepository, playerRuntimeService });
+  const actual = craft.buildPipelineContext(world);
+  assert.equal(actual.deps, world, 'pipeline must preserve world runtime identity and prototype methods');
+  assert.equal(actual.facilityWorkPort, craft.facilityWorkPort);
+  return { ...actual, resolveExpToNextByLevel: context.resolveExpToNextByLevel };
 }
 
 function main(): void {
