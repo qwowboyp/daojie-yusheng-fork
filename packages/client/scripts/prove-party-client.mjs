@@ -203,10 +203,18 @@ await withClientBrowserProof(
         document.body.appendChild(settingsHost);
         const { mountReactSettingsPanel } = await import('/src/react-ui/panels/settings/mount-settings-panel.tsx');
         mountReactSettingsPanel(settingsHost);
-        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-        settingsHost.querySelector('[data-settings-tab="ui"]')?.click();
-        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-        const partyToggle = settingsHost.querySelector('[data-floating-panel-key="party"] [data-floating-panel-enabled="true"]');
+        // React 可延後提交；等待真實控制項，不能用固定兩幀推定已掛載。
+        const waitForSettingsControl = async (selector) => {
+          const deadline = performance.now() + 3000;
+          while (performance.now() < deadline) {
+            const control = settingsHost.querySelector(selector);
+            if (control) return control;
+            await new Promise(resolve => setTimeout(resolve, 20));
+          }
+          throw new Error('設定控制項等待逾時：' + selector);
+        };
+        (await waitForSettingsControl('[data-settings-tab="ui"]')).click();
+        const partyToggle = await waitForSettingsControl('[data-floating-panel-key="party"] [data-floating-panel-enabled="true"]');
         const reactTogglePresent = partyToggle instanceof HTMLButtonElement;
         partyToggle?.click();
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
