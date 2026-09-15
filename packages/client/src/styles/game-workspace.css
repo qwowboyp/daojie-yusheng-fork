@@ -366,6 +366,36 @@
   box-shadow: none;
   backdrop-filter: none;
 }
+#workspace-building .building-mode-item-grid {
+  grid-auto-flow: row;
+  grid-auto-columns: auto;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 108px), 1fr));
+  gap: 8px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-snap-type: none;
+}
+#workspace-building .building-mode-item {
+  grid-template-rows: 96px auto;
+  justify-items: center;
+  align-content: start;
+  aspect-ratio: auto;
+  gap: 6px;
+  min-height: 134px;
+  padding: 6px;
+}
+#workspace-building .building-mode-item-image { width: 96px; height: 96px; }
+#workspace-building .building-mode-item-label {
+  position: static;
+  min-height: 28px;
+  padding: 0;
+  background: transparent;
+  color: var(--ink-dark);
+  font-size: 12px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
 #game-shell[data-workspace-mode="true"] #chat-panel {
   position: absolute;
   left: max(12px, env(safe-area-inset-left, 0px));

@@ -93,6 +93,22 @@ await withClientBrowserProof({ viewport, profilePrefix: `building-workspace-${vi
   `${viewport.name}/${theme} 營造工作窗越界`);
   await capture(cdp, `building-workspace-${viewport.name}-${theme}-embedded`);
 
+  await cdp.evaluate(`document.querySelector('#workspace-building [data-category="facility"]').click(); true`);
+  await waitFor(() => cdp.evaluate(`document.querySelectorAll('#workspace-building .building-mode-item').length > 10`), '設施圖文選項');
+  assert.equal(await cdp.evaluate(`document.querySelector('[data-def-id="spirit_incubator_metal"] .building-mode-item-label')?.textContent`), '金行孵蛋器');
+  const artworkLayout = await cdp.evaluate(`(() => {
+    const grid = document.querySelector('#workspace-building .building-mode-item-grid');
+    const items = [...grid.querySelectorAll('.building-mode-item')];
+    const first = items[0].getBoundingClientRect();
+    return { noOverflow: grid.scrollWidth <= grid.clientWidth + 1,
+      wraps: items.some(item => item.getBoundingClientRect().top > first.top + 10),
+      readable: items.every(item => { const image = item.querySelector('img').getBoundingClientRect(); const label = item.querySelector('strong').getBoundingClientRect(); return image.width >= 95 && image.height >= 95 && label.top >= image.bottom; }) };
+  })()`);
+  assert(artworkLayout.noOverflow && artworkLayout.wraps && artworkLayout.readable, `設施圖片過小、未換行或名稱遮圖：${JSON.stringify(artworkLayout)}`);
+  await cdp.evaluate(`document.querySelector('#workspace-building .building-mode-stage').scrollIntoView({ block: 'nearest' }); true`);
+  await capture(cdp, `building-workspace-${viewport.name}-${theme}-facility-art`);
+  await cdp.evaluate(`document.querySelector('#workspace-building [data-category="structure"]').click(); true`);
+
   const continuity = await cdp.evaluate(String.raw`(async () => {
     const proof = window.__buildingWorkspaceProof;
     const host = proof.host;

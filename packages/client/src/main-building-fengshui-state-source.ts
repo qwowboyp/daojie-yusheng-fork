@@ -1462,7 +1462,7 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
     }, { once: true });
     const label = document.createElement('strong');
     label.className = 'building-mode-item-label';
-    label.textContent = resolveBuildingDisplayLabel(def);
+    label.textContent = spiritBeastBuilding ? def.name : resolveBuildingDisplayLabel(def);
     button.replaceChildren(image, label);
     itemGrid.appendChild(button);
   }
