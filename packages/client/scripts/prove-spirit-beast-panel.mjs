@@ -145,8 +145,8 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
     const eggSection=root.querySelector('#spirit-beast-egg-enhance-title').closest('section');set(eggSection.querySelector('select'),'egg-stack-fire');await frame();const eggCounts=eggSection.querySelectorAll('fieldset input[type=number]');set(eggCounts[0],9);set(eggCounts[1],1);await frame();click(eggSection,'確認強化');
     await tab('growth');const growth=root.querySelector('#spirit-beast-growth-title').closest('section'), growthSelect=growth.querySelector('select');const excluded={five:![...growthSelect.options].some((o)=>o.value==='five-star-target'),outsider:![...growthSelect.options].some((o)=>o.value==='outsider')};set(growthSelect,'beast-target');await frame();[...growth.querySelectorAll('fieldset input[type=checkbox]')].slice(0,10).forEach((box)=>box.click());await frame();click(growth,'確認培養');
     await tab('fusion');const fusion=root.querySelector('#spirit-beast-fusion-title').closest('section'), selects=fusion.querySelectorAll('select');const fusionExcluded={wrongStar:![...selects[0].options].some((o)=>o.value==='fusion-wrong-star'),immortal:![...selects[0].options].some((o)=>o.value==='fusion-immortal')};set(selects[0],'fusion-left');await frame();set(selects[1],'fusion-right');await frame();click(fusion,'查看融合結果');await frame();const previewCommand=[...proof.commands].reverse().find((command)=>command.action==='preview_fusion');const preview=proof.shared.previewSpiritBeastFusion(proof.fusionLeft,proof.fusionRight,proof.shared.SPIRIT_BEAST_CATALOG);proof.model.spiritBeastStore.patchState({view:{...proof.model.spiritBeastStore.getState().view,fusionPreview:preview},fusionPreviewReceipt:{requestId:previewCommand.requestId,revision:proof.view.revision}});await frame();const previewReady=Boolean(fusion.querySelector('[data-fusion-preview-ready=true]')),previewStarText=fusion.querySelector('.spirit-beast-fusion-preview span')?.textContent||'';click(fusion,'確認融合');
-    await tab('codex');const codexCount=root.querySelectorAll('[data-species-id]').length;const finder=root.querySelector('#spirit-beast-parent-title').closest('section'),targetSelect=finder.querySelector('select');set(targetSelect,'spirit_beast.immortal.fire.01');await frame();const parentCount=finder.querySelectorAll('.spirit-beast-parent-results li').length;const pairText=finder.textContent.includes('1860 組');
-    return {commands:proof.commands,continuity,crossElementSpeed,excluded,fusionExcluded,previewReady,previewStarText,previewStar:preview?.star,codexCount,parentCount,pairText,tabs:[...root.querySelectorAll('[data-spirit-beast-tab]')].map((entry)=>entry.dataset.spiritBeastTab),errors:window.__spiritBeastProofErrors};
+    await tab('codex');const codexCount=root.querySelectorAll('[data-species-id]').length,bottomFinderAbsent=!root.querySelector('#spirit-beast-parent-title'),detailCard=root.querySelector('[data-species-id="spirit_beast.immortal.fire.01"]');detailCard.click();await frame();const detail=root.querySelector('[data-spirit-beast-codex-detail="spirit_beast.immortal.fire.01"]'),parentCount=detail?.querySelectorAll('.spirit-beast-parent-results li').length||0,detailText=detail?.textContent||'',detailName=detail?.querySelector('.spirit-beast-growth-preview strong')?.textContent||'';click(root,'返回靈獸圖鑑');await frame();const returnedFocus=document.activeElement?.dataset.speciesId==='spirit_beast.immortal.fire.01',keyboardCard=root.querySelector('[data-species-id="spirit_beast.immortal.fire.01"]');keyboardCard.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));await frame();const keyboardOpened=Boolean(root.querySelector('[data-spirit-beast-codex-detail="spirit_beast.immortal.fire.01"]'));click(root,'返回靈獸圖鑑');await frame();
+    return {commands:proof.commands,continuity,crossElementSpeed,excluded,fusionExcluded,previewReady,previewStarText,previewStar:preview?.star,codexCount,bottomFinderAbsent,parentCount,detailText,detailName,returnedFocus,keyboardOpened,tabs:[...root.querySelectorAll('[data-spirit-beast-tab]')].map((entry)=>entry.dataset.spiritBeastTab),errors:window.__spiritBeastProofErrors};
   })()`);
   const actions = new Set(interactionResult.commands.map((command) => command.action));
   for (const action of ['summon','recall','protect','incubate','cancel_incubation','adopt','enhance_egg','cultivate','preview_fusion','fuse','set_mine_enabled','set_crop_plan','cancel_crop','deposit','withdraw','queue_craft','cancel_order','manual_work','cancel_manual_work','buy_seed']) assert(actions.has(action), `未送出 ${action} payload`);
@@ -169,7 +169,14 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
   assert(interactionResult.commands.some((command) => command.action === 'preview_fusion' && command.beastIds[0] === 'fusion-left' && command.beastIds[1] === 'fusion-right'), '三星融合預覽 payload 錯誤');
   assert(interactionResult.commands.some((command) => command.action === 'fuse' && command.beastIds[0] === 'fusion-left' && command.beastIds[1] === 'fusion-right'), '三星確認融合 payload 錯誤');
   assert.equal(interactionResult.codexCount, 150, '圖鑑未完整呈現 150 種靈獸');
-  assert(interactionResult.parentCount > 0 && interactionResult.pairText, '依目標查父母未走完整 1860 組配方');
+  assert.equal(interactionResult.bottomFinderAbsent, true, '圖鑑底部仍重複顯示融合查詢');
+  assert.equal(interactionResult.detailName, '大日金烏', '點擊圖鑑卡片未開啟對應靈獸詳情');
+  assert(interactionResult.parentCount > 0, '靈獸詳情未列出可用融合來源');
+  assert.match(interactionResult.detailText, /融合來源/, '靈獸詳情缺少融合來源區塊');
+  assert.match(interactionResult.detailText, /同品三星父獸融合為一星/, '靈獸詳情未說明融合門檻與產出');
+  assert.match(interactionResult.detailText, /仙品本身尚未開放繼續融合/, '仙品詳情未說明後續融合限制');
+  assert.equal(interactionResult.returnedFocus, true, '返回圖鑑後未回到原卡片位置');
+  assert.equal(interactionResult.keyboardOpened, true, '鍵盤無法由圖鑑卡片開啟靈獸詳情');
   assert.deepEqual(interactionResult.errors, [], '靈獸面板出現瀏覽器執行錯誤');
 
   const modes = [
@@ -177,19 +184,27 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
     { id: 'desktop-light-work', width: 1280, height: 720, mobile: false, theme: 'light', tab: 'work' },
     { id: 'mobile-portrait-incubation', width: 390, height: 844, mobile: true, theme: 'dark', tab: 'incubation' },
     { id: 'touch-landscape-codex', width: 844, height: 390, mobile: true, theme: 'light', tab: 'codex' },
+    { id: 'desktop-dark-codex-detail', width: 1280, height: 900, mobile: false, theme: 'dark', tab: 'codex', detail: true },
+    { id: 'mobile-portrait-codex-detail', width: 390, height: 844, mobile: true, theme: 'dark', tab: 'codex', detail: true },
+    { id: 'touch-landscape-codex-detail', width: 844, height: 390, mobile: true, theme: 'light', tab: 'codex', detail: true },
   ];
   for (const mode of modes) {
     await cdp.send('Emulation.setDeviceMetricsOverride', { width: mode.width, height: mode.height, deviceScaleFactor: 1, mobile: mode.mobile, screenWidth: mode.width, screenHeight: mode.height });
     await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: mode.mobile, maxTouchPoints: mode.mobile ? 5 : 1 });
-    const layout = await cdp.evaluate(`(async()=>{document.documentElement.dataset.colorMode=${JSON.stringify(mode.theme)};const shell=document.getElementById('spirit-beast-proof-shell');shell.querySelector('[data-spirit-beast-tab=${mode.tab}]').click();await new Promise((resolve)=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));const content=shell.querySelector('.spirit-beast-content');return{rootOverflow:shell.scrollWidth>shell.clientWidth+1,contentOverflow:content.scrollWidth>content.clientWidth+1,scrollable:content.scrollHeight>content.clientHeight,active:content.dataset.spiritBeastActiveTab,theme:document.documentElement.dataset.colorMode,minTouch:Math.min(...[...shell.querySelectorAll('button,select,input,summary')].filter((el)=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0}).map((el)=>el.getBoundingClientRect().height))};})()`);
+    const layout = await cdp.evaluate(`(async()=>{document.documentElement.dataset.colorMode=${JSON.stringify(mode.theme)};const shell=document.getElementById('spirit-beast-proof-shell');shell.querySelector('[data-spirit-beast-tab=${mode.tab}]').click();await new Promise((resolve)=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));if(${Boolean(mode.detail)}){shell.querySelector('[data-species-id="spirit_beast.immortal.fire.01"]')?.click();await new Promise((resolve)=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));}const content=shell.querySelector('.spirit-beast-content'),detail=shell.querySelector('[data-spirit-beast-codex-detail]');return{rootOverflow:shell.scrollWidth>shell.clientWidth+1,contentOverflow:content.scrollWidth>content.clientWidth+1,scrollable:content.scrollHeight>content.clientHeight,active:content.dataset.spiritBeastActiveTab,theme:document.documentElement.dataset.colorMode,detailOpen:Boolean(detail),fusionSources:detail?.querySelectorAll('.spirit-beast-parent-results li').length||0,minTouch:Math.min(...[...shell.querySelectorAll('button,select,input,summary,[role=button]')].filter((el)=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0}).map((el)=>el.getBoundingClientRect().height))};})()`);
     assert.equal(layout.rootOverflow, false, `${mode.id} 外框水平溢出`);
     assert.equal(layout.contentOverflow, false, `${mode.id} 內容水平溢出`);
     assert.equal(layout.active, mode.tab, `${mode.id} 分頁未開啟`);
     assert.equal(layout.theme, mode.theme, `${mode.id} 主題未套用`);
     if (mode.mobile) assert(layout.minTouch >= 38, `${mode.id} 可見控制過小：${layout.minTouch}`);
+    if (mode.detail) {
+      assert.equal(layout.detailOpen, true, `${mode.id} 未進入卡片詳情`);
+      assert(layout.fusionSources > 0, `${mode.id} 詳情未顯示融合來源`);
+    }
     const brokenImages = await cdp.evaluate(`(async()=>{const shell=document.getElementById('spirit-beast-proof-shell'),bounds=shell.getBoundingClientRect(),images=[...shell.querySelectorAll('img')].filter((img)=>{const rect=img.getBoundingClientRect();return rect.width>0&&rect.height>0&&rect.bottom>=bounds.top&&rect.top<=bounds.bottom;});await Promise.allSettled(images.map((img)=>Promise.race([img.decode(),new Promise((resolve)=>setTimeout(resolve,5000))])));return images.filter((img)=>!img.naturalWidth).map((img)=>img.src);})()`);
     assert.deepEqual(brokenImages, [], `${mode.id} 靈獸或工位圖片無法解碼`);
     await capture(cdp, mode.id);
+    if (mode.detail) await cdp.evaluate(`document.querySelector('#spirit-beast-proof-shell .spirit-beast-codex-detail__back')?.click()`);
   }
 
   await cdp.send('Emulation.setDeviceMetricsOverride', { width: 1280, height: 800, deviceScaleFactor: 1, mobile: false, screenWidth: 1280, screenHeight: 800 });
@@ -201,12 +216,12 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
 
   const controllerResult = await cdp.evaluate(`(async()=>{const proof=window.__spiritBeastProof;const shared=proof.shared;const controller=await import('/src/react-ui/panels/spirit-beast/spirit-beast-panel-controller.ts');const handlers=new Map(),sent=[];controller.createSpiritBeastPanelController({on:(event,handler)=>handlers.set(event,handler),emitEvent:(event,payload)=>sent.push({event,payload})});proof.model.spiritBeastStore.patchState({view:proof.view,pending:['keep-request'],fusionPreviewReceipt:null,result:null,error:null});handlers.get(shared.S2C.SpiritBeastPanel)({...proof.view});const pendingAfterPanel=proof.model.spiritBeastStore.getState().pending;handlers.get(shared.S2C.SpiritBeastCommandResult)({requestId:'unknown',ok:false,revision:31,reasonKey:'raw_secret_reason'});const unknownIgnored=proof.model.spiritBeastStore.getState().error===null;const requestId=proof.model.sendSpiritBeastCommand({action:'preview_fusion',buildingId:'spirit_beast_fusion_station',beastIds:['fusion-left','fusion-right'],expectedRevision:31});const preview=shared.previewSpiritBeastFusion(proof.fusionLeft,proof.fusionRight,shared.SPIRIT_BEAST_CATALOG);handlers.get(shared.S2C.SpiritBeastCommandResult)({requestId,ok:true,revision:31,fusionPreview:preview});const merged=proof.model.spiritBeastStore.getState();const previewMerged=merged.view.fusionPreview?.speciesId===preview.speciesId,receipt=merged.fusionPreviewReceipt;handlers.get(shared.S2C.SpiritBeastPanel)({...proof.view,revision:32});const stale=proof.model.spiritBeastStore.getState();return{pendingAfterPanel,unknownIgnored,previewMerged,receipt,staleCleared:!stale.view.fusionPreview&&stale.fusionPreviewReceipt===null,pending:stale.pending};})()`);
   assert.deepEqual(controllerResult.pendingAfterPanel, ['keep-request'], 'Panel 快照清除了未完成 requestId');
-  assert.equal(controllerResult.unknownIgnored, true, '未知 requestId 結果污染面板錯誤');
+  assert.equal(controllerResult.unknownIgnored, true, '未知 requestId 結果汙染面板錯誤');
   assert.equal(controllerResult.previewMerged, true, 'command result 的 fusionPreview 未合併入 view');
   assert(controllerResult.receipt?.requestId && controllerResult.receipt.revision === 31, '融合預覽 receipt 未綁 requestId/revision');
   assert.equal(controllerResult.staleCleared, true, '較新快照未清除過期融合預覽');
   assert.deepEqual(controllerResult.pending, ['keep-request'], 'command result 移除了其他 requestId');
-  console.log('SPIRIT_BEAST_PANEL_BROWSER_ASSERTIONS:PASS screenshots=4');
+  console.log(`SPIRIT_BEAST_PANEL_BROWSER_ASSERTIONS:PASS screenshots=${modes.length}`);
 });
 
-console.log(`SPIRIT_BEAST_PANEL_BROWSER_PROOF:PASS screenshots=4 dir=${artifactDir}`);
+console.log(`SPIRIT_BEAST_PANEL_BROWSER_PROOF:PASS screenshots=7 dir=${artifactDir}`);

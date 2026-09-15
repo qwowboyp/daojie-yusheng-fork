@@ -269,7 +269,9 @@
   border-radius: 18px;
   background: linear-gradient(135deg, var(--beast-deep), var(--beast-foil) 28%, #fff 33%, var(--beast-deep) 52%, var(--beast-foil) 78%, var(--beast-deep));
   box-shadow: 0 6px 16px #0002, inset 0 0 0 1px #ffffff70;
+  cursor: pointer;
 }
+.spirit-beast-codex-card:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
 .spirit-beast-codex-card[data-grade="human"] { --beast-foil: #7ce6ae; --beast-deep: #24614e; }
 .spirit-beast-codex-card[data-grade="heaven"] { --beast-foil: #ff929f; --beast-deep: #942e46; }
 .spirit-beast-codex-card[data-grade="saint"] { --beast-foil: #d4a4ff; --beast-deep: #653598; }
@@ -344,7 +346,14 @@
 .spirit-beast-codex-card__body strong { font-size: 19px; font-family: var(--font-role-title); letter-spacing: .04em; }
 .spirit-beast-codex-card__identity { padding-bottom: 8px; border-bottom: 1px solid var(--wash-ink); }
 .spirit-beast-codex-card__body p { margin: 2px 0 6px; }
+.spirit-beast-codex-card__action { margin-top: auto; padding-top: 8px; border-top: 1px solid var(--wash-ink); color: var(--accent-strong); font-weight: 700; }
+.spirit-beast-codex-detail { display: grid; gap: 12px; color: var(--ink-dark); }
+.spirit-beast-codex-detail > p { margin: 0; line-height: 1.7; }
+.spirit-beast-codex-detail__stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.spirit-beast-codex-detail__stats > span { padding: 10px; border: 1px solid var(--wash-ink); border-radius: var(--radius-sm, 4px); background: var(--surface-muted); }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .spirit-beast-codex-card { transition: transform .18s ease, box-shadow .18s ease; }
+  .spirit-beast-codex-card:hover { transform: translateY(-2px); box-shadow: 0 9px 20px #0003, inset 0 0 0 1px #ffffff70; }
   .spirit-beast-codex-card:hover .spirit-beast-codex-card__art::after { transform: translateX(22%); }
 }
 .spirit-beast-panel .spirit-beast-codex :is(select, input, button) { min-height: 44px; }
@@ -371,6 +380,7 @@
   .spirit-beast-egg-list > div { display: grid; grid-template-columns: 48px 1fr; justify-content: start; }
   .spirit-beast-egg-list > div span { grid-column: 2; }
   .spirit-beast-ready > img { width: 88px; height: 88px; }
+  .spirit-beast-codex-detail__stats { grid-template-columns: 1fr; }
 }
 
 @media (pointer: coarse) {
