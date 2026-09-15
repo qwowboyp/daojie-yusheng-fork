@@ -19,7 +19,6 @@ import { t } from './ui/i18n';
  * @param options InitializeMainAppOptions 选项参数。
  * @returns 无返回值，直接更新MainApp运行态上下文相关状态。
  */
-
 export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
   const {
     windowRef,
@@ -27,12 +26,10 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
     dom,
     modules,
   } = options;
-
   const rootRuntimeSource = createMainRootRuntimeSource({
     replaceVisibleEntities: (entities) => modules.mapRuntime.replaceVisibleEntities(entities),
     getLatestObservedEntitiesSnapshot,
   });
-
   let panelContext!: ReturnType<typeof createMainPanelContext>;  
   /**
  * showToast：执行showToast相关逻辑。
