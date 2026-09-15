@@ -13,7 +13,7 @@ import {
   collectPlan,
   hashFile,
   parseVersionJson,
-  readFullVerificationReport,
+  readCoordinatedVerificationReport,
   readBaselineManifest,
   readWorktreeState,
 } from './manifest.mjs';
@@ -29,6 +29,7 @@ export function parseArgs(argv) {
     baselineManifest: null,
     coordinatedFull: false,
     fullVerification: null,
+    scopedVerification: null,
     proofs: [],
     allClientTests: false,
   };
@@ -40,15 +41,17 @@ export function parseArgs(argv) {
     else if (value === '--baseline-manifest') options.baselineManifest = readOptionValue(argv, ++index, value);
     else if (value === '--coordinated-full') options.coordinatedFull = true;
     else if (value === '--full-verification') options.fullVerification = readOptionValue(argv, ++index, value);
+    else if (value === '--scoped-verification') options.scopedVerification = readOptionValue(argv, ++index, value);
     else if (value === '--proof') options.proofs.push(readOptionValue(argv, ++index, value));
     else if (value === '--all-client-tests') options.allClientTests = true;
     else throw new Error(`未知參數：${value}`);
   }
   if (!options.base || !options.output || !options.ref) {
-    throw new Error('用法：node prepare.mjs --base <commit-ish> --output <repo外或忽略目錄> [--ref HEAD] [--baseline-manifest <path>] (--proof <id|script>... | --all-client-tests) [--coordinated-full --full-verification <report.json>]');
+    throw new Error('用法：node prepare.mjs --base <commit-ish> --output <repo外或忽略目錄> [--ref HEAD] [--baseline-manifest <path>] (--proof <id|script>... | --all-client-tests) [--coordinated-full (--full-verification <report.json> | --scoped-verification <report.json>)]');
   }
-  if (options.coordinatedFull !== Boolean(options.fullVerification)) {
-    throw new Error('--coordinated-full 與 --full-verification <report.json> 必須成對使用');
+  const coordinatedReports = [options.fullVerification, options.scopedVerification].filter(Boolean);
+  if (options.coordinatedFull !== (coordinatedReports.length === 1)) {
+    throw new Error('--coordinated-full 必須且只能搭配一份 --full-verification 或 --scoped-verification 報告');
   }
   if (options.allClientTests && options.proofs.length > 0) {
     throw new Error('--all-client-tests 與 --proof 不可同時使用');
@@ -121,8 +124,14 @@ async function main() {
   assertCleanWorktree(before);
   const plan = collectPlan(repoRoot, options);
   assertReleaseMode(plan, options);
-  const fullVerification = options.coordinatedFull
-    ? await readFullVerificationReport(repoRoot, options.fullVerification, plan.commit)
+  const coordinatedVerification = options.coordinatedFull
+    ? await readCoordinatedVerificationReport(
+      repoRoot,
+      options.fullVerification ?? options.scopedVerification,
+      plan.commit,
+      plan.baseCommit,
+      plan.paths,
+    )
     : null;
   let outputRoot = await assertAllowedOutput(repoRoot, options.output);
   const baseline = options.baselineManifest ? await readBaselineManifest(path.resolve(options.baselineManifest)) : null;
@@ -164,7 +173,7 @@ async function main() {
       version: { ...version, manifestPath: versionFile.path, sha256: versionFile.sha256 },
       verification,
       delta: buildDelta(files, baseline),
-      fullVerification,
+      coordinatedVerification,
     });
     const receiptText = `${JSON.stringify(receipt, null, 2)}\n`;
     const candidateDir = path.join(outputRoot, receipt.artifactVersion);

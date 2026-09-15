@@ -15,6 +15,7 @@ import {
   normalizeArchivePath,
   parseGitPathList,
   parseVersionJson,
+  readCoordinatedVerificationReport,
   readFullVerificationReport,
   resolveGitCommit,
   readBaselineManifest,
@@ -236,6 +237,15 @@ async function testVerificationSelectionContract() {
   ]);
   assert.deepEqual(prepareOptions.proofs, ['release-contracts']);
   assert.equal(prepareOptions.fullVerification, 'report.json');
+  const scopedPrepareOptions = parsePrepareArgs([
+    '--base', 'HEAD~1', '--output', 'out', '--proof', 'release-contracts',
+    '--coordinated-full', '--scoped-verification', 'scoped.json',
+  ]);
+  assert.equal(scopedPrepareOptions.scopedVerification, 'scoped.json');
+  assert.throws(() => parsePrepareArgs([
+    '--base', 'HEAD~1', '--output', 'out', '--proof', 'release-contracts', '--coordinated-full',
+    '--full-verification', 'full.json', '--scoped-verification', 'scoped.json',
+  ]), /必須且只能/);
   assert.deepEqual(parsePlanArgs(['--base', 'HEAD~1', '--proof', 'release-contracts']).proofs, ['release-contracts']);
 
   const tempRepo = await fs.mkdtemp(path.join(os.tmpdir(), 'daojie-proof-realpath-'));
@@ -264,13 +274,14 @@ async function testVerificationSelectionContract() {
 async function testCoordinatedFullVerification() {
   assert.throws(
     () => parsePrepareArgs(['--base', 'HEAD~1', '--output', 'out', '--coordinated-full']),
-    /必須成對使用/,
+    /必須且只能/,
   );
   const fullPlan = {
     commit: resolveGitCommit(repoRoot, 'HEAD'),
     baseCommit: 'b'.repeat(40),
     classification: 'full',
     eligible: false,
+    paths: ['packages/server/example.ts'],
     blockedPaths: ['packages/server/example.ts'],
   };
   assert.throws(() => assertReleaseMode(fullPlan, { coordinatedFull: false }), /缺少 coordinated full 證據/);
@@ -351,6 +362,60 @@ async function testCoordinatedFullVerification() {
     });
     assert.equal(fullReceipt.classification, 'full');
     assert.equal(fullReceipt.coordinatedFull.serverCommit, fullPlan.commit);
+
+    const scopedPaths = fullPlan.paths;
+    const scopedReport = {
+      schemaVersion: 1,
+      kind: 'daojie-scoped-source-verification',
+      commit: fullPlan.commit,
+      baseCommit: fullPlan.baseCommit,
+      command: 'node scripts/scoped-source-verification.mjs',
+      exitCode: 0,
+      startedAt: '2026-09-13T00:00:00.000Z',
+      completedAt: '2026-09-13T00:10:00.000Z',
+      changeScope: { baseCommit: fullPlan.baseCommit, commit: fullPlan.commit, paths: scopedPaths },
+      selectedProofs: [{ input: 'scripts/prove-spirit-beast-redesign.mjs', kind: 'script', path: 'scripts/prove-spirit-beast-redesign.mjs' }],
+      commands: [
+        ['setup:dependencies', 'pnpm', ['install', '--frozen-lockfile']],
+        ['check:shared-types', 'pnpm', ['--dir', 'packages/shared', 'exec', 'tsc']],
+        ['check:server-types', 'pnpm', ['--dir', 'packages/server', 'exec', 'tsc', '-p', 'tsconfig.json', '--pretty', 'false']],
+        ['proof:script:scripts/prove-spirit-beast-redesign.mjs', 'node', ['scripts/prove-spirit-beast-redesign.mjs']],
+      ].map(([label, executable, argv]) => ({ label, executable, argv, cwd: '.', exitCode: 0,
+        startedAt: '2026-09-13T00:00:01.000Z', completedAt: '2026-09-13T00:09:59.000Z' })),
+      sourceArchive: baseReport.sourceArchive,
+    };
+    await fs.writeFile(reportPath, `${JSON.stringify(scopedReport)}\n`, 'utf8');
+    const scopedVerification = await readCoordinatedVerificationReport(
+      repoRoot, reportPath, fullPlan.commit, fullPlan.baseCommit, scopedPaths,
+    );
+    assert.equal(scopedVerification.kind, 'daojie-scoped-source-verification');
+    assert.equal(scopedVerification.report.sha256.length, 64);
+    const commandTime = {
+      cwd: '.', exitCode: 0,
+      startedAt: '2026-09-13T00:00:01.000Z', completedAt: '2026-09-13T00:09:59.000Z',
+    };
+    const scopedReceipt = buildReceipt({
+      ...receiptArgs,
+      files: [versionFile, ...nginxFiles],
+      distFiles: [versionFile],
+      nginxFiles,
+      verification: {
+        mode: 'scoped', command: SCOPED_VERIFICATION_COMMAND,
+        selectedProofs: [{ input: 'release-contracts', kind: 'script', path: 'scripts/client-release/prove-release-contracts.mjs' }],
+        commands: [
+          ...REQUIRED_BUILD_COMMANDS.map((command) => ({ ...command, argv: [...command.argv], ...commandTime })),
+          { label: 'proof:script:scripts/client-release/prove-release-contracts.mjs', executable: 'node',
+            argv: ['scripts/client-release/prove-release-contracts.mjs'], ...commandTime },
+        ],
+        exitCode: 0, startedAt: '2026-09-13T00:00:00.000Z', completedAt: '2026-09-13T00:10:00.000Z',
+      },
+      coordinatedVerification: scopedVerification,
+    });
+    assert.equal(scopedReceipt.coordinatedFull.scopedVerification.kind, 'daojie-scoped-source-verification');
+    await assert.rejects(
+      () => readCoordinatedVerificationReport(repoRoot, reportPath, fullPlan.commit, fullPlan.baseCommit, ['other.ts']),
+      /完整 changeScope 不一致/,
+    );
   } finally {
     await fs.rm(tempRoot, { recursive: true, force: true });
   }

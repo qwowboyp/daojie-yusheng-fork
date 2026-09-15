@@ -17,6 +17,7 @@ from pathlib import Path
 
 from remote_apply import (
     REQUIRED_BUILD_COMMANDS,
+    REQUIRED_SOURCE_VERIFICATION_COMMANDS,
     SCOPED_VERIFICATION_COMMAND,
     ReleaseError,
     RemoteReleaseManager,
@@ -161,6 +162,41 @@ def make_scoped_receipt(receipt: dict) -> dict:
     return validate_receipt(payload)
 
 
+def make_coordinated_scoped_receipt(receipt: dict) -> dict:
+    payload = json.loads(json.dumps(make_scoped_receipt(receipt)))
+    payload["classification"] = "full"
+    payload["changeScope"]["classification"] = "full"
+    paths = payload["changeScope"]["paths"]
+    started_at = "2026-09-15T00:00:00.000Z"
+    completed_at = "2026-09-15T00:10:00.000Z"
+    proof_path = "scripts/prove-spirit-beast-redesign.mjs"
+    source_commands = [
+        {"label": label, "executable": executable, "argv": argv, "cwd": ".", "exitCode": 0,
+         "startedAt": started_at, "completedAt": completed_at}
+        for label, executable, argv in REQUIRED_SOURCE_VERIFICATION_COMMANDS
+    ]
+    source_commands.append({
+        "label": f"proof:script:{proof_path}", "executable": "node", "argv": [proof_path], "cwd": ".",
+        "exitCode": 0, "startedAt": started_at, "completedAt": completed_at,
+    })
+    payload["coordinatedFull"] = {
+        "serverCommit": payload["commit"],
+        "publicationOrder": "server-before-client",
+        "scopedVerification": {
+            "schemaVersion": 1, "kind": "daojie-scoped-source-verification",
+            "commit": payload["commit"], "baseCommit": payload["baseCommit"],
+            "command": "node scripts/scoped-source-verification.mjs", "exitCode": 0,
+            "startedAt": started_at, "completedAt": completed_at,
+            "changeScope": {"baseCommit": payload["baseCommit"], "commit": payload["commit"], "paths": paths},
+            "selectedProofs": [{"input": proof_path, "kind": "script", "path": proof_path}],
+            "commands": source_commands,
+            "sourceArchive": {"bytes": 100, "sha256": "1" * 64},
+            "report": {"bytes": 100, "sha256": "2" * 64},
+        },
+    }
+    return validate_receipt(payload)
+
+
 def make_payload(parent: Path, site: Path, receipt: dict, changed: list[str], *, nginx: bool = False) -> Path:
     payload = parent / "payload"
     payload.mkdir(parents=True)
@@ -195,6 +231,14 @@ class ReceiptValidationTests(unittest.TestCase):
             bad_scope["changeScope"]["paths"] = ["../escape"]
             with self.assertRaisesRegex(ReleaseError, "path"):
                 validate_receipt(bad_scope)
+
+            coordinated = make_coordinated_scoped_receipt(legacy)
+            self.assertEqual(coordinated["coordinatedFull"]["scopedVerification"]["kind"],
+                             "daojie-scoped-source-verification")
+            bad_source = json.loads(json.dumps(coordinated))
+            bad_source["coordinatedFull"]["scopedVerification"]["commands"][-1]["exitCode"] = 1
+            with self.assertRaisesRegex(ReleaseError, "command result"):
+                validate_receipt(bad_source)
 
 
 class RemoteReleaseTests(unittest.TestCase):

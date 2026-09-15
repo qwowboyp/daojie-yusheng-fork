@@ -3,6 +3,7 @@ import contextlib
 import importlib.util
 import io
 import json
+import subprocess
 import tarfile
 import tempfile
 import unittest
@@ -41,6 +42,72 @@ class ServerReleaseContracts(unittest.TestCase):
 
     def test_complete_evidence_and_matching_archive_pass(self):
         self.assertEqual(self.validate()["archiveSha256"], release.sha256_file(self.archive))
+
+    def test_scoped_source_evidence_binds_scope_commands_and_archive(self):
+        self.evidence = {
+            "schemaVersion": 1, "kind": release.SCOPED_VERIFICATION_KIND,
+            "commit": self.commit, "baseCommit": "b" * 40,
+            "command": release.SCOPED_VERIFICATION_COMMAND, "exitCode": 0,
+            "startedAt": "2026-09-14T00:00:00.000Z", "completedAt": "2026-09-14T01:00:00.000Z",
+            "changeScope": {"baseCommit": "b" * 40, "commit": self.commit,
+                            "paths": ["packages/server/data/content/spirit-beasts/catalog.json"]},
+            "selectedProofs": [{"input": "scripts/prove-spirit-beast-redesign.mjs", "kind": "script",
+                                "path": "scripts/prove-spirit-beast-redesign.mjs"}],
+            "commands": [
+                {"label": label, "executable": executable, "argv": argv, "cwd": ".", "exitCode": 0,
+                 "startedAt": "2026-09-14T00:00:01.000Z", "completedAt": "2026-09-14T00:59:59.000Z"}
+                for label, executable, argv in release.REQUIRED_SCOPED_COMMANDS
+            ] + [{"label": "proof:script:scripts/prove-spirit-beast-redesign.mjs", "executable": "node",
+                  "argv": ["scripts/prove-spirit-beast-redesign.mjs"], "cwd": ".", "exitCode": 0,
+                  "startedAt": "2026-09-14T00:00:01.000Z", "completedAt": "2026-09-14T00:59:59.000Z"}],
+            "sourceArchive": {"path": "source.tar", "bytes": self.archive.stat().st_size,
+                              "sha256": release.sha256_file(self.archive)},
+        }
+        self.assertEqual(self.validate()["kind"], release.SCOPED_VERIFICATION_KIND)
+        self.evidence["commands"][-1]["argv"] = ["scripts/coordinated-server-release.py"]
+        with self.assertRaisesRegex(release.ReleaseError, "does not match"):
+            self.validate()
+
+    def test_full_and_scoped_reports_are_mutually_exclusive(self):
+        args = release.parse_args(["--full-verification", str(self.report),
+                                   "--scoped-verification", str(self.root / "scoped.json")])
+        with self.assertRaisesRegex(release.ReleaseError, "mutually exclusive"):
+            release.selected_verification(args)
+
+    def test_canonical_scoped_report_recomputes_base_commit_paths(self):
+        commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+        base = subprocess.check_output(["git", "rev-parse", "HEAD^"], cwd=ROOT, text=True).strip()
+        paths = subprocess.check_output(
+            ["git", "diff", "--name-only", "-z", base, commit, "--"], cwd=ROOT,
+        ).decode("utf-8").split("\0")
+        paths = sorted(value for value in paths if value)
+        subprocess.run(["git", "archive", "--format=tar", "--output", str(self.archive), commit],
+                       cwd=ROOT, check=True)
+        proof_path = "scripts/prove-spirit-beast-redesign.mjs"
+        self.evidence = {
+            "schemaVersion": 1, "kind": release.SCOPED_VERIFICATION_KIND,
+            "commit": commit, "baseCommit": base, "command": release.SCOPED_VERIFICATION_COMMAND,
+            "exitCode": 0, "startedAt": "2026-09-14T00:00:00.000Z",
+            "completedAt": "2026-09-14T01:00:00.000Z",
+            "changeScope": {"baseCommit": base, "commit": commit, "paths": paths},
+            "selectedProofs": [{"input": proof_path, "kind": "script", "path": proof_path}],
+            "commands": [
+                {"label": label, "executable": executable, "argv": argv, "cwd": ".", "exitCode": 0,
+                 "startedAt": "2026-09-14T00:00:01.000Z", "completedAt": "2026-09-14T00:59:59.000Z"}
+                for label, executable, argv in release.REQUIRED_SCOPED_COMMANDS
+            ] + [{"label": f"proof:script:{proof_path}", "executable": "node", "argv": [proof_path],
+                  "cwd": ".", "exitCode": 0, "startedAt": "2026-09-14T00:00:01.000Z",
+                  "completedAt": "2026-09-14T00:59:59.000Z"}],
+            "sourceArchive": {"path": "source.tar", "bytes": self.archive.stat().st_size,
+                              "sha256": release.sha256_file(self.archive)},
+        }
+        self.report.write_text(json.dumps(self.evidence), encoding="utf-8")
+        self.assertEqual(release.validate_canonical_archive(ROOT, self.archive, self.report, commit)["kind"],
+                         release.SCOPED_VERIFICATION_KIND)
+        self.evidence["changeScope"]["paths"] = paths[:-1]
+        self.report.write_text(json.dumps(self.evidence), encoding="utf-8")
+        with self.assertRaisesRegex(release.ReleaseError, "does not match"):
+            release.validate_canonical_archive(ROOT, self.archive, self.report, commit)
 
     def test_failed_or_missing_gate_cannot_publish(self):
         for gates in [self.evidence["gates"][:-1], [{"label": label, "exitCode": 1} for label in release.FULL_GATES]]:

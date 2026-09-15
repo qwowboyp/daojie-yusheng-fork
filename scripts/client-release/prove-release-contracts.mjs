@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const checks = [
+  { executable: 'node', argv: ['--test', 'scripts/scoped-source-verification.test.mjs'], cwd: repoRoot },
   { executable: 'node', argv: ['scripts/client-release/check-client-release.mjs'], cwd: repoRoot },
   { executable: 'python', argv: ['-B', '-X', 'utf8', 'test_preflight.py'], cwd: path.join(repoRoot, 'scripts', 'client-release') },
   {

@@ -4,7 +4,13 @@
 
 ## 候選與證據
 
-候選必須是已提交的完整 SHA，以 `git archive --format=tar <SHA>` 產生未壓縮、無 prefix 的 `source.tar`。在該 archive 的獨立副本執行 `pnpm verify:release:full`，四個 gate（with-db、gm-database-backup-persistence、shadow、gm）都成功才可發布。完整報告格式見 [前端協調發布](client-hot-release.md)；工具會重新產生 canonical archive 並比對 SHA256、大小、提交與完整門禁報告。
+候選必須是已提交的完整 SHA，且服務端與前端使用同一份無 prefix、未壓縮的 canonical `source.tar`。一般跨域發布仍使用 `pnpm verify:release:full` 的四門禁報告；使用者明確要求只測當次完整差異時，可用 `scripts/scoped-source-verification.mjs` 在該 archive 的乾淨副本固定執行 frozen install、shared/server TypeScript 與明確選定的純讀 proof。scoped 報告綁定 base、commit、完整變更路徑、各命令 UTC 時間／exit code 及 archive SHA256，不能標記成 full PASS，也不能沿用其他 commit 的報告。
+
+```powershell
+node scripts/scoped-source-verification.mjs --base <線上完整SHA> --commit <候選完整SHA> --output .runtime/releases/<本次證據> --proof scripts/prove-spirit-beast-redesign.mjs
+```
+
+工具會重新產生 canonical archive，比對 SHA256、大小與提交；scoped 模式還會以 Git 重算 base..commit 完整路徑。缺 proof、未知模式、失敗命令或 scope 漂移均拒絕發布。完整報告與前端收據格式見 [前端協調發布](client-hot-release.md)。
 
 先讀取線上狀態，保存四個容器的完整 ID：
 
@@ -15,8 +21,10 @@ python scripts/coordinated-server-release.py --mode plan --env-file .env/pve.env
 以同一候選、證據及讀取到的容器 ID 執行：
 
 ```powershell
-python scripts/coordinated-server-release.py --mode publish --commit <完整SHA> --source-archive <source.tar> --full-verification <完整門禁報告.json> --expected-current-server <服務端ID> --expected-client <前端ID> --expected-postgres <PostgresID> --expected-redis <RedisID> --env-file .env/pve.env --known-hosts <已核對的-known_hosts> --execute
+python scripts/coordinated-server-release.py --mode publish --commit <完整SHA> --source-archive <source.tar> --scoped-verification <scoped-verification.json> --expected-current-server <服務端ID> --expected-client <前端ID> --expected-postgres <PostgresID> --expected-redis <RedisID> --env-file .env/pve.env --known-hosts <已核對的-known_hosts> --execute
 ```
+
+執行完整四門禁時把 `--scoped-verification` 換回 `--full-verification <完整門禁報告.json>`；兩者互斥且只接受一份。
 
 省略 `--execute` 只檢查證據並回傳唯讀計畫。SSH 拒絕未知 host key。憑證檔需要 `LXC_HOST`、`LXC_SSH_USER`、`LXC_SSH_PASSWORD`，不可提交或輸出內容。線上容器 ID 必須完全相符，狀態漂移時停止並重新調查。
 

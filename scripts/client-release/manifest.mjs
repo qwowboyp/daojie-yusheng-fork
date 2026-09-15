@@ -15,11 +15,18 @@ export const CLIENT_RELEASE_SCHEMA_VERSION = 1;
 export const FULL_VERIFICATION_SCHEMA_VERSION = 1;
 export const FULL_VERIFICATION_KIND = 'daojie-full-release-verification';
 export const FULL_VERIFICATION_COMMAND = 'pnpm verify:release:full';
+export const SCOPED_SOURCE_VERIFICATION_KIND = 'daojie-scoped-source-verification';
+export const SCOPED_SOURCE_VERIFICATION_COMMAND = 'node scripts/scoped-source-verification.mjs';
 export const FULL_VERIFICATION_GATES = Object.freeze([
   'with-db',
   'gm-database-backup-persistence',
   'shadow',
   'gm',
+]);
+export const REQUIRED_SOURCE_VERIFICATION_COMMANDS = Object.freeze([
+  Object.freeze({ label: 'setup:dependencies', executable: 'pnpm', argv: Object.freeze(['install', '--frozen-lockfile']) }),
+  Object.freeze({ label: 'check:shared-types', executable: 'pnpm', argv: Object.freeze(['--dir', 'packages/shared', 'exec', 'tsc']) }),
+  Object.freeze({ label: 'check:server-types', executable: 'pnpm', argv: Object.freeze(['--dir', 'packages/server', 'exec', 'tsc', '-p', 'tsconfig.json', '--pretty', 'false']) }),
 ]);
 
 const DOCUMENT_PREFIX = 'docs/';
@@ -261,6 +268,84 @@ function validateFullVerificationPayload(payload, expectedCommit) {
   };
 }
 
+function validateScopedSourceVerificationPayload(payload, expectedCommit) {
+  if (!payload || payload.schemaVersion !== FULL_VERIFICATION_SCHEMA_VERSION
+    || payload.kind !== SCOPED_SOURCE_VERIFICATION_KIND || payload.command !== SCOPED_SOURCE_VERIFICATION_COMMAND
+    || payload.commit !== expectedCommit || !/^[a-f0-9]{40}$/u.test(payload.commit ?? '')
+    || !/^[a-f0-9]{40}$/u.test(payload.baseCommit ?? '') || payload.exitCode !== 0) {
+    throw new Error('scoped source verification 身分、commit、command 或 exit code 無效');
+  }
+  const startedAt = parseUtcTimestamp(payload.startedAt, 'scoped source verification startedAt');
+  const completedAt = parseUtcTimestamp(payload.completedAt, 'scoped source verification completedAt');
+  if (startedAt > completedAt) throw new Error('scoped source verification 時間順序無效');
+  const scope = payload.changeScope;
+  if (!scope || scope.baseCommit !== payload.baseCommit || scope.commit !== payload.commit
+    || !Array.isArray(scope.paths) || scope.paths.length === 0) {
+    throw new Error('scoped source verification 缺少完整 changeScope');
+  }
+  const paths = scope.paths.map(normalizeArchivePath);
+  const sortedPaths = [...new Set(paths)].sort(compareArchivePaths);
+  if (JSON.stringify(paths) !== JSON.stringify(sortedPaths)) {
+    throw new Error('scoped source verification changeScope paths 必須唯一且排序');
+  }
+  if (!Array.isArray(payload.selectedProofs) || payload.selectedProofs.length === 0
+    || !Array.isArray(payload.commands)
+    || payload.commands.length !== REQUIRED_SOURCE_VERIFICATION_COMMANDS.length + payload.selectedProofs.length) {
+    throw new Error('scoped source verification selectedProofs 或 commands 不完整');
+  }
+  for (const selected of payload.selectedProofs) {
+    if (!selected || selected.kind !== 'script' || selected.input !== selected.path
+      || typeof selected.path !== 'string'
+      || !/^(?:scripts|packages\/client\/scripts)\/(?:[a-z0-9._-]+\/)*(?:check|prove|verify|test)[a-z0-9._-]*\.(?:c?js|mjs|py)$/u.test(selected.path)) {
+      throw new Error('scoped source verification selected proof 不在白名單');
+    }
+  }
+  for (let index = 0; index < payload.commands.length; index += 1) {
+    const result = payload.commands[index];
+    const commandStartedAt = parseUtcTimestamp(result?.startedAt, 'scoped source verification command startedAt');
+    const commandCompletedAt = parseUtcTimestamp(result?.completedAt, 'scoped source verification command completedAt');
+    if (commandStartedAt > commandCompletedAt || commandStartedAt < startedAt || commandCompletedAt > completedAt
+      || result.exitCode !== 0 || result.cwd !== '.') {
+      throw new Error('scoped source verification command 結果無效');
+    }
+    const required = REQUIRED_SOURCE_VERIFICATION_COMMANDS[index];
+    if (required) {
+      if (result.label !== required.label || result.executable !== required.executable
+        || JSON.stringify(result.argv) !== JSON.stringify(required.argv)) {
+        throw new Error(`scoped source verification 必要 command 無效：${required.label}`);
+      }
+      continue;
+    }
+    validateProofCommand(result, 'scoped source verification');
+    const proof = payload.selectedProofs[index - REQUIRED_SOURCE_VERIFICATION_COMMANDS.length];
+    const script = result.executable === 'python' ? result.argv[3] : result.argv[0];
+    if (script !== proof.path || result.label !== `proof:script:${proof.path}`) {
+      throw new Error('scoped source verification proof 與 command 不一致');
+    }
+  }
+  const sourceArchive = payload.sourceArchive;
+  if (!sourceArchive || typeof sourceArchive.path !== 'string'
+    || sourceArchive.path.includes('/') || sourceArchive.path.includes('\\') || !sourceArchive.path.endsWith('.tar')
+    || !Number.isSafeInteger(sourceArchive.bytes) || sourceArchive.bytes < 1
+    || !/^[a-f0-9]{64}$/u.test(sourceArchive.sha256 ?? '')) {
+    throw new Error('scoped source verification sourceArchive 證據無效');
+  }
+  return {
+    schemaVersion: payload.schemaVersion,
+    kind: payload.kind,
+    commit: payload.commit,
+    baseCommit: payload.baseCommit,
+    command: payload.command,
+    exitCode: payload.exitCode,
+    startedAt: payload.startedAt,
+    completedAt: payload.completedAt,
+    changeScope: { baseCommit: scope.baseCommit, commit: scope.commit, paths },
+    selectedProofs: payload.selectedProofs.map((proof) => ({ ...proof })),
+    commands: payload.commands.map((command) => ({ ...command, argv: [...command.argv] })),
+    sourceArchive: { bytes: sourceArchive.bytes, sha256: sourceArchive.sha256 },
+  };
+}
+
 function validateStoredFullVerification(payload, expectedCommit, label) {
   if (!payload || payload.schemaVersion !== FULL_VERIFICATION_SCHEMA_VERSION || payload.kind !== FULL_VERIFICATION_KIND
     || payload.commit !== expectedCommit || payload.command !== FULL_VERIFICATION_COMMAND || payload.exitCode !== 0) {
@@ -280,8 +365,29 @@ function validateStoredFullVerification(payload, expectedCommit, label) {
   }
 }
 
-export async function readFullVerificationReport(repoRoot, reportPath, expectedCommit) {
-  if (!reportPath) throw new Error('--coordinated-full 必須搭配 --full-verification <report.json>');
+function validateStoredCoordinatedVerification(payload, expectedCommit, baseCommit, paths, label) {
+  if (payload?.kind === FULL_VERIFICATION_KIND) {
+    validateStoredFullVerification(payload, expectedCommit, label);
+    return;
+  }
+  const validated = validateScopedSourceVerificationPayload({
+    ...payload,
+    sourceArchive: { path: 'source.tar', ...payload?.sourceArchive },
+  }, expectedCommit);
+  if (validated.baseCommit !== baseCommit
+    || JSON.stringify(validated.changeScope.paths) !== JSON.stringify(paths)) {
+    throw new Error(`${label} scoped source verification 與 receipt changeScope 不一致`);
+  }
+  for (const name of ['sourceArchive', 'report']) {
+    const record = payload[name];
+    if (!record || !Number.isSafeInteger(record.bytes) || record.bytes < 1 || !/^[a-f0-9]{64}$/u.test(record.sha256 ?? '')) {
+      throw new Error(`${label} scoped source verification ${name} 雜湊證據無效`);
+    }
+  }
+}
+
+export async function readCoordinatedVerificationReport(repoRoot, reportPath, expectedCommit, expectedBaseCommit, expectedPaths) {
+  if (!reportPath) throw new Error('--coordinated-full 必須搭配驗證報告');
   const resolvedReport = path.resolve(reportPath);
   const reportStat = await fs.lstat(resolvedReport);
   if (!reportStat.isFile() || reportStat.isSymbolicLink()) throw new Error(`full verification report 無效或為符號連結：${resolvedReport}`);
@@ -293,7 +399,14 @@ export async function readFullVerificationReport(repoRoot, reportPath, expectedC
   } catch (error) {
     throw new Error(`full verification report 不是有效 JSON：${error instanceof Error ? error.message : String(error)}`);
   }
-  const verification = validateFullVerificationPayload(payload, expectedCommit);
+  const verification = payload?.kind === FULL_VERIFICATION_KIND
+    ? validateFullVerificationPayload(payload, expectedCommit)
+    : validateScopedSourceVerificationPayload(payload, expectedCommit);
+  if (verification.kind === SCOPED_SOURCE_VERIFICATION_KIND
+    && (verification.baseCommit !== expectedBaseCommit
+      || JSON.stringify(verification.changeScope.paths) !== JSON.stringify(expectedPaths))) {
+    throw new Error('scoped source verification 與本次完整 changeScope 不一致');
+  }
   const sourceArchivePath = path.join(path.dirname(resolvedReport), payload.sourceArchive.path);
   const sourceArchiveRecord = await hashLocalFile(sourceArchivePath);
   if (sourceArchiveRecord.bytes !== verification.sourceArchive.bytes
@@ -319,6 +432,10 @@ export async function readFullVerificationReport(repoRoot, reportPath, expectedC
     await fs.rm(canonicalDir, { recursive: true, force: true });
   }
   return { ...verification, report: reportRecord };
+}
+
+export async function readFullVerificationReport(repoRoot, reportPath, expectedCommit) {
+  return readCoordinatedVerificationReport(repoRoot, reportPath, expectedCommit, null, null);
 }
 
 export function parseVersionJson(source) {
@@ -361,9 +478,10 @@ export async function readBaselineManifest(manifestPath) {
   return parsed;
 }
 
-export function buildReceipt({ plan, files, distFiles, nginxFiles, version, verification, delta, fullVerification = null }) {
+export function buildReceipt({ plan, files, distFiles, nginxFiles, version, verification, delta, coordinatedVerification = null, fullVerification = null }) {
   const sortedFiles = [...files].sort(compareManifestEntries);
-  const isCoordinatedFull = plan?.classification === 'full' && fullVerification?.commit === plan.commit;
+  const sourceVerification = coordinatedVerification ?? fullVerification;
+  const isCoordinatedFull = plan?.classification === 'full' && sourceVerification?.commit === plan.commit;
   const isClientOnly = plan?.eligible === true && (plan.classification === 'client' || plan.classification === 'assets');
   if (!isClientOnly && !isCoordinatedFull) {
     throw new Error('receipt 只能由 eligible client/assets plan 或具完整證據的 coordinated full plan 建立');
@@ -399,7 +517,9 @@ export function buildReceipt({ plan, files, distFiles, nginxFiles, version, veri
       coordinatedFull: {
         serverCommit: plan.commit,
         publicationOrder: 'server-before-client',
-        fullVerification,
+        ...(sourceVerification.kind === FULL_VERIFICATION_KIND
+          ? { fullVerification: sourceVerification }
+          : { scopedVerification: sourceVerification }),
       },
     } : null),
   };
@@ -432,7 +552,12 @@ function validateReceipt(receipt, label) {
     if (!coordinated || coordinated.serverCommit !== receipt.commit || coordinated.publicationOrder !== 'server-before-client') {
       throw new Error(`${label} 缺少 coordinated full server-first 契約`);
     }
-    validateStoredFullVerification(coordinated.fullVerification, receipt.commit, label);
+    const sourceVerification = coordinated.fullVerification ?? coordinated.scopedVerification;
+    if (Boolean(coordinated.fullVerification) === Boolean(coordinated.scopedVerification)) {
+      throw new Error(`${label} 必須且只能包含一種 coordinated source verification`);
+    }
+    const receiptPaths = receipt.changeScope?.paths ?? [];
+    validateStoredCoordinatedVerification(sourceVerification, receipt.commit, receipt.baseCommit, receiptPaths, label);
   } else if (receipt.coordinatedFull !== undefined) {
     throw new Error(`${label} client/assets receipt 不得包含 coordinatedFull`);
   }

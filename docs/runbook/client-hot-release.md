@@ -72,7 +72,19 @@ Nginx 模板契約有改動時不得沿用一般 publish；需要重新檢查 ru
 
 ## Full-stack 協調發布
 
-這條路徑只負責在服務端已安全更新後切換靜態前端，不會替換 server、Postgres 或 Redis。`--coordinated-full` 不是略過分類或門禁的開關；它必須搭配由同一份 canonical source archive 跑完 `pnpm verify:release:full` 所產生的證據。明確選定的前端驗證、完整產物 manifest、bundle envelope、CAS、Nginx 契約、不可變圖包、保留舊 chunk、線上 hash 與回復機制仍全部執行。
+這條路徑只負責在服務端已安全更新後切換靜態前端，不會替換 server、Postgres 或 Redis。`--coordinated-full` 不是略過分類或門禁的開關；它必須搭配同一份 canonical source archive 的成功 source verification。預設仍接受既有 `pnpm verify:release:full` 四門禁報告；使用者明確要求只測當次完整差異時，改用 scoped source 報告。明確選定的前端驗證、完整產物 manifest、bundle envelope、CAS、Nginx 契約、不可變圖包、保留舊 chunk、線上 hash 與回復機制仍全部執行。
+
+scoped source 報告由固定入口建立，不手寫成功欄位：
+
+```powershell
+node scripts/scoped-source-verification.mjs `
+  --base LIVE_RECEIPT_COMMIT `
+  --commit HEAD `
+  --output .runtime/releases/spirit-catalog-source `
+  --proof scripts/prove-spirit-beast-redesign.mjs
+```
+
+入口從候選 commit 產生 `source.tar`，解到乾淨候選後執行 frozen install、shared/server tsc 與所選純讀 proof。`scoped-verification.json` 記錄 base→commit 完整路徑、selectedProofs、每個實際命令的時間與退出碼，以及 archive bytes/SHA256。client prepare 會重算 canonical archive 並要求報告 scope 完全等於本次 plan；服務端發布工具還會從 Git 重算 base..commit 路徑。scoped 成功只代表所列檢查，不會產生或冒充 full PASS。
 
 先從最終乾淨 commit 建立不含工作目錄變更、無 prefix、未壓縮的 canonical archive。full gate 必須在這份 archive 解開的隔離 checkout 執行：
 
@@ -119,6 +131,19 @@ node scripts/client-release/prepare.mjs `
   --output .runtime/client-release-artifacts `
   --coordinated-full `
   --full-verification C:/release-evidence/full-verification.json
+```
+
+當次採 scoped source verification 時，保留 `--coordinated-full`，將最後一行換成 `--scoped-verification .runtime/releases/spirit-catalog-source/scoped-verification.json`，並把 `--all-client-tests` 換成當次明確選定的 `--proof`。例如靈獸名稱與圖鑑美術只選圖鑑及地圖瀏覽器 proof：
+
+```powershell
+node scripts/client-release/prepare.mjs `
+  --base LIVE_RECEIPT_COMMIT `
+  --baseline-manifest LIVE_RECEIPT_JSON `
+  --output .runtime/releases/spirit-catalog-client `
+  --coordinated-full `
+  --scoped-verification .runtime/releases/spirit-catalog-source/scoped-verification.json `
+  --proof packages/client/scripts/prove-spirit-beast-codex.mjs `
+  --proof packages/client/scripts/prove-spirit-beast-map-browser.mjs
 ```
 
 服務端必須由同一份 `source.tar` 建置，且 Docker build 必須明確傳入完整 commit，讓最終映像的 `org.opencontainers.image.revision` 等於 receipt commit：

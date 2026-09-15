@@ -45,11 +45,18 @@ EXPECTED_NGINX_TEMPLATES = {
 }
 FULL_VERIFICATION_KIND = "daojie-full-release-verification"
 FULL_VERIFICATION_COMMAND = "pnpm verify:release:full"
+SCOPED_SOURCE_VERIFICATION_KIND = "daojie-scoped-source-verification"
+SCOPED_SOURCE_VERIFICATION_COMMAND = "node scripts/scoped-source-verification.mjs"
 FULL_VERIFICATION_GATES = (
     "with-db",
     "gm-database-backup-persistence",
     "shadow",
     "gm",
+)
+REQUIRED_SOURCE_VERIFICATION_COMMANDS = (
+    ("setup:dependencies", "pnpm", ["install", "--frozen-lockfile"]),
+    ("check:shared-types", "pnpm", ["--dir", "packages/shared", "exec", "tsc"]),
+    ("check:server-types", "pnpm", ["--dir", "packages/server", "exec", "tsc", "-p", "tsconfig.json", "--pretty", "false"]),
 )
 SCOPED_VERIFICATION_COMMAND = "client-release scoped verification"
 ALL_CLIENT_TESTS_COMMAND = "client-release all-client-tests verification"
@@ -145,7 +152,14 @@ def _validate_coordinated_full(payload: dict) -> None:
     if (not isinstance(coordinated, dict) or coordinated.get("serverCommit") != payload["commit"]
             or coordinated.get("publicationOrder") != "server-before-client"):
         raise ReleaseError("full receipt is missing the coordinated server-first contract")
-    proof = coordinated.get("fullVerification")
+    full_proof = coordinated.get("fullVerification")
+    scoped_proof = coordinated.get("scopedVerification")
+    if bool(full_proof) == bool(scoped_proof):
+        raise ReleaseError("full receipt must contain exactly one coordinated source verification")
+    proof = full_proof or scoped_proof
+    if scoped_proof:
+        _validate_scoped_source_verification(payload, proof)
+        return
     if (not isinstance(proof, dict) or proof.get("schemaVersion") != 1
             or proof.get("kind") != FULL_VERIFICATION_KIND or proof.get("commit") != payload["commit"]
             or proof.get("command") != FULL_VERIFICATION_COMMAND or proof.get("exitCode") != 0):
@@ -163,6 +177,61 @@ def _validate_coordinated_full(payload: dict) -> None:
                 or isinstance(record.get("bytes"), bool) or record["bytes"] < 1
                 or not isinstance(record.get("sha256"), str) or not HEX64.fullmatch(record["sha256"])):
             raise ReleaseError(f"full receipt {name} evidence is invalid")
+
+
+def _validate_scoped_source_verification(payload: dict, proof: dict) -> None:
+    if (not isinstance(proof, dict) or proof.get("schemaVersion") != 1
+            or proof.get("kind") != SCOPED_SOURCE_VERIFICATION_KIND
+            or proof.get("command") != SCOPED_SOURCE_VERIFICATION_COMMAND
+            or proof.get("commit") != payload["commit"] or proof.get("baseCommit") != payload["baseCommit"]
+            or proof.get("exitCode") != 0):
+        raise ReleaseError("scoped source verification identity is invalid")
+    started = _parse_utc_timestamp(proof.get("startedAt"))
+    completed = _parse_utc_timestamp(proof.get("completedAt"))
+    if started > completed:
+        raise ReleaseError("scoped source verification timestamps are invalid")
+    scope = proof.get("changeScope")
+    receipt_scope = payload.get("changeScope")
+    if (not isinstance(scope, dict) or scope.get("baseCommit") != payload["baseCommit"]
+            or scope.get("commit") != payload["commit"] or not isinstance(receipt_scope, dict)
+            or scope.get("paths") != receipt_scope.get("paths")):
+        raise ReleaseError("scoped source verification changeScope does not match receipt")
+    selected = proof.get("selectedProofs")
+    commands = proof.get("commands")
+    if (not isinstance(selected, list) or not selected or not isinstance(commands, list)
+            or len(commands) != len(REQUIRED_SOURCE_VERIFICATION_COMMANDS) + len(selected)):
+        raise ReleaseError("scoped source verification proofs or commands are incomplete")
+    for selected_proof in selected:
+        if (not isinstance(selected_proof, dict) or selected_proof.get("kind") != "script"
+                or selected_proof.get("input") != selected_proof.get("path")
+                or not isinstance(selected_proof.get("path"), str)
+                or not SAFE_PROOF_SCRIPT.fullmatch(selected_proof["path"])):
+            raise ReleaseError("scoped source verification selected proof is outside the allowlist")
+    for index, result in enumerate(commands):
+        if not isinstance(result, dict) or result.get("exitCode") != 0 or result.get("cwd") != ".":
+            raise ReleaseError("scoped source verification command result is invalid")
+        command_started = _parse_utc_timestamp(result.get("startedAt"))
+        command_completed = _parse_utc_timestamp(result.get("completedAt"))
+        if command_started > command_completed or command_started < started or command_completed > completed:
+            raise ReleaseError("scoped source verification command timestamps are invalid")
+        if index < len(REQUIRED_SOURCE_VERIFICATION_COMMANDS):
+            label, executable, argv = REQUIRED_SOURCE_VERIFICATION_COMMANDS[index]
+            if result.get("label") != label or result.get("executable") != executable or result.get("argv") != argv:
+                raise ReleaseError(f"scoped source verification required command is invalid: {label}")
+            continue
+        selected_proof = selected[index - len(REQUIRED_SOURCE_VERIFICATION_COMMANDS)]
+        script = selected_proof["path"]
+        executable = "python" if script.endswith(".py") else "node"
+        argv = ["-B", "-X", "utf8", script] if executable == "python" else [script]
+        if (result.get("label") != f"proof:script:{script}"
+                or result.get("executable") != executable or result.get("argv") != argv):
+            raise ReleaseError("scoped source verification proof command does not match selected proof")
+    for name in ("sourceArchive", "report"):
+        record = proof.get(name)
+        if (not isinstance(record, dict) or not isinstance(record.get("bytes"), int)
+                or isinstance(record.get("bytes"), bool) or record["bytes"] < 1
+                or not isinstance(record.get("sha256"), str) or not HEX64.fullmatch(record["sha256"])):
+            raise ReleaseError(f"scoped source verification {name} evidence is invalid")
 
 
 def validate_receipt(payload: object) -> dict:

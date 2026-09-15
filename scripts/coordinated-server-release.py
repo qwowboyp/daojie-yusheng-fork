@@ -30,6 +30,18 @@ HEX40 = re.compile(r"^[0-9a-f]{40}$")
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 SAFE_ID = re.compile(r"^[A-Za-z0-9._-]{1,160}$")
 FULL_GATES = ("with-db", "gm-database-backup-persistence", "shadow", "gm")
+FULL_VERIFICATION_KIND = "daojie-full-release-verification"
+FULL_VERIFICATION_COMMAND = "pnpm verify:release:full"
+SCOPED_VERIFICATION_KIND = "daojie-scoped-source-verification"
+SCOPED_VERIFICATION_COMMAND = "node scripts/scoped-source-verification.mjs"
+REQUIRED_SCOPED_COMMANDS = (
+    ("setup:dependencies", "pnpm", ["install", "--frozen-lockfile"]),
+    ("check:shared-types", "pnpm", ["--dir", "packages/shared", "exec", "tsc"]),
+    ("check:server-types", "pnpm", ["--dir", "packages/server", "exec", "tsc", "-p", "tsconfig.json", "--pretty", "false"]),
+)
+SAFE_PROOF_SCRIPT = re.compile(
+    r"^(?:scripts|packages/client/scripts)/(?:[a-z0-9._-]+/)*(?:check|prove|verify|test)[a-z0-9._-]*\.(?:c?js|mjs|py)$"
+)
 PROTECTED = ("daojie-client", "daojie-postgres", "daojie-redis")
 SERVER_NAME = "daojie-server"
 SERVER_NETWORK = "daojie_net"
@@ -277,6 +289,59 @@ def parse_utc(value: object, label: str) -> datetime:
     return parsed
 
 
+def validate_scoped_report(report: dict, expected_commit: str) -> None:
+    if (report.get("kind") != SCOPED_VERIFICATION_KIND
+            or report.get("command") != SCOPED_VERIFICATION_COMMAND
+            or report.get("commit") != expected_commit or report.get("exitCode") != 0
+            or not HEX40.fullmatch(report.get("baseCommit") or "")):
+        raise ReleaseError("scoped verification identity, commit, command or exit code is invalid")
+    scope = report.get("changeScope")
+    paths = scope.get("paths") if isinstance(scope, dict) else None
+    if (not isinstance(scope, dict) or scope.get("baseCommit") != report["baseCommit"]
+            or scope.get("commit") != expected_commit or not isinstance(paths, list) or not paths
+            or paths != sorted(set(paths))):
+        raise ReleaseError("scoped verification change scope is incomplete")
+    for value in paths:
+        pure = PurePosixPath(value) if isinstance(value, str) else PurePosixPath("/")
+        if (not isinstance(value, str) or pure.is_absolute() or ".." in pure.parts
+                or pure.as_posix() != value or "\\" in value):
+            raise ReleaseError("scoped verification change scope path is unsafe")
+    selected = report.get("selectedProofs")
+    commands = report.get("commands")
+    if (not isinstance(selected, list) or not selected or not isinstance(commands, list)
+            or len(commands) != len(REQUIRED_SCOPED_COMMANDS) + len(selected)):
+        raise ReleaseError("scoped verification proofs or command evidence is incomplete")
+    for proof in selected:
+        if (not isinstance(proof, dict) or proof.get("kind") != "script"
+                or proof.get("input") != proof.get("path")
+                or not isinstance(proof.get("path"), str)
+                or not SAFE_PROOF_SCRIPT.fullmatch(proof["path"])):
+            raise ReleaseError("scoped verification selected proof is outside the allowlist")
+    report_started = parse_utc(report.get("startedAt"), "startedAt")
+    report_completed = parse_utc(report.get("completedAt"), "completedAt")
+    if report_started > report_completed:
+        raise ReleaseError("scoped verification timestamps are reversed")
+    for index, result in enumerate(commands):
+        if (not isinstance(result, dict) or result.get("exitCode") != 0 or result.get("cwd") != "."
+                or parse_utc(result.get("startedAt"), "command startedAt") < report_started
+                or parse_utc(result.get("completedAt"), "command completedAt") > report_completed
+                or parse_utc(result.get("startedAt"), "command startedAt")
+                > parse_utc(result.get("completedAt"), "command completedAt")):
+            raise ReleaseError("scoped verification command result is invalid")
+        if index < len(REQUIRED_SCOPED_COMMANDS):
+            label, executable, argv = REQUIRED_SCOPED_COMMANDS[index]
+            if (result.get("label") != label or result.get("executable") != executable or result.get("argv") != argv):
+                raise ReleaseError(f"scoped verification required command is invalid: {label}")
+            continue
+        proof = selected[index - len(REQUIRED_SCOPED_COMMANDS)]
+        expected_argv = (["-B", "-X", "utf8", proof["path"]]
+                         if proof["path"].endswith(".py") else [proof["path"]])
+        expected_executable = "python" if proof["path"].endswith(".py") else "node"
+        if (result.get("label") != f"proof:script:{proof['path']}"
+                or result.get("executable") != expected_executable or result.get("argv") != expected_argv):
+            raise ReleaseError("scoped verification proof command does not match selected proof")
+
+
 def validate_full_evidence(report_path: Path, archive_path: Path, expected_commit: str) -> dict:
     if report_path.is_symlink() or archive_path.is_symlink() or not report_path.is_file() or not archive_path.is_file():
         raise ReleaseError("full verification report and source archive must be normal files")
@@ -284,25 +349,30 @@ def validate_full_evidence(report_path: Path, archive_path: Path, expected_commi
         report = json.loads(report_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
         raise ReleaseError(f"invalid full verification report: {error}") from error
-    if (not isinstance(report, dict) or report.get("schemaVersion") != 1
-            or report.get("kind") != "daojie-full-release-verification"
-            or report.get("commit") != expected_commit or report.get("command") != "pnpm verify:release:full"
-            or report.get("exitCode") != 0):
-        raise ReleaseError("full verification identity, commit, command or exit code is invalid")
-    if parse_utc(report.get("startedAt"), "startedAt") > parse_utc(report.get("completedAt"), "completedAt"):
-        raise ReleaseError("full verification timestamps are reversed")
-    gates = report.get("gates")
-    if (not isinstance(gates, list) or len(gates) != len(FULL_GATES)
-            or any(not isinstance(gate, dict) or gate.get("label") != FULL_GATES[index]
-                   or gate.get("exitCode") != 0 for index, gate in enumerate(gates))):
-        raise ReleaseError("full verification gate list is incomplete")
+    if not isinstance(report, dict) or report.get("schemaVersion") != 1:
+        raise ReleaseError("verification report schema is invalid")
+    if report.get("kind") == FULL_VERIFICATION_KIND:
+        if (report.get("commit") != expected_commit or report.get("command") != FULL_VERIFICATION_COMMAND
+                or report.get("exitCode") != 0):
+            raise ReleaseError("full verification identity, commit, command or exit code is invalid")
+        if parse_utc(report.get("startedAt"), "startedAt") > parse_utc(report.get("completedAt"), "completedAt"):
+            raise ReleaseError("full verification timestamps are reversed")
+        gates = report.get("gates")
+        if (not isinstance(gates, list) or len(gates) != len(FULL_GATES)
+                or any(not isinstance(gate, dict) or gate.get("label") != FULL_GATES[index]
+                       or gate.get("exitCode") != 0 for index, gate in enumerate(gates))):
+            raise ReleaseError("full verification gate list is incomplete")
+    elif report.get("kind") == SCOPED_VERIFICATION_KIND:
+        validate_scoped_report(report, expected_commit)
+    else:
+        raise ReleaseError("verification report kind is unsupported")
     source = report.get("sourceArchive")
     archive_size = archive_path.stat().st_size
     archive_sha = sha256_file(archive_path)
     if (not isinstance(source, dict) or source.get("path") != archive_path.name
             or source.get("bytes") != archive_size or source.get("sha256") != archive_sha):
         raise ReleaseError("source archive does not match full verification report")
-    return {"report": report, "archiveBytes": archive_size, "archiveSha256": archive_sha,
+    return {"report": report, "kind": report["kind"], "archiveBytes": archive_size, "archiveSha256": archive_sha,
             "reportSha256": sha256_file(report_path)}
 
 
@@ -435,11 +505,14 @@ def preserve_failed_attempt(root: Path, attempt: Path, commit: str, phase: str, 
 def publish_worker(args: argparse.Namespace) -> dict:
     if not HEX40.fullmatch(args.commit or ""):
         raise ReleaseError("publish requires a full 40-character commit")
+    verification_report, _ = selected_verification(args)
+    if verification_report is None or args.source_archive is None:
+        raise ReleaseError("publish requires source archive and one verification report")
     stage_root = args.stage_root.resolve()
-    for evidence_path in (args.full_verification.resolve(), args.source_archive.resolve()):
+    for evidence_path in (verification_report.resolve(), args.source_archive.resolve()):
         if os.path.commonpath((str(stage_root), str(evidence_path))) != str(stage_root):
             raise ReleaseError("publish evidence is outside the bounded staging directory")
-    evidence = validate_full_evidence(args.full_verification, args.source_archive, args.commit)
+    evidence = validate_full_evidence(verification_report, args.source_archive, args.commit)
     expected_protected = expected_protected_from_args(args)
     old_server, _ = verify_expected_ids(args.expected_current_server, expected_protected)
     contract_errors = validate_server_contract(old_server)
@@ -584,7 +657,10 @@ def publish_worker(args: argparse.Namespace) -> dict:
         "protectedContainerIds": expected_protected,
         "evidence": {"sourceArchiveBytes": evidence["archiveBytes"],
                      "sourceArchiveSha256": evidence["archiveSha256"],
-                     "fullVerificationSha256": evidence["reportSha256"]},
+                     "verificationKind": evidence["kind"],
+                     "verificationSha256": evidence["reportSha256"],
+                     **({"fullVerificationSha256": evidence["reportSha256"]}
+                        if evidence["kind"] == FULL_VERIFICATION_KIND else {})},
     }
     atomic_json(release_dir / "release-state.json", state)
     return {"ok": True, "mode": "publish", "commit": args.commit,
@@ -766,7 +842,30 @@ def validate_canonical_archive(repo_root: Path, archive: Path, report: Path, com
             raise ReleaseError(f"cannot produce canonical git archive: {result.stderr.strip()}")
         if canonical.stat().st_size != evidence["archiveBytes"] or sha256_file(canonical) != evidence["archiveSha256"]:
             raise ReleaseError("source archive is not the canonical git archive for the requested commit")
+    if evidence["kind"] == SCOPED_VERIFICATION_KIND:
+        scope = evidence["report"]["changeScope"]
+        result = subprocess.run(
+            ["git", "diff", "--name-only", "-z", scope["baseCommit"], commit, "--"],
+            cwd=repo_root, capture_output=True, check=False,
+        )
+        if result.returncode != 0:
+            raise ReleaseError("cannot reproduce scoped verification change scope")
+        try:
+            actual_paths = sorted(value for value in result.stdout.decode("utf-8", "strict").split("\0") if value)
+        except UnicodeDecodeError as error:
+            raise ReleaseError("scoped verification change scope is not UTF-8") from error
+        if actual_paths != scope["paths"]:
+            raise ReleaseError("scoped verification change scope does not match base..commit")
     return evidence
+
+
+def selected_verification(args: argparse.Namespace) -> tuple[Path | None, str | None]:
+    supplied = [(args.full_verification, "--full-verification"),
+                (args.scoped_verification, "--scoped-verification")]
+    selected = [(path, option) for path, option in supplied if path is not None]
+    if len(selected) > 1:
+        raise ReleaseError("full and scoped verification reports are mutually exclusive")
+    return selected[0] if selected else (None, None)
 
 
 def inline_worker_command(worker_args: list[str]) -> str:
@@ -788,8 +887,9 @@ def worker_args_for_execute(args: argparse.Namespace, remote_stage: str) -> list
         "--stage-root", remote_stage,
     ]
     if args.mode == "publish":
+        report, option = selected_verification(args)
         values.extend(("--source-archive", f"{remote_stage}/{args.source_archive.name}",
-                       "--full-verification", f"{remote_stage}/{args.full_verification.name}"))
+                       option, f"{remote_stage}/{report.name}"))
     return values
 
 
@@ -799,16 +899,17 @@ def orchestrate(args: argparse.Namespace) -> int:
     if not re.fullmatch(r"/[A-Za-z0-9._/-]+", args.remote_root) or ".." in PurePosixPath(args.remote_root).parts:
         raise ReleaseError("--remote-root is unsafe")
     local_evidence = None
+    verification_report, _ = selected_verification(args)
     if args.mode == "publish" and not args.execute:
-        supplied = (args.commit, args.source_archive, args.full_verification)
+        supplied = (args.commit, args.source_archive, verification_report)
         if any(supplied) and not all(supplied):
-            raise ReleaseError("publish plan evidence requires commit, source archive and full verification report together")
+            raise ReleaseError("publish plan evidence requires commit, source archive and one verification report together")
         if all(supplied):
             if not HEX40.fullmatch(args.commit):
                 raise ReleaseError("publish plan requires a full 40-character commit")
             local_evidence = validate_canonical_archive(
                 Path(__file__).resolve().parents[1], args.source_archive.resolve(),
-                args.full_verification.resolve(), args.commit,
+                verification_report.resolve(), args.commit,
             )
     env = load_env(args.env_file.resolve())
     remote = Remote(env, args.known_hosts.resolve())
@@ -824,7 +925,10 @@ def orchestrate(args: argparse.Namespace) -> int:
                     "valid": True,
                     "sourceArchiveBytes": local_evidence["archiveBytes"],
                     "sourceArchiveSha256": local_evidence["archiveSha256"],
-                    "fullVerificationSha256": local_evidence["reportSha256"],
+                    "verificationKind": local_evidence["kind"],
+                    "verificationSha256": local_evidence["reportSha256"],
+                    **({"fullVerificationSha256": local_evidence["reportSha256"]}
+                       if local_evidence["kind"] == FULL_VERIFICATION_KIND else {}),
                 }
             print(json.dumps(live_plan, ensure_ascii=False, sort_keys=True))
             return 0
@@ -836,11 +940,11 @@ def orchestrate(args: argparse.Namespace) -> int:
         if not HEX40.fullmatch(args.commit or ""):
             raise ReleaseError("execute requires --commit with a full 40-character SHA")
         if args.mode == "publish":
-            if not args.source_archive or not args.full_verification:
-                raise ReleaseError("publish requires --source-archive and --full-verification")
+            if not args.source_archive or not verification_report:
+                raise ReleaseError("publish requires --source-archive and one verification report")
             validate_canonical_archive(Path(__file__).resolve().parents[1], args.source_archive.resolve(),
-                                       args.full_verification.resolve(), args.commit)
-            if not SAFE_ID.fullmatch(args.source_archive.name) or not SAFE_ID.fullmatch(args.full_verification.name):
+                                       verification_report.resolve(), args.commit)
+            if not SAFE_ID.fullmatch(args.source_archive.name) or not SAFE_ID.fullmatch(verification_report.name):
                 raise ReleaseError("evidence filenames contain unsafe characters")
 
         staging_root = f"{args.remote_root.rstrip('/')}/.staging"
@@ -850,7 +954,7 @@ def orchestrate(args: argparse.Namespace) -> int:
         remote.put(Path(__file__).resolve(), worker_remote, 0o700)
         if args.mode == "publish":
             remote.put(args.source_archive.resolve(), f"{remote_stage}/{args.source_archive.name}", 0o600)
-            remote.put(args.full_verification.resolve(), f"{remote_stage}/{args.full_verification.name}", 0o600)
+            remote.put(verification_report.resolve(), f"{remote_stage}/{verification_report.name}", 0o600)
         try:
             command = " ".join(shlex.quote(value) for value in (
                 ["python3", worker_remote, "--worker"] + worker_args_for_execute(args, remote_stage)
@@ -874,6 +978,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--commit")
     parser.add_argument("--source-archive", type=Path)
     parser.add_argument("--full-verification", type=Path)
+    parser.add_argument("--scoped-verification", type=Path)
     parser.add_argument("--expected-current-server")
     parser.add_argument("--expected-client")
     parser.add_argument("--expected-postgres")
