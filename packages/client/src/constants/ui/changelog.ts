@@ -12,6 +12,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 /** 当前内置的更新日志条目。 */
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    updatedAt: '2026-09-15',
+    summary: '靈獸圖鑑加入右下角「其它」，隨時查看五行靈獸。',
+    items: [
+      '圖文名錄：介紹全部 150 種靈獸的品級、五行、技藝等級、基礎工作速度加成與戰鬥力，不需先進宗門。',
+      '快速查找：可依品級、五行、技藝和名稱篩選，並查詢指定靈獸的融合父母配方。',
+    ],
+  },
+  {
     updatedAt: '2026-09-14',
     summary: '靈獸養成登場：五行孵化、升星融合與宗門自動生產。',
     items: [

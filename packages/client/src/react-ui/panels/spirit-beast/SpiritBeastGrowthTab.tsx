@@ -1,10 +1,6 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import {
-  SPIRIT_BEAST_CATALOG,
-  SPIRIT_BEAST_GRADES,
-  resolveSpiritBeastFusionSpecies,
   type SpiritBeastPanelView,
-  type SpiritBeastSpecies,
   type SpiritBeastView,
 } from '@mud/shared';
 import { elementLabel, gradeClass, gradeLabel, skillLabel, speciesArtUrl, stars } from './spirit-beast-display';
@@ -94,62 +90,3 @@ export const SpiritBeastFusionTab = memo(function SpiritBeastFusionTab({ view, b
     </section>
   );
 });
-
-interface FusionSpeciesPair { left: SpiritBeastSpecies; right: SpiritBeastSpecies; child: SpiritBeastSpecies }
-const ALL_FUSION_SPECIES_PAIRS: FusionSpeciesPair[] = (() => {
-  const pairs: FusionSpeciesPair[] = [];
-  for (const grade of SPIRIT_BEAST_GRADES) {
-    const parents = SPIRIT_BEAST_CATALOG.filter((entry) => entry.grade === grade);
-    for (let left = 0; left < parents.length; left += 1) {
-      for (let right = left; right < parents.length; right += 1) {
-        const child = resolveSpiritBeastFusionSpecies(parents[left], parents[right], SPIRIT_BEAST_CATALOG);
-        if (child) pairs.push({ left: parents[left], right: parents[right], child });
-      }
-    }
-  }
-  return pairs;
-})();
-
-export const SpiritBeastCodexTab = memo(function SpiritBeastCodexTab() {
-  const [grade, setGrade] = useState<string>('all');
-  const [element, setElement] = useState<string>('all');
-  const [query, setQuery] = useState('');
-  const [targetId, setTargetId] = useState('');
-  const species = SPIRIT_BEAST_CATALOG.filter((entry) => (
-    (grade === 'all' || entry.grade === grade)
-    && (element === 'all' || entry.element === element)
-    && (!query.trim() || entry.name.includes(query.trim()))
-  ));
-  const target = SPIRIT_BEAST_CATALOG.find((entry) => entry.id === targetId);
-  const parentPairs = target ? ALL_FUSION_SPECIES_PAIRS.filter((entry) => entry.child.id === target.id) : [];
-  return (
-    <div className="spirit-beast-codex">
-      <section className="spirit-beast-codex-search" aria-labelledby="spirit-beast-codex-title">
-        <div className="spirit-beast-section-heading"><div><h3 id="spirit-beast-codex-title">靈獸圖鑑</h3><p>共 {SPIRIT_BEAST_CATALOG.length} 種靈獸；依品階、五行或名稱查找。</p></div></div>
-        <div className="spirit-beast-form-grid">
-          <label>品階<select value={grade} onChange={(event) => setGrade(event.target.value)}><option value="all">全部品階</option>{SPIRIT_BEAST_GRADES.map((entry) => <option key={entry} value={entry}>{gradeLabel(entry)}</option>)}</select></label>
-          <label>五行<select value={element} onChange={(event) => setElement(event.target.value)}><option value="all">全部五行</option>{(['metal', 'wood', 'water', 'fire', 'earth'] as const).map((entry) => <option key={entry} value={entry}>{elementLabel(entry)}</option>)}</select></label>
-          <label>名稱<input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="輸入靈獸名稱" /></label>
-        </div>
-        <div className="spirit-beast-codex-grid">
-          {species.map((entry) => (
-            <article key={entry.id} data-species-id={entry.id}>
-              <img src={speciesArtUrl(entry.id)} srcSet={`${speciesArtUrl(entry.id)} 1x, ${speciesArtUrl(entry.id, 192)} 2x`} alt={`${entry.name}圖`} width="72" height="72" />
-              <div><strong>{entry.name}</strong><span className={gradeClass(entry.grade)}>{gradeLabel(entry.grade)}・{elementLabel(entry.element)}行</span><span>{entry.masteries.map((mastery) => `${skillLabel(mastery.skill)} ${mastery.level} 級`).join('、')}</span></div>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section className="spirit-beast-parent-finder" aria-labelledby="spirit-beast-parent-title">
-        <div className="spirit-beast-section-heading"><div><h3 id="spirit-beast-parent-title">依目標查融合父母</h3><p>完整查詢同品配對表，共 {ALL_FUSION_SPECIES_PAIRS.length} 組。</p></div></div>
-        <label>目標靈獸<select value={targetId} onChange={(event) => setTargetId(event.target.value)}><option value="">選擇目標靈獸</option>{SPIRIT_BEAST_CATALOG.map((entry) => <option key={entry.id} value={entry.id}>{entry.name}・{gradeLabel(entry.grade)}・{elementLabel(entry.element)}行</option>)}</select></label>
-        {target ? <div className="spirit-beast-parent-results">
-          <div className="spirit-beast-growth-preview"><img src={speciesArtUrl(target.id)} srcSet={`${speciesArtUrl(target.id)} 1x, ${speciesArtUrl(target.id, 192)} 2x`} alt={`${target.name}圖`} width="80" height="80" /><div><strong>{target.name}</strong><span>{gradeLabel(target.grade)}・{elementLabel(target.element)}行・可由 {parentPairs.length} 組父母融合</span></div></div>
-          <ul>{parentPairs.map((pair) => <li key={`${pair.left.id}:${pair.right.id}`}><span><img src={speciesArtUrl(pair.left.id)} alt="" width="48" height="48" />{pair.left.name}</span><b>＋</b><span><img src={speciesArtUrl(pair.right.id)} alt="" width="48" height="48" />{pair.right.name}</span></li>)}</ul>
-        </div> : null}
-      </section>
-    </div>
-  );
-});
-
-export const spiritBeastFusionSpeciesPairCount = ALL_FUSION_SPECIES_PAIRS.length;

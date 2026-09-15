@@ -3,12 +3,13 @@ import { createRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
 import { requestMobileSurface, subscribeMobileSurface } from '../../ui/mobile-surface';
 import { shouldUseMobileUi } from '../../ui/responsive-viewport';
+import { isReactPanelEnabled } from '../bridge/panel-flags';
 import { mailPanelStore } from '../panels/mail/MailPanel';
 
 const getMailUnread = () => mailPanelStore.getState().summary.unreadCount > 0;
 
 export type WorkspaceId = 'character' | 'items' | 'cultivation' | 'action' | 'quests' | 'market' | 'world' | 'system';
-export type WorkspaceAction = 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'building' | 'settings' | 'tutorial' | 'guided-tour' | 'mail' | 'activity' | 'chronicle' | 'logout';
+export type WorkspaceAction = 'alchemy' | 'forging' | 'enhancement' | 'transmission' | 'building' | 'settings' | 'tutorial' | 'guided-tour' | 'mail' | 'activity' | 'chronicle' | 'spirit-beast-codex' | 'logout';
 
 export interface WorkspaceDefinition {
   id: WorkspaceId;
@@ -134,6 +135,10 @@ function WorkspaceDock({ state, registerCloseMenu }: { state: WorkspaceNavigatio
             aria-expanded={state.activeWorkspace === id} onPointerDown={(event) => { if (event.button === 0) state.onPrepareOpen(id); }}
             onClick={() => open(id)}><span>{state.workspaces.find((entry) => entry.id === id)?.label}</span><small>{state.workspaces.find((entry) => entry.id === id)?.description}</small></button>)}
         </section>)}
+        {isReactPanelEnabled('spirit-beast-codex') ? <section className="workspace-menu-group">
+          <h3>靈獸</h3>
+          <button type="button" data-workspace-action="spirit-beast-codex" aria-haspopup="dialog" onClick={() => { setMenuOpen(false); state.onAction('spirit-beast-codex'); }}><span>靈獸圖鑑</span><small>圖文介紹・技藝・融合配方</small></button>
+        </section> : null}
       </div>
     </nav>
   );

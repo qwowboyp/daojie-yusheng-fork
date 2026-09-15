@@ -3,6 +3,7 @@
  *
  * 维护时要把用户意图、显示派生和服务端权威数据分清，避免为了展示便利复制业务规则。
  */
+import { openSpiritBeastCodex } from './react-ui/panels/spirit-beast/mount-spirit-beast-codex-panel';
 import { detailModalHost } from './ui/detail-modal-host';
 import { getLatestObservedEntitiesSnapshot } from './game-map/store/map-store';
 import { syncEstimatedServerTickInterval } from './runtime/server-tick';
@@ -161,6 +162,10 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
         // 活動是焦點視窗；先收起工作區的背景攔截層，才會讓詳情宿主維持僅真實地圖畫布可背景關閉的契約。
         modules.sidePanel.closeWorkspace(false);
         documentRef.getElementById('hud-open-activity')?.click();
+        break;
+      case 'spirit-beast-codex':
+        modules.sidePanel.closeWorkspace(false);
+        openSpiritBeastCodex();
         break;
       case 'chronicle': documentRef.getElementById('hud-open-chronicle')?.click(); break;
     }

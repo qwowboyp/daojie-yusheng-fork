@@ -1,7 +1,8 @@
 /** 宗門核心中的靈獸管理分頁；只呈現服務端快照與收集玩家操作意圖。 */
 import { memo, useState } from 'react';
 import { SpiritBeastCollectionTab } from './SpiritBeastCollectionTab';
-import { SpiritBeastCodexTab, SpiritBeastFusionTab, SpiritBeastGrowthTab } from './SpiritBeastGrowthTab';
+import { SpiritBeastCodexTab } from './SpiritBeastCodexPanel';
+import { SpiritBeastFusionTab, SpiritBeastGrowthTab } from './SpiritBeastGrowthTab';
 import { SpiritBeastIncubationTab } from './SpiritBeastIncubationTab';
 import { SpiritBeastWorkTab } from './SpiritBeastWorkTab';
 import { formatSpiritBeastReason } from './spirit-beast-display';

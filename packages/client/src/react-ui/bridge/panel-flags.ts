@@ -14,6 +14,7 @@ const STORAGE_KEY = 'mud:react-panel-flags';
 export type ReactPanelId =
   | 'shenxing-travel'
   | 'item-sources'
+  | 'spirit-beast-codex'
   | 'workspace-navigation'
   | 'changelog'
   | 'world'
@@ -37,6 +38,7 @@ export type ReactPanelId =
 const DEFAULT_ENABLED: Set<ReactPanelId> = new Set([
   'shenxing-travel',
   'item-sources',
+  'spirit-beast-codex',
   'workspace-navigation',
   'action',
   'changelog',
@@ -84,6 +86,7 @@ function loadFlags(): Map<ReactPanelId, boolean> {
     if (paramValue === 'all') {
       const allPanels: ReactPanelId[] = [
         'shenxing-travel',
+        'spirit-beast-codex',
         'workspace-navigation',
         'changelog', 'world', 'loot', 'equipment', 'tutorial',
         'body-training', 'quest', 'gm', 'settings',
@@ -146,6 +149,7 @@ export function registerPanelFlagApi(win: Window): void {
     status: () => {
       const flags = loadFlags();
       const allPanels: ReactPanelId[] = [
+        'spirit-beast-codex',
         'workspace-navigation',
         'changelog', 'world', 'loot', 'equipment', 'tutorial',
         'body-training', 'quest', 'gm', 'settings',
