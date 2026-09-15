@@ -3,9 +3,11 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { spawnSync } from 'node:child_process';
 
 import {
   cleanupCandidate,
+  extractCanonicalArchive,
   normalizeProof,
   runCommand,
   sanitizeLogLabel,
@@ -77,4 +79,18 @@ test('candidate cleanup failure is returned as a warning instead of throwing', (
   } finally {
     fs.rmSync = original;
   }
+});
+
+test('canonical archive preserves UTF-8 Chinese paths', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'daojie-scoped-utf8-'));
+  try {
+    const archive = path.join(root, 'source.tar');
+    const candidate = path.join(root, 'candidate');
+    fs.mkdirSync(candidate);
+    const program = "import io, sys, tarfile\nwith tarfile.open(sys.argv[1], 'w') as target:\n item=tarfile.TarInfo('宗門/靈獸.json'); data=b'{}'; item.size=len(data); target.addfile(item, io.BytesIO(data))";
+    const made = spawnSync('python', ['-B', '-X', 'utf8', '-c', program, archive], { encoding: 'utf8', windowsHide: true });
+    assert.equal(made.status, 0, made.stderr);
+    extractCanonicalArchive(archive, candidate);
+    assert.equal(fs.readFileSync(path.join(candidate, '宗門', '靈獸.json'), 'utf8'), '{}');
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

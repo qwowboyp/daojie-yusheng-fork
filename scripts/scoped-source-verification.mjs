@@ -124,6 +124,16 @@ export function cleanupCandidate(candidate) {
   }
 }
 
+/** Windows 系統 tar 可能以本機碼頁解讀中文路徑；Python tarfile 保留 UTF-8 並拒絕越界連結。 */
+export function extractCanonicalArchive(archive, candidate) {
+  const program = "import sys, tarfile\nwith tarfile.open(sys.argv[1], 'r:') as source:\n source.extractall(sys.argv[2], filter='data')";
+  const result = spawnSync('python', ['-B', '-X', 'utf8', '-c', program, archive, candidate], {
+    cwd: repoRoot, encoding: 'utf8', shell: false, windowsHide: true,
+  });
+  if (result.error) throw result.error;
+  if (result.status !== 0) throw new Error(`canonical archive 解開失敗：${result.stderr.trim()}`);
+}
+
 function main() {
   const options = parseArgs(process.argv.slice(2));
   const baseCommit = resolveCommit(options.base);
@@ -145,9 +155,7 @@ function main() {
   const candidate = path.join(output, '.candidate');
   fs.mkdirSync(candidate);
   activeCandidate = candidate;
-  const extract = spawnSync('tar', ['-xf', archive, '-C', candidate], { cwd: repoRoot, encoding: 'utf8', shell: false });
-  if (extract.error) throw extract.error;
-  if (extract.status !== 0) throw new Error(`canonical archive 解開失敗：${extract.stderr.trim()}`);
+  extractCanonicalArchive(archive, candidate);
   for (const proof of proofs) validateCandidateProofPath(candidate, proof);
 
   const startedAt = new Date().toISOString();
