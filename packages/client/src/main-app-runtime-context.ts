@@ -20,7 +20,6 @@ import { t } from './ui/i18n';
  * @returns 无返回值，直接更新MainApp运行态上下文相关状态。
  */
 
-
 export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
   const {
     windowRef,
@@ -41,7 +40,6 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
  * @param kind ToastKind 参数说明。
  * @returns 无返回值，直接更新showToast相关状态。
  */
-
 
   function showToast(message: string, kind: ToastKind = 'system') {
     panelContext.uiStateSource.showToast(message, kind);
