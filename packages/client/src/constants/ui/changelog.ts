@@ -12,6 +12,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 /** 当前内置的更新日志条目。 */
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    updatedAt: '2026-09-16',
+    summary: '宗門設施補上近身操作入口，採礦與生產更容易上手。',
+    items: [
+      '宗門設施：站在已完工設施的同格或相鄰格，即可從「互動」開啟對應操作；相鄰的礦場、靈田與其他設施各自保留入口。',
+      '採礦指引：可在礦場親自採礦，或開啟自動工作交由具備採礦專精的出戰靈獸處理，產物完成後再從設施領取。',
+    ],
+  },
+  {
     updatedAt: '2026-09-15',
     summary: '靈獸仙相煥新，圖鑑升級為五品閃卡。',
     items: [

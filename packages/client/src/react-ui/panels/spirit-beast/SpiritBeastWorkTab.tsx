@@ -122,6 +122,7 @@ function FacilityCard({ view, facility, busy }: { view: SpiritBeastPanelView; fa
         <div><strong>{facility.name}</strong><span>{facility.enabled ? '運作中' : '已停止'}・{facility.orders.length} 筆排程</span></div>
       </header>
       <OrderList facility={facility} busy={busy} />
+      {isMine ? <p className="spirit-beast-note">按「親自採集」即可開採；自動採集需先召喚具備採礦專精的靈獸。完成後展開「領取產物」，選擇數量並確認領取。</p> : null}
       <div className="spirit-beast-actions">
         {isMine ? <>
           <button type="button" className="small-btn ghost" disabled={busy || !facility.canOperate} onClick={() => sendSpiritBeastCommand({ action: 'set_mine_enabled', buildingId: facility.buildingId, enabled: !facility.enabled, expectedRevision: facility.revision })}>{facility.enabled ? '停止自動採集' : '開啟自動採集'}</button>
@@ -184,14 +185,13 @@ function SeedShop({ view, busy }: { view: SpiritBeastPanelView; busy: boolean })
   );
 }
 
-export const SpiritBeastWorkTab = memo(function SpiritBeastWorkTab({ view, busy }: { view: SpiritBeastPanelView; busy: boolean }) {
+export const SpiritBeastWorkTab = memo(function SpiritBeastWorkTab({ view, busy, focused = false }: { view: SpiritBeastPanelView; busy: boolean; focused?: boolean }) {
   const facilities = view.facilities.filter((facility) => ['iron_mine', 'spirit_stone_mine', 'forging', 'enhancement', 'alchemy'].includes(facility.kind));
   const fields = view.facilities.filter((facility) => facility.kind === 'field');
   return (
     <div className="spirit-beast-work">
-      <section><div className="spirit-beast-section-heading"><div><h3>宗門設備</h3><p>安排靈獸工作、排程製作，或親自處理單次工作。</p></div></div><div className="spirit-beast-station-grid">{facilities.map((facility) => <FacilityCard key={facility.buildingId} view={view} facility={facility} busy={busy} />)}</div></section>
-      <section><div className="spirit-beast-section-heading"><div><h3>靈田</h3><p>選擇種子與重複種植計畫，收成後在靈田領取。肥料尚未開放。</p></div></div><div className="spirit-beast-station-grid">{fields.map((facility) => <FieldCard key={facility.buildingId} view={view} facility={facility} busy={busy} />)}</div></section>
-      <SeedShop view={view} busy={busy} />
+      {!focused || facilities.length > 0 ? <section><div className="spirit-beast-section-heading"><div><h3>宗門設備</h3><p>安排靈獸工作、排程製作，或親自處理單次工作。</p></div></div><div className="spirit-beast-station-grid">{facilities.map((facility) => <FacilityCard key={facility.buildingId} view={view} facility={facility} busy={busy} />)}</div></section> : null}
+      {!focused || fields.length > 0 ? <><section><div className="spirit-beast-section-heading"><div><h3>靈田</h3><p>選擇種子與重複種植計畫，收成後在靈田領取。肥料尚未開放。</p></div></div><div className="spirit-beast-station-grid">{fields.map((facility) => <FieldCard key={facility.buildingId} view={view} facility={facility} busy={busy} />)}</div></section><SeedShop view={view} busy={busy} /></> : null}
     </div>
   );
 });

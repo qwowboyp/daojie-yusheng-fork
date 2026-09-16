@@ -19,6 +19,7 @@ import type { ClientTechniqueActivityKind } from './technique-activity-client.he
 import type { TreasureVaultModalTab } from './ui/panels/social-panel';
 import type { ToastKind } from './main-app-assembly-types';
 import { ActionPanel } from './ui/panels/action-panel';
+import { openSpiritBeastFacility } from './react-ui/panels/spirit-beast/mount-spirit-beast-panel';
 /**
  * MainActionStateSourceOptions：统一结构类型，保证协议与运行时一致性。
  */
@@ -203,6 +204,15 @@ export function createMainActionStateSource(options: MainActionStateSourceOption
         options.hideObserveModal();
         options.openTechniqueRefiningPanel();
         return;
+      }
+      if (actionId.startsWith('spirit_beast:facility:')) {
+        const encodedBuildingId = actionId.slice('spirit_beast:facility:'.length).trim();
+        if (encodedBuildingId && !encodedBuildingId.includes(':')) {
+          options.cancelTargeting();
+          options.hideObserveModal();
+          openSpiritBeastFacility(safeDecodeActionPart(encodedBuildingId));
+          return;
+        }
       }
       if (actionId.startsWith('technique_unification:open:')) {
         const encodedBuildingId = actionId.slice('technique_unification:open:'.length).trim();

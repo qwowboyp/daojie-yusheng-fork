@@ -4,7 +4,7 @@
  * 维护时应避免查询路径产生副作用，并控制返回字段，防止高频同步带出完整大对象。
  */
 import { Injectable } from '@nestjs/common';
-import { RETURN_TO_SPAWN_ACTION_ID, RETURN_TO_SPAWN_COOLDOWN_TICKS, formatDisplayInteger, resolvePlayerFacingContentName } from '@mud/shared';
+import { RETURN_TO_SPAWN_ACTION_ID, RETURN_TO_SPAWN_COOLDOWN_TICKS, SPIRIT_BEAST_FACILITIES, formatDisplayInteger, resolvePlayerFacingContentName } from '@mud/shared';
 import { MapTemplateRepository } from '../../map/map-template.repository';
 import { PlayerRuntimeService } from '../../player/player-runtime.service';
 import { resolveCompiledBuildingDefinition } from '../../building/building-definition-resolution.helpers';
@@ -249,6 +249,16 @@ export class WorldRuntimeContextActionQueryService {
                 const instance = deps.getInstanceRuntimeOrThrow(sourceInstanceId);
                 const building = instance?.buildingById?.get?.(entry.id);
                 if (!building || building.state !== 'building') {
+                    if (building?.state === 'active' && SPIRIT_BEAST_FACILITIES[building.defId]) {
+                        const buildingName = resolvePlayerFacingContentName(building.defId, '宗門設施', entry?.name);
+                        actions.push({
+                            id: `spirit_beast:facility:${encodeURIComponent(building.id)}`,
+                            name: `操作：${buildingName}`,
+                            type: 'interact',
+                            desc: '開啟此設施，安排工作、親自操作或領取產物。',
+                            cooldownLeft: 0,
+                        });
+                    }
                     if (building?.defId === 'scripture_platform' && building?.state === 'active') {
                         actions.push(...buildScripturePlatformActions(player, building));
                     }

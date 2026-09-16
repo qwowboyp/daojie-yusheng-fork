@@ -101,13 +101,13 @@ function EggEnhancement({ view, busy }: { view: SpiritBeastPanelView; busy: bool
   );
 }
 
-export const SpiritBeastIncubationTab = memo(function SpiritBeastIncubationTab({ view, busy }: { view: SpiritBeastPanelView; busy: boolean }) {
+export const SpiritBeastIncubationTab = memo(function SpiritBeastIncubationTab({ view, busy, focused = false }: { view: SpiritBeastPanelView; busy: boolean; focused?: boolean }) {
   const incubators = view.facilities.filter((facility) => facility.kind === 'incubator');
   return (
     <div className="spirit-beast-incubation">
-      <p className="spirit-beast-note">五行相性會讓孵化速度介於 0.50 至 2.00 倍。選蛋後可先看速度與各品階機率。</p>
+      {!focused || incubators.length > 0 ? <p className="spirit-beast-note">五行相性會讓孵化速度介於 0.50 至 2.00 倍。選蛋後可先看速度與各品階機率。</p> : null}
       <div className="spirit-beast-station-grid">{incubators.map((facility) => <IncubatorCard key={facility.buildingId} view={view} facility={facility} busy={busy} />)}</div>
-      <EggEnhancement view={view} busy={busy} />
+      {!focused || view.facilities.some((entry) => entry.kind === 'egg_enhancement') ? <EggEnhancement view={view} busy={busy} /> : null}
       <section className="spirit-beast-egg-list"><h3>我的靈蛋</h3>{view.eggs.length ? view.eggs.map((egg) => <div key={egg.itemKey}><img src={eggArtUrl(egg.element)} srcSet={`${eggArtUrl(egg.element)} 1x, ${eggArtUrl(egg.element, 192)} 2x`} alt="" width="48" height="48" /><strong>{egg.name} ×{egg.count}</strong><span>{elementLabel(egg.element)}行・{stars(egg.star)}</span><span>{egg.star >= 5 ? '已達五星' : '可作主蛋或素材'}</span></div>) : <p>尚未持有靈蛋。</p>}</section>
     </div>
   );

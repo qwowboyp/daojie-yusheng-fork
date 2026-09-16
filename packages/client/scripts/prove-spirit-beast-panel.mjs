@@ -221,6 +221,88 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
   assert(controllerResult.receipt?.requestId && controllerResult.receipt.revision === 31, '融合預覽 receipt 未綁 requestId/revision');
   assert.equal(controllerResult.staleCleared, true, '較新快照未清除過期融合預覽');
   assert.deepEqual(controllerResult.pending, ['keep-request'], 'command result 移除了其他 requestId');
+
+  // 真實互動按鈕 → 主行動路由 → 指定設施；不直接呼叫掛載函式冒充入口驗證。
+  const facilityResult = await cdp.evaluate(`(async () => {
+    const proof = window.__spiritBeastProof;
+    const { ActionPanel } = await import('/src/ui/panels/action-panel.ts');
+    const { createMainActionStateSource } = await import('/src/main-action-state-source.ts');
+    const { detailModalHost } = await import('/src/ui/detail-modal-host.ts');
+    const frame = () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const commands = [], forwarded = [];
+    const secondMine = { ...proof.view.facilities.find((entry) => entry.kind === 'iron_mine'), buildingId: 'build:second:iron', name: '第二座玄鐵礦場' };
+    const view = { ...proof.view, facilities: [...proof.view.facilities, secondMine] };
+    proof.model.setSpiritBeastCallbacks({ onRequest: () => proof.model.spiritBeastStore.patchState({ view, loading: false, pending: [], error: null, result: null }), onCommand: (command) => commands.push(command) });
+    proof.model.spiritBeastStore.patchState({ view, loading: false, pending: [], error: null, result: null });
+    const actionPanel = new ActionPanel();
+    createMainActionStateSource({ actionPanel, socket: { sendAction: (id) => forwarded.push(id) }, cancelTargeting: () => {}, hideObserveModal: () => {}, getCurrentActionDef: () => null });
+    const actions = view.facilities.map((facility) => ({ id: 'spirit_beast:facility:' + encodeURIComponent(facility.buildingId), type: 'interact', name: '操作：' + facility.name, desc: '設施操作', cooldownLeft: 0 }));
+    actions.push({ id: 'building:start:unfinished-one', type: 'interact', name: '開始建造：孵蛋器', desc: '繼續施工', cooldownLeft: 0 });
+    actions.push({ id: 'building:start:unfinished-two', type: 'interact', name: '開始建造：孵蛋器二', desc: '繼續施工', cooldownLeft: 0 });
+    actionPanel.update(actions);
+    await frame();
+    const open = async (buildingId) => {
+      const id = 'spirit_beast:facility:' + encodeURIComponent(buildingId);
+      const button = [...document.querySelectorAll('#floating-interaction-list [data-action]')].find((entry) => entry.dataset.action === id);
+      if (!button) throw new Error('互動入口不存在：' + buildingId);
+      button.click(); await frame();
+      const root = document.querySelector('[data-focused-facility]');
+      if (!root) throw new Error(JSON.stringify({ buildingId, modal: document.getElementById('detail-modal-body').textContent, errors: window.__spiritBeastProofErrors, forwarded }));
+      return root;
+    };
+    const expectedTabs = { incubator: 'incubation', egg_enhancement: 'incubation', cultivation: 'growth', fusion: 'fusion' };
+    const opened = [];
+    for (const facility of view.facilities) {
+      const root = await open(facility.buildingId);
+      opened.push({ id: root?.dataset.focusedFacility, expected: facility.buildingId, tab: root?.querySelector('[data-spirit-beast-active-tab]')?.dataset.spiritBeastActiveTab, expectedTab: expectedTabs[facility.kind] || 'work', nav: root?.querySelectorAll('[data-spirit-beast-tab]').length });
+      if (facility.kind === 'iron_mine') [...root.querySelectorAll('button')].find((entry) => entry.textContent === '親自採集').click();
+      detailModalHost.close('spirit-beast-facility'); await frame();
+    }
+    for (const id of ['building:start:unfinished-one', 'building:start:unfinished-two']) [...document.querySelectorAll('#floating-interaction-list [data-action]')].find((entry) => entry.dataset.action === id).click();
+    const root = await open('sect_iron_mine');
+    const disclosure = root.querySelector('[data-transfer-mode=withdraw]'); disclosure.open = true;
+    const input = disclosure.querySelector('input');
+    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, '2');
+    input.dispatchEvent(new Event('input', { bubbles: true })); input.dispatchEvent(new Event('change', { bubbles: true })); await frame();
+    input.focus({ preventScroll: true });
+    proof.model.spiritBeastStore.patchState({ view: { ...view, revision: view.revision + 1 } }); await frame();
+    const continuity = { sameNode: disclosure.querySelector('input') === input, focused: document.activeElement === input, value: input.value, expanded: disclosure.open };
+    [...disclosure.querySelectorAll('button')].find((entry) => entry.textContent === '確認領取').click();
+    window.__facilityProof = { open, detailModalHost, view, actionPanel };
+    return { opened, commands, forwarded, continuity, instruction: root.textContent.includes('採礦專精'), errors: window.__spiritBeastProofErrors };
+  })()`);
+  assert.equal(facilityResult.opened.length, 15, '必須覆蓋十四種設施及第二座同類礦場');
+  for (const opened of facilityResult.opened) {
+    assert.equal(opened.id, opened.expected, '互動開啟錯誤設施');
+    assert.equal(opened.tab, opened.expectedTab, '設施未開啟對應操作分頁');
+    assert.equal(opened.nav, 0, '近身操作不應回到通用靈獸分頁');
+  }
+  for (const id of ['sect_iron_mine', 'build:second:iron']) assert(facilityResult.commands.some((command) => command.action === 'manual_work' && command.buildingId === id && command.workAction === 'mine'), '採礦指令未帶入所選礦場');
+  assert(facilityResult.commands.some((command) => command.action === 'withdraw' && command.buildingId === 'sect_iron_mine' && command.entries[0]?.count === 2), '領取指令未保留礦場或數量');
+  assert.deepEqual(facilityResult.forwarded, ['building:start:unfinished-one', 'building:start:unfinished-two'], '設施開窗不可送普通 Action，施工仍須送原指令');
+  assert.deepEqual(facilityResult.continuity, { sameNode: true, focused: true, value: '2', expanded: true }, '設施快照刷新破壞輸入或展開');
+  assert.equal(facilityResult.instruction, true, '礦場缺少開採說明');
+  assert.deepEqual(facilityResult.errors, [], '設施入口出現瀏覽器錯誤');
+  for (const mode of [
+    { id: 'facility-desktop-dark', width: 1280, height: 900, mobile: false, theme: 'dark' },
+    { id: 'facility-desktop-light', width: 1280, height: 720, mobile: false, theme: 'light' },
+    { id: 'facility-mobile', width: 390, height: 844, mobile: true, theme: 'dark' },
+    { id: 'facility-touch-landscape', width: 844, height: 390, mobile: true, theme: 'light' },
+  ]) {
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: mode.width, height: mode.height, deviceScaleFactor: 1, mobile: mode.mobile });
+    await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: mode.mobile, maxTouchPoints: mode.mobile ? 5 : 1 });
+    const layout = await cdp.evaluate(`(async()=>{const {updateUiColorMode}=await import('/src/ui/ui-style-config.ts');updateUiColorMode(${JSON.stringify(mode.theme)});await new Promise((resolve)=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));const root=document.querySelector('[data-focused-facility]'),content=root.querySelector('.spirit-beast-content'),card=root.closest('.detail-modal-card'),rect=card.getBoundingClientRect();return{overflow:content.scrollWidth>content.clientWidth+1,visible:rect.width>0&&rect.height>0&&rect.top>=0&&rect.bottom<=innerHeight+1,controls:[...root.querySelectorAll('button')].filter((button)=>button.offsetHeight>0).map((button)=>button.getBoundingClientRect().height)};})()`);
+    assert.equal(layout.overflow, false, `${mode.id} 設施內容水平溢出`);
+    assert.equal(layout.visible, true, `${mode.id} 設施彈窗超出可視範圍`);
+    if (mode.mobile) assert(Math.min(...layout.controls) >= 38, `${mode.id} 觸控按鈕過小`);
+    // 等候主題 CSS 過渡完成，避免截到前一個模式的中間畫面。
+    await cdp.evaluate(`Promise.allSettled(document.getAnimations().filter((animation) => animation instanceof CSSTransition).map((animation) => animation.finished)).then(() => true)`);
+    assert.equal(await cdp.evaluate('document.documentElement.dataset.colorMode'), mode.theme, `${mode.id} 主題未保留`);
+    await capture(cdp, mode.id);
+  }
+  const disappeared = await cdp.evaluate(`(async()=>{const proof=window.__spiritBeastProof,facility=window.__facilityProof;proof.model.spiritBeastStore.patchState({view:{...facility.view,facilities:[]},loading:false});await new Promise((resolve)=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));const text=document.getElementById('detail-modal-body').textContent;facility.detailModalHost.close('spirit-beast-facility');return text;})()`);
+  assert.match(disappeared, /此設施已不存在/, '設施移除後不應悄悄操作其他同類設施');
+  console.log('SECT_FACILITY_INTERACTION_BROWSER:PASS facilities=15 screenshots=4');
   console.log(`SPIRIT_BEAST_PANEL_BROWSER_ASSERTIONS:PASS screenshots=${modes.length}`);
 });
 
