@@ -26,6 +26,11 @@ $WebUrl = 'http://192.168.0.191:11921/'
 $PollIntervalSec = 30
 $BuildTimeoutSec = 1800
 
+# -- container topology -------------------------------------------------
+# client-only deploys recreate ONLY daojie-client; these three must keep their container IDs.
+$ProtectedContainers = @('daojie-server', 'daojie-postgres', 'daojie-redis')
+$ClientOnlyTarget = $Target -eq 'client'
+
 function Resolve-WinSCP {
   $cmd = Get-Command winscp.com -ErrorAction SilentlyContinue
   if ($cmd) { return $cmd.Source }
@@ -88,6 +93,18 @@ function Write-WinSCPScript {
   return $path
 }
 
+function Wait-WebReady {
+  param([string]$Url, [int]$TimeoutSec = 90)
+  # client-only deploy must confirm nginx answers on 11921 before declaring success
+  $deadline = (Get-Date).AddSeconds($TimeoutSec)
+  while ($true) {
+    $code = & curl.exe -s -o NUL -w '%{http_code}' $Url
+    if ($code -eq '200') { return }
+    if ((Get-Date) -gt $deadline) { throw "web not ready after ${TimeoutSec}s: $Url => $code" }
+    Start-Sleep -Seconds 2
+  }
+}
+
 # -- step 0: credentials + archive -------------------------------------
 $envMap = Read-PveEnv -Path (Join-Path $RepoRoot '.env\pve.env')
 $LxcHost = $envMap['LXC_HOST']
@@ -108,6 +125,13 @@ $remoteBuildCmd = "cd $RemoteSrc && export DOCKER_BUILDKIT=1 && $buildChain"
 
 Write-Host "[plan] target=$Target ref=$Ref"
 Write-Host "[plan] remote build chain: $buildChain"
+if ($ClientOnlyTarget) {
+  Write-Host '[plan] recreate scope: daojie-client only (daojie-server, daojie-postgres, daojie-redis untouched)'
+  Write-Host '[plan]   docker rm -f daojie-client'
+  Write-Host '[plan]   docker run -d --name daojie-client --restart unless-stopped --network daojie_net -p 11921:80 daojie-client:lxc'
+} else {
+  Write-Host '[plan] recreate scope: bash /opt/daojie/lxc-deploy.sh (recreates daojie-server, daojie-client, daojie-postgres, daojie-redis)'
+}
 if ($DryRun) { Remove-Item $tarPath -Force; Write-Host '[DryRun] stop before remote operations.'; exit 0 }
 
 # -- step 1: upload + unpack + kick build ------------------------------
@@ -170,17 +194,71 @@ while ($true) {
   Start-Sleep -Seconds $PollIntervalSec
 }
 
-# -- step 3: rerun deploy script (idempotent) --------------------------
-Write-Host '[5/6] run /opt/daojie/lxc-deploy.sh (recreates 4 containers)'
-$deployScript = Write-WinSCPScript -Name '05-deploy.txt' -Lines @(
-  'option batch abort',
-  $openLine,
-  'call bash /opt/daojie/lxc-deploy.sh 2>&1 | tail -15',
-  'exit'
-)
-$deployOut = Invoke-WinSCP -ScriptPath $deployScript
-Write-Host $deployOut
-if ($deployOut -notmatch 'DEPLOY_DONE') { throw 'lxc-deploy.sh did not print DEPLOY_DONE' }
+# -- step 3: recreate containers ---------------------------------------
+if ($ClientOnlyTarget) {
+  # client-only: recreate ONLY daojie-client; never call lxc-deploy.sh (it recreates server/postgres/redis).
+  Write-Host '[5/6] recreate daojie-client only (daojie-server, daojie-postgres, daojie-redis untouched)'
+  $clientMarker = 'ID_daojie-client'
+  $inspectProtectedLines = foreach ($name in $ProtectedContainers) {
+    "call echo `"ID_$name=`$(docker inspect -f '{{.Id}}' $name)`""
+  }
+  $clientBeforeLine = "call echo `"$clientMarker=`$(docker inspect -f '{{.Id}}' daojie-client)`""
+
+  $beforeScript = Write-WinSCPScript -Name '05-client-before.txt' -Lines (@(
+    'option batch abort',
+    $openLine,
+    $clientBeforeLine
+  ) + $inspectProtectedLines + @('exit'))
+  $beforeOut = Invoke-WinSCP -ScriptPath $beforeScript
+  if ($beforeOut -match "$clientMarker=([0-9a-f]{64})") { $clientBefore = $Matches[1] }
+  else { throw "could not read daojie-client id before client-only recreate: $beforeOut" }
+  $protectedBefore = @{}
+  foreach ($name in $ProtectedContainers) {
+    if ($beforeOut -match "ID_$name=([0-9a-f]{64})") { $protectedBefore[$name] = $Matches[1] }
+    else { throw "could not read protected container id before client-only recreate: $name" }
+  }
+
+  $recreateScript = Write-WinSCPScript -Name '05-client-recreate.txt' -Lines (@(
+    'option batch abort',
+    $openLine,
+    'call docker rm -f daojie-client',
+    'call docker run -d --name daojie-client --restart unless-stopped --network daojie_net -p 11921:80 daojie-client:lxc',
+    $clientBeforeLine
+  ) + $inspectProtectedLines + @('exit'))
+  $recreateOut = Invoke-WinSCP -ScriptPath $recreateScript
+  Write-Host $recreateOut
+
+  if ($recreateOut -match "$clientMarker=([0-9a-f]{64})") { $clientAfter = $Matches[1] }
+  else { throw "could not read daojie-client id after client-only recreate: $recreateOut" }
+  if ($clientAfter -eq $clientBefore) {
+    throw "daojie-client container was not recreated (id unchanged: $clientAfter)"
+  }
+  Write-Host "      daojie-client recreated ($($clientBefore.Substring(0, 12)) -> $($clientAfter.Substring(0, 12)))"
+
+  foreach ($name in $ProtectedContainers) {
+    if ($recreateOut -match "ID_$name=([0-9a-f]{64})") { $after = $Matches[1] }
+    else { throw "could not read protected container id after client-only recreate: $name" }
+    if ($protectedBefore[$name] -ne $after) {
+      throw "protected container changed during client-only deploy: $name ($($protectedBefore[$name]) -> $after)"
+    }
+    Write-Host "      $name unchanged ($($after.Substring(0, 12)))"
+  }
+
+  Write-Host '      waiting for daojie-client web readiness'
+  Wait-WebReady -Url $WebUrl -TimeoutSec 90
+} else {
+  # server/both: full idempotent deploy; explicitly recreates all four containers.
+  Write-Host '[5/6] run /opt/daojie/lxc-deploy.sh (recreates daojie-server, daojie-client, daojie-postgres, daojie-redis)'
+  $deployScript = Write-WinSCPScript -Name '05-deploy.txt' -Lines @(
+    'option batch abort',
+    $openLine,
+    'call bash /opt/daojie/lxc-deploy.sh 2>&1 | tail -15',
+    'exit'
+  )
+  $deployOut = Invoke-WinSCP -ScriptPath $deployScript
+  Write-Host $deployOut
+  if ($deployOut -notmatch 'DEPLOY_DONE') { throw 'lxc-deploy.sh did not print DEPLOY_DONE' }
+}
 
 # -- step 3b: prune dangling layers AFTER new containers are running ----
 # lxc-deploy.sh already prunes; this is a logged safety net.
