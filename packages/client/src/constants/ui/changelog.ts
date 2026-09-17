@@ -12,6 +12,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 /** 当前内置的更新日志条目。 */
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    updatedAt: '2026-09-18',
+    summary: '煉丹與煉器材料的「前往目標」可跨地圖導航，並自動關閉工坊返回地圖。',
+    items: [
+      '導航：煉丹與煉器材料的「前往目標」現在可跨地圖導航，不再只限同一張地圖。',
+      '介面：導航成功後會自動關閉材料詳情與工坊，並返回地圖畫面。',
+    ],
+  },
+  {
     updatedAt: '2026-09-17',
     summary: '更新流程與建築資料保護加固，避免玩家宗門建築被誤刪。',
     items: [
