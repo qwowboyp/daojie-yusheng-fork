@@ -3,39 +3,7 @@ description: 發布專員：僅在使用者明確要求發布時，依序載入 
 mode: subagent
 model: commandcode/deepseek-v4.1-flash
 variant: high
-permission:
-  read: allow
-  edit: allow
-  glob: allow
-  grep: allow
-  list: allow
-  skill:
-    "*": deny
-    "changelog": allow
-    "git-master": allow
-    "daojie-deploy": allow
-  lsp: allow
-  todowrite: allow
-  question: allow
-  external_directory: deny
-  task: deny
-  webfetch: deny
-  websearch: deny
-  bash:
-    "*": ask
-    "*$env:GIT_MASTER='1'; git *": allow
-    "git *": allow
-    "node scripts/check-traditional.mjs*": allow
-    "node scripts/workflow.mjs*": allow
-    "pnpm *": allow
-    "pwsh -NoProfile -File .claude/skills/daojie-deploy/scripts/deploy.ps1*": allow
-    "*--amend*": deny
-    "*--force*": deny
-    "*push -f*": deny
-    "*reset --hard*": deny
-    "*git clean*": deny
-    "*git checkout*": deny
-    "*git restore*": deny
+permission: allow
 ---
 
 # 發布專員（project-release）
