@@ -13,6 +13,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-17',
+    summary: '更新流程與建築資料保護加固，避免玩家宗門建築被誤刪。',
+    items: [
+      '穩定性：前端更新只重建前端服務，遊戲伺服器與資料庫維持原運作，不再因前端發布而重啟舊版伺服器。',
+      '穩定性：伺服器啟動時若發現任何建築定義缺失，會在任何寫入或還原地塊之前停止啟動並保留原始資料，附上缺失清單等待修復，不再自動清除建築。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-17',
     summary: '煉器與煉丹材料可點開詳情，並從取得途徑前往目標。',
     items: [
       '介面：煉器、煉丹材料名稱可點開詳情，查看類型、說明與取得途徑。',
