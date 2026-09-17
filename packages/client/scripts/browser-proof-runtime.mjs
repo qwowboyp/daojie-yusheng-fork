@@ -11,6 +11,10 @@ import { createServer } from 'vite';
 const clientRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CDP_COMMAND_TIMEOUT_MS = 45_000;
 
+/** 進行中的瀏覽器 proof 清理註冊表；全域關機時逐一呼叫其 memoized teardown。 */
+const activeClientBrowserProofCleanups = new Set();
+let closingAllClientBrowserProofs = false;
+
 function logProof(message) {
   process.stdout.write(`[browser-proof] ${message}\n`);
 }
@@ -189,55 +193,150 @@ async function resolvePageTarget(port) {
   }, 'Chrome 页面目标');
 }
 
+/** 清理開始後不得再取得資源；若取得與清理交錯，立即回收剛取得的資源，並彙總失敗。 */
+async function acquireWhileOpen(isClosing, acquire, release) {
+  if (isClosing()) throw new Error('客户端浏览器 proof 已進入全域清理');
+  const resource = await acquire();
+  if (isClosing()) {
+    const failures = [new Error('客户端浏览器 proof 已進入全域清理')];
+    try {
+      await release(resource);
+    } catch (releaseError) {
+      failures.push(releaseError);
+    }
+    throw new AggregateError(failures, '資源取得與全域清理交錯');
+  }
+  return resource;
+}
+
+/** 全域關機：等待所有進行中的瀏覽器 proof 清理結算，再彙總失敗擲出 AggregateError。 */
+export async function closeAllClientBrowserProofs() {
+  closingAllClientBrowserProofs = true;
+  const results = await Promise.allSettled([...activeClientBrowserProofCleanups].map((cleanup) => cleanup()));
+  const failures = results.filter((result) => result.status === 'rejected');
+  if (failures.length > 0) {
+    throw new AggregateError(failures.map((result) => result.reason), `全域清理有 ${failures.length} 項失敗`);
+  }
+}
+
 export async function withClientBrowserProof({ viewport, profilePrefix, configureViteServer, initialTouch = true }, run) {
   let viteServer = null;
   let chrome = null;
   let cdp = null;
   let profileDir = null;
-  try {
-    viteServer = await createServer({
-      root: clientRoot,
-      configFile: path.join(clientRoot, 'vite.config.ts'),
-      logLevel: 'silent',
-      server: { host: '127.0.0.1', port: 0, strictPort: false },
+  let teardownPromise = null;
+  let cleanupRequested = false;
+  // 清理一旦被要求（本地 finally 或全域關機）即同步反映，封鎖後續資源取得。
+  const isClosing = () => closingAllClientBrowserProofs || cleanupRequested;
+  const ensureActive = () => {
+    if (isClosing()) throw new Error('客户端浏览器 proof 已進入全域清理');
+  };
+  // 全域關機與本地 finally 共用同一個 memoized teardown，確保每個資源只釋放一次。
+  const teardown = () => {
+    cleanupRequested = true;
+    teardownPromise ??= (async () => {
+      const failures = [];
+      try {
+        // 先走 CDP 優雅關閉讓 Chrome 釋放 profile 文件鎖；Windows 上直接殺進程會殘留
+        // first_party_sets.db-journal 等句柄，導致暫存目錄清理 EBUSY。
+        await cdp?.send('Browser.close');
+      } catch {
+        // CDP 已斷開時退回進程信號方式。
+      }
+      cdp?.close();
+      // 任一步驟失敗都不得跳過後續自有資源，最後才彙總非忽略性失敗。
+      try {
+        await stopChild(chrome);
+      } catch (error) {
+        failures.push(error);
+      }
+      try {
+        await viteServer?.close();
+      } catch (error) {
+        failures.push(error);
+      }
+      if (profileDir) {
+        try {
+          await rm(profileDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+        } catch (error) {
+          // Windows 上 Crashpad 句柄釋放可能超過內建重試窗口導致 EBUSY；暫存 profile 清理
+          // 屬衛生問題，不得讓已通過的 proof 判為失敗（殘留目錄交由系統 Temp 清理機制回收）。
+          console.warn(`[browser-proof] 暫存 profile 清理失敗（不影響 proof 結果）：${error.code ?? error.message}`);
+        }
+      }
+      if (failures.length > 0) {
+        throw new AggregateError(failures, '瀏覽器 proof 資源清理失敗');
+      }
+    })().finally(() => {
+      // 清理結算後才移除註冊，讓並行的全域關機等待進行中的清理。
+      activeClientBrowserProofCleanups.delete(teardown);
     });
+    return teardownPromise;
+  };
+  activeClientBrowserProofCleanups.add(teardown);
+  try {
+    viteServer = await acquireWhileOpen(
+      isClosing,
+      () => createServer({
+        root: clientRoot,
+        configFile: path.join(clientRoot, 'vite.config.ts'),
+        logLevel: 'silent',
+        server: { host: '127.0.0.1', port: 0, strictPort: false },
+      }),
+      (server) => server.close(),
+    );
     configureViteServer?.(viteServer);
+    ensureActive();
     await viteServer.listen();
+    ensureActive();
     const address = viteServer.httpServer?.address();
-    assert(address && typeof address === 'object', 'Vite proof 服务未取得本地端口');
+    assert(address && typeof address === 'object', 'Vite proof 服務未取得本地端口');
     logProof(`${profilePrefix} vite :${address.port}`);
 
-    profileDir = await mkdtemp(path.join(os.tmpdir(), profilePrefix));
-    chrome = spawn(await findChromeExecutable(), [
-      // Xvfb 提供可在取消觸控模擬後恢復的滑鼠能力；Alpine headless 的基線沒有指標。
-      ...(process.platform === 'linux' && process.env.DISPLAY
-        ? ['--ozone-platform=x11']
-        : [
-          '--headless=new',
-          // headless 滑鼠懸停（2）與精準指標（4）；觸控另由 CDP 模擬。
-          '--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4',
-        ]),
-      '--no-first-run',
-      '--no-default-browser-check',
-      '--disable-background-networking',
-      '--disable-component-update',
-      '--disable-default-apps',
-      '--disable-extensions',
-      '--disable-sync',
-      // Docker/Xvfb 下同时打开多个 Chromium 窗口时，被遮挡的后台窗口会被节流，
-      // requestAnimationFrame 不再触发，nextPaint 永不解决导致 proof 卡死。
-      '--disable-backgrounding-occluded-windows',
-      '--disable-renderer-backgrounding',
-      '--disable-background-timer-throttling',
-      // Linux 隔離 proof 使用 Mesa 軟體 Vulkan；停用 GPU 程序會連 WebGL 一起阻擋。
-      ...(process.platform === 'linux' ? ['--use-angle=vulkan', '--ignore-gpu-blocklist'] : ['--disable-gpu']),
-      // Docker build 默认只有 64MB /dev/shm，避免渲染器在布局 proof 中阻塞。
-      '--disable-dev-shm-usage',
-      '--no-sandbox',
-      '--remote-debugging-port=0',
-      `--user-data-dir=${profileDir}`,
-      'about:blank',
-    ], { stdio: 'ignore' });
+    profileDir = await acquireWhileOpen(
+      isClosing,
+      () => mkdtemp(path.join(os.tmpdir(), profilePrefix)),
+      (dir) => rm(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 }),
+    );
+    chrome = await acquireWhileOpen(
+      isClosing,
+      async () => {
+        const executable = await findChromeExecutable();
+        // 探測可執行檔期間可能已完成清理；final gate 與 spawn 之間不得有 await。
+        ensureActive();
+        return spawn(executable, [
+          // Xvfb 提供可在取消觸控模擬後恢復的滑鼠能力；Alpine headless 的基線沒有指標。
+          ...(process.platform === 'linux' && process.env.DISPLAY
+            ? ['--ozone-platform=x11']
+            : [
+              '--headless=new',
+              // headless 滑鼠懸停（2）與精準指標（4）；觸控另由 CDP 模擬。
+              '--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4',
+            ]),
+          '--no-first-run',
+          '--no-default-browser-check',
+          '--disable-background-networking',
+          '--disable-component-update',
+          '--disable-default-apps',
+          '--disable-extensions',
+          '--disable-sync',
+          // Docker/Xvfb 下同时打开多个 Chromium 窗口时，被遮挡的后台窗口会被节流，
+          // requestAnimationFrame 不再触发，nextPaint 永不解决导致 proof 卡死。
+          '--disable-backgrounding-occluded-windows',
+          '--disable-renderer-backgrounding',
+          '--disable-background-timer-throttling',
+          // Linux 隔離 proof 使用 Mesa 軟體 Vulkan；停用 GPU 程序會連 WebGL 一起阻擋。
+          ...(process.platform === 'linux' ? ['--use-angle=vulkan', '--ignore-gpu-blocklist'] : ['--disable-gpu']),
+          // Docker build 默认只有 64MB /dev/shm，避免渲染器在布局 proof 中阻塞。
+          '--disable-dev-shm-usage',
+          '--no-sandbox',
+          '--remote-debugging-port=0',
+          `--user-data-dir=${profileDir}`,
+          'about:blank',
+        ], { stdio: 'ignore' });
+      },
+      (child) => stopChild(child),
+    );
 
     logProof(`${profilePrefix} chrome pid=${chrome.pid}`);
     const debugPort = await readDevToolsPort(profileDir);
@@ -264,24 +363,6 @@ export async function withClientBrowserProof({ viewport, profilePrefix, configur
     logProof(`${profilePrefix} page ready`);
     return await run(cdp);
   } finally {
-    try {
-      // 先走 CDP 优雅关闭让 Chrome 释放 profile 文件锁；Windows 上直接杀进程会残留
-      // first_party_sets.db-journal 等句柄，导致暂存目录清理 EBUSY。
-      await cdp?.send('Browser.close');
-    } catch {
-      // CDP 已断开时退回进程信号方式。
-    }
-    cdp?.close();
-    await stopChild(chrome);
-    await viteServer?.close();
-    if (profileDir) {
-      try {
-        await rm(profileDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
-      } catch (error) {
-        // Windows 上 Crashpad 句柄释放可能超过内置重试窗口导致 EBUSY；暂存 profile 清理
-        // 属卫生问题，不得让已通过的 proof 判为失败（残留目录交由系统 Temp 清理机制回收）。
-        console.warn(`[browser-proof] 暂存 profile 清理失败（不影响 proof 结果）：${error.code ?? error.message}`);
-      }
-    }
+    await teardown();
   }
 }

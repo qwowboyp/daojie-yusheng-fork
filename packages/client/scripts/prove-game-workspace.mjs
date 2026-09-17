@@ -7,7 +7,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { delay, withClientBrowserProof, waitFor } from './browser-proof-runtime.mjs';
+import { closeAllClientBrowserProofs, delay, withClientBrowserProof, waitFor } from './browser-proof-runtime.mjs';
 
 const PHONE = { width: 390, height: 844 };
 const PHONE_BROWSER_CHROME = { width: 390, height: 670 };
@@ -23,13 +23,21 @@ function logWorkspaceProof(message) {
   process.stdout.write(`[game-workspace-proof] ${message}\n`);
 }
 
-{
-  const timer = setTimeout(() => {
-    process.stderr.write(`[game-workspace-proof] exceeded ${PROOF_TIMEOUT_MS}ms and will exit\n`);
+let watchdogOwnsExit = false;
+const proofTimer = setTimeout(() => {
+  watchdogOwnsExit = true;
+  process.stderr.write(`[game-workspace-proof] exceeded ${PROOF_TIMEOUT_MS}ms and will exit\n`);
+  void (async () => {
+    try {
+      // 逾時後先清理所有進行中的瀏覽器 proof，再以 124 結束；清理失敗不改變結束碼。
+      await closeAllClientBrowserProofs();
+    } catch (error) {
+      process.stderr.write(`[game-workspace-proof] 全域清理失敗：${error?.message ?? error}\n`);
+    }
     process.exit(124);
-  }, PROOF_TIMEOUT_MS);
-  timer.unref();
-}
+  })();
+}, PROOF_TIMEOUT_MS);
+proofTimer.unref();
 
 const fixtureExpression = String.raw`
   (async () => {
@@ -1341,7 +1349,8 @@ async function initializeWorkspaceProofContext(cdp) {
 }
 
 logWorkspaceProof(`start timeout=${PROOF_TIMEOUT_MS}ms`);
-await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-proof-' }, async (cdp) => {
+try {
+  await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-proof-' }, async (cdp) => {
   // 舊 active tab 不得在啟動時自動打開按需工作窗。
   const { initial, shown, fixture } = await initializeWorkspaceProofContext(cdp);
   logWorkspaceProof('phone context ready');
@@ -1881,5 +1890,10 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   await verifyWorkspaceOutsideDismiss(cdp, DESKTOP, false);
   });
 });
-
-console.log('game workspace proof: PASS');
+} catch (error) {
+  clearTimeout(proofTimer);
+  // 看門狗已接管 124 結束語意時，只吞掉被動關閉資源造成的次級 teardown 錯誤。
+  if (!watchdogOwnsExit) throw error;
+}
+clearTimeout(proofTimer);
+if (!watchdogOwnsExit) console.log('game workspace proof: PASS');
