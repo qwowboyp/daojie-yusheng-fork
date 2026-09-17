@@ -882,13 +882,13 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
       enhancementJob?: { facilityOrderId?: string } | null;
       plantingJob?: { orderId?: string } | null;
     } | null;
-    if (!player) return null;
+    if (!player || !this.craftPanelRuntimeService.hasAnyActiveTechniqueActivity(player)) return null;
     for (const job of [player.miningJob, player.forgingJob, player.alchemyJob, player.enhancementJob]) {
       const id = typeof job?.facilityOrderId === 'string' ? job.facilityOrderId.trim() : '';
-      if (id) return id;
+      if (id && this.isFacilityCurrent(playerId, id)) return id;
     }
     const planting = typeof player.plantingJob?.orderId === 'string' ? player.plantingJob.orderId.trim() : '';
-    return planting || null;
+    return planting && this.isFacilityCurrent(playerId, planting) ? planting : null;
   }
 
   /** 回收進程遺失後仍佔工位唯一鍵的玩家工單，並立刻寫回資料庫，避免親自採集被舊 running 擋住。 */
