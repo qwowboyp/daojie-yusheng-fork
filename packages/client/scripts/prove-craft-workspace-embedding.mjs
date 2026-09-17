@@ -20,10 +20,24 @@ const cases = [
 
 const initialize = String.raw`
   (async () => {
-    const [{ CraftWorkbenchModal }, { detailModalHost }] = await Promise.all([
+    const [
+      { CraftWorkbenchModal },
+      { detailModalHost },
+      itemSourceBridge,
+      { createMainNavigationStateSource },
+      { createSocketRuntimeSender },
+      itemSources,
+      { resolveItemSourceNavigation },
+    ] = await Promise.all([
       import('/src/ui/craft-workbench-modal.ts'),
       import('/src/ui/detail-modal-host.ts'),
+      import('/src/ui/item-source-navigation.ts'),
+      import('/src/main-navigation-state-source.ts'),
+      import('/src/network/socket-send-runtime.ts'),
+      import('/src/content/item-sources.ts'),
+      import('/src/content/item-source-navigation.ts'),
     ]);
+    await itemSources.preloadItemSourceCatalog();
     document.getElementById('login-overlay')?.classList.add('hidden');
     document.getElementById('game-shell')?.classList.remove('hidden');
     const workspace = document.getElementById('game-workspace');
@@ -33,12 +47,38 @@ const initialize = String.raw`
     const requests = { alchemy: 0, forging: 0, enhancement: 0 };
     const starts = [];
     const modal = new CraftWorkbenchModal();
+    const navigationState = {
+      playerMap: 'proof-other-map',
+      sent: [],
+      workspaceCloseCount: 0,
+    };
+    const sender = createSocketRuntimeSender({
+      isConnected: () => true,
+      emitEvent: (event, payload) => navigationState.sent.push({ event, payload }),
+    });
+    const navigation = createMainNavigationStateSource({
+      getPlayer: () => ({ id: 'proof', x: 0, y: 0, mapId: navigationState.playerMap }),
+      getMapMeta: () => null,
+      getLatestEntities: () => [],
+      setRuntimePathCells: () => {},
+      sendMoveTo: (x, y, options) => sender.sendMoveTo(x, y, options),
+    });
+    itemSourceBridge.setItemSourceNavigationHandler(itemSourceBridge.createItemSourceNavigationHandler({
+      isReady: () => true,
+      planPathTo: (target, options) => navigation.planPathTo(target, options),
+      navigateToQuest: (questId) => sender.sendNavigateQuest(questId),
+    }));
     const showWorkspaceMode = CraftWorkbenchModal.prototype.showWorkspaceMode;
     CraftWorkbenchModal.prototype.showWorkspaceMode = function(mode, host) {
       return showWorkspaceMode.call(modal, mode, host);
     };
     modal.configureWorkspaceNavigation({
       open: (mode) => {
+        if (workspace.classList.contains('hidden')) {
+          const itemsEntry = document.querySelector('#game-dock [data-workspace-open="items"]');
+          if (!(itemsEntry instanceof HTMLButtonElement)) throw new Error('缺少正式背包與技藝入口');
+          itemsEntry.click();
+        }
         let tab = document.getElementById('workspace-tab-' + mode);
         if (!(tab instanceof HTMLButtonElement)) {
           const itemsEntry = document.querySelector('#game-dock [data-workspace-open="items"]');
@@ -50,6 +90,11 @@ const initialize = String.raw`
         tab.click();
       },
       resolveBody: (mode) => document.getElementById('workspace-' + mode),
+      close: () => {
+        navigationState.workspaceCloseCount += 1;
+        workspace.classList.add('hidden');
+        modal.hideWorkspace();
+      },
     });
     modal.setCallbacks({
       onRequestAlchemy: () => { requests.alchemy += 1; },
@@ -134,6 +179,7 @@ const initialize = String.raw`
 
     window.__craftWorkspaceProof = {
       modal, requests, starts, workspace, alchemyCatalog, forgingCatalog, job, candidate, detailModalHost,
+      itemSources, resolveItemSourceNavigation, navigationState,
       openAlchemy() { modal.openAlchemy(); modal.updateAlchemy({ kind: 'alchemy', catalogVersion: 3, catalog: alchemyCatalog, state: { presets: [], job, queue: [] } }); },
       openForging() { modal.openForging(); modal.updateForging({ kind: 'forging', catalogVersion: 4, catalog: forgingCatalog, state: { presets: [], job: null, queue: [] } }); },
       openEnhancement() { modal.openEnhancement(); modal.updateEnhancement({ state: { enhancementSkillLevel: 4, candidates: [candidate], records: [], job: null, queue: [] } }); },
@@ -306,6 +352,113 @@ async function runCase(entry) {
     assert.equal(lifecycle.transmissionVisible, true, '傳功必须进入自身 workspace pane');
     assert.equal(lifecycle.confirmClosed, true, `离开 workspace 必须关闭 transient confirm：${JSON.stringify(lifecycle.confirmStates)}`);
     assert.equal(lifecycle.bodyCleared, true, '离开 workspace 必须卸载 React 与清空专属宿主');
+
+    const materialNavigation = await cdp.evaluate(String.raw`
+      (async () => {
+        const p = window.__craftWorkspaceProof;
+        const paint = () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const waitFor = async (predicate, label) => {
+          const deadline = performance.now() + 3000;
+          while (!predicate()) {
+            if (performance.now() >= deadline) throw new Error('等待逾時：' + label);
+            await new Promise((resolve) => setTimeout(resolve, 20));
+          }
+        };
+        const runNavigation = async (mode, itemId) => {
+          p.navigationState.playerMap = 'proof-other-map';
+          p.navigationState.sent.length = 0;
+          p.navigationState.workspaceCloseCount = 0;
+          if (mode === 'alchemy') p.openAlchemy();
+          else p.openForging();
+          await paint();
+          const pane = document.getElementById('workspace-' + mode);
+          pane.querySelector('[data-alchemy-realm-tabs="true"] [data-realm="mortal"]')?.click();
+          await paint();
+          pane.querySelector('[data-alchemy-category-tabs="true"] [data-category="' + (mode === 'alchemy' ? 'recovery' : 'weapon') + '"]')?.click();
+          await paint();
+          pane.querySelector('[data-guided-tour-alchemy-recipe="proof-' + mode + '-0"]')?.click();
+          await paint();
+          const opener = [...pane.querySelectorAll('[data-craft-action="alchemy-open-material-detail"]')]
+            .find((button) => button.dataset.itemId === itemId);
+          if (!(opener instanceof HTMLButtonElement)) throw new Error('缺少材料詳情入口：' + mode + '/' + itemId);
+          opener.click();
+          await waitFor(() => document.querySelector('.catalog-item-detail-dialog')?.open === true, '材料詳情開啟');
+          const entries = p.itemSources.getItemSourceEntries(itemId);
+          const index = entries.findIndex((entry) => p.resolveItemSourceNavigation(entry).kind === 'point');
+          if (index < 0) throw new Error('材料缺少真實座標來源：' + itemId);
+          const expected = p.resolveItemSourceNavigation(entries[index]);
+          const go = document.querySelector('.catalog-item-detail-dialog [data-catalog-item-source-go="' + index + '"]');
+          if (!(go instanceof HTMLButtonElement)) throw new Error('缺少材料前往按鈕：' + mode + '/' + itemId);
+          go.click();
+          await paint();
+          if (mode === 'alchemy') {
+            p.modal.updateAlchemy({ kind: 'alchemy', catalogVersion: 3, statePatch: { job: null, queue: [] } });
+          } else {
+            p.modal.updateForging({ kind: 'forging', catalogVersion: 4, statePatch: { job: null, queue: [] } });
+          }
+          await paint();
+          return {
+            expected,
+            sent: p.navigationState.sent.map(({ event, payload }) => ({ event, payload: { ...payload } })),
+            childClosed: document.querySelector('.catalog-item-detail-dialog')?.open === false,
+            workspaceClosed: p.workspace.classList.contains('hidden'),
+            workspaceCloseCount: p.navigationState.workspaceCloseCount,
+            mapFocused: document.activeElement?.id === 'game-stage',
+            bodyCleared: pane.childElementCount === 0,
+          };
+        };
+
+        const alchemy = await runNavigation('alchemy', 'mat.moondew_grass');
+        const forging = await runNavigation('forging', 'black_iron_chunk');
+
+        p.openAlchemy();
+        await paint();
+        const pane = document.getElementById('workspace-alchemy');
+        pane.querySelector('[data-alchemy-realm-tabs="true"] [data-realm="mortal"]')?.click();
+        await paint();
+        pane.querySelector('[data-alchemy-category-tabs="true"] [data-category="recovery"]')?.click();
+        await paint();
+        pane.querySelector('[data-guided-tour-alchemy-recipe="proof-alchemy-0"]')?.click();
+        await paint();
+        const opener = [...pane.querySelectorAll('[data-craft-action="alchemy-open-material-detail"]')]
+          .find((button) => button.dataset.itemId === 'mat.moondew_grass');
+        opener.click();
+        await waitFor(() => document.querySelector('.catalog-item-detail-dialog')?.open === true, '一般關閉材料詳情');
+        document.querySelector('.catalog-item-detail-dialog [data-catalog-item-detail-close]')?.click();
+        await paint();
+        const ordinaryCloseKeepsWorkspace = !p.workspace.classList.contains('hidden');
+        const ordinaryCloseRestoresFocus = document.activeElement === opener;
+
+        const { openCatalogItemDetail } = await import('/src/ui/catalog-item-detail.ts');
+        p.navigationState.sent.length = 0;
+        openCatalogItemDetail({ itemId: 'mat.moondew_grass' });
+        await waitFor(() => document.querySelector('.catalog-item-detail-dialog')?.open === true, '無回呼材料詳情');
+        const entries = p.itemSources.getItemSourceEntries('mat.moondew_grass');
+        const index = entries.findIndex((entry) => p.resolveItemSourceNavigation(entry).kind === 'point');
+        document.querySelector('.catalog-item-detail-dialog [data-catalog-item-source-go="' + index + '"]')?.click();
+        await paint();
+        const callbackCleared = !p.workspace.classList.contains('hidden') && p.navigationState.sent.length === 1;
+        p.modal.hideWorkspace();
+        p.workspace.classList.add('hidden');
+        return { alchemy, forging, ordinaryCloseKeepsWorkspace, ordinaryCloseRestoresFocus, callbackCleared };
+      })()
+    `);
+    for (const [mode, result] of Object.entries({ alchemy: materialNavigation.alchemy, forging: materialNavigation.forging })) {
+      assert.equal(result.sent.length, 1, `${mode} 材料前往只能送出一次導航意圖`);
+      assert.equal(result.sent[0].payload.x, result.expected.x, `${mode} 材料導航 X 座標錯誤`);
+      assert.equal(result.sent[0].payload.y, result.expected.y, `${mode} 材料導航 Y 座標錯誤`);
+      assert.equal(result.sent[0].payload.targetMapId, result.expected.mapId, `${mode} 材料導航必須保留跨地圖目標`);
+      assert.equal(result.sent[0].payload.ignoreVisibilityLimit, true, `${mode} 材料導航必須忽略當前可視範圍`);
+      assert.equal(result.sent[0].payload.allowNearestReachable, true, `${mode} 材料導航必須允許最近可達格`);
+      assert.equal(result.childClosed, true, `${mode} 導航後必須關閉材料詳情`);
+      assert.equal(result.workspaceClosed, true, `${mode} 導航後必須關閉工坊並返回地圖`);
+      assert.equal(result.workspaceCloseCount, 1, `${mode} 導航後只能關閉一次工坊`);
+      assert.equal(result.mapFocused, true, `${mode} 導航後必須將焦點交回地圖`);
+      assert.equal(result.bodyCleared, true, `${mode} 導航後更新不得重開工坊內容`);
+    }
+    assert.equal(materialNavigation.ordinaryCloseKeepsWorkspace, true, '一般關閉材料詳情不得關閉工坊');
+    assert.equal(materialNavigation.ordinaryCloseRestoresFocus, true, '一般關閉材料詳情必須將焦點還給材料按鈕');
+    assert.equal(materialNavigation.callbackCleared, true, '下一次無回呼材料導航不得沿用舊工坊關閉回呼');
     return [alchemyShot, alchemyDarkShot, enhancementShot];
   });
 }
