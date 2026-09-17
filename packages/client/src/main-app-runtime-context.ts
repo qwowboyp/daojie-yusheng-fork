@@ -123,6 +123,7 @@ export function createMainAppRuntimeContext(options: InitializeMainAppOptions) {
     modules.craftWorkbenchModal.configureWorkspaceNavigation({
       open: (mode) => modules.sidePanel.switchTab(mode),
       resolveBody: (mode) => documentRef.getElementById(`workspace-${mode}`),
+      close: () => modules.sidePanel.closeWorkspace(false),
     });
   }
   modules.socialPanel.setMailOpenHandler(() => panelContext.mailStateSource.open());

@@ -115,6 +115,7 @@ export type CraftWorkspaceMode = 'alchemy' | 'forging' | 'enhancement' | 'transm
 export type CraftWorkspaceNavigation = {
   open: (mode: CraftWorkspaceMode) => void;
   resolveBody: (mode: CraftWorkspaceMode) => HTMLElement | null;
+  close: () => void;
 };
 type CraftMode = CraftWorkspaceMode | 'technique_refining' | null;
 type AlchemyTab = 'full' | 'simple';
@@ -580,6 +581,15 @@ export class CraftWorkbenchModal {
       return;
     }
     this.releaseWorkspaceBody(true);
+  }
+
+  closeForItemSourceNavigation(): void {
+    if (this.workspaceBody && this.workspaceNavigation) {
+      this.workspaceNavigation.close();
+    } else if (detailModalHost.isOpenFor(CraftWorkbenchModal.MODAL_OWNER)) {
+      detailModalHost.requestClose();
+    }
+    document.getElementById('game-stage')?.focus({ preventScroll: true });
   }
 
   getOpenCraftBody(): HTMLElement | null {

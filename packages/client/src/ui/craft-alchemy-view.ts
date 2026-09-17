@@ -214,6 +214,7 @@ export interface CraftAlchemyParent {
   confirmEventsBound: boolean;
   readonly ALCHEMY_CONFIRM_OWNER: string;
   getAlchemyRecipePresets(recipeId: string): PlayerAlchemyPreset[];
+  closeForItemSourceNavigation(): void;
   render(): void;
   callbacks: {
     onStartAlchemy?: (recipeId: string, ingredients: Array<{ itemId: string; count: number }>, quantity: number, queueMode: CraftQueueStartMode) => void;
@@ -618,7 +619,11 @@ export class CraftAlchemyView {
       event.preventDefault();
       event.stopPropagation();
       if (action === 'alchemy-open-material-detail') {
-        openCatalogItemDetail({ itemId, opener: target });
+        openCatalogItemDetail({
+          itemId,
+          opener: target,
+          onNavigate: () => this.parent.closeForItemSourceNavigation(),
+        });
         return;
       }
       if (action === 'alchemy-remove-aux') {

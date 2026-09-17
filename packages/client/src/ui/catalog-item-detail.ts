@@ -27,12 +27,14 @@ const GO_LABEL = '前往目標';
 type CatalogItemDetailOptions = {
   itemId: string;
   opener?: HTMLElement | null;
+  onNavigate?: () => void;
 };
 
 let dialog: HTMLDialogElement | null = null;
 let currentItemId: string | null = null;
 let currentEntries: ItemSourceEntry[] = [];
 let openerEl: HTMLElement | null = null;
+let onNavigate: (() => void) | null = null;
 let restoreOpenerOnClose = true;
 let dialogAbort: AbortController | null = null;
 
@@ -66,6 +68,7 @@ function ensureDialog(): HTMLDialogElement {
     currentEntries = [];
     const opener = openerEl;
     openerEl = null;
+    onNavigate = null;
     if (restoreOpenerOnClose) {
       opener?.focus();
     }
@@ -214,8 +217,10 @@ function bindDialog(root: HTMLDialogElement): void {
       setNavError(error);
       return;
     }
+    const navigateCallback = onNavigate;
     restoreOpenerOnClose = false;
     closeCatalogItemDetail();
+    navigateCallback?.();
   }, { signal });
   bindItemSourceLinks(root, signal);
 }
@@ -234,6 +239,7 @@ export function openCatalogItemDetail(options: CatalogItemDetailOptions): void {
     return;
   }
   openerEl = options.opener ?? null;
+  onNavigate = options.onNavigate ?? null;
   restoreOpenerOnClose = true;
   paintDialog(itemId);
   const root = ensureDialog();
