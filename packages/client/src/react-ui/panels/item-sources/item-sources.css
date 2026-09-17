@@ -38,7 +38,7 @@
 .item-sources-detail-chip { padding: 4px 7px; border-radius: 5px; background: var(--surface-base); color: var(--color-role-body); font-size: 13px; line-height: 1.4; }.item-sources-detail-chip--accent { border: 1px solid var(--accent-border); color: var(--accent-ink); }.item-sources-detail-chip--muted { color: var(--color-role-body-muted); }
 .item-sources-map-group li { align-items: center; flex-wrap: nowrap; padding: 6px 0; }
 .item-sources-route-details { display: flex; flex: 1; min-width: 0; flex-wrap: wrap; gap: 6px; overflow-wrap: anywhere; }
-.item-sources-route-action { display: grid; flex: 0 0 64px; gap: 4px; text-align: center; }
+.item-sources-route-action { display: grid; flex: 0 0 96px; gap: 4px; text-align: center; }
 .item-sources-go { min-height: 44px; padding: 0 10px; border: 1px solid var(--accent-border); border-radius: 8px; background: var(--accent-soft); color: var(--accent-ink); cursor: pointer; font: inherit; }
 .item-sources-go:hover:not(:disabled) { background: var(--surface-base); }
 .item-sources-go:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }

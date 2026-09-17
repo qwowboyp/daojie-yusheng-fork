@@ -71,7 +71,7 @@ function SourceRoute({ entry, onNavigate }: { entry: ItemSourceEntry; onNavigate
           const reason = navigateToItemSource(entry);
           setError(reason);
           if (!reason) onNavigate();
-        }}>前往</button>
+        }}>前往目標</button>
       {!unavailable && entry.kind === 'monster_drop' && <small>出沒地</small>}
     </div>
   </li>;
