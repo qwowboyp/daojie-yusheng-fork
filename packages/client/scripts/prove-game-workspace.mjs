@@ -17,6 +17,19 @@ const DESKTOP = { width: 1440, height: 900 };
 const SQUARE_DESKTOP = { width: 900, height: 900 };
 const LARGE_DESKTOP = { width: 3727, height: 2233 };
 const VISUALIZATION_DIR = process.env.WORKSPACE_PROOF_OUTPUT_DIR;
+const PROOF_TIMEOUT_MS = Number(process.env.GAME_WORKSPACE_PROOF_TIMEOUT_MS) || 480_000;
+
+function logWorkspaceProof(message) {
+  process.stdout.write(`[game-workspace-proof] ${message}\n`);
+}
+
+{
+  const timer = setTimeout(() => {
+    process.stderr.write(`[game-workspace-proof] exceeded ${PROOF_TIMEOUT_MS}ms and will exit\n`);
+    process.exit(124);
+  }, PROOF_TIMEOUT_MS);
+  timer.unref();
+}
 
 const fixtureExpression = String.raw`
   (async () => {
@@ -1284,12 +1297,14 @@ async function verifyWorkspaceOutsideDismiss(cdp, viewport, touch) {
 }
 
 async function initializeWorkspaceProofContext(cdp) {
+  logWorkspaceProof('seed localStorage then Page.reload');
   await cdp.evaluate(`(async () => {
     localStorage.setItem('mud:side-panel-state:v1', JSON.stringify({ version: 1, activeTabs: { 'side-primary': 'inventory' } }));
     const { GUIDED_TOUR_FLOWS } = await import('/src/constants/ui/guided-tour.ts');
     localStorage.setItem('mud:guided-tour:v1', JSON.stringify({ completed: {}, dismissed: Object.fromEntries(GUIDED_TOUR_FLOWS.map(flow => [flow.id, flow.storageVersion])) }));
-    location.reload(); return true;
+    return true;
   })()`);
+  await cdp.send('Page.reload');
   await waitFor(() => cdp.evaluate(`document.readyState === 'complete' && document.getElementById('game-shell')?.dataset.workspaceMode === 'true'`), '工作窗控制器初始化');
   const initial = await cdp.evaluate(measureShellExpression);
 
@@ -1325,9 +1340,11 @@ async function initializeWorkspaceProofContext(cdp) {
   return { initial, shown, fixture };
 }
 
+logWorkspaceProof(`start timeout=${PROOF_TIMEOUT_MS}ms`);
 await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-proof-' }, async (cdp) => {
   // 舊 active tab 不得在啟動時自動打開按需工作窗。
   const { initial, shown, fixture } = await initializeWorkspaceProofContext(cdp);
+  logWorkspaceProof('phone context ready');
   assert.equal(initial.mode, 'true', '主舞台未啟用 workspace mode');
   assert.equal(initial.workspaceHidden, true, '舊 active tab 在初始載入時打開了工作窗');
 
@@ -1476,12 +1493,14 @@ await withClientBrowserProof({ viewport: PHONE, profilePrefix: 'game-workspace-p
   await captureWorkspace(cdp, 'implemented-landscape.png');
 
   const touchCdp = cdp;
+  logWorkspaceProof('desktop chrome start');
   await withClientBrowserProof({
     viewport: DESKTOP,
     profilePrefix: 'game-workspace-desktop-proof-',
     initialTouch: false,
   }, async (cdp) => {
     await initializeWorkspaceProofContext(cdp);
+    logWorkspaceProof('desktop context ready');
     const desktopMedia = await cdp.evaluate(`({
       coarse: matchMedia('(pointer: coarse)').matches,
       hoverNone: matchMedia('(hover: none)').matches,

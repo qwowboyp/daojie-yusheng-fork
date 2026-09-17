@@ -9,6 +9,11 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const clientRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const CDP_COMMAND_TIMEOUT_MS = 45_000;
+
+function logProof(message) {
+  process.stdout.write(`[browser-proof] ${message}\n`);
+}
 
 export function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -18,10 +23,21 @@ export async function waitFor(probe, label, timeoutMs = 15_000) {
   const deadline = Date.now() + timeoutMs;
   let lastError = null;
   while (Date.now() < deadline) {
+    const remaining = deadline - Date.now();
     try {
-      const value = await probe();
+      const value = await Promise.race([
+        Promise.resolve().then(probe),
+        delay(remaining).then(() => {
+          const error = new Error(`等待${label}超时`);
+          error.name = 'WaitTimeout';
+          throw error;
+        }),
+      ]);
       if (value) return value;
     } catch (error) {
+      if (error?.name === 'WaitTimeout' || Date.now() >= deadline) {
+        throw new Error(`等待${label}超时${lastError ? `：${lastError.message}` : ''}`);
+      }
       lastError = error;
     }
     await delay(50);
@@ -89,8 +105,15 @@ class CdpClient {
       this.pending.clear();
     });
     await new Promise((resolve, reject) => {
-      socket.addEventListener('open', resolve, { once: true });
-      socket.addEventListener('error', () => reject(new Error('无法连接 Chrome CDP')), { once: true });
+      const timer = setTimeout(() => reject(new Error(`连接 Chrome CDP 超时 ${CDP_COMMAND_TIMEOUT_MS}ms`)), CDP_COMMAND_TIMEOUT_MS);
+      socket.addEventListener('open', () => {
+        clearTimeout(timer);
+        resolve();
+      }, { once: true });
+      socket.addEventListener('error', () => {
+        clearTimeout(timer);
+        reject(new Error('无法连接 Chrome CDP'));
+      }, { once: true });
     });
   }
 
@@ -99,7 +122,20 @@ class CdpClient {
     const id = this.nextId;
     this.nextId += 1;
     return new Promise((resolve, reject) => {
-      this.pending.set(id, { resolve, reject });
+      const timer = setTimeout(() => {
+        this.pending.delete(id);
+        reject(new Error(`Chrome CDP 超时 ${CDP_COMMAND_TIMEOUT_MS}ms：${method}`));
+      }, CDP_COMMAND_TIMEOUT_MS);
+      this.pending.set(id, {
+        resolve: (value) => {
+          clearTimeout(timer);
+          resolve(value);
+        },
+        reject: (error) => {
+          clearTimeout(timer);
+          reject(error);
+        },
+      });
       this.socket.send(JSON.stringify({ id, method, params }));
     });
   }
@@ -167,6 +203,7 @@ export async function withClientBrowserProof({ viewport, profilePrefix, configur
     await viteServer.listen();
     const address = viteServer.httpServer?.address();
     assert(address && typeof address === 'object', 'Vite proof 服务未取得本地端口');
+    logProof(`${profilePrefix} vite :${address.port}`);
 
     profileDir = await mkdtemp(path.join(os.tmpdir(), profilePrefix));
     chrome = spawn(await findChromeExecutable(), [
@@ -195,10 +232,12 @@ export async function withClientBrowserProof({ viewport, profilePrefix, configur
       'about:blank',
     ], { stdio: 'ignore' });
 
+    logProof(`${profilePrefix} chrome pid=${chrome.pid}`);
     const debugPort = await readDevToolsPort(profileDir);
     const target = await resolvePageTarget(debugPort);
     cdp = new CdpClient(target.webSocketDebuggerUrl);
     await cdp.connect();
+    logProof(`${profilePrefix} cdp connected :${debugPort}`);
     await cdp.send('Runtime.enable');
     await cdp.send('Page.enable');
     await cdp.send('Emulation.setDeviceMetricsOverride', {
@@ -215,6 +254,7 @@ export async function withClientBrowserProof({ viewport, profilePrefix, configur
       () => cdp.evaluate(`document.readyState === 'complete' && Boolean(document.getElementById('detail-modal-body'))`),
       '正式客户端页面加载',
     );
+    logProof(`${profilePrefix} page ready`);
     return await run(cdp);
   } finally {
     try {
