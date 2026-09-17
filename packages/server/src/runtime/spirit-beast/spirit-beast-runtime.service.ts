@@ -891,8 +891,20 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
     return planting || null;
   }
 
-  /** 回收進程遺失後仍佔工位唯一鍵的玩家工單，並立刻刷盤，避免親自採集被舊 running 擋住。 */
+  /** 回收進程遺失後仍佔工位唯一鍵的玩家工單，並立刻寫回資料庫，避免親自採集被舊 running 擋住。 */
   private async reclaimOrphanedPlayerWorkOrders(ownerPlayerId?: string, buildingId?: string): Promise<void> {
+    const liveOrderIds = new Set<string>();
+    for (const entry of this.workOrders.values()) {
+      if (!entry.workerId) continue;
+      const liveOrderId = this.resolveLivePlayerWorkOrderId(entry.workerId);
+      if (liveOrderId) liveOrderIds.add(liveOrderId);
+    }
+    if (this.persistence.isEnabled()) {
+      const released = await this.persistence.releaseOrphanedPlayerWorkOrders({
+        ownerPlayerId, buildingId, excludeOrderIds: [...liveOrderIds],
+      });
+      for (const row of released) this.workOrders.set(row.orderId, row);
+    }
     for (const entry of this.workOrders.values()) {
       if (entry.status !== 'reserved' && entry.status !== 'running') continue;
       if (entry.workerKind !== 'player') continue;
@@ -901,8 +913,7 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
         const sameBuilding = Boolean(buildingId) && entry.buildingId === buildingId;
         if (!sameOwner && !sameBuilding) continue;
       }
-      const liveOrderId = entry.workerId ? this.resolveLivePlayerWorkOrderId(entry.workerId) : null;
-      if (liveOrderId === entry.orderId) continue;
+      if (liveOrderIds.has(entry.orderId)) continue;
       if (entry.status === 'running' && entry.remainingTicks === 0) {
         this.completedOrderIds.add(entry.orderId);
         continue;

@@ -1133,6 +1133,30 @@ export class SpiritBeastPersistenceService implements OnModuleInit, OnModuleDest
       itemId: String(row.item_id), count: Math.max(1, Math.trunc(Number(row.count) || 1)) }));
   }
 
+  /** 進程遺失後，把仍佔工位唯一鍵的玩家工單改回 waiting，讓親自採集可以再預約。 */
+  async releaseOrphanedPlayerWorkOrders(input: {
+    ownerPlayerId?: string;
+    buildingId?: string;
+    excludeOrderIds?: string[];
+  } = {}): Promise<SpiritWorkOrderRow[]> {
+    const ownerPlayerId = input.ownerPlayerId?.trim() || null;
+    const buildingId = input.buildingId?.trim() || null;
+    const excludeOrderIds = (input.excludeOrderIds ?? []).map((id) => id.trim()).filter((id) => id.length > 0);
+    const result = await this.requirePool().query(
+      `UPDATE spirit_beast_work_order
+          SET status='waiting', worker_kind=NULL, worker_id=NULL, job_run_id=NULL,
+              revision=revision+1, updated_at=now()
+        WHERE status IN ('reserved','running')
+          AND worker_kind='player'
+          AND remaining_ticks > 0
+          AND (($1::text IS NULL AND $2::text IS NULL) OR owner_player_id=$1 OR building_id=$2)
+          AND ($3::uuid[] IS NULL OR NOT (order_id = ANY($3::uuid[])))
+        RETURNING *`,
+      [ownerPlayerId, buildingId, excludeOrderIds.length > 0 ? excludeOrderIds : null],
+    );
+    return result.rows.map(mapWorkOrderRow);
+  }
+
   async loadRecoveryState(): Promise<SpiritBeastRecoveryState> {
     const result = await Promise.all([
       this.requirePool().query(`SELECT * FROM spirit_beast_hatch WHERE status IN ('incubating','ready') ORDER BY hatch_id`),

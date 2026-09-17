@@ -223,6 +223,35 @@ function createRuntimeHarness(player: SmokePlayer, orders: SpiritWorkOrderRow[],
       runtime.workOrders.set(input.orderId, reserved);
       return reserved;
     },
+    async releaseOrphanedPlayerWorkOrders(input: {
+      ownerPlayerId?: string;
+      buildingId?: string;
+      excludeOrderIds?: string[];
+    } = {}): Promise<SpiritWorkOrderRow[]> {
+      const exclude = new Set(input.excludeOrderIds ?? []);
+      const released: SpiritWorkOrderRow[] = [];
+      for (const current of [...runtime.workOrders.values()]) {
+        if (exclude.has(current.orderId)) continue;
+        if (current.status !== 'reserved' && current.status !== 'running') continue;
+        if (current.workerKind !== 'player' || current.remainingTicks <= 0) continue;
+        if (input.ownerPlayerId || input.buildingId) {
+          const sameOwner = Boolean(input.ownerPlayerId) && current.ownerPlayerId === input.ownerPlayerId;
+          const sameBuilding = Boolean(input.buildingId) && current.buildingId === input.buildingId;
+          if (!sameOwner && !sameBuilding) continue;
+        }
+        const next = {
+          ...current,
+          status: 'waiting' as const,
+          workerKind: null,
+          workerId: null,
+          jobRunId: null,
+          revision: current.revision + 1,
+        };
+        runtime.workOrders.set(current.orderId, next);
+        released.push(next);
+      }
+      return released;
+    },
     async cancelWorkOrder(input: { orderId: string }): Promise<{ result: SpiritWorkOrderRow | null }> {
       const current = runtime.workOrders.get(input.orderId);
       if (!current) return { result: null };
@@ -498,6 +527,7 @@ async function testManualWorkRejectsSecondActiveStation(): Promise<void> {
   runtime.persistence = {
     isEnabled(): boolean { return true; },
     async flushProgress(): Promise<void> {},
+    async releaseOrphanedPlayerWorkOrders(): Promise<SpiritWorkOrderRow[]> { return []; },
     async cancelWorkOrder(): Promise<{ result: null }> { return { result: null }; },
     async reservePlayerWorkOrder(input: { orderId: string; ownerPlayerId: string; expectedRevision: number }): Promise<SpiritWorkOrderRow | null> {
       reserveCalls += 1;
