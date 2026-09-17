@@ -677,6 +677,30 @@ async function testManualWorkReclaimsOrphanMissingFromMemory(): Promise<void> {
   assert.equal(db.get(orphan.orderId)?.status, 'running');
 }
 
+async function testMiningContinuesWhenMapResolverReturnsSnapshot(): Promise<void> {
+  const probe = createProbe();
+  const player = createPlayer();
+  const order = createOrder('order:mining:snapshot-resolver', 'mining', 'building:iron-mine');
+  const runtime = createRuntimeHarness(player, [order], probe);
+  (runtime as { resolveMapInstance?: (instanceId: string) => unknown }).resolveMapInstance = () => ({
+    instanceId: order.instanceId,
+  });
+  const pipeline = createPipeline();
+  const ctx = createContext(runtime, probe);
+  assert.equal(pipeline.startLifecycle(player, 'mining', { facilityOrderId: order.orderId }, ctx).ok, true);
+  pipeline.tickLifecycle(player, 'mining', ctx);
+  assert.ok(player.miningJob, 'snapshot resolver must not cancel a valid station job');
+  assert.equal(order.status, 'running');
+  assert.equal(player.miningJob?.remainingTicks, 2);
+
+  (runtime as { resolveMapInstance?: (instanceId: string) => unknown }).resolveMapInstance = () => ({
+    buildingById: new Map([[order.buildingId, { state: 'destroyed' }]]),
+  });
+  pipeline.tickLifecycle(player, 'mining', ctx);
+  assert.equal(player.miningJob, null);
+  assert.equal(order.status, 'waiting');
+}
+
 async function main(): Promise<void> {
   await testMiningLifecycle();
   await testInvalidFacilityReleasesReservation();
@@ -686,6 +710,7 @@ async function main(): Promise<void> {
   await testMiningCompletionSettlesAndContinues();
   await testManualWorkReclaimsOrphanedStationOrder();
   await testManualWorkReclaimsOrphanMissingFromMemory();
+  await testMiningContinuesWhenMapResolverReturnsSnapshot();
   console.log(JSON.stringify({
     ok: true,
     answers: [
@@ -698,6 +723,7 @@ async function main(): Promise<void> {
       '親自採礦完成後立即結算產物，並在玩家仍在工位時自動續採。',
       '礦場殘留玩家 running 工單會在親自採集前回收並立刻刷盤，不再被工位唯一鍵擋住。',
       '記憶體沒有舊工單時，仍會從資料庫回收佔工位的玩家 running 工單並開始親自採集。',
+      '地圖解析若只回傳快照、沒有 buildingById，親自採礦仍會繼續，不會被誤判離位。',
     ],
   }, null, 2));
 }

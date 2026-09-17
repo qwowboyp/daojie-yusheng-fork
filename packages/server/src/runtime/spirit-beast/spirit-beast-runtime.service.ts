@@ -804,8 +804,12 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
     const instanceId = normalizeId(player?.instanceId ?? player?.location?.instanceId);
     const x = Math.trunc(Number(player?.x ?? player?.location?.x) || 0);
     const y = Math.trunc(Number(player?.y ?? player?.location?.y) || 0);
-    const building = this.resolveMapInstance?.(order.instanceId)?.buildingById?.get(order.buildingId);
-    return instanceId === order.instanceId && (!this.resolveMapInstance || building?.state === 'active')
+    const resolved = this.resolveMapInstance?.(order.instanceId) as
+      { buildingById?: { get?: (id: string) => { state?: string } | undefined } } | null | undefined;
+    const hasBuildingIndex = typeof resolved?.buildingById?.get === 'function';
+    const building = hasBuildingIndex ? resolved.buildingById.get(order.buildingId) : undefined;
+    return instanceId === order.instanceId
+      && (!hasBuildingIndex || building?.state === 'active')
       && Math.max(Math.abs(x - Number(order.payload.x)), Math.abs(y - Number(order.payload.y))) <= 2;
   }
 

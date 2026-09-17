@@ -13,6 +13,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-17',
+    summary: '親自採集開始後會繼續挖，不再被誤判離開工位。',
+    items: [
+      '礦場修復：站在玄鐵礦場旁邊按「親自採集」後會持續開採，完成後產物進礦場，可展開「領取產物」。',
+      '操作說明：要停下來時按「停止親自工作」。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-17',
     summary: '親自採集會清掉卡住的舊工作並立刻開採。',
     items: [
       '礦場修復：就算畫面上沒有排程，按下「親自採集」也會清掉卡住的舊採礦並開始開採。',

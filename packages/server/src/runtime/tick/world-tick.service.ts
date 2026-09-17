@@ -229,8 +229,10 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
           scheduledPlans,
         );
         if (elapsedSpiritTicks > 0) {
-          this.spiritBeastRuntimeService?.advanceTicks(elapsedSpiritTicks,
-            (instanceId) => this.worldRuntimeService.getInstance?.(instanceId) ?? null);
+          this.spiritBeastRuntimeService?.advanceTicks(elapsedSpiritTicks, (instanceId) => {
+            const instance = this.worldRuntimeService.getInstanceRuntime?.(instanceId);
+            return (instance ?? null) as SpiritBeastMapInstance | null;
+          });
         }
         this.pendingWorldFrameElapsedMs = 0;
         if (scheduledPlans) {
