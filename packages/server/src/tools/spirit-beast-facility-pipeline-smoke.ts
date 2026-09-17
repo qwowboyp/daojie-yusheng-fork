@@ -58,6 +58,13 @@ type RuntimeHarness = FacilityWorkPort & {
   persistence: Record<string, unknown>;
   contentTemplateRepository: { createItem(itemId: string, count: number): Record<string, unknown> };
   movementPaths: Map<string, unknown>;
+  crops: Map<string, unknown>;
+  hatches: Map<string, unknown>;
+  activeBeasts: Map<string, unknown>;
+  dirtyHatches: Set<string>;
+  dirtyBeasts: Set<string>;
+  dirtyCrops: Set<string>;
+  kickScheduler: () => void;
   logger: { warn(message: string): void };
   executeCommand: SpiritBeastRuntimeService['executeCommand'];
 };
@@ -170,11 +177,43 @@ function createRuntimeHarness(player: SmokePlayer, orders: SpiritWorkOrderRow[],
       activePlayer.persistentRevision += 1;
     },
   };
+  runtime.crops = new Map();
+  runtime.hatches = new Map();
+  runtime.activeBeasts = new Map();
+  runtime.dirtyHatches = new Set();
+  runtime.dirtyBeasts = new Set();
+  runtime.dirtyCrops = new Set();
+  runtime.kickScheduler = (): void => {};
   runtime.persistence = {
     isEnabled(): boolean { return true; },
+    async flushProgress(): Promise<void> {},
     async releasePlayerWorkOrder(input: { ownerPlayerId: string; orderId: string }): Promise<SpiritWorkOrderRow | null> {
       probe.releases.push(input.orderId);
       return runtime.workOrders.get(input.orderId) ?? null;
+    },
+    async completeWorkOrder(input: { orderId: string }) {
+      const current = runtime.workOrders.get(input.orderId);
+      if (!current) throw new Error(`missing order ${input.orderId}`);
+      const repeat = current.payload.repeat === true || current.payload.manualRepeat === true;
+      const next = {
+        ...current,
+        status: repeat ? 'waiting' as const : 'completed' as const,
+        remainingTicks: repeat ? current.totalTicks : 0,
+        workerKind: null,
+        workerId: null,
+        jobRunId: null,
+        revision: current.revision + 1,
+      };
+      return { settled: true, order: next, beast: null, crop: null };
+    },
+    async reservePlayerWorkOrder(input: { orderId: string; ownerPlayerId: string; expectedRevision: number }): Promise<SpiritWorkOrderRow | null> {
+      const current = runtime.workOrders.get(input.orderId);
+      if (!current || current.ownerPlayerId !== input.ownerPlayerId || current.revision !== input.expectedRevision
+        || !['queued', 'waiting'].includes(current.status)) return null;
+      const reserved = { ...current, status: 'running' as const, workerKind: 'player' as const,
+        workerId: input.ownerPlayerId, jobRunId: input.orderId, revision: current.revision + 1 };
+      runtime.workOrders.set(input.orderId, reserved);
+      return reserved;
     },
   };
   return runtime;
@@ -307,7 +346,7 @@ async function testInvalidFacilityReleasesReservation(): Promise<void> {
   assert.equal(removedProbe.completions.length, 0);
 }
 
-function testManufacturingStrategiesUseSamePipeline(): void {
+async function testManufacturingStrategiesUseSamePipeline(): Promise<void> {
   for (const kind of ['forging', 'alchemy', 'enhancement'] as const) {
     const probe = createProbe();
     const player = createPlayer();
@@ -329,7 +368,49 @@ function testManufacturingStrategiesUseSamePipeline(): void {
     const slot = `${kind}Job` as 'forgingJob' | 'alchemyJob' | 'enhancementJob';
     assert.equal(player[slot], null);
     assert.deepEqual(probe.reservationReads, [{ playerId: player.playerId, orderId: order.orderId, skill: kind }]);
+    await Promise.resolve();
+    await Promise.resolve();
   }
+}
+
+function attachCraftPanel(runtime: RuntimeHarness, pipeline: TechniqueActivityPipelineService): void {
+  const craft = Object.create(CraftPanelRuntimeService.prototype) as CraftPanelRuntimeService & Record<string, unknown>;
+  craft.pipeline = pipeline;
+  craft.facilityWorkPort = runtime;
+  craft.contentTemplateRepository = {
+    getItemName(itemId: string): string { return itemId; },
+    normalizeItem(item: unknown): unknown { return item; },
+  };
+  craft.playerRuntimeService = runtime.playerRuntimeService;
+  craft.recordTechniqueActivityStatisticMutation = (): void => {};
+  runtime.craftPanelRuntimeService = craft;
+}
+
+async function testMiningCompletionSettlesAndContinues(): Promise<void> {
+  const probe = createProbe();
+  const player = createPlayer();
+  const order = createOrder('order:mining:repeat', 'mining', 'building:iron-mine', {
+    totalTicks: 1,
+    remainingTicks: 1,
+    payload: { x: 5, y: 5, manualPlayerId: player.playerId, manualRepeat: true },
+  });
+  const runtime = createRuntimeHarness(player, [order], probe);
+  const pipeline = createPipeline();
+  attachCraftPanel(runtime, pipeline);
+  const ctx = createContext(runtime, probe);
+  assert.equal(pipeline.startLifecycle(player, 'mining', { facilityOrderId: order.orderId }, ctx).ok, true);
+  pipeline.tickLifecycle(player, 'mining', ctx);
+  assert.deepEqual(probe.completions, [order.orderId]);
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    if (runtime.workOrders.get(order.orderId)?.status === 'running' && player.miningJob) break;
+    await Promise.resolve();
+  }
+  const continued = runtime.workOrders.get(order.orderId);
+  assert.equal(continued?.status, 'running');
+  assert.equal(continued?.payload.manualRepeat, true);
+  assert.equal(continued?.workerKind, 'player');
+  assert.ok(player.miningJob);
+  assert.equal(player.miningJob?.facilityOrderId, order.orderId);
 }
 
 async function testCompletionDelegatesExternalAssetsToAuthority(): Promise<void> {
@@ -442,9 +523,10 @@ async function testManualWorkRejectsSecondActiveStation(): Promise<void> {
 async function main(): Promise<void> {
   await testMiningLifecycle();
   await testInvalidFacilityReleasesReservation();
-  testManufacturingStrategiesUseSamePipeline();
+  await testManufacturingStrategiesUseSamePipeline();
   await testCompletionDelegatesExternalAssetsToAuthority();
   await testManualWorkRejectsSecondActiveStation();
+  await testMiningCompletionSettlesAndContinues();
   console.log(JSON.stringify({
     ok: true,
     answers: [
@@ -454,6 +536,7 @@ async function main(): Promise<void> {
       '煉器、煉丹與強化工位以同一 pipeline 讀 reservation，完成只呼叫服務端權威 port，不在 strategy 內改外部資產。',
       '製作輸出、材料扣除與強化成功率均由服務端 persistence 完成，strategy 不自行複製公式或改裝備。',
       '玩家已有工位 job 時，第二個人工工位在 DB reservation 前即以正式 busy key 拒絕。',
+      '親自採礦完成後立即結算產物，並在玩家仍在工位時自動續採。',
     ],
   }, null, 2));
 }

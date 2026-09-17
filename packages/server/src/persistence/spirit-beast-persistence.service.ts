@@ -923,7 +923,7 @@ export class SpiritBeastPersistenceService implements OnModuleInit, OnModuleDest
         );
         crop = cropResult.rows[0] ? mapCropRow(cropResult.rows[0]) : null;
       }
-      const repeat = order.payload.repeat === true || enhancementRepeat;
+      const repeat = order.payload.repeat === true || order.payload.manualRepeat === true || enhancementRepeat;
       order.payload = { ...order.payload, lastSettledExpectedRevision: input.expectedRevision,
         lastWorkerKind: order.workerKind, lastWorkerId: order.workerId };
       const updated = await client.query(

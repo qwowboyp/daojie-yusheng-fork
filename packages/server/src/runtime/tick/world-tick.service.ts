@@ -108,6 +108,8 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
   private lastFullSyncStartedAt = 0;
   /** movement-only 唤醒之间累计的真实时间；只在实例逻辑帧实际执行时交给 world clock。 */
   private pendingWorldFrameElapsedMs = 0;
+  /** 靈獸／設施 1Hz 獨立累積；加速實例 100ms 世界幀不得把未滿 1 秒的餘數清掉。 */
+  private pendingSpiritTickElapsedMs = 0;
   private lastTickDurationMs = 0;
   private lastIntervalMs = BASE_TICK_INTERVAL_MS;
   private totalTicks = 0;
@@ -216,7 +218,11 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
         ? this.collectPlanPlayerIds(scheduledPlans)
         : null;
       if (shouldAdvanceWorldFrame) {
-        const elapsedSpiritTicks = Math.floor(this.pendingWorldFrameElapsedMs / BASE_TICK_INTERVAL_MS);
+        this.pendingSpiritTickElapsedMs += this.pendingWorldFrameElapsedMs;
+        const elapsedSpiritTicks = Math.floor(this.pendingSpiritTickElapsedMs / BASE_TICK_INTERVAL_MS);
+        if (elapsedSpiritTicks > 0) {
+          this.pendingSpiritTickElapsedMs -= elapsedSpiritTicks * BASE_TICK_INTERVAL_MS;
+        }
         await this.worldRuntimeService.advanceFrame(
           this.pendingWorldFrameElapsedMs,
           null,
@@ -419,6 +425,7 @@ export class WorldTickService implements OnModuleInit, OnModuleDestroy {
     this.lastTickStartedAt = 0;
     this.lastFullSyncStartedAt = 0;
     this.pendingWorldFrameElapsedMs = 0;
+    this.pendingSpiritTickElapsedMs = 0;
     this.currentWakeDelayMs = BASE_TICK_INTERVAL_MS;
     if (this.instanceScheduleService && typeof this.worldRuntimeService.listInstanceEntries === 'function') {
       this.instanceScheduleService.rebuild(this.worldRuntimeService.listInstanceEntries(), performance.now());

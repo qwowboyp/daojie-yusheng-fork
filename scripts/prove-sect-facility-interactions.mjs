@@ -16,14 +16,22 @@ const definitions = JSON.parse(readFileSync(new URL('../packages/server/data/con
 const catalog = compileBuildingDefinitions(definitions);
 const facilityPrefix = 'spirit_beast:facility:';
 
-test('既有設施人工工作共用採礦及製作生命週期', () => {
-  const result = spawnSync(process.execPath, [fileURLToPath(new URL('../packages/server/dist/tools/spirit-beast-facility-pipeline-smoke.js', import.meta.url))], {
+function runServerSmoke(relativePath, timeoutMs) {
+  const result = spawnSync(process.execPath, [fileURLToPath(new URL(relativePath, import.meta.url))], {
     encoding: 'utf8',
     env: { ...process.env, SERVER_SKIP_LOCAL_ENV_AUTOLOAD: '1' },
-    timeout: 30_000, // 純記憶體回歸最長等待三十秒，避免阻塞發布驗證。
+    timeout: timeoutMs, // 純記憶體回歸最長等待，避免阻塞發布驗證。
   });
   assert.ifError(result.error);
   assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+}
+
+test('既有設施人工工作共用採礦及製作生命週期', () => {
+  runServerSmoke('../packages/server/dist/tools/spirit-beast-facility-pipeline-smoke.js', 30_000);
+});
+
+test('加速實例幀仍累積設施與靈獸 1Hz 計時', () => {
+  runServerSmoke('../packages/server/dist/tools/world-tick-smoke.js', 30_000);
 });
 
 function fixture() {

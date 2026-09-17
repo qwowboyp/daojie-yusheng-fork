@@ -161,10 +161,14 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
     for (const entry of recovered.hatches) this.hatches.set(entry.hatchId, entry);
     for (const entry of recovered.beasts) this.trackActiveBeast(entry);
     for (const entry of recovered.workOrders) {
-      // 進程失去時撤銷未完成 reservation；下一次排程依 DB 版本重新取得兩端。
-      if (entry.status === 'reserved') {
-        entry.status = 'waiting'; entry.workerKind = null; entry.workerId = null; entry.jobRunId = null; entry.revision += 1;
-        this.dirtyOrders.add(entry.orderId);
+      // 進程失去時撤銷未完成 reservation；玩家人工工單也不重開舊 job，避免剩餘時間與產物脫節。
+      if (entry.status === 'reserved' || (entry.status === 'running' && entry.workerKind === 'player')) {
+        if (entry.status === 'running' && entry.remainingTicks === 0) {
+          this.completedOrderIds.add(entry.orderId);
+        } else {
+          entry.status = 'waiting'; entry.workerKind = null; entry.workerId = null; entry.jobRunId = null; entry.revision += 1;
+          this.dirtyOrders.add(entry.orderId);
+        }
       }
       this.workOrders.set(entry.orderId, entry);
     }
@@ -174,6 +178,10 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
       this.startWorkerLifecycle(entry.workerId, entry, false);
     }
     for (const crop of recovered.crops.filter((entry) => entry.status === 'planned')) await this.ensureCropSowOrder(crop);
+    for (const orderId of this.completedOrderIds) {
+      const order = this.workOrders.get(orderId);
+      if (order) void this.settleCompletedOrder(order);
+    }
     this.kickScheduler();
   }
 
@@ -419,7 +427,7 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
             const action = facility.definition.kind === 'iron_mine' ? 'mine_iron' : 'mine_spirit_stone';
             const created = await this.persistence.createWorkOrder({ operationId: `${requestId}:order`, orderId, ownerPlayerId,
               sectId: context.sectId, instanceId: context.sectInstanceId, buildingId: command.buildingId,
-              skill, action, payload: { x: facility.building.x, y: facility.building.y, manualPlayerId: ownerPlayerId },
+              skill, action, payload: { x: facility.building.x, y: facility.building.y, manualPlayerId: ownerPlayerId, manualRepeat: true },
               priority: 100, totalTicks: action === 'mine_iron' ? SPIRIT_BEAST_RULES.ironMineWorkTicks : SPIRIT_BEAST_RULES.spiritStoneMineWorkTicks });
             order = created.result; this.workOrders.set(order.orderId, order);
           }
@@ -484,11 +492,17 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
         }
         case 'cancel_manual_work': {
           const player = this.playerRuntimeService.getPlayer(ownerPlayerId);
-          const order = Array.from(this.workOrders.values()).find((entry) => entry.ownerPlayerId === ownerPlayerId
-            && entry.buildingId === command.buildingId && entry.workerKind === 'player' && entry.status === 'running');
-          if (!player || !order) throw new Error('SPIRIT_MANUAL_WORK_NOT_FOUND');
-          const cancelled = this.craftPanelRuntimeService.cancelTechniqueActivity(player, order.skill, { plantingWorkPort: this, facilityWorkPort: this });
-          if (!cancelled?.ok) throw new Error(normalizeId(cancelled?.error) || 'SPIRIT_MANUAL_WORK_CANCEL_FAILED');
+          const orders = Array.from(this.workOrders.values()).filter((entry) => entry.ownerPlayerId === ownerPlayerId
+            && entry.buildingId === command.buildingId);
+          const running = orders.find((entry) => entry.workerKind === 'player' && entry.status === 'running');
+          const waiting = orders.find((entry) => entry.status === 'waiting' && entry.payload.manualRepeat === true);
+          const order = running ?? waiting;
+          if (!order) throw new Error('SPIRIT_MANUAL_WORK_NOT_FOUND');
+          if (running) {
+            if (!player) throw new Error('SPIRIT_MANUAL_WORK_NOT_FOUND');
+            const cancelled = this.craftPanelRuntimeService.cancelTechniqueActivity(player, order.skill, { plantingWorkPort: this, facilityWorkPort: this });
+            if (!cancelled?.ok) throw new Error(normalizeId(cancelled?.error) || 'SPIRIT_MANUAL_WORK_CANCEL_FAILED');
+          }
           await this.flushDirtyProgress();
           await this.persistence.cancelWorkOrder({ operationId: requestId, ownerPlayerId, orderId: order.orderId });
           this.workOrders.delete(order.orderId); this.bumpPanelRevision(); break;
@@ -735,6 +749,7 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
     const order = this.workOrders.get(orderId);
     if (order?.ownerPlayerId === playerId && order.workerKind === 'player') {
       order.remainingTicks = 0; order.revision += 1; this.dirtyOrders.add(orderId); this.completedOrderIds.add(orderId);
+      void this.settleCompletedOrder(order);
     }
   }
 
@@ -768,6 +783,7 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
     const order = this.workOrders.get(orderId);
     if (!order || order.ownerPlayerId !== playerId || order.workerKind !== 'player') return;
     order.remainingTicks = 0; order.revision += 1; this.dirtyOrders.add(orderId); this.completedOrderIds.add(orderId);
+    void this.settleCompletedOrder(order);
   }
 
   releaseFacilityWork(playerId: string, orderId: string): void {
@@ -849,9 +865,45 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
           this.playerRuntimeService.bumpPersistentRevision(player);
         }
       }
-      this.dirtyOrders.delete(order.orderId); this.bumpPanelRevision(); this.kickScheduler();
+      this.dirtyOrders.delete(order.orderId); this.bumpPanelRevision();
+      if (settled.order.status === 'waiting' && settled.order.payload.manualRepeat === true) {
+        await this.tryContinueManualWork(settled.order);
+      }
+      this.kickScheduler();
     } catch (error) {
       this.logger.warn(`靈獸工單結算將重試：${order.orderId} ${normalizeReason(error)}`);
+    }
+  }
+
+  private async tryContinueManualWork(order: SpiritWorkOrderRow): Promise<void> {
+    const playerId = normalizeId(order.payload.manualPlayerId);
+    if (!playerId || order.ownerPlayerId !== playerId) return;
+    const player = this.playerRuntimeService.getPlayer(playerId);
+    if (!player || this.craftPanelRuntimeService.hasAnyActiveTechniqueActivity(player)) return;
+    const instanceId = normalizeId(player.instanceId ?? player.location?.instanceId);
+    const x = Math.trunc(Number(player.x ?? player.location?.x) || 0);
+    const y = Math.trunc(Number(player.y ?? player.location?.y) || 0);
+    const building = this.resolveMapInstance?.(order.instanceId)?.buildingById?.get(order.buildingId);
+    if (instanceId !== order.instanceId || (this.resolveMapInstance && building?.state !== 'active')
+      || Math.max(Math.abs(x - Number(order.payload.x)), Math.abs(y - Number(order.payload.y))) > 2) return;
+    const reserved = await this.persistence.reservePlayerWorkOrder({
+      orderId: order.orderId, ownerPlayerId: playerId, expectedRevision: order.revision,
+    });
+    if (!reserved) return;
+    const skillLevel = Math.max(1, Math.trunc(Number(player[`${reserved.skill}Skill`]?.level) || 1));
+    const speed = 1 + skillLevel / 100;
+    reserved.totalTicks = Math.max(1, Math.ceil(reserved.totalTicks / speed));
+    reserved.remainingTicks = Math.max(1, Math.ceil(reserved.remainingTicks / speed));
+    reserved.revision += 1;
+    this.dirtyOrders.add(reserved.orderId);
+    this.workOrders.set(reserved.orderId, reserved);
+    const payload = reserved.skill === 'planting' ? { orderId: reserved.orderId } : { facilityOrderId: reserved.orderId };
+    const started = this.craftPanelRuntimeService.startTechniqueActivity(player, reserved.skill, payload, {
+      plantingWorkPort: this, facilityWorkPort: this,
+    });
+    if (!started?.ok || !('started' in started) || started.started !== true) {
+      const released = await this.persistence.releasePlayerWorkOrder({ ownerPlayerId: playerId, orderId: reserved.orderId });
+      if (released) this.workOrders.set(reserved.orderId, released);
     }
   }
 
@@ -863,7 +915,8 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
 
   private async scheduleOne(): Promise<void> {
     const orders = Array.from(this.workOrders.values())
-      .filter((entry) => ['queued', 'waiting'].includes(entry.status) && entry.retryAfterTick <= this.logicalTick)
+      .filter((entry) => ['queued', 'waiting'].includes(entry.status) && entry.retryAfterTick <= this.logicalTick
+        && entry.payload.manualRepeat !== true)
       .sort((a, b) => b.priority - a.priority || a.createdAtMs - b.createdAtMs || a.orderId.localeCompare(b.orderId));
     for (const order of orders) {
       const candidates = Array.from(this.activeBeasts.values())

@@ -510,6 +510,46 @@ async function testLogicalPlanSyncUnionsBeforeAfterAndMovementPlayers(): Promise
   assert.deepEqual(flushedPlayerIds, ['player:after', 'player:before', 'player:movement']);
 }
 
+async function testAcceleratedInstanceFramesAccumulateSpiritTicks(): Promise<void> {
+  const intervalMs = 100; // 加速實例到期間隔
+  const simulatedElapsedMs = 2_000; // 兩秒真實時間
+  const expectedSpiritTicks = 2;
+  let worldMs = 0;
+  let spiritTicks = 0;
+  const instance = {
+    meta: { instanceId: 'instance:spirit-tick', runtimeStatus: 'running', status: 'active' },
+    tickSpeed: 10,
+    paused: false,
+  };
+  const plan = { instanceId: 'instance:spirit-tick', instance, steps: 1, speed: 10 };
+  const service = new WorldTickService(
+    { flushTick(): void {} },
+    { isRuntimeMaintenanceActive(): boolean { return false; } },
+    { getMapTickSpeed(): number { return 1; }, isMapPaused(): boolean { return false; } },
+    {
+      async advanceFrame(frameDurationMs: number): Promise<void> { worldMs += frameDurationMs; },
+      recordSyncFlushDuration(): void {},
+      getInstanceRuntime(): typeof instance { return instance; },
+    },
+    { flushConnectedPlayers(): void {} },
+    undefined,
+    undefined,
+    { collectDue(): Array<typeof plan> { return [plan]; } } as never,
+    undefined,
+    {
+      advanceTicks(ticks: number): void { spiritTicks += ticks; },
+    } as never,
+  );
+  const internals = service as unknown as { lastTickStartedAt: number };
+  const frames = Math.trunc(simulatedElapsedMs / intervalMs);
+  for (let index = 0; index < frames; index += 1) {
+    internals.lastTickStartedAt = performance.now() - intervalMs;
+    await runTickOnce(service);
+  }
+  assert.equal(Math.round(worldMs), simulatedElapsedMs);
+  assert.equal(spiritTicks, expectedSpiritTicks);
+}
+
 Promise.resolve()
   .then(() => testAwaitsAdvanceFrameBeforeSyncFlush())
   .then(() => testTickInFlightPreventsReentry())
@@ -521,6 +561,7 @@ Promise.resolve()
   .then(() => testDeadlineWaitRemainderIsNotReportedAsSkippedFrame())
   .then(() => testMovementOnlyFramesAccumulateWithoutLogicalDoubleTick())
   .then(() => testLogicalPlanSyncUnionsBeforeAfterAndMovementPlayers())
+  .then(() => testAcceleratedInstanceFramesAccumulateSpiritTicks())
   .then(() => {
     console.log(JSON.stringify({ ok: true, case: 'world-tick' }, null, 2));
   });

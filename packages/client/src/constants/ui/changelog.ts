@@ -12,6 +12,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 /** 当前内置的更新日志条目。 */
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    updatedAt: '2026-09-17',
+    summary: '親自採礦完成後會入庫，並自動開始下一輪。',
+    items: [
+      '採礦結算：親自採礦跑完後，產物會放入礦場，可展開「領取產物」取走。',
+      '持續採集：只要人還在礦場旁邊，就會自動開始下一輪；要停下來時按「停止親自工作」。',
+    ],
+  },
+  {
     updatedAt: '2026-09-16',
     summary: '宗門設施補上近身操作入口，採礦與生產更容易上手。',
     items: [
