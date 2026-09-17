@@ -8,7 +8,7 @@
  * 管理玩家寻路目标设置、路径规划、跨图导航和导航中断
  */
 import { Inject, Injectable, BadRequestException, Logger, NotFoundException, Optional } from '@nestjs/common';
-import { resolvePlayerFacingContentName } from '@mud/shared';
+import { resolvePlayerFacingContentName, type Portal } from '@mud/shared';
 import { isServerNextMovementDebugEnabled, logServerNextMovement } from '../../debug/movement-debug';
 import { MapTemplateRepository } from '../map/map-template.repository';
 import { PlayerRuntimeService } from '../player/player-runtime.service';
@@ -397,12 +397,13 @@ export class WorldRuntimeNavigationService {
             const playerMovementPathingOptions = resolvePlayerMovementPathingOptions(player, deps);
             const destination = this.resolveNavigationDestination(playerId, intent, deps, playerMovementPathingOptions);
             if (destination.mapId !== currentMapId) {
-                const route = this.findMapRoute(currentMapId, destination.mapId);
+                const portals = instance.listAllPortals();
+                const route = this.findMapRoute(currentMapId, destination.mapId, portals);
                 if (!route || route.length < 2) {
                     return [];
                 }
                 const nextMapId = route[1];
-                const portal = selectNearestPortal(instance.template.portals, nextMapId, player.x, player.y);
+                const portal = selectNearestPortal(portals, nextMapId, player.x, player.y);
                 if (!portal || (portal.x === player.x && portal.y === player.y)) {
                     return [];
                 }
@@ -674,12 +675,13 @@ export class WorldRuntimeNavigationService {
         const playerMovementPathingOptions = resolvePlayerMovementPathingOptions(player, deps);
         const destination = this.resolveNavigationDestination(playerId, intent, deps, playerMovementPathingOptions);
         if (destination.mapId !== currentMapId) {
-            const route = this.findMapRoute(currentMapId, destination.mapId);
+            const portals = instance.listAllPortals();
+            const route = this.findMapRoute(currentMapId, destination.mapId, portals);
             if (!route || route.length < 2) {
                 throw new BadRequestException(`無法規劃前往 ${this.resolveMapDisplayName(destination.mapId)} 的跨圖路線`);
             }
             const nextMapId = route[1];
-            const portal = selectNearestPortal(instance.template.portals, nextMapId, player.x, player.y);
+            const portal = selectNearestPortal(portals, nextMapId, player.x, player.y);
             if (!portal) {
                 throw new BadRequestException(`當前地圖沒有通往 ${this.resolveMapDisplayName(nextMapId)} 的界門`);
             }
@@ -868,7 +870,7 @@ export class WorldRuntimeNavigationService {
  * @returns 无返回值，完成地图路线的读取/组装。
  */
 
-    findMapRoute(fromMapId, toMapId) {
+    findMapRoute(fromMapId, toMapId, initialPortals?: readonly Portal[]) {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
         if (fromMapId === toMapId) {
@@ -878,8 +880,11 @@ export class WorldRuntimeNavigationService {
         const queue = [{ mapId: fromMapId, path: [fromMapId] }];
         for (let index = 0; index < queue.length; index += 1) {
             const current = queue[index];
-            const template = this.templateRepository.getOrThrow(current.mapId);
-            for (const portal of template.portals) {
+            // 宗門出口由當前實例派生；只用於首段，避免將私人出口混入全域地圖路網。
+            const portals = current.mapId === fromMapId && initialPortals
+                ? initialPortals
+                : this.templateRepository.getOrThrow(current.mapId).portals;
+            for (const portal of portals) {
                 if (visited.has(portal.targetMapId)) {
                     continue;
                 }
