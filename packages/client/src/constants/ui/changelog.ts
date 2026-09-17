@@ -13,6 +13,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-17',
+    summary: '領取產物會預填目前數量，並可一鍵全部領取。',
+    items: [
+      '介面：展開「領取產物」時，數量預設為礦場目前庫存，不必再從 0 調起。',
+      '介面：可按「全部領取」一次拿走全部產物與靈石。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-17',
     summary: '親自採集開始後會繼續挖，不再被誤判離開工位。',
     items: [
       '礦場修復：站在玄鐵礦場旁邊按「親自採集」後會持續開採，完成後產物進礦場，可展開「領取產物」。',

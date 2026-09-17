@@ -137,7 +137,10 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
     const enhanceForm=enhance.querySelector('[data-craft-kind="enhancement"]');enhanceForm.open=true;await frame();set(enhanceForm.querySelector('select'),'stored-sword');const en=enhanceForm.querySelectorAll('input[type=number]');set(en[0],7);set(en[1],5);set(en[2],500);click(enhanceForm,'加入排程');
     const alchemy=root.querySelector('[data-facility-kind="alchemy"]'),alchemyForm=alchemy.querySelector('[data-craft-kind="alchemy"]');alchemyForm.open=true;await frame();set(alchemyForm.querySelector('select'),'alchemy.spring');click(alchemyForm,'加入排程');
     const deposit=iron.querySelector('[data-transfer-mode=deposit]');deposit.open=true;await frame();set(deposit.querySelector('[aria-label="玄鐵礦塊數量"]'),2);set(deposit.querySelector('[aria-label="靈石數量"]'),40);click(deposit,'確認放入');
-    const withdraw=iron.querySelector('[data-transfer-mode=withdraw]');withdraw.open=true;await frame();set(withdraw.querySelector('[aria-label="玄鐵礦塊數量"]'),3);set(withdraw.querySelector('[aria-label="靈石數量"]'),5);click(withdraw,'確認領取');
+    const withdraw=iron.querySelector('[data-transfer-mode=withdraw]');withdraw.open=true;await frame();
+    const withdrawDefaults={iron:withdraw.querySelector('[aria-label="玄鐵礦塊數量"]').value,stone:withdraw.querySelector('[aria-label="靈石數量"]').value};
+    click(withdraw,'全部領取');
+    set(withdraw.querySelector('[aria-label="玄鐵礦塊數量"]'),3);set(withdraw.querySelector('[aria-label="靈石數量"]'),5);click(withdraw,'確認領取');
     click(root.querySelector('.spirit-beast-seed-shop'),'購買');click(field,'儲存計畫');click(field,'取消本輪種植');click(field,'親自澆水');
     const content=root.querySelector('.spirit-beast-content'), focusInput=deposit.querySelector('[aria-label="玄鐵礦塊數量"]');focusInput.dataset.proofNode='keep';focusInput.focus({preventScroll:true});content.scrollTop=Math.min(120,Math.max(0,content.scrollHeight-content.clientHeight));const beforeScroll=content.scrollTop;
     proof.model.spiritBeastStore.patchState({view:{...proof.model.spiritBeastStore.getState().view,facilities:proof.view.facilities.map((entry)=>entry.kind==='iron_mine'?{...entry,output:[{...entry.output[0],count:7}]}:entry)}});await frame();const afterInput=root.querySelector('[data-proof-node=keep]');const continuity={sameNode:afterInput===focusInput,focused:document.activeElement===focusInput,value:focusInput.value,scroll:content.scrollTop,beforeScroll};
@@ -146,7 +149,7 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
     await tab('growth');const growth=root.querySelector('#spirit-beast-growth-title').closest('section'), growthSelect=growth.querySelector('select');const excluded={five:![...growthSelect.options].some((o)=>o.value==='five-star-target'),outsider:![...growthSelect.options].some((o)=>o.value==='outsider')};set(growthSelect,'beast-target');await frame();[...growth.querySelectorAll('fieldset input[type=checkbox]')].slice(0,10).forEach((box)=>box.click());await frame();click(growth,'確認培養');
     await tab('fusion');const fusion=root.querySelector('#spirit-beast-fusion-title').closest('section'), selects=fusion.querySelectorAll('select');const fusionExcluded={wrongStar:![...selects[0].options].some((o)=>o.value==='fusion-wrong-star'),immortal:![...selects[0].options].some((o)=>o.value==='fusion-immortal')};set(selects[0],'fusion-left');await frame();set(selects[1],'fusion-right');await frame();click(fusion,'查看融合結果');await frame();const previewCommand=[...proof.commands].reverse().find((command)=>command.action==='preview_fusion');const preview=proof.shared.previewSpiritBeastFusion(proof.fusionLeft,proof.fusionRight,proof.shared.SPIRIT_BEAST_CATALOG);proof.model.spiritBeastStore.patchState({view:{...proof.model.spiritBeastStore.getState().view,fusionPreview:preview},fusionPreviewReceipt:{requestId:previewCommand.requestId,revision:proof.view.revision}});await frame();const previewReady=Boolean(fusion.querySelector('[data-fusion-preview-ready=true]')),previewStarText=fusion.querySelector('.spirit-beast-fusion-preview span')?.textContent||'';click(fusion,'確認融合');
     await tab('codex');const codexCount=root.querySelectorAll('[data-species-id]').length,bottomFinderAbsent=!root.querySelector('#spirit-beast-parent-title'),detailCard=root.querySelector('[data-species-id="spirit_beast.immortal.fire.01"]');detailCard.click();await frame();const detail=root.querySelector('[data-spirit-beast-codex-detail="spirit_beast.immortal.fire.01"]'),parentCount=detail?.querySelectorAll('.spirit-beast-parent-results li').length||0,detailText=detail?.textContent||'',detailName=detail?.querySelector('.spirit-beast-growth-preview strong')?.textContent||'';click(root,'返回靈獸圖鑑');await frame();const returnedFocus=document.activeElement?.dataset.speciesId==='spirit_beast.immortal.fire.01',keyboardCard=root.querySelector('[data-species-id="spirit_beast.immortal.fire.01"]');keyboardCard.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));await frame();const keyboardOpened=Boolean(root.querySelector('[data-spirit-beast-codex-detail="spirit_beast.immortal.fire.01"]'));click(root,'返回靈獸圖鑑');await frame();
-    return {commands:proof.commands,continuity,crossElementSpeed,excluded,fusionExcluded,previewReady,previewStarText,previewStar:preview?.star,codexCount,bottomFinderAbsent,parentCount,detailText,detailName,returnedFocus,keyboardOpened,tabs:[...root.querySelectorAll('[data-spirit-beast-tab]')].map((entry)=>entry.dataset.spiritBeastTab),errors:window.__spiritBeastProofErrors};
+    return {commands:proof.commands,withdrawDefaults,continuity,crossElementSpeed,excluded,fusionExcluded,previewReady,previewStarText,previewStar:preview?.star,codexCount,bottomFinderAbsent,parentCount,detailText,detailName,returnedFocus,keyboardOpened,tabs:[...root.querySelectorAll('[data-spirit-beast-tab]')].map((entry)=>entry.dataset.spiritBeastTab),errors:window.__spiritBeastProofErrors};
   })()`);
   const actions = new Set(interactionResult.commands.map((command) => command.action));
   for (const action of ['summon','recall','protect','incubate','cancel_incubation','adopt','enhance_egg','cultivate','preview_fusion','fuse','set_mine_enabled','set_crop_plan','cancel_crop','deposit','withdraw','queue_craft','cancel_order','manual_work','cancel_manual_work','buy_seed']) assert(actions.has(action), `未送出 ${action} payload`);
@@ -157,6 +160,8 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
   assert(interactionResult.commands.some((command) => command.action === 'queue_craft' && command.targetItemKey === 'stored-sword' && command.targetEnhancementLevel === 7 && command.maxAttempts === 5 && command.maxSpiritStones === 500), '強化目標／批量預算 payload 錯誤');
   assert(interactionResult.commands.some((command) => command.action === 'queue_craft' && command.recipeId === 'alchemy.spring'), '煉丹排程未由名稱選單送出 recipeId');
   assert(interactionResult.commands.some((command) => command.action === 'deposit' && command.entries[0]?.itemKey === 'inv-iron' && command.entries[0]?.count === 2 && command.spiritStones === 40), '放入材料與靈石 payload 錯誤');
+  assert.deepEqual(interactionResult.withdrawDefaults, { iron: '6', stone: '8' }, '領取產物未預設目前可用數量');
+  assert(interactionResult.commands.some((command) => command.action === 'withdraw' && command.entries[0]?.itemKey === 'iron-output' && command.entries[0]?.count === 6 && command.spiritStones === 8), '全部領取未送出目前庫存');
   assert(interactionResult.commands.some((command) => command.action === 'withdraw' && command.entries[0]?.itemKey === 'iron-output' && command.entries[0]?.count === 3 && command.spiritStones === 5), '領取產物與靈石 payload 錯誤');
   assert(interactionResult.commands.some((command) => command.action === 'enhance_egg' && command.materials.some((entry) => entry.itemKey === 'egg-stack-fire' && entry.count === 9) && command.materials.some((entry) => entry.itemKey === 'egg-uuid-fire' && entry.count === 1)), '靈蛋聚合堆疊／單顆 UUID 素材 payload 錯誤');
   assert.deepEqual(interactionResult.continuity, { sameNode: true, focused: true, value: '2', scroll: interactionResult.continuity.beforeScroll, beforeScroll: interactionResult.continuity.beforeScroll }, '快照 patch 未保留表單節點、焦點、值或捲動');
@@ -262,12 +267,13 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
     const root = await open('sect_iron_mine');
     const disclosure = root.querySelector('[data-transfer-mode=withdraw]'); disclosure.open = true;
     const input = disclosure.querySelector('input');
+    const defaultCount = input.value;
     Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, '2');
     input.dispatchEvent(new Event('input', { bubbles: true })); input.dispatchEvent(new Event('change', { bubbles: true })); await frame();
     input.focus({ preventScroll: true });
     proof.model.spiritBeastStore.patchState({ view: { ...view, revision: view.revision + 1 } }); await frame();
-    const continuity = { sameNode: disclosure.querySelector('input') === input, focused: document.activeElement === input, value: input.value, expanded: disclosure.open };
-    [...disclosure.querySelectorAll('button')].find((entry) => entry.textContent === '確認領取').click();
+    const continuity = { sameNode: disclosure.querySelector('input') === input, focused: document.activeElement === input, value: input.value, expanded: disclosure.open, defaultCount };
+    [...disclosure.querySelectorAll('button')].find((entry) => entry.textContent === '全部領取').click();
     window.__facilityProof = { open, detailModalHost, view, actionPanel };
     return { opened, commands, forwarded, continuity, instruction: root.textContent.includes('採礦專精'), errors: window.__spiritBeastProofErrors };
   })()`);
@@ -278,9 +284,9 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
     assert.equal(opened.nav, 0, '近身操作不應回到通用靈獸分頁');
   }
   for (const id of ['sect_iron_mine', 'build:second:iron']) assert(facilityResult.commands.some((command) => command.action === 'manual_work' && command.buildingId === id && command.workAction === 'mine'), '採礦指令未帶入所選礦場');
-  assert(facilityResult.commands.some((command) => command.action === 'withdraw' && command.buildingId === 'sect_iron_mine' && command.entries[0]?.count === 2), '領取指令未保留礦場或數量');
+  assert(facilityResult.commands.some((command) => command.action === 'withdraw' && command.buildingId === 'sect_iron_mine' && command.entries[0]?.count === 6 && command.spiritStones === 8), '近身操作全部領取未送出目前庫存');
   assert.deepEqual(facilityResult.forwarded, ['building:start:unfinished-one', 'building:start:unfinished-two'], '設施開窗不可送普通 Action，施工仍須送原指令');
-  assert.deepEqual(facilityResult.continuity, { sameNode: true, focused: true, value: '2', expanded: true }, '設施快照刷新破壞輸入或展開');
+  assert.deepEqual(facilityResult.continuity, { sameNode: true, focused: true, value: '2', expanded: true, defaultCount: '6' }, '設施快照刷新破壞輸入或展開');
   assert.equal(facilityResult.instruction, true, '礦場缺少開採說明');
   assert.deepEqual(facilityResult.errors, [], '設施入口出現瀏覽器錯誤');
   for (const mode of [

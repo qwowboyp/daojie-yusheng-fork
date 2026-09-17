@@ -34,31 +34,72 @@ function TransferEditor({ facility, inventory, busy, mode }: { facility: SpiritB
   const stoneLimit = mode === 'deposit'
     ? inventory.filter((item) => item.itemId === 'spirit_stone').reduce((sum, item) => sum + availableCount(item), 0)
     : Math.max(0, facility.outputSpiritStones ?? 0);
+  const itemMax = (item: SpiritBeastItemView) => mode === 'deposit' ? availableCount(item) : item.count;
   const [counts, setCounts] = useState<Record<string, number>>({});
-  const [spiritStones, setSpiritStones] = useState(0);
+  const [spiritStones, setSpiritStones] = useState<number | null>(null);
   useEffect(() => {
     const limits = new Map(source.map((item) => [item.itemKey, mode === 'deposit' ? availableCount(item) : item.count]));
-    setCounts((current) => Object.fromEntries(Object.entries(current).filter(([key, count]) => (limits.get(key) ?? 0) >= count && count > 0)));
-    setSpiritStones((current) => Math.min(current, stoneLimit));
+    setCounts((current) => {
+      const next: Record<string, number> = {};
+      for (const [key, max] of limits) {
+        const existing = current[key];
+        if (existing === undefined) continue;
+        next[key] = Math.max(0, Math.min(max, existing));
+      }
+      return next;
+    });
+    setSpiritStones((current) => current === null ? null : Math.min(current, stoneLimit));
   }, [mode, source, stoneLimit]);
-  const entries = source.flatMap((item) => counts[item.itemKey] ? [{ itemKey: item.itemKey, count: counts[item.itemKey] }] : []);
+  const resolvedCount = (item: SpiritBeastItemView) => counts[item.itemKey] ?? (mode === 'withdraw' ? itemMax(item) : 0);
+  const resolvedStones = spiritStones ?? (mode === 'withdraw' ? stoneLimit : 0);
+  const entries = source.flatMap((item) => {
+    const count = resolvedCount(item);
+    return count > 0 ? [{ itemKey: item.itemKey, count }] : [];
+  });
+  const allEntries = source.flatMap((item) => {
+    const count = itemMax(item);
+    return count > 0 ? [{ itemKey: item.itemKey, count }] : [];
+  });
   const canUse = mode === 'deposit' ? facility.canDeposit : facility.canWithdraw;
+  const submit = (nextEntries: Array<{ itemKey: string; count: number }>, nextStones: number) => {
+    sendSpiritBeastCommand({
+      action: mode,
+      buildingId: facility.buildingId,
+      entries: nextEntries,
+      ...(nextStones > 0 ? { spiritStones: nextStones } : {}),
+      expectedRevision: facility.revision,
+    });
+  };
   return (
     <details className="spirit-beast-disclosure" data-transfer-mode={mode}>
       <summary>{mode === 'deposit' ? '放入材料' : '領取產物'}</summary>
       <div className="spirit-beast-transfer-grid">
         {source.length ? source.map((item) => {
-          const max = mode === 'deposit' ? availableCount(item) : item.count;
-          return <label key={item.itemKey}><span>{item.name}<small>可用 {max}</small></span><input aria-label={`${item.name}數量`} type="number" min="0" max={max} value={counts[item.itemKey] ?? 0} onChange={(event) => setCounts((current) => ({ ...current, [item.itemKey]: Math.max(0, Math.min(max, Math.trunc(event.target.valueAsNumber || 0))) }))} /></label>;
+          const max = itemMax(item);
+          return <label key={item.itemKey}><span>{item.name}<small>可用 {max}</small></span><input aria-label={`${item.name}數量`} type="number" min="0" max={max} value={resolvedCount(item)} onChange={(event) => setCounts((current) => ({ ...current, [item.itemKey]: Math.max(0, Math.min(max, Math.trunc(event.target.valueAsNumber || 0))) }))} /></label>;
         }) : <p className="spirit-beast-muted">目前沒有可選物品。</p>}
-        {stoneLimit > 0 ? <label><span>靈石<small>可用 {stoneLimit}</small></span><input aria-label="靈石數量" type="number" min="0" max={stoneLimit} value={spiritStones} onChange={(event) => setSpiritStones(Math.max(0, Math.min(stoneLimit, Math.trunc(event.target.valueAsNumber || 0))))} /></label> : null}
+        {stoneLimit > 0 ? <label><span>靈石<small>可用 {stoneLimit}</small></span><input aria-label="靈石數量" type="number" min="0" max={stoneLimit} value={resolvedStones} onChange={(event) => setSpiritStones(Math.max(0, Math.min(stoneLimit, Math.trunc(event.target.valueAsNumber || 0))))} /></label> : null}
       </div>
-      <button
-        type="button"
-        className="small-btn"
-        disabled={busy || !canUse || (entries.length === 0 && spiritStones === 0)}
-        onClick={() => sendSpiritBeastCommand({ action: mode, buildingId: facility.buildingId, entries, ...(spiritStones > 0 ? { spiritStones } : {}), expectedRevision: facility.revision })}
-      >{mode === 'deposit' ? '確認放入' : '確認領取'}</button>
+      <div className="spirit-beast-actions">
+        {mode === 'withdraw' ? (
+          <button
+            type="button"
+            className="small-btn"
+            disabled={busy || !canUse || (allEntries.length === 0 && stoneLimit === 0)}
+            onClick={() => {
+              setCounts(Object.fromEntries(source.map((item) => [item.itemKey, itemMax(item)])));
+              setSpiritStones(stoneLimit);
+              submit(allEntries, stoneLimit);
+            }}
+          >全部領取</button>
+        ) : null}
+        <button
+          type="button"
+          className="small-btn"
+          disabled={busy || !canUse || (entries.length === 0 && resolvedStones === 0)}
+          onClick={() => submit(entries, resolvedStones)}
+        >{mode === 'deposit' ? '確認放入' : '確認領取'}</button>
+      </div>
     </details>
   );
 }
@@ -122,7 +163,7 @@ function FacilityCard({ view, facility, busy }: { view: SpiritBeastPanelView; fa
         <div><strong>{facility.name}</strong><span>{facility.enabled ? '運作中' : '已停止'}・{facility.orders.length} 筆排程</span></div>
       </header>
       <OrderList facility={facility} busy={busy} />
-      {isMine ? <p className="spirit-beast-note">按「親自採集」即可開採；自動採集需先召喚具備採礦專精的靈獸。完成後展開「領取產物」，選擇數量並確認領取。</p> : null}
+      {isMine ? <p className="spirit-beast-note">按「親自採集」即可開採；自動採集需先召喚具備採礦專精的靈獸。完成後展開「領取產物」，數量預設為目前庫存，也可按「全部領取」。</p> : null}
       <div className="spirit-beast-actions">
         {isMine ? <>
           <button type="button" className="small-btn ghost" disabled={busy || !facility.canOperate} onClick={() => sendSpiritBeastCommand({ action: 'set_mine_enabled', buildingId: facility.buildingId, enabled: !facility.enabled, expectedRevision: facility.revision })}>{facility.enabled ? '停止自動採集' : '開啟自動採集'}</button>
