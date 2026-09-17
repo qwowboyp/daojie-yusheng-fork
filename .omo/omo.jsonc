@@ -1,0 +1,30 @@
+// OMO 專案層設定（OpenCode harness）：啟用模型回退，並覆寫 project-release 代理的模型與技能。
+// [opencode] 區塊即 OpenCode 外掛設定本體；此處的鍵由 OhMyOpenCodeConfigSchema / AgentOverridesSchema 驗證。
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json",
+  "[opencode]": {
+    "model_fallback": true,
+    "agents": {
+      "project-release": {
+        "skills": [
+          "changelog",
+          "git-master",
+          "daojie-deploy"
+        ],
+        "models": [
+          {
+            "model": "commandcode/deepseek-v4.1-flash",
+            "reasoning": "high"
+          },
+          {
+            "model": "zai-coding-plan/glm-5.3-flash",
+            "reasoning": "max"
+          }
+        ]
+      }
+    }
+  },
+  "_migrations": [
+    "2026-08-reasoning-unification"
+  ]
+}
