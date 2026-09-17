@@ -2,6 +2,26 @@
 
 本流程供自建 LXC 的 `daojie-client` 使用。建置和測試在乾淨的本機 checkout 完成；生產機只接收需要更新的靜態檔案，不執行 pnpm、Vite、Chromium 或 apk。Postgres、Redis 與遊戲伺服器不參與前端發布。
 
+## 操作入口
+
+日常前端發布**只走** `scripts/client-release/deploy.ps1`。`.claude/skills/daojie-deploy/scripts/deploy.ps1 -Target client` 會在讀 `.env`、打包原始碼或 Docker 重建之前轉入同一入口。
+
+| Mode | 何時用 | 必要參數 |
+| --- | --- | --- |
+| `publish`（預設） | 線上已有 hot-static `current` 之後的日常發布 | 至少一個 `-Proof`、明確 trusted `-KnownHosts`。禁止 `-SkipVerify` |
+| `bootstrap` | **一次性**導入：線上尚無 bootstrapped `current` | 上述，外加完整 40 hex `-AdoptCommit` 與 `sha256:` `-ExpectedImage` |
+| `recovery-source-build` | **極少見**完整 client Docker 重建 | 必須明示此 Mode；不會從 publish/bootstrap 自動退回 |
+
+沒有自動 fallback。缺 Proof、KnownHosts、bootstrap 身分，或線上尚未導入熱靜態狀態時直接失敗，並印出 bootstrap 範例。`-DryRun` 不讀憑證、不 SSH/SFTP、不建置、不建立輸出目錄、不打包原始碼、不碰 Docker 或容器，只印機器可核對的非機密計畫。產物固定在專案 `.runtime/releases/`。`-Ref` 必須等於乾淨 checkout 的 HEAD。
+
+```powershell
+pwsh -NoProfile -File scripts/client-release/deploy.ps1 -Proof release-contracts -KnownHosts KNOWN_HOSTS -DryRun
+pwsh -NoProfile -File scripts/client-release/deploy.ps1 -Proof release-contracts -KnownHosts KNOWN_HOSTS
+pwsh -NoProfile -File scripts/client-release/deploy.ps1 -Mode bootstrap -Proof release-contracts -KnownHosts KNOWN_HOSTS -AdoptCommit <40-hex> -ExpectedImage sha256:<64-hex>
+```
+
+下列逐步 `node` / `python` 命令是 wrapper 內部呼叫的同一條管線，除錯外不要繞過 wrapper。
+
 ## 範圍
 
 | 變更 | 分類 | 處理 |
