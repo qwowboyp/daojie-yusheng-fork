@@ -13,6 +13,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-17',
+    summary: '卡住的礦場舊工單會自動清掉，親自採集可以再開始。',
+    items: [
+      '礦場修復：先前卡住的親自採礦不會再擋住新的開採；請重新整理後再按「親自採集」。',
+      '失敗提示：若礦場仍被其他工作佔用，會改為明確說明，不再只顯示無法完成。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-17',
     summary: '親自採礦完成後會入庫，並自動開始下一輪。',
     items: [
       '採礦結算：親自採礦跑完後，產物會放入礦場，可展開「領取產物」取走。',

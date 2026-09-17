@@ -75,6 +75,10 @@ export function formatSpiritBeastReason(reasonKey?: string): string {
     spirit_work_action_invalid: '這座設備不支援目前的工作。',
     'spirit_beast.order_unavailable': '這筆工作已結束或無法再操作。',
     'spirit_beast.worker_busy': '目前已有親自進行的工作，請先完成或停止它。',
+    spirit_work_order_reservation_conflict: '礦場目前有未完成的舊工作卡住，請再按一次親自採集。',
+    spirit_work_order_not_found: '找不到這筆工作，請重新整理後再試。',
+    spirit_facility_not_available: '這座設施目前無法操作。',
+    spirit_manual_work_start_failed: '無法開始親自工作，請靠近設施後再試。',
   };
   return known[normalized] ?? '目前無法完成此操作，請重新整理後再試。';
 }

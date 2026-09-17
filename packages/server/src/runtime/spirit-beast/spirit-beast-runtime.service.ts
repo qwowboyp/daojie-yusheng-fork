@@ -160,28 +160,15 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
     this.hatches.clear(); this.activeBeasts.clear(); this.activeBeastIdsByInstance.clear(); this.workOrders.clear(); this.crops.clear();
     for (const entry of recovered.hatches) this.hatches.set(entry.hatchId, entry);
     for (const entry of recovered.beasts) this.trackActiveBeast(entry);
-    for (const entry of recovered.workOrders) {
-      // 進程失去時撤銷未完成 reservation；玩家人工工單也不重開舊 job，避免剩餘時間與產物脫節。
-      if (entry.status === 'reserved' || (entry.status === 'running' && entry.workerKind === 'player')) {
-        if (entry.status === 'running' && entry.remainingTicks === 0) {
-          this.completedOrderIds.add(entry.orderId);
-        } else {
-          entry.status = 'waiting'; entry.workerKind = null; entry.workerId = null; entry.jobRunId = null; entry.revision += 1;
-          this.dirtyOrders.add(entry.orderId);
-        }
-      }
-      this.workOrders.set(entry.orderId, entry);
-    }
+    for (const entry of recovered.workOrders) this.workOrders.set(entry.orderId, entry);
+    await this.reclaimOrphanedPlayerWorkOrders();
     for (const entry of recovered.crops) this.crops.set(entry.cropId, entry);
     for (const entry of recovered.workOrders) {
-      if (entry.status !== 'running' || entry.workerKind !== 'spirit_beast' || !entry.workerId) continue;
-      this.startWorkerLifecycle(entry.workerId, entry, false);
+      const current = this.workOrders.get(entry.orderId);
+      if (current?.status !== 'running' || current.workerKind !== 'spirit_beast' || !current.workerId) continue;
+      this.startWorkerLifecycle(current.workerId, current, false);
     }
     for (const crop of recovered.crops.filter((entry) => entry.status === 'planned')) await this.ensureCropSowOrder(crop);
-    for (const orderId of this.completedOrderIds) {
-      const order = this.workOrders.get(orderId);
-      if (order) void this.settleCompletedOrder(order);
-    }
     this.kickScheduler();
   }
 
@@ -419,9 +406,11 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
           const player = this.playerRuntimeService.getPlayer(ownerPlayerId);
           if (!player) throw new Error('SPIRIT_PLAYER_NOT_ONLINE');
           if (this.craftPanelRuntimeService.hasAnyActiveTechniqueActivity(player)) throw new Error('SPIRIT_PLAYER_WORKER_BUSY');
+          await this.reclaimOrphanedPlayerWorkOrders(ownerPlayerId, command.buildingId);
           let order = Array.from(this.workOrders.values()).filter((entry) => entry.ownerPlayerId === ownerPlayerId
             && entry.buildingId === command.buildingId && entry.skill === skill && ['queued', 'waiting'].includes(entry.status))
             .sort((a, b) => b.priority - a.priority || a.createdAtMs - b.createdAtMs)[0];
+          let createdOrderId: string | null = null;
           if (!order && skill === 'mining') {
             const orderId = randomUUID();
             const action = facility.definition.kind === 'iron_mine' ? 'mine_iron' : 'mine_spirit_stone';
@@ -429,25 +418,35 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
               sectId: context.sectId, instanceId: context.sectInstanceId, buildingId: command.buildingId,
               skill, action, payload: { x: facility.building.x, y: facility.building.y, manualPlayerId: ownerPlayerId, manualRepeat: true },
               priority: 100, totalTicks: action === 'mine_iron' ? SPIRIT_BEAST_RULES.ironMineWorkTicks : SPIRIT_BEAST_RULES.spiritStoneMineWorkTicks });
-            order = created.result; this.workOrders.set(order.orderId, order);
+            order = created.result; createdOrderId = order.orderId; this.workOrders.set(order.orderId, order);
           }
           if (!order) throw new Error('SPIRIT_WORK_ORDER_NOT_FOUND');
-          const reserved = await this.persistence.reservePlayerWorkOrder({ orderId: order.orderId, ownerPlayerId, expectedRevision: order.revision });
-          if (!reserved) throw new Error('SPIRIT_WORK_ORDER_RESERVATION_CONFLICT');
-          const skillLevel = Math.max(1, Math.trunc(Number(player[`${skill}Skill`]?.level) || 1));
-          const speed = 1 + skillLevel / 100;
-          reserved.totalTicks = Math.max(1, Math.ceil(reserved.totalTicks / speed));
-          reserved.remainingTicks = Math.max(1, Math.ceil(reserved.remainingTicks / speed));
-          reserved.revision += 1;
-          this.dirtyOrders.add(reserved.orderId);
-          this.workOrders.set(order.orderId, reserved);
-          const deps = { plantingWorkPort: this, facilityWorkPort: this };
-          const payload = skill === 'planting' ? { orderId: order.orderId } : { facilityOrderId: order.orderId };
-          const started = this.craftPanelRuntimeService.startTechniqueActivity(player, skill, payload, deps);
-          if (!started?.ok || !('started' in started) || started.started !== true) {
-            const released = await this.persistence.releasePlayerWorkOrder({ ownerPlayerId, orderId: order.orderId });
-            if (released) this.workOrders.set(order.orderId, released);
-            throw new Error(normalizeId(started?.error) || 'SPIRIT_MANUAL_WORK_START_FAILED');
+          try {
+            const reserved = await this.persistence.reservePlayerWorkOrder({ orderId: order.orderId, ownerPlayerId, expectedRevision: order.revision });
+            if (!reserved) throw new Error('SPIRIT_WORK_ORDER_RESERVATION_CONFLICT');
+            const skillLevel = Math.max(1, Math.trunc(Number(player[`${skill}Skill`]?.level) || 1));
+            const speed = 1 + skillLevel / 100;
+            reserved.totalTicks = Math.max(1, Math.ceil(reserved.totalTicks / speed));
+            reserved.remainingTicks = Math.max(1, Math.ceil(reserved.remainingTicks / speed));
+            reserved.revision += 1;
+            this.dirtyOrders.add(reserved.orderId);
+            this.workOrders.set(order.orderId, reserved);
+            const deps = { plantingWorkPort: this, facilityWorkPort: this };
+            const payload = skill === 'planting' ? { orderId: order.orderId } : { facilityOrderId: order.orderId };
+            const started = this.craftPanelRuntimeService.startTechniqueActivity(player, skill, payload, deps);
+            if (!started?.ok || !('started' in started) || started.started !== true) {
+              const released = await this.persistence.releasePlayerWorkOrder({ ownerPlayerId, orderId: order.orderId });
+              if (released) this.workOrders.set(order.orderId, released);
+              throw new Error(normalizeId(started?.error) || 'SPIRIT_MANUAL_WORK_START_FAILED');
+            }
+          } catch (error) {
+            if (createdOrderId) {
+              this.workOrders.delete(createdOrderId);
+              await this.persistence.cancelWorkOrder({
+                operationId: `${requestId}:cleanup`, ownerPlayerId, orderId: createdOrderId,
+              }).catch(() => undefined);
+            }
+            throw error;
           }
           this.bumpPanelRevision(); break;
         }
@@ -872,6 +871,53 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
       this.kickScheduler();
     } catch (error) {
       this.logger.warn(`靈獸工單結算將重試：${order.orderId} ${normalizeReason(error)}`);
+    }
+  }
+
+  private resolveLivePlayerWorkOrderId(playerId: string): string | null {
+    const player = this.playerRuntimeService.getPlayer(playerId) as {
+      miningJob?: { facilityOrderId?: string } | null;
+      forgingJob?: { facilityOrderId?: string } | null;
+      alchemyJob?: { facilityOrderId?: string } | null;
+      enhancementJob?: { facilityOrderId?: string } | null;
+      plantingJob?: { orderId?: string } | null;
+    } | null;
+    if (!player) return null;
+    for (const job of [player.miningJob, player.forgingJob, player.alchemyJob, player.enhancementJob]) {
+      const id = typeof job?.facilityOrderId === 'string' ? job.facilityOrderId.trim() : '';
+      if (id) return id;
+    }
+    const planting = typeof player.plantingJob?.orderId === 'string' ? player.plantingJob.orderId.trim() : '';
+    return planting || null;
+  }
+
+  /** 回收進程遺失後仍佔工位唯一鍵的玩家工單，並立刻刷盤，避免親自採集被舊 running 擋住。 */
+  private async reclaimOrphanedPlayerWorkOrders(ownerPlayerId?: string, buildingId?: string): Promise<void> {
+    for (const entry of this.workOrders.values()) {
+      if (entry.status !== 'reserved' && entry.status !== 'running') continue;
+      if (entry.workerKind !== 'player') continue;
+      if (ownerPlayerId || buildingId) {
+        const sameOwner = Boolean(ownerPlayerId) && entry.ownerPlayerId === ownerPlayerId;
+        const sameBuilding = Boolean(buildingId) && entry.buildingId === buildingId;
+        if (!sameOwner && !sameBuilding) continue;
+      }
+      const liveOrderId = entry.workerId ? this.resolveLivePlayerWorkOrderId(entry.workerId) : null;
+      if (liveOrderId === entry.orderId) continue;
+      if (entry.status === 'running' && entry.remainingTicks === 0) {
+        this.completedOrderIds.add(entry.orderId);
+        continue;
+      }
+      entry.status = 'waiting';
+      entry.workerKind = null;
+      entry.workerId = null;
+      entry.jobRunId = null;
+      entry.revision += 1;
+      this.dirtyOrders.add(entry.orderId);
+    }
+    await this.flushDirtyProgress();
+    for (const orderId of [...this.completedOrderIds]) {
+      const order = this.workOrders.get(orderId);
+      if (order) await this.settleCompletedOrder(order);
     }
   }
 
@@ -1419,6 +1465,9 @@ function normalizeItemType(value: unknown): 'consumable' | 'equipment' | 'artifa
 function normalizeReason(error: unknown): string {
   const raw = error instanceof Error ? error.message : String(error);
   if (raw === 'SPIRIT_PLAYER_WORKER_BUSY') return 'spirit_beast.worker_busy';
+  if (raw.includes('idx_spirit_beast_station_exclusive') || raw.includes('idx_spirit_beast_worker_active')) {
+    return 'spirit_work_order_reservation_conflict';
+  }
   return raw.toLowerCase().replace(/[^a-z0-9_]+/g, '_') || 'spirit_beast_command_failed';
 }
 function resolveElementName(element: SpiritBeastElement): string {

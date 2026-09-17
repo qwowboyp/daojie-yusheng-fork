@@ -210,10 +210,25 @@ function createRuntimeHarness(player: SmokePlayer, orders: SpiritWorkOrderRow[],
       const current = runtime.workOrders.get(input.orderId);
       if (!current || current.ownerPlayerId !== input.ownerPlayerId || current.revision !== input.expectedRevision
         || !['queued', 'waiting'].includes(current.status)) return null;
+      const occupied = [...runtime.workOrders.values()].some((entry) =>
+        entry.orderId !== input.orderId
+        && (entry.status === 'running' || entry.status === 'reserved')
+        && entry.buildingId === current.buildingId
+        && entry.skill !== 'building');
+      if (occupied) {
+        throw new Error('duplicate key value violates unique constraint "idx_spirit_beast_station_exclusive"');
+      }
       const reserved = { ...current, status: 'running' as const, workerKind: 'player' as const,
         workerId: input.ownerPlayerId, jobRunId: input.orderId, revision: current.revision + 1 };
       runtime.workOrders.set(input.orderId, reserved);
       return reserved;
+    },
+    async cancelWorkOrder(input: { orderId: string }): Promise<{ result: SpiritWorkOrderRow | null }> {
+      const current = runtime.workOrders.get(input.orderId);
+      if (!current) return { result: null };
+      const cancelled = { ...current, status: 'cancelled' as const, workerKind: null, workerId: null, jobRunId: null, revision: current.revision + 1 };
+      runtime.workOrders.set(input.orderId, cancelled);
+      return { result: cancelled };
     },
   };
   return runtime;
@@ -482,6 +497,8 @@ async function testManualWorkRejectsSecondActiveStation(): Promise<void> {
   let reserveCalls = 0;
   runtime.persistence = {
     isEnabled(): boolean { return true; },
+    async flushProgress(): Promise<void> {},
+    async cancelWorkOrder(): Promise<{ result: null }> { return { result: null }; },
     async reservePlayerWorkOrder(input: { orderId: string; ownerPlayerId: string; expectedRevision: number }): Promise<SpiritWorkOrderRow | null> {
       reserveCalls += 1;
       const current = runtime.workOrders.get(input.orderId);
@@ -520,6 +537,35 @@ async function testManualWorkRejectsSecondActiveStation(): Promise<void> {
   assert.equal(player.forgingJob ?? null, null);
 }
 
+async function testManualWorkReclaimsOrphanedStationOrder(): Promise<void> {
+  const probe = createProbe();
+  const player = createPlayer();
+  const orphan = createOrder('order:mining:orphan', 'mining', 'building:iron-mine', {
+    totalTicks: 120,
+    remainingTicks: 120,
+    payload: { x: 5, y: 5, manualPlayerId: player.playerId },
+  });
+  const runtime = createRuntimeHarness(player, [orphan], probe);
+  const pipeline = createPipeline();
+  attachCraftPanel(runtime, pipeline);
+  const context = {
+    sectId: 'sect:facility-pipeline-smoke',
+    sectInstanceId: 'instance:sect-smoke',
+    canManage: true,
+    buildings: [
+      { id: 'building:iron-mine', defId: 'sect_iron_mine', x: 5, y: 5, state: 'active', revision: 1 },
+    ],
+  };
+  const result = await runtime.executeCommand(player.playerId, {
+    action: 'manual_work', requestId: 'request:manual:orphan', buildingId: orphan.buildingId, workAction: 'mine', expectedRevision: 1,
+  }, context);
+  assert.equal(result.ok, true, result.reasonKey ?? 'orphan reclaim should start mining');
+  assert.ok(player.miningJob);
+  assert.equal(player.miningJob?.facilityOrderId, orphan.orderId);
+  assert.equal(runtime.workOrders.get(orphan.orderId)?.status, 'running');
+  assert.equal(runtime.workOrders.get(orphan.orderId)?.workerKind, 'player');
+}
+
 async function main(): Promise<void> {
   await testMiningLifecycle();
   await testInvalidFacilityReleasesReservation();
@@ -527,6 +573,7 @@ async function main(): Promise<void> {
   await testCompletionDelegatesExternalAssetsToAuthority();
   await testManualWorkRejectsSecondActiveStation();
   await testMiningCompletionSettlesAndContinues();
+  await testManualWorkReclaimsOrphanedStationOrder();
   console.log(JSON.stringify({
     ok: true,
     answers: [
@@ -537,6 +584,7 @@ async function main(): Promise<void> {
       '製作輸出、材料扣除與強化成功率均由服務端 persistence 完成，strategy 不自行複製公式或改裝備。',
       '玩家已有工位 job 時，第二個人工工位在 DB reservation 前即以正式 busy key 拒絕。',
       '親自採礦完成後立即結算產物，並在玩家仍在工位時自動續採。',
+      '礦場殘留玩家 running 工單會在親自採集前回收並立刻刷盤，不再被工位唯一鍵擋住。',
     ],
   }, null, 2));
 }
