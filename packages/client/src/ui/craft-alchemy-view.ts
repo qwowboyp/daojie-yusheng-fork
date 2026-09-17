@@ -37,6 +37,7 @@ import type { ItemIconSize } from '../content/item-art';
 import { getTechniqueGradeLabel } from '../domain-labels';
 import { confirmModalHost } from './confirm-modal-host';
 import { t } from './i18n';
+import { openCatalogItemDetail } from './catalog-item-detail';
 import { bindInlineItemTooltips, renderInlineItemChip } from './item-inline-tooltip';
 import {
   getCraftRealmTab,
@@ -602,7 +603,12 @@ export class CraftAlchemyView {
         return;
       }
       const action = target.dataset.craftAction ?? '';
-      if (action !== 'alchemy-increase-aux' && action !== 'alchemy-decrease-aux' && action !== 'alchemy-remove-aux') {
+      if (
+        action !== 'alchemy-open-material-detail'
+        && action !== 'alchemy-increase-aux'
+        && action !== 'alchemy-decrease-aux'
+        && action !== 'alchemy-remove-aux'
+      ) {
         return;
       }
       const itemId = (target.dataset.itemId ?? '').trim();
@@ -611,6 +617,10 @@ export class CraftAlchemyView {
       }
       event.preventDefault();
       event.stopPropagation();
+      if (action === 'alchemy-open-material-detail') {
+        openCatalogItemDetail({ itemId, opener: target });
+        return;
+      }
       if (action === 'alchemy-remove-aux') {
         this.handleAlchemyRemoveAux(itemId);
         return;
@@ -884,6 +894,10 @@ export class CraftAlchemyView {
     return renderInlineItemChip(itemId, { label: displayLabel, tone, count, iconSize });
   }
 
+  private renderOpenableAlchemyMaterial(itemId: string, name: string): string {
+    return `<button type="button" class="alchemy-material-open" data-craft-action="alchemy-open-material-detail" data-item-id="${escapeHtml(itemId)}">${this.renderAlchemyItemReference(itemId, name, 'material')}</button>`;
+  }
+
 
   // --- Main body render ---
 
@@ -1023,7 +1037,7 @@ export class CraftAlchemyView {
     const insufficient = options.requiredCount > options.currentCount;
     return `
       <div class="alchemy-material-row" data-alchemy-ingredient-item-id="${escapeHtml(options.itemId)}">
-        <div class="alchemy-material-name">${this.renderAlchemyItemReference(options.itemId, options.name, 'material')}</div>
+        <div class="alchemy-material-name">${this.renderOpenableAlchemyMaterial(options.itemId, options.name)}</div>
         <div><span class="alchemy-ingredient-role ${options.role}">${roleLabel}</span></div>
         <div class="alchemy-material-count ${insufficient ? 'insufficient' : ''}">${formatDisplayInteger(options.requiredCount)} / ${formatDisplayInteger(options.currentCount)}</div>
         <div class="alchemy-material-elements">${escapeHtml(this.renderAlchemyElementInline(options.elements))}</div>
@@ -1179,7 +1193,7 @@ export class CraftAlchemyView {
               <div class="alchemy-ingredient-row" data-alchemy-ingredient-item-id="${escapeHtml(ingredient.itemId)}">
                 <div class="alchemy-ingredient-main">
                   <span class="alchemy-ingredient-role ${ingredient.role === 'main' ? 'main' : 'aux'}">${ingredient.role === 'main' ? mainRoleLabel : auxRoleLabel}</span>
-                  <span class="alchemy-ingredient-name">${this.renderAlchemyItemReference(ingredient.itemId, ingredient.name, 'material')}</span>
+                  <span class="alchemy-ingredient-name">${this.renderOpenableAlchemyMaterial(ingredient.itemId, ingredient.name)}</span>
                   <span class="alchemy-ingredient-owned" data-alchemy-owned="true">持有 ${formatDisplayInteger(this.getAlchemyInventoryCount(ingredient.itemId))}</span>
                 </div>
                 <div class="alchemy-ingredient-editor">
