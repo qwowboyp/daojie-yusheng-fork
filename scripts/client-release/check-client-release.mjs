@@ -37,6 +37,9 @@ function testConservativeClassification() {
   assert.deepEqual(classifyChangedPaths(['packages/client/public/main.js']).classification, 'client');
   assert.deepEqual(classifyChangedPaths(['packages/client/src/main.ts']).classification, 'client');
   assert.deepEqual(classifyChangedPaths(['scripts/client-release/prepare.mjs']).classification, 'client');
+  assert.deepEqual(classifyChangedPaths(['.claude/skills/daojie-deploy/scripts/deploy.ps1']).classification, 'client');
+  assert.deepEqual(classifyChangedPaths(['.claude/skills/daojie-deploy/SKILL.md']).classification, 'assets');
+  assert.deepEqual(classifyChangedPaths(['.claude/skills/daojie-deploy/scripts/other.ps1']).classification, 'full');
   assert.deepEqual(classifyChangedPaths(['.runtime/releases/deploy-optimization/scripts/client-release/prepare.mjs']).classification, 'full');
   const full = classifyChangedPaths(['packages/server/data/content/items.json']);
   assert.equal(full.classification, 'full');

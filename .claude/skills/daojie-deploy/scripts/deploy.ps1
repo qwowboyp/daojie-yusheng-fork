@@ -10,10 +10,39 @@ param(
   [switch]$DryRun,
   [switch]$SkipVerify,
   # repo root = four levels up from this script (<repo>/.claude/skills/daojie-deploy/scripts/)
-  [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..\..\')).Path
+  [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..\..\')).Path,
+  [string]$Mode,
+  [string[]]$Proof,
+  [string]$KnownHosts,
+  [string]$AdoptCommit,
+  [string]$ExpectedImage,
+  [string]$Output,
+  [string]$EnvFile,
+  [switch]$AllowClientSourceBuildRecovery
 )
 
 $ErrorActionPreference = 'Stop'
+
+# Client hot-static: route to canonical wrapper before env/archive. No automatic source-build fallback.
+if ($Target -eq 'client' -and -not $AllowClientSourceBuildRecovery) {
+  $canonical = Join-Path $RepoRoot 'scripts\client-release\deploy.ps1'
+  $forward = @{
+    Ref = $Ref
+    RepoRoot = $RepoRoot
+  }
+  if ($Mode) { $forward['Mode'] = $Mode }
+  $proofs = @($Proof | Where-Object { $_ })
+  if ($proofs.Count -gt 0) { $forward['Proof'] = $proofs }
+  if ($KnownHosts) { $forward['KnownHosts'] = $KnownHosts }
+  if ($AdoptCommit) { $forward['AdoptCommit'] = $AdoptCommit }
+  if ($ExpectedImage) { $forward['ExpectedImage'] = $ExpectedImage }
+  if ($Output) { $forward['Output'] = $Output }
+  if ($EnvFile) { $forward['EnvFile'] = $EnvFile }
+  if ($DryRun) { $forward['DryRun'] = $true }
+  if ($SkipVerify) { $forward['SkipVerify'] = $true }
+  & $canonical @forward
+  exit $LASTEXITCODE
+}
 
 # -- environment constants ---------------------------------------------
 $HostKey = 'ssh-ed25519 255 BIrLOS6gElJJ08pEYO4nvIBvRInllRlUYtOlKoLlkVw'

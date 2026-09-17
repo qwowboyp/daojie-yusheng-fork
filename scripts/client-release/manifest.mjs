@@ -31,9 +31,11 @@ export const REQUIRED_SOURCE_VERIFICATION_COMMANDS = Object.freeze([
 
 const DOCUMENT_PREFIX = 'docs/';
 const ROOT_RELEASE_DOCUMENTS = new Set(['AGENTS.md']);
+const CLIENT_HOT_DEPLOY_DOCUMENT = '.claude/skills/daojie-deploy/SKILL.md';
 const CLIENT_PREFIX = 'packages/client/';
 const CLIENT_ASSET_PREFIX = 'packages/client/public/';
 const CLIENT_RELEASE_SCRIPT_PREFIX = 'scripts/client-release/';
+const CLIENT_HOT_DEPLOY_SCRIPT = '.claude/skills/daojie-deploy/scripts/deploy.ps1';
 const FULL_RELEASE_PREFIXES = ['packages/server/', 'packages/shared/'];
 const ROOT_FULL_RELEASE_FILES = new Set([
   'package.json',
@@ -77,7 +79,7 @@ export function classifyChangedPaths(paths) {
   const unsupported = materialPaths.filter((file) =>
     FULL_RELEASE_PREFIXES.some((prefix) => file.startsWith(prefix))
     || ROOT_FULL_RELEASE_FILES.has(file)
-    || (!file.startsWith(CLIENT_PREFIX) && !file.startsWith(CLIENT_RELEASE_SCRIPT_PREFIX)));
+    || (!file.startsWith(CLIENT_PREFIX) && !isClientReleaseToolingPath(file)));
 
   if (unsupported.length > 0) {
     return { classification: 'full', eligible: false, paths: normalized, blockedPaths: unsupported };
@@ -89,7 +91,11 @@ export function classifyChangedPaths(paths) {
 }
 
 function isReleaseDocumentationPath(file) {
-  return file.startsWith(DOCUMENT_PREFIX) || ROOT_RELEASE_DOCUMENTS.has(file);
+  return file.startsWith(DOCUMENT_PREFIX) || ROOT_RELEASE_DOCUMENTS.has(file) || file === CLIENT_HOT_DEPLOY_DOCUMENT;
+}
+
+function isClientReleaseToolingPath(file) {
+  return file.startsWith(CLIENT_RELEASE_SCRIPT_PREFIX) || file === CLIENT_HOT_DEPLOY_SCRIPT;
 }
 
 function isStaticClientAssetPath(file) {
