@@ -13,6 +13,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-17',
+    summary: '煉器與煉丹材料可點開詳情，並從取得途徑前往目標。',
+    items: [
+      '介面：煉器、煉丹材料名稱可點開詳情，查看類型、說明與取得途徑。',
+      '導航：取得途徑後方新增「前往目標」，可走到對應地點或任務。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-17',
     summary: '領取產物會預填目前數量，並可一鍵全部領取。',
     items: [
       '介面：展開「領取產物」時，數量預設為礦場目前庫存，不必再從 0 調起。',
