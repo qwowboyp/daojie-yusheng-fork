@@ -5,7 +5,6 @@ import fs from 'node:fs';
 import {
   BACKUP_IDENTITY,
   COVERAGE_GAP_NOTE,
-  EXPECTED_EMIT_MANIFEST_SHA256,
   TARGET_BUILDING_IDS,
   TARGET_INSTANCE_ID,
   TARGET_OWNER_SECT_ID,
@@ -31,27 +30,20 @@ export const CELL_INSERT_COLUMNS = [
 
 export type EmitSqlAuthResult =
   | { readonly ok: true }
-  | { readonly ok: false; readonly code: 'emit_authorization_mismatch' | 'emit_manifest_mismatch'; readonly message: string };
+  | { readonly ok: false; readonly code: 'emit_authorization_mismatch'; readonly message: string };
 
 export function authorizeEmitSql(input: {
   readonly authorization: string;
   readonly manifestSha256: string;
 }): EmitSqlAuthResult {
-  if (input.authorization !== EXPECTED_EMIT_MANIFEST_SHA256) {
-    return {
-      ok: false,
-      code: 'emit_authorization_mismatch',
-      message: 'emit authorization token must equal the pinned real-receipt manifest hash',
-    };
+  if (input.authorization !== '' && input.authorization === input.manifestSha256) {
+    return { ok: true };
   }
-  if (input.manifestSha256 !== EXPECTED_EMIT_MANIFEST_SHA256) {
-    return {
-      ok: false,
-      code: 'emit_manifest_mismatch',
-      message: 'plan manifestSha256 is not the pinned real-receipt hash; refuse SQL emission',
-    };
-  }
-  return { ok: true };
+  return {
+    ok: false,
+    code: 'emit_authorization_mismatch',
+    message: 'emit authorization token must equal this plan manifestSha256; dry-run first then copy the printed hash',
+  };
 }
 
 function idListSql(): string {

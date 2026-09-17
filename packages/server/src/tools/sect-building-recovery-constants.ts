@@ -33,8 +33,6 @@ export const BACKUP_IDENTITY = '20260917-110032-hourly-f42e62c0';
 export const BACKUP_SHA256 = '4b5435c12b5ded30e0ba3254c30606ef0d7ff4df98abd9ff05fd8856cc5d857d';
 export const SOURCE_SQL_SHA256 = '239641d2f81730e80f0ca9cfe3c5fd061e4a88af695efb692ddacdd0f071f140';
 export const TARGET_TILE_INDEXES = [151, 150, 149, 165, 164, 110, 109, 96] as const;
-export const EXPECTED_EMIT_MANIFEST_SHA256 =
-  'b20d429238324adf8f285024ecc29f0058325570fe67c9344a5e203a09624b31';
 export const COVERAGE_GAP_TOKEN = 'cannot_capture_1100_to_1148_utc';
 export const COVERAGE_GAP_NOTE =
   'Backup is from 11:00 UTC and cannot capture changes from 11:00-11:48.';

@@ -9,9 +9,10 @@ import {
   BACKUP_IDENTITY,
   BACKUP_SHA256,
   COVERAGE_GAP_TOKEN,
-  EXPECTED_EMIT_MANIFEST_SHA256,
+  SOURCE_SQL_SHA256,
   TARGET_BUILDING_IDS,
 } from './sect-building-recovery-constants';
+import { bindCurrentState, type BoundCurrentState } from './sect-building-recovery-current-state';
 import { emitSectBuildingRecoverySql } from './sect-building-recovery-emit-sql';
 import { runSectBuildingRecoveryCli } from './sect-building-recovery-manifest';
 import { buildSectBuildingRecoveryPlan } from './sect-building-recovery-plan';
@@ -68,7 +69,7 @@ function proveEmitSqlRejectsWrongAuthorization(): void {
       '--emit-authorization', '0'.repeat(64),
     ]);
     assert.equal(captured.exitCode, 2);
-    assert.match(captured.stderr, /emit_authorization_mismatch|emit_manifest_mismatch/);
+    assert.match(captured.stderr, /emit_authorization_mismatch/);
     assert.equal(fs.existsSync(sqlOut), false);
   });
 }
@@ -134,19 +135,66 @@ function proveEmittedSqlShapeFromFixturePlan(): void {
   }
 }
 
-function proveEmitSqlRejectsUnpinnedManifest(): void {
+function planForCurrent(current: BoundCurrentState) {
+  const planned = buildSectBuildingRecoveryPlan({
+    sqlText: fs.readFileSync(extractionPath(), 'utf8'),
+    sourceSqlSha256: SOURCE_SQL_SHA256,
+    dumpIdentity: BACKUP_IDENTITY,
+    dumpSha256: BACKUP_SHA256,
+    current,
+  });
+  if (planned.ok === false) {
+    throw new Error(planned.error.message);
+  }
+  return planned.plan;
+}
+
+function sqlWithoutReceiptComments(sql: string): string {
+  return sql
+    .split('\n')
+    .filter((line) => !line.startsWith('-- currentStateFileSha256=') && !line.startsWith('-- manifestSha256='))
+    .join('\n');
+}
+
+function proveTwoReceiptsAuthorizeOnlyWithOwnManifest(): void {
+  const earlier = bindCurrentState({ queriedAt: '2026-09-17T14:21:27.999Z' });
+  const later = bindCurrentState({ queriedAt: '2026-09-17T14:30:00.000Z' });
+  const earlierPlan = planForCurrent(earlier);
+  const laterPlan = planForCurrent(later);
+  assert.notEqual(earlierPlan.manifestSha256, laterPlan.manifestSha256);
   withTempDir((dir) => {
-    const sqlOut = path.join(dir, 'recovery-apply.sql');
-    const receiptPath = path.join(dir, 'current-state.json');
-    const captured = captureCli([
+    const earlierOut = path.join(dir, 'earlier.sql');
+    const laterOut = path.join(dir, 'later.sql');
+    const crossOut = path.join(dir, 'cross.sql');
+    const earlierOk = captureCli([
       '--sql', extractionPath(),
-      ...currentStateCliArgs(receiptPath),
-      '--emit-apply-sql', sqlOut,
-      '--emit-authorization', EXPECTED_EMIT_MANIFEST_SHA256,
+      ...currentStateCliArgs(path.join(dir, 'earlier.json'), earlier),
+      '--emit-apply-sql', earlierOut,
+      '--emit-authorization', earlierPlan.manifestSha256,
     ]);
-    assert.equal(captured.exitCode, 2);
-    assert.match(captured.stderr, /emit_manifest_mismatch/);
-    assert.equal(fs.existsSync(sqlOut), false);
+    assert.equal(earlierOk.exitCode, 0);
+    assert.equal(fs.existsSync(earlierOut), true);
+    const laterOk = captureCli([
+      '--sql', extractionPath(),
+      ...currentStateCliArgs(path.join(dir, 'later.json'), later),
+      '--emit-apply-sql', laterOut,
+      '--emit-authorization', laterPlan.manifestSha256,
+    ]);
+    assert.equal(laterOk.exitCode, 0);
+    assert.equal(fs.existsSync(laterOut), true);
+    const cross = captureCli([
+      '--sql', extractionPath(),
+      ...currentStateCliArgs(path.join(dir, 'cross.json'), earlier),
+      '--emit-apply-sql', crossOut,
+      '--emit-authorization', laterPlan.manifestSha256,
+    ]);
+    assert.equal(cross.exitCode, 2);
+    assert.match(cross.stderr, /emit_authorization_mismatch/);
+    assert.equal(fs.existsSync(crossOut), false);
+    assert.equal(
+      sqlWithoutReceiptComments(fs.readFileSync(earlierOut, 'utf8')),
+      sqlWithoutReceiptComments(fs.readFileSync(laterOut, 'utf8')),
+    );
   });
 }
 
@@ -162,9 +210,8 @@ function main(): void {
   proveEmittedSqlShapeFromFixturePlan();
   proveEmitSqlRequiresAuthorization();
   proveEmitSqlRejectsWrongAuthorization();
-  proveEmitSqlRejectsUnpinnedManifest();
+  proveTwoReceiptsAuthorizeOnlyWithOwnManifest();
   proveApplyFlagStillRefused();
-  assert.match(EXPECTED_EMIT_MANIFEST_SHA256, /^[0-9a-f]{64}$/);
   console.log(JSON.stringify({
     ok: true,
     case: 'sect-building-recovery-emit-sql',
