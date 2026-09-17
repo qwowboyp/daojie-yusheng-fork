@@ -121,10 +121,12 @@ class CdpClient {
     assert(this.socket?.readyState === WebSocket.OPEN, 'Chrome CDP 尚未连接');
     const id = this.nextId;
     this.nextId += 1;
+    // 超时时附带调用端堆栈，避免只看到 timer 内部帧而无法定位卡住的调用点。
+    const callerStack = new Error(`Chrome CDP caller: ${method}`).stack;
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => {
         this.pending.delete(id);
-        reject(new Error(`Chrome CDP 超时 ${CDP_COMMAND_TIMEOUT_MS}ms：${method}`));
+        reject(new Error(`Chrome CDP 超时 ${CDP_COMMAND_TIMEOUT_MS}ms：${method}\n调用端堆栈:\n${callerStack}`));
       }, CDP_COMMAND_TIMEOUT_MS);
       this.pending.set(id, {
         resolve: (value) => {
@@ -222,6 +224,11 @@ export async function withClientBrowserProof({ viewport, profilePrefix, configur
       '--disable-default-apps',
       '--disable-extensions',
       '--disable-sync',
+      // Docker/Xvfb 下同时打开多个 Chromium 窗口时，被遮挡的后台窗口会被节流，
+      // requestAnimationFrame 不再触发，nextPaint 永不解决导致 proof 卡死。
+      '--disable-backgrounding-occluded-windows',
+      '--disable-renderer-backgrounding',
+      '--disable-background-timer-throttling',
       // Linux 隔離 proof 使用 Mesa 軟體 Vulkan；停用 GPU 程序會連 WebGL 一起阻擋。
       ...(process.platform === 'linux' ? ['--use-angle=vulkan', '--ignore-gpu-blocklist'] : ['--disable-gpu']),
       // Docker build 默认只有 64MB /dev/shm，避免渲染器在布局 proof 中阻塞。
