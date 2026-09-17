@@ -89,6 +89,8 @@
     "audit:persistence-retirement": "pnpm compile && node dist/tools/persistence-retirement-audit.js",
     "smoke:import-legacy-persistence": "pnpm compile && node dist/tools/import-legacy-persistence-once.js --apply",
     "convert:main-dump": "pnpm compile && node dist/tools/convert-main-dump-to-current-db.js",
+    "recover:sect-buildings:dry-run": "pnpm compile && node dist/tools/sect-building-recovery-manifest.js",
+    "smoke:sect-building-recovery-manifest": "pnpm compile && node dist/tools/sect-building-recovery-manifest-smoke.js && node dist/tools/sect-building-recovery-receipt-smoke.js && node dist/tools/sect-building-recovery-emit-sql-smoke.js",
     "deploy:database-preflight": "pnpm compile && node dist/tools/deploy-database-preflight.js --ensure-current-schema",
     "smoke:durable-operation": "pnpm compile && node dist/tools/durable-operation-smoke.js",
     "smoke:item-instance-id": "pnpm compile && node dist/tools/item-instance-id-smoke.js",
