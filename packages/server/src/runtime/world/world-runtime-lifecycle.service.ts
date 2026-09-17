@@ -11,7 +11,9 @@ import { Injectable } from '@nestjs/common';
 import { BASE_OFFLINE_MAX_HOURS, MERIT_MONTH_CARD_OFFLINE_MAX_HOURS } from '@mud/shared';
 import * as world_runtime_normalization_helpers_1 from './world-runtime.normalization.helpers';
 import {
+    assertNoUnknownBuildingDefinitions,
     logPrunedBuildingAudit,
+    persistBuildingRoomStateAfterStartupRecovery,
     recoverVaultsBeforePlacementPrune,
     releaseTimeChambersBeforePlacementPrune,
 } from './building-placement-prune.helpers';
@@ -93,53 +95,6 @@ async function activateOfflinePlayerTowerInstances(deps, positions) {
         }));
     }
     return failed;
-}
-
-async function persistBuildingRoomStateAfterStartupRecovery(deps, domainPersistenceService, instanceId, instance, hydrateResult) {
-    const skippedCount = Math.max(0, Math.trunc(Number(hydrateResult?.skippedUnknownDefCount) || 0));
-    const skippedProtectedPlacementCount = Math.max(0, Math.trunc(Number(hydrateResult?.skippedProtectedPlacementCount) || 0));
-    const restoredSkippedBuildingTileCellCount = Math.max(0, Math.trunc(Number(hydrateResult?.restoredSkippedBuildingTileCellCount) || 0));
-    const repairedBuildingCellCount = Math.max(0, Math.trunc(Number(hydrateResult?.repairedBuildingCellCount) || 0));
-    const repairedBuildingVisualCellCount = Math.max(0, Math.trunc(Number(hydrateResult?.repairedBuildingVisualCellCount) || 0));
-    const restoredStaleBuildingVisualCellCount = Math.max(0, Math.trunc(Number(hydrateResult?.restoredStaleBuildingVisualCellCount) || 0));
-    const runtimeTileCellRecoveryCount = restoredSkippedBuildingTileCellCount
-        + repairedBuildingVisualCellCount
-        + restoredStaleBuildingVisualCellCount;
-    if (skippedCount <= 0
-        && skippedProtectedPlacementCount <= 0
-        && restoredSkippedBuildingTileCellCount <= 0
-        && repairedBuildingCellCount <= 0) {
-        return;
-    }
-    if (typeof domainPersistenceService?.saveBuildingRoomFengShuiState === 'function') {
-        const state = typeof instance?.buildBuildingRoomFengShuiPersistenceState === 'function'
-            ? instance.buildBuildingRoomFengShuiPersistenceState()
-            : {
-                buildings: typeof instance?.buildBuildingPersistenceEntries === 'function' ? instance.buildBuildingPersistenceEntries() : [],
-                rooms: typeof instance?.listRoomSummaries === 'function' ? instance.listRoomSummaries() : [],
-                roomCells: [],
-                fengShui: [],
-        };
-        await domainPersistenceService.saveBuildingRoomFengShuiState(instanceId, state);
-    }
-    if (runtimeTileCellRecoveryCount > 0 && typeof domainPersistenceService?.replaceRuntimeTileCells === 'function') {
-        await domainPersistenceService.replaceRuntimeTileCells(
-            instanceId,
-            typeof instance?.buildRuntimeTilePersistenceEntries === 'function' ? instance.buildRuntimeTilePersistenceEntries() : [],
-        );
-    }
-    if (skippedCount > 0) {
-        deps.logger?.warn?.(`啟動清理了 ${skippedCount} 個未知建築定義實例：${instanceId}`);
-    }
-    if (skippedProtectedPlacementCount > 0) {
-        deps.logger?.warn?.(`啟動清理了 ${skippedProtectedPlacementCount} 個違規保護點位建築：${instanceId}`);
-    }
-    if (restoredSkippedBuildingTileCellCount > 0) {
-        deps.logger?.warn?.(`啟動恢復了 ${restoredSkippedBuildingTileCellCount} 個違規建築佔用地塊：${instanceId}`);
-    }
-    if (repairedBuildingCellCount > 0) {
-        deps.logger?.warn?.(`啟動修復了 ${repairedBuildingCellCount} 個失配建築佔格：${instanceId}`);
-    }
 }
 
 /** world-runtime lifecycle seam：承接公共实例 bootstrap、持久化恢复与整体验证前 rebuild。 */
@@ -305,6 +260,8 @@ export class WorldRuntimeLifecycleService {
                         || buildingRoomFengShuiState.rooms?.length > 0
                         || buildingRoomFengShuiState.fengShui?.length > 0)
                     && typeof instance.hydrateBuildingRoomFengShuiState === 'function') {
+                    // 定義缺失必須在任何寫入或釋放佔格前失敗關閉，資料保持原樣等待修定義。
+                    assertNoUnknownBuildingDefinitions(instance, buildingRoomFengShuiState, instanceId, deps?.logger);
                     // 先返还即将被摧毁的宝库库存：删除建筑行后就取不到 owner 了；返还失败的宝库豁免摧毁。
                     const keepBuildingIds = await recoverVaultsBeforePlacementPrune(deps, instanceId, instance, buildingRoomFengShuiState, deps?.logger);
                     const keptTimeChambers = await releaseTimeChambersBeforePlacementPrune(deps, instanceId, instance, buildingRoomFengShuiState, deps?.logger);

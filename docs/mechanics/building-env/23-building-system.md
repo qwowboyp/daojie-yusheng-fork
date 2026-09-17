@@ -112,12 +112,12 @@ TypedArray 索引结构，按 cellIndex 存储:
 
 ### 启动自检与自动摧毁
 
-服务器启动恢复建筑时对每个存量建筑执行同一套禁建区自检；违规建筑会直接从运行态和持久化快照中清理，占用的地块还原为建造前状态。
+服务器启动恢复建筑时对每个存量建筑执行同一套禁建区自检；定义仍然有效的违规建筑会从运行态和持久化快照中清理，占用的地块还原为建造前状态。
 
 宝库和密室是需要先处理独立领域状态的特例：
 
 - 宝库必须先把库存邮件一次性返还给建造者（owner），返还失败就不摧毁。
-- 密室必须先确认独立实例无人，再原子停止实例目录并删除密室状态；释放失败就不摧毁。定义已删除且无法恢复的异常状态保留 error 日志供 GM 回读。
+- 密室必须先确认独立实例无人，再原子停止实例目录并删除密室状态；释放失败就不摧毁。
 
 `hydrate` 是同步的，无法在其中 await 邮件返还，因此启动恢复分三步：
 
@@ -127,9 +127,9 @@ TypedArray 索引结构，按 cellIndex 存储:
 
 返还必须早于 `saveBuildingRoomFengShuiState`：建筑行一旦删除，`owner_player_id` 就无法从建筑行回退取得，`instance_building_storage_item` 会成为活实例期间 orphan 扫描覆盖不到的孤儿。
 
-例外：定义已删除（`unknown_def`）的宝库无法恢复运行态，即使返还失败也不能保留，只写 error 日志交由 GM 处理。
+定义缺失（`unknown_def`）的建筑绝不走剪除路径：只要任一持久化建筑的 `defId` 无法解析，启动就在任何持久化写入或地块还原之前失败关闭，抛出 `startup_building_unknown_def_fail_closed` 致命错误，并附实例、建筑数、定义种类数与缺失 `defId` 明细（不夹带快照 payload／凭据）。数据库行、占格与运行态全部保持原样，等待补齐定义或 GM 处理；绝不允许把剪除后的快照写回，否则等同删除玩家建筑数据。
 
-自动摧毁**不返还建材**；每个被摧毁建筑写一条 warn 审计日志（`instance` / `building` / `def` / `owner` / `reason`），豁免保留的宝库写 error 日志。
+自动摧毁**不返还建材**；每个被摧毁建筑写一条 warn 审计日志（`instance` / `building` / `def` / `owner` / `reason`），豁免保留的宝库写 error 日志。启动恢复的两条路径（`world-runtime-lifecycle.service.ts` 与 `world-runtime-instance-lease.helpers.ts`）共用 `building-placement-prune.helpers.ts` 的 `assertNoUnknownBuildingDefinitions` 前置检查与 `persistBuildingRoomStateAfterStartupRecovery` 写回闸门，避免行为漂移。
 
 ### 建筑占格恢复与历史孤儿投影
 

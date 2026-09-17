@@ -242,6 +242,7 @@ const smokeCases = [
   { name: 'instance-ownership-epoch-replay', scriptFile: 'instance-ownership-epoch-replay-smoke.js', standalone: true },
   { name: 'tongtian-tower-catalog-materialization', scriptFile: 'tongtian-tower-catalog-materialization-smoke.js', standalone: true },
   { name: 'world-runtime-tower-restart-recovery', scriptFile: 'world-runtime-tower-restart-recovery-smoke.js', standalone: true },
+  { name: 'building-unknown-def-startup-fail-closed', scriptFile: 'building-unknown-def-startup-fail-closed-smoke.js', standalone: true },
   { name: 'gm-world-instance-lease', scriptFile: 'gm-world-instance-lease-smoke.js', standalone: true },
   { name: 'gm-world-instance-flush', scriptFile: 'gm-world-instance-flush-smoke.js', standalone: true },
   { name: 'gm-world-instance-freeze', scriptFile: 'gm-world-instance-freeze-smoke.js', standalone: true },
@@ -358,6 +359,7 @@ const SMOKE_CASE_GROUPS = Object.freeze({
     'instance-ownership-epoch-replay',
     'tongtian-tower-catalog-materialization',
     'world-runtime-tower-restart-recovery',
+    'building-unknown-def-startup-fail-closed',
   ],
   'gm-world-ops': [
     'gm-world-instance',
