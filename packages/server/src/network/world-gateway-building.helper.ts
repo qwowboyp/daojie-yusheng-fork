@@ -62,6 +62,24 @@ class WorldGatewayBuildingHelper {
         }
     }
 
+    async handleBuildMove(client: Socket, payload: any) {
+        const playerId = this.gatewayGuardHelper.requirePlayerId(client);
+        if (!playerId) {
+            return;
+        }
+        try {
+            const result = await this.worldRuntimeService.handleBuildMoveIntent(playerId, payload);
+            client.emit(S2C.BuildResult, result);
+            if (result?.ok === true) {
+                client.emit(S2C.RoomSummaryPatch, this.worldRuntimeService.buildCurrentRoomSummaryPatch(playerId));
+                this.worldSyncService.emitDeltaSync(playerId, client);
+            }
+        }
+        catch (error) {
+            this.worldClientEventService.emitGatewayError(client, 'BUILD_MOVE_FAILED', error);
+        }
+    }
+
     handleRoomSetRole(client: Socket, payload: any) {
         const playerId = this.gatewayGuardHelper.requirePlayerId(client);
         if (!playerId) {

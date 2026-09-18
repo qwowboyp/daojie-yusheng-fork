@@ -432,9 +432,9 @@ function resolveBuildingBaseBuildTicks(entry: BuildingCatalogEntry | null): numb
   return Math.max(1, Math.trunc(Number(entry?.buildTicks) || 1));
 }
 
-function normalizeMaterialFailure(reason: string | undefined): string {
+function normalizeMaterialFailure(reason: string | undefined, operation: 'place' | 'deconstruct' | 'move' = 'place'): string {
   if (!reason) {
-    return '建造失敗';
+    return operation === 'move' ? '移動失敗' : '建造失敗';
   }
   const [kind, itemId, count] = reason.split(':');
   if (kind === 'material_insufficient' && itemId) {
@@ -495,7 +495,13 @@ function normalizeMaterialFailure(reason: string | undefined): string {
     return '目標建築不在當前視野內';
   }
   if (reason === 'not_owner' || reason === 'building_owner_mismatch') {
-    return '該建築當前不允許由你拆除';
+    return operation === 'move' ? '只能移動自己建造的建築' : '該建築當前不允許由你拆除';
+  }
+  if (reason === 'building_move_unavailable') {
+    return '該建築當前不可移動';
+  }
+  if (reason === 'building_move_failed') {
+    return '移動失敗，請稍後再試';
   }
   if (reason === 'building_job_active') {
     return '當前已有營造任務在進行中';
@@ -551,8 +557,10 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
   } | null = null;
   let pendingPlacementHover: { x: number; y: number } | null = null;
   let pendingDeconstructTargeting = false;
+  let pendingMoveTargeting = false;
+  let pendingMoveSourceBuildingId: string | null = null;
   let continuousSelection = false;
-  const buildOperationByRequestId = new Map<string, 'place' | 'deconstruct'>();
+  const buildOperationByRequestId = new Map<string, 'place' | 'deconstruct' | 'move'>();
 
   function applyOverlay(data: ServerToClientEventPayload<typeof S2C.FengShuiOverlayPatch>): void {
     const visibleCells = typeof options.getVisibleTileAt === 'function'
@@ -763,12 +771,14 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
   }
 
   function resetPendingPlacement(clearTargeting = false): void {
-    if (!pendingPlacementIntent && !pendingPlacementHover && !pendingDeconstructTargeting) {
+    if (!pendingPlacementIntent && !pendingPlacementHover && !pendingDeconstructTargeting && !pendingMoveTargeting) {
       return;
     }
     pendingPlacementIntent = null;
     pendingPlacementHover = null;
     pendingDeconstructTargeting = false;
+    pendingMoveTargeting = false;
+    pendingMoveSourceBuildingId = null;
     options.setBuildPreviewOverlay(null);
     if (clearTargeting) {
       options.cancelTargeting();
@@ -801,7 +811,7 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
       mobileLayoutActive ? 'mobile' : 'desktop',
       selectedCategory,
       String(buildStrength),
-      pendingDeconstructTargeting ? 'deconstruct' : 'place',
+      pendingDeconstructTargeting ? 'deconstruct' : pendingMoveTargeting ? (pendingMoveSourceBuildingId ? 'move-destination' : 'move-source') : 'place',
       continuousSelection ? 'continuous' : 'single',
       filteredEntries.map((entry) => entry.id).join(','),
       latestBuildResult?.ok === false ? latestBuildResult.reason ?? '' : latestBuildResult?.ok === true ? 'ok' : '',
@@ -831,6 +841,8 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
       materialSlots,
       pendingPlacementActive: Boolean(pendingPlacementIntent),
       pendingDeconstructActive: pendingDeconstructTargeting,
+      pendingMoveActive: pendingMoveTargeting,
+      moveSourceSelected: Boolean(pendingMoveSourceBuildingId),
       continuousSelection,
       onSelectCategory: (category) => {
         resetPendingPlacement(true);
@@ -880,6 +892,8 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
           selectedMaterialItemIds: latestMaterialSlots.map((slot) => slot.selectedItemId ?? ''),
         };
         pendingPlacementHover = null;
+        pendingMoveTargeting = false;
+        pendingMoveSourceBuildingId = null;
         enterMapPlacement();
         options.beginTargeting('building:place', '建造位置', 'tile', Math.max(1, options.getInfoRadius()));
         syncActiveBuildMode(true);
@@ -889,8 +903,21 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
         pendingPlacementHover = null;
         options.setBuildPreviewOverlay(null);
         pendingDeconstructTargeting = true;
+        pendingMoveTargeting = false;
+        pendingMoveSourceBuildingId = null;
         enterMapPlacement();
         options.beginTargeting('building:deconstruct', '拆除建築', 'entity', Math.max(1, options.getInfoRadius()));
+        syncActiveBuildMode(true);
+      },
+      onMove: () => {
+        pendingPlacementIntent = null;
+        pendingPlacementHover = null;
+        options.setBuildPreviewOverlay(null);
+        pendingDeconstructTargeting = false;
+        pendingMoveTargeting = true;
+        pendingMoveSourceBuildingId = null;
+        enterMapPlacement();
+        options.beginTargeting('building:move', '移動建築', 'entity', Math.max(1, options.getInfoRadius()));
         syncActiveBuildMode(true);
       },
       onToggleContinuous: () => {
@@ -959,7 +986,7 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
     },
 
     hasPendingPlacementTargeting(): boolean {
-      return Boolean(pendingPlacementIntent || pendingDeconstructTargeting);
+      return Boolean(pendingPlacementIntent || pendingDeconstructTargeting || pendingMoveTargeting);
     },
 
     setPendingPlacementHover(target: { x?: number; y?: number } | null): void {
@@ -1024,6 +1051,40 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
       return continuousSelection;
     },
 
+    confirmBuildMoveTarget(target: { buildingId?: string; x: number; y: number }): boolean {
+      if (!pendingMoveTargeting || !Number.isFinite(target.x) || !Number.isFinite(target.y)) {
+        return false;
+      }
+      const targetX = Math.trunc(target.x);
+      const targetY = Math.trunc(target.y);
+      if (!pendingMoveSourceBuildingId) {
+        const buildingId = typeof target.buildingId === 'string' ? target.buildingId.trim() : '';
+        if (!buildingId) {
+          options.showToast('請選擇自己建造的建築', 'warn');
+          return true;
+        }
+        pendingMoveSourceBuildingId = buildingId;
+        options.showToast('已選中建築，請點擊新位置', 'system');
+        syncActiveBuildMode(true);
+        return true;
+      }
+      const requestId = `move:${Date.now()}:${Math.random().toString(36).slice(2)}`;
+      buildOperationByRequestId.set(requestId, 'move');
+      options.socket.sendBuildMove({
+        requestId,
+        buildingId: pendingMoveSourceBuildingId,
+        x: targetX,
+        y: targetY,
+      });
+      pendingMoveSourceBuildingId = null;
+      if (!continuousSelection) {
+        pendingMoveTargeting = false;
+      }
+      options.showToast('移動請求已提交', 'system');
+      syncActiveBuildMode(true);
+      return continuousSelection;
+    },
+
     cancelPendingPlacementTargeting(clearTargeting = true): void {
       resetPendingPlacement(clearTargeting);
       syncActiveBuildMode(true);
@@ -1035,6 +1096,10 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
 
     sendBuildDeconstruct(payload: ClientToServerEventPayload<typeof C2S.BuildDeconstruct>): void {
       options.socket.sendBuildDeconstruct(payload);
+    },
+
+    sendBuildMove(payload: ClientToServerEventPayload<typeof C2S.BuildMove>): void {
+      options.socket.sendBuildMove(payload);
     },
 
     sendRoomSetRole(payload: ClientToServerEventPayload<typeof C2S.RoomSetRole>): void {
@@ -1053,7 +1118,9 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
         pendingPlacementHover = null;
         options.setBuildPreviewOverlay(null);
         options.showToast(
-          operation === 'deconstruct'
+          operation === 'move'
+            ? '建築已移動'
+            : operation === 'deconstruct'
             ? data.deconstructStarted
               ? `已開始拆除，預計 ${Math.max(1, Math.trunc(Number(data.deconstructTicks) || 1))} 息`
               : '建築已拆除'
@@ -1067,7 +1134,7 @@ export function createMainBuildingFengShuiStateSource(options: MainBuildingFengS
         syncActiveBuildMode(true);
         return;
       }
-      options.showToast(normalizeMaterialFailure(data.reason), 'warn');
+      options.showToast(normalizeMaterialFailure(data.reason, operation), 'warn');
       syncActiveBuildMode(true);
     },
 
@@ -1211,6 +1278,8 @@ type BuildModeToolbarOptions = {
   materialSlots: BuildMaterialSlot[];
   pendingPlacementActive: boolean;
   pendingDeconstructActive: boolean;
+  pendingMoveActive: boolean;
+  moveSourceSelected: boolean;
   continuousSelection: boolean;
   onSelectCategory: (category: BuildCategoryKey) => void;
   onChangeBuildStrength: (value: number) => void;
@@ -1218,6 +1287,7 @@ type BuildModeToolbarOptions = {
   onSelectMaterial: (slotIndex: number, itemId: string) => void;
   onPlace: () => void;
   onDeconstruct: () => void;
+  onMove: () => void;
   onToggleContinuous: () => void;
   onExit: () => void;
   prepareSignal: () => AbortSignal;
@@ -1416,6 +1486,11 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
   deconstructButton.classList.toggle('active', options.pendingDeconstructActive);
   deconstructButton.disabled = !player;
   actions.appendChild(deconstructButton);
+  const moveButton = buildModeActionButton(options.mobileLayoutActive ? '移動' : '移動建築', 'move');
+  moveButton.setAttribute('aria-label', '移動建築');
+  moveButton.classList.toggle('active', options.pendingMoveActive);
+  moveButton.disabled = !player;
+  actions.appendChild(moveButton);
   const continuousLabel = options.continuousSelection ? '連續選擇：開' : '連續選擇：關';
   const continuousButton = buildModeActionButton(options.mobileLayoutActive
     ? `連選：${options.continuousSelection ? '開' : '關'}`
@@ -1564,6 +1639,10 @@ function renderBuildModeToolbar(options: BuildModeToolbarOptions): void {
         options.onDeconstruct();
         return;
       }
+      if (action === 'move') {
+        options.onMove();
+        return;
+      }
       if (action === 'continuous') {
         options.onToggleContinuous();
         return;
@@ -1607,7 +1686,7 @@ function patchBuildModeStrengthProjection(
   }
 }
 
-function buildModeActionButton(label: string, action: 'place' | 'deconstruct' | 'continuous', primary = false): HTMLButtonElement {
+function buildModeActionButton(label: string, action: 'place' | 'deconstruct' | 'move' | 'continuous', primary = false): HTMLButtonElement {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = primary ? 'building-mode-action primary' : 'building-mode-action';
@@ -1618,6 +1697,12 @@ function buildModeActionButton(label: string, action: 'place' | 'deconstruct' | 
 }
 
 function pendingPlacementHint(options: BuildModeToolbarOptions): string | null {
+  if (options.pendingMoveActive) {
+    if (options.moveSourceSelected) {
+      return options.continuousSelection ? '請選擇建築的新位置，完成後可繼續選擇' : '請選擇建築的新位置';
+    }
+    return '請選擇要移動的自己建築';
+  }
   if (options.pendingDeconstructActive) {
     return options.continuousSelection ? '請選擇建築拆除，完成後可繼續選擇' : '請選擇要拆除的建築';
   }

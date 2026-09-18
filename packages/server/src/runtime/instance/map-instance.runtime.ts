@@ -1858,6 +1858,172 @@ class MapInstanceRuntime {
         this.markPersistenceDirtyDomainsHighPriority(Array.from(new Set(dirtyDomains)));
         return { ok: true, building };
     }
+    /** moveBuildingInstance：服務端權威搬遷建築，呼叫方負責所有權、權限與審計。 */
+    moveBuildingInstance(input) {
+        const catalog = this.buildingCatalog;
+        if (!catalog?.defById) {
+            return { ok: false, reason: 'building_catalog_missing' };
+        }
+        const buildingId = normalizeBuildingId(input?.buildingId);
+        const building = buildingId ? this.buildingById.get(buildingId) : null;
+        if (!building) {
+            return { ok: false, reason: 'building_not_found' };
+        }
+        const compiled = resolveCompiledBuildingDefinition(catalog, building);
+        if (!compiled) {
+            return { ok: false, reason: 'building_def_not_found' };
+        }
+        // 僅允許搬遷已完工（含受損）建築；半成品、拆除中與密室建築座標耦合，一律不可搬遷。
+        if (building.state !== 'active' && building.state !== 'damaged') {
+            return { ok: false, reason: 'building_move_unavailable' };
+        }
+        if (isTimeChamberBuildingForRuntime(compiled, building)) {
+            return { ok: false, reason: 'building_move_unavailable' };
+        }
+        const x = Math.trunc(Number(input?.x));
+        const y = Math.trunc(Number(input?.y));
+        if (!Number.isFinite(x) || !Number.isFinite(y)) {
+            return { ok: false, reason: 'invalid_coordinate' };
+        }
+        const rotation = normalizeBuildingRotation(input?.rotation ?? building.rotation);
+        const footprint = compiled.footprintByRotation[rotationToIndex(rotation)] ?? compiled.footprintByRotation[0];
+        const oldCells = (this.buildingCellsById.get(buildingId) ?? []).slice();
+        const oldCellSet = new Set(oldCells);
+        const cells = [];
+        for (let index = 0; index < footprint.length; index += 2) {
+            const cellX = x + footprint[index];
+            const cellY = y + footprint[index + 1];
+            const cellIndex = this.toTileIndex(cellX, cellY);
+            if (cellIndex < 0) {
+                return { ok: false, reason: 'out_of_bounds', x: cellX, y: cellY };
+            }
+            // 目標格若仍屬於本建築現有佔格，需排除自身拓撲與佔位造成的假衝突。
+            const isOwnCurrentCell = oldCellSet.has(cellIndex);
+            const cellProtectedConflict = findBuildingProtectedPlacementConflict(this, [{ x: cellX, y: cellY }]);
+            if (cellProtectedConflict.ok !== true) {
+                return { ok: false, reason: cellProtectedConflict.reason, x: cellProtectedConflict.x, y: cellProtectedConflict.y };
+            }
+            if (this.occupancy[cellIndex] !== INVALID_OCCUPANCY) {
+                return { ok: false, reason: 'occupied', x: cellX, y: cellY };
+            }
+            if (!isOwnCurrentCell && compiled.layerId === 1 && this.buildingTopologyIndex?.structureHandleByCell?.[cellIndex] > 0) {
+                return { ok: false, reason: 'structure_overlap', x: cellX, y: cellY };
+            }
+            if (this.hasBuildingLayerOverlapAtCell(cellIndex, compiled.layerId, { excludeBuildingId: buildingId })) {
+                return { ok: false, reason: 'building_layer_overlap', x: cellX, y: cellY };
+            }
+            if (!isOwnCurrentCell && !this.isCellIndexWalkable(cellIndex)) {
+                return { ok: false, reason: 'tile_not_clear', x: cellX, y: cellY };
+            }
+            cells.push(cellIndex);
+        }
+        const sameCells = cells.length === oldCells.length && cells.every((cellIndex) => oldCellSet.has(cellIndex));
+        if (sameCells && rotation === normalizeBuildingRotation(building.rotation)) {
+            return { ok: true, building, changed: false };
+        }
+        const oldX = building.x;
+        const oldY = building.y;
+        const wasInRoomInfluenceOld = oldCells.some((cellIndex) => this.isCellInRoomInfluence(cellIndex));
+        const wasInRoomInfluenceNew = cells.some((cellIndex) => this.isCellInRoomInfluence(cellIndex));
+        const oldPreviousTileTypes = this.buildingPreviousTileTypeById.get(buildingId) ?? [];
+        // 先撤下舊佔格：還原地塊視覺與拓撲，再從舊格索引移除自身。
+        for (const [cellIndex, previousState] of oldPreviousTileTypes) {
+            this.restoreBuildingPreviousTileState(cellIndex, previousState);
+        }
+        this.buildingPreviousTileTypeById.delete(buildingId);
+        this.buildingCellsById.delete(buildingId);
+        for (const cellIndex of oldCells) {
+            const ids = this.buildingIdByCell.get(cellIndex);
+            if (!ids) {
+                continue;
+            }
+            const keptIds = ids.filter((id) => id !== buildingId);
+            if (keptIds.length > 0) {
+                this.buildingIdByCell.set(cellIndex, keptIds);
+            }
+            else {
+                this.buildingIdByCell.delete(cellIndex);
+            }
+        }
+        const oldSightBlockingChanged = Boolean(compiled.topologyMask & BUILDING_TOPOLOGY_BLOCKS_SIGHT)
+            || (compiled.visualTileType ? doesTileTypeBlockSight(compiled.visualTileType) : false);
+        for (const cellIndex of oldCells) {
+            this.markStaticTileSyncDirtyByIndex(cellIndex, {
+                sightBlockingChanged: oldSightBlockingChanged,
+                pathingChanged: Boolean(compiled.topologyMask & BUILDING_TOPOLOGY_BLOCKS_MOVE) || oldPreviousTileTypes.length > 0,
+            });
+        }
+        this.rebuildBuildingTopologyCells(oldCells);
+        // 再落到新佔格：捕獲地塊原狀、清理地形傷害並寫入建築視覺與拓撲。
+        const previousTileTypes = [];
+        let clearedTileDamage = false;
+        if (compiled.visualTileType) {
+            for (const cellIndex of cells) {
+                previousTileTypes.push([cellIndex, this.captureBuildingPreviousTileState(cellIndex)]);
+            }
+            clearedTileDamage = this.clearTileDamageForBuildingVisualCells(cells);
+            for (const cellIndex of cells) {
+                this.applyBuildingVisualTileType(cellIndex, compiled);
+                this.markStaticTileSyncDirtyByIndex(cellIndex, { sightBlockingChanged: true, pathingChanged: true });
+            }
+        }
+        building.x = x;
+        building.y = y;
+        building.rotation = rotation;
+        building.updatedAtTick = this.tick;
+        building.revision = Math.max(1, Math.trunc(Number(building.revision) || 1)) + 1;
+        this.buildingCellsById.set(buildingId, cells);
+        if (previousTileTypes.length > 0) {
+            this.buildingPreviousTileTypeById.set(buildingId, previousTileTypes);
+        }
+        this.applyBuildingTopologyForBuilding(buildingId);
+        if (!compiled.visualTileType && (compiled.topologyMask & (BUILDING_TOPOLOGY_BLOCKS_MOVE | BUILDING_TOPOLOGY_BLOCKS_SIGHT)) !== 0) {
+            for (const cellIndex of cells) {
+                this.markStaticTileSyncDirtyByIndex(cellIndex, {
+                    sightBlockingChanged: Boolean(compiled.topologyMask & BUILDING_TOPOLOGY_BLOCKS_SIGHT),
+                    pathingChanged: Boolean(compiled.topologyMask & BUILDING_TOPOLOGY_BLOCKS_MOVE),
+                });
+            }
+        }
+        // 房間歸屬直接依新佔格重解析；房間/風水受拓撲或影響變動時標髒待批次重算。
+        building.roomId = this.resolveBuildingRoomId(buildingId);
+        const affectsBoundaryTopology = compiledBuildingAffectsRoomBoundaryTopology(compiled);
+        const affectsRoofTopology = compiled.roofCoverage > 0;
+        if (affectsBoundaryTopology) {
+            this.markRoomsAndFengShuiDirtyAfterTopologyChange({
+                reason: 'move',
+                dirtyCellCount: oldCells.length + cells.length,
+                highPriority: true,
+            });
+        }
+        else if (compiledBuildingAffectsFengShui(compiled) || affectsRoofTopology) {
+            if (wasInRoomInfluenceOld) {
+                for (const cellIndex of oldCells) {
+                    this.markFengShuiDirtyAfterRoomInfluenceChange(cellIndex, 'building_move_fengshui', { highPriority: true });
+                }
+            }
+            if (wasInRoomInfluenceNew) {
+                for (const cellIndex of cells) {
+                    this.markFengShuiDirtyAfterRoomInfluenceChange(cellIndex, 'building_move_fengshui', { highPriority: true });
+                }
+            }
+        }
+        const dirtyDomains = ['building'];
+        if (oldPreviousTileTypes.length > 0 || previousTileTypes.length > 0) {
+            dirtyDomains.push('tile_cell');
+        }
+        if (clearedTileDamage) {
+            dirtyDomains.push('tile_damage');
+        }
+        // P0-4 entry cache 跟随 entity lifecycle 释放：搬遷時同步刷新視圖條目。
+        this.localBuildingViewCacheById.delete(buildingId);
+        this.markAoiViewChangedAt(oldX, oldY);
+        this.markAoiViewChangedAt(building.x, building.y);
+        this.worldRevision += 1;
+        this.persistentRevision += 1;
+        this.markPersistenceDirtyDomainsHighPriority(Array.from(new Set(dirtyDomains)));
+        return { ok: true, building, changed: true };
+    }
     /** startBuildingConstruction：把半成品建筑切到持续施工状态。 */
     startBuildingConstruction(buildingIdInput, playerIdInput) {
         const buildingId = normalizeBuildingId(buildingIdInput);
@@ -2207,17 +2373,18 @@ class MapInstanceRuntime {
         }
         return true;
     }
-    /** hasBuildingLayerOverlapAtCell：建造前检查同一建筑层是否已有未销毁建筑，包括半成品。 */
-    hasBuildingLayerOverlapAtCell(cellIndexInput, layerIdInput) {
+    /** hasBuildingLayerOverlapAtCell：建造前检查同一建筑层是否已有未销毁建筑，包括半成品；搬遷時可排除自身。 */
+    hasBuildingLayerOverlapAtCell(cellIndexInput, layerIdInput, options: { excludeBuildingId?: string | null } = {}) {
         const cellIndex = Math.trunc(Number(cellIndexInput));
         const layerId = Math.max(0, Math.trunc(Number(layerIdInput) || 0));
         const catalog = this.buildingCatalog;
         if (!Number.isFinite(cellIndex) || cellIndex < 0 || layerId <= 0 || !catalog) {
             return false;
         }
+        const excludeBuildingId = normalizeBuildingId(options?.excludeBuildingId);
         const candidateIds = new Set(this.buildingIdByCell.get(cellIndex) ?? []);
         for (const [buildingId, cells] of this.buildingCellsById.entries()) {
-            if (candidateIds.has(buildingId)) {
+            if (buildingId === excludeBuildingId || candidateIds.has(buildingId)) {
                 continue;
             }
             if (Array.isArray(cells) && cells.includes(cellIndex)) {
@@ -2225,6 +2392,9 @@ class MapInstanceRuntime {
             }
         }
         for (const buildingId of candidateIds) {
+            if (buildingId === excludeBuildingId) {
+                continue;
+            }
             const building = this.buildingById.get(buildingId);
             if (!building || building.state === 'destroyed') {
                 continue;

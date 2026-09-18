@@ -264,6 +264,7 @@ type MainMapInteractionBindingsOptions = {
   setPendingBuildPlacementHover: (target: { x?: number; y?: number } | null) => void;
   confirmBuildPlacementTarget: (x: number, y: number) => boolean;
   confirmBuildDeconstructTarget: (target: { buildingId?: string; x: number; y: number }) => boolean;
+  confirmBuildMoveTarget: (target: { buildingId?: string; x: number; y: number }) => boolean;
   cancelPendingBuildPlacementTargeting: (clearTargeting?: boolean) => void;
   /**
  * cancelTargeting：cancelTargeting相关字段。
@@ -452,6 +453,25 @@ export function bindMainMapInteractions(options: MainMapInteractionBindingsOptio
             return;
           }
           const keepTargeting = options.confirmBuildDeconstructTarget({
+            buildingId: clickedBuilding?.id,
+            x: target.x,
+            y: target.y,
+          });
+          if (!keepTargeting) {
+            options.cancelTargeting();
+          }
+          return;
+        }
+        if (pendingTargetedAction.actionId === 'building:move') {
+          if (!player || !isPointInRange({ x: player.x, y: player.y }, { x: target.x, y: target.y }, pendingTargetedAction.range)) {
+            options.showToast(t('map-interaction.toast.build-out-of-range', { range: formatDisplayNumber(pendingTargetedAction.range) }));
+            return;
+          }
+          if (!options.getVisibleTileAt(target.x, target.y)) {
+            options.showToast(t('map-interaction.toast.select-visible-tile'));
+            return;
+          }
+          const keepTargeting = options.confirmBuildMoveTarget({
             buildingId: clickedBuilding?.id,
             x: target.x,
             y: target.y,

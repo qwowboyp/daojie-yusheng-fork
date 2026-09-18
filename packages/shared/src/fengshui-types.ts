@@ -101,6 +101,15 @@ export interface BuildDeconstructIntentView {
   y?: number;
 }
 
+export interface BuildMoveIntentView {
+  requestId: string;
+  /** 要移动的建筑实体 ID：服务端只允许移动玩家自己建造的完工建筑。 */
+  buildingId: string;
+  /** 建筑新位置的锚点坐标。 */
+  x: number;
+  y: number;
+}
+
 export interface RoomSetRoleRequestView {
   requestId: string;
   roomId: string;

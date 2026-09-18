@@ -20,6 +20,10 @@ export function createSocketBuildingSender(deps: BuildingSenderDeps) {
       deps.emitEvent(C2S.BuildDeconstruct, payload);
     },
 
+    sendBuildMove(payload: ClientToServerEventPayload<typeof C2S.BuildMove>): void {
+      deps.emitEvent(C2S.BuildMove, payload);
+    },
+
     sendRoomSetRole(payload: ClientToServerEventPayload<typeof C2S.RoomSetRole>): void {
       deps.emitEvent(C2S.RoomSetRole, payload);
     },

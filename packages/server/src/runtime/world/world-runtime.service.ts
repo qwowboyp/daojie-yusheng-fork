@@ -88,7 +88,7 @@ import '../instance/map-instance.runtime';
 import { MapTemplateRepository } from '../map/map-template.repository';
 import { PlayerRuntimeService } from '../player/player-runtime.service';
 import { SpiritBeastRuntimeService } from '../spirit-beast/spirit-beast-runtime.service';
-import { buildCurrentRoomSummaryPatch, buildFengShuiObserveView, dispatchStartBuildingConstruction, dispatchStartBuildingDeconstruction, handleBuildDeconstructIntent, handleBuildPlaceIntent, handleGmBuildDeconstruct, handleRoomSetRoleIntent, handleStartBuildingConstruction, interruptBuildingConstruction, listBuildingOperationAudit, tickBuildingConstruction } from './world-runtime-building.service';
+import { buildCurrentRoomSummaryPatch, buildFengShuiObserveView, dispatchStartBuildingConstruction, dispatchStartBuildingDeconstruction, handleBuildDeconstructIntent, handleBuildMoveIntent, handleBuildPlaceIntent, handleGmBuildDeconstruct, handleRoomSetRoleIntent, handleStartBuildingConstruction, interruptBuildingConstruction, listBuildingOperationAudit, tickBuildingConstruction } from './world-runtime-building.service';
 import { claimRecoverableCatalogInstances, destroyManagedInstance, fenceInstanceRuntime, getInstanceLeaseStatus, getInstancePlayerAttachReadiness, hydratePersistentInstanceSnapshot, isInstanceLeaseWritable, migrateInstanceToNode, migratePlayerToNode, rebuildPersistentInstance, releaseLocalInstanceLeasesForShutdown, syncAllInstanceLeases, syncInstanceLease, unfreezeInstanceWriting } from './world-runtime-instance-lease.helpers';
 import { WorldRuntimeInstanceLeaseReadinessService } from './world-runtime-instance-lease-readiness.service';
 const INSTANCE_LEASE_RENEW_SKEW_MS = 5_000;
@@ -724,6 +724,9 @@ export class WorldRuntimeService {
         handleBuildPlaceIntent(playerId, payload) {
         return handleBuildPlaceIntent(this, playerId, payload);
     }
+        async handleBuildMoveIntent(playerId, payload) {
+        return handleBuildMoveIntent(this, playerId, payload);
+        }
         async handleBuildDeconstructIntent(playerId, payload) {
         return handleBuildDeconstructIntent(this, playerId, payload);
     }

@@ -116,6 +116,7 @@ import type {
 } from './formation-types';
 import type {
   BuildDeconstructIntentView,
+  BuildMoveIntentView,
   BuildPlaceIntentView,
   FengShuiObserveRequestView,
   RoomSetRoleRequestView,
@@ -304,6 +305,8 @@ export interface C2S_RefillFormation extends FormationRefillPayload {}
 export interface C2S_BuildPlaceIntent extends BuildPlaceIntentView {}
 /** 建筑拆除意图：服务端裁定返还、审计和重算。 */
 export interface C2S_BuildDeconstruct extends BuildDeconstructIntentView {}
+/** 建筑移动意图：服务端裁定所有权、目标点占位与拓扑重算。 */
+export interface C2S_BuildMove extends BuildMoveIntentView {}
 /** 设置房间用途：低频房间规则变更。 */
 export interface C2S_RoomSetRole extends RoomSetRoleRequestView {}
 /** 请求风水详情或 overlay：只在玩家打开风水视图时使用。 */

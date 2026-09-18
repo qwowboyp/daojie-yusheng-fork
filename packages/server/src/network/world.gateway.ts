@@ -713,6 +713,8 @@ class WorldGateway implements WorldGatewayHelperContext {
     handleBuildPlaceIntent(@ConnectedSocket() client: Socket, @MessageBody() payload: any) { return this.gatewayBuildingHelper.handleBuildPlaceIntent(client, payload); }
     @SubscribeMessage(C2S.BuildDeconstruct)
     handleBuildDeconstruct(@ConnectedSocket() client: Socket, @MessageBody() payload: any) { return this.gatewayBuildingHelper.handleBuildDeconstruct(client, payload); }
+    @SubscribeMessage(C2S.BuildMove)
+    handleBuildMove(@ConnectedSocket() client: Socket, @MessageBody() payload: any) { return this.gatewayBuildingHelper.handleBuildMove(client, payload); }
     @SubscribeMessage(C2S.RoomSetRole)
     handleRoomSetRole(@ConnectedSocket() client: Socket, @MessageBody() payload: any) { return this.gatewayBuildingHelper.handleRoomSetRole(client, payload); }
     @SubscribeMessage(C2S.FengShuiObserve)

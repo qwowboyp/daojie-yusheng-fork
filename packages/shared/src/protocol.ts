@@ -190,6 +190,7 @@ export const C2S = {
   RefillFormation: 'n:c:refillFormation',
   BuildPlaceIntent: 'n:c:buildPlaceIntent',
   BuildDeconstruct: 'n:c:buildDeconstruct',
+  BuildMove: 'n:c:buildMove',
   RoomSetRole: 'n:c:roomSetRole',
   FengShuiObserve: 'n:c:fengShuiObserve',
   DropItem: 'n:c:dropItem',
@@ -457,6 +458,7 @@ export interface C2S_PayloadMap extends Record<C2S_EventName, unknown> {
   [C2S.RefillFormation]: RequestPayloads.C2S_RefillFormation;
   [C2S.BuildPlaceIntent]: RequestPayloads.C2S_BuildPlaceIntent;
   [C2S.BuildDeconstruct]: RequestPayloads.C2S_BuildDeconstruct;
+  [C2S.BuildMove]: RequestPayloads.C2S_BuildMove;
   [C2S.RoomSetRole]: RequestPayloads.C2S_RoomSetRole;
   [C2S.FengShuiObserve]: RequestPayloads.C2S_FengShuiObserve;
   [C2S.DropItem]: RequestPayloads.C2S_DropItem;

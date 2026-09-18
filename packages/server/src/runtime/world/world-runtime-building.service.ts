@@ -351,7 +351,7 @@ export async function handleBuildDeconstructIntent(runtime, playerId, payload) {
     if (!building) {
         return recordBuildingOperation(runtime, operationKey, { requestId, ok: false, reason: 'building_not_found' }, { action: 'deconstruct', playerId, instanceId: context.instance.meta.instanceId, buildingId });
     }
-    const targetAccess = resolveDeconstructTargetAccess(runtime, context, playerId, building, payload);
+    const targetAccess = resolveBuildingTargetAccess(runtime, context, playerId, building, payload);
     if (!targetAccess.ok) {
         return recordBuildingOperation(runtime, operationKey, { requestId, ok: false, reason: targetAccess.reason }, { action: 'deconstruct', playerId, instanceId: context.instance.meta.instanceId, buildingId });
     }
@@ -374,6 +374,87 @@ export async function handleBuildDeconstructIntent(runtime, playerId, payload) {
         treasureVaultRecoveryMailId: result.mailId,
         treasureVaultRecoveredItems: result.itemCount,
     }, { action: 'deconstruct', playerId, instanceId: context.instance.meta.instanceId, buildingId });
+}
+
+/** 搬遷意圖：僅允許玩家搬遷自己建造的完工建築，目標點需在視野內，合法性由實例層複驗。 */
+export async function handleBuildMoveIntent(runtime, playerId, payload) {
+    const requestId = normalizeBuildingRequestId(payload?.requestId);
+    if (!requestId) {
+        return { requestId: '', ok: false, reason: 'request_id_required' };
+    }
+    const operationKey = buildBuildingOperationKey('move', playerId, requestId);
+    const replay = runtime.buildingOperationResultsByKey.get(operationKey);
+    if (replay) {
+        return { ...replay, duplicate: true };
+    }
+    const buildingId = normalizeBuildingRequestId(payload?.buildingId);
+    const context = resolvePlayerBuildingContext(runtime, playerId);
+    const instanceId = context.instance?.meta?.instanceId ?? null;
+    const auditMeta = { action: 'move', playerId, instanceId, buildingId };
+    if (isVirtualPublicWorldInstance(context.instance)) {
+        return recordBuildingOperation(runtime, operationKey, { requestId, ok: false, reason: 'virtual_world_building_forbidden' }, auditMeta);
+    }
+    if (!context.instance?.meta?.persistent) {
+        return recordBuildingOperation(runtime, operationKey, { requestId, ok: false, reason: 'instance_not_persistent' }, auditMeta);
+    }
+    const building = buildingId ? context.instance.buildingById?.get?.(buildingId) : null;
+    if (!building) {
+        return recordBuildingOperation(runtime, operationKey, { requestId, ok: false, reason: 'building_not_found' }, auditMeta);
+    }
+    // 僅限自己建設的建築：他人或宗門所屬、天然生成物一律拒絕搬遷。
+    if (building.ownerPlayerId !== playerId) {
+        return recordBuildingOperation(runtime, operationKey, { requestId, ok: false, reason: 'building_owner_mismatch' }, auditMeta);
+    }
+    const sectAccess = resolveSectBuildingAccess(runtime, context, playerId, 'building_create');
+    if (sectAccess.applies && !sectAccess.allowed) {
+        return recordBuildingOperation(runtime, operationKey, { requestId, ok: false, reason: 'sect_build_permission_denied' }, auditMeta);
+    }
+    const sourceAccess = resolveBuildingTargetAccess(runtime, context, playerId, building, null);
+    if (!sourceAccess.ok) {
+        return recordBuildingOperation(runtime, operationKey, { requestId, ok: false, reason: sourceAccess.reason }, auditMeta);
+    }
+    const destinationAccess = resolveMoveDestinationAccess(runtime, context, playerId, payload);
+    if (!destinationAccess.ok) {
+        return recordBuildingOperation(runtime, operationKey, { requestId, ok: false, reason: destinationAccess.reason }, auditMeta);
+    }
+    const result = context.instance.moveBuildingInstance?.({
+        buildingId: building.id,
+        x: payload?.x,
+        y: payload?.y,
+    });
+    return recordBuildingOperation(runtime, operationKey, {
+        requestId,
+        ok: result?.ok === true,
+        reason: result?.ok === true ? undefined : result?.reason ?? 'building_move_failed',
+        building: result?.ok === true ? toBuildingInstanceView(result.building) : undefined,
+        moved: result?.ok === true && result?.changed !== false,
+    }, auditMeta);
+}
+
+/** 搬遷目標點必須落在玩家當前視野與觀測範圍內，避免隔空搬遷。 */
+function resolveMoveDestinationAccess(runtime, context, playerId, payload) {
+    const x = Number(payload?.x);
+    const y = Number(payload?.y);
+    if (!Number.isFinite(x) || !Number.isFinite(y)) {
+        return { ok: false, reason: 'invalid_coordinate' };
+    }
+    const targetX = Math.trunc(x);
+    const targetY = Math.trunc(y);
+    const instancePlayer = context.instance.playersById?.get?.(playerId);
+    const playerX = Number(instancePlayer?.x ?? context.player?.x ?? context.location?.x);
+    const playerY = Number(instancePlayer?.y ?? context.player?.y ?? context.location?.y);
+    if (!Number.isFinite(playerX) || !Number.isFinite(playerY)) {
+        return { ok: false, reason: 'building_not_visible' };
+    }
+    const viewRange = resolvePlayerBuildingViewRange(runtime, context, playerId);
+    if (Math.max(Math.abs(targetX - Math.trunc(playerX)), Math.abs(targetY - Math.trunc(playerY))) > viewRange) {
+        return { ok: false, reason: 'building_out_of_range' };
+    }
+    const visibleTiles = buildPlayerVisibleTileLookup(runtime, playerId, context.instance);
+    if (!isTileVisibleToPlayer(context.instance, targetX, targetY, visibleTiles)) {
+        return { ok: false, reason: 'building_not_visible' };
+    }
+    return { ok: true };
 }
 
 export async function completeBuildingDeconstruction(runtime, playerIdInput, instanceIdInput, buildingIdInput) {
@@ -406,8 +487,8 @@ function resolveDeconstructBuildingAtCoordinate(instance, xInput, yInput) {
     return instance.getPrimaryBuildingAtTile?.(Math.trunc(x), Math.trunc(y)) ?? null;
 }
 
-/** 拆除必须命中目标建筑的权威占格，并处于玩家当前可见范围内。 */
-function resolveDeconstructTargetAccess(runtime, context, playerId, building, payload) {
+/** 拆除/搬遷必须命中目标建筑的权威占格，并处于玩家当前可见范围内。 */
+function resolveBuildingTargetAccess(runtime, context, playerId, building, payload) {
     const cells = collectBuildingOccupiedCells(context.instance, building);
     if (cells.length === 0) {
         return { ok: false, reason: 'building_not_found' };
