@@ -31,6 +31,8 @@ const FORMATION_SETUP_MIN_RADIUS = 1;
 const FORMATION_SETUP_MAX_RADIUS = 10;
 const FORMATION_SETUP_MIN_DURATION_MINUTES = 1;
 const FORMATION_SETUP_MAX_DURATION_MINUTES = 24 * 60;
+const FORMATION_RANGE_PREVIEW_ACTIVE_CLASS = 'formation-range-preview-active';
+const FORMATION_RANGE_PREVIEW_UI_IDS = ['detail-modal', 'detail-modal-card', 'game-workspace'] as const;
 
 export type FormationRangePreviewPayload = {
   shape: FormationRangeShape;
@@ -195,8 +197,7 @@ export class InventoryFormationDialogController {
   }
 
   clearWorldPreview(): void {
-    document.getElementById('detail-modal')?.classList.remove('formation-range-preview-active');
-    document.getElementById('detail-modal-card')?.classList.remove('formation-range-preview-active');
+    this.toggleRangePreviewUi(false);
     this.options.previewRange(null);
   }
 
@@ -467,12 +468,8 @@ export class InventoryFormationDialogController {
   private bindRangePreviewButton(body: HTMLElement, signal: AbortSignal): void {
     const button = body.querySelector<HTMLButtonElement>('[data-formation-range-preview]');
     if (!button) return;
-    const toggle = (visible: boolean) => {
-      document.getElementById('detail-modal')?.classList.toggle('formation-range-preview-active', visible);
-      document.getElementById('detail-modal-card')?.classList.toggle('formation-range-preview-active', visible);
-    };
-    const show = () => toggle(true);
-    const hide = () => toggle(false);
+    const show = () => this.toggleRangePreviewUi(true);
+    const hide = () => this.toggleRangePreviewUi(false);
     button.addEventListener('mouseenter', show, { signal });
     button.addEventListener('mouseleave', hide, { signal });
     button.addEventListener('focus', show, { signal });
@@ -480,6 +477,13 @@ export class InventoryFormationDialogController {
     button.addEventListener('pointerdown', show, { signal });
     button.addEventListener('pointerup', hide, { signal });
     button.addEventListener('pointercancel', hide, { signal });
+    signal.addEventListener('abort', hide, { once: true });
+  }
+
+  private toggleRangePreviewUi(visible: boolean): void {
+    for (const id of FORMATION_RANGE_PREVIEW_UI_IDS) {
+      document.getElementById(id)?.classList.toggle(FORMATION_RANGE_PREVIEW_ACTIVE_CLASS, visible);
+    }
   }
 
   private getCurrentSpiritStoneCount(): number {

@@ -9,6 +9,7 @@ const outputDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..
 const modes = [
   { id: 'pc-light', width: 1280, height: 900, mobile: false, color: 'light' },
   { id: 'phone-dark', width: 375, height: 844, mobile: true, color: 'dark' },
+  { id: 'touch-landscape-dark', width: 844, height: 390, mobile: true, color: 'dark' },
 ];
 
 const fixture = String.raw`
@@ -21,7 +22,7 @@ const fixture = String.raw`
     const compact = matchMedia('(max-width: 768px), (pointer: coarse) and (max-width: 1024px)').matches;
     const checks = [];
     const check = async (image, expected, label) => { if (!(image instanceof HTMLImageElement)) throw new Error(label + ' 未產生正式圖片'); await image.decode(); image.scrollIntoView({ block: 'center' }); const box = image.getBoundingClientRect(); checks.push({ label, width: box.width, height: box.height, expected }); };
-    document.getElementById('game-shell')?.classList.remove('hidden'); document.getElementById('login-overlay')?.classList.add('hidden');
+    document.getElementById('game-shell')?.classList.remove('hidden'); document.getElementById('game-workspace')?.classList.remove('hidden'); document.getElementById('login-overlay')?.classList.add('hidden');
     const template = getLocalItemTemplate('pill.minor_heal'); if (!template) throw new Error('缺少正式道具模板');
     const item = { ...template, itemId: 'pill.minor_heal', itemInstanceId: 'reference-proof-pill', count: 9 };
     const diskTemplate = getLocalItemTemplate('formation_disk.basic') ?? template;
@@ -42,11 +43,19 @@ const fixture = String.raw`
     const actionInput = document.querySelector('[data-inventory-action-count]'); if (!(actionInput instanceof HTMLInputElement)) throw new Error('drop 確認未產生正式數量輸入'); actionInput.focus(); actionInput.value = '3'; actionInput.dispatchEvent(new Event('input', { bubbles: true }));
     const actionImage = document.querySelector('#detail-modal-body img.item-art--detail'); await check(actionImage, compact ? 64 : 80, 'drop confirm');
     detailModalHost.close('action-proof');
-    detailModalHost.open({ ownerId: 'formation-proof', title: '布置陣法', renderBody: (body) => { const formation = new InventoryFormationDialogController({ getInventory: () => ({ capacity: 30, revision: 1, items: [{ itemId: 'spirit_stone', itemInstanceId: 'proof-stone', count: 99999 }] }), getPlayerQi: () => 99999, getFormationSkillLevel: () => 10, resolveDiskMultiplier: () => 1, getItemInstanceId: (entry) => entry?.itemInstanceId ?? '', repairMissingItemInstanceIds() {}, previewRange() {} }); formation.renderBody(body, disk); const controller = new AbortController(); formation.bind(body, disk, controller.signal); } });
+    detailModalHost.open({ ownerId: 'formation-proof', title: '佈置陣法', renderBody: (body) => { const formation = new InventoryFormationDialogController({ getInventory: () => ({ capacity: 30, revision: 1, items: [{ itemId: 'spirit_stone', itemInstanceId: 'proof-stone', count: 99999 }] }), getPlayerQi: () => 99999, getFormationSkillLevel: () => 10, resolveDiskMultiplier: () => 1, getItemInstanceId: (entry) => entry?.itemInstanceId ?? '', repairMissingItemInstanceIds() {}, previewRange() {} }); formation.renderBody(body, disk); const controller = new AbortController(); formation.bind(body, disk, controller.signal); } });
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
     const formationInput = document.querySelector('[data-formation-radius-input]'); if (!(formationInput instanceof HTMLInputElement)) throw new Error('陣法正式數量控制未產生'); formationInput.focus(); formationInput.value = '2'; formationInput.dispatchEvent(new Event('input', { bubbles: true }));
     const formationImage = document.querySelector('#detail-modal-body img.item-art--detail'); await check(formationImage, compact ? 64 : 80, 'formation dialog');
-    return { ok: true, focus: document.activeElement === formationInput, events, checks };
+    const previewButton = document.querySelector('[data-formation-range-preview]'); const workspace = document.getElementById('game-workspace'); const modalCard = document.getElementById('detail-modal-card');
+    if (!(previewButton instanceof HTMLButtonElement) || !workspace || !modalCard) throw new Error('陣法範圍預覽控制或工作區缺失');
+    const settlePreview = () => new Promise(r => requestAnimationFrame(() => setTimeout(r, 160)));
+    const snapshotPreview = () => ({ workspaceClass: workspace.classList.contains('formation-range-preview-active'), cardClass: modalCard.classList.contains('formation-range-preview-active'), workspaceOpacity: Number(getComputedStyle(workspace).opacity), cardOpacity: Number(getComputedStyle(modalCard).opacity) });
+    previewButton.dispatchEvent(new MouseEvent('mouseenter')); await settlePreview(); const hoverPreview = snapshotPreview();
+    previewButton.dispatchEvent(new MouseEvent('mouseleave')); await settlePreview(); const hoverRestored = snapshotPreview();
+    previewButton.dispatchEvent(new PointerEvent('pointerdown', { pointerType: 'touch' })); await settlePreview(); const touchPreview = snapshotPreview();
+    previewButton.dispatchEvent(new PointerEvent('pointerup', { pointerType: 'touch' })); await settlePreview(); const touchRestored = snapshotPreview();
+    return { ok: true, focus: document.activeElement === formationInput, events, checks, hoverPreview, hoverRestored, touchPreview, touchRestored };
   })()
 `;
 
@@ -76,6 +85,8 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
     await cdp.send('Page.navigate', { url: origin }); await delay(300);
     await cdp.evaluate(`(async()=>{ const { updateUiColorMode }=await import('/src/ui/ui-style-config.ts'); updateUiColorMode(${JSON.stringify(mode.color)}); })()`);
     const fixtureResult = await cdp.evaluate(fixture); assert.equal(fixtureResult.ok, true); assert.equal(fixtureResult.focus, true); assert.deepEqual(fixtureResult.events, []); assert(fixtureResult.checks.every((entry) => Math.abs(entry.width - entry.expected) <= 1 && Math.abs(entry.height - entry.expected) <= 1), `${mode.id} 圖片尺寸錯誤`);
+    for (const preview of [fixtureResult.hoverPreview, fixtureResult.touchPreview]) { assert.equal(preview.workspaceClass, true, `${mode.id} 預覽時背包工作區未退場`); assert.equal(preview.cardClass, true, `${mode.id} 預覽時佈陣視窗未退場`); assert.equal(preview.workspaceOpacity, 0, `${mode.id} 預覽時背包工作區仍遮住地圖`); assert.equal(preview.cardOpacity, 0, `${mode.id} 預覽時佈陣視窗仍遮住地圖`); }
+    for (const restored of [fixtureResult.hoverRestored, fixtureResult.touchRestored]) { assert.equal(restored.workspaceClass, false, `${mode.id} 結束預覽後背包工作區未恢復`); assert.equal(restored.cardClass, false, `${mode.id} 結束預覽後佈陣視窗未恢復`); assert.equal(restored.workspaceOpacity, 1, `${mode.id} 結束預覽後背包工作區仍透明`); assert.equal(restored.cardOpacity, 1, `${mode.id} 結束預覽後佈陣視窗仍透明`); }
     const result = await cdp.evaluate(inspect); assert(result.count >= 1, `${mode.id} 最終正式視窗沒有圖`); assert.deepEqual(result.errors, [], `${mode.id} 尺寸或裁切`); assert.equal(result.focus, true); assert.equal(result.overflow, false);
     const shot = await cdp.send('Page.captureScreenshot', { format: 'png', fromSurface: true }); await writeFile(path.join(outputDir, `${mode.id}.png`), Buffer.from(shot.data, 'base64'));
   }
