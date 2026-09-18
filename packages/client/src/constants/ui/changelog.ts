@@ -12,6 +12,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 /** 当前内置的更新日志条目。 */
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    updatedAt: '2026-09-19',
+    summary: '修復「玄壤深淵」連通性，入口傳送點接回洞穴主網，首領與全部採集點恢復可達。',
+    items: [
+      '地圖：修復自焚木荒臺傳入「玄壤深淵」後無法移動的問題 — 入口傳送點四周原本被結構石封死，現已打通並接回洞穴主網。',
+      '地圖：中央大廳通往「封印石室」與「地脈泉」的通道已打通，兩處首領（五行噬脈獸、玄壤地龍）與全部採集點恢復可達。',
+    ],
+  },
+  {
     updatedAt: '2026-09-18',
     summary: '預覽陣法範圍時，佈陣視窗與背包會暫時退場，地圖覆蓋格不再被介面遮住。',
     items: [
