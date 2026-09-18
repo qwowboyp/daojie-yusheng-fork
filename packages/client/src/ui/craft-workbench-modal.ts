@@ -77,6 +77,7 @@ import type { CraftQueueParent } from './craft-queue-view';
 import { CraftTransmissionView } from './craft-transmission-view';
 import type { CraftTransmissionCallbacks, CraftTransmissionParent } from './craft-transmission-view';
 import type { AccessPolicySocketClient } from './access-policy-socket-client';
+import { shouldUseMobileUi } from './responsive-viewport';
 import {
   getReactCraftWorkbenchState,
   mountReactCraftWorkbenchPanel,
@@ -297,6 +298,7 @@ function normalizeTechniqueActivityKind(value: string | undefined): RuntimeTechn
 
 export class CraftWorkbenchModal {
   private static readonly MODAL_OWNER = 'craft-workbench-modal';
+  private static readonly MOBILE_ALCHEMY_DETAIL_OWNER = 'craft-workbench-modal:mobile-alchemy-detail';
   private static readonly ALCHEMY_CONFIRM_OWNER = 'craft-workbench-modal:alchemy-confirm';
   private static readonly ALCHEMY_MATERIAL_PICKER_OWNER = 'craft-workbench-modal:alchemy-material-picker';
   private static readonly ALCHEMY_PRESET_PICKER_OWNER = 'craft-workbench-modal:alchemy-preset-picker';
@@ -309,6 +311,7 @@ export class CraftWorkbenchModal {
   private workspaceBodyMode: CraftWorkspaceMode | null = null;
   private workspaceBodyEvents: AbortController | null = null;
   private workspaceActivationRevision = 0;
+  private mobileAlchemyDetailOpener: HTMLElement | null = null;
 
   private alchemyPanel: S2C_AlchemyPanel | null = null;
   private enhancementPanel: S2C_EnhancementPanel | null = null;
@@ -682,6 +685,7 @@ export class CraftWorkbenchModal {
   }
 
   private releaseWorkspaceBody(clearActiveMode: boolean): void {
+    this.closeMobileAlchemyDetail(false);
     this.workspaceBodyEvents?.abort();
     this.workspaceBodyEvents = null;
     unmountReactCraftWorkbenchPanel();
@@ -1027,6 +1031,7 @@ export class CraftWorkbenchModal {
     }
     if (this.workspaceBodyMode === this.activeMode && this.workspaceBody?.isConnected) {
       this.renderWorkspaceBody(this.workspaceBody, definition);
+      this.syncMobileAlchemyDetail();
       return;
     }
     if (this.workspaceNavigation && this.activeMode !== 'technique_refining') {
@@ -1085,6 +1090,85 @@ export class CraftWorkbenchModal {
     }
     replaceElementHtml(body, this.renderCraftBody(true));
     this.bindWorkspaceBody(body, false);
+  }
+
+  private renderMobileAlchemyDetailBody(): string {
+    return `<div class="alchemy-mobile-detail-content">${this.alchemyView.renderAlchemyDetailPanel()}</div>`;
+  }
+
+  private getMobileAlchemyDetailFrame(): { title: string; subtitle: string; variantClass: string } | null {
+    const recipe = this.getSelectedAlchemyRecipe();
+    if (!recipe || (this.activeMode !== 'alchemy' && this.activeMode !== 'forging')) {
+      return null;
+    }
+    const isForging = this.activeMode === 'forging';
+    return {
+      title: isForging ? '煉器製作詳情' : '煉丹製作詳情',
+      subtitle: recipe.outputName,
+      variantClass: `detail-modal--craft detail-modal--craft-recipe detail-modal--craft-${isForging ? 'forging' : 'alchemy'}`,
+    };
+  }
+
+  private bindMobileAlchemyDetail(body: HTMLElement, signal: AbortSignal): void {
+    bindInlineItemTooltips(body, signal);
+    this.bindActions(body, signal);
+  }
+
+  private shouldUseMobileAlchemyDetail(): boolean {
+    return shouldUseMobileUi(window)
+      || (typeof window.matchMedia === 'function'
+        && window.matchMedia('(max-width: 1024px) and (max-height: 520px)').matches);
+  }
+
+  private openMobileAlchemyDetail(opener: HTMLElement): void {
+    const frame = this.getMobileAlchemyDetailFrame();
+    if (!frame) {
+      return;
+    }
+    this.mobileAlchemyDetailOpener = opener;
+    detailModalHost.open({
+      ownerId: CraftWorkbenchModal.MOBILE_ALCHEMY_DETAIL_OWNER,
+      ...frame,
+      hint: '',
+      renderBody: (body) => replaceElementHtml(body, this.renderMobileAlchemyDetailBody()),
+      onAfterRender: (body, signal) => this.bindMobileAlchemyDetail(body, signal),
+      onClose: () => {
+        const previousOpener = this.mobileAlchemyDetailOpener;
+        this.mobileAlchemyDetailOpener = null;
+        if (previousOpener?.isConnected) {
+          previousOpener.focus({ preventScroll: true });
+        }
+      },
+    });
+    document.querySelector<HTMLButtonElement>('#detail-modal [data-detail-modal-close="true"]')
+      ?.focus({ preventScroll: true });
+  }
+
+  private syncMobileAlchemyDetail(): void {
+    if (!detailModalHost.isOpenFor(CraftWorkbenchModal.MOBILE_ALCHEMY_DETAIL_OWNER)) {
+      return;
+    }
+    const frame = this.getMobileAlchemyDetailFrame();
+    if (!frame || !this.shouldUseMobileAlchemyDetail()) {
+      this.closeMobileAlchemyDetail(false);
+      return;
+    }
+    detailModalHost.patch({
+      ownerId: CraftWorkbenchModal.MOBILE_ALCHEMY_DETAIL_OWNER,
+      ...frame,
+      hint: '',
+      renderBody: (body) => replaceElementHtml(body, this.renderMobileAlchemyDetailBody()),
+      onAfterRender: (body, signal) => this.bindMobileAlchemyDetail(body, signal),
+    });
+  }
+
+  private closeMobileAlchemyDetail(restoreFocus: boolean): void {
+    const previousOpener = this.mobileAlchemyDetailOpener;
+    this.mobileAlchemyDetailOpener = null;
+    detailModalHost.close(CraftWorkbenchModal.MOBILE_ALCHEMY_DETAIL_OWNER);
+    if (restoreFocus && previousOpener?.isConnected) {
+      previousOpener.focus({ preventScroll: true });
+    }
   }
 
   private bindWorkspaceBody(body: HTMLElement, react: boolean): void {
@@ -1634,12 +1718,23 @@ export class CraftWorkbenchModal {
   }
 
   private renderCraftQueuePanelContent(queue = this.getCraftQueueSnapshot()): string {
+    const listId = `craft-queue-list-${this.activeMode ?? 'general'}`;
     return `
         <div class="craft-queue-head">
           <span>${escapeHtml(t('craft.workbench.queue.title'))}</span>
-          <strong>${formatDisplayInteger(queue.length)}</strong>
+          <div class="craft-queue-head-actions">
+            <strong>${formatDisplayInteger(queue.length)}</strong>
+            <button
+              class="small-btn ghost craft-queue-toggle"
+              type="button"
+              data-craft-action="toggle-craft-queue"
+              aria-controls="${escapeHtmlAttr(listId)}"
+              aria-expanded="false"
+              ${queue.length <= 1 ? 'hidden' : ''}
+            >查看全部</button>
+          </div>
         </div>
-        <div class="craft-queue-list">
+        <div class="craft-queue-list" id="${escapeHtmlAttr(listId)}">
           ${queue.length > 0
             ? queue.map((entry, index) => `
               <div class="craft-queue-item ${entry.isActive ? 'active' : ''}" data-craft-queue-entry="${escapeHtmlAttr(entry.queueId)}">
@@ -1700,9 +1795,33 @@ export class CraftWorkbenchModal {
       replaceElementHtml(queuePanel, this.renderCraftQueuePanelContent(queue));
       queuePanel.dataset.craftQueueKey = queueKey;
     }
+    this.syncCraftQueueToggle(queuePanel);
     this.patchCraftQueueProgress(queuePanel);
     this.refreshQueueFloatingPanel();
     return true;
+  }
+
+  private syncCraftQueueToggle(queuePanel: HTMLElement): void {
+    const button = queuePanel.querySelector<HTMLButtonElement>('[data-craft-action="toggle-craft-queue"]');
+    if (!button) {
+      queuePanel.classList.remove('is-mobile-expanded');
+      return;
+    }
+    if (button.hidden) {
+      queuePanel.classList.remove('is-mobile-expanded');
+    }
+    const expanded = queuePanel.classList.contains('is-mobile-expanded');
+    button.setAttribute('aria-expanded', String(expanded));
+    button.textContent = expanded ? '收合隊列' : '查看全部';
+  }
+
+  private toggleMobileCraftQueue(target: HTMLElement): void {
+    const queuePanel = target.closest<HTMLElement>('.craft-queue-panel');
+    if (!queuePanel) {
+      return;
+    }
+    queuePanel.classList.toggle('is-mobile-expanded');
+    this.syncCraftQueueToggle(queuePanel);
   }
 
   private refreshQueueFloatingPanel(): void {
@@ -2081,6 +2200,10 @@ export class CraftWorkbenchModal {
       if (this.transmissionView.handleAction(action, target, body)) {
         return;
       }
+      if (action === 'toggle-craft-queue') {
+        this.toggleMobileCraftQueue(target);
+        return;
+      }
       if (action === 'cancel-queue-entry') {
         this.dispatchQueueCancellation(target);
         return;
@@ -2128,6 +2251,12 @@ export class CraftWorkbenchModal {
           this.selectedAlchemyPresetId = null;
           this.ensureAlchemyDraft();
           this.render();
+          if (this.shouldUseMobileAlchemyDetail() && this.workspaceBody?.isConnected) {
+            const currentOpener = Array.from(
+              this.workspaceBody.querySelectorAll<HTMLElement>('[data-craft-action="alchemy-select-recipe"]'),
+            ).find((button) => button.dataset.recipeId === recipeId) ?? target;
+            this.openMobileAlchemyDetail(currentOpener);
+          }
         }
         return;
       }

@@ -168,6 +168,10 @@ const initialize = String.raw`
       batchBrewTicks: 10, currentBatchRemainingTicks: 8, pausedTicks: 0, spiritStoneCost: 2,
       totalTicks: 20, remainingTicks: 8, workTotalTicks: 20, workRemainingTicks: 8,
       interruptWaitRemainingTicks: 0, interruptState: null, successRate: 0.8, exactRecipe: true, startedAt: Date.now(),
+      queuedJobs: [{
+        queueId: 'proof-alchemy-queued', kind: 'alchemy', label: '回元丹02', quantity: 1,
+        createdAt: Date.now() + 1, state: 'pending', payload: { outputItemId: alchemyCatalog[1].outputItemId },
+      }],
     };
     const hammer = inventory.items[3];
     const candidate = {
@@ -220,6 +224,17 @@ async function runCase(entry) {
         const afterList = pane.querySelector('[data-alchemy-recipe-list="true"]');
         const afterScrollOwner = scrollOwner === list ? afterList : pane;
         const realmTabs = pane.querySelector('[data-alchemy-realm-tabs="true"]');
+        const firstRecipe = pane.querySelector('.alchemy-recipe-item');
+        const inlineDetail = pane.querySelector('.alchemy-detail-panel');
+        const workbenchHeader = pane.querySelector('.craft-workbench-header');
+        const queuePanel = pane.querySelector('.craft-queue-panel');
+        const paneRect = pane.getBoundingClientRect();
+        const queueRect = queuePanel.getBoundingClientRect();
+        const recipeColumns = getComputedStyle(afterList).gridTemplateColumns.trim().split(/\s+/).filter(Boolean).length;
+        const visibleRecipeCount = [...pane.querySelectorAll('.alchemy-recipe-item')].filter((item) => {
+          const rect = item.getBoundingClientRect();
+          return rect.bottom > paneRect.top && rect.top < paneRect.bottom;
+        }).length;
         const result = {
           requestCount: p.requests.alchemy,
           detailHidden: document.getElementById('detail-modal').classList.contains('hidden'),
@@ -228,6 +243,17 @@ async function runCase(entry) {
           recipeCount: pane.querySelectorAll('.alchemy-recipe-item').length,
           realmTabs: [...pane.querySelectorAll('[data-alchemy-realm-tabs="true"] [data-craft-action="alchemy-switch-realm"]')].map((button) => button.dataset.realm),
           realmTabsOverflow: realmTabs.scrollWidth > realmTabs.clientWidth,
+          realmTabsOverflowMode: getComputedStyle(realmTabs).overflowX,
+          pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+          recipeColumns,
+          visibleRecipeCount,
+          firstRecipeHeight: firstRecipe.getBoundingClientRect().height,
+          firstRecipeLabelled: (firstRecipe.getAttribute('aria-label') ?? '').includes('製作詳情'),
+          inlineDetailDisplay: getComputedStyle(inlineDetail).display,
+          workbenchHeaderPosition: getComputedStyle(workbenchHeader).position,
+          queueVisibleAfterScroll: queueRect.top >= paneRect.top - 1 && queueRect.top < paneRect.bottom,
+          queueItemCount: pane.querySelectorAll('.craft-queue-item').length,
+          queueToggleVisible: getComputedStyle(pane.querySelector('.craft-queue-toggle')).display !== 'none',
           scrollable: scrollOwner.scrollHeight > scrollOwner.clientHeight,
           scrollPreserved: afterScrollOwner.scrollTop === beforeScroll,
           hostPreserved: pane.querySelector('[data-react-panel="craft"]') === beforeHost,
@@ -238,18 +264,105 @@ async function runCase(entry) {
         return result;
       })()
     `);
-    assert.equal(alchemy.requestCount, 1, '同步 workspace onContent 重入只能请求一次煉丹面板');
-    assert.equal(alchemy.detailHidden, true, '工坊不得再打开 detail modal');
-    assert.equal(alchemy.embedded, true, 'React 工坊必须带 embedded 标记');
-    assert.equal(alchemy.noInnerTabs, true, 'workspace 已有主分页时不得重复工坊侧栏分页');
-    assert.equal(alchemy.recipeCount, 24, '非空煉丹长列表必须完整进入正式 renderer');
+    assert.equal(alchemy.requestCount, 1, '同步 workspace onContent 重入只能請求一次煉丹面板');
+    assert.equal(alchemy.detailHidden, true, '工坊不得再開啟 detail modal');
+    assert.equal(alchemy.embedded, true, 'React 工坊必須帶 embedded 標記');
+    assert.equal(alchemy.noInnerTabs, true, 'workspace 已有主分頁時不得重複工坊側欄分頁');
+    assert.equal(alchemy.recipeCount, 24, '非空煉丹長列表必須完整進入正式 renderer');
     assert.deepEqual(alchemy.realmTabs, ['mortal', 'qi', 'foundation', 'golden-core', 'nascent', 'soul-transform', 'void-refine', 'body-integration', 'mahayana', 'tribulation', 'ascension'], '築基後配方必須依真實境界邊界新增各大境界分頁');
-    assert.equal(alchemy.realmTabsOverflow, false, '境界分頁不得橫向溢出容器');
-    assert.equal(alchemy.scrollable, true, '煉丹长列表必须存在可滚动路径');
-    assert.equal(alchemy.scrollPreserved, true, '增量 patch 不得打断列表滚动位置');
-    assert.equal(alchemy.hostPreserved, true, '增量 patch 不得重挂 React root');
+    assert.equal(alchemy.pageOverflow, false, '工坊不得造成頁面級橫向溢位');
+    assert.equal(alchemy.queueItemCount, 2, '當前工作與後續項目必須完整進入隊列');
+    assert.equal(alchemy.scrollable, true, '煉丹長列表必須存在可捲動路徑');
+    assert.equal(alchemy.scrollPreserved, true, '增量 patch 不得打斷列表捲動位置');
+    assert.equal(alchemy.hostPreserved, true, '增量 patch 不得重新掛載 React root');
     assert.equal(alchemy.progressChanged, true, `job statePatch 必须更新工作进度：${JSON.stringify(alchemy)}`);
+    if (entry.id === 'desktop') {
+      assert.equal(alchemy.realmTabsOverflow, false, '桌面境界分頁不得橫向溢出容器');
+      assert.equal(alchemy.recipeColumns, 1, '桌面配方仍須維持清單與右側詳情佈局');
+      assert.notEqual(alchemy.inlineDetailDisplay, 'none', '桌面必須保留右側製作詳情');
+    } else {
+      assert.equal(alchemy.realmTabsOverflow, true, '手機境界分頁應使用緊湊的橫向分類帶');
+      assert.equal(alchemy.realmTabsOverflowMode, 'auto', '手機境界分類帶必須可水平捲動');
+      assert.ok(alchemy.recipeColumns >= 2, `手機可製作道具至少雙欄：${JSON.stringify(alchemy)}`);
+      assert.ok(alchemy.firstRecipeHeight >= 44, `手機配方觸控高度不得低於 44px：${JSON.stringify(alchemy)}`);
+      assert.equal(alchemy.firstRecipeLabelled, true, '手機配方必須有明確的製作詳情語意');
+      assert.equal(alchemy.inlineDetailDisplay, 'none', '手機不得再把製作詳情塞在配方清單底部');
+      assert.equal(alchemy.workbenchHeaderPosition, 'sticky', '手機當前隊列必須置頂');
+      assert.equal(alchemy.queueVisibleAfterScroll, true, '手機捲動配方時仍必須看得到當前隊列');
+      assert.equal(alchemy.queueToggleVisible, true, '多項隊列必須提供完整展開入口');
+      assert.ok(alchemy.visibleRecipeCount > 0, `手機首屏必須同時看得到可製作道具：${JSON.stringify(alchemy)}`);
+    }
     const alchemyShot = await capture(cdp, `craft-workspace-${entry.id}-alchemy-light.png`);
+
+    let mobileDetailShot = null;
+    if (entry.id !== 'desktop') {
+      const mobileDetail = await cdp.evaluate(String.raw`
+        (async () => {
+          const pane = document.getElementById('workspace-alchemy');
+          const opener = pane.querySelector('[data-guided-tour-alchemy-recipe="proof-alchemy-0"]');
+          const queueToggle = pane.querySelector('[data-craft-action="toggle-craft-queue"]');
+          const beforeScroll = pane.scrollTop;
+          queueToggle.click();
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+          const queueExpanded = queueToggle.getAttribute('aria-expanded') === 'true'
+            && getComputedStyle(pane.querySelectorAll('.craft-queue-item')[1]).display !== 'none';
+          queueToggle.click();
+          opener.click();
+          await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+          const layer = document.getElementById('detail-modal');
+          const card = document.getElementById('detail-modal-card');
+          const body = document.getElementById('detail-modal-body');
+          const closeButton = layer.querySelector('[data-detail-modal-close="true"]');
+          const actionButtons = [...body.querySelectorAll('button')];
+          return {
+            queueExpanded,
+            open: !layer.classList.contains('hidden'),
+            recipeVariant: card.classList.contains('detail-modal--craft-recipe'),
+            title: document.getElementById('detail-modal-title').textContent,
+            bodyReady: body.querySelector('.alchemy-mobile-detail-content .alchemy-detail-stack') !== null,
+            hasStartAction: body.querySelector('[data-craft-action="alchemy-start-full"]') !== null,
+            closeFocused: document.activeElement === closeButton,
+            closeHeight: closeButton.getBoundingClientRect().height,
+            minActionHeight: actionButtons.length > 0 ? Math.min(...actionButtons.map((button) => button.getBoundingClientRect().height)) : 0,
+            withinViewport: card.getBoundingClientRect().left >= 0
+              && card.getBoundingClientRect().right <= window.innerWidth
+              && card.getBoundingClientRect().bottom <= window.innerHeight + 1,
+            pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+            beforeScroll,
+          };
+        })()
+      `);
+      assert.equal(mobileDetail.queueExpanded, true, '手機完整隊列必須可展開並顯示後續項目');
+      assert.equal(mobileDetail.open, true, '手機點選配方必須開啟製作詳情浮窗');
+      assert.equal(mobileDetail.recipeVariant, true, '手機製作詳情必須使用專屬浮窗樣式');
+      assert.equal(mobileDetail.title, '煉丹製作詳情', '手機詳情浮窗標題必須清楚說明用途');
+      assert.equal(mobileDetail.bodyReady, true, '手機詳情浮窗必須包含完整配方內容');
+      assert.equal(mobileDetail.hasStartAction, true, '手機詳情浮窗內必須可以直接進入製作流程');
+      assert.equal(mobileDetail.closeFocused, true, '手機詳情浮窗開啟後必須把焦點移到可見關閉按鈕');
+      assert.ok(mobileDetail.closeHeight >= 44, `手機詳情關閉按鈕不得低於 44px：${JSON.stringify(mobileDetail)}`);
+      assert.ok(mobileDetail.minActionHeight >= 44, `手機詳情操作按鈕不得低於 44px：${JSON.stringify(mobileDetail)}`);
+      assert.equal(mobileDetail.withinViewport, true, '手機詳情浮窗不得超出可視範圍');
+      assert.equal(mobileDetail.pageOverflow, false, '手機詳情浮窗不得造成頁面級橫向溢位');
+      mobileDetailShot = await capture(cdp, `craft-workspace-${entry.id}-alchemy-detail-light.png`);
+
+      const mobileDetailClose = await cdp.evaluate(String.raw`
+        (async () => {
+          const pane = document.getElementById('workspace-alchemy');
+          const beforeScroll = pane.scrollTop;
+          document.querySelector('#detail-modal [data-detail-modal-close="true"]')?.click();
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+          const opener = pane.querySelector('[data-guided-tour-alchemy-recipe="proof-alchemy-0"]');
+          return {
+            closed: document.getElementById('detail-modal').classList.contains('hidden'),
+            focusReturned: document.activeElement === opener,
+            scrollPreserved: pane.scrollTop === beforeScroll,
+          };
+        })()
+      `);
+      assert.equal(mobileDetailClose.closed, true, '手機製作詳情必須可明確關閉');
+      assert.equal(mobileDetailClose.focusReturned, true, '關閉手機製作詳情後必須把焦點還給原配方');
+      assert.equal(mobileDetailClose.scrollPreserved, true, '關閉手機製作詳情不得改變配方清單位置');
+    }
 
     const realmSwitching = await cdp.evaluate(String.raw`
       (async () => {
@@ -286,7 +399,7 @@ async function runCase(entry) {
     assert.deepEqual(realmSwitching.ascension, ['proof-alchemy-127'], '飛昇配方必須落入飛昇分頁');
     assert.notEqual(realmSwitching.darkRealmBackground, 'rgba(247, 239, 225, 0.64)', '深色模式境界分頁不得沿用淺色底');
     assert.equal(realmSwitching.darkRealmText, 'rgb(246, 238, 224)', '深色模式境界分頁必須保留高對比文字');
-    assert.equal(realmSwitching.realmTabsOverflow, false, '深色模式境界分頁不得橫向溢出容器');
+    assert.equal(realmSwitching.realmTabsOverflow, entry.id !== 'desktop', '境界分類帶只可在手機內部水平捲動');
     const alchemyDarkShot = await capture(cdp, `craft-workspace-${entry.id}-alchemy-dark.png`);
 
     const enhancement = await cdp.evaluate(String.raw`
@@ -299,6 +412,19 @@ async function runCase(entry) {
         forgingPane.querySelector('[data-alchemy-realm-tabs="true"] [data-realm="golden-core"]')?.click();
         await new Promise((resolve) => requestAnimationFrame(resolve));
         const forgingGoldenRecipes = [...forgingPane.querySelectorAll('.alchemy-recipe-item')].map((item) => item.dataset.guidedTourAlchemyRecipe);
+        let forgingMobileDetail = null;
+        if (matchMedia('(max-width: 760px), (max-width: 1024px) and (max-height: 520px)').matches) {
+          forgingPane.querySelector('[data-guided-tour-alchemy-recipe="proof-forging-43"]')?.click();
+          await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+          forgingMobileDetail = {
+            open: !document.getElementById('detail-modal').classList.contains('hidden'),
+            title: document.getElementById('detail-modal-title').textContent,
+            variant: document.getElementById('detail-modal-card').classList.contains('detail-modal--craft-forging'),
+            hasStartAction: document.getElementById('detail-modal-body').querySelector('[data-craft-action="alchemy-start-full"]') !== null,
+          };
+          document.querySelector('#detail-modal [data-detail-modal-close="true"]')?.click();
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+        }
         p.openEnhancement();
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
         const pane = document.getElementById('workspace-enhancement');
@@ -308,14 +434,23 @@ async function runCase(entry) {
           embedded: pane.querySelector('[data-craft-workbench-embedded="true"]') !== null,
           candidateText: pane.textContent.includes('銅鑄造鎚'),
           forgingGoldenRecipes,
+          forgingMobileDetail,
         };
       })()
     `);
-    assert.equal(enhancement.forgingRequests, 1, '煉器同步切页只能请求一次');
-    assert.equal(enhancement.enhancementRequests, 1, '强化同步切页只能请求一次');
-    assert.equal(enhancement.embedded, true, '强化必须沿用 embedded 正式 renderer');
-    assert.equal(enhancement.candidateText, true, '强化非空候选必须可见');
+    assert.equal(enhancement.forgingRequests, 1, '煉器同步切頁只能請求一次');
+    assert.equal(enhancement.enhancementRequests, 1, '強化同步切頁只能請求一次');
+    assert.equal(enhancement.embedded, true, '強化必須沿用 embedded 正式 renderer');
+    assert.equal(enhancement.candidateText, true, '強化非空候選必須可見');
     assert.deepEqual(enhancement.forgingGoldenRecipes, ['proof-forging-43'], '煉器入口必須與煉丹共用金丹分頁邊界');
+    if (entry.id !== 'desktop') {
+      assert.deepEqual(enhancement.forgingMobileDetail, {
+        open: true,
+        title: '煉器製作詳情',
+        variant: true,
+        hasStartAction: true,
+      }, '手機煉器配方也必須開啟可直接操作的專屬詳情浮窗');
+    }
     const enhancementShot = await capture(cdp, `craft-workspace-${entry.id}-enhancement.png`);
 
     const lifecycle = await cdp.evaluate(String.raw`
@@ -346,12 +481,12 @@ async function runCase(entry) {
         };
       })()
     `);
-    assert.equal(lifecycle.confirmOpened, true, '煉丹开始确认必须继续使用独立 confirm layer');
-    assert.equal(lifecycle.detailClosed, true, '道具详细弹层入口切换 workspace 时必须走原 onClose 生命周期');
-    assert.equal(lifecycle.enhancementRequests, 2, '道具详细入口后的强化激活仍只能增加一次请求');
-    assert.equal(lifecycle.transmissionVisible, true, '傳功必须进入自身 workspace pane');
+    assert.equal(lifecycle.confirmOpened, true, '煉丹開始確認必須繼續使用獨立 confirm layer');
+    assert.equal(lifecycle.detailClosed, true, '道具詳細彈層入口切換 workspace 時必須走原 onClose 生命週期');
+    assert.equal(lifecycle.enhancementRequests, 2, '道具詳細入口後的強化啟用仍只能增加一次請求');
+    assert.equal(lifecycle.transmissionVisible, true, '傳功必須進入自身 workspace pane');
     assert.equal(lifecycle.confirmClosed, true, `离开 workspace 必须关闭 transient confirm：${JSON.stringify(lifecycle.confirmStates)}`);
-    assert.equal(lifecycle.bodyCleared, true, '离开 workspace 必须卸载 React 与清空专属宿主');
+    assert.equal(lifecycle.bodyCleared, true, '離開 workspace 必須卸載 React 與清空專屬宿主');
 
     const materialNavigation = await cdp.evaluate(String.raw`
       (async () => {
@@ -378,7 +513,10 @@ async function runCase(entry) {
           await paint();
           pane.querySelector('[data-guided-tour-alchemy-recipe="proof-' + mode + '-0"]')?.click();
           await paint();
-          const opener = [...pane.querySelectorAll('[data-craft-action="alchemy-open-material-detail"]')]
+          const materialHost = document.getElementById('detail-modal').classList.contains('hidden')
+            ? pane
+            : document.getElementById('detail-modal-body');
+          const opener = [...materialHost.querySelectorAll('[data-craft-action="alchemy-open-material-detail"]')]
             .find((button) => button.dataset.itemId === itemId);
           if (!(opener instanceof HTMLButtonElement)) throw new Error('缺少材料詳情入口：' + mode + '/' + itemId);
           opener.click();
@@ -420,7 +558,10 @@ async function runCase(entry) {
         await paint();
         pane.querySelector('[data-guided-tour-alchemy-recipe="proof-alchemy-0"]')?.click();
         await paint();
-        const opener = [...pane.querySelectorAll('[data-craft-action="alchemy-open-material-detail"]')]
+        const materialHost = document.getElementById('detail-modal').classList.contains('hidden')
+          ? pane
+          : document.getElementById('detail-modal-body');
+        const opener = [...materialHost.querySelectorAll('[data-craft-action="alchemy-open-material-detail"]')]
           .find((button) => button.dataset.itemId === 'mat.moondew_grass');
         opener.click();
         await waitFor(() => document.querySelector('.catalog-item-detail-dialog')?.open === true, '一般關閉材料詳情');
@@ -459,7 +600,7 @@ async function runCase(entry) {
     assert.equal(materialNavigation.ordinaryCloseKeepsWorkspace, true, '一般關閉材料詳情不得關閉工坊');
     assert.equal(materialNavigation.ordinaryCloseRestoresFocus, true, '一般關閉材料詳情必須將焦點還給材料按鈕');
     assert.equal(materialNavigation.callbackCleared, true, '下一次無回呼材料導航不得沿用舊工坊關閉回呼');
-    return [alchemyShot, alchemyDarkShot, enhancementShot];
+    return [alchemyShot, mobileDetailShot, alchemyDarkShot, enhancementShot];
   });
 }
 

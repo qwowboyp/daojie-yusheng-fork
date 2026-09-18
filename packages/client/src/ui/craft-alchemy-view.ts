@@ -818,8 +818,9 @@ export class CraftAlchemyView {
 
   renderAlchemyRecipeItem(recipe: AlchemyRecipeCatalogEntry, active: boolean): string {
     return `
-      <button class="alchemy-recipe-item ${active ? 'active' : ''}" type="button" data-craft-action="alchemy-select-recipe" data-recipe-id="${escapeHtml(recipe.recipeId)}" data-guided-tour-alchemy-recipe="${escapeHtml(recipe.recipeId)}" data-guided-tour-alchemy-output="${escapeHtml(recipe.outputItemId)}">
+      <button class="alchemy-recipe-item ${active ? 'active' : ''}" type="button" data-craft-action="alchemy-select-recipe" data-recipe-id="${escapeHtml(recipe.recipeId)}" data-guided-tour-alchemy-recipe="${escapeHtml(recipe.recipeId)}" data-guided-tour-alchemy-output="${escapeHtml(recipe.outputItemId)}" aria-current="${active ? 'true' : 'false'}" aria-label="查看${escapeHtml(recipe.outputName)}製作詳情">
         <span class="alchemy-recipe-name">${this.renderAlchemyItemReference(recipe.outputItemId, recipe.outputName, 'reward')}</span>
+        <span class="alchemy-recipe-action-hint" aria-hidden="true">詳情</span>
       </button>
     `;
   }
