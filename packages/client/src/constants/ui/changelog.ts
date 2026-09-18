@@ -13,6 +13,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     updatedAt: '2026-09-18',
+    summary: '預覽陣法範圍時，佈陣視窗與背包會暫時退場，地圖覆蓋格不再被介面遮住。',
+    items: [
+      '介面：滑鼠移入、鍵盤聚焦或觸控按住「預覽範圍」時，佈陣視窗與背包會暫時退場，方便查看完整地圖覆蓋格。',
+      '操作：移開、離焦或放開後，原本的視窗與輸入狀態會自動恢復。',
+    ],
+  },
+  {
+    updatedAt: '2026-09-18',
     summary: '「營造」面板新增移動建築，可把自己蓋好的地面建築搬遷到新位置。',
     items: [
       '營造：新增「移動建築」按鈕 — 依序選擇自己建設的完工地面建築與新位置，即可將建築搬遷過去。',
