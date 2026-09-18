@@ -115,23 +115,54 @@ function testLegacyRouterSource(legacy) {
   const interceptIdx = legacy.indexOf(canonicalEntrypoint.replaceAll('/', '\\')) >= 0
     ? legacy.indexOf(canonicalEntrypoint.replaceAll('/', '\\'))
     : legacy.indexOf(canonicalEntrypoint);
-  const envIdx = legacy.indexOf('Read-PveEnv');
-  const archiveIdx = legacy.indexOf('git archive', envIdx);
+  // Use executable / call-site forms so the guard's comment block (which
+  // also mentions these names) does not false-positive the indices.
+  const envIdx = legacy.indexOf('Read-PveEnv -');
+  const archiveIdx = legacy.indexOf('git -C $RepoRoot archive');
+  const dockerBuildIdx = legacy.indexOf('docker build');
+  const lxcIdx = legacy.indexOf('bash /opt/daojie/lxc-deploy.sh');
+  const guardIdx = legacy.indexOf("if ($Target -ne 'client') {");
   assert.ok(interceptIdx >= 0, 'legacy client path must call canonical wrapper');
-  assert.ok(envIdx >= 0 && archiveIdx >= 0, 'server/both must keep legacy env/archive');
+  assert.ok(envIdx >= 0, 'legacy env loader must remain (historical reference, unreachable from server/both/default)');
+  assert.ok(archiveIdx >= 0, 'legacy archive step must remain (historical reference, unreachable from server/both/default)');
+  assert.ok(dockerBuildIdx >= 0, 'legacy docker build must remain (historical reference, unreachable)');
+  assert.ok(lxcIdx >= 0, 'legacy lxc-deploy.sh call must remain (historical reference, unreachable)');
+  assert.ok(guardIdx >= 0, 'fail-closed guard line must be present');
+  assert.ok(guardIdx < envIdx, 'guard must precede env loading');
+  assert.ok(guardIdx < archiveIdx, 'guard must precede archive step');
+  assert.ok(guardIdx < dockerBuildIdx, 'guard must precede docker build');
+  assert.ok(guardIdx < lxcIdx, 'guard must precede lxc-deploy.sh call');
   assert.ok(interceptIdx < envIdx, 'client intercept must run before env loading');
-  assert.ok(envIdx < archiveIdx, 'legacy archive must remain after env loading');
   assert.match(legacy, /\$Target -eq 'client'/);
   assert.match(legacy, /AllowClientSourceBuildRecovery/);
   assert.match(legacy, /\[ValidateSet\('server', 'client', 'both'\)\]/);
+  assert.match(legacy, /unsafe-legacy-deploy-disabled/);
+  assert.match(legacy, /scripts\/coordinated-server-release\.py/);
+  assert.match(legacy, /scripts\/client-release\/deploy\.ps1/);
   const clientGateStart = legacy.indexOf("if ($Target -eq 'client' -and -not $AllowClientSourceBuildRecovery)");
   assert.ok(clientGateStart >= 0 && clientGateStart < envIdx, 'client gate must precede env loading');
+  assert.ok(clientGateStart < guardIdx, 'client gate must precede the fail-closed guard');
   const clientGate = legacy.slice(clientGateStart, envIdx);
   assert.match(clientGate, /AllowClientSourceBuildRecovery/);
-  assert.doesNotMatch(clientGate, /git archive/);
+  // Guard comment block also lives between clientGate and envIdx; only check
+  // executable archive / build / lxc-deploy forms (the comment mentions them).
+  assert.doesNotMatch(clientGate, /git -C \$RepoRoot archive/);
+  assert.doesNotMatch(clientGate, /^\s*'call bash \/opt\/daojie\/lxc-deploy\.sh',?$/m);
+  // Guard body (4 lines from guardIdx) must short-circuit on $Target alone.
+  const guardBody = legacy.slice(guardIdx, guardIdx + 600);
+  assert.match(guardBody, /unsafe-legacy-deploy-disabled/);
+  assert.match(guardBody, /exit \d+/);
+  // Guard must NOT consult Mode / AllowClientSourceBuildRecovery as a bypass.
+  // (AllowClientSourceBuildRecovery appears in the client gate above; here we
+  // check only the guard body to ensure no bypass branch was added.)
+  assert.doesNotMatch(guardBody, /\$Mode/);
+  assert.doesNotMatch(guardBody, /AllowClientSourceBuildRecovery/);
   const afterIntercept = legacy.slice(envIdx);
+  // Unreachable historical reference: archive + docker build still in source
+  // so existing runbook text and review references remain accurate.
   assert.match(afterIntercept, /git archive/);
   assert.match(afterIntercept, /docker build/);
+  assert.match(afterIntercept, /bash \/opt\/daojie\/lxc-deploy\.sh/);
   assert.doesNotMatch(afterIntercept, /scripts\\client-release\\deploy\.ps1/);
 }
 

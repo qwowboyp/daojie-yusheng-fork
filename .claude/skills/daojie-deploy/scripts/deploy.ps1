@@ -44,6 +44,20 @@ if ($Target -eq 'client' -and -not $AllowClientSourceBuildRecovery) {
   exit $LASTEXITCODE
 }
 
+# -- fail-closed guard -------------------------------------------------
+# Legacy -Target server / -Target both / default path is disabled. The
+# client router above is the only supported way to release the client
+# from this script; server releases must go through
+# scripts/coordinated-server-release.py. The guard runs BEFORE
+# Read-PveEnv, git archive, WinSCP, Docker build, and the remote
+# lxc-deploy.sh call so the unsafe legacy pipeline is unreachable from
+# any non-client target. Recovery flags (-Mode, -AllowClientSourceBuildRecovery)
+# cannot bypass it; this guard short-circuits on $Target alone.
+if ($Target -ne 'client') {
+  [Console]::Error.WriteLine("unsafe-legacy-deploy-disabled: -Target '$Target' is no longer supported. Use scripts/client-release/deploy.ps1 for client releases and scripts/coordinated-server-release.py for server releases. See docs/runbook/server-coordinated-release.md and docs/runbook/client-hot-release.md.")
+  exit 64
+}
+
 # -- environment constants ---------------------------------------------
 $HostKey = 'ssh-ed25519 255 BIrLOS6gElJJ08pEYO4nvIBvRInllRlUYtOlKoLlkVw'
 $RemoteSrc = '/opt/daojie/src'
