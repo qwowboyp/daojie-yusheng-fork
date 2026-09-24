@@ -12,6 +12,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 /** 当前内置的更新日志条目。 */
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    updatedAt: '2026-09-24',
+    summary: '提升靈獸靈蛋掉落率，普通怪由 0.001% 提升至 0.5%、首領由 0.01% 提升至 3%。',
+    items: [
+      '戰鬥：擊殺一般怪物掉落靈蛋的機率由 0.001% 提升至 0.5%，首領由 0.01% 提升至 3%。',
+      '平衡：五行與星級分佈維持不變，僅調整掉落機率。',
+    ],
+  },
+  {
     updatedAt: '2026-09-19',
     summary: '修復「玄壤深淵」連通性，入口傳送點接回洞穴主網，首領與全部採集點恢復可達。',
     items: [

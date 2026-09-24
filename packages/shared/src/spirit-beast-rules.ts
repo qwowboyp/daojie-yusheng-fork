@@ -12,7 +12,7 @@ export const SPIRIT_BEAST_ELEMENT_NAMES: Record<SpiritBeastElement, string> = { 
 export const SPIRIT_BEAST_SKILL_NAMES: Record<SpiritBeastSkill, string> = { forging: '煉器', alchemy: '煉丹', enhancement: '強化', building: '營造', mining: '採礦', planting: '種植' };
 export const SPIRIT_BEAST_STAR_WEIGHTS = [7000, 1500, 500, 800, 200] as const;
 export const SPIRIT_BEAST_RULES = Object.freeze({
-  version: 1, normalEggDropProbability: 0.00001, bossEggDropProbability: 0.0001,
+  version: 1, normalEggDropProbability: 0.005, bossEggDropProbability: 0.03,
   hatchBaseWorkTicks: 3600, evolutionMaterialCount: 10, evolutionSuccessBasisPoints: 2500,
   maxStar: 5, baseCombatGrowth: 1.3, skillLevelsPerStar: 5, speedBonusPerStar: 0.1,
   fusionParentStar: 3, fusionOutputStar: 1, fusionVersion: 2,
