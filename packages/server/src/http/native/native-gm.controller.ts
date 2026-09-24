@@ -233,6 +233,14 @@ interface ZeroPublishedGeneratedTechniqueChantApplyBody {
   expectedMatchedRows?: number;
 }
 
+interface RemoveWorldInstanceFormationBody {
+  instanceId?: string;
+  formationInstanceId?: string;
+  refundSpiritStones?: boolean;
+  expectedFormationId?: string;
+  expectedOwnerPlayerId?: string;
+}
+
 interface NodeMigrationBody {
   targetNodeId?: string;
 }
@@ -669,6 +677,16 @@ export class NativeGmController {
       targetType: 'world_instance',
       targetId: instanceId,
     }, () => this.nextGmWorldService.destroyWorldInstance(instanceId));
+  }
+
+  @Post('world/formations/remove')
+  removeWorldInstanceFormation(@Body() body: RemoveWorldInstanceFormationBody, @Req() request: unknown) {
+    return this.executeAuditedGmWrite({
+      op: 'gm.world.formation.remove',
+      request,
+      targetType: 'formation',
+      targetId: typeof body?.formationInstanceId === 'string' ? body.formationInstanceId : null,
+    }, () => this.nextGmWorldService.removeWorldInstanceFormation(body ?? {}));
   }
 
   @Get('world/instances/:instanceId/rooms')

@@ -2206,6 +2206,146 @@ class WorldRuntimeFormationService {
         return formation ?? null;
     }
 
+    /**
+     * removeFormationWithRefund：GM 專用——拆除指定玩家陣法並把剩餘靈石預算退還給擁有者。
+     * 順序：前置檢查（含擁有者存在與堆疊容量）→ 維護檢查點／租約圍欄預檢 → 運行態移除 →
+     * 等待並確認持久列已刪除 → 入帳退款 → 通知。
+     * 先刪後退：持久刪除未確認時回滾運行態並中止（尚未退款，可安全重試）；
+     * 退款在刪除確認後才同步入帳，任何崩潰窗口最多是「已刪未退」（可人工補償），不會重複退款。
+     */
+    async removeFormationWithRefund(instanceId, formationInstanceId, deps = null, options: { refundSpiritStones?: boolean; expectedFormationId?: string; expectedOwnerPlayerId?: string } = {}) {
+        const normalizedInstanceId = normalizeInstanceId(instanceId);
+        const normalizedId = typeof formationInstanceId === 'string' ? formationInstanceId.trim() : '';
+        if (!normalizedInstanceId || !normalizedId) {
+            throw new BadRequestException('陣法標識無效');
+        }
+        const formation = this.findFormationInInstance(normalizedInstanceId, normalizedId);
+        if (!formation) {
+            throw new NotFoundException('陣法不存在');
+        }
+        if (isPersistentFormation(formation)) {
+            throw new BadRequestException('持續性陣法不允許透過此介面移除');
+        }
+        const expectedFormationId = normalizeOptionalString(options?.expectedFormationId);
+        if (expectedFormationId && normalizeOptionalString(formation.formationId) !== expectedFormationId) {
+            throw new BadRequestException('陣法類型與預期不符');
+        }
+        const ownerPlayerId = normalizeOptionalString(formation.ownerPlayerId);
+        const expectedOwnerPlayerId = normalizeOptionalString(options?.expectedOwnerPlayerId);
+        if (expectedOwnerPlayerId && ownerPlayerId !== expectedOwnerPlayerId) {
+            throw new BadRequestException('陣法擁有者與預期不符');
+        }
+        const remainingSpiritStonesBefore = Math.max(0, Math.floor(Number(resolveFormationRemainingSpiritStoneBudget(formation)) || 0));
+        const refundSpiritStones = options?.refundSpiritStones !== false;
+        const refundAmount = refundSpiritStones ? remainingSpiritStonesBefore : 0;
+        if (refundAmount > 0 && !ownerPlayerId) {
+            throw new BadRequestException('陣法缺少擁有者，無法退還靈石');
+        }
+        if (refundAmount > 0) {
+            // 容量與在線預檢：擁有者必須仍在運行態（在線或離線掛機）才能入帳；超過堆疊上限會靜默截斷，故先擋。
+            const walletStackLimit = 2_147_483_647; // 錢包單一物品堆疊上限，與 player-runtime 的 MAX_ITEM_COUNT 一致
+            const player = this.playerRuntimeService.getPlayerOrThrow(ownerPlayerId);
+            const currentSpiritStones = (Array.isArray(player?.inventory?.items) ? player.inventory.items : [])
+                .filter((entry) => entry?.itemId === FORMATION_SPIRIT_STONE_ITEM_ID)
+                .reduce((sum, entry) => sum + Math.max(0, Math.trunc(Number(entry?.count) || 0)), 0);
+            if (currentSpiritStones + refundAmount > walletStackLimit) {
+                throw new BadRequestException('退還後將超過靈石堆疊上限，請先整理目標玩家背包');
+            }
+        }
+        // 維護檢查點預檢：檢查點稍後可能把已刪的持久列寫回，存在時直接拒絕。
+        if (this.formationMaintenanceCheckpointById?.has?.(normalizedId) === true) {
+            throw new ServiceUnavailableException('陣法維護檢查點進行中，請稍後重試');
+        }
+        // 預檢租約圍欄：租約不可寫時直接失敗，避免後續刪除無法持久化。
+        const persistenceFence = this.captureFormationPersistenceFence(
+            deps?.getInstanceRuntime?.(normalizedInstanceId) ?? null,
+            deps,
+        );
+        const rollbackRemoval = () => {
+            this.getFormationList(normalizedInstanceId).push(removed);
+            touchRuntimeInstanceRevision(deps, normalizedInstanceId);
+            this.markFormationInstanceDirty(normalizedInstanceId, persistenceFence);
+            this.persistInstanceFormationsSoon(normalizedInstanceId, persistenceFence);
+        };
+        const removed = this.removeFormationFromInstance(normalizedInstanceId, normalizedId, deps, { deferPersistence: true });
+        if (!removed) {
+            throw new ServiceUnavailableException('陣法移除失敗，操作未生效');
+        }
+        const persistenceRequired = this.requiresFormationPersistenceFence();
+        let persistenceConfirmed = !persistenceRequired;
+        if (persistenceRequired) {
+            persistenceConfirmed = await this.confirmFormationRemovalPersisted(removed, persistenceFence);
+            const checkpointRaced = this.formationMaintenanceCheckpointById?.has?.(normalizedId) === true;
+            if (!persistenceConfirmed || checkpointRaced) {
+                rollbackRemoval();
+                throw new ServiceUnavailableException('陣法持久刪除未確認，操作已回滾，請稍後重試');
+            }
+        } else {
+            this.persistFormationRemovalSoon(removed, persistenceFence);
+        }
+        if (refundAmount > 0) {
+            try {
+                this.playerRuntimeService.creditWallet(ownerPlayerId, FORMATION_SPIRIT_STONE_ITEM_ID, refundAmount);
+            } catch (error) {
+                rollbackRemoval();
+                throw new ServiceUnavailableException(`陣法退款入帳失敗，操作已回滾：${error instanceof Error ? error.message : String(error)}`);
+            }
+        }
+        if (ownerPlayerId) {
+            this.enqueueFormationNotice(
+                ownerPlayerId,
+                'warning',
+                'notice.formation.admin-removed',
+                `陣法「${formation.name}」已被拆除，退還靈石 ${formatInteger(refundAmount)}。`,
+                { formationName: formation.name, spiritStoneCount: formatInteger(refundAmount) },
+            );
+        }
+        return {
+            instanceId: normalizedInstanceId,
+            formationInstanceId: formation.id,
+            formationId: formation.formationId,
+            formationName: formation.name,
+            ownerPlayerId: ownerPlayerId ?? null,
+            refundedSpiritStones: refundAmount,
+            remainingSpiritStoneBudgetBefore: remainingSpiritStonesBefore,
+            persistenceConfirmed,
+        };
+    }
+
+    /**
+     * confirmFormationRemovalPersisted：嘗試刪除陣法持久列並回查確認已不存在。
+     * 回傳 false 代表「無法確認已刪」（阻擋中、無連線池、查詢失敗或列仍在），呼叫端必須回滾。
+     */
+    async confirmFormationRemovalPersisted(formation, persistenceFence = null) {
+        const normalizedInstanceId = normalizeInstanceId(formation?.instanceId);
+        const formationInstanceId = normalizeOptionalString(formation?.id);
+        if (!normalizedInstanceId || !formationInstanceId) {
+            return false;
+        }
+        try {
+            await this.deleteFormationSnapshot(formation, persistenceFence);
+        } catch (error) {
+            this.logger.warn(`陣法刪除持久化失敗：${normalizedInstanceId} ${formationInstanceId} ${error instanceof Error ? error.message : String(error)}`);
+        }
+        let pool = null;
+        try {
+            pool = await this.ensurePersistencePool();
+        } catch {
+            pool = null;
+        }
+        if (!pool) {
+            return false;
+        }
+        const remaining = await pool.query(
+            `SELECT 1 FROM ${INSTANCE_FORMATION_STATE_TABLE} WHERE instance_id = $1 AND formation_instance_id = $2 LIMIT 1`,
+            [normalizedInstanceId, formationInstanceId],
+        ).catch(() => null);
+        if (!remaining) {
+            return false;
+        }
+        return Number(remaining.rowCount ?? 0) === 0;
+    }
+
     pruneInvalidPlacementsInInstance(instanceId, instance, options: { deps?: unknown } = {}) {
         const normalizedInstanceId = normalizeInstanceId(instanceId);
         if (!normalizedInstanceId || !instance) {

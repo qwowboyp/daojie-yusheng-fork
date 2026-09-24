@@ -182,6 +182,24 @@ interface ManagedRuntimeInstanceLike {
   };
 }
 
+interface WorldRuntimeFormationServiceLike {
+  removeFormationWithRefund(
+    instanceId: string,
+    formationInstanceId: string,
+    deps?: unknown,
+    options?: { refundSpiritStones?: boolean; expectedFormationId?: string; expectedOwnerPlayerId?: string },
+  ): Promise<{
+    instanceId: string;
+    formationInstanceId: string;
+    formationId?: string;
+    formationName?: string;
+    ownerPlayerId?: string | null;
+    refundedSpiritStones: number;
+    remainingSpiritStoneBudgetBefore: number;
+    persistenceConfirmed: boolean;
+  }>;
+}
+
 interface WorldRuntimeServiceLike {
   getRuntimeSummary(): unknown;
   listBuildingOperationAudit?(limit?: number): unknown[];
@@ -226,6 +244,7 @@ interface WorldRuntimeServiceLike {
   destroyEmptyManagedInstance?(instanceId: string, reason?: string): Promise<{ ok: boolean; reason?: string }>;
   handleGmBuildDeconstruct?(instanceId: string, buildingId: string): Promise<{ ok?: boolean; reason?: string; building?: unknown }>;
   isInstanceLeaseWritable?(instance: unknown): boolean;
+  worldRuntimeFormationService?: WorldRuntimeFormationServiceLike;
   timeChamberRuntimeService?: {
     getInstanceBinding?(instanceId: string): {
       sourceInstanceId: string;
@@ -743,6 +762,29 @@ export class NativeGmWorldService {
     }
     return { ok: true, instanceId, invalidChamberBootstrapRemoved: invalidChamberBootstrap };
   }
+
+  /**
+   * removeWorldInstanceFormation：GM 移除玩家陣法，可選擇把剩餘靈石退還給擁有者。
+   * 只處理已部署的非持續性陣法；退款金額以整數靈石（無條件捨去）計。
+   */
+  async removeWorldInstanceFormation(input: { instanceId?: unknown; formationInstanceId?: unknown; refundSpiritStones?: unknown; expectedFormationId?: unknown; expectedOwnerPlayerId?: unknown }) {
+    const instanceId = normalizeRequiredString(input?.instanceId);
+    const formationInstanceId = normalizeRequiredString(input?.formationInstanceId);
+    if (!instanceId || !formationInstanceId) {
+      throw new BadRequestException('实例 ID 和阵法实例 ID 不能为空');
+    }
+    const formationService = this.worldRuntimeService?.worldRuntimeFormationService;
+    if (!formationService || typeof formationService.removeFormationWithRefund !== 'function') {
+      throw new ServiceUnavailableException('阵法移除能力不可用');
+    }
+    const result = await formationService.removeFormationWithRefund(instanceId, formationInstanceId, this.worldRuntimeService, {
+      refundSpiritStones: input?.refundSpiritStones !== false,
+      expectedFormationId: normalizeRequiredString(input?.expectedFormationId) || undefined,
+      expectedOwnerPlayerId: normalizeRequiredString(input?.expectedOwnerPlayerId) || undefined,
+    });
+    return { ok: true, ...result };
+  }
+
   /**
  * getWorldInstanceRuntime：读取实例运行态。
  * @param instanceId string 实例 ID。
