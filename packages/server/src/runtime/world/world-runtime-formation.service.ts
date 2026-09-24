@@ -563,7 +563,7 @@ class WorldRuntimeFormationService {
     }
 
     dispatchSetFormationActive(playerId, payload, deps = null) {
-        const formation = this.findOwnedFormation(playerId, payload?.formationInstanceId);
+        const formation = this.findOwnedFormation(playerId, payload?.formationInstanceId, deps);
         if (isPersistentFormation(formation)) {
             throw new BadRequestException('持續性陣法需要在陣法管理面板操作');
         }
@@ -607,7 +607,7 @@ class WorldRuntimeFormationService {
     }
 
     buildRefillFormationPlan(playerId, payload, deps = null) {
-        const formation = this.findOwnedFormation(playerId, payload?.formationInstanceId);
+        const formation = this.findOwnedFormation(playerId, payload?.formationInstanceId, deps);
         if (isPersistentFormation(formation)) {
             throw new BadRequestException('持續性陣法需要在陣法管理面板注入靈石或靈力');
         }
@@ -761,7 +761,7 @@ class WorldRuntimeFormationService {
 
     resolveMaintainableFormation(playerId, formationInstanceId, ctx = null) {
         try {
-            return this.findOwnedFormation(playerId, formationInstanceId);
+            return this.findOwnedFormation(playerId, formationInstanceId, ctx?.deps ?? null);
         }
         catch (ownedError) {
             const formation = this.findFormationByInstanceOrId(null, formationInstanceId);
@@ -1441,11 +1441,30 @@ class WorldRuntimeFormationService {
         return result;
     }
 
-    listOwnedFormationsAt(instanceId, ownerPlayerId, x, y) {
+    listOwnedFormationsAt(instanceId, ownerPlayerId, x, y, instanceOwnerSectId = null) {
+        let actorSectId = null;
+        try {
+            actorSectId = resolvePlayerSectId(this.playerRuntimeService.getPlayerOrThrow(ownerPlayerId));
+        }
+        catch (_error) {
+            actorSectId = null;
+        }
+        const normalizedInstanceSectId = normalizeOptionalString(instanceOwnerSectId);
         return (this.formationsByInstanceId.get(instanceId) ?? [])
-            .filter((formation) => formation.ownerPlayerId === ownerPlayerId
-            && !isPersistentFormation(formation)
-            && isWithinFormationMaintenanceControlRange(x, y, formation.eyeX ?? formation.x, formation.eyeY ?? formation.y))
+            .filter((formation) => {
+            if (isPersistentFormation(formation)
+                || !isWithinFormationMaintenanceControlRange(x, y, formation.eyeX ?? formation.x, formation.eyeY ?? formation.y)) {
+                return false;
+            }
+            if (formation.ownerPlayerId === ownerPlayerId) {
+                return true;
+            }
+            // 宗門領地內的成員陣法：同宗成員且身處宗門領地實例時可見（與操作權限一致）。
+            return Boolean(actorSectId)
+                && Boolean(normalizedInstanceSectId)
+                && normalizedInstanceSectId === actorSectId
+                && normalizeOptionalString(formation.ownerSectId) === actorSectId;
+        })
             .map((formation) => ({
             id: formation.id,
             name: formation.name,
@@ -2139,7 +2158,7 @@ class WorldRuntimeFormationService {
         this.persistenceReady = false;
     }
 
-    findOwnedFormation(playerId, formationInstanceId) {
+    findOwnedFormation(playerId, formationInstanceId, deps = null) {
         const normalizedId = typeof formationInstanceId === 'string' ? formationInstanceId.trim() : '';
         if (!normalizedId) {
             throw new BadRequestException('陣法實例 ID 不能為空');
@@ -2149,12 +2168,52 @@ class WorldRuntimeFormationService {
             if (!formation) {
                 continue;
             }
-            if (formation.ownerPlayerId !== playerId) {
+            if (formation.ownerPlayerId !== playerId && !this.canControlFormationAsSectMember(formation, playerId, deps)) {
                 throw new ForbiddenException('不能操作他人的陣法');
             }
             return formation;
         }
         throw new NotFoundException('陣法不存在');
+    }
+
+    /**
+     * 判斷非持久性陣法是否可由同宗成員共同操作：
+     * 陣法須佈在操作者所屬宗門的領地實例內，且操作者身處陣眼維護控制範圍。
+     * deps 需能解析實例運行態（缺 getInstanceRuntime 時一律拒絕，維持擁有者專屬）。
+     */
+    canControlFormationAsSectMember(formation, playerId, deps = null) {
+        if (!formation || !playerId || isPersistentFormation(formation)) {
+            return false;
+        }
+        let player = null;
+        try {
+            player = this.playerRuntimeService.getPlayerOrThrow(playerId);
+        }
+        catch (_error) {
+            return false;
+        }
+        const playerSectId = resolvePlayerSectId(player);
+        const formationSectId = normalizeOptionalString(formation.ownerSectId);
+        if (!playerSectId || !formationSectId || playerSectId !== formationSectId) {
+            return false;
+        }
+        const instance = typeof deps?.getInstanceRuntime === 'function'
+            ? deps.getInstanceRuntime(formation.instanceId)
+            : null;
+        const instanceSectId = normalizeOptionalString(instance?.meta?.ownerSectId);
+        if (!instanceSectId || instanceSectId !== playerSectId) {
+            return false;
+        }
+        const controlInstanceId = normalizeInstanceId(formation.eyeInstanceId) || normalizeInstanceId(formation.instanceId);
+        if (!controlInstanceId || normalizeInstanceId(player.instanceId) !== controlInstanceId) {
+            return false;
+        }
+        return isWithinFormationMaintenanceControlRange(
+            player.x,
+            player.y,
+            firstFiniteInteger(formation.eyeX, formation.x),
+            firstFiniteInteger(formation.eyeY, formation.y),
+        );
     }
 
     findFormationInInstance(instanceId, formationInstanceId) {

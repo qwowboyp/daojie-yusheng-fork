@@ -60,6 +60,7 @@ async function main() {
   await testFormationFlushAllNowFlushesPendingInstances();
   await testFormationPersistFailureKeepsDirtyForFlushAll();
   await testFormationSaveInstanceFormationsReplaysRemovalDirty();
+  await testFormationSectMemberControl();
   const notices = [];
   const player = {
     playerId,
@@ -1425,6 +1426,85 @@ async function runFormationPersistenceSmoke(playerRuntimeService) {
     await pool.query("DELETE FROM server_sect WHERE sect_id = 'sect:smoke'").catch(() => undefined);
     await pool.end().catch(() => undefined);
   }
+}
+
+/**
+ * 宗門領地內陣法的成員共同控制測試：
+ * 同宗成員（操作者自行支付）可開啟/關閉、資源補給；外人、非領地、超距皆不可。
+ */
+async function testFormationSectMemberControl() {
+  const memberPlayerId = "player:formation-sect-control-member";
+  const outsiderPlayerId = "player:formation-sect-control-outsider";
+  const memberInstanceId = "sect:sect:control-smoke:inner";
+  const publicInstanceId = "real:sect_control_public";
+  const notices = [];
+  const member = { playerId: memberPlayerId, sectId: "sect:control-smoke", instanceId: memberInstanceId, x: 0, y: 0, qi: 500, wallet: { spirit_stone: 500 }, inventory: { items: [] }, dirtyDomains: new Set() };
+  const playerRuntimeService = {
+    getPlayerOrThrow(targetPlayerId) {
+      if (targetPlayerId === memberPlayerId) {
+        return member;
+      }
+      throw new Error(`player_not_found:${targetPlayerId}`);
+    },
+    canAffordWallet(targetPlayerId, itemId, amount) {
+      assert.equal(targetPlayerId, memberPlayerId, "資源僅能由操作者支付");
+      return ((member.wallet[itemId] || 0)) >= amount;
+    },
+    debitWallet(targetPlayerId, itemId, amount = 1) {
+      assert.equal(targetPlayerId, memberPlayerId, "資源僅能由操作者支付");
+      const current = (member.wallet[itemId] || 0);
+      if (current < amount) {
+        throw new Error(`${itemId} 餘額不足`);
+      }
+      member.wallet[itemId] = current - amount;
+      return amount;
+    },
+    spendQi(targetPlayerId, amount = 1) {
+      assert.equal(targetPlayerId, memberPlayerId, "資源僅能由操作者支付");
+      member.qi -= amount;
+    },
+    enqueueNotice(targetPlayerId, notice) {
+      notices.push({ targetPlayerId, notice });
+    },
+  };
+  const service = new WorldRuntimeFormationService({ getFormationTemplate: () => null }, playerRuntimeService);
+  service.ensurePersistencePool = async () => null;
+  const template = service.resolveFormationTemplate("spirit_gathering");
+  assert.ok(template, "聚靈陣模板必須可解析");
+  const buildInstanceMock = (targetInstanceId, kind, ownerSectId) => ({ meta: { instanceId: targetInstanceId, kind, ownerSectId, assignedNodeId: "node:smoke", leaseToken: "lease:smoke", ownershipEpoch: 7 }, template: { width: 16, height: 16 }, worldRevision: 0, getTileResource: () => 0, addTileResource() {}, disperseQiAt() { return 0; } });
+  const sectInstance = buildInstanceMock(memberInstanceId, "sect", "sect:control-smoke");
+  const publicInstance = buildInstanceMock(publicInstanceId, "public", null);
+  const deps = { getInstanceRuntime: (targetInstanceId) => targetInstanceId === memberInstanceId ? sectInstance : (targetInstanceId === publicInstanceId ? publicInstance : null), isInstanceLeaseWritable: () => true };
+  const buildFormation = (id, ownerPlayerId, instanceIdValue) => ({ instanceId: instanceIdValue, id, ownerPlayerId, ownerSectId: "sect:control-smoke", formationId: template.id, lifecycle: "deployed", name: template.name, template, diskItemId: "formation_disk.yellow", diskTier: "yellow", diskMultiplier: 2, spiritStoneCount: 100, qiCost: 100, x: 0, y: 0, eyeInstanceId: instanceIdValue, eyeX: 0, eyeY: 0, allocation: { radius: 2, effectValue: 250, durationHours: 24 }, stats: { effectValue: 250, radius: 2, tickActiveCost: 1, tickInactiveCost: 0, tickActiveQiCost: 1, tickInactiveQiCost: 0, tickActiveSpiritStoneCost: 0, tickInactiveSpiritStoneCost: 0 }, active: true, remainingQiBudget: 1000, remainingSpiritStoneBudget: 1000, remainingAuraBudget: 1000, createdAt: Date.now(), updatedAt: Date.now() });
+  const sectFormation = buildFormation("formation:control-smoke:member", "player:formation-sect-control-owner", memberInstanceId);
+  const publicFormation = buildFormation("formation:control-smoke:public", "player:formation-sect-control-owner", publicInstanceId);
+  service.formationsByInstanceId.set(memberInstanceId, [sectFormation]);
+  service.formationsByInstanceId.set(publicInstanceId, [publicFormation]);
+  // 成員在宗門領地內可見同宗陣法；外人與非領地都不行。
+  assert.equal(service.listOwnedFormationsAt(memberInstanceId, memberPlayerId, 0, 0, "sect:control-smoke").length, 1, "同宗成員應可在宗門領地看到陣法");
+  assert.equal(service.listOwnedFormationsAt(memberInstanceId, memberPlayerId, 0, 0, null).length, 0, "非宗門領地不應列出");
+  assert.equal(service.listOwnedFormationsAt(memberInstanceId, outsiderPlayerId, 0, 0, "sect:control-smoke").length, 0, "非成員不應列出");
+  assert.equal(service.listOwnedFormationsAt(publicInstanceId, memberPlayerId, 0, 0, null).length, 0, "非領地實例不應列出");
+  // 成員操作：toggle 與 refill 皆由操作者自己付費。
+  const memberNoticesBefore = notices.length;
+  service.dispatchSetFormationActive(memberPlayerId, { formationInstanceId: sectFormation.id, active: false }, deps);
+  assert.equal(sectFormation.active, false, "成員應能關閉同宗陣法");
+  assert.equal(notices[notices.length - 1].targetPlayerId, memberPlayerId, "通知應發給操作者");
+  const memberStonesBefore = member.wallet.spirit_stone;
+  service.dispatchRefillFormation(memberPlayerId, { formationInstanceId: sectFormation.id, spiritStoneCount: 10, qiCost: 100 }, deps);
+  assert.equal(memberStonesBefore - member.wallet.spirit_stone, 10, "補給資源應由操作者支付");
+  assert.equal(sectFormation.remainingSpiritStoneBudget, 1010, "陣法預算應增加");
+  assert.equal(sectFormation.active, true, "補給後陣法應重新開啟");
+  // 外人不可操作；非領地陣法對成員也不可操作；超距不可操作。
+  assert.throws(() => service.findOwnedFormation(outsiderPlayerId, sectFormation.id, deps), /不能操作他人的陣法/, "外人不可操作同宗陣法");
+  assert.throws(() => service.findOwnedFormation(memberPlayerId, publicFormation.id, deps), /不能操作他人的陣法/, "非宗門領地陣法不可由成員操作");
+  member.x = 9;
+  assert.throws(() => service.findOwnedFormation(memberPlayerId, sectFormation.id, deps), /不能操作他人的陣法/, "超出陣眼控制範圍不可操作");
+  member.x = 0;
+  // 擁有者本人照舊可操作（回歸）。
+  service.dispatchSetFormationActive("player:formation-sect-control-owner", { formationInstanceId: sectFormation.id, active: false }, deps);
+  assert.equal(sectFormation.active, false, "擁有者操作權限不受影響");
+  assert.ok(notices.length > memberNoticesBefore, "操作應產生通知");
 }
 
 async function countRows(pool, sql, params = []) {

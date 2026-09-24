@@ -200,8 +200,11 @@ export class WorldRuntimeContextActionQueryService {
                 cooldownLeft: 0,
             });
         }
+        const instanceOwnerSectId = typeof view?.instance?.meta?.ownerSectId === 'string' && view.instance.meta.ownerSectId.trim()
+            ? view.instance.meta.ownerSectId.trim()
+            : null;
         const localFormations = typeof deps?.worldRuntimeFormationService?.listOwnedFormationsAt === 'function'
-            ? deps.worldRuntimeFormationService.listOwnedFormationsAt(view.instance.instanceId, view.playerId, view.self.x, view.self.y)
+            ? deps.worldRuntimeFormationService.listOwnedFormationsAt(view.instance.instanceId, view.playerId, view.self.x, view.self.y, instanceOwnerSectId)
             : [];
         for (const formation of localFormations) {
             const remainingQi = Math.max(0, Math.floor(Number(formation.remainingQiBudget ?? formation.remainingAuraBudget) || 0));

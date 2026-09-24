@@ -247,7 +247,7 @@ export class WorldRuntimeActionExecutionService {
         }
         if (actionId.startsWith('formation:toggle:')) {
             const formationInstanceId = actionId.slice('formation:toggle:'.length).trim();
-            const formation = deps.worldRuntimeFormationService.findOwnedFormation(playerId, formationInstanceId);
+            const formation = deps.worldRuntimeFormationService.findOwnedFormation(playerId, formationInstanceId, deps);
             deps.worldRuntimeFormationService.dispatchSetFormationActive(playerId, {
                 formationInstanceId,
                 active: !formation.active,
