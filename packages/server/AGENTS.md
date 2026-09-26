@@ -1,6 +1,6 @@
 # packages/server — 游戏服务端
 
-**本目录：1208 文件（src/ 1064）**。NestJS + Socket.IO 权威服务端，纯 tsc 编译（无 webpack/swc/esbuild）。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。子目录深导航：`src/runtime/AGENTS.md`（22 子域）、`src/tools/AGENTS.md`（415 smoke 脚手架）。
+**本目录：1313 文件（src/ 1115）**。NestJS + Socket.IO 权威服务端，纯 tsc 编译（无 webpack/swc/esbuild）。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。子目录深导航：`src/runtime/AGENTS.md`（23 子域）、`src/tools/AGENTS.md`（435 smoke 脚手架）、`src/network/AGENTS.md`、`src/persistence/AGENTS.md`。
 
 ## OVERVIEW
 
@@ -10,15 +10,15 @@
 
 | 目录 | 文件 | 职责 |
 |---|---|---|
-| runtime/ | 271 | 权威玩法运行时（22 个子系统，详见 src/runtime/AGENTS.md） |
-| tools/ | 531 | smoke / proof / audit / bench / 修复 / 迁移脚本（验证入口，详见 src/tools/AGENTS.md） |
-| network/ | 73 | Socket.IO gateway + session/sync/projector + 领域 helper |
-| persistence/ | 54 | 刷盘任务、outbox、领域持久化、连接池、节点注册 |
-| http/ | 40 | 对外 HTTP controllers（native-http.registry 聚合） |
+| runtime/ | 279 | 权威玩法运行时（23 个子系统，详见 src/runtime/AGENTS.md） |
+| tools/ | 563 | smoke / proof / audit / bench / 修复 / 迁移脚本（验证入口，详见 src/tools/AGENTS.md） |
+| network/ | 77 | Socket.IO gateway + session/sync/projector + 领域 helper |
+| persistence/ | 55 | 刷盘任务、outbox、领域持久化、连接池、节点注册 |
+| http/ | 44 | 对外 HTTP controllers（native-http.registry 聚合） |
 | content/ | 10 | 模板 repository + 8 个 registry（启动期装载） |
 | concurrency/ | 13 | worker pool（encoding/instance/persistence/leaderboard） |
 | config/ | 12 | env 加载、runtime-role、CORS、worker pool 配置 |
-| gm/ | 9 | GM 环境 / runtime 认证 + compat-conversions |
+| gm/ | 11 | GM 环境 / runtime 认证 + compat-conversions |
 | scheduler/ lifecycle/ ai/ auth/ health/ logging/ bootstrap/ constants/ common/ debug/ | | 支撑层 |
 
 ## WHERE TO LOOK

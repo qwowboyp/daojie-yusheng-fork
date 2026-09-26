@@ -1,6 +1,6 @@
 # packages/client — 游戏客户端
 
-**本目录：714 文件（src/ 440）**。Vite + TypeScript + Canvas 2D + DOM UI + React 19 渐进式 UI；地图渲染用 PixiJS。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。子目录深导航：`src/react-ui/AGENTS.md`（18 域 React 面板）、`src/game-map/AGENTS.md`（PixiJS 渲染域）。
+**本目录：819 文件（src/ 495；另有 public/ 资产 2,917）**。Vite + TypeScript + Canvas 2D + DOM UI + React 19 渐进式 UI；地图渲染用 PixiJS。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。子目录深导航：`src/react-ui/AGENTS.md`（21 域 React 面板）、`src/game-map/AGENTS.md`（PixiJS 渲染域）、`src/ui/AGENTS.md`（旧版 DOM UI）、`scripts/AGENTS.md`（proof/生成器腳本）。
 
 ## OVERVIEW
 
@@ -10,14 +10,14 @@
 
 | 目录 | 文件 | 职责 |
 |---|---|---|
-| ui/ | 117 | 旧版 DOM UI（根 80 扁平 + panels/ 33 + panel-system/ 6） |
-| react-ui/ | 96 | React 19 新 UI（panels 18 域 + bridge/primitives/stores/hooks/overlays/shell；详见 src/react-ui/AGENTS.md） |
-| main-*.ts | 68+ | 主链装配 / state source 拆分文件 |
-| constants/ | 40 | 客户端常量 + generated JSON（editor/item-sources/building-catalog） |
-| styles/ | 38 | CSS（tokens/base + panels/ 25） |
-| game-map/ | 21 | PixiJS 地图渲染域（10 子目录：renderer/camera/viewport/scene/minimap/interaction/projection/runtime/store；详见 src/game-map/AGENTS.md） |
+| ui/ | 127 | 旧版 DOM UI（根 88 扁平 + panels/ 33 + panel-system/ 6；详见 src/ui/AGENTS.md） |
+| react-ui/ | 120 | React 19 新 UI（panels 21 域 + bridge/primitives/stores/hooks/overlays/shell；详见 src/react-ui/AGENTS.md） |
+| main-*.ts | 55 | 主链装配 / state source 拆分文件 |
+| constants/ | 42 | 客户端常量 + generated JSON（editor/item-sources/building-catalog） |
+| styles/ | 44 | CSS（tokens/base + panels/ 27） |
+| game-map/ | 25 | PixiJS 地图渲染域（9 子目录：renderer/camera/viewport/scene/minimap/interaction/projection/runtime/store；详见 src/game-map/AGENTS.md） |
 | network/ | 16 | Socket.IO 收发（socket.ts 为主） |
-| renderer/ | 10 | 共享 Canvas/Pixi 图集 / 字体缓存 |
+| renderer/ | 15 | 共享 Canvas/Pixi 图集 / 字体缓存 |
 | gm/ | 5 | GM 工具（gm*.ts 大文件在 src/ 根层） |
 | input/ debug/ utils/ runtime/ content/ | | 小支撑层 |
 
@@ -32,7 +32,7 @@
 | 地图渲染 | `game-map/renderer/pixi-*.ts`（11 个） |
 | 地图运行时 | `game-map/runtime/map-runtime.ts` |
 | 样式 token | `styles/tokens.css` |
-| GM 工具 | `src/gm.ts`（609KB）、`gm-map-editor.ts`、`gm-world-viewer.ts` |
+| GM 工具 | `src/gm.ts`（589KB）、`gm-map-editor.ts`、`gm-world-viewer.ts` |
 | 协议事件注册 | `network/socket-event-registry.ts`、`socket-server-events.ts` |
 
 ## CONVENTIONS

@@ -9,13 +9,13 @@
 
 | 前缀 | 数量 | 角色 |
 |---|---|---|
-| verify-* | 7 | 门禁编排（quick / client / standard / release / building / building-perf / backup-worker） |
+| verify-* | 9 | 门禁编排（quick / client / standard / release / building / building-perf / backup-worker） |
 | release-* | 10 | 发布流水线（full / with-db / proof-with-db / acceptance / doctor / local / shadow / shadow-destructive[-preflight] / verification-mode 共享库） |
-| prove-* | 12 | 针对性证明（protocol-source / protobuf-drift / s2c-consumption / server-runtime-boundaries / craft-* / gm-login-autofill 等） |
+| prove-* | 25 | 针对性证明（protocol-source / protobuf-drift / s2c-consumption / server-runtime-boundaries / craft-* / gm-login-autofill 等） |
 | check-* | 6+1json | 一次性检查（release-gates / file-size-gate[+baseline.json] / traditional[+scope.json] / item-sources / player-facing-name-boundaries / runtime-realm-exp-boundary） |
 | shadow-local-* | 13 | 本地 Docker shadow 环境生命周期 shell（up/down/reset/full/all/verify/acceptance/destructive[-preflight]/maintenance-on/off/status/lib） |
-| generate-* / sync-* / convert-* | 4/4/2 | 内容生成 / 数据同步 / 简转繁转换 |
-| 其他 | 12 | 共享库（load-local-runtime-env / server-env-alias / parallel-verification / verification-timing / shadow-target-probe）+ 工具（analyze-heap / compile-monster-tendency / gm-api.sh / tencent-swarm-volumes.sh） |
+| generate-* / sync-* / convert-* | 9/5/2 | 内容生成 / 数据同步 / 简转繁转换 |
+| 其他 | 20 | 共享库（load-local-runtime-env / server-env-alias / parallel-verification / verification-timing / shadow-target-probe）+ 工具（analyze-heap / compile-monster-tendency / gm-api.sh / tencent-swarm-volumes.sh 等） |
 
 ## 命名后缀语义
 

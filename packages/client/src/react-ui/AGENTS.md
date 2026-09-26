@@ -1,12 +1,12 @@
 # packages/client/src/react-ui — React 19 新 UI
 
-**本目录：96 文件**。React 19 渐进式新 UI；与 `ui/`（旧 DOM 33 面板）双轨并存，**新面板一律写这里**。行为红线见 packages/client/AGENTS.md 与仓库根 AGENTS.md。
+**本目录：120 文件**。React 19 渐进式新 UI；与 `ui/`（旧 DOM 33 面板）双轨并存，**新面板一律写这里**。行为红线见 packages/client/AGENTS.md 与仓库根 AGENTS.md。
 
 ## STRUCTURE
 
 | 位置 | 职责 |
 |---|---|
-| panels/ | 18 域面板（action / attr / body-training / changelog / chat / craft / equipment / gm / inventory / loot / mail / market / quest / settings / technique / technique-generation / tutorial / world） |
+| panels/ | 21 域面板（action / attr / body-training / changelog / chat / craft / equipment / gm / inventory / item-sources / loot / mail / market / quest / sect-directory / settings / spirit-beast / technique / technique-generation / tutorial / world） |
 | bridge/ | 挂载闸门：panel-flags.ts 控制新旧面板切换、react-ui-bridge.ts、feature-flag.ts |
 | primitives/ | 基础组件 |
 | stores/ hooks/ | 状态与副作用 |
@@ -17,9 +17,9 @@
 
 ## CONVENTIONS
 
-- 面板成对文件：`XxxPanel.tsx` + `mount-xxx-panel.tsx`（18 域全部遵循）
+- 面板成对文件：`XxxPanel.tsx` + `mount-xxx-panel.tsx`（21 域全部遵循）
 - 挂载由 `bridge/panel-flags.ts` 控制（渐进式迁移闸门）
-- 迁移现状：React 已覆盖全部 18 个业务面板域；equipment / inventory / market / craft / technique 5 域的 legacy 多文件实现仍在 `ui/`；体积迁移约 30%
+- 迁移现状：React 已覆盖全部 21 个业务面板域；equipment / inventory / market / craft / technique 5 域的 legacy 多文件实现仍在 `ui/`；体积迁移约 30%
 
 ## WHERE TO LOOK
 

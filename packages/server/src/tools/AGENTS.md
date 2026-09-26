@@ -1,6 +1,6 @@
 # packages/server/src/tools — 验证脚本库
 
-**本目录：531 文件 / 187,784 行，全仓最大目录**。415 个 `*-smoke.ts` 是独立 Node.js 验证入口，经 dist 执行（须先 `pnpm --filter @mud/server compile`）。行为红线见 packages/server/AGENTS.md。
+**本目录：563 文件 / 195,769 行，全仓最大目录**。435 个 `*-smoke.ts` 是独立 Node.js 验证入口，经 dist 执行（须先 `pnpm --filter @mud/server compile`）。行为红线见 packages/server/AGENTS.md。
 
 ## smoke 共用脚手架（新增 smoke 必须遵循）
 
@@ -19,18 +19,20 @@
 
 | 前缀 | 数量 | 涵盖 |
 |---|---|---|
-| world-runtime-* | ~70 | world facade 各子系统整合 |
-| world-gateway-* | ~13 | gateway handler 按域拆分 |
-| player-* | 27 | 玩家持久化 CRUD/fence/route |
-| gm-* | 26 | GM HTTP/socket 主链路 |
-| instance-* | 18 | 实例 lease/flush/migration |
-| technique-* | 16 | 功法状态机 |
-| market-* | 16 | 市场 fence/refund/expiry |
-| flush-* | 13 | flush worker 幂等/重试 |
-| mail-* / native-* | 9+9 | 邮件 / native HTTP 持久化 |
-| world-sync-* / combat-* / runtime-* / monster-* | 9/8/8/8 | 同步、战斗、运行时、怪物 |
+| world-runtime-* | 108 | world facade 各子系统整合 |
+| world-gateway-* | 12 | gateway handler 按域拆分 |
+| player-* | 33 | 玩家持久化 CRUD/fence/route |
+| gm-* | 27 | GM HTTP/socket 主链路 |
+| instance-* | 24 | 实例 lease/flush/migration |
+| technique-* | 19 | 功法状态机 |
+| market-* | 19 | 市场 fence/refund/expiry |
+| sect-* | 17 | 宗门链路 |
+| flush-* | 14 | flush worker 幂等/重试 |
+| mail-* / native-* | 14+9 | 邮件 / native HTTP 持久化 |
+| world-sync-* / runtime-* | 9/9 | 同步、运行时 |
+| combat-* / monster-* / map-* / worker-* | 8/8/8/8 | 战斗、怪物、地图、worker |
 | world-session-* | 7 | session bootstrap/recovery |
-| world-projector-* / world-tick-* | 4/2 | 协议投影 / tick 调度 |
+| world-projector-* / world-tick-* | 5/2 | 协议投影 / tick 调度 |
 | 汇总入口 | — | runtime-smoke.ts、persistence-smoke.ts、combat-smoke.ts、session-smoke.ts、gm-smoke.ts、shadow-smoke.ts |
 
 ## 执行方式

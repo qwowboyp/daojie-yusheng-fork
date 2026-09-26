@@ -1,6 +1,6 @@
 # docs/mechanics — 游戏机制文档库
 
-**本目录：46 个机制文档 + README.md，8 大子类**。这是「涉及游戏系统必先读」的强制入口（仓库根 AGENTS.md 规定：改代码前必读对应机制文档）。
+**本目录：48 个机制文档 + README.md，8 大子类**。这是「涉及游戏系统必先读」的强制入口（仓库根 AGENTS.md 规定：改代码前必读对应机制文档）。
 
 ## STRUCTURE
 
@@ -13,12 +13,12 @@
 | building-env/ | 3 | 建筑/风水/灵气场 | 23–25 |
 | equipment-items/ | 4 | 装备/背包/阵法/存储 | 26–28 + 1 无编号迁移档 |
 | economy/ | 6 | 市场/邮件/宗门/排行榜/道友社交/组队 | 29–34 |
-| other/ | 8 | 通天塔/NPC 商店/任务/兑换码/自动化/GM/Actor/访问策略 | 33–40 |
+| other/ | 10 | 通天塔/NPC 商店/任务/兑换码/自动化/GM/Actor/访问策略 等 | 33–40 |
 
 ## 编号规范
 
 - 全域流水号跨子类连续配置；字母后缀（16a / 17a）表子版本
-- **已知冲突**：economy/33、economy/34 与 other/33、other/34 编号重复；新增文档避免沿用冲突编号，建议从 41 起跳
+- **已知冲突**：economy/33、economy/34 与 other/33、other/34 编号重复；other/38-gm-system 与 other/38-late-game-content 亦重复；新增文档避免沿用冲突编号，建议从 42 起跳
 - 无编号档案属设计参考类（craft-effect-stats-design.md、craft-fivephase-reference.md、storage-architecture-migration.md）
 
 ## CONVENTIONS

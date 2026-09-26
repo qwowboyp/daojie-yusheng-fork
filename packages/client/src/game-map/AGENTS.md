@@ -1,12 +1,12 @@
 # packages/client/src/game-map — PixiJS 地图渲染域
 
-**本目录：21 文件 / 10 子目录**。PixiJS 地图渲染。表现插值/预测只影响显示，**不污染服务端权威坐标**。行为红线见 packages/client/AGENTS.md 与仓库根 AGENTS.md。
+**本目录：25 文件 / 9 子目录**。PixiJS 地图渲染。表现插值/预测只影响显示，**不污染服务端权威坐标**。行为红线见 packages/client/AGENTS.md 与仓库根 AGENTS.md。
 
 ## STRUCTURE
 
 | 位置 | 职责 |
 |---|---|
-| renderer/ | 11 档 PixiJS 核心：pixi-map-renderer-adapter.ts（主入口）、pixi-render-state / render-primitives / render-profiler / profiler-window / frame-spatial-index / combat-effect-runtime / artifact-aura-geometry / runtime-image-manifest / terrain-cache-signatures、combat-damage-summary-text |
+| renderer/ | 13 档 PixiJS 核心：pixi-map-renderer-adapter.ts（主入口）、pixi-render-state / pixi-render-primitives / pixi-render-profiler / pixi-profiler-window / pixi-frame-spatial-index / pixi-combat-effect-runtime / pixi-artifact-aura-geometry / pixi-runtime-image-manifest / pixi-terrain-cache-signatures / pixi-cast-burst / pixi-dual-grid-feather、combat-damage-summary-text |
 | camera/ | camera-controller.ts |
 | viewport/ | viewport-controller.ts |
 | scene/ | map-scene.ts |

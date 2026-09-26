@@ -1,6 +1,6 @@
 # packages/shared — 共享契约层
 
-**本目录：212 文件（src/ 199）**。client / server / config-editor 唯一契约源。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。
+**本目录：218 文件（src/ 205）**。client / server / config-editor 唯一契约源。行为红线见仓库根 AGENTS.md，本文件只补充本包特有内容。
 
 ## OVERVIEW
 
@@ -10,8 +10,8 @@
 
 | 位置 | 文件 | 职责 |
 |---|---|---|
-| 根层 *.ts | ~119 | 协议、API 契约、领域类型、工具 |
-| constants/ | 47 | 跨端稳定数值（gameplay 30 / network 4 / ui 6 / visuals 6） |
+| 根层 *.ts | ~124 | 协议、API 契约、领域类型、工具 |
+| constants/ | 49 | 跨端稳定数值（gameplay 32 / network 4 / ui 6 / visuals 6） |
 | procgen/ | 28 | 秘境随机地形生成 |
 | actor/ | 4 | Actor 契约（blueprint / ephemeral / bot） |
 
