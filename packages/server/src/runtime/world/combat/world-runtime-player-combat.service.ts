@@ -115,23 +115,12 @@ export class WorldRuntimePlayerCombatService {
 
     async handlePlayerMonsterKill(instance: any, monster: any, killerPlayerId: string, deps: any) {
         this.handlePlayerMonsterKillSynchronously(instance, monster, killerPlayerId, deps);
-        if (this.spiritBeastRuntimeService) {
-            const instanceId = typeof instance?.meta?.instanceId === 'string' ? instance.meta.instanceId : 'unknown';
-            const runtimeId = typeof monster?.runtimeId === 'string' ? monster.runtimeId : String(monster?.monsterId ?? 'unknown');
-            const killTick = Math.max(0, Math.trunc(Number(instance?.tick) || 0));
-            try {
-                await this.spiritBeastRuntimeService.recordEligibleMonsterDeath({
-                    sourceRef: `spirit-egg:${instanceId}:${runtimeId}:${killTick}`,
-                    ownerPlayerId: killerPlayerId,
-                    boss: monster?.tier === 'boss',
-                });
-            } catch (error) {
-                this.logger.warn(`靈蛋掉落寫入失敗，不回滾既有擊殺結算: ${error instanceof Error ? error.message : String(error)}`);
-            }
-        }
     }
 
-    /** 击杀奖励链仅修改内存态，热路径直接同步结算，避免每只妖兽产生空 Promise 边界。 */
+    /**
+     * 击杀奖励链仅修改内存态，热路径直接同步结算，避免每只妖兽产生空 Promise 边界；
+     * 灵蛋掉落作为异步副作用在结算末尾排队，判定同步取样、落库不阻塞 tick。
+     */
     handlePlayerMonsterKillSynchronously(instance: any, monster: any, killerPlayerId: string, deps: any): void {
   // 关键分支按状态与边界条件处理，非法路径会被提前拦截。
 
@@ -227,7 +216,26 @@ export class WorldRuntimePlayerCombatService {
             'combat.playerMonsterKill.lootDeliveryMs',
             sectionStartedAt,
         );
+        this.scheduleSpiritBeastEggDrop(instance, monster, killerPlayerId);
     }    
+    /**
+     * 灵蛋掉落判定：随机取样在击杀当帧同步完成，落库异步完成；
+     * 写库失败仅告警，不回滚既有击杀结算。
+     */
+    scheduleSpiritBeastEggDrop(instance: any, monster: any, killerPlayerId: string): void {
+        if (!this.spiritBeastRuntimeService) return;
+        const instanceId = typeof instance?.meta?.instanceId === 'string' ? instance.meta.instanceId : 'unknown';
+        const runtimeId = typeof monster?.runtimeId === 'string' ? monster.runtimeId : String(monster?.monsterId ?? 'unknown');
+        const killTick = Math.max(0, Math.trunc(Number(instance?.tick) || 0));
+        void this.spiritBeastRuntimeService.recordEligibleMonsterDeath({
+            sourceRef: `spirit-egg:${instanceId}:${runtimeId}:${killTick}`,
+            ownerPlayerId: killerPlayerId,
+            boss: monster?.tier === 'boss',
+        }).catch((error: unknown) => {
+            this.logger.warn(`靈蛋掉落寫入失敗，不回滾既有擊殺結算: ${error instanceof Error ? error.message : String(error)}`);
+        });
+    }
+
     /**
  * distributeMonsterKillProgress：判断distribute怪物Kill进度是否满足条件。
  * @param instance 地图实例。

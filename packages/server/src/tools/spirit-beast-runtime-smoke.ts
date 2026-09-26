@@ -56,6 +56,7 @@ async function main(): Promise<void> {
         element: input.element, star: input.star, state: 'warehouse', hatchId: null, sourceRef: input.sourceRef, revision: 1 } };
     },
     listPlayerEggs: async () => [], listPlayerBeasts: async () => [], listPlayerHatches: async () => [], listFacilityStorage: async () => [],
+    releaseOrphanedPlayerWorkOrders: async () => [],
   };
   const playerRuntime = { getPlayer: () => ({
     inventory: { items: [{ itemId: 'black_iron_chunk', name: '玄鐵礦塊', type: 'material', count: 2 }] },
@@ -98,11 +99,22 @@ async function main(): Promise<void> {
   service['randomSample'] = () => 0;
   const combat = Object.create(WorldRuntimePlayerCombatService.prototype);
   combat.spiritBeastRuntimeService = service;
-  combat.handlePlayerMonsterKillSynchronously = () => undefined;
-  await combat.handlePlayerMonsterKill({ meta: { instanceId: 'sect:instance:1' }, tick: 9 },
-    { runtimeId: 'monster:runtime:death-hook', tier: 'boss' }, 'player:1', {});
-  assert.equal(awardedSources.has('spirit-egg:sect:instance:1:monster:runtime:death-hook:9'), true,
-    '靈蛋必須由實際 monster death hook 送入權威掉落入口');
+  combat.playerRuntimeService = { getPlayer: () => null };
+  combat.contentTemplateRepository = { rollMonsterDrops: () => [], getMonsterCombatProfile: () => undefined };
+  const killInstance = { meta: { instanceId: 'sect:instance:1' }, tick: 9, getMonsterDamageContributionEntries: () => [] };
+  const killDeps = { queuePlayerNotice: () => undefined, advanceKillQuestProgress: () => undefined };
+  const assertEggQueued = async (sourceRef: string) => {
+    for (let attempt = 0; attempt < 20 && !awardedSources.has(sourceRef); attempt += 1) {
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.equal(awardedSources.has(sourceRef), true, '靈蛋必須由實際 monster death hook 送入權威掉落入口');
+  };
+  combat.handlePlayerMonsterKillSynchronously(killInstance,
+    { runtimeId: 'monster:runtime:death-hook', tier: 'boss' }, 'player:1', killDeps);
+  await assertEggQueued('spirit-egg:sect:instance:1:monster:runtime:death-hook:9');
+  await combat.handlePlayerMonsterKill({ ...killInstance, tick: 10 },
+    { runtimeId: 'monster:runtime:death-hook-async', tier: 'mortal_blood' }, 'player:1', killDeps);
+  await assertEggQueued('spirit-egg:sect:instance:1:monster:runtime:death-hook-async:10');
   const first = await service.recordEligibleMonsterDeath({ sourceRef: 'spirit-egg:instance:monster:10', ownerPlayerId: 'player:1', boss: false });
   const replay = await service.recordEligibleMonsterDeath({ sourceRef: 'spirit-egg:instance:monster:10', ownerPlayerId: 'player:1', boss: false });
   assert.equal(first.dropped, true);

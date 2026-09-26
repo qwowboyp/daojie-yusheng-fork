@@ -12,6 +12,14 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 /** 当前内置的更新日志条目。 */
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    updatedAt: '2026-09-26',
+    summary: '修復靈獸「靈蛋」掉落從未生效的問題，恢復普通怪 0.5%、首領 3% 的掉落設定。',
+    items: [
+      '戰鬥：修復靈獸「靈蛋」掉落從未生效的問題 — 擊殺熱路徑改寫後，掉落判定被繞過，導致所有怪物（含首領）都不會掉落靈蛋。',
+      '掉落：修復後恢復設定值，普通怪掉落機率 0.5%、首領 3%，五行與星級分佈維持不變。',
+    ],
+  },
+  {
     updatedAt: '2026-09-24',
     summary: '宗門領地內的陣法現在可由同宗成員共同操作，開啟關閉、資源補給與補充靈力皆由操作者自行支付。',
     items: [
