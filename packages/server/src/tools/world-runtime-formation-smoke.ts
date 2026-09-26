@@ -1505,6 +1505,28 @@ async function testFormationSectMemberControl() {
   service.dispatchSetFormationActive("player:formation-sect-control-owner", { formationInstanceId: sectFormation.id, active: false }, deps);
   assert.equal(sectFormation.active, false, "擁有者操作權限不受影響");
   assert.ok(notices.length > memberNoticesBefore, "操作應產生通知");
+  // buildContextActions 是玩家看到陣法互動的入口；view.instance 只有投影摘要（無 meta），
+  // 必須能從 runtime 實例解析領地宗門，否則同宗成員看不到互動選項。
+  const { WorldRuntimeContextActionQueryService } = require("../runtime/world/query/world-runtime-context-action-query.service");
+  const contextActionPlayer = { attrs: { numericStats: { viewRange: 7 } }, equipment: { slots: [] } };
+  const contextActionService = new WorldRuntimeContextActionQueryService(
+    { has: () => false, getOrThrow: (mapId) => ({ name: mapId }) },
+    { getPlayer: () => contextActionPlayer },
+    { buildNpcQuestContextAction: () => null },
+  );
+  const buildSectView = (viewPlayerId) => ({
+    playerId: viewPlayerId,
+    tick: 1,
+    instance: { instanceId: memberInstanceId, templateId: "sect:control-smoke", name: "宗門", kind: "sect", width: 16, height: 16 },
+    self: { x: 0, y: 0 },
+    localPortals: [],
+    localNpcs: [],
+  });
+  const contextActionDeps = { ...deps, worldRuntimeFormationService: service };
+  const memberActions = contextActionService.buildContextActions(buildSectView(memberPlayerId), contextActionDeps);
+  assert.ok(memberActions.some((entry) => entry.id === `formation:toggle:${sectFormation.id}`), "同宗成員的 context actions 應包含陣法互動");
+  const outsiderActions = contextActionService.buildContextActions(buildSectView(outsiderPlayerId), contextActionDeps);
+  assert.equal(outsiderActions.some((entry) => typeof entry.id === "string" && entry.id.startsWith("formation:")), false, "非成員的 context actions 不應包含陣法互動");
 }
 
 async function countRows(pool, sql, params = []) {

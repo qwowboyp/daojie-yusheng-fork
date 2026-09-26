@@ -200,8 +200,16 @@ export class WorldRuntimeContextActionQueryService {
                 cooldownLeft: 0,
             });
         }
-        const instanceOwnerSectId = typeof view?.instance?.meta?.ownerSectId === 'string' && view.instance.meta.ownerSectId.trim()
-            ? view.instance.meta.ownerSectId.trim()
+        // view.instance 是投影摘要（buildPlayerView 只帶 instanceId/templateId/name/kind/width/height，不含 meta），
+        // 領地歸屬必須回查 runtime 實例，與 canControlFormationAsSectMember 的判定來源一致，否則同宗成員永遠看不到陣法互動。
+        const viewInstanceId = typeof view?.instance?.instanceId === 'string' && view.instance.instanceId.trim()
+            ? view.instance.instanceId.trim()
+            : null;
+        const runtimeInstance = viewInstanceId && typeof deps?.getInstanceRuntime === 'function'
+            ? deps.getInstanceRuntime(viewInstanceId)
+            : null;
+        const instanceOwnerSectId = typeof runtimeInstance?.meta?.ownerSectId === 'string' && runtimeInstance.meta.ownerSectId.trim()
+            ? runtimeInstance.meta.ownerSectId.trim()
             : null;
         const localFormations = typeof deps?.worldRuntimeFormationService?.listOwnedFormationsAt === 'function'
             ? deps.worldRuntimeFormationService.listOwnedFormationsAt(view.instance.instanceId, view.playerId, view.self.x, view.self.y, instanceOwnerSectId)
