@@ -9,14 +9,17 @@ import { pathToFileURL } from 'node:url';
 
 const fs = require("node:fs");
 const path = require("node:path");
-const { ELEMENT_KEYS, MERIT_ETERNAL_USE_BEHAVIOR, MERIT_MONTH_CARD_USE_BEHAVIOR, NUMERIC_STATS_KEYS, SECT_ENTRANCE_RELOCATION_USE_BEHAVIOR, resolveMapGroupInfo } = require("@mud/shared");
+const { ELEMENT_KEYS, HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID, MERIT_ETERNAL_USE_BEHAVIOR, MERIT_MONTH_CARD_USE_BEHAVIOR, NUMERIC_STATS_KEYS, SECT_ENTRANCE_RELOCATION_USE_BEHAVIOR, SHENXING_USE_BEHAVIOR, resolveMapGroupInfo } = require("@mud/shared");
 
 const packageRoot = path.resolve(__dirname, "..", "..");
 const contentRoot = path.join(packageRoot, "data", "content");
 const mapsRoot = path.join(packageRoot, "data", "maps");
 const numericScalarStatKeys = new Set(NUMERIC_STATS_KEYS.filter((key) => key !== "elementDamageBonus" && key !== "elementDamageReduce"));
 const elementKeys = new Set(ELEMENT_KEYS);
-const SPECIAL_CONSUMABLE_ITEM_IDS = new Set(["pill.shatter_spirit", "pill.wangsheng"]);
+// 特殊 consumable：無 item-use 效果欄位，但由專屬運行時路徑消耗。
+// - pill.shatter_spirit / pill.wangsheng：專屬使用流程
+// - HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID（merit）：天道商店專屬貨幣，經商店結算消耗
+const SPECIAL_CONSUMABLE_ITEM_IDS = new Set(["pill.shatter_spirit", "pill.wangsheng", HEAVENLY_DAO_SHOP_CURRENCY_ITEM_ID]);
 const runtimeTileSourcePath = path.resolve(packageRoot, "..", "..", "scripts", "lib", "runtime-tile-drops.mjs");
 /**
  * walkJsonFiles：执行walkJsonFile相关逻辑。
@@ -402,6 +405,10 @@ function validateItemRefs(errors, items, refs) {
 function hasConsumableUseRuntimeEffect(item) {
   if (typeof item?.learnTechniqueId === "string" && item.learnTechniqueId.length > 0) return true;
   if (item?.useBehavior === "create_sect" || item?.useBehavior === "bind_current_respawn" || item?.useBehavior === SECT_ENTRANCE_RELOCATION_USE_BEHAVIOR || item?.useBehavior === MERIT_MONTH_CARD_USE_BEHAVIOR || item?.useBehavior === MERIT_ETERNAL_USE_BEHAVIOR) return true;
+  // 神行丹：世界使用入口以 SHENXING_USE_BEHAVIOR（或神行丹階級）辨識並走 handleShenxingItem。
+  if (item?.useBehavior === SHENXING_USE_BEHAVIOR) return true;
+  // 悟道玉簡：使用後開啟功法領悟面板，由 use-item 服務消費。
+  if (item?.useBehavior === "open_technique_generation") return true;
   if (typeof item?.formationDiskTier === "string" && item.formationDiskTier.length > 0) return true;
   if (typeof item?.healAmount === "number" && item.healAmount > 0) return true;
   if (typeof item?.healPercent === "number" && item.healPercent > 0) return true;

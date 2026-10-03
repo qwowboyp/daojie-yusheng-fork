@@ -99,7 +99,8 @@ function testRootFoundationRefineAcceptsExactSpiritStoneCount() {
 function testRootFoundationPreviewReportsSpiritStoneShortage() {
     const service = new PlayerProgressionService({
         getItemName(itemId) {
-            return itemId;
+            // 展示名必須與內部 ID 不同，否則 resolvePlayerFacingContentName 會回退「未知物品」。
+            return itemId === 'spirit_stone' ? '靈石' : itemId;
         },
     }, {
         recalculate() {
@@ -119,7 +120,7 @@ function testRootFoundationPreviewReportsSpiritStoneShortage() {
     };
     const preview = service.buildRootFoundationPreview(player, player.realm);
     assert.equal(preview.canRefine, false);
-    assert.equal(preview.blockedReason, '材料不足：spirit_stone缺 13');
+    assert.equal(preview.blockedReason, '材料不足：靈石缺 13');
 }
 
 function testRootFoundationRefineStillSupportsConfiguredNonSpiritStoneItem() {
