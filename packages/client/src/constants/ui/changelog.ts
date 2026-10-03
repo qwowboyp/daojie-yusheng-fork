@@ -12,6 +12,13 @@ import type { ChangelogEntry } from '../../ui/changelog-data';
 /** 当前内置的更新日志条目。 */
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    updatedAt: '2026-10-03',
+    summary: '補齊金丹以上的突破條件，金丹至飛昇恢復可正常突破。',
+    items: [
+      '修煉：補齊金丹及以上境界（42 級至 127 級）的突破條件 — 突破至飛昇之間每個境界都能正常進行，不再顯示「仙路斷絕」。',
+    ],
+  },
+  {
     updatedAt: '2026-09-26',
     summary: '修復靈獸「靈蛋」掉落從未生效的問題，恢復普通怪 0.5%、首領 3% 的掉落設定。',
     items: [
