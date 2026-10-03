@@ -1035,7 +1035,1610 @@
           "count": 272
         }
       ],
-      "requirements": []
+      "requirements": [
+        {
+          "id": "bw_42_43_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 107000,
+          "label": "六維總屬性達到 107000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 43,
+      "toRealmLv": 44,
+      "title": "金丹二層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 281
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_43_44_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 115000,
+          "label": "六維總屬性達到 115000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 44,
+      "toRealmLv": 45,
+      "title": "金丹三層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 290
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_44_45_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 123000,
+          "label": "六維總屬性達到 123000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 45,
+      "toRealmLv": 46,
+      "title": "金丹四層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 299
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_45_46_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 132000,
+          "label": "六維總屬性達到 132000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 46,
+      "toRealmLv": 47,
+      "title": "金丹五層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 308
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_46_47_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 141000,
+          "label": "六維總屬性達到 141000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 47,
+      "toRealmLv": 48,
+      "title": "金丹六層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 317
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_47_48_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 151000,
+          "label": "六維總屬性達到 151000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 48,
+      "toRealmLv": 49,
+      "title": "金丹七層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 326
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_48_49_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 161000,
+          "label": "六維總屬性達到 161000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 49,
+      "toRealmLv": 50,
+      "title": "金丹八層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 335
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_49_50_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 171000,
+          "label": "六維總屬性達到 171000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 50,
+      "toRealmLv": 51,
+      "title": "金丹九層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 344
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_50_51_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 182000,
+          "label": "六維總屬性達到 182000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 51,
+      "toRealmLv": 52,
+      "title": "金丹巔峰",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 353
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_51_52_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 193000,
+          "label": "六維總屬性達到 193000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 52,
+      "toRealmLv": 53,
+      "title": "金丹大圓滿",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 362
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_52_53_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 205000,
+          "label": "六維總屬性達到 205000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 53,
+      "toRealmLv": 54,
+      "title": "半步元嬰",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 371
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_53_54_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 218000,
+          "label": "六維總屬性達到 218000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 54,
+      "toRealmLv": 55,
+      "title": "元嬰一層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 380
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_54_55_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 231000,
+          "label": "六維總屬性達到 231000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 55,
+      "toRealmLv": 56,
+      "title": "元嬰二層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 389
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_55_56_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 244000,
+          "label": "六維總屬性達到 244000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 56,
+      "toRealmLv": 57,
+      "title": "元嬰三層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 398
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_56_57_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 258000,
+          "label": "六維總屬性達到 258000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 57,
+      "toRealmLv": 58,
+      "title": "元嬰四層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 407
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_57_58_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 272000,
+          "label": "六維總屬性達到 272000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 58,
+      "toRealmLv": 59,
+      "title": "元嬰五層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 416
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_58_59_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 286000,
+          "label": "六維總屬性達到 286000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 59,
+      "toRealmLv": 60,
+      "title": "元嬰六層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 425
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_59_60_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 302000,
+          "label": "六維總屬性達到 302000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 60,
+      "toRealmLv": 61,
+      "title": "元嬰七層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 434
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_60_61_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 317000,
+          "label": "六維總屬性達到 317000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 61,
+      "toRealmLv": 62,
+      "title": "元嬰八層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 443
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_61_62_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 333000,
+          "label": "六維總屬性達到 333000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 62,
+      "toRealmLv": 63,
+      "title": "元嬰九層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 452
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_62_63_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 350000,
+          "label": "六維總屬性達到 350000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 63,
+      "toRealmLv": 64,
+      "title": "元嬰巔峰",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 461
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_63_64_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 406000,
+          "label": "六維總屬性達到 406000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 64,
+      "toRealmLv": 65,
+      "title": "元嬰大圓滿",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 470
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_64_65_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 432000,
+          "label": "六維總屬性達到 432000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 65,
+      "toRealmLv": 66,
+      "title": "半步化神",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 479
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_65_66_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 459000,
+          "label": "六維總屬性達到 459000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 66,
+      "toRealmLv": 67,
+      "title": "化神一層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 488
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_66_67_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 489000,
+          "label": "六維總屬性達到 489000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 67,
+      "toRealmLv": 68,
+      "title": "化神二層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 497
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_67_68_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 520000,
+          "label": "六維總屬性達到 520000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 68,
+      "toRealmLv": 69,
+      "title": "化神三層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 506
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_68_69_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 552000,
+          "label": "六維總屬性達到 552000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 69,
+      "toRealmLv": 70,
+      "title": "化神四層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 515
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_69_70_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 586000,
+          "label": "六維總屬性達到 586000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 70,
+      "toRealmLv": 71,
+      "title": "化神五層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 524
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_70_71_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 620000,
+          "label": "六維總屬性達到 620000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 71,
+      "toRealmLv": 72,
+      "title": "化神六層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 533
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_71_72_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 656000,
+          "label": "六維總屬性達到 656000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 72,
+      "toRealmLv": 73,
+      "title": "化神七層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 542
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_72_73_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 693000,
+          "label": "六維總屬性達到 693000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 73,
+      "toRealmLv": 74,
+      "title": "化神八層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 551
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_73_74_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 731000,
+          "label": "六維總屬性達到 731000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 74,
+      "toRealmLv": 75,
+      "title": "化神九層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 560
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_74_75_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 770000,
+          "label": "六維總屬性達到 770000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 75,
+      "toRealmLv": 76,
+      "title": "化神巔峰",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 569
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_75_76_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 811000,
+          "label": "六維總屬性達到 811000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 76,
+      "toRealmLv": 77,
+      "title": "化神大圓滿",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 578
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_76_77_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 852000,
+          "label": "六維總屬性達到 852000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 77,
+      "toRealmLv": 78,
+      "title": "半步煉虛",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 587
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_77_78_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 896000,
+          "label": "六維總屬性達到 896000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 78,
+      "toRealmLv": 79,
+      "title": "煉虛一層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 596
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_78_79_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 940000,
+          "label": "六維總屬性達到 940000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 79,
+      "toRealmLv": 80,
+      "title": "煉虛二層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 605
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_79_80_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 986000,
+          "label": "六維總屬性達到 986000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 80,
+      "toRealmLv": 81,
+      "title": "煉虛三層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 614
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_80_81_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1040000,
+          "label": "六維總屬性達到 1040000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 81,
+      "toRealmLv": 82,
+      "title": "煉虛四層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 623
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_81_82_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1090000,
+          "label": "六維總屬性達到 1090000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 82,
+      "toRealmLv": 83,
+      "title": "煉虛五層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 632
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_82_83_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1140000,
+          "label": "六維總屬性達到 1140000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 83,
+      "toRealmLv": 84,
+      "title": "煉虛六層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 641
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_83_84_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1190000,
+          "label": "六維總屬性達到 1190000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 84,
+      "toRealmLv": 85,
+      "title": "煉虛七層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 650
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_84_85_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1250000,
+          "label": "六維總屬性達到 1250000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 85,
+      "toRealmLv": 86,
+      "title": "煉虛八層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 659
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_85_86_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1310000,
+          "label": "六維總屬性達到 1310000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 86,
+      "toRealmLv": 87,
+      "title": "煉虛九層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 668
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_86_87_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1370000,
+          "label": "六維總屬性達到 1370000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 87,
+      "toRealmLv": 88,
+      "title": "煉虛巔峰",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 677
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_87_88_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1430000,
+          "label": "六維總屬性達到 1430000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 88,
+      "toRealmLv": 89,
+      "title": "煉虛大圓滿",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 686
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_88_89_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1490000,
+          "label": "六維總屬性達到 1490000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 89,
+      "toRealmLv": 90,
+      "title": "半步合體",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 695
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_89_90_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1560000,
+          "label": "六維總屬性達到 1560000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 90,
+      "toRealmLv": 91,
+      "title": "合體一層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 704
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_90_91_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1620000,
+          "label": "六維總屬性達到 1620000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 91,
+      "toRealmLv": 92,
+      "title": "合體二層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 713
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_91_92_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1680000,
+          "label": "六維總屬性達到 1680000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 92,
+      "toRealmLv": 93,
+      "title": "合體三層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 722
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_92_93_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1750000,
+          "label": "六維總屬性達到 1750000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 93,
+      "toRealmLv": 94,
+      "title": "合體四層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 731
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_93_94_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1820000,
+          "label": "六維總屬性達到 1820000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 94,
+      "toRealmLv": 95,
+      "title": "合體五層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 740
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_94_95_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1880000,
+          "label": "六維總屬性達到 1880000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 95,
+      "toRealmLv": 96,
+      "title": "合體六層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 749
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_95_96_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 1950000,
+          "label": "六維總屬性達到 1950000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 96,
+      "toRealmLv": 97,
+      "title": "合體七層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 758
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_96_97_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 2020000,
+          "label": "六維總屬性達到 2020000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 97,
+      "toRealmLv": 98,
+      "title": "合體八層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 767
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_97_98_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 2320000,
+          "label": "六維總屬性達到 2320000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 98,
+      "toRealmLv": 99,
+      "title": "合體九層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 776
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_98_99_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 2450000,
+          "label": "六維總屬性達到 2450000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 99,
+      "toRealmLv": 100,
+      "title": "合體巔峰",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 785
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_99_100_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 2580000,
+          "label": "六維總屬性達到 2580000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 100,
+      "toRealmLv": 101,
+      "title": "合體大圓滿",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 794
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_100_101_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 2720000,
+          "label": "六維總屬性達到 2720000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 101,
+      "toRealmLv": 102,
+      "title": "半步大乘",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 803
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_101_102_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 2860000,
+          "label": "六維總屬性達到 2860000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 102,
+      "toRealmLv": 103,
+      "title": "大乘一層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 812
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_102_103_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 3000000,
+          "label": "六維總屬性達到 3000000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 103,
+      "toRealmLv": 104,
+      "title": "大乘二層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 821
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_103_104_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 3160000,
+          "label": "六維總屬性達到 3160000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 104,
+      "toRealmLv": 105,
+      "title": "大乘三層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 830
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_104_105_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 3310000,
+          "label": "六維總屬性達到 3310000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 105,
+      "toRealmLv": 106,
+      "title": "大乘四層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 839
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_105_106_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 3470000,
+          "label": "六維總屬性達到 3470000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 106,
+      "toRealmLv": 107,
+      "title": "大乘五層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 848
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_106_107_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 3630000,
+          "label": "六維總屬性達到 3630000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 107,
+      "toRealmLv": 108,
+      "title": "大乘六層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 857
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_107_108_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 3800000,
+          "label": "六維總屬性達到 3800000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 108,
+      "toRealmLv": 109,
+      "title": "大乘七層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 866
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_108_109_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 3980000,
+          "label": "六維總屬性達到 3980000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 109,
+      "toRealmLv": 110,
+      "title": "大乘八層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 875
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_109_110_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 4160000,
+          "label": "六維總屬性達到 4160000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 110,
+      "toRealmLv": 111,
+      "title": "大乘九層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 884
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_110_111_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 4330000,
+          "label": "六維總屬性達到 4330000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 111,
+      "toRealmLv": 112,
+      "title": "大乘巔峰",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 893
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_111_112_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 4520000,
+          "label": "六維總屬性達到 4520000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 112,
+      "toRealmLv": 113,
+      "title": "大乘大圓滿",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 902
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_112_113_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 4710000,
+          "label": "六維總屬性達到 4710000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 113,
+      "toRealmLv": 114,
+      "title": "半步渡劫",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 911
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_113_114_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 4900000,
+          "label": "六維總屬性達到 4900000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 114,
+      "toRealmLv": 115,
+      "title": "渡劫一層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 920
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_114_115_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 5100000,
+          "label": "六維總屬性達到 5100000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 115,
+      "toRealmLv": 116,
+      "title": "渡劫二層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 929
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_115_116_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 5300000,
+          "label": "六維總屬性達到 5300000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 116,
+      "toRealmLv": 117,
+      "title": "渡劫三層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 938
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_116_117_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 5510000,
+          "label": "六維總屬性達到 5510000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 117,
+      "toRealmLv": 118,
+      "title": "渡劫四層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 947
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_117_118_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 5710000,
+          "label": "六維總屬性達到 5710000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 118,
+      "toRealmLv": 119,
+      "title": "渡劫五層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 956
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_118_119_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 5920000,
+          "label": "六維總屬性達到 5920000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 119,
+      "toRealmLv": 120,
+      "title": "渡劫六層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 965
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_119_120_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 6130000,
+          "label": "六維總屬性達到 6130000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 120,
+      "toRealmLv": 121,
+      "title": "渡劫七層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 974
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_120_121_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 6350000,
+          "label": "六維總屬性達到 6350000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 121,
+      "toRealmLv": 122,
+      "title": "渡劫八層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 983
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_121_122_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 7330000,
+          "label": "六維總屬性達到 7330000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 122,
+      "toRealmLv": 123,
+      "title": "渡劫九層",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 992
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_122_123_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 7740000,
+          "label": "六維總屬性達到 7740000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 123,
+      "toRealmLv": 124,
+      "title": "渡劫巔峰",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 1001
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_123_124_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 8160000,
+          "label": "六維總屬性達到 8160000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 124,
+      "toRealmLv": 125,
+      "title": "渡劫大圓滿",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 1010
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_124_125_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 8590000,
+          "label": "六維總屬性達到 8590000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 125,
+      "toRealmLv": 126,
+      "title": "半步飛昇",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 1019
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_125_126_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 9030000,
+          "label": "六維總屬性達到 9030000"
+        }
+      ]
+    },
+    {
+      "fromRealmLv": 126,
+      "toRealmLv": 127,
+      "title": "飛昇",
+      "rootFoundationItems": [
+        {
+          "itemId": "spirit_stone",
+          "count": 1028
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bw_126_127_total_attrs",
+          "type": "attribute_total",
+          "minTotalValue": 9480000,
+          "label": "六維總屬性達到 9480000"
+        }
+      ]
     }
   ]
 }

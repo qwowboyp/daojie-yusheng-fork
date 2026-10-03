@@ -316,8 +316,9 @@ function testMissingBreakthroughConfigShowsPathSevered() {
         },
     });
     service.onModuleInit();
+    service.breakthroughTransitions.delete(30);
     const player = {
-        realm: service.createRealmStateFromLevel(42, Number.MAX_SAFE_INTEGER),
+        realm: service.createRealmStateFromLevel(30, Number.MAX_SAFE_INTEGER),
         inventory: { items: [], revision: 0 },
         techniques: { techniques: [] },
         attrs: { finalAttrs: {}, revision: 0 },
@@ -334,7 +335,7 @@ function testMissingBreakthroughConfigShowsPathSevered() {
     assert.equal(preview.requirements.find((entry) => entry.label === '仙路斷絕')?.detail, '仙路斷絕，你的前路已被無形天塹阻斷，暫時無法繼續突破。');
     const result = service.attemptBreakthrough(player);
     assert.equal(result.changed, false);
-    assert.equal(player.realm.realmLv, 42);
+    assert.equal(player.realm.realmLv, 30);
 }
 
 function testEmptyBreakthroughRequirementsShowPathSevered() {
