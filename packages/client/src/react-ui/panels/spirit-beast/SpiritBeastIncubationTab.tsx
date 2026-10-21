@@ -61,7 +61,7 @@ function IncubatorCard({ view, facility, busy }: { view: SpiritBeastPanelView; f
           <div><strong>孵化速度 {speed.toFixed(2)} 倍</strong><span>約需 {Math.ceil(3600 / speed).toLocaleString('zh-TW')} 息</span></div>
         </div> : null}
         {egg ? <HatchWeights star={egg.star} /> : null}
-        <button type="button" className="small-btn" disabled={busy || !egg || !facility.canOperate} onClick={() => egg && sendSpiritBeastCommand({ action: 'incubate', buildingId: facility.buildingId, eggItemKey: egg.itemKey, expectedRevision: egg.revision })}>開始孵化</button>
+        <button type="button" className="small-btn" disabled={busy || !egg || !facility.canOperate} onClick={() => egg && sendSpiritBeastCommand({ action: 'incubate', buildingId: facility.buildingId, eggItemKey: egg.itemKey })}>開始孵化</button>
       </div> : null}
     </article>
   );
@@ -70,33 +70,22 @@ function IncubatorCard({ view, facility, busy }: { view: SpiritBeastPanelView; f
 function EggEnhancement({ view, busy }: { view: SpiritBeastPanelView; busy: boolean }) {
   const facility = view.facilities.find((entry) => entry.kind === 'egg_enhancement');
   const [targetKey, setTargetKey] = useState('');
-  const [counts, setCounts] = useState<Record<string, number>>({});
   const target = view.eggs.find((entry) => entry.itemKey === targetKey);
-  const candidates = useMemo(() => target ? view.eggs.filter((entry) => entry.star === target.star) : [], [target, view.eggs]);
+  const sameItemTotal = useMemo(() => target
+    ? view.eggs.filter((entry) => entry.itemId === target.itemId).reduce((sum, entry) => sum + entry.count, 0)
+    : 0, [target, view.eggs]);
   useEffect(() => {
     if (targetKey && !view.eggs.some((entry) => entry.itemKey === targetKey && entry.star < 5 && entry.count > 0)) setTargetKey('');
   }, [targetKey, view.eggs]);
-  useEffect(() => {
-    if (!target) { setCounts({}); return; }
-    const limits = new Map(candidates.map((entry) => [entry.itemKey, Math.max(0, entry.count - (entry.itemKey === target.itemKey ? 1 : 0))]));
-    setCounts((current) => Object.fromEntries(Object.entries(current).filter(([key, count]) => count > 0 && (limits.get(key) ?? 0) >= count)));
-  }, [candidates, target]);
-  const selectedCount = Object.values(counts).reduce((sum, count) => sum + count, 0);
   return (
     <section className="spirit-beast-operation" aria-labelledby="spirit-beast-egg-enhance-title">
-      <div className="spirit-beast-section-heading"><div><h3 id="spirit-beast-egg-enhance-title">靈蛋強化</h3><p>選一顆主蛋與十份同星靈蛋；成功升一星，未成功時主蛋仍會保留。</p></div><span>成功率 25%</span></div>
-      <label>主蛋<select value={targetKey} onChange={(event) => { setTargetKey(event.target.value); setCounts({}); }}><option value="">選擇一至四星主蛋</option>{view.eggs.filter((egg) => egg.star < 5 && egg.count > 0).map((egg) => <option key={egg.itemKey} value={egg.itemKey}>{egg.name} ×{egg.count}・{stars(egg.star)}</option>)}</select></label>
+      <div className="spirit-beast-section-heading"><div><h3 id="spirit-beast-egg-enhance-title">靈蛋強化</h3><p>選一顆主蛋，背包內同元素同星靈蛋合計滿 11 顆即可強化；成功升一星，未成功時主蛋仍會保留。</p></div><span>成功率 25%</span></div>
+      <label>主蛋<select value={targetKey} onChange={(event) => setTargetKey(event.target.value)}><option value="">選擇一至四星主蛋</option>{view.eggs.filter((egg) => egg.star < 5 && egg.count > 0).map((egg) => <option key={egg.itemKey} value={egg.itemKey}>{egg.name} ×{egg.count}・{stars(egg.star)}</option>)}</select></label>
       {target ? <>
         <div className="spirit-beast-hatch-preview"><img src={eggArtUrl(target.element)} srcSet={`${eggArtUrl(target.element)} 1x, ${eggArtUrl(target.element, 192)} 2x`} alt={`${target.name}圖`} width="64" height="64" /><div><strong>{target.name}</strong><span>{stars(target.star)} → {stars(target.star + 1)}</span></div></div>
-        <fieldset className="spirit-beast-materials"><legend>同星素材 {selectedCount}/10</legend>
-          {candidates.some((entry) => entry.count - (entry.itemKey === target.itemKey ? 1 : 0) > 0) ? candidates.map((entry) => {
-            const max = Math.max(0, entry.count - (entry.itemKey === target.itemKey ? 1 : 0));
-            if (!max) return null;
-            return <label key={entry.itemKey}><span>{entry.name}<small>可用 {max}</small></span><input type="number" min="0" max={Math.min(max, 10)} value={counts[entry.itemKey] ?? 0} onChange={(event) => { const next = Math.max(0, Math.min(max, Math.trunc(event.target.valueAsNumber || 0))); setCounts((current) => ({ ...current, [entry.itemKey]: next })); }} /></label>;
-          }) : <p className="spirit-beast-muted">沒有可用的十份同星素材。</p>}
-        </fieldset>
+        <p className="spirit-beast-materials">同元素同星靈蛋 {sameItemTotal}/11・{sameItemTotal >= 11 ? '成功扣 11 顆，失敗扣 10 顆' : '需主蛋加 10 顆素材'}</p>
       </> : null}
-      <button type="button" className="small-btn" disabled={!facility || !target || selectedCount !== 10 || busy || !facility.canOperate} onClick={() => facility && target && sendSpiritBeastCommand({ action: 'enhance_egg', buildingId: facility.buildingId, eggItemKey: target.itemKey, materials: Object.entries(counts).filter(([, count]) => count > 0).map(([itemKey, count]) => ({ itemKey, count })), expectedRevision: target.revision })}>確認強化（消耗十份素材）</button>
+      <button type="button" className="small-btn" disabled={!facility || !target || sameItemTotal < 11 || busy || !facility.canOperate} onClick={() => facility && target && sendSpiritBeastCommand({ action: 'enhance_egg', buildingId: facility.buildingId, eggItemKey: target.itemKey })}>確認強化</button>
     </section>
   );
 }

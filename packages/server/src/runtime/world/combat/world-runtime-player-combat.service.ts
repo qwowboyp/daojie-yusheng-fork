@@ -211,30 +211,30 @@ export class WorldRuntimePlayerCombatService {
             );
         }
         clearPartyMonsterSupport(instance?.meta?.instanceId ?? '', monster.runtimeId);
-        recordPlayerMonsterKillPerf(
+        sectionStartedAt = recordPlayerMonsterKillPerf(
             deps,
             'combat.playerMonsterKill.lootDeliveryMs',
             sectionStartedAt,
         );
-        this.scheduleSpiritBeastEggDrop(instance, monster, killerPlayerId);
+        // 靈蛋是普通背包道具：擊殺當帧同步擲骰，直接走一般掉落入包（不參與隊伍分配）。
+        const eggItemId = this.spiritBeastRuntimeService?.rollMonsterEggItemId(monster?.tier === 'boss') ?? null;
+        if (eggItemId) {
+            this.deliverMonsterLootSynchronously(
+                killerPlayerId,
+                instance,
+                monster.x,
+                monster.y,
+                this.contentTemplateRepository.createItem(eggItemId, 1),
+                deps,
+                buildMonsterLootDeliverySourceRef(instance, monster, items.length),
+            );
+        }
+        recordPlayerMonsterKillPerf(
+            deps,
+            'combat.playerMonsterKill.eggDropMs',
+            sectionStartedAt,
+        );
     }    
-    /**
-     * 灵蛋掉落判定：随机取样在击杀当帧同步完成，落库异步完成；
-     * 写库失败仅告警，不回滚既有击杀结算。
-     */
-    scheduleSpiritBeastEggDrop(instance: any, monster: any, killerPlayerId: string): void {
-        if (!this.spiritBeastRuntimeService) return;
-        const instanceId = typeof instance?.meta?.instanceId === 'string' ? instance.meta.instanceId : 'unknown';
-        const runtimeId = typeof monster?.runtimeId === 'string' ? monster.runtimeId : String(monster?.monsterId ?? 'unknown');
-        const killTick = Math.max(0, Math.trunc(Number(instance?.tick) || 0));
-        void this.spiritBeastRuntimeService.recordEligibleMonsterDeath({
-            sourceRef: `spirit-egg:${instanceId}:${runtimeId}:${killTick}`,
-            ownerPlayerId: killerPlayerId,
-            boss: monster?.tier === 'boss',
-        }).catch((error: unknown) => {
-            this.logger.warn(`靈蛋掉落寫入失敗，不回滾既有擊殺結算: ${error instanceof Error ? error.message : String(error)}`);
-        });
-    }
 
     /**
  * distributeMonsterKillProgress：判断distribute怪物Kill进度是否满足条件。

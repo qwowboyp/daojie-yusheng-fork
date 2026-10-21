@@ -55,9 +55,9 @@ export interface SpiritBeastView extends SpiritBeastRecord {
   canManage: boolean;
 }
 
+/** 靈蛋即普通背包道具；itemKey 對應背包堆疊（itemInstanceId 或 slot:索引）。 */
 export interface SpiritEggStackView {
   itemKey: string;
-  revision: number;
   itemId: string;
   name: string;
   element: SpiritBeastElement;
@@ -215,7 +215,7 @@ export type SpiritBeastCommandView = SpiritBeastCommandBase & (
   | { action: 'protect'; beastId: string; protected: boolean }
   | { action: 'incubate'; buildingId: string; eggItemKey: string }
   | { action: 'cancel_incubation' | 'adopt'; buildingId: string; hatchId: string }
-  | { action: 'enhance_egg'; buildingId: string; eggItemKey: string; materials: Array<{ itemKey: string; count: number }> }
+  | { action: 'enhance_egg'; buildingId: string; eggItemKey: string }
   | { action: 'cultivate'; buildingId: string; beastId: string; materialBeastIds: string[] }
   | { action: 'fuse' | 'preview_fusion'; buildingId: string; beastIds: [string, string] }
   | { action: 'set_mine_enabled'; buildingId: string; enabled: boolean }

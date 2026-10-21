@@ -694,8 +694,8 @@ function main() {
   for (const item of items) {
     if (!item.itemId.startsWith('spirit_egg.')) continue;
     pushSource(sourceByItemId, item.itemId, {
-      kind: 'acquisition_rule', mapId: 'world', mapName: '宗門核心', ruleId: 'spirit-beast-monster-egg',
-      title: '極稀有靈蛋掉落', description: '擊殺怪物有極低機率取得，首領較高；在宗門核心的靈獸管理查看蛋袋及孵化。',
+      kind: 'acquisition_rule', mapId: 'world', mapName: '世界', ruleId: 'spirit-beast-monster-egg',
+      title: '極稀有靈蛋掉落', description: '擊殺怪物有極低機率直接掉入背包，首領機率較高；持有靈蛋即可在宗門靈獸設施孵化或強化。',
     });
   }
   for (const seed of spiritBeastContent.seeds) {

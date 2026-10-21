@@ -1,5 +1,5 @@
 // @ts-nocheck
-/** 用途：靈獸掉蛋去重入口、恢復、最強閒獸派工、1Hz 進度與地圖投影冒煙驗證。 */
+/** 用途：靈蛋背包制（孵化／取消退還／強化）與恢復、最強閒獸派工、1Hz 進度與地圖投影冒煙驗證。 */
 import assert from 'node:assert/strict';
 import { SPIRIT_BEAST_CATALOG } from '@mud/shared';
 import { MapTemplateRepository } from '../runtime/map/map-template.repository';
@@ -27,7 +27,6 @@ async function main(): Promise<void> {
   const reserved: string[] = [];
   const constructionEnsures: Array<Record<string, unknown>> = [];
   let constructionOrder: ReturnType<typeof workOrder> | null = null;
-  const awardedSources = new Set<string>();
   const persistence = {
     isEnabled: () => true,
     loadRecoveryState: async () => ({ hatches: [hatch], beasts: [strong, weak], workOrders: [order], crops: [] }),
@@ -50,19 +49,18 @@ async function main(): Promise<void> {
         totalTicks: input.totalWork, remainingTicks: input.totalWork };
       return constructionOrder;
     },
-    awardEgg: async (input) => {
-      const awarded = !awardedSources.has(input.sourceRef); awardedSources.add(input.sourceRef);
-      return { awarded, egg: { eggId: '00000000-0000-4000-8000-000000000401', ownerPlayerId: input.ownerPlayerId,
-        element: input.element, star: input.star, state: 'warehouse', hatchId: null, sourceRef: input.sourceRef, revision: 1 } };
-    },
-    listPlayerEggs: async () => [], listPlayerBeasts: async () => [], listPlayerHatches: async () => [], listFacilityStorage: async () => [],
+    listPlayerBeasts: async () => [], listPlayerHatches: async () => [], listFacilityStorage: async () => [],
     releaseOrphanedPlayerWorkOrders: async () => [],
   };
   const playerRuntime = { getPlayer: () => ({
-    inventory: { items: [{ itemId: 'black_iron_chunk', name: '玄鐵礦塊', type: 'material', count: 2 }] },
+    inventory: { capacity: 40, items: [
+      { itemId: 'black_iron_chunk', name: '玄鐵礦塊', type: 'material', count: 2 },
+      { itemId: 'spirit_egg.metal.star2', name: '金靈蛋', type: 'material', count: 3, itemInstanceId: 'egg:instance:1' },
+    ] },
     plantingSkill: { level: 2, exp: 3, expToNext: 60 },
   }), playerProgressionService: null };
-  const content = { getItemName: (itemId: string) => itemId === 'black_iron_chunk' ? '玄鐵礦塊' : itemId };
+  const content = { getItemName: (itemId: string) => itemId === 'black_iron_chunk' ? '玄鐵礦塊' : itemId,
+    createItem: (itemId: string, count: number) => ({ itemId, count, type: 'material' }) };
   const craft = { forgingCatalog: [{ recipeId: 'forge:1', outputItemId: 'sword:1', outputName: '測試劍',
     outputLevel: 2, baseBrewTicks: 12, ingredients: [{ itemId: 'black_iron_chunk', name: '玄鐵礦塊', count: 2 }] }], alchemyCatalog: [] };
   const flush = { flushPlayerDomains: async () => true };
@@ -71,6 +69,10 @@ async function main(): Promise<void> {
   const panel = await service.getPanel('player:1', { sectId: 'sect:1', sectInstanceId: 'sect:instance:1', buildings: [], canManage: true });
   assert.equal(panel.craftOptions[0]?.recipeId, 'forge:1');
   assert.equal(panel.inventory[0]?.type, 'material');
+  assert.equal(panel.eggs.length, 1, '面板靈蛋必須直接來自背包堆疊');
+  assert.equal(panel.eggs[0]?.itemKey, 'egg:instance:1');
+  assert.equal(panel.eggs[0]?.count, 3);
+  assert.equal(panel.eggs[0]?.star, 2);
   assert.equal(panel.plantingSkill?.level, 2);
   await Promise.resolve(); await Promise.resolve();
   assert.equal(reserved[0], strong.beastId, '應優先派同技藝等級最高的閒獸');
@@ -97,28 +99,24 @@ async function main(): Promise<void> {
   assert.equal(weak.x, strong.x, '靈獸尋路必須忽略其他獸與玩家 occupancy，允許同格穿透');
 
   service['randomSample'] = () => 0;
+  const deliveredEggs: string[] = [];
   const combat = Object.create(WorldRuntimePlayerCombatService.prototype);
+  combat.deliveredMonsterLootSources = new Map();
   combat.spiritBeastRuntimeService = service;
-  combat.playerRuntimeService = { getPlayer: () => null };
-  combat.contentTemplateRepository = { rollMonsterDrops: () => [], getMonsterCombatProfile: () => undefined };
+  combat.playerRuntimeService = { getPlayer: () => null,
+    tryReceiveInventoryItem: (_playerId: string, item: { itemId: string }) => { deliveredEggs.push(item.itemId); return true; } };
+  combat.contentTemplateRepository = { rollMonsterDrops: () => [], getMonsterCombatProfile: () => undefined,
+    createItem: (itemId: string, count: number) => ({ itemId, count, type: 'material' }) };
   const killInstance = { meta: { instanceId: 'sect:instance:1' }, tick: 9, getMonsterDamageContributionEntries: () => [] };
   const killDeps = { queuePlayerNotice: () => undefined, advanceKillQuestProgress: () => undefined };
-  const assertEggQueued = async (sourceRef: string) => {
-    for (let attempt = 0; attempt < 20 && !awardedSources.has(sourceRef); attempt += 1) {
-      await new Promise((resolve) => setImmediate(resolve));
-    }
-    assert.equal(awardedSources.has(sourceRef), true, '靈蛋必須由實際 monster death hook 送入權威掉落入口');
-  };
   combat.handlePlayerMonsterKillSynchronously(killInstance,
-    { runtimeId: 'monster:runtime:death-hook', tier: 'boss' }, 'player:1', killDeps);
-  await assertEggQueued('spirit-egg:sect:instance:1:monster:runtime:death-hook:9');
-  await combat.handlePlayerMonsterKill({ ...killInstance, tick: 10 },
-    { runtimeId: 'monster:runtime:death-hook-async', tier: 'mortal_blood' }, 'player:1', killDeps);
-  await assertEggQueued('spirit-egg:sect:instance:1:monster:runtime:death-hook-async:10');
-  const first = await service.recordEligibleMonsterDeath({ sourceRef: 'spirit-egg:instance:monster:10', ownerPlayerId: 'player:1', boss: false });
-  const replay = await service.recordEligibleMonsterDeath({ sourceRef: 'spirit-egg:instance:monster:10', ownerPlayerId: 'player:1', boss: false });
-  assert.equal(first.dropped, true);
-  assert.equal(replay.dropped, false, '同一死亡身份不得重複產蛋');
+    { runtimeId: 'monster:runtime:death-hook', tier: 'boss', x: 1, y: 1 }, 'player:1', killDeps);
+  assert.equal(deliveredEggs.length, 1, '靈蛋必須在擊殺當帧同步走一般掉落入包');
+  assert.match(deliveredEggs[0], /^spirit_egg\.(metal|wood|water|fire|earth)\.star[1-5]$/,
+    '掉落物必須是既有靈蛋道具模板 ID');
+  combat.handlePlayerMonsterKillSynchronously({ ...killInstance, tick: 10 },
+    { runtimeId: 'monster:runtime:death-hook-async', tier: 'mortal_blood', x: 2, y: 2 }, 'player:1', killDeps);
+  assert.equal(deliveredEggs.length, 2, '普通怪亦需同樣走背包掉落');
   const unknown = await service.executeCommand('player:1', { action: 'unknown', requestId: 'unknown:1' } as never,
     { sectId: 'sect:1', sectInstanceId: 'sect:instance:1', buildings: [], canManage: true });
   assert.equal(unknown.ok, false, '未知 command action 必須 fail closed');
@@ -178,8 +176,8 @@ async function main(): Promise<void> {
   assert.equal(constructionEnsures.length, 1, '放置命令重放不得重建營造工單');
 
   console.log(JSON.stringify({ ok: true, case: 'spirit-beast-runtime', strongestWorker: reserved[0], hatchReady: true,
-    dedupe: true, deathHook: true, projections: projections.length, passThroughOccupancy: true,
-    mineEnabledProjection: true, cropStates: true, constructionPlacementEvent: true }, null, 2));
+    eggFromInventory: panel.eggs.length, eggToInventory: deliveredEggs.length, projections: projections.length,
+    passThroughOccupancy: true, mineEnabledProjection: true, cropStates: true, constructionPlacementEvent: true }, null, 2));
 }
 
 function beast(beastId: string, speciesId: string, x: number) {

@@ -7,7 +7,13 @@
 import { Inject, Injectable, Logger, type OnModuleDestroy, type OnModuleInit } from '@nestjs/common';
 import { createHash, randomUUID } from 'node:crypto';
 import type { Pool, PoolClient } from 'pg';
-import { computeCraftSkillExpGain, SPIRIT_BEAST_RULES } from '@mud/shared';
+import {
+  computeCraftSkillExpGain,
+  getSpiritEggItemId,
+  parseSpiritEggItemId,
+  SPIRIT_BEAST_RULES,
+  type SpiritBeastStar,
+} from '@mud/shared';
 
 import { DatabasePoolProvider } from './database-pool.provider';
 
@@ -151,49 +157,6 @@ export class SpiritBeastPersistenceService implements OnModuleInit, OnModuleDest
     return this.pool;
   }
 
-  async awardEgg(input: {
-    sourceRef: string;
-    ownerPlayerId: string;
-    element: SpiritElement;
-    star: number;
-  }): Promise<{ awarded: boolean; egg: SpiritEggRow }> {
-    const pool = this.requirePool();
-    const client = await pool.connect();
-    try {
-      await client.query('BEGIN');
-      const eggId = randomUUID();
-      const inserted = await client.query(
-        `INSERT INTO spirit_beast_egg
-          (egg_id, owner_player_id, element, star, state, source_ref, revision)
-         VALUES ($1, $2, $3, $4, 'warehouse', $5, 1)
-         ON CONFLICT (source_ref) DO NOTHING
-         RETURNING *`,
-        [eggId, input.ownerPlayerId, input.element, normalizeStar(input.star), input.sourceRef],
-      );
-      if (!inserted.rows[0]) {
-        const existing = await client.query(`SELECT * FROM spirit_beast_egg WHERE source_ref=$1`, [input.sourceRef]);
-        if (!existing.rows[0]) throw new Error('SPIRIT_EGG_DEDUPE_READ_FAILED');
-        await client.query('COMMIT');
-        return { awarded: false, egg: mapEggRow(existing.rows[0]) };
-      }
-      await client.query('COMMIT');
-      return { awarded: true, egg: mapEggRow(inserted.rows[0]) };
-    } catch (error) {
-      await client.query('ROLLBACK').catch(() => undefined);
-      throw error;
-    } finally {
-      client.release();
-    }
-  }
-
-  async listPlayerEggs(ownerPlayerId: string): Promise<SpiritEggRow[]> {
-    const result = await this.requirePool().query(
-      `SELECT * FROM spirit_beast_egg WHERE owner_player_id = $1 ORDER BY created_at, egg_id`,
-      [ownerPlayerId],
-    );
-    return result.rows.map(mapEggRow);
-  }
-
   async listPlayerBeasts(ownerPlayerId: string): Promise<SpiritBeastRow[]> {
     const result = await this.requirePool().query(
       `SELECT * FROM spirit_beast_instance WHERE owner_player_id = $1 ORDER BY created_at, beast_id`,
@@ -222,11 +185,11 @@ export class SpiritBeastPersistenceService implements OnModuleInit, OnModuleDest
     return row.status === 'completed' ? row.result_json as T : null;
   }
 
+  /** 從背包扣 1 顆靈蛋開始孵化；背包是真源，孵化中期只用蛋列維持 hatch 關聯。 */
   async startHatch(input: {
     operationId: string;
     ownerPlayerId: string;
-    eggId: string;
-    expectedEggRevision?: number;
+    eggItemKey: string;
     buildingInstanceId: string;
     buildingId: string;
     incubatorElement: SpiritElement;
@@ -235,31 +198,33 @@ export class SpiritBeastPersistenceService implements OnModuleInit, OnModuleDest
     resultCombatPower: number;
     totalTicks: number;
   }): Promise<IdempotentResult<SpiritHatchRow>> {
+    const eggItemKey = normalizeRequiredId(input.eggItemKey, 'SPIRIT_ITEM_KEY_REQUIRED');
     const requestIdentity = {
-      operationId: input.operationId, ownerPlayerId: input.ownerPlayerId, eggId: input.eggId,
-      expectedEggRevision: input.expectedEggRevision, buildingInstanceId: input.buildingInstanceId,
-      buildingId: input.buildingId, incubatorElement: input.incubatorElement, totalTicks: input.totalTicks,
+      operationId: input.operationId, ownerPlayerId: input.ownerPlayerId, eggItemKey,
+      buildingInstanceId: input.buildingInstanceId, buildingId: input.buildingId,
+      incubatorElement: input.incubatorElement, totalTicks: input.totalTicks,
     };
     return this.executeIdempotent(input.operationId, input.ownerPlayerId, 'start_hatch', requestIdentity, async (client) => {
       await client.query(`SELECT pg_advisory_xact_lock(hashtext($1))`, [`spirit-incubator:${input.buildingInstanceId}:${input.buildingId}`]);
+      await client.query(`SELECT pg_advisory_xact_lock($1::integer,hashtext($2))`, [SPIRIT_INVENTORY_LOCK_KEY, input.ownerPlayerId]);
       const occupied = await client.query(
         `SELECT 1 FROM spirit_beast_hatch WHERE building_instance_id=$1 AND building_id=$2
           AND status IN ('incubating','ready') LIMIT 1`, [input.buildingInstanceId, input.buildingId],
       );
       if ((occupied.rowCount ?? 0) > 0) throw new Error('SPIRIT_INCUBATOR_OCCUPIED');
-      const eggResult = await client.query(
-        `SELECT * FROM spirit_beast_egg WHERE egg_id = $1 FOR UPDATE`,
-        [input.eggId],
-      );
-      const egg = eggResult.rows[0] ? mapEggRow(eggResult.rows[0]) : null;
-      if (!egg || egg.ownerPlayerId !== input.ownerPlayerId) throw new Error('SPIRIT_EGG_NOT_FOUND');
-      if (egg.state !== 'warehouse') throw new Error('SPIRIT_EGG_NOT_AVAILABLE');
-      if (input.expectedEggRevision !== undefined && egg.revision !== input.expectedEggRevision) {
-        throw new Error('SPIRIT_EGG_REVISION_CONFLICT');
-      }
+      const stack = await lockInventoryStack(client, input.ownerPlayerId, eggItemKey);
+      const egg = stack ? parseSpiritEggItemId(String(stack.item_id)) : null;
+      if (!stack || !egg) throw new Error('SPIRIT_EGG_NOT_FOUND');
+      await consumeInventoryCount(client, stack, 1);
+      const eggId = randomUUID();
       const hatchId = randomUUID();
       const pendingBeastId = randomUUID();
       const totalTicks = Math.max(1, Math.trunc(input.totalTicks));
+      await client.query(
+        `INSERT INTO spirit_beast_egg (egg_id, owner_player_id, element, star, state, hatch_id, revision)
+         VALUES ($1,$2,$3,$4,'incubating',$5,1)`,
+        [eggId, input.ownerPlayerId, egg.element, egg.star, hatchId],
+      );
       const inserted = await client.query(
         `INSERT INTO spirit_beast_hatch
           (hatch_id, owner_player_id, egg_id, building_instance_id, building_id,
@@ -267,14 +232,9 @@ export class SpiritBeastPersistenceService implements OnModuleInit, OnModuleDest
            total_ticks, remaining_ticks, status, pending_beast_id, revision)
          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$12,'incubating',$13,1)
          RETURNING *`,
-        [hatchId, input.ownerPlayerId, input.eggId, input.buildingInstanceId, input.buildingId,
+        [hatchId, input.ownerPlayerId, eggId, input.buildingInstanceId, input.buildingId,
           input.incubatorElement, egg.element, egg.star, input.resultSpeciesId, input.resultGrade,
           Math.max(1, Math.trunc(input.resultCombatPower)), totalTicks, pendingBeastId],
-      );
-      await client.query(
-        `UPDATE spirit_beast_egg SET state='incubating', hatch_id=$2, revision=revision+1, updated_at=now()
-          WHERE egg_id=$1`,
-        [input.eggId, hatchId],
       );
       return mapHatchRow(inserted.rows[0]);
     });
@@ -322,44 +282,49 @@ export class SpiritBeastPersistenceService implements OnModuleInit, OnModuleDest
     });
   }
 
+  /**
+   * 靈蛋強化（背包制）：目標與素材是同一個 item_id（同元素同星），合計需 11 顆。
+   * 成功扣 11 顆並回補 1 顆 star+1；失敗只扣 10 顆（目標保留原星）。
+   */
   async enhanceEgg(input: {
     operationId: string;
     ownerPlayerId: string;
-    targetEggId: string;
-    materialEggIds: string[];
-    expectedTargetRevision?: number;
+    eggItemKey: string;
+    inventoryCapacity: number;
     success: boolean;
-  }): Promise<IdempotentResult<{ success: boolean; target: SpiritEggRow }>> {
-    const materialIds = normalizeDistinctIds(input.materialEggIds);
-    if (materialIds.length !== 10 || materialIds.includes(input.targetEggId)) throw new Error('SPIRIT_EGG_MATERIAL_COUNT_INVALID');
-    const lockIds = [input.targetEggId, ...materialIds].sort();
-    const requestIdentity = { operationId: input.operationId, ownerPlayerId: input.ownerPlayerId,
-      targetEggId: input.targetEggId, materialEggIds: [...materialIds].sort(),
-      expectedTargetRevision: input.expectedTargetRevision };
+  }): Promise<IdempotentResult<{ success: boolean; targetItemId: string; targetStar: SpiritBeastStar; consumed: number }>> {
+    const eggItemKey = normalizeRequiredId(input.eggItemKey, 'SPIRIT_ITEM_KEY_REQUIRED');
+    const requestIdentity = { operationId: input.operationId, ownerPlayerId: input.ownerPlayerId, eggItemKey };
     return this.executeIdempotent(input.operationId, input.ownerPlayerId, 'enhance_egg', requestIdentity, async (client) => {
-      const rows = await lockEggs(client, lockIds);
-      const byId = new Map(rows.map((row) => [row.eggId, row]));
-      const target = byId.get(input.targetEggId);
-      if (!target || target.ownerPlayerId !== input.ownerPlayerId) throw new Error('SPIRIT_EGG_NOT_FOUND');
-      if (target.state !== 'warehouse' || target.star >= 5) throw new Error('SPIRIT_EGG_NOT_ENHANCEABLE');
-      if (input.expectedTargetRevision !== undefined && target.revision !== input.expectedTargetRevision) {
-        throw new Error('SPIRIT_EGG_REVISION_CONFLICT');
-      }
-      for (const materialId of materialIds) {
-        const material = byId.get(materialId);
-        if (!material || material.ownerPlayerId !== input.ownerPlayerId || material.state !== 'warehouse') {
-          throw new Error('SPIRIT_EGG_MATERIAL_NOT_AVAILABLE');
-        }
-        if (material.star !== target.star) throw new Error('SPIRIT_EGG_MATERIAL_STAR_MISMATCH');
-      }
-      await client.query(`DELETE FROM spirit_beast_egg WHERE egg_id = ANY($1::uuid[])`, [materialIds]);
-      const updated = await client.query(
-        `UPDATE spirit_beast_egg
-            SET star=CASE WHEN $2 THEN star+1 ELSE star END, revision=revision+1, updated_at=now()
-          WHERE egg_id=$1 RETURNING *`,
-        [target.eggId, input.success],
+      await client.query(`SELECT pg_advisory_xact_lock($1::integer,hashtext($2))`, [SPIRIT_INVENTORY_LOCK_KEY, input.ownerPlayerId]);
+      const targetStack = await lockInventoryStack(client, input.ownerPlayerId, eggItemKey);
+      const targetEgg = targetStack ? parseSpiritEggItemId(String(targetStack.item_id)) : null;
+      if (!targetStack || !targetEgg) throw new Error('SPIRIT_EGG_NOT_FOUND');
+      if (targetEgg.star >= 5) throw new Error('SPIRIT_EGG_NOT_ENHANCEABLE');
+      const sourceItemId = String(targetStack.item_id);
+      const stacks = await client.query(
+        `SELECT * FROM player_inventory_item WHERE player_id=$1 AND item_id=$2 AND locked_by IS NULL
+          ORDER BY slot_index FOR UPDATE`,
+        [input.ownerPlayerId, sourceItemId],
       );
-      return { success: input.success, target: mapEggRow(updated.rows[0]) };
+      const total = stacks.rows.reduce((sum, row) => sum + Math.max(0, Math.trunc(Number(row.count) || 0)), 0);
+      if (total < 11) throw new Error('SPIRIT_EGG_MATERIAL_COUNT_INVALID');
+      const consumed = input.success ? 11 : 10;
+      let remaining = consumed;
+      for (const row of stacks.rows) {
+        if (remaining <= 0) break;
+        const available = Math.max(0, Math.trunc(Number(row.count) || 0));
+        if (available <= 0) continue;
+        const take = Math.min(available, remaining);
+        await consumeInventoryCount(client, row, take);
+        remaining -= take;
+      }
+      const targetStar = (input.success ? targetEgg.star + 1 : targetEgg.star) as SpiritBeastStar;
+      const targetItemId = input.success ? getSpiritEggItemId(targetEgg.element, targetStar) : sourceItemId;
+      if (input.success) {
+        await grantInventoryItem(client, input.ownerPlayerId, targetItemId, 1, input.inventoryCapacity);
+      }
+      return { success: input.success, targetItemId, targetStar, consumed };
     });
   }
 
@@ -526,12 +491,16 @@ export class SpiritBeastPersistenceService implements OnModuleInit, OnModuleDest
     });
   }
 
+  /** 取消孵化：把 1 顆同元素同星的靈蛋還回背包；背包滿則拒絕取消，蛋不憑空消失。 */
   async cancelHatch(input: {
     operationId: string;
     ownerPlayerId: string;
     hatchId: string;
-  }): Promise<IdempotentResult<SpiritEggRow>> {
-    return this.executeIdempotent(input.operationId, input.ownerPlayerId, 'cancel_hatch', input, async (client) => {
+    inventoryCapacity: number;
+  }): Promise<IdempotentResult<{ element: SpiritElement; star: SpiritBeastStar; itemId: string }>> {
+    const requestIdentity = { operationId: input.operationId, ownerPlayerId: input.ownerPlayerId, hatchId: input.hatchId };
+    return this.executeIdempotent(input.operationId, input.ownerPlayerId, 'cancel_hatch', requestIdentity, async (client) => {
+      await client.query(`SELECT pg_advisory_xact_lock($1::integer,hashtext($2))`, [SPIRIT_INVENTORY_LOCK_KEY, input.ownerPlayerId]);
       const locked = await client.query(`SELECT * FROM spirit_beast_hatch WHERE hatch_id=$1 FOR UPDATE`, [input.hatchId]);
       const hatch = locked.rows[0] ? mapHatchRow(locked.rows[0]) : null;
       if (!hatch || hatch.ownerPlayerId !== input.ownerPlayerId) throw new Error('SPIRIT_HATCH_NOT_FOUND');
@@ -539,8 +508,12 @@ export class SpiritBeastPersistenceService implements OnModuleInit, OnModuleDest
       const eggResult = await client.query(`DELETE FROM spirit_beast_egg WHERE egg_id=$1 AND owner_player_id=$2 RETURNING *`,
         [hatch.eggId, input.ownerPlayerId]);
       if (!eggResult.rows[0]) throw new Error('SPIRIT_EGG_NOT_FOUND');
+      const egg = mapEggRow(eggResult.rows[0]);
+      const star = normalizeStar(egg.star) as SpiritBeastStar;
+      const itemId = getSpiritEggItemId(egg.element, star);
+      await grantInventoryItem(client, input.ownerPlayerId, itemId, 1, input.inventoryCapacity);
       await client.query(`UPDATE spirit_beast_hatch SET status='cancelled', revision=revision+1, updated_at=now() WHERE hatch_id=$1`, [hatch.hatchId]);
-      return mapEggRow(eggResult.rows[0]);
+      return { element: egg.element, star, itemId };
     });
   }
 
@@ -1437,6 +1410,79 @@ async function ensureSpiritBeastTables(pool: Pool): Promise<void> {
   } finally {
     client.release();
   }
+}
+
+/** 與 deposit/withdraw 相同的玩家背包 advisory lock 第一鍵，序列化同一玩家的背包資產變更。 */
+const SPIRIT_INVENTORY_LOCK_KEY = 7101;
+
+/** 鎖定玩家背包堆疊；itemKey 為 `slot:<索引>` 或 item_instance_id，只鎖未被長時間持有的列。 */
+async function lockInventoryStack(client: PoolClient, playerId: string, itemKey: string): Promise<Record<string, unknown> | null> {
+  const slot = itemKey.startsWith('slot:') ? Number(itemKey.slice(5)) : null;
+  const slotIndex = Number.isInteger(slot) && Number(slot) >= 0 ? Number(slot) : null;
+  const result = await client.query(
+    `SELECT * FROM player_inventory_item WHERE player_id=$1
+       AND (($2::bigint IS NOT NULL AND slot_index=$2) OR ($3::text IS NOT NULL AND item_instance_id=$3))
+       AND locked_by IS NULL FOR UPDATE`,
+    [playerId, slotIndex, slotIndex === null ? itemKey : null],
+  );
+  return result.rows[0] ?? null;
+}
+
+/** 從已鎖定的背包堆疊扣量；歸零即刪列。 */
+async function consumeInventoryCount(client: PoolClient, row: Record<string, unknown>, count: number): Promise<void> {
+  const nextCount = Math.max(0, Math.trunc(Number(row.count) || 0) - Math.max(0, Math.trunc(count)));
+  if (nextCount <= 0) {
+    await client.query(`DELETE FROM player_inventory_item WHERE item_instance_id=$1`, [row.item_instance_id]);
+    row.count = 0;
+    return;
+  }
+  await client.query(
+    `UPDATE player_inventory_item
+        SET count=$2, raw_payload=jsonb_set(raw_payload,'{count}',to_jsonb($2::bigint),true), updated_at=now()
+      WHERE item_instance_id=$1`,
+    [row.item_instance_id, nextCount],
+  );
+  row.count = nextCount;
+}
+
+/** 回補背包道具：同 item_id 未鎖堆疊優先加量，否則佔新格；超出容量丟 SPIRIT_INVENTORY_FULL。 */
+async function grantInventoryItem(
+  client: PoolClient,
+  playerId: string,
+  itemId: string,
+  count: number,
+  inventoryCapacity: number,
+): Promise<void> {
+  const amount = Math.max(1, Math.trunc(count));
+  const stack = await client.query(
+    `SELECT * FROM player_inventory_item WHERE player_id=$1 AND item_id=$2 AND locked_by IS NULL
+      ORDER BY slot_index LIMIT 1 FOR UPDATE`,
+    [playerId, itemId],
+  );
+  if (stack.rows[0]) {
+    await client.query(
+      `UPDATE player_inventory_item
+          SET count=count+$2, raw_payload=jsonb_set(raw_payload,'{count}',to_jsonb((count+$2)::bigint),true), updated_at=now()
+        WHERE item_instance_id=$1`,
+      [stack.rows[0].item_instance_id, amount],
+    );
+    return;
+  }
+  const occupied = await client.query(
+    `SELECT COUNT(*) AS count, COALESCE(MAX(slot_index), -1) AS slot_index FROM player_inventory_item WHERE player_id=$1`,
+    [playerId],
+  );
+  if (Number(occupied.rows[0]?.count ?? 0) >= Math.max(1, Math.trunc(inventoryCapacity))) {
+    throw new Error('SPIRIT_INVENTORY_FULL');
+  }
+  const itemInstanceId = randomUUID();
+  await client.query(
+    `INSERT INTO player_inventory_item
+      (item_instance_id, player_id, slot_index, item_id, count, raw_payload, updated_at)
+     VALUES ($1,$2,$3,$4,$5,$6::jsonb,now())`,
+    [itemInstanceId, playerId, Number(occupied.rows[0]?.slot_index ?? -1) + 1, itemId, amount,
+      JSON.stringify({ itemInstanceId, itemId, count: amount, type: 'material' })],
+  );
 }
 
 async function lockEggs(client: PoolClient, ids: string[]): Promise<SpiritEggRow[]> {

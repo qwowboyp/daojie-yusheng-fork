@@ -48,6 +48,7 @@ import { RecoverEmptyCustomTechniqueBooksConversion } from '../gm/compat-convers
 import { OrphanSectBuildingVisualsConversion } from '../gm/compat-conversions/conversions/building/orphan-sect-building-visuals';
 import { TongtianTowerCatalogInstanceTypeConversion } from '../gm/compat-conversions/conversions/world/tongtian-tower-catalog-instance-type';
 import { MailSnapshotTraditionalizeConversion } from '../gm/compat-conversions/conversions/mail/mail-snapshot-traditionalize';
+import { SpiritBeastWarehouseEggsToInventoryConversion } from '../gm/compat-conversions/conversions/spirit-beast/warehouse-eggs-to-inventory';
 
 /** 原生主线 HTTP 路由与依赖注册清单（控制器 + 服务）。 */
 export const NATIVE_HTTP_CONTRACT = Object.freeze({
@@ -100,6 +101,7 @@ export const NATIVE_HTTP_PROVIDERS = [
   OrphanSectBuildingVisualsConversion,
   TongtianTowerCatalogInstanceTypeConversion,
   MailSnapshotTraditionalizeConversion,
+  SpiritBeastWarehouseEggsToInventoryConversion,
   ...NATIVE_GM_AI_PROVIDER_CONTROLLER_PROVIDERS,
   RuntimeEnvManagementService,
   BotTokenService,

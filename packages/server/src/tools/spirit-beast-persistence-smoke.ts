@@ -1,5 +1,5 @@
 // @ts-nocheck
-/** 用途：以真 PostgreSQL 驗證靈蛋冪等、十顆原子扣除、孵化恢復與收養。 */
+/** 用途：以真 PostgreSQL 驗證靈蛋背包制（孵化扣蛋、取消退還、強化扣 11 顆）、冪等、孵化恢復與收養。 */
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 
@@ -28,31 +28,43 @@ async function main(): Promise<void> {
     await playerDomain.onModuleInit();
     assert.equal(playerDomain.isEnabled(), true, '必須以正式 PlayerDomain schema 初始化資產表');
     await service.onModuleInit();
-    const awards = [];
-    for (let index = 0; index < 11; index += 1) {
-      awards.push(await service.awardEgg({ sourceRef: `${sourcePrefix}:egg:${index}`, ownerPlayerId: playerId, element: 'metal', star: 1 }));
-    }
-    const duplicate = await service.awardEgg({ sourceRef: `${sourcePrefix}:egg:0`, ownerPlayerId: playerId, element: 'metal', star: 1 });
-    assert.equal(duplicate.awarded, false);
+    /** 直接寫入背包，模擬一般掉落已入包。 */
+    const insertEgg = async (ownerPlayerId: string, slotIndex: number, itemId: string, count: number): Promise<string> => {
+      const itemInstanceId = randomUUID();
+      await pool.query(`INSERT INTO player_inventory_item(item_instance_id,player_id,slot_index,item_id,count,raw_payload,updated_at)
+        VALUES ($1,$2,$3,$4,$5,$6::jsonb,now())`, [itemInstanceId, ownerPlayerId, slotIndex, itemId, count,
+        JSON.stringify({ itemInstanceId, itemId, count, type: 'material' })]);
+      return itemInstanceId;
+    };
+    const countEggs = async (ownerPlayerId: string, itemId: string): Promise<number> => {
+      const result = await pool.query(
+        `SELECT COALESCE(SUM(count),0) AS total FROM player_inventory_item WHERE player_id=$1 AND item_id=$2`,
+        [ownerPlayerId, itemId],
+      );
+      return Number(result.rows[0]?.total ?? 0);
+    };
+    const eggItemId = 'spirit_egg.metal.star1';
+    const eggStackId = await insertEgg(playerId, 500, eggItemId, 11);
+    await insertEgg(playerId, 501, eggItemId, 1);
     const operationId = `${sourcePrefix}:enhance`;
-    const request = { operationId, ownerPlayerId: playerId, targetEggId: awards[0].egg.eggId,
-      materialEggIds: awards.slice(1).map((entry) => entry.egg.eggId), expectedTargetRevision: 1, success: false };
+    const request = { operationId, ownerPlayerId: playerId, eggItemKey: eggStackId, inventoryCapacity: 40, success: false };
     const first = await service.enhanceEgg(request);
-    const replay = await service.enhanceEgg({ ...request, materialEggIds: [...request.materialEggIds].reverse(), success: true });
+    const replay = await service.enhanceEgg({ ...request, success: true });
     assert.equal(first.replayed, false);
     assert.equal(replay.replayed, true);
-    assert.equal((await service.listPlayerEggs(playerId)).length, 1, '失敗仍必須原子扣除十顆素材且保留主蛋');
+    assert.equal(first.result.success, false);
+    assert.equal(await countEggs(playerId, eggItemId), 2, '失敗只扣十顆素材，重放不得重複扣除');
 
     const species = SPIRIT_BEAST_CATALOG.find((entry) => entry.element === 'metal');
     assert.ok(species);
     const started = await service.startHatch({ operationId: `${sourcePrefix}:hatch`, ownerPlayerId: playerId,
-      eggId: first.result.target.eggId, expectedEggRevision: first.result.target.revision,
+      eggItemKey: eggStackId,
       buildingInstanceId: `smoke:instance:${suffix}`, buildingId: `smoke:incubator:${suffix}`,
       incubatorElement: 'metal', resultSpeciesId: species.id, resultGrade: species.grade,
       resultCombatPower: species.baseCombatPowerMin, totalTicks: 1 });
     const alternateSpecies = SPIRIT_BEAST_CATALOG.find((entry) => entry.id !== species.id && entry.element === 'metal')!;
     const hatchReplay = await service.startHatch({ operationId: `${sourcePrefix}:hatch`, ownerPlayerId: playerId,
-      eggId: first.result.target.eggId, expectedEggRevision: first.result.target.revision,
+      eggItemKey: eggStackId,
       buildingInstanceId: `smoke:instance:${suffix}`, buildingId: `smoke:incubator:${suffix}`,
       incubatorElement: 'metal', resultSpeciesId: alternateSpecies.id, resultGrade: alternateSpecies.grade,
       resultCombatPower: alternateSpecies.baseCombatPowerMax, totalTicks: 1 });
@@ -67,6 +79,23 @@ async function main(): Promise<void> {
     await service.flushProgress({ hatches: [{ ...ready, revision: ready.revision + 100 }], beasts: [], workOrders: [], crops: [] });
     const adoptedHatch = (await service.listPlayerHatches(playerId)).find((entry) => entry.hatchId === ready.hatchId);
     assert.equal(adoptedHatch?.status, 'adopted', '晚到孵化 flush 不得覆寫已收養終態');
+
+    // 取消孵化必須把同元素同星的靈蛋還回背包，而不是讓蛋消失。
+    const cancelEggKey = (await pool.query(
+      `SELECT item_instance_id FROM player_inventory_item WHERE player_id=$1 AND item_id=$2 ORDER BY slot_index LIMIT 1`,
+      [playerId, eggItemId])).rows[0]?.item_instance_id;
+    assert.ok(cancelEggKey, '強化失敗後必須留下可孵化的靈蛋');
+    const cancelStart = await service.startHatch({ operationId: `${sourcePrefix}:cancel-hatch`, ownerPlayerId: playerId,
+      eggItemKey: cancelEggKey, buildingInstanceId: `smoke:instance:${suffix}`, buildingId: `smoke:incubator-cancel:${suffix}`,
+      incubatorElement: 'metal', resultSpeciesId: species.id, resultGrade: species.grade,
+      resultCombatPower: species.baseCombatPowerMin, totalTicks: 10 });
+    const cancelled = await service.cancelHatch({ operationId: `${sourcePrefix}:cancel-hatch-cancel`, ownerPlayerId: playerId,
+      hatchId: cancelStart.result.hatchId, inventoryCapacity: 40 });
+    assert.equal(cancelled.result.itemId, eggItemId);
+    const cancelReplay = await service.cancelHatch({ operationId: `${sourcePrefix}:cancel-hatch-cancel`, ownerPlayerId: playerId,
+      hatchId: cancelStart.result.hatchId, inventoryCapacity: 40 });
+    assert.equal(cancelReplay.replayed, true);
+    assert.equal(await countEggs(playerId, eggItemId), 1, '取消孵化只退還一顆蛋，重放不得重複發放');
 
     const summoned = await service.summonBeast({ operationId: `${sourcePrefix}:summon`, ownerPlayerId: playerId,
       beastId: adopted.result.beastId, expectedRevision: adopted.result.revision, sectId: `smoke:sect:${suffix}`,
@@ -99,7 +128,8 @@ async function main(): Promise<void> {
     await service.withdrawInventory({ operationId: `${sourcePrefix}:withdraw-slot`, ownerPlayerId: playerId,
       instanceId: `smoke:instance:${suffix}`, buildingId: `smoke:storage:${suffix}`,
       entries: [{ itemKey: storageId, count: 1 }], inventoryCapacity: 10 });
-    const slots = await pool.query(`SELECT slot_index FROM player_inventory_item WHERE player_id=$1 ORDER BY slot_index`, [playerId]);
+    const slots = await pool.query(`SELECT slot_index FROM player_inventory_item
+      WHERE player_id=$1 AND item_id IN ('black_iron_chunk','spirit_stone') ORDER BY slot_index`, [playerId]);
     assert.deepEqual(slots.rows.map((row) => Number(row.slot_index)), [0, 1], 'slot0 已佔用時領取必須寫入 slot1');
 
     const cultivateIds: string[] = [];
@@ -118,7 +148,7 @@ async function main(): Promise<void> {
     assert.equal(cultivationReplay.replayed, true);
     assert.equal(cultivated.result.success, false);
     assert.equal(cultivationReplay.result.success, false, '同培養命令重放不得重擲成功率');
-    assert.equal((await service.listPlayerEggs(playerId)).length, 0);
+    assert.equal(await countEggs(playerId, eggItemId), 1, '背包只保留取消孵化退還的那顆蛋');
     assert.deepEqual(new Set((await service.listPlayerBeasts(playerId)).map((entry) => entry.beastId)),
       new Set([adopted.result.beastId, cultivateIds[0]]), '收養獸與培養失敗保留的主獸都必須存在，十隻素材必須消耗');
     const runtimeInstanceId = `smoke:runtime-instance:${suffix}`;
@@ -128,6 +158,7 @@ async function main(): Promise<void> {
       plantingSkill: { level: 1, exp: 0, expToNext: 100 } };
     const playerRuntime = { getPlayer: (id: string) => id === runtimePlayerId ? playerView : null,
       replaceInventoryItems: (_id: string, items: unknown[]) => { playerView.inventory.items = items; },
+      runExclusiveAssetMutation: async (_ids: string[], mutation: () => Promise<unknown>) => mutation(),
       markPlayerPersistentDirty: () => undefined };
     const flush = { flushPlayerDomains: async () => undefined };
     const content = { getItemName: (itemId: string) => itemId,
@@ -143,17 +174,19 @@ async function main(): Promise<void> {
         { id: 'fusion', defId: 'spirit_beast_fusion_station', x: 2, y: 0, state: 'active', revision: 1 },
       ] };
     for (let index = 0; index < 12; index += 1) {
-      await service.awardEgg({ sourceRef: `${sourcePrefix}:runtime-egg:${index}`,
-        ownerPlayerId: runtimePlayerId, element: 'metal', star: 1 });
+      await insertEgg(runtimePlayerId, index, eggItemId, 1);
     }
+    const syncedRuntimeItems = await service.listPlayerInventoryItems(runtimePlayerId);
+    playerView.inventory.items = syncedRuntimeItems;
     const initialPanel = await runtime.getPanel(runtimePlayerId, runtimeContext);
-    assert.equal(initialPanel.eggs.length, 12);
-    assert.ok(initialPanel.eggs.every((entry) => entry.revision === 1), '面板必須投影每顆蛋自己的 revision');
+    assert.equal(initialPanel.eggs.length, 12, '面板靈蛋必須逐堆疊投影自背包');
+    assert.ok(initialPanel.eggs.every((entry) => entry.count === 1));
     const hatchEgg = initialPanel.eggs[0];
     const incubated = await runtime.executeCommand(runtimePlayerId, { requestId: `${sourcePrefix}:runtime-incubate`,
-      action: 'incubate', buildingId: incubatorId, eggItemKey: hatchEgg.itemKey,
-      expectedRevision: hatchEgg.revision }, runtimeContext);
+      action: 'incubate', buildingId: incubatorId, eggItemKey: hatchEgg.itemKey }, runtimeContext);
     assert.equal(incubated.ok, true, incubated.reasonKey);
+    const afterIncubatePanel = await runtime.getPanel(runtimePlayerId, runtimeContext);
+    assert.equal(afterIncubatePanel.eggs.reduce((sum, entry) => sum + entry.count, 0), 11, '孵化必須從背包扣 1 顆蛋');
     const incubatingPanel = await runtime.getPanel(runtimePlayerId, runtimeContext);
     const hatch = incubatingPanel.facilities.find((entry) => entry.buildingId === incubatorId)?.hatch;
     assert.ok(hatch && hatch.revision >= 1, '面板必須投影孵化紀錄自己的 revision');
@@ -168,13 +201,17 @@ async function main(): Promise<void> {
 
     const enhancementPanel = await runtime.getPanel(runtimePlayerId, runtimeContext);
     const targetEgg = enhancementPanel.eggs[0];
+    runtime['rollPromotion'] = () => true;
     const enhancedViaRuntime = await runtime.executeCommand(runtimePlayerId, { requestId: `${sourcePrefix}:runtime-enhance`,
-      action: 'enhance_egg', buildingId: enhancementId, eggItemKey: targetEgg.itemKey,
-      expectedRevision: targetEgg.revision,
-      materials: enhancementPanel.eggs.slice(1, 11).map((entry) => ({ itemKey: entry.itemKey, count: 1 })) }, runtimeContext);
+      action: 'enhance_egg', buildingId: enhancementId, eggItemKey: targetEgg.itemKey }, runtimeContext);
     assert.equal(enhancedViaRuntime.ok, true, enhancedViaRuntime.reasonKey);
-    assert.equal((await service.listPlayerEggs(runtimePlayerId)).length, 1,
-      '真 command 路徑須以蛋 revision 原子扣除十顆素材');
+    assert.equal(enhancedViaRuntime.promoted, true);
+    const afterEnhancePanel = await runtime.getPanel(runtimePlayerId, runtimeContext);
+    assert.equal(afterEnhancePanel.eggs.length, 1, '11 顆同星靈蛋必須從背包合成 1 顆升星靈蛋');
+    assert.equal(afterEnhancePanel.eggs[0]?.star, 2);
+    assert.equal(afterEnhancePanel.eggs[0]?.count, 1);
+    assert.equal(await countEggs(runtimePlayerId, eggItemId), 0, '強化必須從背包扣除 11 顆素材');
+    assert.equal(await countEggs(runtimePlayerId, 'spirit_egg.metal.star2'), 1);
 
     const beforeFusionIds = new Set((await service.listPlayerBeasts(runtimePlayerId)).map((beast) => beast.beastId));
     const fusionIds = [randomUUID(), randomUUID()];
@@ -229,11 +266,12 @@ async function main(): Promise<void> {
     assert.equal(persistedChild.baseCombatPower, 540);
     assert.deepEqual(persistedChild.skillLevels, persistenceRequest.childSkillLevels);
 
-    console.log(JSON.stringify({ ok: true, case: 'spirit-beast-persistence', sourceDedupe: true,
+    console.log(JSON.stringify({ ok: true, case: 'spirit-beast-persistence', bagBasedEggs: true,
+      cancelIncubationReturnsEgg: true, enhanceElevenFromBag: true,
       fusionThreeToOne: true, fusionConcurrentAndReplay: true, fusionPreviewMatchesReadback: true,
       atomicTenMaterialConsume: true, idempotentRandomReplay: true, hatchAdopted: true,
       lateFlushTerminalSafe: true, inventorySlotAndSharedLock: true,
-      commandRevisionBindings: ['incubate', 'adopt', 'enhance_egg'] }, null, 2));
+      commandBindings: ['incubate', 'cancel_incubation', 'enhance_egg'] }, null, 2));
   } finally {
     if (runtime) await runtime.onModuleDestroy();
     if (pool) {

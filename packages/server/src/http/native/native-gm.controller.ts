@@ -42,6 +42,7 @@ import { RecoverEmptyCustomTechniqueBooksConversion } from '../../gm/compat-conv
 import { OrphanSectBuildingVisualsConversion } from '../../gm/compat-conversions/conversions/building/orphan-sect-building-visuals';
 import { TongtianTowerCatalogInstanceTypeConversion } from '../../gm/compat-conversions/conversions/world/tongtian-tower-catalog-instance-type';
 import { MailSnapshotTraditionalizeConversion } from '../../gm/compat-conversions/conversions/mail/mail-snapshot-traditionalize';
+import { SpiritBeastWarehouseEggsToInventoryConversion } from '../../gm/compat-conversions/conversions/spirit-beast/warehouse-eggs-to-inventory';
 /**
  * UpdatePlayerPasswordBody：定义接口结构约束，明确可交付字段含义。
  */
@@ -302,6 +303,8 @@ export class NativeGmController {
     @Inject(OrphanSectBuildingVisualsConversion) private readonly orphanSectBuildingVisualsConversion: OrphanSectBuildingVisualsConversion,
     @Inject(TongtianTowerCatalogInstanceTypeConversion) private readonly tongtianTowerCatalogInstanceTypeConversion: TongtianTowerCatalogInstanceTypeConversion,
     @Inject(MailSnapshotTraditionalizeConversion) private readonly mailSnapshotTraditionalizeConversion: MailSnapshotTraditionalizeConversion,
+    @Inject(SpiritBeastWarehouseEggsToInventoryConversion)
+    private readonly spiritBeastWarehouseEggsToInventoryConversion: SpiritBeastWarehouseEggsToInventoryConversion,
     @Optional()
     @Inject(GmAuditLogPersistenceService)
     private readonly gmAuditLogPersistenceService: GmAuditLogPersistenceService | null = null,
@@ -1345,6 +1348,26 @@ export class NativeGmController {
       targetType: 'compat_conversion',
       targetId: 'mail_snapshot_traditionalize',
     }, (actor) => this.mailSnapshotTraditionalizeConversion.run({
+      mode: 'apply',
+      actor,
+    }));
+  }
+  @Post('shortcuts/compat/spirit-beast-warehouse-eggs-to-inventory/dry-run')
+  async dryRunSpiritBeastWarehouseEggsToInventory(@Req() request: unknown) {
+    return this.spiritBeastWarehouseEggsToInventoryConversion.run({
+      mode: 'dry-run',
+      actor: extractGmActor(request),
+    });
+  }
+
+  @Post('shortcuts/compat/spirit-beast-warehouse-eggs-to-inventory/apply')
+  async applySpiritBeastWarehouseEggsToInventory(@Req() request: unknown) {
+    return this.executeAuditedGmWrite({
+      op: 'gm.shortcuts.compat.spirit_beast_warehouse_eggs_to_inventory.apply',
+      request,
+      targetType: 'compat_conversion',
+      targetId: 'spirit_beast_warehouse_eggs_to_inventory',
+    }, (actor) => this.spiritBeastWarehouseEggsToInventoryConversion.run({
       mode: 'apply',
       actor,
     }));

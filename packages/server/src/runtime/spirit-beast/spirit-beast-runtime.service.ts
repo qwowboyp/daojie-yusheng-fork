@@ -3,6 +3,7 @@ import { Inject, Injectable, Logger, type OnModuleDestroy, type OnModuleInit } f
 import { randomInt, randomUUID } from 'node:crypto';
 import {
   SPIRIT_BEAST_CATALOG,
+  SPIRIT_BEAST_ELEMENTS,
   SPIRIT_BEAST_FACILITIES,
   SPIRIT_BEAST_GRADES,
   SPIRIT_BEAST_RULES,
@@ -23,6 +24,7 @@ import {
   MAX_ENHANCE_LEVEL,
   normalizeEnhanceLevel,
   getSpiritEggItemId,
+  parseSpiritEggItemId,
   previewSpiritBeastFusion,
   selectSpiritBeastWeightedIndex,
   type SpiritBeastCommandResultView,
@@ -55,7 +57,6 @@ import {
   SpiritBeastPersistenceService,
   type SpiritBeastRow,
   type SpiritCropRow,
-  type SpiritEggRow,
   type SpiritHatchRow,
   type SpiritWorkOrderRow,
 } from '../../persistence/spirit-beast-persistence.service';
@@ -73,12 +74,6 @@ export interface SpiritBeastRuntimeContext {
   buildings: Array<{ id?: string; defId?: string; x?: number; y?: number; state?: string; revision?: number;
     buildRemainingTicks?: number; buildStrength?: number }>;
   canManage: boolean;
-}
-
-interface EggDropEvent {
-  sourceRef: string;
-  ownerPlayerId: string;
-  boss: boolean;
 }
 
 export interface SpiritBeastMapInstance {
@@ -177,23 +172,22 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
     await this.hydrationPromise;
   }
 
-  /** 真死亡鏈呼叫；sourceRef 是 instance + runtime monster + kill tick 的唯一身份。 */
-  async recordEligibleMonsterDeath(event: EggDropEvent): Promise<{ dropped: boolean; egg?: SpiritEggRow }> {
-    const probability = event.boss ? SPIRIT_BEAST_RULES.bossEggDropProbability : SPIRIT_BEAST_RULES.normalEggDropProbability;
-    if (this.randomSample() >= probability) return { dropped: false };
-    await this.ready();
-    const element = (['metal', 'wood', 'water', 'fire', 'earth'] as const)[randomInt(5)];
+  /**
+   * 怪物死亡當帧同步擲骰：只回傳靈蛋道具 ID，不觸碰 DB、不做字串簽名，供戰鬥熱路徑直接發放入包。
+   */
+  rollMonsterEggItemId(boss: boolean): string | null {
+    const probability = boss ? SPIRIT_BEAST_RULES.bossEggDropProbability : SPIRIT_BEAST_RULES.normalEggDropProbability;
+    if (this.randomSample() >= probability) return null;
+    const element = SPIRIT_BEAST_ELEMENTS[randomInt(SPIRIT_BEAST_ELEMENTS.length)];
     const star = (selectSpiritBeastWeightedIndex(SPIRIT_BEAST_STAR_WEIGHTS, this.randomSample()) + 1) as SpiritBeastStar;
-    const result = await this.persistence.awardEgg({ sourceRef: event.sourceRef, ownerPlayerId: event.ownerPlayerId, element, star });
-    if (result.awarded) this.bumpPanelRevision();
-    return { dropped: result.awarded, egg: result.egg };
+    return getSpiritEggItemId(element, star);
   }
 
   async getPanel(ownerPlayerId: string, context: SpiritBeastRuntimeContext): Promise<SpiritBeastPanelView> {
     await this.ready();
     await this.ensureConstructionOrders(ownerPlayerId, context);
-    const [eggs, beasts, hatches, storage] = await Promise.all([
-      this.persistence.listPlayerEggs(ownerPlayerId), this.persistence.listPlayerBeasts(ownerPlayerId),
+    const [beasts, hatches, storage] = await Promise.all([
+      this.persistence.listPlayerBeasts(ownerPlayerId),
       this.persistence.listPlayerHatches(ownerPlayerId), this.persistence.listFacilityStorage(ownerPlayerId, context.sectInstanceId ?? undefined),
     ]);
     const currentHatches = new Map(hatches.map((entry) => [entry.hatchId, entry]));
@@ -209,12 +203,18 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
       ownerPlayerId,
       beasts: beasts.map((entry) => this.buildBeastView(entry, ownerPlayerId)),
       facilities: this.buildFacilities(ownerPlayerId, context, Array.from(currentHatches.values()), storage),
-      eggs: eggs.filter((entry) => entry.state === 'warehouse').map((entry) => ({
-        itemKey: entry.eggId,
-        itemId: getSpiritEggItemId(entry.element, entry.star as SpiritBeastStar),
-        name: `${resolveElementName(entry.element)}靈蛋`, element: entry.element, star: entry.star as SpiritBeastStar, count: 1,
-        revision: entry.revision,
-      })),
+      eggs: (player?.inventory?.items ?? []).flatMap((item: Record<string, unknown>, index: number) => {
+        const itemId = normalizeId(item.itemId);
+        const count = Math.max(0, Math.trunc(Number(item.count) || 0));
+        const egg = parseSpiritEggItemId(itemId);
+        if (!egg || count <= 0) return [];
+        return [{
+          itemKey: normalizeId(item.itemInstanceId) || `slot:${index}`,
+          itemId,
+          name: normalizeId(item.name) || this.contentTemplateRepository.getItemName(itemId) || `${resolveElementName(egg.element)}靈蛋`,
+          element: egg.element, star: egg.star, count,
+        }];
+      }),
       inventory: (player?.inventory?.items ?? []).flatMap((item: Record<string, unknown>, index: number) => {
         const itemId = normalizeId(item.itemId);
         const count = Math.max(0, Math.trunc(Number(item.count) || 0));
@@ -301,26 +301,42 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
           this.bumpPanelRevision(); break;
         }
         case 'incubate': {
-          const egg = (await this.persistence.listPlayerEggs(ownerPlayerId)).find((entry) => entry.eggId === command.eggItemKey);
-          if (!egg || (egg.state !== 'warehouse' && egg.state !== 'incubating')) throw new Error('SPIRIT_EGG_NOT_FOUND');
           const facility = this.requireFacility(context, command.buildingId, 'incubator');
-          const speed = getSpiritBeastHatchSpeed(facility.definition.element as SpiritBeastElement, egg.element);
-          const gradeIndex = selectSpiritBeastWeightedIndex(getSpiritBeastHatchWeights(egg.star as SpiritBeastStar), this.randomSample());
-          const grade = SPIRIT_BEAST_GRADES[gradeIndex];
-          const candidates = SPIRIT_BEAST_CATALOG.filter((entry) => entry.grade === grade && entry.element === egg.element);
-          const species = candidates[randomInt(candidates.length)];
-          const baseCombatPower = randomInclusive(species.baseCombatPowerMin, species.baseCombatPowerMax);
-          const result = await this.persistence.startHatch({
-            operationId: requestId, ownerPlayerId, eggId: egg.eggId, expectedEggRevision: command.expectedRevision ?? egg.revision,
-            buildingInstanceId: context.sectInstanceId, buildingId: command.buildingId,
-            incubatorElement: facility.definition.element as SpiritBeastElement, resultSpeciesId: species.id, resultGrade: grade,
-            resultCombatPower: baseCombatPower, totalTicks: Math.max(1, Math.ceil(SPIRIT_BEAST_RULES.hatchBaseWorkTicks / speed)),
+          await this.playerRuntimeService.runExclusiveAssetMutation([ownerPlayerId], async () => {
+            const player = this.playerRuntimeService.getPlayer(ownerPlayerId);
+            if (!player) throw new Error('SPIRIT_PLAYER_NOT_ONLINE');
+            const egg = findInventoryEgg(player.inventory.items, command.eggItemKey);
+            if (!egg) throw new Error('SPIRIT_EGG_NOT_FOUND');
+            const speed = getSpiritBeastHatchSpeed(facility.definition.element as SpiritBeastElement, egg.element);
+            const gradeIndex = selectSpiritBeastWeightedIndex(getSpiritBeastHatchWeights(egg.star), this.randomSample());
+            const grade = SPIRIT_BEAST_GRADES[gradeIndex];
+            const candidates = SPIRIT_BEAST_CATALOG.filter((entry) => entry.grade === grade && entry.element === egg.element);
+            const species = candidates[randomInt(candidates.length)];
+            const baseCombatPower = randomInclusive(species.baseCombatPowerMin, species.baseCombatPowerMax);
+            await this.playerPersistenceFlushService.flushPlayerDomains(ownerPlayerId, ['inventory'], { forceCurrentSnapshot: true });
+            const result = await this.persistence.startHatch({
+              operationId: requestId, ownerPlayerId, eggItemKey: egg.itemKey,
+              buildingInstanceId: context.sectInstanceId!, buildingId: command.buildingId,
+              incubatorElement: facility.definition.element as SpiritBeastElement, resultSpeciesId: species.id, resultGrade: grade,
+              resultCombatPower: baseCombatPower, totalTicks: Math.max(1, Math.ceil(SPIRIT_BEAST_RULES.hatchBaseWorkTicks / speed)),
+            });
+            this.playerRuntimeService.replaceInventoryItems(ownerPlayerId,
+              await this.persistence.listPlayerInventoryItems(ownerPlayerId));
+            this.hatches.set(result.result.hatchId, result.result);
           });
-          this.hatches.set(result.result.hatchId, result.result); this.bumpPanelRevision(); break;
+          this.bumpPanelRevision(); break;
         }
         case 'cancel_incubation': {
           await this.flushDirtyProgress();
-          await this.persistence.cancelHatch({ operationId: requestId, ownerPlayerId, hatchId: command.hatchId });
+          await this.playerRuntimeService.runExclusiveAssetMutation([ownerPlayerId], async () => {
+            const player = this.playerRuntimeService.getPlayer(ownerPlayerId);
+            if (!player) throw new Error('SPIRIT_PLAYER_NOT_ONLINE');
+            await this.playerPersistenceFlushService.flushPlayerDomains(ownerPlayerId, ['inventory'], { forceCurrentSnapshot: true });
+            await this.persistence.cancelHatch({ operationId: requestId, ownerPlayerId, hatchId: command.hatchId,
+              inventoryCapacity: Math.max(1, Math.trunc(Number(player.inventory.capacity) || 1)) });
+            this.playerRuntimeService.replaceInventoryItems(ownerPlayerId,
+              await this.persistence.listPlayerInventoryItems(ownerPlayerId));
+          });
           this.hatches.delete(command.hatchId); this.bumpPanelRevision(); break;
         }
         case 'adopt': {
@@ -336,10 +352,18 @@ export class SpiritBeastRuntimeService implements OnModuleInit, OnModuleDestroy,
         }
         case 'enhance_egg': {
           this.requireFacility(context, command.buildingId, 'egg_enhancement');
-          const ids = expandEggMaterialIds(command.materials);
-          const result = await this.persistence.enhanceEgg({ operationId: requestId, ownerPlayerId,
-            targetEggId: command.eggItemKey, materialEggIds: ids, expectedTargetRevision: command.expectedRevision,
-            success: this.rollPromotion(),
+          const result = await this.playerRuntimeService.runExclusiveAssetMutation([ownerPlayerId], async () => {
+            const player = this.playerRuntimeService.getPlayer(ownerPlayerId);
+            if (!player) throw new Error('SPIRIT_PLAYER_NOT_ONLINE');
+            const egg = findInventoryEgg(player.inventory.items, command.eggItemKey);
+            if (!egg) throw new Error('SPIRIT_EGG_NOT_FOUND');
+            await this.playerPersistenceFlushService.flushPlayerDomains(ownerPlayerId, ['inventory'], { forceCurrentSnapshot: true });
+            const settled = await this.persistence.enhanceEgg({ operationId: requestId, ownerPlayerId,
+              eggItemKey: egg.itemKey, success: this.rollPromotion(),
+              inventoryCapacity: Math.max(1, Math.trunc(Number(player.inventory.capacity) || 1)) });
+            this.playerRuntimeService.replaceInventoryItems(ownerPlayerId,
+              await this.persistence.listPlayerInventoryItems(ownerPlayerId));
+            return settled;
           });
           this.bumpPanelRevision();
           return { requestId, ok: true, revision: this.panelRevision, promoted: result.result.success };
@@ -1426,13 +1450,24 @@ function mapWorkOrderView(order: SpiritWorkOrderRow) {
     workTotalTicks: order.totalTicks, workRemainingTicks: order.remainingTicks, revision: order.revision };
 }
 
-function expandEggMaterialIds(entries: Array<{ itemKey: string; count: number }>): string[] {
-  const result: string[] = [];
-  for (const entry of entries ?? []) {
-    const count = Math.max(0, Math.trunc(Number(entry.count) || 0));
-    for (let index = 0; index < count; index += 1) result.push(entry.itemKey);
+/** 在記憶體背包中依 itemKey（itemInstanceId 或 slot:索引）找出靈蛋堆疊。 */
+function findInventoryEgg(
+  items: ReadonlyArray<unknown>,
+  itemKey: string,
+): { itemKey: string; itemId: string; element: SpiritBeastElement; star: SpiritBeastStar; count: number } | null {
+  const normalizedKey = normalizeId(itemKey);
+  if (!normalizedKey) return null;
+  for (let index = 0; index < items.length; index += 1) {
+    const item = items[index] as Record<string, unknown> | undefined;
+    if (!item) continue;
+    const key = normalizeId(item.itemInstanceId) || `slot:${index}`;
+    if (key !== normalizedKey) continue;
+    const egg = parseSpiritEggItemId(normalizeId(item.itemId));
+    const count = Math.max(0, Math.trunc(Number(item.count) || 0));
+    if (!egg || count <= 0) return null;
+    return { itemKey: key, itemId: normalizeId(item.itemId), element: egg.element, star: egg.star, count };
   }
-  return result;
+  return null;
 }
 
 function mapRecordState(state: SpiritBeastRow['state']): SpiritBeastRecord['state'] {
