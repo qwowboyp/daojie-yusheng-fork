@@ -5,8 +5,9 @@
  * 併入同 item_id 的未鎖堆疊或新增一格堆疊，成功後刪除原列。
  *
  * 安全邊界：
- * - 線上玩家的記憶體背包刷盤會覆蓋新寫入的列，因此線上玩家整組跳過並在結果回報，
- *   待玩家下線後重跑即可；任何情況都不刪除尚未入包的蛋列。
+ * - 已載入運行態的玩家（線上或離線掛機）持資產互斥鎖、先強制刷盤背包，提交後以 DB 回讀覆蓋記憶體背包；
+ *   缺少同步所需服務時才跳過並回報；任何情況都不刪除尚未入包的蛋列。
+ * - 逐玩家獨立事務，新增堆疊依序配置空槽位。
  * - 背包已滿且無同 item_id 堆疊時整組跳過，不丟棄資產。
  * - 只在 GM 冷路徑執行，禁止進 tick 熱路徑。
  */
@@ -17,6 +18,8 @@ import { DEFAULT_INVENTORY_CAPACITY, getSpiritEggItemId, type SpiritBeastElement
 
 import { DatabasePoolProvider } from '../../../../persistence/database-pool.provider';
 import { GmAuditLogPersistenceService } from '../../../../persistence/gm-audit-log-persistence.service';
+import { PlayerPersistenceFlushService } from '../../../../persistence/player-persistence-flush.service';
+import { SpiritBeastPersistenceService } from '../../../../persistence/spirit-beast-persistence.service';
 import { PlayerRuntimeService } from '../../../../runtime/player/player-runtime.service';
 import type {
   GmCompatConversionRunOptions,
@@ -43,6 +46,8 @@ interface EggGroupPlan {
   stackItemInstanceId: string | null;
   existingCount: number;
   nextSlotIndex: number;
+  /** 搬遷前背包已佔格數。 */
+  occupied: number;
   blockedReason: string | null;
 }
 
@@ -75,7 +80,15 @@ export class SpiritBeastWarehouseEggsToInventoryConversion {
     @Optional() @Inject(PlayerRuntimeService) private readonly playerRuntimeService: PlayerRuntimeService | null = null,
     @Optional() @Inject(GmAuditLogPersistenceService)
     private readonly gmAuditLogPersistenceService: GmAuditLogPersistenceService | null = null,
+    @Optional() @Inject(PlayerPersistenceFlushService)
+    private readonly playerPersistenceFlushService: PlayerPersistenceFlushService | null = null,
+    @Optional() @Inject(SpiritBeastPersistenceService)
+    private readonly spiritBeastPersistenceService: SpiritBeastPersistenceService | null = null,
   ) {}
+
+  private canSyncLoadedPlayer(): boolean {
+    return Boolean(this.playerRuntimeService && this.playerPersistenceFlushService && this.spiritBeastPersistenceService);
+  }
 
   async run(options: GmCompatConversionRunOptions): Promise<GmCompatConversionRunResult> {
     const pool = this.databasePoolProvider.getPool('gm-compat-spirit-beast-warehouse-eggs-to-inventory');
@@ -92,39 +105,23 @@ export class SpiritBeastWarehouseEggsToInventoryConversion {
       return result;
     }
 
-    const client = await pool.connect();
+    // 逐玩家獨立事務：單一玩家失敗只回滾該玩家，不影響其他玩家。
+    const owners = await pool.query(
+      `SELECT DISTINCT owner_player_id FROM spirit_beast_egg WHERE state = 'warehouse' ORDER BY owner_player_id ASC`,
+    );
     const applied: AppliedGroup[] = [];
-    let convertibleRows = 0;
-    try {
-      await client.query('BEGIN');
-      const plans = await this.loadPlans(client as unknown as Queryable, true);
-      this.populateScanResult(result, plans);
-      convertibleRows = plans.filter((plan) => !plan.blockedReason).reduce((sum, plan) => sum + plan.eggRows, 0);
-      for (const plan of plans) {
-        if (plan.blockedReason) continue;
-        await this.mergeIntoInventory(client, plan);
-        const deleted = await client.query(
-          `DELETE FROM spirit_beast_egg
-            WHERE egg_id = ANY($1::uuid[]) AND owner_player_id = $2 AND state = 'warehouse'`,
-          [plan.eggIds, plan.ownerPlayerId],
-        );
-        if ((deleted.rowCount ?? 0) !== plan.eggIds.length) {
-          throw new Error(`spirit_egg_delete_cas_failed:${plan.ownerPlayerId}:${plan.itemId}`);
-        }
-        applied.push({ plan, expectedTotal: plan.existingCount + plan.eggRows });
+    const allPlans: EggGroupPlan[] = [];
+    for (const row of owners.rows) {
+      const ownerPlayerId = String(row.owner_player_id);
+      const loaded = Boolean(this.playerRuntimeService?.getPlayer(ownerPlayerId)) && this.canSyncLoadedPlayer();
+      const migrate = () => this.applyOwner(pool, ownerPlayerId, loaded, allPlans, applied, result);
+      if (loaded && this.playerRuntimeService) {
+        await this.playerRuntimeService.runExclusiveAssetMutation([ownerPlayerId], migrate);
+      } else {
+        await migrate();
       }
-      await client.query('COMMIT');
-    } catch (error) {
-      await client.query('ROLLBACK').catch(() => undefined);
-      result.convertedRows = 0;
-      result.failedRows = convertibleRows;
-      result.errors.push(error instanceof Error ? error.message : String(error));
-      this.logger.error(`倉庫靈蛋轉背包失敗並已回滾：${result.errors[result.errors.length - 1]}`);
-      await this.recordAudit(result, options);
-      return result;
-    } finally {
-      client.release();
     }
+    this.populateScanResult(result, allPlans);
 
     result.convertedRows = applied.reduce((sum, entry) => sum + entry.plan.eggRows, 0);
     result.verifiedRows = await this.verifyAppliedRows(pool, applied, result);
@@ -142,16 +139,84 @@ export class SpiritBeastWarehouseEggsToInventoryConversion {
     return result;
   }
 
-  /** 只在冷路徑載入聚合力案；apply 時鎖定蛋列與背包堆疊。 */
-  private async loadPlans(queryable: Queryable, lockRows: boolean): Promise<EggGroupPlan[]> {
+  /**
+   * 單一玩家搬遷。已載入運行態的玩家（含離線掛機）由呼叫端持資產互斥鎖，
+   * 先強制刷盤背包，事務提交後以 DB 回讀覆蓋記憶體背包，避免後續刷盤蓋掉新堆疊。
+   */
+  private async applyOwner(
+    pool: Pool,
+    ownerPlayerId: string,
+    loaded: boolean,
+    allPlans: EggGroupPlan[],
+    applied: AppliedGroup[],
+    result: GmCompatConversionRunResult,
+  ): Promise<void> {
+    if (loaded) {
+      await this.playerPersistenceFlushService!.flushPlayerDomains(ownerPlayerId, ['inventory'], { forceCurrentSnapshot: true });
+    }
+    const client = await pool.connect();
+    const ownerApplied: AppliedGroup[] = [];
+    let plans: EggGroupPlan[] = [];
+    try {
+      await client.query('BEGIN');
+      plans = await this.loadPlans(client as unknown as Queryable, true, ownerPlayerId);
+      let nextSlotIndex = plans[0]?.nextSlotIndex ?? 0;
+      let occupied = plans[0]?.occupied ?? 0;
+      for (const plan of plans) {
+        if (plan.blockedReason) continue;
+        if (!plan.stackItemInstanceId) {
+          // 同一玩家多組新堆疊需累計佔格，超出容量的組別保留原列。
+          if (occupied >= DEFAULT_INVENTORY_CAPACITY) {
+            plan.blockedReason = 'inventory_full';
+            continue;
+          }
+          occupied += 1;
+          plan.nextSlotIndex = nextSlotIndex++;
+        }
+        await this.mergeIntoInventory(client, plan);
+        const deleted = await client.query(
+          `DELETE FROM spirit_beast_egg
+            WHERE egg_id = ANY($1::uuid[]) AND owner_player_id = $2 AND state = 'warehouse'`,
+          [plan.eggIds, plan.ownerPlayerId],
+        );
+        if ((deleted.rowCount ?? 0) !== plan.eggIds.length) {
+          throw new Error(`spirit_egg_delete_cas_failed:${plan.ownerPlayerId}:${plan.itemId}`);
+        }
+        ownerApplied.push({ plan, expectedTotal: plan.existingCount + plan.eggRows });
+      }
+      await client.query('COMMIT');
+    } catch (error) {
+      await client.query('ROLLBACK').catch(() => undefined);
+      result.failedRows += plans.filter((plan) => !plan.blockedReason).reduce((sum, plan) => sum + plan.eggRows, 0);
+      result.errors.push(`${ownerPlayerId}:${error instanceof Error ? error.message : String(error)}`);
+      this.logger.error(`倉庫靈蛋轉背包失敗並已回滾（${ownerPlayerId}）：${result.errors[result.errors.length - 1]}`);
+      for (const plan of plans) plan.blockedReason ??= 'apply_failed';
+      allPlans.push(...plans);
+      return;
+    } finally {
+      client.release();
+    }
+    allPlans.push(...plans);
+    applied.push(...ownerApplied);
+    if (loaded && ownerApplied.length > 0) {
+      this.playerRuntimeService!.replaceInventoryItems(
+        ownerPlayerId,
+        await this.spiritBeastPersistenceService!.listPlayerInventoryItems(ownerPlayerId),
+      );
+    }
+  }
+
+  /** 只在冷路徑載入聚合方案；apply 時鎖定蛋列與背包堆疊。 */
+  private async loadPlans(queryable: Queryable, lockRows: boolean, ownerPlayerId: string | null = null): Promise<EggGroupPlan[]> {
     const groups = await queryable.query(
       `SELECT owner_player_id, element, star,
               array_agg(egg_id::text ORDER BY egg_id) AS egg_ids,
               COUNT(*)::int AS egg_rows
          FROM spirit_beast_egg
-        WHERE state = 'warehouse'
+        WHERE state = 'warehouse' AND ($1::text IS NULL OR owner_player_id = $1)
         GROUP BY owner_player_id, element, star
         ORDER BY owner_player_id ASC, element ASC, star ASC`,
+      [ownerPlayerId],
     );
     const plans: EggGroupPlan[] = [];
     for (const row of groups.rows) {
@@ -177,7 +242,8 @@ export class SpiritBeastWarehouseEggsToInventoryConversion {
       const occupied = Math.max(0, Math.trunc(Number(stats.rows[0]?.occupied) || 0));
       const maxSlot = Math.trunc(Number(stats.rows[0]?.max_slot) || -1);
       const hasStack = Boolean(stack.rows[0]);
-      const blockedReason = online
+      // 已載入運行態但缺少刷盤/回讀服務時無法安全同步記憶體背包，才需等玩家下線。
+      const blockedReason = online && !this.canSyncLoadedPlayer()
         ? 'online_player_requires_logout'
         : hasStack || occupied < DEFAULT_INVENTORY_CAPACITY ? null : 'inventory_full';
       plans.push({
@@ -190,6 +256,7 @@ export class SpiritBeastWarehouseEggsToInventoryConversion {
         stackItemInstanceId: hasStack ? String(stack.rows[0].item_instance_id) : null,
         existingCount: hasStack ? Math.max(0, Math.trunc(Number(stack.rows[0].count) || 0)) : 0,
         nextSlotIndex: maxSlot + 1,
+        occupied,
         blockedReason,
       });
     }
