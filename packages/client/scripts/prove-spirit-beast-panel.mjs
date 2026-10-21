@@ -300,8 +300,8 @@ await withClientBrowserProof({ viewport: { width: 1280, height: 900 }, profilePr
     assert.equal(layout.overflow, false, `${mode.id} 設施內容水平溢出`);
     assert.equal(layout.visible, true, `${mode.id} 設施彈窗超出可視範圍`);
     if (mode.mobile) assert(Math.min(...layout.controls) >= 38, `${mode.id} 觸控按鈕過小`);
-    // 等候主題 CSS 過渡完成，避免截到前一個模式的中間畫面。
-    await cdp.evaluate(`Promise.allSettled(document.getAnimations().filter((animation) => animation instanceof CSSTransition).map((animation) => animation.finished)).then(() => true)`);
+    // 等候主題 CSS 過渡完成，避免截到前一個模式的中間畫面；headless 下部分過渡不會結束，因此上限 2000ms。
+    await cdp.evaluate(`Promise.race([Promise.allSettled(document.getAnimations().filter((animation) => animation instanceof CSSTransition).map((animation) => animation.finished)), new Promise((resolve) => setTimeout(resolve, 2000))]).then(() => true)`);
     assert.equal(await cdp.evaluate('document.documentElement.dataset.colorMode'), mode.theme, `${mode.id} 主題未保留`);
     await capture(cdp, mode.id);
   }
